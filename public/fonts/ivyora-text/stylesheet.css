@@ -1,0 +1,130 @@
+@font-face {
+    font-family: 'IvyOra Text';
+    src: url('IvyOraText-RegularItalic.eot');
+    src: local('IvyOra Text Regular Italic'), local('IvyOraText-RegularItalic'),
+        url('IvyOraText-RegularItalic.eot?#iefix') format('embedded-opentype'),
+        url('IvyOraText-RegularItalic.woff2') format('woff2'),
+        url('IvyOraText-RegularItalic.woff') format('woff'),
+        url('IvyOraText-RegularItalic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'IvyOra Text';
+    src: url('IvyOraText-Regular.eot');
+    src: local('IvyOra Text Regular'), local('IvyOraText-Regular'),
+        url('IvyOraText-Regular.eot?#iefix') format('embedded-opentype'),
+        url('IvyOraText-Regular.woff2') format('woff2'),
+        url('IvyOraText-Regular.woff') format('woff'),
+        url('IvyOraText-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'IvyOra Text';
+    src: url('IvyOraText-BoldItalic.eot');
+    src: local('IvyOra Text Bold Italic'), local('IvyOraText-BoldItalic'),
+        url('IvyOraText-BoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('IvyOraText-BoldItalic.woff2') format('woff2'),
+        url('IvyOraText-BoldItalic.woff') format('woff'),
+        url('IvyOraText-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'IvyOra Text';
+    src: url('IvyOraText-Thin.eot');
+    src: local('IvyOra Text Thin'), local('IvyOraText-Thin'),
+        url('IvyOraText-Thin.eot?#iefix') format('embedded-opentype'),
+        url('IvyOraText-Thin.woff2') format('woff2'),
+        url('IvyOraText-Thin.woff') format('woff'),
+        url('IvyOraText-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'IvyOra Text';
+    src: url('IvyOraText-MediumItalic.eot');
+    src: local('IvyOra Text Medium Italic'), local('IvyOraText-MediumItalic'),
+        url('IvyOraText-MediumItalic.eot?#iefix') format('embedded-opentype'),
+        url('IvyOraText-MediumItalic.woff2') format('woff2'),
+        url('IvyOraText-MediumItalic.woff') format('woff'),
+        url('IvyOraText-MediumItalic.ttf') format('truetype');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'IvyOra Text';
+    src: url('IvyOraText-LightItalic.eot');
+    src: local('IvyOra Text Light Italic'), local('IvyOraText-LightItalic'),
+        url('IvyOraText-LightItalic.eot?#iefix') format('embedded-opentype'),
+        url('IvyOraText-LightItalic.woff2') format('woff2'),
+        url('IvyOraText-LightItalic.woff') format('woff'),
+        url('IvyOraText-LightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'IvyOra Text';
+    src: url('IvyOraText-Bold.eot');
+    src: local('IvyOra Text Bold'), local('IvyOraText-Bold'),
+        url('IvyOraText-Bold.eot?#iefix') format('embedded-opentype'),
+        url('IvyOraText-Bold.woff2') format('woff2'),
+        url('IvyOraText-Bold.woff') format('woff'),
+        url('IvyOraText-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'IvyOra Text';
+    src: url('IvyOraText-ThinItalic.eot');
+    src: local('IvyOra Text Thin Italic'), local('IvyOraText-ThinItalic'),
+        url('IvyOraText-ThinItalic.eot?#iefix') format('embedded-opentype'),
+        url('IvyOraText-ThinItalic.woff2') format('woff2'),
+        url('IvyOraText-ThinItalic.woff') format('woff'),
+        url('IvyOraText-ThinItalic.ttf') format('truetype');
+    font-weight: 100;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'IvyOra Text';
+    src: url('IvyOraText-Light.eot');
+    src: local('IvyOra Text Light'), local('IvyOraText-Light'),
+        url('IvyOraText-Light.eot?#iefix') format('embedded-opentype'),
+        url('IvyOraText-Light.woff2') format('woff2'),
+        url('IvyOraText-Light.woff') format('woff'),
+        url('IvyOraText-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'IvyOra Text';
+    src: url('IvyOraText-Medium.eot');
+    src: local('IvyOra Text Medium'), local('IvyOraText-Medium'),
+        url('IvyOraText-Medium.eot?#iefix') format('embedded-opentype'),
+        url('IvyOraText-Medium.woff2') format('woff2'),
+        url('IvyOraText-Medium.woff') format('woff'),
+        url('IvyOraText-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
