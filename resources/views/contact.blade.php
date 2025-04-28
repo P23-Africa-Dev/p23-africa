@@ -5,7 +5,7 @@
 @section('content')
     <!-- Contact Section -->
     <section class="contact-section">
-
+        
     </section>
     <div class="container" id="sec2">
         <div class="row">
