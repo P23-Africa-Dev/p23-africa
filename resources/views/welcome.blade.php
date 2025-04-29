@@ -11,7 +11,7 @@
                         <p>We create tailored solutions for homegrown and global businesses at every stage of growth.
                         </p>
                         <button>Contact Us →</button>
-                    </div>
+                    </div>  
                     <div class="col-md-5 animated-images">
                         <div class="fade-overlay fade-top"></div>
                         <div class="fade-overlay fade-bottom"></div>
