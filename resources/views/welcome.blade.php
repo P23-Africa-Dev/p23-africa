@@ -10,7 +10,7 @@
                         <h1>Driving <span>Successful</span><br>Businesses Across<br><img src="{{ asset('images/dot.png') }}" id="dot" alt=""><span> Africa</span></h1>
                         <p>We create tailored solutions for homegrown and global businesses at every stage of growth.
                         </p>
-                        <button>Contact Us →</button>
+                        <a href="{{ url('contact') }}">Contact Us →</a>
                     </div>  
                     <div class="col-md-5 animated-images">
                         <div class="fade-overlay fade-top"></div>

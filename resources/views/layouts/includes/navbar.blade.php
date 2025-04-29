@@ -3,7 +3,7 @@
     <div id="header">
             <nav class="navbar navbar-expand-lg px-5">
         <div class="container-fluid">
-            <a href="#" class="navbar-brand logo">
+            <a href="{{ route('homepage') }}" class="navbar-brand logo">
                 <img src="images/logo.png" alt="">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -14,11 +14,11 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto ms-auto mb-2 mb-lg-0" id="nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Who We
+                        <a class="nav-link active" aria-current="page" href="{{ url('about') }}">Who We
                             Are</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">What We Do</a>
+                        <a class="nav-link" href="{{ url('services') }}">What We Do</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Our Events</a>
