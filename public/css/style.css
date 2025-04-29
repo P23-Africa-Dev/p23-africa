@@ -1505,6 +1505,8 @@ h3 {
     background: url("../images/bg-about.png") no-repeat center center/cover;
     padding-top: 6rem;
     position: relative;
+    font-family: "GT Walsheim Pro";
+
 }
 
 .about .hero-overlay {
@@ -1603,6 +1605,10 @@ h3 {
 }
 
 /* Servies */
+.services{
+  font-family: "GT Walsheim Pro";
+
+}
 .services .services-content {
     padding: 30px;
 }
