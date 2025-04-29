@@ -7,7 +7,7 @@
             <section class="hero">
                 <div class="row">
                     <div class="col-md-7 hero-text my-auto">
-                        <h1>Driving <span>Successful</span><br>Businesses Across<br><span>Africa</span></h1>
+                        <h1>Driving <span>Successful</span><br>Businesses Across<br><img src="{{ asset('images/dot.png') }}" id="dot" alt=""><span> Africa</span></h1>
                         <p>We create tailored solutions for homegrown and global businesses at every stage of growth.
                         </p>
                         <button>Contact Us →</button>
@@ -67,7 +67,7 @@
             </div>
 
             <!-- Right Column -->
-            <div class="col-md-6 d-flex flex-column justify-content-center" style="padding: 0px 150px 0px 10px;">
+            <div class="col-md-6 d-flex flex-column justify-content-center" style="">
                 <h2 class="fw-bold mb-4">Who We Are</h2>
                 <p class="mb-3">
                     Building a successful business in Africa requires reliable support.
@@ -243,7 +243,7 @@
     <section class="insight-section">
         <div class="">
             <h2>P23 Insights</h2>
-            <div class="insight-content">
+            <div  class="insight-content">
                 <div class="insight-image-wrapper">
                     <img src="{{ asset('images/scolding_donald.jpg') }}" alt="Scolding Donald" class="insight-image" />
                     <div class="bottom-bar"></div>
@@ -329,22 +329,22 @@
     <!-- Stats Section -->
     <section class="px-5">
         <div class="stats-section">
-            <div class="container me-auto ms-auto w-50">
+            <div class="container">
                 <div class="stats-container">
-                    <h1>55%</h1>
+                    <h1>63%</h1>
                     <div class="line-down"></div>
                 </div>
-                <p class="mx-4">of consumers learn about brands or<br> companies on social media</p>
-                <div class="row justify-content-center sub-stats text-center mt-5 mx-4">
-                    <div class="col-md-3">
+                <p class="mx-4">of consumers learn about brands or companies on social media</p>
+                <div class="row justify-content-center sub-stats text-center mt-5 mx-md-4 mx-2">
+                    <div class="col-3">
                         <h4>73%</h4>
                         <p>Start-ups</p>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-3">
                         <h4>73%</h4>
                         <p>MSMEs</p>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-3">
                         <h4>73%</h4>
                         <p>Enterprises</p>
                     </div>

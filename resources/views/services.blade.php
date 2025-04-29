@@ -9,12 +9,8 @@
             <div class="hero" >
                     <div class="left-content">
                         <h2>Our Services</h2>
-            
                          <a href="#" class="read-more">Contact Us <span>→</span></a>
-
                     </div>
-
-                  
                   <div class="right-content">
                      <div class="content bg-color1">
                         <div class="icon-box" >
@@ -40,7 +36,6 @@
                             <h4>Expansion</h4>
                         </div>
                      </div>
-                   
                   </div>
             </div>
         </div>
@@ -49,7 +44,6 @@
 
     <section class="services">
         <div class="">
-      
              <div class="service-top-content">
                 <div class="container position-relative">
                     <div class="top-image">
@@ -57,7 +51,7 @@
                     </div>
                     <div class="row g-0">
                         <div class="col-md-4">
-                            <div class="services-content bg-color1 roundedtop ">
+                            <div class="services-content bg-color1 roundedtop">
                                 <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
                                     <img src="{{ asset('images/strategy.png') }}" alt="">
                                     <h4 class="text-left">Business Strategy</h4>
@@ -65,7 +59,6 @@
                                     <p>We help you build a clear plan for growth and success. Our team works closely with you to understand your goals, challenges, and the market you’re in. We create tailored strategies that show you the best steps to take, whether you’re starting a new business, growing an existing one, or expanding into new markets. With expert advice, market insights, and practical solutions, we give you the tools to make confident decisions and achieve lasting success.</p>
                                 </div>
                              </div>
-                          
                         </div>
                     
                         <div class="col-md-4">
@@ -77,7 +70,6 @@
                                     <p>We help you successfully enter and grow in African markets. Our team provides expert guidance on local regulations, business culture, and market opportunities across the continent. We develop tailored entry strategies, connect you with trusted local partners, and support you through every step—from market research to launch. Whether you’re expanding into one country or across multiple regions, we make your move into Africa smooth, strategic, and successful.</p>
                                 </div>
                              </div>
-                          
                         </div>
                     
                         <div class="col-md-4">
@@ -89,11 +81,7 @@
                                     <p>We help you make smarter business decisions with reliable research and insights. Our team gathers and analyzes information about markets, industries, customers, and competitors, giving you a clear understanding of the opportunities and challenges ahead. Whether you’re entering a new market, launching a product, or planning for growth, we provide the data and analysis you need to build strong, informed strategies.</p>
                                 </div>
                              </div>
-                          
                         </div>
-                    
-                
-                     
                     </div>
                 </div>
              </div>
@@ -110,7 +98,6 @@
                                     <p>We help you grow your sales, reach more customers, and build stronger sales teams. Our experts work closely with you to understand your products, services, and target market. We create clear sales strategies, improve your processes, and provide hands-on training to boost your team’s skills and confidence. Whether you need help closing more deals, entering new markets, or increasing revenue, we give you the tools, support, and training to grow your business successfully.</p>
                                 </div>
                              </div>
-                          
                         </div>
                     
                         <div class="col-md-4">
@@ -122,7 +109,6 @@
                                     <p>We help you build a clear plan for growth and success. Our team works closely with you to understand your goals, challenges, and the market you’re in. We create tailored strategies that show you the best steps to take, whether you’re starting a new business, growing an existing one, or expanding into new markets. With expert advice, market insights, and practical solutions, we give you the tools to make confident decisions and achieve lasting success.</p>
                                 </div>
                              </div>
-                          
                         </div>
                     
                         <div class="col-md-4">
@@ -134,11 +120,7 @@
                                     <p>We help you build a clear plan for growth and success. Our team works closely with you to understand your goals, challenges, and the market you’re in. We create tailored strategies that show you the best steps to take, whether you’re starting a new business, growing an existing one, or expanding into new markets. With expert advice, market insights, and practical solutions, we give you the tools to make confident decisions and achieve lasting success.</p>
                                 </div>
                              </div>
-                          
-                        </div>
-                    
-                
-                     
+                        </div> 
                     </div>
                  </div>
              </div>
@@ -146,7 +128,6 @@
     </section>
 
  
-
     <section class="research">
         <div class="container">
             <div class="row g-10">
@@ -156,7 +137,6 @@
                         <img src="{{ asset('images/research-image.png') }}" alt="People"
                         class="img-fluid">
                     </div>
-                 
                 </div>
     
                 <!-- Right Column -->
@@ -164,13 +144,11 @@
                     <h2 class="">Global Reach. Local Approach</h2>
                     <p class="">
                         We partner with entrepreneurs and businesses to understand their unique  needs, align them with their goals, and set a clear path to execution and results. 
-    
                     </p>
                     <p class="">
                         Our consulting services come with personalised and hands-on support, and our team is committed to excellence, intergrity and collaboration.Let's help you thrive in the dynamic and unpredictable African market.
                     </p>
                     <div>
-                     
                         <a href="#" class="read-more">Contact Us <span>→</span></a>
                     </div>
                 </div>
@@ -179,7 +157,6 @@
 
 
         <div class="global_reach">
-
             <div class="row justify-content-center text-center stats me-auto ms-auto mt-5">
                 <div class="col-6 col-md-3 stat-box">
                     <div class="number" id="countries"></div>
