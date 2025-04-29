@@ -1525,3 +1525,119 @@ body, h3{
   font-size: 1rem;
   margin: 0;
 }
+
+
+/* SERVICES */
+.hero-section.about{
+  background: url('../images/bg-about.png') no-repeat center center/cover;
+
+}
+
+.about .hero-overlay {
+  background: rgba(255, 255, 255, 0.8);
+  position: absolute;
+  inset: 0;
+}
+
+.about .hero-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.about .left-content{
+ margin-top: 70px;
+ 
+}
+
+.about .left-content h2{
+  color: #0D4036;
+  font-size: 80px;
+  line-height: 70px;
+  font-weight: 900;
+  margin-bottom: 20px;
+}
+.about .left-content .read-more{
+  background-color: #0D4036;
+ color: white;
+ font-size: 15px;
+ padding: 8px 35px;
+ font-weight: 500;
+}
+
+.about .right-content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+}
+
+.about .right-content .content{
+  padding: 5rem 2rem;
+}
+.right-content .content .icon-box{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.icon-box img{
+  width: 30px;
+  height: 30px;
+}
+.icon-box h4{
+  font-weight: bold;
+  padding: 0px 50px;
+  font-size: 20px;
+  text-align: center;
+  margin-top: 6px;
+}
+
+.right-content .content.bg-color1{
+  background-color: #A3C56D;
+  border-top-left-radius: 50px;
+}
+.right-content .content.bg-color2{
+  background-color: #2D9378;
+}
+.right-content .content.bg-color3{
+  background-color: #002523;
+}
+.right-content .content.bg-color4{
+  background-color: #00514C;
+  border-bottom-right-radius: 50px;
+
+}
+
+
+/* Servies */
+.services .services-content{
+  color: #0D4036;
+  padding: 30px;
+  
+}
+
+.services .icon-box h4{
+  padding: 0px 0px;
+  margin: 20px 0px;
+
+}
+.services .icon-box p{
+  font-size: 17px;
+  font-weight: 200;
+  color: #ffffff00;
+
+}
+
+
+.services .services-content.bg-color1{
+  background: #2D9378;
+  color: #fff;
+
+}
+.services .services-content.bg-color2{
+  background: #D0EEE9;
+}
+.services .services-content.bg-color3{
+  background: #fff;
+}
+.services .services-content.bg-color4{
+  background: #2D9378;
+}
