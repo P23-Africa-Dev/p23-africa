@@ -3,11 +3,10 @@
 
 
 @section('content')
-    <section class="hero-section about">
+    <section class="services-hero about">
         <div class="hero-overlay"></div>
         <div class="container hero-content">
-            <div class="row">
-                <div class="col-md-4">
+            <div class="hero" >
                     <div class="left-content">
                         <h2>Our Services</h2>
             
@@ -16,8 +15,6 @@
                     </div>
 
                   
-                </div>
-                <div class="col-md-8">
                   <div class="right-content">
                      <div class="content bg-color1">
                         <div class="icon-box" >
@@ -45,7 +42,6 @@
                      </div>
                    
                   </div>
-                </div>
             </div>
         </div>
     </section>
@@ -53,8 +49,12 @@
 
     <section class="services">
         <div class="">
+      
              <div class="service-top-content">
                 <div class="container">
+                    <div class="top-image">
+                        <img src="{{ asset('images/service-group.png') }}" alt="">
+                    </div>
                     <div class="row g-0">
                         <div class="col-md-4">
                             <div class="services-content bg-color1 roundedtop ">
@@ -74,7 +74,7 @@
                                     <img src="{{ asset('images/target-03.png') }}" alt="">
                                     <h4 class="text-left">Business Strategy</h4>
         
-                                    <p>We help you build a clear plan for growth and success. Our team works closely with you to understand your goals, challenges, and the market you’re in. We create tailored strategies that show you the best steps to take, whether you’re starting a new business, growing an existing one, or expanding into new markets. With expert advice, market insights, and practical solutions, we give you the tools to make confident decisions and achieve lasting success.</p>
+                                    <p>We help you successfully enter and grow in African markets. Our team provides expert guidance on local regulations, business culture, and market opportunities across the continent. We develop tailored entry strategies, connect you with trusted local partners, and support you through every step—from market research to launch. Whether you’re expanding into one country or across multiple regions, we make your move into Africa smooth, strategic, and successful.</p>
                                 </div>
                              </div>
                           
@@ -83,10 +83,10 @@
                         <div class="col-md-4">
                             <div class="services-content bg-color3 roundedbottom ">
                                 <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
-                                    <img src="{{ asset('images/strategy.png') }}" alt="">
+                                    <img src="{{ asset('images/share-knowledge.png') }}" alt="">
                                     <h4 class="text-left">Business Strategy</h4>
         
-                                    <p>We help you build a clear plan for growth and success. Our team works closely with you to understand your goals, challenges, and the market you’re in. We create tailored strategies that show you the best steps to take, whether you’re starting a new business, growing an existing one, or expanding into new markets. With expert advice, market insights, and practical solutions, we give you the tools to make confident decisions and achieve lasting success.</p>
+                                    <p>We help you make smarter business decisions with reliable research and insights. Our team gathers and analyzes information about markets, industries, customers, and competitors, giving you a clear understanding of the opportunities and challenges ahead. Whether you’re entering a new market, launching a product, or planning for growth, we provide the data and analysis you need to build strong, informed strategies.</p>
                                 </div>
                              </div>
                           
@@ -128,7 +128,7 @@
                         <div class="col-md-4">
                             <div class="services-content bg-color6 ">
                                 <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
-                                    <img src="{{ asset('images/share-knowledge.png') }}" alt="">
+                                    <img src="{{ asset('images/teaching6.png') }}" alt="">
                                     <h4 class="text-left">Business Strategy</h4>
         
                                     <p>We help you build a clear plan for growth and success. Our team works closely with you to understand your goals, challenges, and the market you’re in. We create tailored strategies that show you the best steps to take, whether you’re starting a new business, growing an existing one, or expanding into new markets. With expert advice, market insights, and practical solutions, we give you the tools to make confident decisions and achieve lasting success.</p>

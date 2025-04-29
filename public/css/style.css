@@ -1501,8 +1501,11 @@ h3 {
 }
 
 /* SERVICES */
-.hero-section.about {
+.services-hero {
     background: url("../images/bg-about.png") no-repeat center center/cover;
+    padding-top: 6rem;
+    height: 90vh;
+    
 }
 
 .about .hero-overlay {
@@ -1512,11 +1515,19 @@ h3 {
 }
 
 .about .hero-content {
-    max-width: 900px;
+    max-width: 1200px;
     margin: 0 auto;
 }
+
+.about .hero-content .hero{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
+}
+
 .about .left-content {
     margin-top: 70px;
+    grid-column: 1/2;
 }
 
 .about .left-content h2 {
@@ -1530,17 +1541,20 @@ h3 {
     background-color: #0d4036;
     color: white;
     font-size: 15px;
-    padding: 8px 35px;
+    padding: 8px 50px;
     font-weight: 500;
+    border: 2px solid #fff;
 }
 
 .about .right-content {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    grid-column: 2/4;
+    position: relative;
 }
 
 .about .right-content .content {
-    padding: 5rem 2rem;
+    padding: 6rem 2rem;
 }
 .right-content .content .icon-box {
     display: flex;
@@ -1554,7 +1568,7 @@ h3 {
 }
 .icon-box h4 {
     font-weight: bold;
-    padding: 0px 50px;
+    padding: 0px 80px;
     font-size: 20px;
     text-align: center;
     margin-top: 6px;
@@ -1575,11 +1589,23 @@ h3 {
     border-bottom-right-radius: 50px;
 }
 
+.about .right-content .icon-box{
+  color: #fff;
+}
+
 /* Servies */
+.services{
+  /* padding-top: 7rem; */
+}
+
 .services .services-content {
     padding: 30px;
 }
-
+.service-content-container{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: min-content;
+}
 .services .icon-box h4 {
     padding: 0px 0px;
     margin: 20px 0px;
@@ -1598,8 +1624,11 @@ h3 {
 }
 .services .services-content.bg-color3 {
     background: #fff;
-}
 
+}
+.services .services-content.bg-color3 p{
+  padding-bottom: 26px;
+}
 .bg-color1 .icon-box{
   color: #fff;
 
@@ -1622,6 +1651,13 @@ h3 {
   z-index: 10;
   bottom: -140px;
 
+}
+
+.service-top-content .top-image{
+  z-index: -5;
+  position : absolute;
+  top: -100px;
+  left: 90px;
 }
 
 .service-middle-content{
