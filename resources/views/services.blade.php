@@ -51,7 +51,7 @@
         <div class="">
       
              <div class="service-top-content">
-                <div class="container">
+                <div class="container position-relative">
                     <div class="top-image">
                         <img src="{{ asset('images/service-group.png') }}" alt="">
                     </div>
