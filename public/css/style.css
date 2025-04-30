@@ -1168,6 +1168,10 @@ h3 {
     margin-top: -12rem;
     /* top: -10rem; */
 }
+.contact-text p,
+.contact-text h2 {
+    text-align: left;
+}
 .contact-text h2 {
     font-size: 45px;
     font-weight: 800;
@@ -1183,9 +1187,16 @@ h3 {
     letter-spacing: 2px;
 }
 
-.contact-text p strong {
+.contact-text p span {
     font-weight: 700;
     font-family: "GT Walsheim Con";
+}
+
+.contact-text p {
+    font-weight: 400;
+}
+.contact-text p span {
+    font-weight: 700;
 }
 
 .contact-image {
@@ -1390,6 +1401,31 @@ h3 {
 
 .contact-btn i {
     margin-left: 10px;
+}
+
+.hero-content-block {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.left-block {
+    grid-column: 1/3;
+}
+.right-block {
+    grid-column: 3/4;
+}
+
+@media screen and (max-width: 768px) {
+    .hero-content-block {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .left-block {
+        grid-column: initial;
+    }
+    .right-block {
+        grid-column: initial;
+    }
 }
 
 /* Line from 55% to button */
@@ -2049,16 +2085,31 @@ h3 {
         font-weight: 400;
     }
 
+    /* -------------------- CONTACT  */
+    .contact-section {
+        border-bottom-right-radius: 20px;
+    }
+
+    #sec2 .contact-text {
+        max-width: 350px;
+        margin: 0 auto;
+    }
+    .contact-text h2 {
+        color: #20b486;
+    }
+    .contact-text p {
+        font-weight: 700;
+    }
+    .contact-text p span {
+        font-weight: 400;
+    }
+
     .contact-image {
         display: none;
     }
 
     .contact-info {
         margin-top: 2rem;
-    }
-
-    .contact-section {
-        border-bottom-right-radius: 20px;
     }
 }
 
