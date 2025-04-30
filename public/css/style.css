@@ -1347,6 +1347,7 @@ h3 {
     padding: 50px 30px;
     margin-bottom: 20px;
     max-width: 600px;
+    text-align: left;
 }
 
 .main-box h6 {
@@ -1372,7 +1373,7 @@ h3 {
 }
 
 .info-tag {
-    border: 5px solid #62e7cc;
+    border: 5px solid #19867D;
     padding: 30px 20px;
     display: inline-block;
     font-weight: 600;
@@ -2023,9 +2024,55 @@ h3 {
 
     .left-block {
         grid-column: initial;
+        order: 2;
     }
     .right-block {
         grid-column: initial;
+        order: 1;
+
+    }
+
+    .info-tag {
+        border: 5px solid #62e7cc;
+        padding: 10px 20px;
+        display: inline-block;
+
+        top: 0rem;
+        left: 0rem;
+        margin-bottom: 0px;
+    }
+
+    .main-box {
+        padding: 25px 10px;
+          margin-bottom: 0px;
+          margin-top: 20px;
+    }
+    .main-box h1 {
+        font-size: 26px;
+    }
+
+    .descriptions {
+        max-width: 600px;
+        width: 100%;
+        border-right: 5px solid #d4f437;
+        padding-top: 20px;
+        text-align: left;
+        padding-left: 20px;
+        margin-bottom: 0px;
+    }
+
+    .left-block .c-btn{
+        border-right: 5px solid #d4f437;
+
+    }
+
+    .contact-btn {
+        display: inline-flex;
+        align-items: end;
+
+        z-index: 2;
+        left: 82px;
+        top: 0px;
     }
 
     /* SECODND SECTION */

@@ -13,28 +13,30 @@
 
                     <!-- Highlighted Box -->
                     {{-- <div class="main-box"> --}}
-                    <div class="">
+                    <div class="main-box">
                         <h6>KNOW ABOUT US</h6>
                         <h1><b>EMPOWERING BUSINESSES.<br>TRANSFORMING MARKETS</b></h1>
                     </div>
 
                     <!-- Subdescription -->
-                    <p class="">
+                    <p class="descriptions">
                     {{-- <p class="descriptions"> --}}
                         P23 Africa is a team of seasoned business consultants dedicated to helping SMEs and entrepreneurs thrive in
                         competitive markets across Africa and the UK.
                     </p>
 
                     <!-- Contact Button -->
-                    <a href="#contact" class="">
-                    {{-- <a href="#contact" class="contact-btn"> --}}
-                        Contact Us <i class="fas fa-arrow-right"></i>
-                    </a>
+                    <div class="c-btn">
+
+                        <a href="#contact" class="contact-btn">
+                            Contact Us <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
                 </div>
                 {{-- <div class="right-block text-left" > --}}
                 <div class=" text-left" >
                     <!-- Secondary Label -->
-                    <div class="">
+                    <div class="info-tag">
                         EXPANSION, BRAND, SALES
                     </div>
                 </div>
