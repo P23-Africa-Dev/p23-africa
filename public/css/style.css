@@ -77,9 +77,9 @@ h3 {
     font-family: "GT Walsheim Con";
     margin: 0px 20px;
 }
-.navbar .navbar-toggler{
-  color: #fff;
-  border: 1px solid #fff;
+.navbar .navbar-toggler {
+    color: #fff;
+    border: 1px solid #fff;
 }
 /* .navbar .collapse span {
   font-size: 23px;
@@ -123,9 +123,9 @@ h3 {
     font-size: 16px;
     color: #000;
 }
-.bg-scrolling .navbar .navbar-toggler{
-  color: #000000;
-  border: 1px solid #000000;
+.bg-scrolling .navbar .navbar-toggler {
+    color: #000000;
+    border: 1px solid #000000;
 }
 .bg-scrolling .navbar .collapse #btn {
     border: 2px #000 solid;
@@ -147,8 +147,8 @@ h3 {
     margin: auto 0px;
     /* font-family: 'Montserrat'; */
 }
-.hero-text #dot{
-  width: 74px;
+.hero-text #dot {
+    width: 74px;
 }
 .hero-text h1 {
     font-size: 65px;
@@ -198,39 +198,39 @@ h3 {
         justify-content: center;
         padding: 7rem 0px;
     }
-  #header {
-      padding: 10px 20px;
-      background-color: transparent;
-  }
-  .hero-text {
-      max-width: 100%;
-      margin: auto 0px;
-      /* font-family: 'Montserrat'; */
-  }
-  .hero-text h1 {
-      font-size: 40px;
-      margin: 0;
-      font-weight: 700;
-  }
-  .hero-text p {
-      margin-top: 20px;
-      max-width: 100%;
-      font-size: 20px;
-  }
-  .hero-text button {
-      margin-top: 10px;
-      margin-bottom: 40px;
-      padding: 12px 80px;
-      border-radius: 30px;
-      background-color: transparent;
-      color: #fff;
-      border: 1px solid #fff;
-      font-size: 1rem;
-      cursor: pointer;
-  }
-  .hero-text #dot{
-    width: 56px;
-  }
+    #header {
+        padding: 10px 20px;
+        background-color: transparent;
+    }
+    .hero-text {
+        max-width: 100%;
+        margin: auto 0px;
+        /* font-family: 'Montserrat'; */
+    }
+    .hero-text h1 {
+        font-size: 40px;
+        margin: 0;
+        font-weight: 700;
+    }
+    .hero-text p {
+        margin-top: 20px;
+        max-width: 100%;
+        font-size: 20px;
+    }
+    .hero-text button {
+        margin-top: 10px;
+        margin-bottom: 40px;
+        padding: 12px 80px;
+        border-radius: 30px;
+        background-color: transparent;
+        color: #fff;
+        border: 1px solid #fff;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+    .hero-text #dot {
+        width: 56px;
+    }
 }
 
 .column {
@@ -338,15 +338,15 @@ h3 {
     font-weight: 600;
 }
 @media screen and (max-width: 580px) {
-  #highlight h3 {
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 20px;
-    letter-spacing: 1px;
-  }
-  #highlight {
-    padding: 5rem 0px;
-}
+    #highlight h3 {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 20px;
+        letter-spacing: 1px;
+    }
+    #highlight {
+        padding: 5rem 0px;
+    }
 }
 
 /* WHO WE ARE */
@@ -369,8 +369,8 @@ h3 {
     left: 70px;
     border-bottom-left-radius: 130px;
 }
-.who-we-are .flex-column{
-  padding: 0px 150px 0px 10px;
+.who-we-are .flex-column {
+    padding: 0px 150px 0px 10px;
 }
 .who-we-are h2 {
     font-size: 48px;
@@ -410,43 +410,40 @@ h3 {
     background-color: #0d2f25;
 }
 @media screen and (max-width: 580px) {
-  .bg-overlay {
-      background-size: cover;
-      width: 50%;
-      height: 100%;
-      z-index: 1;
-  }
-  .who-we-are img {
-      height: 560px;
-      width: 454px;
-      object-fit: cover;
-      display: flex;
-      left: 40px;
-  }
-  .who-we-are .flex-column{
-    padding: 30px 50px;
-  }
-  .who-we-are h2 {
-      font-size: 36px;
-  }
-  .who-we-are p {
-      line-height: 24px;
-      font-size: 20px;
-  }
-  .learn-more span {
-      font-size: 20px;
-      color: #101e1a;
-  }
-  .learn-more .arrow {
-    padding: 5.4px;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
+    .bg-overlay {
+        background-size: cover;
+        width: 50%;
+        height: 100%;
+        z-index: 1;
+    }
+    .who-we-are img {
+        height: 560px;
+        width: 454px;
+        object-fit: cover;
+        display: flex;
+        left: 40px;
+    }
+    .who-we-are .flex-column {
+        padding: 30px 50px;
+    }
+    .who-we-are h2 {
+        font-size: 36px;
+    }
+    .who-we-are p {
+        line-height: 24px;
+        font-size: 20px;
+    }
+    .learn-more span {
+        font-size: 20px;
+        color: #101e1a;
+    }
+    .learn-more .arrow {
+        padding: 5.4px;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+    }
 }
-}
-
-
-
 
 /* HOW WE HELP OUR CLIENTS */
 #how_we_help {
@@ -588,33 +585,28 @@ h3 {
     color: #223d38;
 }
 @media screen and (max-width: 580px) {
-  .global_reach h2 {
-      font-size: 24px;
-      font-weight: 600;
-      color: #2e4f48;
-  }
-  .global_reach h2 span {
-      font-weight: 300;
-      color: #4b6f68;
-  }
-  .number {
-      font-size: 40px;
-      color: #0f2e29;
-      height: 3.5rem;
-  }
-  .label {
-      font-size: 14px;
-      letter-spacing: 0.10rem;
-      text-transform: uppercase;
-      margin-top: 8px;
-      color: #223d38;
-  }
+    .global_reach h2 {
+        font-size: 24px;
+        font-weight: 600;
+        color: #2e4f48;
+    }
+    .global_reach h2 span {
+        font-weight: 300;
+        color: #4b6f68;
+    }
+    .number {
+        font-size: 40px;
+        color: #0f2e29;
+        height: 3.5rem;
+    }
+    .label {
+        font-size: 14px;
+        letter-spacing: 0.1rem;
+        text-transform: uppercase;
+        margin-top: 8px;
+        color: #223d38;
+    }
 }
-
-
-
-
-
 
 /* TESTIMONIAL */
 /* .testimonial-section {
@@ -818,47 +810,45 @@ h3 {
     color: #fff;
 }
 @media screen and (max-width: 580px) {
-  .insight-section h2 {
-      font-size: 24px;
-      font-weight: 700;
-      margin-bottom: 30px;
-  }
-  .insight-section {
-      padding: 0px 20px;
-      font-family: "GT Walsheim Con";
-      background-color: #f9f9f9;
-      display: flex;
-      justify-content: center;
-      margin-bottom: 4rem;
-  }
-  .insight-text {
-      max-width: 600px;
-  }
+    .insight-section h2 {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 30px;
+    }
+    .insight-section {
+        padding: 0px 20px;
+        font-family: "GT Walsheim Con";
+        background-color: #f9f9f9;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 4rem;
+    }
+    .insight-text {
+        max-width: 600px;
+    }
 
-  /* .date {
+    /* .date {
       font-size: 14px;
       color: #003f3c;
       margin-bottom: 10px;
   } */
 
-  .insight-text h3 {
-      font-size: 32px;
-      font-weight: 800;
-  }
+    .insight-text h3 {
+        font-size: 32px;
+        font-weight: 800;
+    }
 
-  .description {
-      font-size: 20px;
-  }
+    .description {
+        font-size: 20px;
+    }
 
-  .read-more {
-      padding: 6px 18px;
-  }
-  .read-more span {
-      margin-left: 10px;
-  }
+    .read-more {
+        padding: 6px 18px;
+    }
+    .read-more span {
+        margin-left: 10px;
+    }
 }
-
-
 
 /* INSIGHT CAROUSEL */
 .carousel-container {
@@ -952,10 +942,10 @@ h3 {
     font-family: "GT Walsheim Bold";
     margin-bottom: 2rem;
 }
-.stats-section .container{
-  display: block;
-  justify-content: center;
-  width: 50%;
+.stats-section .container {
+    display: block;
+    justify-content: center;
+    width: 50%;
 }
 .stats-container {
     position: relative;
@@ -1043,53 +1033,53 @@ h3 {
     margin: 0;
 }
 @media screen and (max-width: 580px) {
-  .stats-section {
-      padding: 50px 0px 50px 0px;
-      margin-bottom: 2rem;
-  }
-  .stats-section .container{
-    display: block;
-    justify-content: center;
-    width: 100%;
-  }
-  .stats-container::before {
-      display: none;
-  }
-  .stats-section h1 {
-      font-size: 117px;
-      font-weight: 800;
-      margin: 0;
-      position: relative;
-  }
+    .stats-section {
+        padding: 50px 0px 50px 0px;
+        margin-bottom: 2rem;
+    }
+    .stats-section .container {
+        display: block;
+        justify-content: center;
+        width: 100%;
+    }
+    .stats-container::before {
+        display: none;
+    }
+    .stats-section h1 {
+        font-size: 117px;
+        font-weight: 800;
+        margin: 0;
+        position: relative;
+    }
 
-  .line-down {
-      position: absolute;
-      width: 0px;
-      height: 0px;
-    display: none;
-  }
+    .line-down {
+        position: absolute;
+        width: 0px;
+        height: 0px;
+        display: none;
+    }
 
-  .stats-section p {
-      font-size: 20px;
-      margin-top: 10px;
-      font-family: "GT Walsheim Pro";
-  }
+    .stats-section p {
+        font-size: 20px;
+        margin-top: 10px;
+        font-family: "GT Walsheim Pro";
+    }
 
-  .sub-stats {
-      padding: 20px 0px;
-      margin-top: 80px;
-  }
-  .sub-stats::before {
-      display: none;
-  }
-  .sub-stats h4 {
-      font-weight: bold;
-      font-size: 20px;
-  }
-  .sub-stats p {
-      font-size: 12px;
-      margin: 0;
-  }
+    .sub-stats {
+        padding: 20px 0px;
+        margin-top: 80px;
+    }
+    .sub-stats::before {
+        display: none;
+    }
+    .sub-stats h4 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+    .sub-stats p {
+        font-size: 12px;
+        margin: 0;
+    }
 }
 
 /* FOOTER */
@@ -1713,23 +1703,23 @@ h3 {
     margin: 0;
 }
 
-/* SERVICES */
+/* CONTACT PAGE */
 .services-hero {
-    background: url("../images/bg-about.png") no-repeat center center/cover;
+    background: url("../images/servces-bg.png") no-repeat center center/cover;
     padding-top: 6rem;
     position: relative;
     font-family: "GT Walsheim Pro";
-
+    width: 100%;
 }
 
 .about .hero-overlay {
-    background: rgba(255, 255, 255, 0.8);
+    background: transparent;
     position: absolute;
     inset: 0;
 }
 
-.services-hero .hero{
-  padding: 0px;
+.services-hero .hero {
+    padding: 0px;
 }
 
 .about .hero-content {
@@ -1737,16 +1727,16 @@ h3 {
     margin: 0 auto;
 }
 
-.about .hero-content .hero{
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 50px;
+.about .hero-content .hero {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
 }
 
 .about .left-content {
     padding-top: 80px;
     grid-column: 1/2;
-    
+    text-align: left;
 }
 
 .about .left-content h2 {
@@ -1791,7 +1781,7 @@ h3 {
     padding: 0px 80px;
     font-size: 20px;
     text-align: center;
-    margin-top: 6px;
+    margin-top: 12px;
 }
 
 .right-content .content.bg-color1 {
@@ -1809,26 +1799,28 @@ h3 {
     border-bottom-right-radius: 50px;
 }
 
-.about .right-content .icon-box{
-  color: #fff;
+.about .right-content .icon-box {
+    color: #fff;
 }
-.icon-box img{
-  width: 50px;
-  height: 50px;
+.icon-box img {
+    width: 50px;
+    height: 50px;
 }
 
-/* Servies */
-.services{
-  font-family: "GT Walsheim Pro";
-
+/* SECOND SECTION */
+.services {
+    font-family: "GT Walsheim Pro";
 }
+
+.service-content-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
 .services .services-content {
     padding: 30px;
-}
-.service-content-container{
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: min-content;
+
+    box-shadow: -8px 29px 15px 6px rgba(0, 0, 0, 0.1);
 }
 .services .icon-box h4 {
     padding: 0px 0px;
@@ -1848,21 +1840,17 @@ h3 {
 }
 .services .services-content.bg-color3 {
     background: #fff;
-
 }
-.services .services-content.bg-color3 p{
-  padding-bottom: 26px;
+.services .services-content.bg-color3 p {
+    padding-bottom: 26px;
 }
-.bg-color1 .icon-box{
-  color: #fff;
-
+.bg-color1 .icon-box {
+    color: #fff;
 }
 .bg-color2 .icon-box,
-.bg-color3 .icon-box{
-  color: #0D4036
-
+.bg-color3 .icon-box {
+    color: #0d4036;
 }
-
 
 .services-content.roundedtop {
     border-top-left-radius: 50px;
@@ -1870,82 +1858,208 @@ h3 {
 .services-content.roundedbottom {
     border-bottom-right-radius: 50px;
 }
-.service-top-content{
-  position: relative;
-  z-index: 10;
-  bottom: -140px;
-
+.service-top-content {
+    position: relative;
+    z-index: 10;
+    bottom: -140px;
 }
 
-.service-top-content .top-image{
-  z-index: -5;
-  position : absolute;
-  top: -100px;
-  left: -100px;
+.service-top-content .top-image {
+    z-index: -5;
+    position: absolute;
+    top: -100px;
+    left: -100px;
 }
 
-.service-middle-content{
-  background-color: #094B5D;
-  position: relative;
-  z-index: -5;
-  padding: 9rem;
+.service-middle-content {
+    background-color: #094b5d;
+    position: relative;
+    z-index: -5;
+    padding: 9rem;
 }
 
-.service-bottom-content{
-  position: relative;
-  z-index: 10;
-  top: -90px;
-
+.service-bottom-content {
+    position: relative;
+    z-index: 10;
+    top: -90px;
 }
 
 .service-bottom-content .bg-color4 {
- background-color: #D0EEE9;
- color: #0f2e29;
- border-top-left-radius: 50px;
-
+    background-color: #d0eee9;
+    color: #0f2e29;
+    border-top-left-radius: 50px;
 }
 .service-bottom-content .bg-color5 {
- background-color: #fff;
- color: #0f2e29;
-
+    background-color: #fff;
+    color: #0f2e29;
 }
 .service-bottom-content .bg-color6 {
- background-color: #2D9378;
- color: #fff;
- border-bottom-right-radius: 50px;
-
-
+    background-color: #2d9378;
+    color: #fff;
+    border-bottom-right-radius: 50px;
 }
-
-
 
 /* ======== RESEARCH  */
-.research .research-content{
-  color: #0D4036;
-  max-width: 500px;
-  gap: 30px;
-  font-family: "GT Walsheim Pro";
-
-
+.research .research-content {
+    color: #0d4036;
+    max-width: 500px;
+    gap: 30px;
+    font-family: "GT Walsheim Pro";
 }
-.research .research-content h2{
-  font-size: 60px;
-  font-weight: 900;
-  line-height:50px;
-  margin-top: 20px;
-
+.research .research-content h2 {
+    font-size: 60px;
+    font-weight: 900;
+    line-height: 50px;
+    margin-top: 20px;
 }
 
-.research .research-content p{
-  font-size: 20px;
+.research .research-content p {
+    font-size: 20px;
 }
 
-.research .research-content .read-more{
-  padding: 10px 70px;
-  background-color: #0D4036;
-  color: #fff;
+.research .research-content .read-more {
+    padding: 10px 70px;
+    background-color: #0d4036;
+    color: #fff;
 }
 
-.research .global_reach{
-  border: none;
+.research .global_reach {
+    border: none;
 }
+
+/* ----  SERIVECE MEDIA SCREENS------------- */
+
+@media screen and (max-width: 1200px) {
+    .contact-image {
+        position: static;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .contact-image img {
+        width: 100%;
+        height: 300px;
+        position: inherit;
+        object-fit: cover;
+        border-radius: 100px 100px 0 0;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        border: 3px solid #dfe1e5;
+    }
+}
+@media screen and (max-width: 1200px) {
+    .about .hero-content {
+        max-width: 1000px;
+    }
+
+    .about .right-content .content {
+        padding: 1rem;
+    }
+    .about .right-content {
+        grid-column: initial;
+    }
+
+    /* SECOND SECTION */
+    .services {
+        padding: 5rem 5px;
+    }
+
+    .services .services-content {
+        box-shadow: -8px 10px 15px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .service-top-content {
+        position: static;
+        z-index: initial;
+        bottom: 0px;
+    }
+
+    .service-top-content .top-image {
+        display: none;
+    }
+
+    .service-middle-content {
+        display: none;
+    }
+
+    .service-bottom-content {
+        position: static;
+        z-index: initial;
+        top: 0px;
+        margin-top: 20px;
+    }
+}
+@media screen and (max-width: 800px) {
+    .about .hero-content .hero {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .about .right-content {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-column: initial;
+        bottom: 0px;
+        position: static;
+    }
+
+    .about .right-content .content {
+        padding: 3rem 1rem;
+    }
+    .about .left-content {
+        text-align: left;
+    }
+
+    .about .left-content h2 {
+        font-size: 60px;
+        margin-bottom: 5px;
+        max-width: 200px;
+    }
+
+    .icon-box h4 {
+        font-weight: 500;
+        padding: 0px 5px;
+    }
+
+    .icon-box img {
+        width: 30px;
+        height: 30px;
+    }
+
+    /* THIRD SECTION */
+
+    .research .research-content {
+        /* max-width: 500px; */
+        gap: 10px;
+        padding: 0px 20px;
+    }
+    .research .research-content h2 {
+        font-size: 25px;
+        font-weight: 900;
+        line-height: initial;
+    }
+
+    .research .global_reach {
+        border-top: 2px dashed #ccc;
+        border-bottom: 2px dashed #ccc;
+        padding: 20px;
+        margin: 30px 0px;
+    }
+
+    .research .research-content h2 span {
+        font-weight: 400;
+    }
+
+    .contact-image {
+        display: none;
+    }
+
+    .contact-info {
+        margin-top: 2rem;
+    }
+
+    .contact-section {
+        border-bottom-right-radius: 20px;
+    }
+}
+
+/* ==========================================  SERIVCES PAGE ENDS */

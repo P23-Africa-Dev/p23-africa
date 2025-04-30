@@ -49,8 +49,8 @@
                     <div class="top-image">
                         <img src="{{ asset('images/service-group.png') }}" alt="">
                     </div>
-                    <div class="row g-0">
-                        <div class="col-md-4">
+                    <div class="row g-5 g-sm-4 g-md-3 g-lg-4 g-xl-0">
+                        <div class="  col-12  col-lg-4">
                             <div class="services-content bg-color1 roundedtop">
                                 <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
                                     <img src="{{ asset('images/strategy.png') }}" alt="">
@@ -61,7 +61,7 @@
                              </div>
                         </div>
                     
-                        <div class="col-md-4">
+                        <div class=" col-12 col-lg-4">
                             <div class="services-content bg-color2 ">
                                 <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
                                     <img src="{{ asset('images/target-03.png') }}" alt="">
@@ -72,7 +72,7 @@
                              </div>
                         </div>
                     
-                        <div class="col-md-4">
+                        <div class=" col-12 col-lg-4">
                             <div class="services-content bg-color3 roundedbottom ">
                                 <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
                                     <img src="{{ asset('images/share-knowledge.png') }}" alt="">
@@ -88,8 +88,8 @@
              <div class="service-middle-content"></div>
              <div class="service-bottom-content">
                  <div class="container">
-                    <div class="row g-0">
-                        <div class="col-md-4">
+                    <div class="row g-5 g-sm-4 g-md-3 g-lg-4 g-xl-0">
+                        <div class=" col-md-4">
                             <div class="services-content bg-color4 ">
                                 <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
                                     <img src="{{ asset('images/sale-tag-4.png') }}" alt="">
@@ -100,7 +100,7 @@
                              </div>
                         </div>
                     
-                        <div class="col-md-4">
+                        <div class="  col-md-4">
                             <div class="services-content bg-color5 ">
                                 <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
                                     <img src="{{ asset('images/marketing.png') }}" alt="">
@@ -111,7 +111,7 @@
                              </div>
                         </div>
                     
-                        <div class="col-md-4">
+                        <div class=" col-md-4">
                             <div class="services-content bg-color6 ">
                                 <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
                                     <img src="{{ asset('images/teaching6.png') }}" alt="">
@@ -127,12 +127,12 @@
         </div>
     </section>
 
- 
+
     <section class="research">
         <div class="container">
             <div class="row g-10">
                 <!-- Left Column -->
-                <div class="col-md-6">
+                <div class="col-12 col-md-6">
                     <div class="resarch-image">
                         <img src="{{ asset('images/research-image.png') }}" alt="People"
                         class="img-fluid">
@@ -140,8 +140,8 @@
                 </div>
     
                 <!-- Right Column -->
-                <div class="col-md-6 research-content d-flex flex-column justify-content-start " >
-                    <h2 class="">Global Reach. Local Approach</h2>
+                <div class="col-12 col-md-6 research-content d-flex flex-column justify-content-start " >
+                    <h2 class="">Global Reach. <span>Local Approach</span> </h2>
                     <p class="">
                         We partner with entrepreneurs and businesses to understand their unique  needs, align them with their goals, and set a clear path to execution and results. 
                     </p>
@@ -180,35 +180,30 @@
 
 
 
-    
-
-
-
-
-        <!-- Stats Section -->
-        <section class="container stats-about">
-            <div class="stats-section-about">
-                <div class="container me-auto ms-auto w-50">
-                    <div class="stats-container">
-                        <h1>55%</h1>
-                        <div class="line-down"></div>
+        
+    <section class="px-5  ">
+        <div class="stats-section">
+            <div class="container">
+                <div class="stats-container">
+                    <h1>63%</h1>
+                    <div class="line-down"></div>
+                </div>
+                <p class="mx-4">of consumers learn about brands or companies on social media</p>
+                <div class="row justify-content-center sub-stats text-center mt-5 mx-md-4 mx-2">
+                    <div class="col-3">
+                        <h4>73%</h4>
+                        <p>Start-ups</p>
                     </div>
-                    <p class="mx-4">of consumers learn about <br> brands or companies on <br> social media</p>
-                    <div class="row justify-content-center sub-stats text-center mt-2 mx-4">
-                        <div class="col-md-3">
-                            <h4>73%</h4>
-                            <p>Start-ups</p>
-                        </div>
-                        <div class="col-md-3">
-                            <h4>73%</h4>
-                            <p>MSMEs</p>
-                        </div>
-                        <div class="col-md-3">
-                            <h4>73%</h4>
-                            <p>Enterprises</p>
-                        </div>
+                    <div class="col-3">
+                        <h4>73%</h4>
+                        <p>MSMEs</p>
+                    </div>
+                    <div class="col-3">
+                        <h4>73%</h4>
+                        <p>Enterprises</p>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 @endsection
