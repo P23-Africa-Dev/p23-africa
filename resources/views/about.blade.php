@@ -65,7 +65,7 @@
         </div>
     </section>
 
-    {{--  <section class="growth-section">
+    <section class="growth-section">
         <div class="container">
             <h5>Our Three pillars to ensure success</h5>
             <h2>Empowering your growth <br> through;</h2>
@@ -73,7 +73,7 @@
     </section>
 
     
-    <div class="container growth-container">
+  <div class="container growth-container">
         <div class="row justify-content-center g-4">
             <div class="col-md-4">
                 <div class="growth-card text-center">
@@ -106,7 +106,7 @@
     </div>
 
 
-    <section class="commitment">
+  <section class="commitment">
         <div class="container py-5">
             <div class="row g-0 align-items-stretch">
 
@@ -134,7 +134,7 @@
     </section>
 
 
-        <section class="container stats-about">
+         {{--     <section class="container stats-about">
             <div class="stats-section-about">
                 <div class="container me-auto ms-auto w-50">
                     <div class="stats-container">
