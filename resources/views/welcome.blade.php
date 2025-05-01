@@ -11,7 +11,7 @@
                                 id="dot" alt=""><span> Africa</span></h1>
                         <p>We create tailored solutions for homegrown and global businesses at every stage of growth.
                         </p>
-                        <a href="{{ url('contact') }}">Contact Us →</a>
+                        <a href="{{ url('contact') }}" class="">Contact Us →</a>
                     </div>
                     <div class="col-md-5 animated-images mt-5 mt-md-0">
                         <div class="fade-overlay fade-top"></div>
@@ -41,7 +41,7 @@
         </div>
     </header>
 
-    <div style="background-color: #003c32;" class="py-3">
+    <div style="background-color: #003c32;" id="space">
 
     </div>
     <section id="highlight" class="position-relative overflow-hidden d-flex align-items-center justify-content-center">
@@ -80,7 +80,7 @@
                     Africa to thrive in competitive markets.
                 </p>
                 <div>
-                    <a href="#" class="btn btn-link text-decoration-none learn-more">
+                    <a href="#" class="text-decoration-none learn-more">
                         <span>Learn more</span>
                         <span class="arrow ms-2 d-inline-flex align-items-center justify-content-center">
                             ➔
@@ -140,12 +140,17 @@
                                 physical setups and compliance hassles in the region.</p>
                         </div>
                         <div>
-                            <a href="#" class="read-more-btn mt-3">
+                            <a href="{{ url('services') }}" class="read-more-btn mt-3">
                                 Read More <i class="bi bi-arrow-right"></i>
                             </a>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="mt-2">
+                <a href="{{ url('services') }}" class="read-more-btn-2 mt-3">
+                    Read More <i class="bi bi-arrow-right"></i>
+                </a>
             </div>
         </div>
 
@@ -207,7 +212,7 @@
 
     <section class="testimonial-section">
         <div class="container">
-            <h2>What our Client say about us</h2>
+            <h2>What Our Client Say About Us</h2>
         </div>
     </section>
 
@@ -217,32 +222,38 @@
                 <div class="testimonial">   
                     <div class="testimonial-card text-center">
                         <img src="{{ asset('images/testimonial1.jpg') }}" alt="Chioma Ike">
-                        <h5>Chioma Ike</h5>
-                        <p>We specialize in offering low-risk market entry services that eliminate the need for physical
-                            setups and compliance hassles in the region.</p>
+                        <p>
+                            Working with this team was a game-changer. Their insights and strategies helped us grow and navigate new markets with confidence.
+                        </p>
+                        <h5>Chioma Chuwku</h5>
+                        <h4>C.E.0</h4>
                     </div>
                 </div>
                 <div class="testimonial">
                     <div class="testimonial-card text-center">
                         <img src="{{ asset('images/testimonial2.jpg') }}" alt="Charles">
-                        <h5>Charles</h5>
-                        <p>We specialize in offering low-risk market entry services that eliminate the need for physical
-                            setups and compliance hassles in the region.</p>
+                        <p>
+                            Their expertise and tailored approach transformed our business operations and boosted our efficiency. Highly recommended.                        
+                        </p>
+                        <h5>John Blakey</h5>
+                        <h4>C.E.0</h4>
                     </div>
                 </div>
                 <div class="testimonial">
                     <div class="testimonial-card text-center">
                         <img src="{{ asset('images/testimonial3.jpg') }}" alt="Family Guy">
-                        <h5>Family Guy</h5>
-                        <p>We specialize in offering low-risk market entry services that eliminate the need for physical
-                            setups and compliance hassles in the region.</p>
+                        <p>
+                            A true partner in our success. They provided the guidance we needed to scale our business while overcoming challenges.
+                        </p>
+                        <h5>Emily Nguyen</h5>
+                        <h4>Managing Director</h4>  
                     </div>
                 </div>
             </div>
 
             <div class="slider-controls">
-                <span class="arrow left"><i>&#8592;</i></span>
-                <span class="arrow right"><i>&#8594;</i></span>
+                <span class="arrow left"><i><img src="{{ asset('images/left.png') }}" alt=""></i></span>
+                <span class="arrow right"><i><img src="{{ asset('images/right.png') }}" alt=""></i></span>
             </div>
         </div>
     </div>

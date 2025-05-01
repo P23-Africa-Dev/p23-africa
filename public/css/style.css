@@ -79,7 +79,7 @@ h3 {
 }
 .navbar .navbar-toggler {
     color: #fff;
-    border: 0px solid #fff;
+    border: 0;
 }
 /* .navbar .collapse span {
   font-size: 23px;
@@ -166,12 +166,14 @@ h3 {
     margin-top: 20px;
     max-width: 90%;
     font-size: 1.2rem;
+    font-family: "GT Walsheim Con";
+    margin-bottom: 2rem;
 }
 
 .hero-text a {
     margin-top: 30px;
-    padding: 12px 80px;
-    border-radius: 30px;
+    padding: 20px 90px;
+    border-radius: 10px;
     background-color: transparent;
     color: #fff;
     border: 1px solid #fff;
@@ -190,14 +192,18 @@ h3 {
     width: 100%;
 }
 @media screen and (max-width: 580px) {
+    .navbar #nav li a::after {
+        background: none;
+        transition: transform 0.3s ease;
+    }
     .animated-images {
-        grid-template-columns: repeat(2, 180px);
+        grid-template-columns: repeat(2, 200px);
         gap: 20px;
     }
     .hero {
         display: block;
         justify-content: center;
-        padding: 7rem 0px;
+        padding: 7rem 0px 5rem 0px;
     }
     #header {
         padding: 10px 20px;
@@ -320,9 +326,12 @@ h3 {
 }
 
 /* HIGHLIGHT */
+#space{
+    padding: 1rem 0px;
+}
 #highlight {
     text-align: center;
-    padding: 10rem 0px;
+    padding: 10rem 0px 10rem 0px;
     background-color: #003c32;
     /* background: linear-gradient(#003c32d2, #003c32cc), url('../images/map.png'); */
     color: #fff;
@@ -339,6 +348,9 @@ h3 {
     font-weight: 600;
 }
 @media screen and (max-width: 580px) {
+    #space{
+        padding: 0rem 0px;
+    }
     #highlight h3 {
         font-size: 16px;
         font-weight: 500;
@@ -346,7 +358,7 @@ h3 {
         letter-spacing: 1px;
     }
     #highlight {
-        padding: 5rem 0px;
+        padding: 2rem 0px 7rem 0px;
     }
 }
 
@@ -418,14 +430,14 @@ h3 {
         z-index: 1;
     }
     .who-we-are img {
-        height: 560px;
-        width: 454px;
+        height: 400px;
+        width: 80%;
         object-fit: cover;
         display: flex;
         left: 40px;
     }
     .who-we-are .flex-column {
-        padding: 30px 50px;
+        padding: 30px 20px;
     }
     .who-we-are h2 {
         font-size: 36px;
@@ -469,7 +481,7 @@ h3 {
     background-color: #054b5e;
     color: white;
     padding: 2rem;
-    border-radius: 12px;
+    border-radius: 0px;
     height: 100%;
 }
 #how_we_help #one {
@@ -477,8 +489,10 @@ h3 {
     background-color: #2d9378 !important;
 }
 #how_we_help #two {
+    border-bottom-right-radius: 20px;
     background-color: #d0eee9 !important;
     color: #0d4036 !important;
+    box-shadow: 2px 2px 6px #000;
 }
 #how_we_help #three {
     border-bottom-left-radius: 30px;
@@ -588,7 +602,14 @@ h3 {
     margin-top: 8px;
     color: #223d38;
 }
+.read-more-btn-2 {
+    display: none;
+}
 @media screen and (max-width: 580px) {
+    #how_we_help {
+        margin-top: 2rem;
+        margin-bottom: 6rem;
+    }
     .global_reach h2 {
         font-size: 24px;
         font-weight: 600;
@@ -598,6 +619,35 @@ h3 {
         font-weight: 300;
         color: #4b6f68;
     }
+    #how_we_help #three {
+        border-top-left-radius: 30px;
+        border-bottom-left-radius: 0px;
+    }
+    #how_we_help #four {
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 30px;
+        box-shadow: 2px 2px 6px #000;
+    }
+    .read-more-btn {
+        display: none;
+    }
+    .read-more-btn-2 {
+        background-color: #0D4036;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+    }
+    
+    /* .read-more-btn-2:hover {
+        background-color: #f0f0f0;
+    } */
     .number {
         font-size: 40px;
         color: #0f2e29;
@@ -605,10 +655,11 @@ h3 {
     }
     .label {
         font-size: 14px;
-        letter-spacing: 0.1rem;
+        letter-spacing: 0.0rem;
         text-transform: uppercase;
         margin-top: 8px;
         color: #223d38;
+        margin-bottom: 1rem;
     }
 }
 
@@ -665,8 +716,7 @@ h3 {
 .testimonial-section h2 {
     font-size: 64px;
     font-weight: 600;
-    font-family: "GT Walsheim Con";
-    letter-spacing: 5px;
+    font-family: "Montserrat";
 }
 
 .testimonial-container {
@@ -708,6 +758,9 @@ h3 {
     margin-top: 20px;
     font-size: 40px;
 }
+.testimonial-card h4{
+    font-weight: 275;
+}
 
 .testimonial-card p {
     font-size: 20px;
@@ -737,8 +790,40 @@ h3 {
         padding-bottom: 80px;
     }
     .testimonial-section h2 {
-        display: none;
+        font-size: 26px;
+        text-align: center;
     }
+    .testimonial-card{
+        box-shadow: 2px 2px 6px #000;
+    }
+    .testimonial-card:hover {
+        background: #fff;
+        color: #07483e;
+    }
+    .testimonial-card h5 {
+        font-family: "GT Walsheim Con" !important;
+        font-weight: 800;
+        margin-top: 20px;
+        font-size: 32px !important;
+    }
+    .testimonial-card h4{
+        font-weight: 275 !important;
+        font-size: 20px !important;
+    }
+    .testimonial-card p {
+        font-size: 16px !important;
+        /* color: #0D4036; */
+        font-weight: 300;
+        margin-top: 10px;
+        line-height: 24px;
+    }
+    .testimonial-card img {
+        width: 200px !important;
+        height: 200px !important;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
     .testimonial-container .testimonial-wrapper {
         display: flex;
         transition: transform 0.5s ease-in-out;
@@ -762,26 +847,25 @@ h3 {
       }
       .testimonial-container .slider-controls .arrow {
         cursor: pointer;
-        font-size: 24px;
-        color: #555;
+        /* font-size: 24px;
+        color: #555; */
         transition: color 0.3s;
         user-select: none;
-        background-color: #b6b6b6;
+        /* background-color: #b6b6b6;
         border: 0px solid #555;
         box-shadow: 2px 2px #000;
-        padding: 0px 10px;
+        padding: 0px 10px; */
       }
       /* .testimonial-container .slider-controls .arrow i{
         position: relative;
         align-items: center;
       } */
   
-      .testimonial-container .slider-controls .arrow:active {
+      /* .testimonial-container .slider-controls .arrow:active {
         background-color: #002523;
-        color: #fff;
+        color: #002523;
         border: 1px solid #fff;
-
-      }
+      } */
 }
 
 /* INSIGHT */

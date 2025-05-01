@@ -5,11 +5,12 @@
                 <a href="{{ route('homepage') }}" class="navbar-brand logo">
                     <img src="images/logo.png" alt="">
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                <div class="navbar-toggler" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="fa-solid fa-bars-staggered"></span>
-                </button>
+                    {{-- <span class="fa-solid fa-bars-staggered"></span> --}}
+                    <img src="{{ asset('images/hamburger.png') }}" alt="">
+                </div>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto ms-auto mb-2 mb-lg-0" id="nav">
                         <li class="nav-item">
