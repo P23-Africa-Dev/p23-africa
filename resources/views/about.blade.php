@@ -6,12 +6,13 @@
     <section class="hero-section">
         <div class="hero-overlay"></div>
         <div class="container hero-content">
-            <div class="row">
-                <div class="col-md-8">
+            <div class="hero-content-block" >
+                <div class="left-block" >
                     <!-- Visual Line -->
                     <div class="line-connector"></div>
 
                     <!-- Highlighted Box -->
+                    {{-- <div class="main-box"> --}}
                     <div class="main-box">
                         <h6>KNOW ABOUT US</h6>
                         <h1><b>EMPOWERING BUSINESSES.<br>TRANSFORMING MARKETS</b></h1>
@@ -19,16 +20,21 @@
 
                     <!-- Subdescription -->
                     <p class="descriptions">
+                    {{-- <p class="descriptions"> --}}
                         P23 Africa is a team of seasoned business consultants dedicated to helping SMEs and entrepreneurs thrive in
                         competitive markets across Africa and the UK.
                     </p>
 
                     <!-- Contact Button -->
-                    <a href="#contact" class="contact-btn">
-                        Contact Us <i class="fas fa-arrow-right"></i>
-                    </a>
+                    <div class="c-btn">
+
+                        <a href="#contact" class="contact-btn">
+                            Contact Us <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="col-md-4 text-left">
+                {{-- <div class="right-block text-left" > --}}
+                <div class=" text-left" >
                     <!-- Secondary Label -->
                     <div class="info-tag">
                         EXPANSION, BRAND, SALES
@@ -38,7 +44,7 @@
         </div>
     </section>
 
-    <section id="mission_vision">
+   <section id="mission_vision">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -69,7 +75,7 @@
     </section>
 
     
-    <div class="container growth-container">
+  <div class="container growth-container">
         <div class="row justify-content-center g-4">
             <div class="col-md-4">
                 <div class="growth-card text-center">
@@ -102,23 +108,21 @@
     </div>
 
 
-    <section class="commitment">
+  <section class="commitment">
         <div class="container py-5">
             <div class="row g-0 align-items-stretch">
 
-                <img src="{{ asset('images/Commitment.png') }}" alt="">
-              <!-- Left Section -->
+                <img class="img-fluid" src="{{ asset('images/Commitment.png') }}" alt="">
               {{-- <div class="col-lg-6 commitment-box">
-                <div class="py-4 px-5">
+                <div class="py-4 px-2">
                     <h4>OUR COMMITMENT</h4>
                     <p class="mt-4">
                         With a commitment to excellence, integrity, and collaboration, we partner closely with our clients to understand their unique needs, goals, and aspirations. Through personalised consulting services, actionable insights, and hands-on support, we strive to empower businesses and entrepreneurs to thrive in dynamic and competitive markets.                    
                     </p>
                 </div>
-              </div>
+              </div> --}}
         
-              <!-- Right Section -->
-              <div class="col-lg-6 position-relative">
+              {{-- <div class="col-lg-6 position-relative">
                 <img src="{{ asset('images/about.jpg') }}" alt="Team discussion" class="team-image" />
         
                 <div class="overlay-card">
@@ -132,30 +136,30 @@
     </section>
 
 
-        <!-- Stats Section -->
-        <section class="container stats-about">
-            <div class="stats-section-about">
-                <div class="container me-auto ms-auto w-50">
-                    <div class="stats-container">
-                        <h1>55%</h1>
-                        <div class="line-down"></div>
+         <!-- Stats Section -->
+    <section class="px-5 mt-5">
+        <div class="stats-section">
+            <div class="container">
+                <div class="stats-container">
+                    <h1>70%</h1>
+                    <div class="line-down"></div>
+                </div>
+                <p class="mx-4">of consumers learn about brands or companies on social media</p>
+                <div class="row justify-content-center sub-stats text-center mt-5 mx-md-4 mx-2">
+                    <div class="col-3">
+                        <h4>73%</h4>
+                        <p>Start-ups</p>
                     </div>
-                    <p class="mx-4">of consumers learn about <br> brands or companies on <br> social media</p>
-                    <div class="row justify-content-center sub-stats text-center mt-2 mx-4">
-                        <div class="col-md-3">
-                            <h4>73%</h4>
-                            <p>Start-ups</p>
-                        </div>
-                        <div class="col-md-3">
-                            <h4>73%</h4>
-                            <p>MSMEs</p>
-                        </div>
-                        <div class="col-md-3">
-                            <h4>73%</h4>
-                            <p>Enterprises</p>
-                        </div>
+                    <div class="col-3">
+                        <h4>73%</h4>
+                        <p>MSMEs</p>
+                    </div>
+                    <div class="col-3">
+                        <h4>73%</h4>
+                        <p>Enterprises</p>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 @endsection

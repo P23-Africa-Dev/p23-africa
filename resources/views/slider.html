@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Testimonial Slider</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .testimonial-section {
+      background: #fff;
+      width: 90%;
+      max-width: 600px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      position: relative;
+      padding-bottom: 60px;
+    }
+
+    .slider-container {
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .testimonial-wrapper {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      width: 100%; /* 3 slides */
+    }
+
+    .testimonial {
+      width: 100%;
+      flex-shrink: 0;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .testimonial p {
+      font-size: 1rem;
+      color: #444;
+      margin-bottom: 15px;
+    }
+
+    .testimonial h4 {
+      margin: 0;
+      color: #222;
+      font-weight: 600;
+    }
+
+    .slider-controls {
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 40px;
+    }
+
+    .slider-controls .arrow {
+      cursor: pointer;
+      font-size: 24px;
+      color: #555;
+      transition: color 0.3s;
+      user-select: none;
+    }
+
+    .slider-controls .arrow:hover {
+      color: #007BFF;
+    }
+  </style>
+</head>
+<body>
+
+<div class="testimonial-section">
+  <div class="slider-container">
+    <div class="testimonial-wrapper">
+      <div class="testimonial">
+        <p>"This service changed my life! Totally recommend to everyone."</p>
+        <h4>- Jane Doe</h4>
+      </div>
+      <div class="testimonial">
+        <p>"Excellent support and great quality. I’m a loyal customer now."</p>
+        <h4>- John Smith</h4>
+      </div>
+      <div class="testimonial">
+        <p>"A seamless experience from start to finish. 10/10."</p>
+        <h4>- Alice Johnson</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="slider-controls">
+    <span class="arrow left">&#8592;</span>
+    <span class="arrow right">&#8594;</span>
+  </div>
+</div>
+
+<!-- jQuery CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(function () {
+    let currentIndex = 0;
+    const testimonials = $('.testimonial');
+    const total = testimonials.length;
+
+    function updateSlider(index) {
+      const offset = -index * 100;
+      $('.testimonial-wrapper').css('transform', `translateX(${offset}%)`);
+    }
+
+    $('.arrow.left').click(function () {
+      currentIndex = (currentIndex - 1 + total) % total;
+      updateSlider(currentIndex);
+    });
+
+    $('.arrow.right').click(function () {
+      currentIndex = (currentIndex + 1) % total;
+      updateSlider(currentIndex);
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -7,12 +7,13 @@
             <section class="hero">
                 <div class="row">
                     <div class="col-md-7 hero-text my-auto">
-                        <h1>Driving <span>Successful</span><br>Businesses Across<br><img src="{{ asset('images/dot.png') }}" id="dot" alt=""><span> Africa</span></h1>
+                        <h1>Driving <span>Successful</span><br>Businesses Across<br><img src="{{ asset('images/dot.png') }}"
+                                id="dot" alt=""><span> Africa</span></h1>
                         <p>We create tailored solutions for homegrown and global businesses at every stage of growth.
                         </p>
                         <a href="{{ url('contact') }}">Contact Us →</a>
-                    </div>  
-                    <div class="col-md-5 animated-images">
+                    </div>
+                    <div class="col-md-5 animated-images mt-5 mt-md-0">
                         <div class="fade-overlay fade-top"></div>
                         <div class="fade-overlay fade-bottom"></div>
 
@@ -210,31 +211,38 @@
         </div>
     </section>
 
-    <div class="container testimonial-container">
-        <div class="row justify-content-center g-4">
-            <div class="col-md-4">
-                <div class="testimonial-card text-center">
-                    <img src="{{ asset('images/testimonial1.jpg') }}" alt="Chioma Ike">
-                    <h5>Chioma Ike</h5>
-                    <p>We specialize in offering low-risk market entry services that eliminate the need for physical
-                        setups and compliance hassles in the region.</p>
+    <div class="testimonial-section-main">
+        <div class="container testimonial-container">
+            <div class="testimonial-wrapper">
+                <div class="testimonial">   
+                    <div class="testimonial-card text-center">
+                        <img src="{{ asset('images/testimonial1.jpg') }}" alt="Chioma Ike">
+                        <h5>Chioma Ike</h5>
+                        <p>We specialize in offering low-risk market entry services that eliminate the need for physical
+                            setups and compliance hassles in the region.</p>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-card text-center">
+                        <img src="{{ asset('images/testimonial2.jpg') }}" alt="Charles">
+                        <h5>Charles</h5>
+                        <p>We specialize in offering low-risk market entry services that eliminate the need for physical
+                            setups and compliance hassles in the region.</p>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-card text-center">
+                        <img src="{{ asset('images/testimonial3.jpg') }}" alt="Family Guy">
+                        <h5>Family Guy</h5>
+                        <p>We specialize in offering low-risk market entry services that eliminate the need for physical
+                            setups and compliance hassles in the region.</p>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="testimonial-card text-center">
-                    <img src="{{ asset('images/testimonial2.jpg') }}" alt="Charles">
-                    <h5>Charles</h5>
-                    <p>We specialize in offering low-risk market entry services that eliminate the need for physical
-                        setups and compliance hassles in the region.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="testimonial-card text-center">
-                    <img src="{{ asset('images/testimonial3.jpg') }}" alt="Family Guy">
-                    <h5>Family Guy</h5>
-                    <p>We specialize in offering low-risk market entry services that eliminate the need for physical
-                        setups and compliance hassles in the region.</p>
-                </div>
+
+            <div class="slider-controls">
+                <span class="arrow left"><i>&#8592;</i></span>
+                <span class="arrow right"><i>&#8594;</i></span>
             </div>
         </div>
     </div>
@@ -243,7 +251,7 @@
     <section class="insight-section">
         <div class="">
             <h2>P23 Insights</h2>
-            <div  class="insight-content">
+            <div class="insight-content">
                 <div class="insight-image-wrapper">
                     <img src="{{ asset('images/scolding_donald.jpg') }}" alt="Scolding Donald" class="insight-image" />
                     <div class="bottom-bar"></div>
@@ -352,4 +360,52 @@
             </div>
         </div>
     </section>
+
+
+    <script>
+  $(function () {
+    const $wrapper = $('.testimonial-wrapper');
+    const $testimonials = $('.testimonial');
+    const total = $testimonials.length;
+    let currentIndex = 0;
+
+    function updateWidths() {
+      const screenWidth = $(window).width();
+      if (screenWidth < 580) {
+        // Set for small screens
+        $wrapper.css('width', `${total * 100}%`);
+        $testimonials.css('width', `${100 / total}%`);
+      } else {
+        // Set for larger screens (still full width per testimonial)
+        $wrapper.css('width', `100%`);
+        $testimonials.css('width', `100%`);
+      }
+      // Reposition to current index after width change
+      updateSlider(currentIndex);
+    }
+
+    function updateSlider(index) {
+      const offset = -index * (100 / total);
+      $wrapper.css('transform', `translateX(${offset}%)`);
+    }
+
+    $('.arrow.left').click(function () {
+      currentIndex = (currentIndex - 1 + total) % total;
+      updateSlider(currentIndex);
+    });
+
+    $('.arrow.right').click(function () {
+      currentIndex = (currentIndex + 1) % total;
+      updateSlider(currentIndex);
+    });
+
+    // Init on load
+    updateWidths();
+
+    // Recalculate on window resize
+    $(window).resize(function () {
+      updateWidths();
+    });
+  });
+    </script>
 @endsection
