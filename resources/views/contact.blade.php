@@ -10,15 +10,15 @@
     <div class="container" id="sec2">
         <div class="row">
             <!-- Text Side -->
-            <div class="col-md-6 contact-text text-center text-md-start mb-4 mb-md-0">
+            <div class="col-12 col-md-6 contact-text text-center text-md-start mb-4 mb-md-0">
                 <h2>Contact Us</h2>
                 <p>Ready to expand your business?<br>
-                    <strong>Contact P23 Africa and let’s make growth happen.</strong>
+                    <span>Contact P23 Africa and let’s make growth happen.</span>
                 </p>
             </div>
 
             <!-- Image Side -->
-            <div class="col-md-6 text-center">
+            <div class="col-12 col-md-6 text-center">
                 <div class="contact-image mx-auto" style="max-width: 380px;">
                     <img src="{{ asset('images/contact_header.jpg') }}" alt="Smiling Woman" />
                 </div>
@@ -30,7 +30,7 @@
     <section class="contact-info">
         <div class="container text-left text-md-start">
             <h5 class="text-center text-md-start">Contact Information</h5>
-            <div class="row col-6 justify-content-center justify-content-md-start text-left text-md-start">
+            <div style="gap: 20px" class="d-flex flex-lg-row    col-lg-6 justify-content-center justify-content-md-start text-left text-md-start">
                 <div class="col-md-4 info-box mb-4 mb-md-0">
                     <i class="fas fa-phone-alt"></i>
                     <p><a href="tel:+442080921281" class="text-dark text-decoration-none fw-bold">+44 208 0921 281</a></p>
@@ -51,7 +51,7 @@
     <section id="contact_form">
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-12 col-md-6">
                     <div id="form">
                         <div>
                             <h6>Leave us a message</h6>
@@ -84,7 +84,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-12 col-md-6">
                     <div id="map">
                         <strong>Location</strong>
                         <p>
