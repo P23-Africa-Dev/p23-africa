@@ -19,9 +19,26 @@
 @font-face {
     font-family: "GT Walsheim Bold"; /* Name your font family */
 
+    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-Black.woff2")
+            format("woff2"),
+        url("../fonts/gt-walsheim-pro/GTWalsheimPro-Black.woff")
+            format("woff"); /* Adjust file names and paths as needed */
+}
+@font-face {
+    font-family: "GT Walsheim Black"; /* Name your font family */
+
     src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-Bold.woff2")
             format("woff2"),
         url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff")
+            format("woff"); /* Adjust file names and paths as needed */
+}
+
+@font-face {
+    font-family: "IvyOra Text"; /* Name your font family */
+
+    src: url("../fonts/ivyora-text/IvyOraText-RegularItalic.woff2")
+            format("woff2"),
+        url("../fonts/ivyora-text/IvyOraText-RegularItalic.woff")
             format("woff"); /* Adjust file names and paths as needed */
 }
 
@@ -33,6 +50,7 @@
 body,
 h3 {
     font-family: "GT Walsheim Pro";
+    /* background-color: #F6F6F6; */
 }
 
 #body {
@@ -50,6 +68,7 @@ h3 {
 .logo {
     font-size: 1.5rem;
     font-weight: bold;
+    margin: 0px -10px;
 }
 
 /* #nav ul {
@@ -61,6 +80,89 @@ h3 {
 /* #nav ul li {
     position: relative;
   } */
+
+  /* START */
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1049;
+    display: none;
+  }
+
+  .overlay.active {
+    display: block;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 250px;
+    height: 80%;
+    background-color: #fff;
+    z-index: 1050;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.3);
+    transition: right 0.3s ease-in-out;
+    overflow-y: auto;
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  .sidebar.active {
+    right: 0;
+  }
+
+  .submenu {
+    display: none;
+  }
+  .submenu h5{
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .submenu p{
+    font-size: 12px;
+    font-weight: 400;
+  }
+
+  .submenu.active {
+    display: block;
+  }
+
+  .main-menu {
+    display: block;
+  }
+
+  .main-menu.hide {
+    display: none;
+  }
+
+  .sidebar .nav-link {
+    cursor: pointer;
+  }
+  #backBtn1{
+      color: #0D4036;
+  }
+
+  /* .social-icons a {
+    font-size: 20px;
+    margin-right: 10px;
+    color: #0D4036;
+    position: relative;
+    justify-content: end;
+  } */
+
+  .close-btn {
+    font-size: 1.5rem;
+    float: right;
+    cursor: pointer;
+  }
+/* END */
+
+
 .navbar-full {
     /* margin: 0; */
     font-family: "GT Walsheim Pro";
@@ -80,6 +182,7 @@ h3 {
 .navbar .navbar-toggler {
     color: #fff;
     border: 0;
+    margin: 0px -20px;
 }
 /* .navbar .collapse span {
   font-size: 23px;
@@ -109,37 +212,124 @@ h3 {
     border: 1px solid #fff;
     color: #fff;
 }
+@media screen and (max-width: 580px) {
+    .navbar-full {
+        /* margin: 0; */
+        font-family: "GT Walsheim Pro";
+        color: #000;
+        z-index: 1000;
+    }
+    .sidebar #nav li a {
+        text-decoration: none;
+        color: #000;
+        font-weight: 500;
+        position: relative;
+        padding-bottom: 5px;
+        font-family: "GT Walsheim Con";
+        /* margin: 0px 20px; */
+    }
+    .sidebar #nav li a::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 23px;
+        /* margin-top: 50px; */
+        /*background: url("../images/nav.svg") repeat-x;*/
+        top: 25px;
+        /* bottom: -50; */
+        left: 0;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s ease;
+    }
+    
+    .sidebar #nav li a:hover::after {
+        transform: scaleX(0.8);
+    }
+    .sidebar .contact{
+        margin-bottom: 4rem;
+    }
+    .sidebar .contact #btn {
+        border: 2px #000 solid;
+        color: #000;
+        border-radius: 5px;
+    }
+    .sidebar .subscribe #btn {
+        background-color: #0D4036;
+        border: 2px #0D4036 solid;
+        color: #fff;
+        border-radius: 5px;
+        margin-bottom: 1rem;
+    }
+    .social-icons a {
+        color: #0D4036;
+      }
+}
+
 
 /* NAVBAR SCROLL */
-.bg-scrolling {
-    background-color: #fff; /* Change to your desired color */
-    color: #000;
-    box-shadow: 0px 4px 7px #777;
-    z-index: 1000;
+@media screen and (min-width: 580px) {
+    .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin: 0px 20px;
+    }
+    .main-nav{
+        margin: 0px 10px;
+    }
+    .main-nav .contact{
+        margin-bottom: 0rem;
+        display: none !important;
+    }
+
+    .main-nav .subscribe #btn {
+        background-color: transparent;
+        color: #fff;
+        border-radius: 5px;
+        margin-bottom: 0rem;
+        padding: 10px 30px;
+    }
+    .social-icons a {
+        font-size: 20px;
+        margin-left: 10px !important;
+        color: #fff;
+        position: relative;
+        justify-content: end;
+      }
+    .bg-scrolling {
+        background-color: #fff; 
+        color: #000;
+        box-shadow: 0px 4px 7px #777;
+        z-index: 1000;
+    }
+    .bg-scrolling .navbar #nav li a {
+        text-decoration: none;
+        font-size: 16px;
+        color: #000;
+        font-weight: 500;
+    }
+    .bg-scrolling .navbar .navbar-toggler {
+        color: #000000;
+        border: 0px solid #000000;
+    }
+    .bg-scrolling .navbar .collapse #btn {
+        border: 3px #000 solid;
+        color: #000;
+    }
+    .bg-scrolling .navbar .collapse .social-icons a{
+        color: #000;
+    }
+    .bg-scrolling .navbar img {
+        -webkit-filter: invert(100%);
+        filter: invert(100%);
+    }
 }
-.bg-scrolling .navbar #nav li a {
-    text-decoration: none;
-    /* margin-left: 2rem; */
-    font-size: 16px;
-    color: #000;
-}
-.bg-scrolling .navbar .navbar-toggler {
-    color: #000000;
-    border: 0px solid #000000;
-}
-.bg-scrolling .navbar .collapse #btn {
-    border: 2px #000 solid;
-    color: #000;
-}
-.bg-scrolling .navbar img {
-    -webkit-filter: invert(100%);
-    filter: invert(100%);
-}
+
 
 .hero {
     display: flex;
     justify-content: space-between;
-    padding: 7rem 10px;
+    padding: 7rem 20px;
 }
 
 .hero-text {
@@ -154,9 +344,10 @@ h3 {
     font-size: 65px;
     margin: 0;
     font-weight: 700;
+    font-family: "Montserrat";
 }
 
-.hero-text h1 span {
+.hero-text h1 #font{
     font-style: italic;
     color: #4ee3b5;
     font-family: "IvyOra Text";
@@ -165,7 +356,8 @@ h3 {
 .hero-text p {
     margin-top: 20px;
     max-width: 90%;
-    font-size: 1.2rem;
+    font-size: 24px;
+    width: 70%;
     font-family: "GT Walsheim Con";
     margin-bottom: 2rem;
 }
@@ -184,62 +376,13 @@ h3 {
 
 .animated-images {
     display: grid;
-    grid-template-columns: repeat(2, 240px);
+    grid-template-columns: repeat(2, 260px);
     gap: 20px;
     position: relative;
     height: 500px;
     overflow: hidden;
     width: 100%;
 }
-@media screen and (max-width: 580px) {
-    .navbar #nav li a::after {
-        background: none;
-        transition: transform 0.3s ease;
-    }
-    .animated-images {
-        grid-template-columns: repeat(2, 200px);
-        gap: 20px;
-    }
-    .hero {
-        display: block;
-        justify-content: center;
-        padding: 7rem 0px 5rem 0px;
-    }
-    #header {
-        padding: 10px 20px;
-        background-color: transparent;
-    }
-    .hero-text {
-        max-width: 100%;
-        margin: auto 0px;
-        /* font-family: 'Montserrat'; */
-    }
-    .hero-text h1 {
-        font-size: 40px;
-        margin: 0;
-        font-weight: 700;
-    }
-    .hero-text p {
-        margin-top: 20px;
-        max-width: 100%;
-        font-size: 20px;
-    }
-    .hero-text button {
-        margin-top: 10px;
-        margin-bottom: 40px;
-        padding: 12px 80px;
-        border-radius: 30px;
-        background-color: transparent;
-        color: #fff;
-        border: 1px solid #fff;
-        font-size: 1rem;
-        cursor: pointer;
-    }
-    .hero-text #dot {
-        width: 56px;
-    }
-}
-
 .column {
     display: flex;
     flex-direction: column;
@@ -286,6 +429,66 @@ h3 {
     display: flex;
     flex-direction: column;
 }
+@media screen and (max-width: 580px) {
+    /* .hero .row{
+        display: flex;
+        justify-content: space-between;
+    } */
+}
+@media screen and (max-width: 580px) {
+    .navbar #nav li a::after {
+        background: none;
+        transition: transform 0.3s ease;
+    }
+    .animated-images {
+        grid-template-columns: repeat(2, 190px);
+        gap: 20px;
+    }
+    .hero {
+        display: block;
+        justify-content: center;
+        padding: 7rem 0px 5rem 0px;
+    }
+    #header {
+        padding: 10px 20px;
+        background-color: transparent;
+    }
+    .hero-text {
+        width: 100%;
+        margin: auto 0px;
+        /* font-family: 'Montserrat'; */
+    }
+    .hero-text h1 {
+        font-size: 35px;
+        margin: 0;
+        font-weight: 700;
+    }
+    .hero-text h1 #buss{
+        font-size: 29px;
+    }
+    .hero-text p {
+        margin-top: 20px;
+        width: 100%;
+        font-size: 14px;
+    }
+    .hero-text button {
+        margin-top: 10px;
+        margin-bottom: 40px;
+        padding: 12px 80px;
+        border-radius: 30px;
+        width: 100%;
+        background-color: transparent;
+        color: #fff;
+        border: 1px solid #fff;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+    .hero-text #dot {
+        width: 56px;
+    }
+}
+
+
 
 @keyframes scroll {
     0% {
@@ -396,20 +599,21 @@ h3 {
 
 /* Learn more button styling */
 .learn-more {
-    font-weight: 600;
+    font-weight: 400;
     color: #0f3e2e;
     transition: color 0.3s ease;
     display: block;
+    margin-top: 2rem;
 }
 .learn-more span {
-    font-size: 29.18px;
+    font-size: 19px;
     color: #101e1a;
 }
 
 .learn-more .arrow {
     background-color: #0f3e2e;
     color: white;
-    padding: 25px;
+    padding: 20px;
     border-radius: 50%;
     width: 36px;
     height: 36px;
@@ -460,12 +664,16 @@ h3 {
 
 /* HOW WE HELP OUR CLIENTS */
 #how_we_help {
-    margin-top: 6rem;
-    margin-bottom: 6rem;
+    padding-top: 6rem;
+    margin-top: 0rem;
+    margin-bottom: 0rem;
+    padding-bottom: 6rem;
+    background: linear-gradient(#ffffff93, #ffffff93), url('../images/bg-grey.png');
+    /* background-image: url('../images/bg-grey.png'); */
 }
 .section-title {
     font-weight: 700;
-    font-size: 2rem;
+    font-size: 48px;
     color: #0f2e29;
 }
 
@@ -484,43 +692,60 @@ h3 {
     border-radius: 0px;
     height: 100%;
 }
+.service-card #read{
+    margin-top: 7rem;
+}
+#how_we_help .flex-column{
+    padding: 80px 30px;
+}
 #how_we_help #one {
     border-top-left-radius: 30px;
     background-color: #2d9378 !important;
+    box-shadow: 2px 2px 10px #000 !important;
 }
 #how_we_help #two {
     border-bottom-right-radius: 20px;
     background-color: #d0eee9 !important;
     color: #0d4036 !important;
-    box-shadow: 2px 2px 6px #000;
+    box-shadow: 2px 2px 10px #000 !important;
 }
 #how_we_help #three {
     border-bottom-left-radius: 30px;
     background-color: #a3c56d !important;
     color: #0d4036 !important;
+    box-shadow: 2px 2px 10px #000 !important;
 }
 #how_we_help #four {
     border-top-right-radius: 50px;
     background-color: #ffffff !important;
     color: #0d4036 !important;
-    box-shadow: 10px 10px 10px #2121214d;
+    box-shadow: 2px 2px 10px #000 !important;
+}
+#how_we_help #four img{
+    margin-bottom: -1rem;
+}
+
+.service-card p{
+    font-size: 22px;
+    font-weight: 400;
 }
 
 .service-icon {
     font-size: 2rem;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 }
 
 .service-title {
     font-weight: 700;
-    font-size: 1.2rem;
+    font-size: 24px;
+    margin-bottom: 1rem;
 }
 
 .read-more-btn {
-    background-color: white;
-    color: #054b5e;
+    background-color: #054b5e;
+    color: #fff;
     font-weight: 600;
-    padding: 0.5rem 1rem;
+    padding: 0.7rem 1rem;
     border-radius: 8px;
     text-decoration: none;
     display: inline-flex;
@@ -537,12 +762,12 @@ h3 {
 .global_reach {
     text-align: center;
     padding: 60px 20px;
-    border-top: 2px dashed #ccc;
-    border-bottom: 2px dashed #ccc;
+    border-top: 3px dashed #022a499c;
+    border-bottom: 3px dashed #022a499c;
 }
 
 .global_reach h2 {
-    font-size: 2.5rem;
+    font-size: 64px;
     font-weight: 600;
     color: #2e4f48;
 }
@@ -705,7 +930,7 @@ h3 {
   border: 6px solid #fff;
 } */
 .testimonial-section {
-    background-color: #054851;
+    background-color: #094B5D;
     color: #fff;
     padding: 60px 20px 260px; /* More bottom padding so cards pop out */
     text-align: left;
@@ -714,8 +939,9 @@ h3 {
 }
 
 .testimonial-section h2 {
-    font-size: 64px;
+    font-size: 53px;
     font-weight: 600;
+    margin-bottom: 2rem;
     font-family: "Montserrat";
 }
 
@@ -732,6 +958,9 @@ h3 {
     gap: 20px;
     /* transition: transform 0.5s ease-in-out; */
     /* width: 100%; 3 slides */
+  }
+  .testimonial-section-main .testimonial{
+    padding: 0px 20px;
   }
 .testimonial-card {
     background-color: #fff;
@@ -752,26 +981,33 @@ h3 {
     color: #fff;
 }
 
-.testimonial-card h5 {
-    font-family: "GT Walsheim Pro";
-    font-weight: 800;
+.testimonial .testimonial-card h5 {
+    font-family: "GT Walsheim Con" !important;
+    font-weight: 1000 !important;
     margin-top: 20px;
-    font-size: 40px;
+    font-size: 32px !important;
 }
 .testimonial-card h4{
-    font-weight: 275;
+    font-weight: 200 !important;
+    font-size: 20px !important;
 }
 
 .testimonial-card p {
     font-size: 20px;
     /* color: #0D4036; */
     margin-top: 10px;
+    font-family: "GT Walsheim Con";
 }
-
+#horiz{
+    margin-top: 0rem;
+    margin-bottom: 5rem;
+    border: 2px solid #0000002d;
+}
 .testimonial-card img {
-    width: 249px;
-    height: 249px;
-    object-fit: cover;
+    width: 249px !important;
+    height: 249px !important;
+    object-fit: cover !important;
+    object-position: top;
     border-radius: 50%;
     /* border: 4px solid #eee; */
     margin-bottom: 20px;
@@ -870,9 +1106,9 @@ h3 {
 
 /* INSIGHT */
 .insight-section {
-    padding: 0px;
-    font-family: "GT Walsheim Con";
-    background-color: #f9f9f9;
+    padding: 20px;
+    font-family: "GT Walsheim Bold";
+    /* background-color: #f9f9f9; */
     display: flex;
     justify-content: center;
     margin-bottom: 4rem;
@@ -883,6 +1119,7 @@ h3 {
     font-weight: 700;
     margin-bottom: 40px;
     color: #093a3e;
+    font-family: "GT Walsheim Bold";
 }
 
 .insight-content {
@@ -895,7 +1132,7 @@ h3 {
 .insight-image-wrapper {
     position: relative;
     overflow: hidden;
-    max-width: 600px;
+    max-width: 700px;
     /* box-shadow: #0D4036 0px 10px; */
     /* border-bottom-left-radius: 70px; */
 }
@@ -921,28 +1158,32 @@ h3 {
 
 .insight-text {
     max-width: 600px;
+    margin-top: -3rem;
 }
 
 .date {
-    font-size: 14px;
+    font-size: 16px;
     color: #003f3c;
-    margin-bottom: 10px;
+    margin-bottom: 25px;
+    font-family: "GT Walsheim Con";
 }
 
 .insight-text h3 {
-    font-size: 57px;
+    font-size: 45px;
     font-weight: 800;
     color: #093a3e;
     margin: 0 0 15px;
+    font-family: "GT Walsheim Bold";
 }
 
 .description {
-    font-size: 28px;
+    font-size: 24px;
     line-height: 32px;
     letter-spacing: 3%;
     font-weight: 300;
     color: #3b4d4c;
     margin-bottom: 20px;
+    font-family: "GT Walsheim Con";
 }
 
 .read-more {
@@ -954,6 +1195,7 @@ h3 {
     text-decoration: none;
     font-weight: 600;
     color: #093a3e;
+    margin-top: 2rem;
     transition: background 0.3s, color 0.3s;
 }
 .read-more span {
@@ -1008,7 +1250,7 @@ h3 {
 .carousel-container {
     overflow: hidden;
     position: relative;
-    padding: 30px 10px;
+    padding: 30px 50px !important;
     margin-bottom: 6rem;
 }
 
@@ -1023,20 +1265,23 @@ h3 {
 }
 
 .insight-card {
-    min-width: 300px;
-    max-width: 300px;
+    min-width: 400px;
+    max-width: 400px;
     margin-right: 20px;
     border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); */
     background-color: white;
     flex-shrink: 0;
+    padding: 0px 20px;
 }
 
 .insight-card img {
     width: 100%;
     height: 200px;
     object-fit: cover;
+    border-radius: 10px;
+    object-position: top;
 }
 
 .insight-card .card-body {
@@ -1052,6 +1297,7 @@ h3 {
     font-size: 20px;
     font-weight: 700;
     color: #003f3c;
+    text-transform: capitalize;
 }
 
 .insight-card p {
@@ -1068,9 +1314,12 @@ h3 {
     }
 }
 
-.carousel-container #btn {
-    margin-top: 2rem;
+.carousel-container #btn{
+    margin-top: 4rem;
     text-align: center;
+}
+.carousel-container #btn a{
+    box-shadow: 2px 2px 8px #000;
 }
 .carousel-container #btn a {
     background-color: #0d4036;
@@ -1095,12 +1344,14 @@ h3 {
     text-align: left;
     font-family: "GT Walsheim Bold";
     margin-bottom: 2rem;
+    border-radius: 20px;
 }
 .stats-section .container {
     display: block;
     justify-content: center;
     width: 50%;
 }
+
 .stats-container {
     position: relative;
     display: inline-block;
@@ -1148,13 +1399,15 @@ h3 {
     font-size: 1.2rem;
     margin-top: 15px;
     font-family: "GT Walsheim Pro";
+    width: 65%;
 }
-
+.stats-section #divider{
+    margin: 50px 0px;
+}
 .sub-stats {
     position: relative;
     border: 2px solid #26c0b6;
     padding: 20px 0px;
-    margin-top: 80px;
     font-family: "GT Walsheim Pro";
 }
 .sub-stats::before {
@@ -1166,7 +1419,7 @@ h3 {
 }
 .sub-stats::before {
     top: 50%;
-    left: -74px;
+    left: -73px;
 }
 
 .sub-stats .col {
@@ -1186,10 +1439,69 @@ h3 {
     font-size: 1rem;
     margin: 0;
 }
+.stats-section2{
+    margin-bottom: 0.5rem;
+}
+.stats-section3{
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+}
+.stats-section4{
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+}
+.stats-section2 #stats_img_desktop img{
+    display: block;
+    width: 100%;
+}
+.stats-section2 #stats_img_mobile img{
+    display: none;
+}
+.stats-section3 #stats_img_desktop img{
+    display: block;
+    width: 100%;
+}
+.stats-section3 #stats_img_mobile img{
+    display: none;
+}
+.stats-section4 #stats_img_desktop img{
+    display: block;
+    width: 100%;
+}
+.stats-section4 #stats_img_mobile img{
+    display: none;
+}
 @media screen and (max-width: 580px) {
+    .stats-section2 #stats_img_desktop img{
+        display: none;
+    }
+    .stats-section2 #stats_img_mobile img{
+        display: block;
+        width: 100%;
+    }
+
+    .stats-section3 #stats_img_desktop img{
+        display: none;
+    }
+    .stats-section3 #stats_img_mobile img{
+        display: block;
+        width: 100%;
+    }
+
+    .stats-section4 #stats_img_desktop img{
+        display: none;
+    }
+    .stats-section4 #stats_img_mobile img{
+        display: block;
+        width: 100%;
+    }
+
     .stats-section {
-        padding: 50px 0px 50px 0px;
+        padding: 20px 0px 20px 0px;
         margin-bottom: 2rem;
+    }
+    .stats-section #divider{
+        margin: 0px 0px;
     }
     .stats-section .container {
         display: block;
@@ -1200,7 +1512,7 @@ h3 {
         display: none;
     }
     .stats-section h1 {
-        font-size: 117px;
+        font-size: 64px;
         font-weight: 800;
         margin: 0;
         position: relative;
@@ -1214,14 +1526,15 @@ h3 {
     }
 
     .stats-section p {
-        font-size: 20px;
-        margin-top: 10px;
+        font-size: 13px;
+        margin-top: 0px;
+        width: 100%;
         font-family: "GT Walsheim Pro";
     }
 
     .sub-stats {
-        padding: 20px 0px;
-        margin-top: 80px;
+        padding: 10px 0px;
+        margin-top: 0px;
     }
     .sub-stats::before {
         display: none;
@@ -1618,6 +1931,14 @@ h3 {
     line-height: 28px;
     width: 80%;
 }
+@media screen and (max-width: 580px) {
+    #mission_vision p {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 28px;
+    width: 100%;
+}
+}
 
 /* GROWTH SECTION */
 .growth-section {
@@ -1704,6 +2025,7 @@ h3 {
     background-color: #10363d;
     padding: 20px 0px;
 }
+
 .commitment .container {
     padding: 0px 20px;
 }
@@ -1713,6 +2035,7 @@ h3 {
     font-family: "GT Walsheim Con";
     color: #0d4036;
 }
+
 
 .commitment-box h4 {
     font-weight: 700;
@@ -1727,6 +2050,21 @@ h3 {
     font-size: 24px;
     font-weight: 400;
     line-height: 40px;
+}
+
+.commitment .img-fluid{
+    display: block;
+}
+.commitment .img-fluid2{
+    display: none;
+}
+@media screen and (max-width: 580px) {
+    .commitment .img-fluid{
+        display: none;
+    }
+    .commitment .img-fluid2{
+        display: block;
+    }
 }
 
 .right-section {

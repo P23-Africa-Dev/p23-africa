@@ -7,10 +7,13 @@
             <section class="hero">
                 <div class="row">
                     <div class="col-md-7 hero-text my-auto">
-                        <h1>Driving <span>Successful</span><br>Businesses Across<br><img src="{{ asset('images/dot.png') }}"
-                                id="dot" alt=""><span> Africa</span></h1>
-                        <p>We create tailored solutions for homegrown and global businesses at every stage of growth.
+                        <h1>Driving <span id="font">Successful</span><br><span id="buss">Businesses Across</span><br><img src="{{ asset('images/dot.png') }}"
+                                id="dot" alt=""><span id="font"> Africa</span></h1>
+                        <br>
+                        <p>
+                            We create tailored solutions for homegrown and global businesses at every stage of growth.
                         </p>
+                        <br>
                         <a href="{{ url('contact') }}" class="">Contact Us →</a>
                     </div>
                     <div class="col-md-5 animated-images mt-5 mt-md-0">
@@ -71,13 +74,10 @@
             <div class="col-md-6 d-flex flex-column justify-content-center" style="">
                 <h2 class="fw-bold mb-4">Who We Are</h2>
                 <p class="mb-3">
-                    Building a successful business in Africa requires reliable support.
-                    Whether you’re optimizing your processes, growing your team, or improving sales,
+                    To build a business in Africa, you need more than talent. You need support.
                 </p>
                 <p class="mb-4">
-                    P23 Africa are a team of seasoned business consultants with a passion for empowering businesses
-                    in
-                    Africa to thrive in competitive markets.
+                    At P23 Africa, we are a team of seasoned business consultants with a passion for empowering businesses in Africa to thrive in competitive markets.
                 </p>
                 <div>
                     <a href="#" class="text-decoration-none learn-more">
@@ -93,7 +93,7 @@
 
     <section id="how_we_help">
         <div class="container py-5">
-            <h2 class="section-title">How we help our clients</h2>
+            <h2 class="section-title">How We Help Our Clients</h2>
             <div class="custom-underline"></div>
 
             <div class="row g-4">
@@ -101,29 +101,33 @@
                     <div class="row g-4">
                         <div class="col-md-6">
                             <div class="service-card" id="one">
-                                <div class="service-icon"><i class="bi bi-signpost-2-fill"></i></div>
+                                <div class="service-icon">
+                                    {{-- <i class="bi bi-signpost-2-fill"></i> --}}
+                                    <img src="{{ asset('images/strategy.png') }}" alt="">
+                                </div>
                                 <div class="service-title">Business Strategy</div>
-                                <p>We aid in the development of strategic plan and operational support tailored to
-                                    your business goals & objectives.</p>
+                                <p>We develop detailed and practical strategies to solve business problems and drive organisational goals</p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="service-card" id="two">
-                                <div class="service-icon"><i class="bi bi-tags-fill"></i></div>
+                                <div class="service-icon">
+                                    {{-- <i class="bi bi-tags-fill"></i> --}}
+                                    <img src="{{ asset('images/sales.png') }}" alt="">
+                                </div>
                                 <div class="service-title">Marketing and Sales</div>
-                                <p>We aid in the development of strategic plan and operational support tailored to
-                                    your business goals & objectives.</p>
+                                <p>We build and execute brand awareness, lead generation and conversion & retention strategies for businesses</p>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="service-card" id="three">
-                                <div class="service-icon"><i class="bi bi-activity"></i></div>
+                                <div class="service-icon">
+                                    {{-- <i class="bi bi-activity"></i> --}}
+                                    <img src="{{ asset('images/operation.png') }}" alt="">
+                                </div>
                                 <div class="service-title">Operations and Efficiency</div>
                                 <p>
-                                    We aid in the development of strategic plan and operational support tailored to
-                                    your business goals & objectives.
-                                    We aid in the development of strategic plan and operational support tailored to
-                                    your business goals & objectives.
+                                    We build systems and processes to drive operational efficiency and output for businesses. We aid in the development of strategic plan and operational support tailored to your business goals & objectives.
                                 </p>
                             </div>
                         </div>
@@ -132,16 +136,18 @@
 
                 <!-- Expansion Column -->
                 <div class="col-md-4 d-flex">
-                    <div class="service-card d-flex flex-column justify-content-between w-100" id="four">
+                    <div class="service-card d-flex flex-column w-100" id="four">
                         <div>
-                            <div class="service-icon"><i class="bi bi-fullscreen"></i></div>
+                            <div class="service-icon">
+                                {{-- <i class="bi bi-fullscreen"></i> --}}
+                                <img src="{{ asset('images/expansion.png') }}" alt="">
+                            </div>
                             <div class="service-title">Expansion</div>
-                            <p>We specialize in offering low-risk market entry services that eliminate the need for
-                                physical setups and compliance hassles in the region.</p>
+                            <p>At P23 Africa, we offer low-risk market entry and expansion services for all businesses looking to break into new markets</p>
                         </div>
-                        <div>
+                        <div id="read">
                             <a href="{{ url('services') }}" class="read-more-btn mt-3">
-                                Read More <i class="bi bi-arrow-right"></i>
+                                Read More <i class="bi bi-arrow-right mx-2"></i>
                             </a>
                         </div>
                     </div>
@@ -221,31 +227,32 @@
             <div class="testimonial-wrapper">
                 <div class="testimonial">   
                     <div class="testimonial-card text-center">
-                        <img src="{{ asset('images/testimonial1.jpg') }}" alt="Chioma Ike">
+                        <img src="{{ asset('images/testimonial01.jpg') }}" alt="Chioma Ike">
                         <p>
                             Working with this team was a game-changer. Their insights and strategies helped us grow and navigate new markets with confidence.
                         </p>
-                        <h5>Chioma Chuwku</h5>
+                        <h5><b>Chioma Chuwku</b></h5>
                         <h4>C.E.0</h4>
                     </div>
                 </div>
                 <div class="testimonial">
                     <div class="testimonial-card text-center">
-                        <img src="{{ asset('images/testimonial2.jpg') }}" alt="Charles">
+                        <img src="{{ asset('images/testimonial3.jpg') }}" alt="Charles">
                         <p>
                             Their expertise and tailored approach transformed our business operations and boosted our efficiency. Highly recommended.                        
                         </p>
-                        <h5>John Blakey</h5>
+                        <h5><b>John Blakey</b></h5>
                         <h4>C.E.0</h4>
                     </div>
                 </div>
                 <div class="testimonial">
                     <div class="testimonial-card text-center">
-                        <img src="{{ asset('images/testimonial3.jpg') }}" alt="Family Guy">
-                        <p>
+                        <img src="{{ asset('images/testimonial03.jpg') }}" alt="Family Guy">
+                        <p class="mb-5">
                             A true partner in our success. They provided the guidance we needed to scale our business while overcoming challenges.
                         </p>
-                        <h5>Emily Nguyen</h5>
+    
+                        <h5><b>Emily Nguyen</b></h5>
                         <h4>Managing Director</h4>  
                     </div>
                 </div>
@@ -257,22 +264,21 @@
             </div>
         </div>
     </div>
-
+    <hr id="horiz">
 
     <section class="insight-section">
         <div class="">
             <h2>P23 Insights</h2>
             <div class="insight-content">
                 <div class="insight-image-wrapper">
-                    <img src="{{ asset('images/scolding_donald.jpg') }}" alt="Scolding Donald" class="insight-image" />
+                    <img src="{{ asset('images/insight-side.jpg') }}" alt="Scolding Donald" class="insight-image" />
                     <div class="bottom-bar"></div>
                 </div>
                 <div class="insight-text">
-                    <p class="date">18th Feb 2025</p>
-                    <h3>Scolding Donald</h3>
+                    <p class="date">1st May 2025</p>
+                    <h3>Essential Guide to Doing Business in Africa</h3>
                     <p class="description">
-                        Our solutions are designed to be flexible and performance focused. They can be delivered
-                        in-person, or more commonly remotely for a more cost effective and flexible solution.
+                        Our essential guide helps foreign investors navigate Africa’s diverse markets, build local partnerships, and understand regulations, offering practical strategies for sustainable success.
                     </p>
                     <a href="#" class="read-more">Read More <span>→</span></a>
                 </div>
@@ -283,58 +289,76 @@
     <section class="carousel-container">
         <div class="slider">
             <!-- Main Set -->
-            <div class="insight-card card">
-                <img src="{{ asset('images/insight1.jpg') }}" alt="Card image">
+            <div class="insight-card">
+                <img src="{{ asset('images/funding.jpg') }}" alt="Card image">
                 <div class="card-body">
-                    <div class="date">18th Feb 2025</div>
-                    <h5>Business Strategies</h5>
-                    <p>Our solutions are designed to be flexible and performance focused.</p>
+                    <div class="date">30th April 2025</div>
+                    <h5>State of Funding 2025</h5>
+                    <p>Our solutions are designed to be flexible and performance focused. They can be delivered in-person, or more commonly</p>
                 </div>
             </div>
 
-            <div class="insight-card card">
-                <img src="{{ asset('images/insight2.jpg') }}" alt="Card image">
+            <div class="insight-card">
+                <img src="{{ asset('images/girl.jpg') }}" alt="Card image">
                 <div class="card-body">
-                    <div class="date">18th Feb 2025</div>
-                    <h5>Workplace Benefits</h5>
-                    <p>Our solutions are designed to be flexible and performance focused.</p>
+                    <div class="date">1st May 2025</div>
+                    <h5>Understanding buyer habits</h5>
+                    <p>Our solutions are designed to be flexible and performance focused. They can be delivered in-person, or more commonly</p>
                 </div>
             </div>
 
-            <div class="insight-card card">
-                <img src="{{ asset('images/insight3.jpg') }}" alt="Card image">
+            <div class="insight-card">
+                <img src="{{ asset('images/plant.jpg') }}" alt="Card image">
                 <div class="card-body">
-                    <div class="date">18th Feb 2025</div>
-                    <h5>Business Strategies</h5>
-                    <p>Our solutions are designed to be flexible and performance focused.</p>
+                    <div class="date">2nd May 2025</div>
+                    <h5>Top Agri sectors to watch</h5>
+                    <p>Our solutions are designed to be flexible and performance focused. They can be delivered in-person, or more commonly</p>
+                </div>
+            </div>
+
+            <div class="insight-card">
+                <img src="{{ asset('images/carousel00.jpg') }}" alt="Card image">
+                <div class="card-body">
+                    <div class="date">5th May 2025</div>
+                    <h5>Business trends 2025</h5>
+                    <p>Business trends in Africa are evolving rapidly, with growth in digital transformation, green energy, and emerging markets driving new opportunities across the continent.</p>
                 </div>
             </div>
 
             <!-- Duplicate Set for Seamless Loop -->
-            <div class="insight-card card">
-                <img src="{{ asset('images/insight1.jpg') }}" alt="Card image">
+            <div class="insight-card">
+                <img src="{{ asset('images/funding.jpg') }}" alt="Card image">
                 <div class="card-body">
-                    <div class="date">18th Feb 2025</div>
-                    <h5>Business Strategies</h5>
-                    <p>Our solutions are designed to be flexible and performance focused.</p>
+                    <div class="date">30th April 2025</div>
+                    <h5>State of Funding 2025</h5>
+                    <p>Our solutions are designed to be flexible and performance focused. They can be delivered in-person, or more commonly</p>
                 </div>
             </div>
 
-            <div class="insight-card card">
-                <img src="{{ asset('images/insight2.jpg') }}" alt="Card image">
+            <div class="insight-card">
+                <img src="{{ asset('images/girl.jpg') }}" alt="Card image">
                 <div class="card-body">
-                    <div class="date">18th Feb 2025</div>
-                    <h5>Workplace Benefits</h5>
-                    <p>Our solutions are designed to be flexible and performance focused.</p>
+                    <div class="date">1st May 2025</div>
+                    <h5>Understanding buyer habits</h5>
+                    <p>Our solutions are designed to be flexible and performance focused. They can be delivered in-person, or more commonly</p>
                 </div>
             </div>
 
-            <div class="insight-card card">
-                <img src="{{ asset('images/insight3.jpg') }}" alt="Card image">
+            <div class="insight-card">
+                <img src="{{ asset('images/plant.jpg') }}" alt="Card image">
                 <div class="card-body">
-                    <div class="date">18th Feb 2025</div>
-                    <h5>Business Strategies</h5>
-                    <p>Our solutions are designed to be flexible and performance focused.</p>
+                    <div class="date">2nd May 2025</div>
+                    <h5>Top Agri sectors to watch</h5>
+                    <p>Our solutions are designed to be flexible and performance focused. They can be delivered in-person, or more commonly</p>
+                </div>
+            </div>
+
+            <div class="insight-card">
+                <img src="{{ asset('images/carousel00.jpg') }}" alt="Card image">
+                <div class="card-body">
+                    <div class="date">5th May 2025</div>
+                    <h5>Business Trends 2025</h5>
+                    <p>Business trends in Africa are evolving rapidly, with growth in digital transformation, green energy, and emerging markets driving new opportunities across the continent.</p>
                 </div>
             </div>
         </div>
@@ -343,30 +367,17 @@
             <a href="#" class="btn">More on the Resource Hub</a>
         </div>
     </section>
-
+    <hr id="horiz">
 
     <!-- Stats Section -->
-    <section class="px-5">
-        <div class="stats-section">
+    <section class="px-4">
+        <div class="stats-section2">
             <div class="container">
-                <div class="stats-container">
-                    <h1>63%</h1>
-                    <div class="line-down"></div>
+                <div id="stats_img_desktop">
+                    <img src="{{ asset('images/frame_desktop.png') }}" alt="Card image">
                 </div>
-                <p class="mx-4">of consumers learn about brands or companies on social media</p>
-                <div class="row justify-content-center sub-stats text-center mt-5 mx-md-4 mx-2">
-                    <div class="col-3">
-                        <h4>73%</h4>
-                        <p>Start-ups</p>
-                    </div>
-                    <div class="col-3">
-                        <h4>73%</h4>
-                        <p>MSMEs</p>
-                    </div>
-                    <div class="col-3">
-                        <h4>73%</h4>
-                        <p>Enterprises</p>
-                    </div>
+                <div id="stats_img_mobile">
+                    <img src="{{ asset('images/frame_mobile.png') }}" alt="Card image">
                 </div>
             </div>
         </div>

@@ -47,20 +47,20 @@
    <section id="mission_vision">
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6 mb-md-0 mb-5">
                     <h5>Our Mission</h5>
                     <strong>Business Empowerment</strong>
                     <p>
-                        To empower businesses with the knowledge, resources, and strategies they need to scale successfully. We are dedicated to helping companies of all sizes achieve sustainable growth, streamline operations, and successfully enter new markets.
+                        Our mission is to empower African businesses to thrive and innovate through strategic guidance and transformative solutions. We are committed to fostering sustainable growth, driving impactful change, and unlocking the full potential of businesses across the continent.
                     </p>
                 </div>
                 <div class="col-md-6">
                     <div id="h5">
                         <h5>Our Vision</h5>
                     </div>
-                    <strong>Business Empowerment</strong>
+                    <strong>Excellence, Integrity, and Collaboration</strong>
                     <p>
-                        To empower businesses with the knowledge, resources, and strategies they need to scale successfully. We are dedicated to helping companies of all sizes achieve sustainable growth, streamline operations, and successfully enter new markets.
+                        With a vision rooted in excellence, integrity, and collaboration, we aspire to be the catalyst for Africa's economic advancement, empowering clients to navigate challenges, seize opportunities, and shape a prosperous future for generations to come.
                     </p>
                 </div>
             </div>
@@ -113,6 +113,7 @@
             <div class="row g-0 align-items-stretch">
 
                 <img class="img-fluid" src="{{ asset('images/Commitment.png') }}" alt="">
+                <img class="img-fluid2" src="{{ asset('images/about_frame.png') }}" alt="">
               {{-- <div class="col-lg-6 commitment-box">
                 <div class="py-4 px-2">
                     <h4>OUR COMMITMENT</h4>
@@ -137,29 +138,16 @@
 
 
          <!-- Stats Section -->
-    <section class="px-5 mt-5">
-        <div class="stats-section">
-            <div class="container">
-                <div class="stats-container">
-                    <h1>70%</h1>
-                    <div class="line-down"></div>
-                </div>
-                <p class="mx-4">of consumers learn about brands or companies on social media</p>
-                <div class="row justify-content-center sub-stats text-center mt-5 mx-md-4 mx-2">
-                    <div class="col-3">
-                        <h4>73%</h4>
-                        <p>Start-ups</p>
+         <section class="px-5">
+            <div class="stats-section3">
+                <div class="container">
+                    <div id="stats_img_desktop">
+                        <img src="{{ asset('images/about-desktop.png') }}" alt="Card image">
                     </div>
-                    <div class="col-3">
-                        <h4>73%</h4>
-                        <p>MSMEs</p>
-                    </div>
-                    <div class="col-3">
-                        <h4>73%</h4>
-                        <p>Enterprises</p>
+                    <div id="stats_img_mobile">
+                        <img src="{{ asset('images/about-mobile.png') }}" alt="Card image">
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 @endsection

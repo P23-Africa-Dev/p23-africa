@@ -93,7 +93,7 @@
                             <div class="services-content bg-color4 ">
                                 <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
                                     <img src="{{ asset('images/sale-tag-4.png') }}" alt="">
-                                    <h4 class="text-left">Business Strategy</h4>
+                                    <h4 class="text-left">Sales</h4>
         
                                     <p>We help you grow your sales, reach more customers, and build stronger sales teams. Our experts work closely with you to understand your products, services, and target market. We create clear sales strategies, improve your processes, and provide hands-on training to boost your team’s skills and confidence. Whether you need help closing more deals, entering new markets, or increasing revenue, we give you the tools, support, and training to grow your business successfully.</p>
                                 </div>
@@ -104,9 +104,9 @@
                             <div class="services-content bg-color5 ">
                                 <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
                                     <img src="{{ asset('images/marketing.png') }}" alt="">
-                                    <h4 class="text-left">Market Entry</h4>
+                                    <h4 class="text-left">Marketing</h4>
         
-                                    <p>We help you build a clear plan for growth and success. Our team works closely with you to understand your goals, challenges, and the market you’re in. We create tailored strategies that show you the best steps to take, whether you’re starting a new business, growing an existing one, or expanding into new markets. With expert advice, market insights, and practical solutions, we give you the tools to make confident decisions and achieve lasting success.</p>
+                                    <p>We help you connect with the right customers and grow your brand. Our team works with you to understand your business, your audience, and your goals. We create custom marketing strategies that include branding, social media, advertising, and more. Whether you’re launching a new product, reaching new markets, or building your online presence, we give you the tools and support to promote your business effectively and drive real results.</p>
                                 </div>
                              </div>
                         </div>
@@ -115,9 +115,9 @@
                             <div class="services-content bg-color6 ">
                                 <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
                                     <img src="{{ asset('images/teaching6.png') }}" alt="">
-                                    <h4 class="text-left">Business Strategy</h4>
+                                    <h4 class="text-left">Business Audit</h4>
         
-                                    <p>We help you build a clear plan for growth and success. Our team works closely with you to understand your goals, challenges, and the market you’re in. We create tailored strategies that show you the best steps to take, whether you’re starting a new business, growing an existing one, or expanding into new markets. With expert advice, market insights, and practical solutions, we give you the tools to make confident decisions and achieve lasting success.</p>
+                                    <p>We help you take a closer look at your business to find strengths, weaknesses, & new opportunities. Our team reviews your operations, finances, strategy, & performance to give you a full picture of where you stand. We provide clear reports & practical recommendations to help you improve efficiency, reduce risks, & drive growth. Whether you’re preparing for expansion or just want a health check, our audits give you the insights you need to move forward with confidence.</p>
                                 </div>
                              </div>
                         </div> 
@@ -181,27 +181,14 @@
 
 
         
-    <section class="px-5  ">
-        <div class="stats-section">
+    <section class="px-5">
+        <div class="stats-section4">
             <div class="container">
-                <div class="stats-container">
-                    <h1>63%</h1>
-                    <div class="line-down"></div>
+                <div id="stats_img_desktop">
+                    <img src="{{ asset('images/service-desktop.png') }}" alt="Card image">
                 </div>
-                <p class="mx-4">of consumers learn about brands or companies on social media</p>
-                <div class="row justify-content-center sub-stats text-center mt-5 mx-md-4 mx-2">
-                    <div class="col-3">
-                        <h4>73%</h4>
-                        <p>Start-ups</p>
-                    </div>
-                    <div class="col-3">
-                        <h4>73%</h4>
-                        <p>MSMEs</p>
-                    </div>
-                    <div class="col-3">
-                        <h4>73%</h4>
-                        <p>Enterprises</p>
-                    </div>
+                <div id="stats_img_mobile">
+                    <img src="{{ asset('images/service-mobile.png') }}" alt="Card image">
                 </div>
             </div>
         </div>
