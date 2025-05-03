@@ -20,10 +20,10 @@ class ContactController extends Controller
         $data = $request->only('name', 'email', 'message');
 
         // Send to site owner
-        Mail::to('nurudeen@p23africa.com')->send(new ContactFormMail($data));
+        Mail::to('nurudeen@p23africa.com')->queue(new ContactFormMail($data));
 
         // Send thank-you to user
-        Mail::to($data['email'])->send(new ThankYouMail($data));
+        Mail::to($data['email'])->queue(new ThankYouMail($data));
 
         return redirect()->back()->with('success', 'Your message has been sent!');
     }

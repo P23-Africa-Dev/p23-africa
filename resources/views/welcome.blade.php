@@ -221,13 +221,14 @@
             <h2>What Our Client Say About Us</h2>
         </div>
     </section>
+    {{-- <img src="{{ asset('images/frame-bottom.png') }}" alt=""> --}}
 
     <div class="testimonial-section-main">
         <div class="container testimonial-container">
             <div class="testimonial-wrapper">
-                <div class="testimonial">   
+                <div class="testimonial">
                     <div class="testimonial-card text-center">
-                        <img src="{{ asset('images/testimonial01.jpg') }}" alt="Chioma Ike">
+                        <img src="{{ asset('images/testimonial01.png') }}" alt="Chioma Ike">
                         <p>
                             Working with this team was a game-changer. Their insights and strategies helped us grow and navigate new markets with confidence.
                         </p>
@@ -237,7 +238,7 @@
                 </div>
                 <div class="testimonial">
                     <div class="testimonial-card text-center">
-                        <img src="{{ asset('images/testimonial3.jpg') }}" alt="Charles">
+                        <img src="{{ asset('images/testimonial3.png') }}" alt="Charles">
                         <p>
                             Their expertise and tailored approach transformed our business operations and boosted our efficiency. Highly recommended.                        
                         </p>
@@ -247,7 +248,7 @@
                 </div>
                 <div class="testimonial">
                     <div class="testimonial-card text-center">
-                        <img src="{{ asset('images/testimonial03.jpg') }}" alt="Family Guy">
+                        <img src="{{ asset('images/testimonial03.png') }}" alt="Family Guy">
                         <p class="mb-5">
                             A true partner in our success. They provided the guidance we needed to scale our business while overcoming challenges.
                         </p>
@@ -269,12 +270,12 @@
     <section class="insight-section">
         <div class="">
             <h2>P23 Insights</h2>
-            <div class="insight-content">
-                <div class="insight-image-wrapper">
+            <div class="row insight-content">
+                <div class="col-md-6 insight-image-wrapper">
                     <img src="{{ asset('images/insight-side.jpg') }}" alt="Scolding Donald" class="insight-image" />
                     <div class="bottom-bar"></div>
                 </div>
-                <div class="insight-text">
+                <div class="col-md-6 insight-text">
                     <p class="date">1st May 2025</p>
                     <h3>Essential Guide to Doing Business in Africa</h3>
                     <p class="description">

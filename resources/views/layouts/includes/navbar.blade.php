@@ -13,8 +13,31 @@
                 <div class="collapse navbar-collapse main-nav">
                         <ul class="navbar-nav me-auto ms-auto mb-2 mb-lg-0" id="nav">
                             <li class="nav-item">
-                                <a class="nav-link active" data-target="submenu1" aria-current="page"
-                                    href="{{ url('about') }}">Who We Are</a>
+                                <a class="nav-link active" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-target="submenu1" aria-current="page"
+                                    href="#">Who We Are <i class="fa-solid fa-chevron-down mx-2"></i></a>
+
+                                <div class="dropdown-menu">
+                                    <div class="container py-4" style="width: 90%;">
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-3">
+                                                <a href="{{ url('about') }}" class="d-block mb-3"><b>About Us</b></a>
+                                                <p>Accelerating success for businesses across the globe — that’s the P23 Africa promise.</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <a href="#" class="d-block mb-3"><b>Business Referral Network</b></a>
+                                                <p>Where top CEOs meet, connect, and grow through trusted referrals.</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <a href="#" class="d-block mb-3"><b>University Partnership</b></a>
+                                                <p>Connecting students with real-world research opportunities</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <a href="#" class="d-block mb-3"><b>The 54th Pitch</b></a>
+                                                <p>Helping established businesses secure grant funding through expert pitch programs</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url('services') }}">What We Do</a>
