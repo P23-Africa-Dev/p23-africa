@@ -3,13 +3,13 @@
 
 
 @section('content')
-    <section class="services-hero about">
+    <section class="services-hero about animate-on-scroll">
         <div class="hero-overlay"></div>
         <div class="container hero-content">
             <div class="hero" >
                     <div class="left-content">
                         <h2>Our Services</h2>
-                         <a href="#" class="read-more">Contact Us <span>→</span></a>
+                         <a href="{{ url('contact') }}" class="read-more">Contact Us <span>→</span></a>
                     </div>
                   <div class="right-content">
                      <div class="content bg-color1">
@@ -42,7 +42,7 @@
     </section>
 
 
-    <section class="services">
+    <section class="services animate-on-scroll">
         <div class="">
              <div class="service-top-content">
                 <div class="container position-relative">
@@ -50,7 +50,7 @@
                         <img src="{{ asset('images/service-group.png') }}" alt="">
                     </div>
                     <div class="row g-5 g-sm-4 g-md-3 g-lg-4 g-xl-0">
-                        <div class="  col-12  col-lg-4">
+                        <div class="  col-12  col-lg-4" id="strategy">
                             <div class="services-content bg-color1 roundedtop">
                                 <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
                                     <img src="{{ asset('images/strategy.png') }}" alt="">
@@ -61,22 +61,22 @@
                              </div>
                         </div>
                     
-                        <div class=" col-12 col-lg-4">
+                        <div class=" col-12 col-lg-4" id="market">
                             <div class="services-content bg-color2 ">
                                 <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
                                     <img src="{{ asset('images/target-03.png') }}" alt="">
-                                    <h4 class="text-left">Business Strategy</h4>
+                                    <h4 class="text-left">Market Entry</h4>
         
                                     <p>We help you successfully enter and grow in African markets. Our team provides expert guidance on local regulations, business culture, and market opportunities across the continent. We develop tailored entry strategies, connect you with trusted local partners, and support you through every step—from market research to launch. Whether you’re expanding into one country or across multiple regions, we make your move into Africa smooth, strategic, and successful.</p>
                                 </div>
                              </div>
                         </div>
                     
-                        <div class=" col-12 col-lg-4">
+                        <div class=" col-12 col-lg-4" id="research">
                             <div class="services-content bg-color3 roundedbottom ">
                                 <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
                                     <img src="{{ asset('images/share-knowledge.png') }}" alt="">
-                                    <h4 class="text-left">Business Strategy</h4>
+                                    <h4 class="text-left">Business Research</h4>
         
                                     <p>We help you make smarter business decisions with reliable research and insights. Our team gathers and analyzes information about markets, industries, customers, and competitors, giving you a clear understanding of the opportunities and challenges ahead. Whether you’re entering a new market, launching a product, or planning for growth, we provide the data and analysis you need to build strong, informed strategies.</p>
                                 </div>
@@ -89,7 +89,7 @@
              <div class="service-bottom-content">
                  <div class="container">
                     <div class="row g-5 g-sm-4 g-md-3 g-lg-4 g-xl-0">
-                        <div class=" col-md-4">
+                        <div class=" col-md-4" id="sales">
                             <div class="services-content bg-color4 ">
                                 <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
                                     <img src="{{ asset('images/sale-tag-4.png') }}" alt="">
@@ -100,7 +100,7 @@
                              </div>
                         </div>
                     
-                        <div class="  col-md-4">
+                        <div class="  col-md-4" id="marketing">
                             <div class="services-content bg-color5 ">
                                 <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
                                     <img src="{{ asset('images/marketing.png') }}" alt="">
@@ -111,7 +111,7 @@
                              </div>
                         </div>
                     
-                        <div class=" col-md-4">
+                        <div class=" col-md-4" id="audit">
                             <div class="services-content bg-color6 ">
                                 <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
                                     <img src="{{ asset('images/teaching6.png') }}" alt="">
@@ -128,7 +128,7 @@
     </section>
 
 
-    <section class="research">
+    <section class="research animate-on-scroll">
         <div class="container">
             <div class="row g-10">
                 <!-- Left Column -->
@@ -149,7 +149,7 @@
                         Our consulting services come with personalised and hands-on support, and our team is committed to excellence, intergrity and collaboration.Let's help you thrive in the dynamic and unpredictable African market.
                     </p>
                     <div>
-                        <a href="#" class="read-more">Contact Us <span>→</span></a>
+                        <a href="{{ url('contact') }}" class="read-more">Contact Us <span>→</span></a>
                     </div>
                 </div>
             </div>
@@ -181,7 +181,7 @@
 
 
         
-    <section class="px-5">
+    <section class="px-5 animate-on-scroll">
         <div class="stats-section4">
             <div class="container">
                 <div id="stats_img_desktop">

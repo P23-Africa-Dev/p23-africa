@@ -15,4 +15,5 @@ Route::get('/about', function () {
 Route::get('/services', function () {
     return view('services');
 });
+
 Route::post('/contact', [ContactController::class, 'submitForm'])->name('contact.submit');

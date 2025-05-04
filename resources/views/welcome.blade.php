@@ -4,7 +4,7 @@
 @section('content')
     <header id="body">
         <div id="header">
-            <section class="hero">
+            <section class="hero content-section animate-on-scroll">
                 <div class="row">
                     <div class="col-md-7 hero-text my-auto">
                         <h1>Driving <span id="font">Successful</span><br><span id="buss">Businesses Across</span><br><img src="{{ asset('images/dot.png') }}"
@@ -47,7 +47,7 @@
     <div style="background-color: #003c32;" id="space">
 
     </div>
-    <section id="highlight" class="position-relative overflow-hidden d-flex align-items-center justify-content-center">
+    <section id="highlight" class="position-relative overflow-hidden content-section animate-on-scroll d-flex align-items-center justify-content-center">
         <div class="highlight-overlay position-absolute top-0 start-0"></div>
         <div class="me-auto ms-auto" style="width: 65%;">
             <h3>
@@ -61,7 +61,7 @@
     </div>
 
 
-    <section class="container-fluid p-0 who-we-are">
+    <section class="container-fluid p-0 who-we-are content-section animate-on-scroll">
         <div class="row g-0">
             <!-- Left Column -->
             <div class="col-md-6 position-relative overflow-hidden d-flex align-items-center justify-content-center">
@@ -80,7 +80,7 @@
                     At P23 Africa, we are a team of seasoned business consultants with a passion for empowering businesses in Africa to thrive in competitive markets.
                 </p>
                 <div>
-                    <a href="#" class="text-decoration-none learn-more">
+                    <a href="{{ url('about') }}" class="text-decoration-none learn-more">
                         <span>Learn more</span>
                         <span class="arrow ms-2 d-inline-flex align-items-center justify-content-center">
                             ➔
@@ -91,7 +91,7 @@
         </div>
     </section>
 
-    <section id="how_we_help">
+    <section id="how_we_help" class="content-section animate-on-scroll">
         <div class="container py-5">
             <h2 class="section-title">How We Help Our Clients</h2>
             <div class="custom-underline"></div>
@@ -216,7 +216,7 @@
             </div>
           </section> --}}
 
-    <section class="testimonial-section">
+    <section class="testimonial-section content-section animate-on-scroll">
         <div class="container">
             <h2>What Our Client Say About Us</h2>
         </div>
@@ -249,7 +249,7 @@
                 <div class="testimonial">
                     <div class="testimonial-card text-center">
                         <img src="{{ asset('images/testimonial03.png') }}" alt="Family Guy">
-                        <p class="mb-5">
+                        <p class="">
                             A true partner in our success. They provided the guidance we needed to scale our business while overcoming challenges.
                         </p>
     
@@ -267,7 +267,7 @@
     </div>
     <hr id="horiz">
 
-    <section class="insight-section">
+    <section class="insight-section content-section animate-on-scroll">
         <div class="">
             <h2>P23 Insights</h2>
             <div class="row insight-content">
@@ -287,7 +287,7 @@
         </div>
     </section>
 
-    <section class="carousel-container">
+    <section class="carousel-container content-section animate-on-scroll">
         <div class="slider">
             <!-- Main Set -->
             <div class="insight-card">
@@ -371,7 +371,7 @@
     <hr id="horiz">
 
     <!-- Stats Section -->
-    <section class="px-4">
+    <section class="px-4 content-section animate-on-scroll">
         <div class="stats-section2">
             <div class="container">
                 <div id="stats_img_desktop">

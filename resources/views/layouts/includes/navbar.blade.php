@@ -63,9 +63,9 @@
                         </div>
 
                         <div class="social-icons">
-                            <a href="#"><i class="fab fa-linkedin mx-1"></i></a>
-                            <a href="#"><i class="fab fa-facebook mx-1"></i></a>
-                            <a href="#"><i class="fab fa-instagram mx-1"></i></a>
+                            <a href="https://linkedin.com/company/p23-africa/" target="_blank"><i class="fab fa-linkedin mx-1"></i></a>
+                            <a href="https://facebook.com/p23africa" target="_blank"><i class="fab fa-facebook mx-1"></i></a>
+                            <a href="https://www.instagram.com/p23africa/" target="_blank"><i class="fab fa-instagram mx-1"></i></a>
                             <a href="#"><i class="fab fa-youtube mx-1"></i></a>
                         </div>
             </div>
@@ -110,9 +110,9 @@
                             <a href="#" class="btn" id="btn">Subscribe</a>
                         </div>
                         <div class="social-icons">
-                            <a href="#"><i class="fab fa-linkedin mx-1"></i></a>
-                            <a href="#"><i class="fab fa-facebook mx-1"></i></a>
-                            <a href="#"><i class="fab fa-instagram mx-1"></i></a>
+                            <a href="https://linkedin.com/company/p23-africa/" target="_blank"><i class="fab fa-linkedin mx-1"></i></a>
+                            <a href="https://facebook.com/p23africa" target="_blank"><i class="fab fa-facebook mx-1"></i></a>
+                            <a href="https://www.instagram.com/p23africa/" target="_blank"><i class="fab fa-instagram mx-1"></i></a>
                             <a href="#"><i class="fab fa-youtube mx-1"></i></a>
                         </div>
                     </div>

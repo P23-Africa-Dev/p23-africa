@@ -4,7 +4,7 @@
 
 @section('content')
     <!-- Contact Section -->
-    <section class="contact-section">
+    <section class="contact-section animate-on-scroll">
         
     </section>
     <div class="container" id="sec2">
@@ -27,7 +27,7 @@
     </div>
 
     <!-- Contact Info -->
-    <section class="contact-info">
+    <section class="contact-info animate-on-scroll">
         <div class="container text-left text-md-start">
             <h5 class="text-center text-md-start">Contact Information</h5>
             <div style="gap: 20px" class="d-flex flex-lg-row    col-lg-6 justify-content-center justify-content-md-start text-left text-md-start">
@@ -48,7 +48,7 @@
         </div>
     </section>
 
-    <section id="contact_form">
+    <section id="contact_form" class="animate-on-scroll">
         <div class="container">
             <div class="row">
                 <div class="col-12 col-md-6">
@@ -98,9 +98,9 @@
                         <br>
                         <strong>Social Media</strong>
                         <div id="icons">
-                            <a href="#" class="fa-brands fa-linkedin mx-1"></a>
-                            <a href="#" class="fa-brands fa-square-facebook mx-1"></a>
-                            <a href="#" class="fa-brands fa-square-instagram mx-1"></a>
+                            <a href="https://linkedin.com/company/p23-africa/" target="_blank" class="fa-brands fa-linkedin mx-1"></a>
+                            <a href="https://facebook.com/p23africa" target="_blank" class="fa-brands fa-square-facebook mx-1"></a>
+                            <a href="https://www.instagram.com/p23africa/" target="_blank" class="fa-brands fa-square-instagram mx-1"></a>
                             <a href="#" class="fa-brands fa-youtube mx-1"></a>
                         </div>
                     </div>

@@ -163,6 +163,16 @@ h3 {
 /* END */
 
 
+section {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 1.6s ease-out;
+}
+section.visible{
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .navbar-full {
     /* margin: 0; */
     font-family: "GT Walsheim Pro";
@@ -177,7 +187,7 @@ h3 {
     position: relative;
     padding-bottom: 5px;
     font-family: "GT Walsheim Con";
-    margin: 0px 20px;
+    margin: 0px 10px;
 }
 .navbar .navbar-toggler {
     color: #fff;
@@ -769,7 +779,9 @@ h3 {
 }
 
 .read-more-btn:hover {
-    background-color: #f0f0f0;
+    background-color: transparent;
+    border: 2px solid #054b5e;
+    color: #054b5e;
 }
 
 /* GLOBAL REACH */
@@ -977,7 +989,7 @@ h3 {
     /* width: 100%; 3 slides */
   }
   .testimonial-section-main .testimonial{
-    padding: 0px 20px;
+    padding: 0px 10px;
   }
 .testimonial-card {
     background-color: #fff;
@@ -1956,46 +1968,53 @@ h3 {
 }
 
 .main-box {
-    border: 5px solid #dff500;
-    padding: 50px 30px;
+    border: 5px solid #CCED60;
+    padding: 50px 10px;
     margin-bottom: 20px;
-    max-width: 600px;
+    max-width: 700px;
     text-align: left;
+    display: inline-block;
+    justify-content: center;
 }
 
 .main-box h6 {
     font-weight: 700;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     color: #fff;
     font-size: 16px;
+    font-family: "GT Walsheim Con";
 }
 
 .main-box h1 {
     font-weight: 700;
-    font-size: 46px;
-    line-height: 1.2;
-    letter-spacing: 2px;
+    font-size: 40px;
+    line-height: 120%;
+    /* letter-spacing: 2px; */
+    font-family: 'Montserrat';
 }
 
 .descriptions {
-    max-width: 600px;
+    max-width: 650px;
     font-size: 24px;
     color: #f2f2f2;
     margin-bottom: 30px;
-    width: 80%;
+    width: 90%;
+    font-family: "GT Walsheim Con";
 }
 
 .info-tag {
     border: 5px solid #19867D;
-    padding: 30px 20px;
+    padding: 30px 10px;
     display: inline-block;
-    font-weight: 600;
-    letter-spacing: 5px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 6px;
     text-transform: uppercase;
     margin-bottom: 40px;
     position: relative;
     top: 16rem;
-    left: -7rem;
+    left: -1.5rem;
+    font-family: "GT Walsheim Con";
 }
 
 .contact-btn {
@@ -2009,8 +2028,8 @@ h3 {
     border-radius: 2px;
     position: relative;
     z-index: 2;
-    left: 382px;
-    top: -20px;
+    left: 403px;
+    top: -10px;
 }
 
 .contact-btn i {
@@ -2024,6 +2043,8 @@ h3 {
 
 .left-block {
     grid-column: 1/3;
+    position: relative;
+    left: 60px;
 }
 .right-block {
     grid-column: 3/4;
@@ -2034,11 +2055,11 @@ h3 {
 /* Line from 55% to button */
 .line-connector {
     position: absolute;
-    top: 55%;
-    left: 0;
+    top: 50%;
+    left: 9px;
     width: 5px;
-    height: calc(45% - 60px); /* adjusts to button */
-    background: #dff500;
+    height: calc(45% - 20px); /* adjusts to button */
+    background: #CCED60;
     z-index: 1;
     margin-left: 607px;
 }
@@ -2052,30 +2073,41 @@ h3 {
     .line-connector {
         display: none;
     }
+
+    .left-block {
+        grid-column: 1/3;
+        position: inherit;
+        left: 0px;
+    }
 }
 
 #mission_vision {
     font-family: "GT Walsheim Con";
     margin-top: 6rem;
     margin-bottom: 6rem;
-    color: #0d4036;
+    color: #0D4036;
 }
 #mission_vision h5 {
     font-size: 24px;
     font-weight: 700;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
+}
+#mission_vision h5 span{
+    display: block;
     border-bottom: 2px solid #0d4036;
-    width: 20%;
+    width: 10%;
 }
 #mission_vision strong {
     font-size: 20px;
     font-weight: 700;
+    font-family: "GT Walsheim Pro";
 }
 #mission_vision p {
     font-size: 24px;
     font-weight: 400;
     line-height: 28px;
-    width: 80%;
+    width: 90%;
+    font-family: 'GT Walsheim Con';
 }
 @media screen and (max-width: 580px) {
     #mission_vision p {
@@ -2088,7 +2120,7 @@ h3 {
 
 /* GROWTH SECTION */
 .growth-section {
-    background-color: #054851;
+    background-color: #094B5D;
     color: #fff;
     padding: 60px 20px 160px; /* More bottom padding so cards pop out */
     text-align: left;
@@ -2103,14 +2135,12 @@ h3 {
     font-weight: 700;
     letter-spacing: 2px;
     font-family: "GT Walsheim Con";
+    text-transform: uppercase;
+    margin: 5px 0px;
 }
-/* .growth-section h5::before{
-  content: "";
-  position: absolute;
-  width: 65px;
-  height: 2px;
-  background-color: white;
-} */
+.growth-section h5 img{
+    width: 72px;
+}
 .growth-section h2 {
     font-size: 48px;
     font-weight: 700;
@@ -2124,7 +2154,21 @@ h3 {
     margin-top: -130px; /* Pull cards up into the section */
     margin-bottom: 4rem;
 }
-
+.growth-container .growth-card h5{
+    font-size: 24px;
+    font-weight: 700;
+    font-family: "GT Walsheim Pro";
+    margin-bottom: 2rem;
+}
+.growth-container .growth-card p{
+    font-size: 16px;
+    font-weight: 400;
+    font-family: "GT Walsheim Pro";
+}
+.growth-container img{
+    width: 100%;
+    height: auto;
+}
 .growth-card {
     background-color: #fff;
     border-radius: 1.5rem;
@@ -2414,7 +2458,7 @@ h3 {
     font-size: 15px;
     padding: 8px 50px;
     font-weight: 500;
-    border: 2px solid #fff;
+    /* border: 2px solid #fff; */
 }
 
 .about .right-content {
@@ -2481,8 +2525,8 @@ h3 {
 
 .services .services-content {
     padding: 30px;
-
     box-shadow: -8px 29px 15px 6px rgba(0, 0, 0, 0.1);
+    min-height: 560px;
 }
 .services .icon-box h4 {
     padding: 0px 0px;
@@ -2569,20 +2613,27 @@ h3 {
     font-family: "GT Walsheim Pro";
 }
 .research .research-content h2 {
-    font-size: 60px;
+    font-size: 48px;
     font-weight: 900;
     line-height: 50px;
-    margin-top: 20px;
+    margin-top: 0px;
+    font-family: "GT Walsheim Bold";
+    display: inline;
 }
-
+.research .research-content h2 span{
+    display: block;
+}
 .research .research-content p {
     font-size: 20px;
+    font-weight: 400;
+    display: inline;
 }
 
 .research .research-content .read-more {
     padding: 10px 70px;
     background-color: #0d4036;
     color: #fff;
+    margin-top: -2rem;
 }
 
 .research .global_reach {
