@@ -11,10 +11,11 @@
                                 id="dot" alt=""><span id="font"> Africa</span></h1>
                         <br>
                         <p>
+                            
                             We create tailored solutions for homegrown and global businesses at every stage of growth.
                         </p>
                         <br>
-                        <a href="{{ url('contact') }}" class="">Contact Us →</a>
+                        <a href="{{ url('contact') }}" class="d-flex justify-content-between"><span >Contact Us</span> <span>→</span></a>
                     </div>
                     <div class="col-md-5 animated-images mt-5 mt-md-0">
                         <div class="fade-overlay fade-top"></div>
@@ -47,7 +48,7 @@
     <div style="background-color: #003c32;" id="space">
 
     </div>
-    <section id="highlight" class="position-relative overflow-hidden content-section animate-on-scroll d-flex align-items-center justify-content-center">
+    <section id="highlight" class="position-relative overflow-hidden content-section d-flex align-items-center justify-content-center">
         <div class="highlight-overlay position-absolute top-0 start-0"></div>
         <div class="me-auto ms-auto" style="width: 65%;">
             <h3>
@@ -95,9 +96,9 @@
             <h2 class="section-title">How We Help Our Clients</h2>
             <div class="custom-underline"></div>
 
-            <div class="row g-5">
+            <div class="row g-4">
                 <div class="col-md-8">
-                    <div class="row g-5">
+                    <div class="row g-4">
                         <div class="col-md-6">
                             <div class="service-card" id="one">
                                 <div class="service-icon">
@@ -231,7 +232,7 @@
                         <p>
                             Working with this team was a game-changer. Their insights and strategies helped us grow and navigate new markets with confidence.
                         </p>
-                        <h5><b>Chioma Chuwku</b></h5>
+                        <h5><b>Chioma Chukwu</b></h5>
                         <h4>C.E.0</h4>
                     </div>
                 </div>

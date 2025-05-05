@@ -50,6 +50,10 @@
 html{
     scroll-behavior: smooth;
 }
+.scroll-offset {
+    padding-top: 130px;      /* space above */
+    margin-top: -130px;      /* pull it back up to preserve layout */
+}
 body,
 h3 {
     font-family: "GT Walsheim Pro";
@@ -166,12 +170,22 @@ h3 {
 /* END */
 
 
-section {
+/* section {
     opacity: 0;
     transform: translateY(50px);
     transition: all 1.6s ease-out;
 }
 section.visible{
+    opacity: 1;
+    transform: translateY(0);
+} */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.6s ease-out;
+}
+
+.animate-on-scroll.visible {
     opacity: 1;
     transform: translateY(0);
 }
@@ -322,6 +336,7 @@ section.visible{
         font-size: 1.5rem;
         font-weight: bold;
         margin: 0px 20px;
+        z-index: 1000;
     }
     .main-nav{
         margin-left: -120px;
@@ -428,15 +443,23 @@ section.visible{
 }
 
 .hero-text a {
-    margin-top: 30px;
+    margin-top: 5px;
     padding: 20px 90px;
     border-radius: 10px;
     background-color: transparent;
     color: #fff;
     border: 1px solid #fff;
-    font-size: 1rem;
+    font-size: 20px;
     cursor: pointer;
     text-decoration: none;
+    transition: 500ms;
+    font-family: "GT Walsheim Con";
+    font-weight: 400;
+    width: 45%;
+}
+.hero-text a:hover{
+    background-color: #fff;
+    color: #003c32;
 }
 
 .animated-images {
@@ -524,7 +547,7 @@ section.visible{
         /* font-family: 'Montserrat'; */
     }
     .hero-text h1 {
-        font-size: 35px;
+        font-size: 40px;
         margin: 0;
         font-weight: 700;
     }
@@ -534,7 +557,22 @@ section.visible{
     .hero-text p {
         margin-top: 20px;
         width: 100%;
-        font-size: 14px;
+        font-size: 20px;
+    }
+    .hero-text a {
+        margin-top: -15px;
+        padding: 20px 90px;
+        border-radius: 10px;
+        background-color: transparent;
+        color: #fff;
+        border: 1px solid #fff;
+        font-size: 20px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: 500ms;
+        font-family: "GT Walsheim Con";
+        font-weight: 400;
+        width: 80%;
     }
     .hero-text button {
         margin-top: 10px;
@@ -603,6 +641,8 @@ section.visible{
     background-color: #003c32;
     /* background: linear-gradient(#003c32d2, #003c32cc), url('../images/map.png'); */
     color: #fff;
+    /* visibility: visible !important; */
+
 }
 .highlight-overlay {
     background: url("../images/map.png") no-repeat center center;
@@ -655,6 +695,8 @@ section.visible{
 }
 .who-we-are h2 {
     font-size: 48px;
+    font-family: "Montserrat";
+    font-weight: 700;
 }
 .who-we-are p {
     font-family: "GT Walsheim Con";
@@ -729,7 +771,7 @@ section.visible{
 
 /* HOW WE HELP OUR CLIENTS */
 #how_we_help {
-    padding-top: 6rem;
+    padding-top: 3rem;
     margin-top: 0rem;
     margin-bottom: 0rem;
     padding-bottom: 6rem;
@@ -746,7 +788,7 @@ section.visible{
 .custom-underline {
     width: 220px;
     height: 3px;
-    background-color: #0f2e29;
+    background-color: #0D4036;
     margin-top: 0.5rem;
     margin-bottom: 2rem;
 }
@@ -754,7 +796,7 @@ section.visible{
 .service-card {
     background-color: #054b5e;
     color: white;
-    padding: 1.2rem;
+    padding: 0.1rem 1.2rem;
     border-radius: 0px;
     height: 100%;
 }
@@ -769,6 +811,7 @@ section.visible{
     font-weight: 400;
     font-family: "GT Walsheim Con";
     color: #0D4036;
+    line-height: 28px;
 }
 
 .service-icon {
@@ -784,7 +827,7 @@ section.visible{
 }
 
 .read-more-btn {
-    background-color: #054b5e;
+    background-color: #0D4036;
     color: #fff;
     font-weight: 600;
     padding: 0.7rem 1rem;
@@ -810,7 +853,7 @@ section.visible{
 #how_we_help #one {
     border-top-left-radius: 30px;
     background-color: #2d9378 !important;
-    box-shadow: 2px 2px 10px #000 !important;
+    box-shadow: 2px 2px 10px #00000056 !important;
 }
 #how_we_help #one p{
     color: #fff !important;
@@ -819,19 +862,19 @@ section.visible{
     border-radius: 10px;
     background-color: #d0eee9 !important;
     color: #0d4036 !important;
-    box-shadow: 2px 2px 10px #000 !important;
+    box-shadow: 2px 2px 10px #00000056 !important;
 }
 #how_we_help #three {
     border-bottom-left-radius: 30px;
     background-color: #a3c56d !important;
     color: #0d4036 !important;
-    box-shadow: 2px 2px 10px #000 !important;
+    box-shadow: 2px 2px 10px #00000056 !important;
 }
 #how_we_help #four {
     border-top-right-radius: 50px;
     background-color: #ffffff !important;
     color: #0d4036 !important;
-    box-shadow: 2px 2px 10px #000 !important;
+    box-shadow: 2px 2px 10px #00000056 !important;
 }
 #how_we_help #four img{
     margin-bottom: -1rem;
@@ -868,8 +911,13 @@ section.visible{
 .global_reach {
     text-align: center;
     padding: 20px 20px;
-    border-top: 3px dashed #022A4933;
-    border-bottom: 3px dashed #022A4933;
+    /* border-top: 3px dashed #022a4927;
+    border-bottom: 3px dashed #022a4927; */
+    /* border: 3px solid #022A4933 */
+    border-top: 3px dashed transparent;
+    border-bottom: 3px dashed transparent;
+    border-image: repeating-linear-gradient(to right, #022a4927 0 10px, transparent 10px 20px);
+    border-image-slice: 1;
 }
 
 .global_reach h2 {
@@ -1363,7 +1411,7 @@ section.visible{
     overflow: hidden;
     position: relative;
     padding: 30px 50px !important;
-    margin-bottom: 6rem;
+    margin-bottom: 2.5rem;
 }
 
 .slider {
@@ -1781,7 +1829,7 @@ section.visible{
     .footer {
         background-color: #0D4036;
         color: white;
-        padding: 60px 20px 30px;
+        padding: 30px 80px;
         font-family: "GT Walsheim Con";
     }
     
@@ -1827,10 +1875,11 @@ section.visible{
         letter-spacing: 0.5px;
     }
     .footer .subscribe input {
-        border: 2px solid #d4f437;
+        border: 2px solid #CCED6099;
         background-color: transparent;
         color: white;
         border-radius: 6px;
+        height: 61px;
     }
     
     .footer .subscribe input::placeholder {
@@ -1839,12 +1888,14 @@ section.visible{
     
     .footer .subscribe button {
         margin-top: 15px;
-        background-color: #d4f437;
+        background-color: #CCED60;
         color: black;
         font-weight: 600;
         border: none;
         padding: 10px 25px;
         border-radius: 6px;
+        font-size: 16px;
+        color: #0D4036;
     }
     
     .footer-bottom {
@@ -1942,7 +1993,7 @@ section.visible{
     margin-left: 90px;
 }
 #google-map{
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.363);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.178);
 }
 .info-box {
     /* display: flex; */
@@ -1970,7 +2021,8 @@ section.visible{
     color: white;
     box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     max-width: 95%;
-    margin: 50px auto;
+    margin: 0px auto;
+    z-index: 1000;
   }
 .subcribe-content{
     display: flex;
@@ -2064,7 +2116,7 @@ section.visible{
 }
 
 #contact_form {
-    margin-bottom: 6rem;
+    margin-bottom: 0rem;
     font-family: "GT Walsheim Pro";
 }
 #contact_form .container{
@@ -2077,6 +2129,13 @@ section.visible{
     padding: 80px 50px;
     margin-top: -20px;
     border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.178);
+}
+#contact-img img{
+    width: 100%;
+    position: relative;
+    top: 7rem;
+    z-index: -1;
 }
 #contact_form #form h6 {
     color: #fff;
@@ -2139,7 +2198,7 @@ section.visible{
 }
 
 .hero-overlay {
-    background: rgba(0, 50, 50, 0.8);
+    background: #0D4036E5;
     position: absolute;
     inset: 0;
 }
@@ -2609,13 +2668,29 @@ section.visible{
 
 /* CONTACT PAGE */
 .services-hero {
-    background: url("../images/servces-bg.png") no-repeat center center/cover;
+    background: url("../images/servces-bg.png") no-repeat left center/cover;
+    background-position: -180px !important;
+    background-size: 70%;
     padding-top: 6rem;
+    /* padding-bottom: 6rem; */
     position: relative;
     font-family: "GT Walsheim Pro";
     width: 100%;
 }
+.hero-content{
+    position: relative;
+}
+.services-hero .top-image{
+    z-index: -5;
+    position: absolute;
+    top: -30px;
+    right: -40px;
+}
+.services-hero .top-image img{
+    width: 200px;
+    height: 150px;
 
+}
 .about .hero-overlay {
     background: transparent;
     position: absolute;
@@ -2628,7 +2703,11 @@ section.visible{
 
 .about .hero-content {
     max-width: 1200px;
-    margin: 0 auto;
+    margin: -20px auto;
+    /* background: url("../images/service-box.png") no-repeat;
+    background-size: contain;
+    background-position: top; */
+
 }
 
 .about .hero-content .hero {
@@ -2723,7 +2802,7 @@ section.visible{
 
 .services .services-content {
     padding: 30px;
-    box-shadow: -8px 29px 15px 6px rgba(0, 0, 0, 0.1);
+    /* box-shadow: -8px 29px 15px 6px rgba(0, 0, 0, 0.1); */
     min-height: 560px;
 }
 .services .icon-box h4 {
@@ -2767,7 +2846,14 @@ section.visible{
     z-index: 10;
     bottom: -140px;
 }
-
+.service-top-content .row{
+    box-shadow: 2px 8px 20px #2121214D;
+    border-bottom-right-radius: 50px;
+}
+.service-bottom-content .row{
+    box-shadow: 2px 8px 20px #2121214D;
+    border-bottom-right-radius: 50px;
+}
 .service-top-content .top-image {
     z-index: -5;
     position: absolute;
@@ -2902,6 +2988,9 @@ section.visible{
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         border: 3px solid #dfe1e5;
     }
+}
+#whole_contact{
+    background: linear-gradient(#ffffff8e, #ffffff8e), url('../images/bg-grey.png');
 }
 
 @media screen and (max-width: 1024px){

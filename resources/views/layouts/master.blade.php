@@ -36,6 +36,16 @@
                 color: #0D4036 !important;
                 font-weight: 800 !important;
             }
+
+            /* .content-section {
+                padding: 100px;
+                background: white;
+                margin: 50px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                border-radius: 10px;
+            } */
+
+            /* Apply animation styles ONLY to sections with 'animate-on-scroll' */
         </style>
     </head>
 
@@ -98,8 +108,8 @@
                     });
                 }
 
-                animateOnScroll(); // Run on page load
-                $(window).on('scroll', animateOnScroll); // Run on scroll
+                animateOnScroll(); // Initial check
+                $(window).on('scroll', animateOnScroll); // On scroll
             });
         </script>
     </body>

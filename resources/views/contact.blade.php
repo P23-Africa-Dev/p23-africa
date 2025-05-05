@@ -3,6 +3,7 @@
 
 
 @section('content')
+<section id="whole_contact">
     <!-- Contact Section -->
     <section class="contact-section animate-on-scroll">
         
@@ -92,7 +93,8 @@
                             185 Tower Bridge Rd, London SE1 2UF, UK
                         </p>
                         <div id="google-map">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9582196.954783212!2d-15.016855774923814!3d54.1020496614009!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x25a3b1142c791a9%3A0xc4f8a0433288257a!2sUnited%20Kingdom!5e0!3m2!1sen!2sng!4v1745502051728!5m2!1sen!2sng" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2483.5780880978436!2d-0.08011252412324342!3d51.50260951105425!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48760345c64c3edb%3A0x617596184d03a84c!2s185%20Tower%20Bridge%20Rd%2C%20London%20SE1%202UF%2C%20UK!5e0!3m2!1sen!2sng!4v1746443001887!5m2!1sen!2sng" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            {{-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9582196.954783212!2d-15.016855774923814!3d54.1020496614009!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x25a3b1142c791a9%3A0xc4f8a0433288257a!2sUnited%20Kingdom!5e0!3m2!1sen!2sng!4v1745502051728!5m2!1sen!2sng" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> --}}
                         </div>
 
                         <br>
@@ -109,7 +111,10 @@
         </div>
     </section>
 
-    <section class="animate-on-scroll">
+    <section class="animate-on-scroll pb-5">
+        <div id="contact-img">
+            <img src="{{ asset('images/contact-box.png') }}" style="" alt="">
+        </div>
         <div class="subscribe-box">
             <div class="subcribe-content">
                 <div class="subscribe-text">
@@ -123,4 +128,5 @@
             </div>
           </div>
     </section>
-@endsection
+</section>
+    @endsection

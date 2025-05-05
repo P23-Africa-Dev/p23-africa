@@ -6,7 +6,10 @@
     <section class="services-hero about animate-on-scroll">
         <div class="hero-overlay"></div>
         <div class="container hero-content">
-            <div class="hero" >
+            <div class="hero position-relative" >
+                <div class="top-image">
+                    <img src="{{ asset('images/service-box.png') }}" alt="">
+                </div>
                     <div class="left-content">
                         <h2>Our Services</h2>
                          <a href="{{ url('contact') }}" class="read-more">Contact Us <span>→</span></a>
@@ -50,7 +53,7 @@
                         <img src="{{ asset('images/service-group.png') }}" alt="">
                     </div>
                     <div class="row g-5 g-sm-4 g-md-3 g-lg-4 g-xl-0">
-                        <div class="  col-12  col-lg-4" id="strategy">
+                        <div class="  col-12  col-lg-4 scroll-offset" id="strategy">
                             <div class="services-content bg-color1 roundedtop">
                                 <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
                                     <img src="{{ asset('images/strategy.png') }}" alt="">
@@ -61,7 +64,7 @@
                              </div>
                         </div>
                     
-                        <div class=" col-12 col-lg-4" id="market">
+                        <div class=" col-12 col-lg-4 scroll-offset" id="market">
                             <div class="services-content bg-color2 ">
                                 <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
                                     <img src="{{ asset('images/target-03.png') }}" alt="">
@@ -72,7 +75,7 @@
                              </div>
                         </div>
                     
-                        <div class=" col-12 col-lg-4" id="research">
+                        <div class=" col-12 col-lg-4 scroll-offset" id="research">
                             <div class="services-content bg-color3 roundedbottom ">
                                 <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
                                     <img src="{{ asset('images/share-knowledge.png') }}" alt="">
@@ -89,7 +92,7 @@
              <div class="service-bottom-content">
                  <div class="container">
                     <div class="row g-5 g-sm-4 g-md-3 g-lg-4 g-xl-0">
-                        <div class=" col-md-4" id="sales">
+                        <div class="col-md-4 scroll-offset" id="sales">
                             <div class="services-content bg-color4 ">
                                 <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
                                     <img src="{{ asset('images/sale-tag-4.png') }}" alt="">
@@ -100,7 +103,7 @@
                              </div>
                         </div>
                     
-                        <div class="  col-md-4" id="marketing">
+                        <div class="col-md-4 scroll-offset" id="marketing">
                             <div class="services-content bg-color5 ">
                                 <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
                                     <img src="{{ asset('images/marketing.png') }}" alt="">
@@ -111,7 +114,7 @@
                              </div>
                         </div>
                     
-                        <div class=" col-md-4" id="audit">
+                        <div class="col-md-4 scroll-offset" id="audit">
                             <div class="services-content bg-color6 ">
                                 <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
                                     <img src="{{ asset('images/teaching6.png') }}" alt="">
