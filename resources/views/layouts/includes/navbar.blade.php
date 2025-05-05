@@ -1,5 +1,5 @@
 <div id="navbar" class="fixed-top navbar-full">
-    <div id="header">
+    <div id="">
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
                 <a href="{{ route('homepage') }}" class="navbar-brand logo">
@@ -12,22 +12,22 @@
 
                 <div class="collapse navbar-collapse main-nav">
                         <ul class="navbar-nav me-auto ms-auto mb-2 mb-lg-0" id="nav">
-                            <li class="nav-item">
+                            <li class="nav-item dropdown position-static">
                                 <a class="nav-link active" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-target="submenu1" aria-current="page"
                                     href="#">Who We Are <i class="fa-solid fa-chevron-down mx-2"></i></a>
 
-                                <div class="dropdown-menu">
-                                    <div class="container py-4" style="width: 90%;">
+                                <div class="dropdown-menu dropdown-mega">
+                                    <div class="container py-4" style="width: 70%;">
                                         <div class="row justify-content-center">
-                                            <div class="col-md-3">
+                                            <div class="col-md-3  line">
                                                 <a href="{{ url('about') }}" class="d-block mb-3"><b>About Us</b></a>
                                                 <p>Accelerating success for businesses across the globe — that’s the P23 Africa promise.</p>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-3 line">
                                                 <a href="#" class="d-block mb-3"><b>Business Referral Network</b></a>
                                                 <p>Where top CEOs meet, connect, and grow through trusted referrals.</p>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-3 line">
                                                 <a href="#" class="d-block mb-3"><b>University Partnership</b></a>
                                                 <p>Connecting students with real-world research opportunities</p>
                                             </div>
@@ -40,7 +40,40 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('services') }}">What We Do</a>
+                                <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-target="submenu1" aria-current="page">What We Do <i class="fa-solid fa-chevron-down mx-2"></i></a>
+
+
+                                <div class="dropdown-menu dropdown-mega">
+                                    <div class="container py-4" style="width: 70%;">
+                                        <div class="row">
+                                            <div class="col-md-3  line">
+                                                <a href="{{ url('services') }}#strategy" class="d-block mb-3"><b>Business Strategy</b></a>
+                                                <p>Insights on how we bring about growth in Africa</p>
+                                            </div>
+                                            <div class="col-md-3 line">
+                                                <a href="{{ url('services') }}#market" class="d-block mb-3"><b>Market Entry</b></a>
+                                                <p>Wanna know how we have become great</p>
+                                            </div>
+                                            <div class="col-md-3 line">
+                                                <a href="{{ url('services') }}#research" class="d-block mb-3"><b>Business Research</b></a>
+                                                <p>Wanna know how we have become great</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <a href="{{ url('services') }}#sales" class="d-block mb-3"><b>Sales</b></a>
+                                                <p>Wanna know how we have become great</p>
+                                            </div>
+
+                                            <div class="col-md-3 mt-4 line">
+                                                <a href="{{ url('services') }}#marketing" class="d-block mb-3"><b>Marketing</b></a>
+                                                <p>Wanna know how we have become great</p>
+                                            </div>
+                                            <div class="col-md-3 mt-4">
+                                                <a href="{{ url('services') }}#audit" class="d-block mb-3"><b>Business Audit</b></a>
+                                                <p>Wanna know how we have become great</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Our Events</a>
@@ -65,7 +98,7 @@
                         <div class="social-icons">
                             <a href="https://linkedin.com/company/p23-africa/" target="_blank"><i class="fab fa-linkedin mx-1"></i></a>
                             <a href="https://facebook.com/p23africa" target="_blank"><i class="fab fa-facebook mx-1"></i></a>
-                            <a href="https://www.instagram.com/p23africa/" target="_blank"><i class="fab fa-instagram mx-1"></i></a>
+                            <a href="https://www.instagram.com/p23africa/" target="_blank"><i class="bi bi-instagram mx-1"></i></a>
                             <a href="#"><i class="fab fa-youtube mx-1"></i></a>
                         </div>
             </div>

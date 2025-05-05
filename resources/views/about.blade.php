@@ -34,10 +34,10 @@
                     </div>
                 </div>
                 {{-- <div class="right-block text-left" > --}}
-                <div class=" text-left">
+                <div class="text-left">
                     <!-- Secondary Label -->
                     <div class="info-tag">
-                        EXPANSION, BRAND, SALES
+                        EXPANSION. BRAND. SALES
                     </div>
                 </div>
             </div>
@@ -51,9 +51,7 @@
                     <h5>Our Mission <span></span></h5>
                     <strong class="my-2">Business Empowerment</strong>
                     <p>
-                        Our mission is to empower African businesses to thrive and innovate through strategic guidance and
-                        transformative solutions. We are committed to fostering sustainable growth, driving impactful
-                        change, and unlocking the full potential of businesses across the continent.
+                        Our mission is to empower African businesses to thrive and innovate through strategic guidance and transformative solutions. We are committed to fostering sustainable growth, driving impactful change, and unlocking the full potential of businesses across the continent.
                     </p>
                 </div>
                 <div class="col-md-6">
@@ -62,9 +60,7 @@
                     </div>
                     <strong class="my-2">Excellence, Integrity, and Collaboration</strong>
                     <p>
-                        With a vision rooted in excellence, integrity, and collaboration, we aspire to be the catalyst for
-                        Africa's economic advancement, empowering clients to navigate challenges, seize opportunities, and
-                        shape a prosperous future for generations to come.
+                        With a vision rooted in excellence, integrity, and collaboration, we aspire to be the catalyst for Africa's economic advancement, empowering clients to navigate challenges, seize opportunities, and shape a prosperous future for generations to come.
                     </p>
                 </div>
             </div>
@@ -73,7 +69,7 @@
 
     <section class="growth-section animate-on-scroll">
         <div class="container">
-            <h5><img src="{{ asset('images/line.png') }}" alt=""> Our Three pillars to ensure success</h5>
+            <h5 class="my-auto"><img src="{{ asset('images/line.png') }}" alt=""> Our Three pillars to ensure success</h5>
             <h2>Empowering your growth <br> through;</h2>
         </div>
     </section>
@@ -147,7 +143,7 @@
     <!-- Stats Section -->
     <section class="px-5 animate-on-scroll">
         <div class="stats-section3">
-            <div class="container">
+            <div class="">
                 <div id="stats_img_desktop">
                     <img src="{{ asset('images/about-desktop.png') }}" alt="Card image">
                 </div>

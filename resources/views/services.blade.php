@@ -183,7 +183,7 @@
         
     <section class="px-5 animate-on-scroll">
         <div class="stats-section4">
-            <div class="container">
+            <div class="">
                 <div id="stats_img_desktop">
                     <img src="{{ asset('images/service-desktop.png') }}" alt="Card image">
                 </div>

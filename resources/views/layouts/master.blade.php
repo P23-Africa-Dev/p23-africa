@@ -30,16 +30,16 @@
 
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <style>
+            .nav-link.active-custom {
+                color: #0D4036 !important;
+                font-weight: 800 !important;
+            }
+        </style>
     </head>
 
     <body>
-        <style>
-            /* @media only screen and (max-width: 980px) {
-            .navbar .collapse .nav-item{
-                margin-top: 1rem;
-            }
-        } */
-        </style>
         {{-- NAVBAR --}}
         @include('layouts.includes.navbar')
 
@@ -52,18 +52,6 @@
 
         @include('layouts.includes.footer')
 
-        <script>
-            $(window).scroll(function() {
-                var scroll = $(window).scrollTop();
-                if (scroll > 100) {
-                    $('#navbar').addClass('bg-scrolling');
-                } else {
-                    $('#navbar').removeClass('bg-scrolling');
-                }
-            })
-            // END NAVBAR SCROLL ANIMATION
-        </script>
-
 
         {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
         <script src="{{ asset('js/script.js') }}"></script>
@@ -71,6 +59,32 @@
         </script>
 
         <script>
+            let isScrolled = false;
+
+            // Scroll detection
+            $(window).scroll(function() {
+                const scroll = $(window).scrollTop();
+
+                if (scroll > 100) {
+                    $('#navbar').addClass('bg-scrolling');
+                    isScrolled = true;
+                } else {
+                    $('#navbar').removeClass('bg-scrolling');
+                    isScrolled = false;
+                    $('#nav .nav-link').removeClass('active-custom');
+                }
+            });
+
+            // Menu click handler (bound once)
+            $('#nav .nav-link').on('click', function(e) {
+                if (isScrolled) {
+                    $('#nav .nav-link').removeClass('active-custom');
+                    $(this).addClass('active-custom');
+                }
+            });
+
+
+
             // ANIMATE ON SCROLL
             $(document).ready(function() {
                 function animateOnScroll() {

@@ -51,8 +51,7 @@
         <div class="highlight-overlay position-absolute top-0 start-0"></div>
         <div class="me-auto ms-auto" style="width: 65%;">
             <h3>
-                We collaborate across industries to empower founders in scaling their start-ups into transformative,
-                world-changing enterprises.
+                We work with entrepreneurs at any stage, helping them build thriving businesses that solve problems and transform Africa.
             </h3>
         </div>
     </section>
@@ -92,13 +91,13 @@
     </section>
 
     <section id="how_we_help" class="content-section animate-on-scroll">
-        <div class="container py-5">
+        <div class="py-5 content">
             <h2 class="section-title">How We Help Our Clients</h2>
             <div class="custom-underline"></div>
 
-            <div class="row g-4">
+            <div class="row g-5">
                 <div class="col-md-8">
-                    <div class="row g-4">
+                    <div class="row g-5">
                         <div class="col-md-6">
                             <div class="service-card" id="one">
                                 <div class="service-icon">
@@ -137,7 +136,7 @@
                 <!-- Expansion Column -->
                 <div class="col-md-4 d-flex">
                     <div class="service-card d-flex flex-column w-100" id="four">
-                        <div>
+                        <div class="box-four">
                             <div class="service-icon">
                                 {{-- <i class="bi bi-fullscreen"></i> --}}
                                 <img src="{{ asset('images/expansion.png') }}" alt="">
@@ -373,7 +372,7 @@
     <!-- Stats Section -->
     <section class="px-4 content-section animate-on-scroll">
         <div class="stats-section2">
-            <div class="container">
+            <div class="">
                 <div id="stats_img_desktop">
                     <img src="{{ asset('images/frame_desktop.png') }}" alt="Card image">
                 </div>

@@ -20,7 +20,7 @@
             <!-- Image Side -->
             <div class="col-12 col-md-6 text-center">
                 <div class="contact-image mx-auto" style="max-width: 380px;">
-                    <img src="{{ asset('images/contact_header.jpg') }}" alt="Smiling Woman" />
+                    <img src="{{ asset('images/contact_header.png') }}" alt="Smiling Woman" />
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@
     <section class="contact-info animate-on-scroll">
         <div class="container text-left text-md-start">
             <h5 class="text-center text-md-start">Contact Information</h5>
-            <div style="gap: 20px" class="d-flex flex-lg-row    col-lg-6 justify-content-center justify-content-md-start text-left text-md-start">
+            <div style="gap: 10px" class="d-flex flex-lg-row mx-5 col-lg-6 justify-content-center justify-content-md-start text-left text-md-start">
                 <div class="col-md-4 info-box mb-4 mb-md-0">
                     <i class="fas fa-phone-alt"></i>
                     <p><a href="tel:+442080921281" class="text-dark text-decoration-none fw-bold">+44 208 0921 281</a></p>
@@ -91,7 +91,7 @@
                             185 Tower Bridge Rd <br>
                             185 Tower Bridge Rd, London SE1 2UF, UK
                         </p>
-                        <div>
+                        <div id="google-map">
                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9582196.954783212!2d-15.016855774923814!3d54.1020496614009!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x25a3b1142c791a9%3A0xc4f8a0433288257a!2sUnited%20Kingdom!5e0!3m2!1sen!2sng!4v1745502051728!5m2!1sen!2sng" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </div>
 
@@ -107,5 +107,20 @@
                 </div>
             </div>
         </div>
+    </section>
+
+    <section class="animate-on-scroll">
+        <div class="subscribe-box">
+            <div class="subcribe-content">
+                <div class="subscribe-text">
+                    <h2>Subscribe</h2>
+                    <p>to our Newsletter</p>
+                  </div>
+                  <form class="subscribe-form" action="#" method="post">
+                    <input type="email" name="email" placeholder="Email" required>
+                    <button type="submit">Subscribe</button>
+                  </form>
+            </div>
+          </div>
     </section>
 @endsection
