@@ -4,7 +4,7 @@
 
 @section('content')
     <section class="hero-section animate-on-scroll">
-        <div class="hero-overlay"></div>
+        {{-- <div class="hero-overlay"></div> --}}
         <div class="container hero-content">
             <div class="hero-content-block">
                 <div class="left-block">
@@ -42,30 +42,33 @@
                 </div>
             </div>
         </div>
-    </section>
 
-    <section id="mission_vision" class="animate-on-scroll">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 mb-md-0 mb-5">
-                    <h5>Our Mission <span></span></h5>
-                    <strong class="my-2">Business Empowerment</strong>
-                    <p>
-                        Our mission is to empower African businesses to thrive and innovate through strategic guidance and transformative solutions. We are committed to fostering sustainable growth, driving impactful change, and unlocking the full potential of businesses across the continent.
-                    </p>
-                </div>
-                <div class="col-md-6">
-                    <div id="h5">
-                        <h5>Our Vision <span></span></h5>
+
+        <section id="mission_vision" class="animate-on-scroll">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 mb-md-0 mb-5">
+                        <h5>Our Mission <span></span></h5>
+                        <strong class="my-2">Business Empowerment</strong>
+                        <p>
+                            Our mission is to empower African businesses to thrive and innovate through strategic guidance and transformative solutions. We are committed to fostering sustainable growth, driving impactful change, and unlocking the full potential of businesses across the continent.
+                        </p>
                     </div>
-                    <strong class="my-2">Excellence, Integrity, and Collaboration</strong>
-                    <p>
-                        With a vision rooted in excellence, integrity, and collaboration, we aspire to be the catalyst for Africa's economic advancement, empowering clients to navigate challenges, seize opportunities, and shape a prosperous future for generations to come.
-                    </p>
+                    <div class="col-md-6">
+                        <div id="h5">
+                            <h5>Our Vision <span></span></h5>
+                        </div>
+                        <strong class="my-2">Excellence, Integrity, and Collaboration</strong>
+                        <p>
+                            With a vision rooted in excellence, integrity, and collaboration, we aspire to be the catalyst for Africa's economic advancement, empowering clients to navigate challenges, seize opportunities, and shape a prosperous future for generations to come.
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
     </section>
+
+
 
     <section class="growth-section animate-on-scroll">
         <div class="container">
@@ -141,7 +144,7 @@
 
 
     <!-- Stats Section -->
-    <section class="px-5 animate-on-scroll">
+    <section class="px-2 animate-on-scroll">
         <div class="stats-section3">
             <div class="">
                 <div id="stats_img_desktop">

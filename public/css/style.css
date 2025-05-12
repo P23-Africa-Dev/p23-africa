@@ -21,8 +21,7 @@
 
     src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-Black.woff2")
             format("woff2"),
-        url("../fonts/gt-walsheim-pro/GTWalsheimPro-Black.woff")
-            format("woff"); /* Adjust file names and paths as needed */
+        url("../fonts/gt-walsheim-pro/GTWalsheimPro-Black.woff") format("woff"); /* Adjust file names and paths as needed */
 }
 @font-face {
     font-family: "GT Walsheim Black"; /* Name your font family */
@@ -32,14 +31,21 @@
         url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff")
             format("woff"); /* Adjust file names and paths as needed */
 }
+@font-face {
+    font-family: "GT Walsheim ConB"; /* Name your font family */
+
+    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedBold.woff2")
+            format("woff2"),
+        url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedBold.woff")
+            format("woff"); /* Adjust file names and paths as needed */
+}
 
 @font-face {
     font-family: "IvyOra Text"; /* Name your font family */
 
     src: url("../fonts/ivyora-text/IvyOraText-RegularItalic.woff2")
             format("woff2"),
-        url("../fonts/ivyora-text/IvyOraText-RegularItalic.woff")
-            format("woff"); /* Adjust file names and paths as needed */
+        url("../fonts/ivyora-text/IvyOraText-RegularItalic.woff") format("woff"); /* Adjust file names and paths as needed */
 }
 
 * {
@@ -47,12 +53,12 @@
     padding: 0;
     box-sizing: border-box;
 }
-html{
+html {
     scroll-behavior: smooth;
 }
 .scroll-offset {
-    padding-top: 130px;      /* space above */
-    margin-top: -130px;      /* pull it back up to preserve layout */
+    /* padding-top: 130px;      space above */
+    margin-top: -130px; /* pull it back up to preserve layout */
 }
 body,
 h3 {
@@ -77,7 +83,9 @@ h3 {
     font-weight: bold;
     margin: 0px -10px;
 }
-
+.logo img {
+    width: 62px;
+}
 /* #nav ul {
     list-style: none;
     display: flex;
@@ -88,8 +96,8 @@ h3 {
     position: relative;
   } */
 
-  /* START */
-  .overlay {
+/* START */
+.overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -98,13 +106,13 @@ h3 {
     background: rgba(0, 0, 0, 0.5);
     z-index: 1049;
     display: none;
-  }
+}
 
-  .overlay.active {
+.overlay.active {
     display: block;
-  }
+}
 
-  .sidebar {
+.sidebar {
     position: fixed;
     top: 0;
     right: -300px;
@@ -112,49 +120,49 @@ h3 {
     height: 80%;
     background-color: #fff;
     z-index: 1050;
-    box-shadow: -2px 0 5px rgba(0,0,0,0.3);
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
     transition: right 0.3s ease-in-out;
     overflow-y: auto;
     padding: 20px;
     border-radius: 10px;
-  }
+}
 
-  .sidebar.active {
+.sidebar.active {
     right: 0;
-  }
+}
 
-  .submenu {
+.submenu {
     display: none;
-  }
-  .submenu h5{
+}
+.submenu h5 {
     font-size: 16px;
     font-weight: 500;
-  }
-  .submenu p{
+}
+.submenu p {
     font-size: 12px;
     font-weight: 400;
-  }
+}
 
-  .submenu.active {
+.submenu.active {
     display: block;
-  }
+}
 
-  .main-menu {
+.main-menu {
     display: block;
-  }
+}
 
-  .main-menu.hide {
+.main-menu.hide {
     display: none;
-  }
+}
 
-  .sidebar .nav-link {
+.sidebar .nav-link {
     cursor: pointer;
-  }
-  #backBtn1{
-      color: #0D4036;
-  }
+}
+#backBtn1 {
+    color: #0d4036;
+}
 
-  /* .social-icons a {
+/* .social-icons a {
     font-size: 20px;
     margin-right: 10px;
     color: #0D4036;
@@ -162,13 +170,12 @@ h3 {
     justify-content: end;
   } */
 
-  .close-btn {
+.close-btn {
     font-size: 1.5rem;
     float: right;
     cursor: pointer;
-  }
+}
 /* END */
-
 
 /* section {
     opacity: 0;
@@ -189,7 +196,7 @@ section.visible{
     opacity: 1;
     transform: translateY(0);
 }
-.navbar-full .navbar{
+.navbar-full .navbar {
     padding: 10px 60px;
 }
 .navbar-full {
@@ -207,6 +214,10 @@ section.visible{
     padding-bottom: 5px;
     font-family: "GT Walsheim Con";
     margin: 0px 10px;
+    transition: 300ms;
+}
+.navbar #nav li .nav-link:hover {
+    color: #cecece;
 }
 .navbar .navbar-toggler {
     color: #fff;
@@ -225,7 +236,7 @@ section.visible{
     width: 100%;
     height: 23px;
     /* margin-top: 50px; */
-    background: url("../images/nav.svg") repeat-x;
+    /* background: url("../images/nav.svg") repeat-x; */
     top: 25px;
     /* bottom: -50; */
     left: 0;
@@ -242,33 +253,33 @@ section.visible{
     color: #fff;
 }
 
-.main-nav .dropdown-mega{
-    position: relative;
+.main-nav .dropdown-mega {
+    position: absolute !important;
     left: 0;
     right: 0;
+    margin-top: -0.1rem !important;
     width: 100%;
-    padding: 1rem;
     border-radius: 0%;
     /* background-color: #f8f9fa;  */
     border-top: 0px solid #ffffff;
 }
-.main-nav .dropdown-mega .line{
-    border-right: 1px solid #0D403666;
+.main-nav .dropdown-mega .line {
+    border-right: 1px solid #0d403666;
 }
-.main-nav .dropdown-menu a{
+.main-nav .dropdown-menu a {
     color: #353535 !important;
     background: none !important;
     text-decoration: none;
 }
-.main-nav .dropdown-menu a b{
+.main-nav .dropdown-menu a b {
     font-size: 16px !important;
     font-weight: 400 !important;
     line-height: 100%;
-    color: #0D4036;
+    color: #0d4036;
     font-family: "GT Walsheim Con";
 }
-.main-nav .dropdown-menu p{
-    color: #0D4036 !important;
+.main-nav .dropdown-menu p {
+    color: #0d4036 !important;
     font-size: 14px;
     font-weight: 400;
     font-family: "GT Walsheim Con";
@@ -282,6 +293,9 @@ section.visible{
         font-family: "GT Walsheim Pro";
         color: #000;
         z-index: 1000;
+    }
+    .navbar-full .navbar {
+        padding: 10px 15px;
     }
     .sidebar #nav li a {
         text-decoration: none;
@@ -306,11 +320,11 @@ section.visible{
         transform-origin: left;
         transition: transform 0.3s ease;
     }
-    
+
     .sidebar #nav li a:hover::after {
         transform: scaleX(0.8);
     }
-    .sidebar .contact{
+    .sidebar .contact {
         margin-bottom: 4rem;
     }
     .sidebar .contact #btn {
@@ -319,15 +333,15 @@ section.visible{
         border-radius: 5px;
     }
     .sidebar .subscribe #btn {
-        background-color: #0D4036;
-        border: 2px #0D4036 solid;
+        background-color: #0d4036;
+        border: 2px #0d4036 solid;
         color: #fff;
         border-radius: 5px;
         margin-bottom: 1rem;
     }
     .social-icons a {
-        color: #0D4036;
-      }
+        color: #0d4036;
+    }
 }
 
 /* NAVBAR SCROLL */
@@ -338,10 +352,10 @@ section.visible{
         margin: 0px 20px;
         z-index: 1000;
     }
-    .main-nav{
+    .main-nav {
         margin-left: -120px;
     }
-    .main-nav .contact{
+    .main-nav .contact {
         margin-bottom: 0rem;
         display: none !important;
     }
@@ -358,22 +372,28 @@ section.visible{
         color: #fff;
         position: relative;
         justify-content: end;
-      }
+    }
     .bg-scrolling {
-        background-color: #fff; 
-        color: #0D4036;
-        /* box-shadow: 0px 4px 7px #777; */
+        background-color: #fff;
+        color: #0d4036;
+        box-shadow: 0px 4px 7px #777;
         z-index: 1000;
-        padding: 10px 0px;
+        padding: 0px 0px;
+        transition: 500ms;
     }
     .bg-scrolling .navbar #nav li a {
         text-decoration: none;
         font-size: 16px;
-        color: #0D4036;
+        color: #0d4036;
         font-weight: 500;
+        transition: 300ms;
+    }
+    .bg-scrolling .navbar #nav li a:hover {
+        color: #08201b;
+        font-weight: 700;
     }
 
-      /* .bg-scrolling .nav-link.active-custom {
+    /* .bg-scrolling .nav-link.active-custom {
         color: #0D4036 !important;
         font-weight: 800;
       } */
@@ -382,29 +402,28 @@ section.visible{
         font-weight: 800;
     } */
     .bg-scrolling .navbar .navbar-toggler {
-        color: #0D4036;
-        border: 0px solid #0D4036;
+        color: #0d4036;
+        border: 0px solid #0d4036;
     }
-    
+
     .bg-scrolling .navbar .collapse #btn {
         /* border: 3px #000 solid; */
-        background-color: #0D4036;
+        background-color: #0d4036;
         color: #fff;
     }
     .bg-scrolling .navbar .collapse #btn:hover {
-        border: 2px #0D4036 solid;
+        border: 2px #0d4036 solid;
         background-color: transparent;
-        color: #0D4036;
+        color: #0d4036;
     }
-    .bg-scrolling .navbar .collapse .social-icons a{
-        color: #0D4036;
+    .bg-scrolling .navbar .collapse .social-icons a {
+        color: #0d4036;
     }
     .bg-scrolling .navbar img {
         -webkit-filter: invert(100%);
         filter: invert(100%);
     }
 }
-
 
 .hero {
     display: flex;
@@ -427,19 +446,27 @@ section.visible{
     font-family: "Montserrat";
 }
 
-.hero-text h1 #font{
+.hero-text h1 #font {
     font-style: italic;
-    color: #4ee3b5;
+    color: #52ccb4;
     font-family: "IvyOra Text";
+    letter-spacing: 2px;
+}
+.hero-text h1 #fonts {
+    font-style: italic;
+    color: #52ccb4;
+    font-family: "IvyOra Text";
+    letter-spacing: 2px;
 }
 
 .hero-text p {
     margin-top: 20px;
     max-width: 90%;
     font-size: 24px;
-    width: 70%;
+    width: 80%;
     font-family: "GT Walsheim Con";
     margin-bottom: 2rem;
+    color: #ffffff;
 }
 
 .hero-text a {
@@ -457,7 +484,7 @@ section.visible{
     font-weight: 400;
     width: 45%;
 }
-.hero-text a:hover{
+.hero-text a:hover {
     background-color: #fff;
     color: #003c32;
 }
@@ -517,11 +544,28 @@ section.visible{
     display: flex;
     flex-direction: column;
 }
-@media screen and (max-width: 580px) {
-    /* .hero .row{
-        display: flex;
-        justify-content: space-between;
-    } */
+
+@media screen and (max-width: 400px) {
+    .animated-images {
+        grid-template-columns: repeat(2, 165px) !important;
+        gap: 20px;
+    }
+    .hero-text h1 {
+        font-size: 33px !important;
+        margin: 0;
+        font-weight: 700;
+    }
+    .hero-text h1 #font {
+        font-size: 35px;
+        letter-spacing: 0px;
+    }
+    .hero-text h1 #fonts {
+        font-size: 39px;
+        letter-spacing: 0px;
+    }
+    .hero-text h1 #buss {
+        font-size: 32px !important;
+    }
 }
 @media screen and (max-width: 580px) {
     .navbar #nav li a::after {
@@ -538,7 +582,7 @@ section.visible{
         padding: 7rem 0px 5rem 0px;
     }
     #header {
-        padding: 10px 20px;
+        padding: 10px 15px;
         background-color: transparent;
     }
     .hero-text {
@@ -547,21 +591,29 @@ section.visible{
         /* font-family: 'Montserrat'; */
     }
     .hero-text h1 {
-        font-size: 40px;
+        font-size: 36px;
         margin: 0;
         font-weight: 700;
     }
-    .hero-text h1 #buss{
-        font-size: 29px;
+    .hero-text h1 #font {
+        font-size: 40px;
+        letter-spacing: 0px;
+    }
+    .hero-text h1 #fonts {
+        font-size: 44px;
+        letter-spacing: 0px;
+    }
+    .hero-text h1 #buss {
+        font-size: 34px;
     }
     .hero-text p {
         margin-top: 20px;
         width: 100%;
-        font-size: 20px;
+        font-size: 17px;
     }
     .hero-text a {
         margin-top: -15px;
-        padding: 20px 90px;
+        padding: 20px 60px;
         border-radius: 10px;
         background-color: transparent;
         color: #fff;
@@ -588,10 +640,9 @@ section.visible{
     }
     .hero-text #dot {
         width: 56px;
+        margin-right: 4px;
     }
 }
-
-
 
 @keyframes scroll {
     0% {
@@ -632,7 +683,7 @@ section.visible{
 }
 
 /* HIGHLIGHT */
-#space{
+#space {
     padding: 1rem 0px;
 }
 #highlight {
@@ -642,7 +693,6 @@ section.visible{
     /* background: linear-gradient(#003c32d2, #003c32cc), url('../images/map.png'); */
     color: #fff;
     /* visibility: visible !important; */
-
 }
 .highlight-overlay {
     background: url("../images/map.png") no-repeat center center;
@@ -654,9 +704,10 @@ section.visible{
 #highlight h3 {
     font-size: 40px;
     font-weight: 600;
+    font-family: "Montserrat";
 }
 @media screen and (max-width: 580px) {
-    #space{
+    #space {
         padding: 0rem 0px;
     }
     #highlight h3 {
@@ -666,7 +717,10 @@ section.visible{
         letter-spacing: 1px;
     }
     #highlight {
-        padding: 2rem 0px 7rem 0px;
+        padding: 2rem 0px 4rem 0px;
+    }
+    #highlight .me-auto {
+        width: 70% !important;
     }
 }
 
@@ -693,6 +747,9 @@ section.visible{
 .who-we-are .flex-column {
     padding: 0px 150px 0px 10px;
 }
+.who-we-are .flex-column .minor {
+    display: block;
+}
 .who-we-are h2 {
     font-size: 48px;
     font-family: "Montserrat";
@@ -706,25 +763,40 @@ section.visible{
 
 /* Learn more button styling */
 .learn-more {
+    display: flex;
+    color: #0f3e2e;
+}
+.learn-more span {
+    font-size: 19px;
+    color: #101e1a;
+    font-family: "GT Walsheim Con";
+    font-weight: 500;
+}
+.learn-more img {
+    width: auto;
+    height: 27px;
+    padding-left: 20px;
+}
+/* .learn-more {
     font-weight: 400;
     color: #0f3e2e;
     transition: color 0.3s ease;
     display: block;
     margin-top: 2rem;
-}
-.learn-more span {
+} */
+/* .learn-more span {
     font-size: 19px;
     color: #101e1a;
-}
+} */
 
-.learn-more .arrow {
-    background-color: #0f3e2e;
-    color: white;
-    padding: 20px;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    transition: background-color 0.3s ease;
+.learn-more .arrow img {
+    /* background-color: #0f3e2e;
+    color: white; */
+    /* padding: 20px;
+    border-radius: 50%; */
+    /* width: 24px;
+    height: 24px; */
+    /* transition: background-color 0.3s ease; */
 }
 
 .learn-more:hover {
@@ -734,6 +806,9 @@ section.visible{
     background-color: #0d2f25;
 }
 @media screen and (max-width: 580px) {
+    .who-we-are .flex-column .minor {
+        display: inline;
+    }
     .bg-overlay {
         background-size: cover;
         width: 50%;
@@ -751,21 +826,33 @@ section.visible{
         padding: 30px 20px;
     }
     .who-we-are h2 {
-        font-size: 36px;
+        font-size: 26px;
+        color: #101e1a;
+        font-weight: 700;
+        font-family: "Montserrat";
+        margin-top: 1.3rem;
     }
     .who-we-are p {
         line-height: 24px;
         font-size: 20px;
+        font-family: "GT Walsheim Con";
+        font-weight: 400;
+        margin-bottom: 1rem !important;
+    }
+    .learn-more {
+        font-size: 18px;
+        display: flex;
     }
     .learn-more span {
-        font-size: 20px;
+        font-size: 18px;
         color: #101e1a;
+        font-family: "GT Walsheim Con";
+        font-weight: 500;
     }
-    .learn-more .arrow {
-        padding: 5.4px;
-        border-radius: 50%;
-        width: 36px;
-        height: 36px;
+    .learn-more img {
+        width: auto;
+        height: 25px;
+        padding-left: 20px;
     }
 }
 
@@ -775,20 +862,21 @@ section.visible{
     margin-top: 0rem;
     margin-bottom: 0rem;
     padding-bottom: 6rem;
-    background: linear-gradient(#ffffff93, #ffffff93), url('../images/bg-grey.png');
+    background: linear-gradient(#ffffff93, #ffffff93),
+        url("../images/bg-grey.png");
     /* background-image: url('../images/bg-grey.png'); */
 }
-.section-title {
+#how_we_help .section-title {
     font-weight: 700;
     font-size: 48px !important;
-    color: #101E1A;
-    font-family: 'Montserrat';
+    color: #101e1a;
+    font-family: "Montserrat";
 }
 
 .custom-underline {
     width: 220px;
     height: 3px;
-    background-color: #0D4036;
+    background-color: #0d4036;
     margin-top: 0.5rem;
     margin-bottom: 2rem;
 }
@@ -800,17 +888,17 @@ section.visible{
     border-radius: 0px;
     height: 100%;
 }
-.service-card .box-four{
+.service-card .box-four {
     padding-top: 4rem;
 }
-.service-card #read{
-    margin-top: 5rem;
+.service-card #read {
+    margin-top: 2rem;
 }
-.service-card p{
+.service-card p {
     font-size: 22px;
     font-weight: 400;
     font-family: "GT Walsheim Con";
-    color: #0D4036;
+    color: #0d4036;
     line-height: 28px;
 }
 
@@ -823,11 +911,11 @@ section.visible{
     font-weight: 700;
     font-size: 24px;
     margin-bottom: 0.5rem;
-    font-family: "GT Walsheim Pro" !important;
+    font-family: "GT Walsheim ConB" !important;
 }
 
 .read-more-btn {
-    background-color: #0D4036;
+    background-color: #0d4036;
     color: #fff;
     font-weight: 600;
     padding: 0.7rem 1rem;
@@ -844,10 +932,10 @@ section.visible{
     border: 2px solid #054b5e;
     color: #054b5e;
 }
-#how_we_help .content{
+#how_we_help .content {
     padding: 0px 5.2rem;
 }
-#how_we_help .flex-column{
+#how_we_help .flex-column {
     padding: 0px 30px;
 }
 #how_we_help #one {
@@ -855,7 +943,7 @@ section.visible{
     background-color: #2d9378 !important;
     box-shadow: 2px 2px 10px #00000056 !important;
 }
-#how_we_help #one p{
+#how_we_help #one p {
     color: #fff !important;
 }
 #how_we_help #two {
@@ -876,18 +964,50 @@ section.visible{
     color: #0d4036 !important;
     box-shadow: 2px 2px 10px #00000056 !important;
 }
-#how_we_help #four img{
+#how_we_help #four img {
     margin-bottom: -1rem;
 }
 @media screen and (max-width: 580px) {
-    .section-title {
-        font-size: 26px !important;
+    #how_we_help {
+        padding-top: 0rem;
+        margin-top: 0rem;
+        margin-bottom: 0rem;
+        padding-bottom: 6rem;
+        background: linear-gradient(#ffffff93, #ffffff93),
+            url("../images/bg-grey.png");
+        /* background-image: url('../images/bg-grey.png'); */
     }
-    
+    #how_we_help .service-card span {
+        display: none;
+    }
+    #how_we_help .flex-column {
+        padding: 0.1rem 1.2rem;
+    }
+    .service-title {
+        font-weight: 1000 !important;
+        font-size: 24px;
+        margin-bottom: 0.5rem;
+        font-family: "GT Walsheim ConB" !important;
+    }
+    .service-card .box-four {
+        padding-top: 0rem;
+    }
+    .service-card #read {
+        margin-top: 0rem;
+    }
+    #how_we_help .section-title {
+        font-size: 26px !important;
+        font-weight: 700 !important;
+        font-family: "Montserrat" !important;
+    }
+    .service-card .box-four p {
+        font-size: 20px;
+    }
     .custom-underline {
         width: 220px;
+        margin-bottom: 3rem;
     }
-    #how_we_help .content{
+    #how_we_help .content {
         padding: 0px 1.2rem;
     }
     #how_we_help #one {
@@ -904,9 +1024,6 @@ section.visible{
     }
 }
 
-
-
-
 /* GLOBAL REACH */
 .global_reach {
     text-align: center;
@@ -916,15 +1033,20 @@ section.visible{
     /* border: 3px solid #022A4933 */
     border-top: 3px dashed transparent;
     border-bottom: 3px dashed transparent;
-    border-image: repeating-linear-gradient(to right, #022a4927 0 10px, transparent 10px 20px);
+    border-image: repeating-linear-gradient(
+        to right,
+        #022a4927 0 10px,
+        transparent 10px 20px
+    );
     border-image-slice: 1;
 }
 
 .global_reach h2 {
     font-size: 64px;
     font-weight: 700;
-    color: #0D4036;
-    font-family: "GT Walsheim Con"
+    color: #0d4036;
+    font-family: "GT Walsheim Con";
+    padding-top: 10px;
 }
 
 .global_reach h2 span {
@@ -939,7 +1061,7 @@ section.visible{
 
 .stat-box {
     font-family: "GT Walsheim Con";
-    margin: auto 0px;
+    margin: 20px 0px;
     text-align: center;
 }
 
@@ -951,7 +1073,8 @@ section.visible{
     overflow: hidden;
     position: relative;
     display: block;
-    font-family: "GT Walsheim Con"
+    font-family: "GT Walsheim ConB";
+    letter-spacing: 24%;
     /* justify-content: center; */
     /* align-items: center; */
 }
@@ -978,7 +1101,7 @@ section.visible{
 
 .label {
     font-size: 20px;
-    letter-spacing: 0.15rem;
+    letter-spacing: 0px;
     text-transform: uppercase;
     margin-top: 8px;
     color: #223d38;
@@ -987,13 +1110,24 @@ section.visible{
     display: none;
 }
 @media screen and (max-width: 580px) {
+    .stats {
+        margin-top: 40px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
     #how_we_help {
         margin-top: 2rem;
         margin-bottom: 6rem;
     }
+    /* .global_reach{
+        padding: 20px 0px !important;
+    } */
     .global_reach h2 {
-        font-size: 24px;
-        font-weight: 600;
+        font-size: 27px;
+        font-weight: 700;
         color: #2e4f48;
     }
     .global_reach h2 span {
@@ -1013,33 +1147,40 @@ section.visible{
         display: none;
     }
     .read-more-btn-2 {
-        background-color: #0D4036;
+        background-color: #0d4036;
         color: #fff;
         font-size: 16px;
         font-weight: 600;
-        padding: 0.5rem 1rem;
+        letter-spacing: 0.5px;
+        padding: 10px 1rem;
         border-radius: 8px;
         text-decoration: none;
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
         transition: all 0.3s ease;
+        font-family: "GT Walsheim Con";
     }
-    
+
     /* .read-more-btn-2:hover {
         background-color: #f0f0f0;
     } */
     .number {
         font-size: 40px;
+        font-weight: 700;
         color: #0f2e29;
-        height: 3.5rem;
+        font-family: "GT Walsheim ConB";
+        height: 50px;
+        font-weight: bolder !important;
+        letter-spacing: 4% !important;
     }
     .label {
-        font-size: 14px;
-        letter-spacing: 0.0rem;
+        font-size: 17px;
+        letter-spacing: 1.5px !important;
         text-transform: uppercase;
-        margin-top: 8px;
-        color: #223d38;
+        margin-top: 2px;
+        font-weight: lighter !important;
+        color: #223d38a1;
         margin-bottom: 1rem;
     }
 }
@@ -1087,9 +1228,11 @@ section.visible{
 } */
 .testimonial-section {
     /* background-color: #094B5D; */
-    background: url('../images/group_testimonial.png') no-repeat center center/cover;
+    background: url("../images/group_testimonial.png") no-repeat center
+        center/cover;
     color: #fff;
     width: 100%;
+    background-position: bottom;
     /* height: 390px; */
     padding: 60px 20px 260px;
     text-align: left;
@@ -1117,10 +1260,10 @@ section.visible{
     gap: 20px;
     /* transition: transform 0.5s ease-in-out; */
     /* width: 100%; 3 slides */
-  }
-  .testimonial-section-main .testimonial{
+}
+.testimonial-section-main .testimonial {
     padding: 0px 10px;
-  }
+}
 .testimonial-card {
     background-color: #fff;
     border-radius: 1.5rem;
@@ -1146,7 +1289,7 @@ section.visible{
     margin-top: 20px;
     font-size: 32px !important;
 }
-.testimonial-card h4{
+.testimonial-card h4 {
     font-weight: 200 !important;
     font-size: 20px !important;
 }
@@ -1157,9 +1300,9 @@ section.visible{
     margin-top: 10px;
     font-family: "GT Walsheim Con";
 }
-#horiz{
+#horiz {
     margin-top: 0rem;
-    margin-bottom: 5rem;
+    margin-bottom: 2rem;
     border: 2px solid #0000002d;
 }
 .testimonial-card img {
@@ -1171,25 +1314,30 @@ section.visible{
     /* border: 4px solid #eee; */
     margin-bottom: 20px;
 }
-.testimonial-container .slider-controls{
+.testimonial-container .slider-controls {
     display: none;
 }
 @media screen and (max-width: 580px) {
+    .testimonial-section {
+        padding: 30px 20px 260px;
+        margin-top: -6rem !important;
+    }
     /* .testimonial-section-main{
         overflow: hidden;
         width: 100%;
     } */
-    .testimonial-container{
+    .testimonial-container {
         overflow: hidden;
         width: 100%;
         padding-bottom: 80px;
+        margin-bottom: 1rem;
     }
     .testimonial-section h2 {
         font-size: 26px;
         text-align: center;
     }
-    .testimonial-card{
-        box-shadow: 2px 2px 6px #000;
+    .testimonial-card {
+        box-shadow: 2px 2px 6px #0000005b;
     }
     .testimonial-card:hover {
         background: #fff;
@@ -1201,7 +1349,7 @@ section.visible{
         margin-top: 20px;
         font-size: 32px !important;
     }
-    .testimonial-card h4{
+    .testimonial-card h4 {
         font-weight: 275 !important;
         font-size: 20px !important;
     }
@@ -1224,23 +1372,29 @@ section.visible{
         transition: transform 0.5s ease-in-out;
         justify-content: center;
         gap: 0px;
+        margin-top: -40px; /* Pull cards up into the section */
         /* width: 100%; 3 slides */
-      }
-      .testimonial-container .testimonial {
+    }
+    .testimonial-container .testimonial {
         width: 100%;
         flex-shrink: 0;
         padding: 40px 20px;
         text-align: center;
-      }
-      .testimonial-container .slider-controls {
+    }
+    .testimonial-container .slider-controls {
         position: absolute;
         bottom: 40px;
         left: 50%;
         transform: translateX(-50%);
         display: flex;
         gap: 40px;
-      }
-      .testimonial-container .slider-controls .arrow {
+    }
+    #horiz {
+        margin-top: 0rem;
+        margin-bottom: 2rem;
+        border: 0px solid #0000002d;
+    }
+    .testimonial-container .slider-controls .arrow {
         cursor: pointer;
         /* font-size: 24px;
         color: #555; */
@@ -1250,13 +1404,13 @@ section.visible{
         border: 0px solid #555;
         box-shadow: 2px 2px #000;
         padding: 0px 10px; */
-      }
-      /* .testimonial-container .slider-controls .arrow i{
+    }
+    /* .testimonial-container .slider-controls .arrow i{
         position: relative;
         align-items: center;
       } */
-  
-      /* .testimonial-container .slider-controls .arrow:active {
+
+    /* .testimonial-container .slider-controls .arrow:active {
         background-color: #002523;
         color: #002523;
         border: 1px solid #fff;
@@ -1292,27 +1446,28 @@ section.visible{
     position: relative;
     overflow: hidden;
     width: 100%;
-    /* box-shadow: #0D4036 0px 10px; */
     /* border-bottom-left-radius: 70px; */
 }
 
 .insight-image {
-    width: 100%;
+    width: 97%;
     height: auto;
     display: block;
     border-bottom-left-radius: 70px;
+    box-shadow: 0px 8px 20px #2121214d;
 }
 
 .bottom-bar {
     position: relative;
-    bottom: 0px;
+    bottom: 10px;
     left: 50px;
-    height: 20px;
+    height: 30px;
     width: 100%;
     background-color: #35c6b2;
     /* border-radius: 10px; */
     /* z-index: -1; */
-    margin-left: 30px;
+    margin-left: 20px;
+    z-index: -20;
 }
 
 .insight-text {
@@ -1321,7 +1476,7 @@ section.visible{
 }
 
 .date {
-    font-size: 16px;
+    font-size: 18px;
     color: #003f3c;
     margin-bottom: 25px;
     font-family: "GT Walsheim Con";
@@ -1330,9 +1485,9 @@ section.visible{
 .insight-text h3 {
     font-size: 45px;
     font-weight: 800;
-    color: #093a3e;
+    color: #0d4036;
     margin: 0 0 15px;
-    font-family: "GT Walsheim Bold";
+    font-family: "GT Walsheim Black";
 }
 
 .description {
@@ -1366,14 +1521,13 @@ section.visible{
 }
 @media screen and (max-width: 580px) {
     .insight-section h2 {
-        font-size: 24px;
+        font-size: 26px;
         font-weight: 700;
         margin-bottom: 30px;
     }
     .insight-section {
         padding: 0px 20px;
         font-family: "GT Walsheim Con";
-        background-color: #f9f9f9;
         display: flex;
         justify-content: center;
         margin-bottom: 4rem;
@@ -1383,15 +1537,16 @@ section.visible{
         margin-top: 3rem !important;
     }
 
-    /* .date {
-      font-size: 14px;
-      color: #003f3c;
-      margin-bottom: 10px;
-  } */
+    .date {
+        font-size: 18px;
+        color: #003f3c;
+        margin-bottom: 5px;
+    }
 
     .insight-text h3 {
-        font-size: 32px;
+        font-size: 30px;
         font-weight: 800;
+        font-family: "GT Walsheim Bold";
     }
 
     .description {
@@ -1417,7 +1572,7 @@ section.visible{
 .slider {
     display: flex;
     width: max-content;
-    animation: scrollRight 40s linear infinite;
+    animation: scrollRight 20s linear infinite;
 }
 
 .carousel-container:hover .slider {
@@ -1450,19 +1605,23 @@ section.visible{
 
 .insight-card .date {
     font-size: 14px;
-    color: #555;
+    color: #0d4036;
 }
 
 .insight-card h5 {
     font-size: 20px;
     font-weight: 700;
-    color: #003f3c;
+    color: #0d4036;
     text-transform: capitalize;
+    font-family: "GT Walsheim Con";
 }
 
 .insight-card p {
     font-size: 15px;
-    color: #333;
+    color: #0d4036;
+    font-weight: 400;
+    letter-spacing: 6%;
+    font-family: "GT Walsheim Con";
 }
 
 @keyframes scrollRight {
@@ -1474,11 +1633,11 @@ section.visible{
     }
 }
 
-.carousel-container #btn{
-    margin-top: 4rem;
+.carousel-container #btn {
+    margin-top: 2rem;
     text-align: center;
 }
-.carousel-container #btn a{
+.carousel-container #btn a {
     box-shadow: 2px 2px 8px #000;
 }
 .carousel-container #btn a {
@@ -1493,6 +1652,14 @@ section.visible{
     background-color: #ffffff;
     color: #0d4036;
     border: 2px solid #0d4036;
+}
+@media screen and (max-width: 580px) {
+    .carousel-container {
+        margin-bottom: -1rem;
+    }
+    .carousel-container #btn {
+        margin-top: -0rem;
+    }
 }
 
 /* STATS SECTION */
@@ -1561,7 +1728,7 @@ section.visible{
     font-family: "GT Walsheim Pro";
     width: 65%;
 }
-.stats-section #divider{
+.stats-section #divider {
     margin: 50px 0px;
 }
 .sub-stats {
@@ -1599,59 +1766,59 @@ section.visible{
     font-size: 1rem;
     margin: 0;
 }
-.stats-section2{
+.stats-section2 {
     margin-bottom: 0.5rem;
 }
-.stats-section3{
-    margin-bottom: 2rem;
-    margin-top: 2rem;
+.stats-section3 {
+    margin-bottom: 1rem;
+    margin-top: 1rem;
 }
-.stats-section4{
+.stats-section4 {
     margin-bottom: 0.5rem;
     margin-top: 2rem;
 }
-.stats-section2 #stats_img_desktop img{
+.stats-section2 #stats_img_desktop img {
     display: block;
     width: 100%;
 }
-.stats-section2 #stats_img_mobile img{
+.stats-section2 #stats_img_mobile img {
     display: none;
 }
-.stats-section3 #stats_img_desktop img{
+.stats-section3 #stats_img_desktop img {
     display: block;
     width: 100%;
 }
-.stats-section3 #stats_img_mobile img{
+.stats-section3 #stats_img_mobile img {
     display: none;
 }
-.stats-section4 #stats_img_desktop img{
+.stats-section4 #stats_img_desktop img {
     display: block;
     width: 100%;
 }
-.stats-section4 #stats_img_mobile img{
+.stats-section4 #stats_img_mobile img {
     display: none;
 }
 @media screen and (max-width: 580px) {
-    .stats-section2 #stats_img_desktop img{
+    .stats-section2 #stats_img_desktop img {
         display: none;
     }
-    .stats-section2 #stats_img_mobile img{
+    .stats-section2 #stats_img_mobile img {
         display: block;
         width: 100%;
     }
 
-    .stats-section3 #stats_img_desktop img{
+    .stats-section3 #stats_img_desktop img {
         display: none;
     }
-    .stats-section3 #stats_img_mobile img{
+    .stats-section3 #stats_img_mobile img {
         display: block;
         width: 100%;
     }
 
-    .stats-section4 #stats_img_desktop img{
+    .stats-section4 #stats_img_desktop img {
         display: none;
     }
-    .stats-section4 #stats_img_mobile img{
+    .stats-section4 #stats_img_mobile img {
         display: block;
         width: 100%;
     }
@@ -1660,7 +1827,7 @@ section.visible{
         padding: 20px 0px 20px 0px;
         margin-bottom: 2rem;
     }
-    .stats-section #divider{
+    .stats-section #divider {
         margin: 0px 0px;
     }
     .stats-section .container {
@@ -1712,52 +1879,53 @@ section.visible{
 /* FOOTER */
 @media screen and (max-width: 580px) {
     .footer {
-        background-color: #0D4036;
+        background-color: #0d4036;
         color: white;
         padding: 60px 20px 30px;
         font-family: "GT Walsheim Con";
     }
-    
+
     .footer .logo-text {
-        font-size:  16px;
+        font-size: 16px;
         font-weight: 400;
         letter-spacing: 0.5px;
     }
-    .footer .desk{
+    .footer .desk {
         display: none;
     }
-    .footer .footer-quick-links{
+    .footer .footer-quick-links {
         display: block;
     }
-    .footer .strategy{
+    .footer .strategy {
         display: none;
     }
-    .footer .second-icon{
+    .footer .second-icon {
         display: block;
     }
-    .footer .first-icon{
+    .footer .first-icon {
         display: none;
     }
     .footer .footer-links p {
         font-weight: 400;
-        font-size: 20px;
+        font-size: 19px;
+        font-family: "GT Walsheim Con";
     }
-    
+
     .footer .footer-links a {
         display: block;
         text-decoration: none;
         color: #fff;
         margin: 4px 0;
-        font-size: 16px;
+        font-size: 15px;
         letter-spacing: 0.5px;
     }
-    
+
     .footer .social-icons a {
         color: #d4f437;
         font-size: 20px;
         margin-right: 15px;
     }
-    
+
     .footer .subscribe p {
         font-size: 18px;
         font-weight: 400;
@@ -1769,46 +1937,49 @@ section.visible{
         color: white;
         border-radius: 6px;
     }
-    
+    .footer img {
+        width: 90px;
+    }
     .footer .subscribe input::placeholder {
         color: #ccc;
     }
-    .footer .subscribe_desktop{
+    .footer .subscribe_desktop {
         display: none;
     }
-    .footer .subscribe_mobile{
+    .footer .subscribe_mobile {
         display: block;
+        /* width: 60%; */
         /* position: absolute;
         margin-top: 14rem; */
     }
-    .footer .subscribe_mobile input{
+    .footer .subscribe_mobile input {
         position: absolute;
-        width: 80%;
+        width: 55%;
         padding: 15px 20px;
     }
-    .footer .subscribe_mobile input::placeholder{
+    .footer .subscribe_mobile input::placeholder {
         /* padding: 0px 10px; */
         color: #333333;
     }
-    .footer .subscribe_mobile button{
+    .footer .subscribe_mobile button {
         position: relative;
         justify-content: end;
         float: right;
-        bottom: 13px;
-        right: 30px;
+        bottom: 15px;
+        right: 100px;
         /* padding: 50px 0px; */
-        height: 55px;
+        height: 58px;
     }
     .footer .subscribe button {
         margin-top: 15px;
-        background-color: #CCED60;
+        background-color: #cced60;
         color: black;
         font-weight: 600;
         border: none;
         padding: 10px 25px;
         border-radius: 6px;
     }
-    
+
     .footer-bottom_mobile {
         text-align: right;
         font-size: 16px;
@@ -1816,7 +1987,7 @@ section.visible{
         padding-top: 30px;
         color: #ccc;
     }
-    .footer-bottom_desktop{
+    .footer-bottom_desktop {
         display: none;
     }
     .footer-bottom a {
@@ -1827,31 +1998,33 @@ section.visible{
 }
 @media screen and (min-width: 580px) {
     .footer {
-        background-color: #0D4036;
+        background-color: #0d4036;
         color: white;
         padding: 30px 80px;
         font-family: "GT Walsheim Con";
     }
-    
+    .footer img {
+        width: 90px;
+    }
     .footer .logo-text {
-        font-size:  16px;
+        font-size: 16px;
         font-weight: 400;
     }
-    
+
     .footer .footer-links p {
         font-weight: 400;
         font-size: 20px;
     }
-    .footer .footer-quick-links{
+    .footer .footer-quick-links {
         display: none;
     }
-    .footer .subscribe_mobile{
+    .footer .subscribe_mobile {
         display: none;
     }
-    .footer .first-icon{
+    .footer .first-icon {
         display: none;
     }
-    .footer .footer-bottom_mobile{
+    .footer .footer-bottom_mobile {
         display: none;
     }
     .footer .footer-links a {
@@ -1862,53 +2035,53 @@ section.visible{
         font-size: 16px;
         letter-spacing: 0.5px;
     }
-    
+
     .footer .social-icons a {
         color: #d4f437;
         font-size: 20px;
-        margin-right: 15px;
+        margin-right: 8px;
     }
-    
+
     .footer .subscribe p {
         font-size: 24px;
         font-weight: 300;
         letter-spacing: 0.5px;
     }
     .footer .subscribe input {
-        border: 2px solid #CCED6099;
+        border: 2px solid #cced6099;
         background-color: transparent;
         color: white;
         border-radius: 6px;
         height: 61px;
     }
-    
+
     .footer .subscribe input::placeholder {
         color: #ccc;
     }
-    
+
     .footer .subscribe button {
         margin-top: 15px;
-        background-color: #CCED60;
+        background-color: #cced60;
         color: black;
         font-weight: 600;
         border: none;
         padding: 10px 25px;
         border-radius: 6px;
         font-size: 16px;
-        color: #0D4036;
+        color: #0d4036;
     }
-    
+
     .footer-bottom {
         text-align: right;
         font-size: 16px;
         font-weight: 400;
         padding-top: 30px;
         color: #ccc;
-        font-family: 'Georgia';
+        font-family: "Georgia";
         padding-right: 20px;
         letter-spacing: 8%;
     }
-    
+
     .footer-bottom a {
         color: #ccc;
         margin: 0 5px;
@@ -1936,7 +2109,7 @@ section.visible{
 .contact-text h2 {
     font-size: 45px;
     font-weight: 800;
-    color: white;
+    color: #20b486;
     font-family: "GT Walsheim Pro";
 }
 
@@ -1965,7 +2138,9 @@ section.visible{
     max-width: 100%;
     height: auto;
 }
-
+.contact-info #con {
+    margin-left: 50px !important;
+}
 .contact-image img {
     width: 100%;
     height: 500px;
@@ -1985,14 +2160,37 @@ section.visible{
     margin-top: -15rem;
     margin-bottom: 1rem;
 }
-
+.contact-info i {
+    font-size: 30px !important;
+    margin-top: 1.2rem !important;
+    margin-bottom: 0.8rem !important;
+}
+.contact-info p {
+    font-family: "GT Walsheim Pro";
+    font-weight: 500;
+    font-size: 16px;
+}
 .contact-info h5 {
     font-weight: 700;
     color: #003f3c;
     margin-bottom: 30px;
     margin-left: 90px;
+    font-size: 24px;
 }
-#google-map{
+@media screen and (max-width: 580px) {
+    .contact-info #con {
+        margin-left: 0px !important;
+    }
+    .contact-info h5 {
+        display: none;
+    }
+    .contact-info p {
+        font-family: "GT Walsheim Pro";
+        font-weight: 500;
+        font-size: 15px;
+    }
+}
+#google-map {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.178);
 }
 .info-box {
@@ -2015,98 +2213,156 @@ section.visible{
     color: #000;
 }
 .subscribe-box {
-    background-color: #094B5D; /* Deep teal */
+    background-color: #094b5d; /* Deep teal */
     border-radius: 10px;
     padding: 30px 40px;
     color: white;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     max-width: 95%;
     margin: 0px auto;
     z-index: 1000;
-  }
-.subcribe-content{
+}
+.subcribe-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px 90px;
 }
-  .subscribe-text h2 {
+.subscribe-text h2 {
     font-weight: 800;
     font-family: "GT Walsheim Bold";
     margin: 0;
     font-size: 64px;
     line-height: 40px;
-  }
+}
 
-  .subscribe-text p {
+.subscribe-text p {
     margin: 0;
     font-size: 24px;
     letter-spacing: 10px;
-    color: #FFFFFF;
+    color: #ffffff;
     line-height: 32px;
     font-weight: 275;
     font-family: "GT Walsheim Con";
-  }
+}
 
-  .subscribe-form {
+.subscribe-form {
     flex-grow: 1;
     display: flex;
     gap: 0;
     margin-left: 40px;
-  }
+}
 
-  .subscribe-form input[type="email"] {
+.subscribe-form input[type="email"] {
     border: none;
     padding: 10px 15px;
     border-radius: 10px 0 0 10px;
     outline: none;
     width: 100%;
-  }
-  .subscribe-form input::placeholder{
+}
+.subscribe-form input::placeholder {
     font-size: 16px;
     font-weight: 300;
-    color: #0D4036;
+    color: #0d4036;
     letter-spacing: 0.5px;
     font-family: "GT Walsheim Con";
-  }
+}
 
-  .subscribe-form button {
+.subscribe-form button {
     border: none;
-    background-color: #0D4036;
+    background-color: #0d4036;
     color: white;
     padding: 20px 60px;
     border-radius: 0px 10px 10px 0px;
     font-weight: 600;
     font-size: 16px;
     font-family: "GT Walsheim Pro";
-  }
+}
 
-  @media (max-width: 768px) {
+@media (max-width: 768px) {
+    .contact-info {
+        position: relative;
+        padding: 60px 0;
+        /* background-color: #fff; */
+        /* width: 100%; */
+        font-family: "GT Walsheim Con";
+        margin-top: -15rem;
+        margin-bottom: 1rem;
+    }
     .contact-info h5 {
         margin-left: 0px;
     }
     .subscribe-box {
-      flex-direction: column;
-      text-align: center;
-      gap: 20px;
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+        border-radius: 10px;
+        padding: 30px 10px;
+        color: white;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        max-width: 95%;
+        margin: 0px auto;
+        z-index: 1000;
+    }
+    .subcribe-content {
+        display: block;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin: auto auto;
+        padding: 10px 20px;
+    }
+    .subscribe-text h2 {
+        font-weight: 500;
+        font-family: "GT Walsheim Bold";
+        margin: 0;
+        font-size: 64px;
+        line-height: 40px;
+    }
+
+    .subscribe-text p {
+        margin: 0;
+        font-size: 24px;
+        letter-spacing: 5px;
+        color: #ffffff;
+        line-height: 32px;
+        font-weight: 275;
+        font-family: "GT Walsheim Con";
     }
 
     .subscribe-form {
-      margin-left: 0;
-      flex-direction: column;
-      align-items: stretch;
+        flex-grow: 1;
+        display: flex;
+        gap: 0;
+        margin-left: 0px;
+        margin-top: 1rem;
+    }
+    .subscribe-form input[type="email"] {
+        border: none;
+        padding: 10px 15px;
+        border-radius: 10px 0 0 10px;
+        outline: none;
+        width: 100%;
+    }
+    .subscribe-form input::placeholder {
+        font-size: 16px;
+        font-weight: 300;
+        color: #0d4036;
+        letter-spacing: 0.5px;
+        font-family: "GT Walsheim Con";
     }
 
-    .subscribe-form input[type="email"],
     .subscribe-form button {
-      border-radius: 5px;
-      width: 100%;
+        border: none;
+        background-color: #0d4036;
+        color: white;
+        padding: 20px 10px;
+        border-radius: 0px 10px 10px 0px;
+        font-weight: 400;
+        font-size: 16px;
+        font-family: "GT Walsheim Con";
     }
-
-    .subscribe-form button {
-      margin-top: 10px;
-    }
-  }
+}
 
 @media (min-width: 768px) {
     .info-box {
@@ -2119,19 +2375,19 @@ section.visible{
     margin-bottom: 0rem;
     font-family: "GT Walsheim Pro";
 }
-#contact_form .container{
+#contact_form .container {
     padding-left: 90px;
     padding-right: 90px;
 }
 #contact_form #form {
     position: relative;
     background: linear-gradient(#1d6154, #062c25);
-    padding: 80px 50px;
+    padding: 20px 50px;
     margin-top: -20px;
     border-radius: 10px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.178);
 }
-#contact-img img{
+#contact-img img {
     width: 100%;
     position: relative;
     top: 7rem;
@@ -2143,14 +2399,15 @@ section.visible{
     font-size: 20px;
 }
 #contact_form #form .form-group {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 #contact_form #form .form-group .form-control {
     background: transparent;
     color: #fff;
 }
 #contact_form #form .form-group .form-control::placeholder {
-    color: #fff;
+    color: #ffffff81;
+    font-size: 12px;
 }
 #contact_form #form .send_messages {
     background-color: #20b486;
@@ -2184,41 +2441,47 @@ section.visible{
 
 /* ABOUT PAGE */
 .hero-section {
-    background: url("../images/about-header.jpg") no-repeat center center/cover;
-    height: 100vh;
-    position: relative;
-    background-size: 2400px;
+    background: linear-gradient(#0d4036e5, #0d4036e5),
+        url("../images/about-header.jpg") no-repeat center center/cover;
+    /* background: #0D4036E5; */
+    background-size: 2500px;
     background-position: 50% 12%;
+}
+
+/* .hero-overlay {
+    background: #0D4036E5;
+    position: absolute;
+    inset: 0;
+} */
+
+.hero-content {
+    height: 85vh;
+    position: relative;
+    /* background: #0D4036E5; */
+    width: 100%;
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-top: 4rem;
+    padding-top: 60px;
     font-family: "GT Walsheim Con";
-}
 
-.hero-overlay {
-    background: #0D4036E5;
-    position: absolute;
-    inset: 0;
-}
-
-.hero-content {
-    position: relative;
+    /* position: relative; */
     z-index: 2;
     text-align: left;
-    max-width: 900px;
+    /* max-width: 900px; */
 }
 
 .main-box {
-    border: 5px solid #CCED60;
+    border: 5px solid #cced60;
     padding: 50px 10px;
     margin-bottom: 20px;
     max-width: 700px;
     text-align: left;
     display: inline-block;
     justify-content: center;
-    background-color: #0D4036E5;
+    background-color: #0d4036e5;
 }
 
 .main-box h6 {
@@ -2234,7 +2497,7 @@ section.visible{
     font-size: 40px;
     line-height: 120%;
     /* letter-spacing: 2px; */
-    font-family: 'Montserrat';
+    font-family: "Montserrat";
 }
 
 .descriptions {
@@ -2247,7 +2510,7 @@ section.visible{
 }
 
 .info-tag {
-    border: 5px solid #19867D;
+    border: 5px solid #19867d;
     padding: 30px 10px;
     display: inline-block;
     font-size: 16px;
@@ -2257,9 +2520,9 @@ section.visible{
     margin-bottom: 40px;
     position: relative;
     top: 14.7rem;
-    left: -1.5rem;
+    left: -0.5rem;
     font-family: "GT Walsheim Con";
-    background-color: #0D4036E5;
+    background-color: #0d4036e5;
 }
 
 .contact-btn {
@@ -2289,13 +2552,11 @@ section.visible{
 .left-block {
     grid-column: 1/3;
     position: relative;
-    left: 60px;
+    left: 0px;
 }
 .right-block {
     grid-column: 3/4;
 }
-
-
 
 /* Line from 55% to button */
 .line-connector {
@@ -2304,20 +2565,101 @@ section.visible{
     left: 9px;
     width: 5px;
     height: calc(45% - 20px); /* adjusts to button */
-    background: #CCED60;
+    background: #cced60;
     z-index: 1;
     margin-left: 607px;
 }
 
 @media (max-width: 768px) {
-    #contact_form .container{
+    .hero-section {
+        background: linear-gradient(#0d4036e5, #0d4036e5),
+            url("../images/about-header.jpg") no-repeat center center/cover;
+        /* background: #0D4036E5; */
+        background-size: 2500px;
+        background-position: 50% 100%;
+        padding-top: 20px;
+    }
+
+    /* .hero-overlay {
+        background: #0D4036E5;
+        position: absolute;
+        inset: 0;
+    } */
+
+    .hero-content {
+        height: 90vh;
+        position: relative;
+        /* background: #0D4036E5; */
+        width: 100%;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 4rem;
+        padding-top: 60px;
+        font-family: "GT Walsheim Con";
+
+        /* position: relative; */
+        z-index: 2;
+        text-align: left;
+        /* max-width: 900px; */
+    }
+
+    /* .hero-section {
+        background: url("../images/about-header.jpg") no-repeat center center/cover;
+        height: 100vh;
+        position: relative;
+        background-size: 2400px;
+        background-position: 50% 12%;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        font-family: "GT Walsheim Con";
+    } */
+    .main-box {
+        border: 5px solid #cced60;
+        padding: 40px 20px !important;
+        margin-bottom: 20px;
+        max-width: 700px;
+        text-align: left;
+        display: inline-block;
+        justify-content: center;
+        background-color: #0d4036e5;
+    }
+    .main-box h6 {
+        font-weight: 700;
+        letter-spacing: 2px;
+        color: #fff;
+        font-size: 16px;
+        font-family: "GT Walsheim Con";
+    }
+
+    .main-box h1 {
+        font-weight: 700;
+        font-size: 22px !important;
+        line-height: 120%;
+        /* letter-spacing: 2px; */
+        font-family: "Montserrat";
+    }
+    .descriptions {
+        max-width: 650px;
+        font-size: 16px;
+        color: #f2f2f2;
+        margin-bottom: 30px;
+        width: 90%;
+        font-family: "GT Walsheim Con";
+    }
+    #contact_form .container {
         padding-left: 15px;
         padding-right: 15px;
     }
-    .hero-content {
+    /* .hero-content {
         padding: 0 20px;
         text-align: center;
-    }
+    } */
 
     .line-connector {
         display: none;
@@ -2333,16 +2675,17 @@ section.visible{
 #mission_vision {
     font-family: "GT Walsheim Con";
     margin-top: 6rem;
-    margin-bottom: 6rem;
-    color: #0D4036;
-    padding: 0px 10rem;
+    margin-bottom: 0rem;
+    color: #0d4036;
+    padding: 100px 10rem;
+    background-color: #fffffff5;
 }
 #mission_vision h5 {
     font-size: 24px;
     font-weight: 700;
     margin-bottom: 3rem;
 }
-#mission_vision h5 span{
+#mission_vision h5 span {
     display: block;
     border-bottom: 2px solid #0d4036;
     width: 90px;
@@ -2358,30 +2701,38 @@ section.visible{
     font-weight: 400;
     line-height: 28px;
     width: 90%;
-    font-family: 'GT Walsheim Con';
-    color: #0D4036;
+    font-family: "GT Walsheim Con";
+    color: #0d4036;
     opacity: 70%;
 }
 @media screen and (max-width: 580px) {
     #mission_vision {
-        padding: 0px 1rem;
+        padding: 40px 1rem;
+    }
+    #mission_vision h5 {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 1rem;
     }
     #mission_vision p {
-    font-size: 24px;
-    font-weight: 400;
-    line-height: 28px;
-    width: 100%;
-}
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 28px;
+        width: 100%;
+    }
 }
 
 /* GROWTH SECTION */
 .growth-section {
-    background-color: #094B5D;
+    background-color: #094b5d;
     color: #fff;
     padding: 60px 20px 160px; /* More bottom padding so cards pop out */
     text-align: left;
     position: relative;
     z-index: 1;
+}
+.growth-section .container {
+    margin-left: 4rem;
 }
 .growth-section h5 {
     text-transform: uppercase;
@@ -2392,9 +2743,10 @@ section.visible{
     letter-spacing: 2px;
     font-family: "GT Walsheim Con";
     text-transform: uppercase;
+    margin-bottom: 1rem !important;
     /* margin: auto 0px; */
 }
-.growth-section h5 img{
+.growth-section h5 img {
     width: 72px;
 }
 .growth-section h2 {
@@ -2411,18 +2763,18 @@ section.visible{
     margin-top: -130px; /* Pull cards up into the section */
     margin-bottom: 4rem;
 }
-.growth-container .growth-card h5{
+.growth-container .growth-card h5 {
     font-size: 24px;
     font-weight: 700;
     font-family: "GT Walsheim Pro";
     margin-bottom: 2rem;
 }
-.growth-container .growth-card p{
+.growth-container .growth-card p {
     font-size: 16px;
     font-weight: 400;
     font-family: "GT Walsheim Pro";
 }
-.growth-container img{
+.growth-container img {
     width: 100%;
     height: auto;
 }
@@ -2436,6 +2788,39 @@ section.visible{
     position: relative;
     z-index: 2;
     transition: background-color 0.5s;
+}
+@media screen and (max-width: 580px) {
+    .growth-section {
+        background-color: #094b5d;
+        color: #fff;
+        padding: 60px 20px 160px; /* More bottom padding so cards pop out */
+        text-align: left;
+        position: relative;
+        z-index: 1;
+    }
+    .growth-section .container {
+        margin-left: 0rem;
+    }
+    .growth-section h5 {
+        text-transform: uppercase;
+        font-size: 13px;
+        position: relative;
+        display: inline-block;
+        font-weight: 700;
+        letter-spacing: 2px;
+        font-family: "GT Walsheim Con";
+        text-transform: uppercase;
+        /* margin: auto 0px; */
+    }
+    .growth-section h5 img {
+        width: 31px;
+    }
+    .growth-section h2 {
+        font-size: 26px;
+        font-weight: 700;
+        font-family: "GT Walsheim Pro";
+        text-transform: capitalize;
+    }
 }
 /* .testimonial-card:hover{
   background-color: #19867D;
@@ -2483,7 +2868,6 @@ section.visible{
     color: #0d4036;
 }
 
-
 .commitment-box h4 {
     font-weight: 700;
     border-bottom: 1px solid #00332e;
@@ -2499,17 +2883,17 @@ section.visible{
     line-height: 40px;
 }
 
-.commitment .img-fluid{
+.commitment .img-fluid {
     display: block;
 }
-.commitment .img-fluid2{
+.commitment .img-fluid2 {
     display: none;
 }
 @media screen and (max-width: 580px) {
-    .commitment .img-fluid{
+    .commitment .img-fluid {
         display: none;
     }
-    .commitment .img-fluid2{
+    .commitment .img-fluid2 {
         display: block;
     }
 }
@@ -2672,24 +3056,23 @@ section.visible{
     background-position: -180px !important;
     background-size: 70%;
     padding-top: 6rem;
-    /* padding-bottom: 6rem; */
+    padding-bottom: 6rem;
     position: relative;
     font-family: "GT Walsheim Pro";
     width: 100%;
 }
-.hero-content{
+.hero-content {
     position: relative;
 }
-.services-hero .top-image{
+.services-hero .top-image {
     z-index: -5;
     position: absolute;
     top: -30px;
     right: -40px;
 }
-.services-hero .top-image img{
+.services-hero .top-image img {
     width: 200px;
     height: 150px;
-
 }
 .about .hero-overlay {
     background: transparent;
@@ -2707,7 +3090,6 @@ section.visible{
     /* background: url("../images/service-box.png") no-repeat;
     background-size: contain;
     background-position: top; */
-
 }
 
 .about .hero-content .hero {
@@ -2789,6 +3171,43 @@ section.visible{
     width: 50px;
     height: 50px;
 }
+@media screen and (max-width: 580px) {
+    .services-hero {
+        background: url("../images/servces-bg.png") no-repeat center
+            center/cover;
+        background-position: center !important;
+        background-size: cover;
+        padding-top: 7rem;
+        position: relative;
+        font-family: "GT Walsheim Pro";
+        width: 100%;
+    }
+    .about .left-content h2 {
+        color: #0d4036;
+        font-size: 64px;
+        line-height: 70px;
+        font-weight: 700;
+        margin-bottom: 23px;
+        font-family: "GT Walsheim Con";
+    }
+    .icon-box img {
+        width: 40px !important;
+        height: 40px !important;
+    }
+    .icon-box h4 {
+        font-weight: 400 !important;
+        padding: 0px 80px;
+        font-size: 20px !important;
+        text-align: center;
+        margin-top: 12px;
+    }
+    .hero-content {
+        position: relative;
+    }
+    .services-hero .top-image {
+        display: none;
+    }
+}
 
 /* SECOND SECTION */
 .services {
@@ -2806,8 +3225,14 @@ section.visible{
     min-height: 560px;
 }
 .services .icon-box h4 {
+    font-weight: 700;
     padding: 0px 0px;
     margin: 20px 0px;
+    font-family: "GT Walsheim ConB" !important;
+}
+.services .icon-box img {
+    width: 63px !important;
+    height: 63px !important;
 }
 .services .services-content .icon-box {
     font-size: 17px;
@@ -2845,14 +3270,17 @@ section.visible{
     position: relative;
     z-index: 10;
     bottom: -140px;
+    background: transparent;
 }
-.service-top-content .row{
-    box-shadow: 2px 8px 20px #2121214D;
+.service-top-content .row {
+    box-shadow: 2px 8px 20px #2121214d;
     border-bottom-right-radius: 50px;
+    border-top-left-radius: 50px;
 }
-.service-bottom-content .row{
-    box-shadow: 2px 8px 20px #2121214D;
+.service-bottom-content .row {
+    box-shadow: 2px 8px 20px #2121214d;
     border-bottom-right-radius: 50px;
+    border-top-left-radius: 50px;
 }
 .service-top-content .top-image {
     z-index: -5;
@@ -2888,6 +3316,61 @@ section.visible{
     color: #fff;
     border-bottom-right-radius: 50px;
 }
+@media screen and (max-width: 580px) {
+    .services {
+        margin-top: 2rem;
+    }
+    .services .services-content {
+        padding: 30px;
+        /* box-shadow: -8px 29px 15px 6px rgba(0, 0, 0, 0.1); */
+        min-height: 460px;
+    }
+    .service-top-content .row {
+        box-shadow: 0px 0px 0px #21212100;
+        border-bottom-right-radius: 50px;
+        border-top-left-radius: 50px;
+    }
+    .service-bottom-content .row {
+        box-shadow: 0px 0px 0px #21212100;
+        border-bottom-right-radius: 50px;
+        border-top-left-radius: 50px;
+    }
+    .services-content.roundedtop {
+        border-top-left-radius: 50px;
+        box-shadow: 2px 8px 20px #2121214d;
+    }
+    .services-content.roundedbottom {
+        border-bottom-right-radius: 50px;
+        box-shadow: 2px 8px 20px #2121214d;
+    }
+    .services .icon-box h4 {
+        font-weight: 700;
+        font-size: 24px !important;
+        padding: 0px 0px;
+        margin: 20px 0px;
+        font-family: "GT Walsheim ConB" !important;
+    }
+    .services .icon-box p {
+        font-size: 17px;
+        font-weight: 400;
+        line-height: 160%;
+        font-family: "GT Walsheim Pro" !important;
+    }
+    /* .service-bottom-content .bg-color4 {
+        background-color: #d0eee9;
+        color: #0f2e29;
+        border-top-left-radius: 0px;
+    }
+    .service-bottom-content .bg-color5 {
+        background-color: #fff;
+        color: #0f2e29;
+    }
+    .service-bottom-content .bg-color6 {
+        background-color: #2d9378;
+        color: #fff;
+        border-bottom-right-radius: 0px;
+    } */
+}
 
 /* ======== RESEARCH  */
 .research .research-content {
@@ -2903,31 +3386,71 @@ section.visible{
     margin-top: 0px;
     font-family: "GT Walsheim Bold";
     display: inline;
+    color: #0d4036;
 }
-.research .research-content h2 span{
-    display: block;
+.research .research-content h2 span {
+    display: inline;
+    font-weight: 900 !important;
 }
 .research .research-content p {
-    font-size: 20px;
+    font-size: 19px;
     font-weight: 400;
     display: inline;
 }
 
 .research .research-content .read-more {
     padding: 10px 70px;
-    background-color: #0D4036;
+    background-color: #0d4036;
     color: #fff;
     margin-top: -2rem;
-    border: 1.5px solid #FFFFFF;
+    border: 1.5px solid #ffffff;
     border-radius: 10px;
 }
 
 .research .global_reach {
     border: none;
 }
+.research #contact2 {
+    display: none;
+}
+@media screen and (max-width: 580px) {
+    .research {
+        margin-top: -2rem;
+    }
+    .research .research-content h2 {
+        font-size: 28px;
+        font-weight: 900;
+        line-height: 50px;
+        margin-top: 2rem;
+        font-family: "GT Walsheim Bold";
+        display: inline;
+    }
+    .research .research-content p {
+        font-size: 20px !important;
+        font-family: "GT Walsheim Con";
+    }
+    .research #contact {
+        display: none;
+    }
+    .research #contact2 {
+        display: block;
+    }
+    .research .research-content h2 span {
+        display: inline;
+        font-weight: 400 !important;
+        font-family: "GT Walsheim Con";
+    }
+    .research #contact2 .read-more {
+        padding: 10px 50px;
+        background-color: #0d4036;
+        color: #fff;
+        margin-top: -2rem;
+        border: 1.5px solid #ffffff;
+        border-radius: 10px;
+    }
+}
 
 /* ----  SERIVECE MEDIA SCREENS------------- */
-
 
 @media screen and (max-width: 1200px) {
     .about .hero-content {
@@ -2971,7 +3494,6 @@ section.visible{
         margin-top: 20px;
     }
 
-
     /* -----------------CONTATCT PAGE */
     .contact-image {
         position: static;
@@ -2989,14 +3511,13 @@ section.visible{
         border: 3px solid #dfe1e5;
     }
 }
-#whole_contact{
-    background: linear-gradient(#ffffff8e, #ffffff8e), url('../images/bg-grey.png');
+#whole_contact {
+    background: linear-gradient(#ffffff8e, #ffffff8e),
+        url("../images/bg-grey.png");
 }
 
-@media screen and (max-width: 1024px){
+@media screen and (max-width: 1024px) {
     .info-tag {
-    
-
         left: 1rem;
     }
 }
@@ -3015,8 +3536,6 @@ section.visible{
     .right-block {
         grid-column: initial;
         order: 1;
-       
-
     }
 
     .info-tag {
@@ -3033,7 +3552,7 @@ section.visible{
         padding: 25px 10px;
         margin-bottom: 0px;
         margin-top: 20px;
-        background-color: #0D4036E5;
+        background-color: #0d4036e5;
     }
     .main-box h1 {
         font-size: 26px;
@@ -3050,7 +3569,6 @@ section.visible{
         padding-bottom: 20px;
     }
 
-
     .contact-btn {
         display: inline-flex;
 
@@ -3059,14 +3577,14 @@ section.visible{
         top: 0px;
     }
 
-    .left-block  .c-btn{
+    .left-block .c-btn {
         align-self: flex-end;
         position: relative;
         right: 95px;
     }
 
     /* SECODND SECTION */
-    #mission_vision h5{
+    #mission_vision h5 {
         width: 30%;
     }
 }
@@ -3124,8 +3642,8 @@ section.visible{
     .research .global_reach {
         border-top: 2px dashed #ccc;
         border-bottom: 2px dashed #ccc;
-        padding: 20px;
-        margin: 30px 0px;
+        padding: 0px;
+        margin: 0px 0px 30px 0px;
     }
 
     .research .research-content h2 span {
@@ -3143,6 +3661,7 @@ section.visible{
     }
     .contact-text h2 {
         color: #20b486;
+        font-family: "GT Walsheim Bold";
     }
     .contact-text p {
         font-weight: 700;
@@ -3160,12 +3679,100 @@ section.visible{
     }
 }
 
-@media screen and (max-width: 700px){
-    .left-block  .c-btn{
-      
+@media screen and (max-width: 700px) {
+    .left-block .c-btn {
         right: 0px;
     }
 }
 
+/* EVENT PAGE */
+.upcoming_events{
+    background: url('../images/bg_event.jpg');
+    margin: 7rem 0px;
+    padding: 6rem 5rem;
+}
+.upcoming_events .event-section {
+    max-width: 1400px;
+    margin: auto;
+}
+
+.upcoming_events .event-card1 .section-title {
+    font-size: 24px;
+    font-weight: 700;
+    font-family: "GT Walsheim ConB";
+    color: #FFFFFF;
+}
+
+.upcoming_events .event-card1 .section-subtitle {
+    font-size: 20px;
+    color: #f0f0f0;
+    max-width: 500px;
+    font-family: "GT Walsheim Con";
+}
+.upcoming_events .btn-outline-light {
+    color: #fff;
+    font-weight: 600;
+    font-family: "GT Walsheim Con";
+}
+
+.upcoming_events .btn-outline-light2 {
+    background-color: #fff;
+    color: #0D4036;
+    font-weight: 600;
+    font-family: "GT Walsheim Con";
+    padding: 10px 4rem;
+}
+.upcoming_events .btn-outline-light2 i{
+    font-weight: bolder !important;
+}
+.upcoming_events .event-card1 {
+    padding: 24px;
+    height: 100%;
+}
+.upcoming_events .event-card {
+    background: #fff;
+    color: #00332e;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    height: 100%;
+}
+.upcoming_events .event-card p{
+    font-size: 16px;
+    font-family: "GT Walsheim Con";
+}
+.upcoming_events .event-card.featured {
+    background: #00332e;
+    color: #fff;
+    transform: rotate(-3deg);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.upcoming_events .event-icon {
+    font-size: 1.5rem;
+    margin-right: 10px;
+}
+
+.upcoming_events .event-title {
+    font-weight: 700;
+    font-size: 24px;
+    font-family: "GT Walsheim ConB";
+}
+
+.upcoming_events .btn-book {
+    margin-top: 20px;
+    font-weight: 600;
+    font-family: "GT Walsheim Con";
+}
+
+.upcoming_events .btn-book i {
+    margin-left: 8px;
+}
+
+@media (max-width: 768px) {
+    .upcoming_events .event-card.featured {
+        transform: none;
+    }
+}
 
 /* ==========================================  SERIVCES PAGE ENDS */

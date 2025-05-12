@@ -6,7 +6,7 @@
     <section class="services-hero about animate-on-scroll">
         <div class="hero-overlay"></div>
         <div class="container hero-content">
-            <div class="hero position-relative" >
+            <div class="hero position-relative">
                 <div class="top-image">
                     <img src="{{ asset('images/service-box.png') }}" alt="">
                 </div>
@@ -52,8 +52,8 @@
                     <div class="top-image">
                         <img src="{{ asset('images/service-group.png') }}" alt="">
                     </div>
-                    <div class="row g-5 g-sm-4 g-md-3 g-lg-4 g-xl-0">
-                        <div class="  col-12  col-lg-4 scroll-offset" id="strategy">
+                    <div class="row g-5 g-sm-4 g-md-3 g-lg-4 g-xl-0">   
+                        <div class="col-12  col-lg-4 scroll-offset" id="strategy">
                             <div class="services-content bg-color1 roundedtop">
                                 <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
                                     <img src="{{ asset('images/strategy.png') }}" alt="">
@@ -91,7 +91,7 @@
              <div class="service-middle-content"></div>
              <div class="service-bottom-content">
                  <div class="container">
-                    <div class="row g-5 g-sm-4 g-md-3 g-lg-4 g-xl-0">
+                    <div class="row g-5 g-sm-4  g-md-3 g-lg-4 g-xl-0">
                         <div class="col-md-4 scroll-offset" id="sales">
                             <div class="services-content bg-color4 ">
                                 <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
@@ -135,7 +135,7 @@
         <div class="container">
             <div class="row g-10">
                 <!-- Left Column -->
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-6 px-4">
                     <div class="resarch-image">
                         <img src="{{ asset('images/research-image.png') }}" alt="People"
                         class="img-fluid">
@@ -143,15 +143,14 @@
                 </div>
     
                 <!-- Right Column -->
-                <div class="col-12 col-md-6 research-content d-flex flex-column justify-content-start " >
-                    <h2 class="">Global Reach. <span>Local Approach</span> </h2>
+                <div class="col-12 col-md-6 px-4 research-content d-flex flex-column justify-content-start " >
+                    <h2 class="">Global Reach. <span>Local Approach.</span> </h2>
                     <p class="">
                         We partner with entrepreneurs and businesses to understand their unique  needs, align them with their goals, and set a clear path to execution and results. 
-                    </p>
-                    <p class="">
+                        <br><br>
                         Our consulting services come with personalised and hands-on support, and our team is committed to excellence, intergrity and collaboration.Let's help you thrive in the dynamic and unpredictable African market.
                     </p>
-                    <div>
+                    <div id="contact">
                         <a href="{{ url('contact') }}" class="read-more">Contact Us <span>→</span></a>
                     </div>
                 </div>
@@ -179,12 +178,16 @@
                 </div>
             </div>
         </div>
+
+        <div id="contact2" class="container">
+            <a href="{{ url('contact') }}" class="read-more">Contact Us <span>→</span></a>
+        </div>
     </section>
 
 
 
         
-    <section class="px-5 animate-on-scroll">
+    <section class="px-2 animate-on-scroll">
         <div class="stats-section4">
             <div class="">
                 <div id="stats_img_desktop">

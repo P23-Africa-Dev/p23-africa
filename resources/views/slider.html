@@ -1,200 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sidebar Navigation</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
-  <style>
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 1049;
-      display: none;
-    }
-
-    .overlay.active {
-      display: block;
-    }
-
-    .sidebar {
-      position: fixed;
-      top: 0;
-      right: -300px;
-      width: 300px;
-      height: 100%;
-      background-color: #fff;
-      z-index: 1050;
-      box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
-      transition: right 0.3s ease-in-out;
-      overflow-y: auto;
-    }
-
-    .sidebar.active {
-      right: 0;
-    }
-
-    .submenu {
-      display: none;
-    }
-
-    .submenu.active {
-      display: block;
-    }
-
-    .main-menu {
-      display: block;
-    }
-
-    .main-menu.hide {
-      display: none;
-    }
-
-    .sidebar .nav-link {
-      cursor: pointer;
-    }
-
-    .social-icons i {
-      font-size: 1.5rem;
-      margin-right: 10px;
-    }
-
-    .close-btn {
-      font-size: 1.5rem;
-      float: right;
-      cursor: pointer;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Event</title>
 </head>
-
 <body>
+  <div>
+    <iframe width="100%" height="500" 
+src="https://www.youtube.com/embed/AVU2Q2MQXuU?autoplay=1" 
+title="YouTube Live Stream" frameborder="0" 
+allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+allowfullscreen></iframe>
 
-  <!-- Hamburger Button -->
-  <nav class="navbar navbar-light bg-light">
-    <div class="container-fluid">
-      <span class="navbar-brand">MySite</span>
-      <button class="btn btn-outline-primary d-md-none" id="menuToggle">
-        <i class="bi bi-list" style="font-size: 1.5rem;"></i>
-      </button>
-    </div>
-  </nav>
 
-  <!-- Overlay -->
-  <div class="overlay" id="overlay"></div>
-
-  <!-- Sidebar -->
-  <div class="sidebar bg-white" id="sidebar">
-    <div class="p-3">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <span class="fw-bold">Menu</span>
-        <span class="close-btn" id="closeBtn">&times;</span>
-      </div>
-
-      <!-- Main Menu -->
-      <div id="mainMenu" class="main-menu">
-        <ul class="list-unstyled">
-          <li><a class="nav-link" data-target="submenu1">Menu 1 <i class="bi bi-chevron-right float-end"></i></a></li>
-          <li><a class="nav-link" data-target="submenu2">Menu 2 <i class="bi bi-chevron-right float-end"></i></a></li>
-          <li><a class="nav-link" data-target="submenu3">Menu 3 <i class="bi bi-chevron-right float-end"></i></a></li>
-          <li><a class="nav-link">Menu 4</a></li>
-          <li><a class="nav-link">Menu 5</a></li>
-        </ul>
-        <button class="btn btn-primary w-100 mt-3">Subscribe Now</button>
-        <div class="social-icons mt-3 d-flex justify-content-start">
-          <a href="#"><i class="bi bi-facebook"></i></a>
-          <a href="#"><i class="bi bi-twitter-x"></i></a>
-          <a href="#"><i class="bi bi-instagram"></i></a>
-          <a href="#"><i class="bi bi-linkedin"></i></a>
-        </div>
-      </div>
-
-      <!-- Submenus -->
-      <div class="submenu" id="submenu1">
-        <a class="nav-link text-primary" id="backBtn1"><i class="bi bi-chevron-left"></i> Back</a>
-        <ul class="list-unstyled mt-2">
-          <li><a class="nav-link">Submenu 1.1</a></li>
-          <li><a class="nav-link">Submenu 1.2</a></li>
-          <li><a class="nav-link">Submenu 1.3</a></li>
-        </ul>
-      </div>
-
-      <div class="submenu" id="submenu2">
-        <a class="nav-link text-primary" id="backBtn2"><i class="bi bi-chevron-left"></i> Back</a>
-        <ul class="list-unstyled mt-2">
-          <li><a class="nav-link">Submenu 2.1</a></li>
-          <li><a class="nav-link">Submenu 2.2</a></li>
-        </ul>
-      </div>
-
-      <div class="submenu" id="submenu3">
-        <a class="nav-link text-primary" id="backBtn3"><i class="bi bi-chevron-left"></i> Back</a>
-        <ul class="list-unstyled mt-2">
-          <li><a class="nav-link">Submenu 3.1</a></li>
-          <li><a class="nav-link">Submenu 3.2</a></li>
-          <li><a class="nav-link">Submenu 3.3</a></li>
-        </ul>
-      </div>
-    </div>
+<div>
+  <!-- Live Chat Embed -->
+<iframe width="30%" height="500" 
+src="https://www.youtube.com/live_chat?v=AVU2Q2MQXuU&embed_domain=127.0.0.1:5500" 
+frameborder="0"></iframe>
+</div>
   </div>
-
-  <!-- JavaScript -->
-  <script>
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('overlay');
-    const menuToggle = document.getElementById('menuToggle');
-    const closeBtn = document.getElementById('closeBtn');
-    const mainMenu = document.getElementById('mainMenu');
-    const submenuElements = document.querySelectorAll('.submenu');
-
-    function openSidebar() {
-      sidebar.classList.add('active');
-      overlay.classList.add('active');
-      mainMenu.classList.remove('hide');
-      submenuElements.forEach(sm => sm.classList.remove('active'));
-    }
-
-    function closeSidebar() {
-      sidebar.classList.remove('active');
-      overlay.classList.remove('active');
-      submenuElements.forEach(sm => sm.classList.remove('active'));
-      mainMenu.classList.remove('hide');
-    }
-
-    menuToggle.addEventListener('click', openSidebar);
-    closeBtn.addEventListener('click', closeSidebar);
-    overlay.addEventListener('click', closeSidebar);
-
-    document.querySelectorAll('[data-target]').forEach(item => {
-      item.addEventListener('click', () => {
-        const target = document.getElementById(item.getAttribute('data-target'));
-        mainMenu.classList.add('hide');
-        submenuElements.forEach(sm => sm.classList.remove('active'));
-        target.classList.add('active');
-      });
-    });
-
-    document.getElementById('backBtn1').addEventListener('click', () => {
-      submenuElements[0].classList.remove('active');
-      mainMenu.classList.remove('hide');
-    });
-
-    document.getElementById('backBtn2').addEventListener('click', () => {
-      submenuElements[1].classList.remove('active');
-      mainMenu.classList.remove('hide');
-    });
-
-    document.getElementById('backBtn3').addEventListener('click', () => {
-      submenuElements[2].classList.remove('active');
-      mainMenu.classList.remove('hide');
-    });
-  </script>
-
 </body>
-
 </html>

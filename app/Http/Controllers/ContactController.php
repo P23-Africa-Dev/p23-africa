@@ -14,7 +14,10 @@ class ContactController extends Controller
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|email',
-            'message' => 'required|string'
+            'message' => 'required|string',
+            'job_title' => 'nullable|string',
+            'company_name' => 'nullable|string',
+            'phone_no' => 'required|string'
         ]);
 
         $data = $request->only('name', 'email', 'message');

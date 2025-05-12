@@ -20,7 +20,7 @@ function createNumberList(id, values) {
 
     values.forEach(val => {
         const div = document.createElement('div');
-        div.textContent = `+${val}`;
+        div.textContent = `${val}+`;
         div.style.height = `${heightRem}rem`;
         div.style.lineHeight = `${heightRem}rem`;
         span.appendChild(div);
