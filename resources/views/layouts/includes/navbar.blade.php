@@ -3,11 +3,11 @@
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
                 <a href="{{ route('homepage') }}" class="navbar-brand logo">
-                    <img src="{{ asset('images/logo.png') }}" alt="">
+                    <img src="{{ asset('images/logo.png') }}" loading='lazy' alt="">
                 </a>
                 <div class="navbar-toggler" id="menuToggle">
                     {{-- <span class="fa-solid fa-bars-staggered"></span> --}}
-                    <img src="{{ asset('images/hamburger.png') }}" alt="">
+                    <img src="{{ asset('images/hamburger.png') }}" loading='lazy' alt="">
                 </div>
 
                 <div class="collapse navbar-collapse main-nav">

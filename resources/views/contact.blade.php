@@ -21,7 +21,7 @@
                 <!-- Image Side -->
                 <div class="col-12 col-md-6 text-center">
                     <div class="contact-image mx-auto" style="max-width: 380px;">
-                        <img src="{{ asset('images/contact_header.png') }}" alt="Smiling Woman" />
+                        <img src="{{ asset('images/contact_header.png') }}" loading='lazy' alt="Smiling Woman" />
                     </div>
                 </div>
             </div>
@@ -135,7 +135,7 @@
 
         <section class="animate-on-scroll pb-5">
             <div id="contact-img">
-                <img src="{{ asset('images/contact-box.png') }}" style="" alt="">
+                <img src="{{ asset('images/contact-box.png') }}" loading='lazy' style="" alt="">
             </div>
             <div class="subscribe-box">
                 <div class="subcribe-content">

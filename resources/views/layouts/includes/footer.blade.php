@@ -4,7 +4,7 @@
             <div class="container-fluid">
                 <div class="row gy-4">
                     <div class="col-md-3 col-lg-3 col-7">
-                        <img src="{{ asset('images/logo.png') }}" alt="">
+                        <img src="{{ asset('images/logo.png') }}" loading='lazy' alt="">
                         <p class="mt-3 logo-text">P23 Africa LTD is registered in the United Kingdom. Company No: 15246700</p>
                     </div>
 

@@ -9,10 +9,10 @@
 @section('content')
     <section class="all_event_hero content-section animate-on-scroll">
         <div id="all_event_hero_desktop">
-            <img src="{{ asset('images/All-Desktopt-Event.png') }}" alt="Card image">
+            <img src="{{ asset('images/All-Desktopt-Event.png') }}" loading='lazy' alt="Card image">
         </div>
         <div id="all_event_hero_mobile">
-            <img src="{{ asset('images/All-Event-Mobile.png') }}" alt="Card image">
+            <img src="{{ asset('images/All-Event-Mobile.png') }}" loading='lazy' alt="Card image">
         </div>
     </section>
 
@@ -31,15 +31,15 @@
                 <!-- Sidebar (Desktop Only) -->
                 <div class="sidebar1">
                     <div class="event-box">
-                            <h4><img src="{{ asset('images/calendar.png') }}" alt=""> 1st April - 30th April</h4>
+                            <h4><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""> 1st April - 30th April</h4>
                             <p>Happening This Month</p>
                     </div>
                     <div class="event-box">
-                            <h4><img src="{{ asset('images/calendar.png') }}" alt=""> 1st May - 31st May</h4>
+                            <h4><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""> 1st May - 31st May</h4>
                             <p>Happening Next Month</p>
                     </div>
                     <div class="event-box">
-                            <h4><img src="{{ asset('images/calendar.png') }}" alt=""> 1st June - 30th June</h4>
+                            <h4><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""> 1st June - 30th June</h4>
                             <p>Happening In Two Month</p>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                         <div class="event-card">
                             {{-- <div style="font-size: 24px;">📅</div> --}}
                             <div>
-                                <h3><img src="{{ asset('images/calendar.png') }}" alt=""> Event Name</h3>
+                                <h3><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""> Event Name</h3>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                                 <div class="event-card-footer">
                                     <span class="status">Happening in 3hr</span>

@@ -72,7 +72,7 @@
 
     <section class="growth-section animate-on-scroll">
         <div class="container">
-            <h5 class="my-auto"><img src="{{ asset('images/line.png') }}" alt=""> Our Three pillars to ensure success</h5>
+            <h5 class="my-auto"><img src="{{ asset('images/line.png') }}" loading='lazy' alt=""> Our Three pillars to ensure success</h5>
             <h2>Empowering your growth <br> through;</h2>
         </div>
     </section>
@@ -81,7 +81,7 @@
     <div class="container growth-container animate-on-scroll">
         <div class="row justify-content-center g-2">
             <div class="col-md-4">
-                <img src="{{ asset('images/knowledge_expert.png') }}" alt="">
+                <img src="{{ asset('images/knowledge_expert.png') }}" loading='lazy' alt="">
                 {{-- <div class="growth-card text-center">
                     <img src="{{ asset('images/icon_mark.png') }}" alt="Chioma Ike">
                     <h5>The Knowledge of Experts</h5>
@@ -91,7 +91,7 @@
                 </div> --}}
             </div>
             <div class="col-md-4">
-                <img src="{{ asset('images/simple_execution.png') }}" alt="">
+                <img src="{{ asset('images/simple_execution.png') }}" loading='lazy' alt="">
                 {{-- <div class="growth-card text-center">
                     <img src="{{ asset('images/icon_bulb.png') }}" alt="Charles">
                     <h5>Simple Execution</h5>
@@ -101,7 +101,7 @@
                 </div> --}}
             </div>
             <div class="col-md-4">
-                <img src="{{ asset('images/practical_guidance.png') }}" alt="">
+                <img src="{{ asset('images/practical_guidance.png') }}" loading='lazy' alt="">
                 {{-- <div class="growth-card text-center">
                     <img src="{{ asset('images/icon_technical-support-2.png') }}" alt="Family Guy">
                     <h5>Practical Guidance</h5>
@@ -118,8 +118,8 @@
         <div class="container py-5">
             <div class="row g-0 align-items-stretch">
 
-                <img class="img-fluid" src="{{ asset('images/Commitment.png') }}" alt="">
-                <img class="img-fluid2" src="{{ asset('images/about_frame.png') }}" alt="">
+                <img class="img-fluid" src="{{ asset('images/Commitment.png') }}" loading='lazy' alt="">
+                <img class="img-fluid2" src="{{ asset('images/about_frame.png') }}" loading='lazy' alt="">
                 {{-- <div class="col-lg-6 commitment-box">
                 <div class="py-4 px-2">
                     <h4>OUR COMMITMENT</h4>
@@ -148,10 +148,10 @@
         <div class="stats-section3">
             <div class="">
                 <div id="stats_img_desktop">
-                    <img src="{{ asset('images/about-desktop.png') }}" alt="Card image">
+                    <img src="{{ asset('images/about-desktop.png') }}" loading='lazy' alt="Card image">
                 </div>
                 <div id="stats_img_mobile">
-                    <img src="{{ asset('images/about-mobile.png') }}" alt="Card image">
+                    <img src="{{ asset('images/about-mobile.png') }}" loading='lazy' alt="Card image">
                 </div>
             </div>
         </div>

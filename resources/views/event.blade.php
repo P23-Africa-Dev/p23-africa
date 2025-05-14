@@ -5,10 +5,10 @@
 @section('content')
     <section class="event_hero content-section animate-on-scroll">
         <div id="event_hero_desktop">
-            <img src="{{ asset('images/event_hero_header.png') }}" alt="Card image">
+            <img src="{{ asset('images/event_hero_header.png') }}" loading='lazy' alt="Card image">
         </div>
         <div id="event_hero_mobile">
-            <img src="{{ asset('images/event_hero_mobile.jpg') }}" alt="Card image">
+            <img src="{{ asset('images/event_hero_mobile.jpg') }}" loading='lazy' alt="Card image">
         </div>
     </section>
 
@@ -130,7 +130,7 @@
                 <!-- Event Card -->
                 <div class="col-12 col-sm-6 col-lg-4">
                     <div class="card-wrapper">
-                        <img src="{{ asset('images/past-event.jpg') }}" alt="Event" class="event-image" />
+                        <img src="{{ asset('images/past-event.jpg') }}" loading='lazy' alt="Event" class="event-image" />
                         <div class="event-overlay brown">
                             <h5>Vision VS Execution</h5>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.
@@ -146,7 +146,7 @@
                 <!-- Repeat Cards -->
                 <div class="col-12 col-sm-6 col-lg-4">
                     <div class="card-wrapper">
-                        <img src="{{ asset('images/past-event.jpg') }}" alt="Event" class="event-image" />
+                        <img src="{{ asset('images/past-event.jpg') }}" loading='lazy' alt="Event" class="event-image" />
                         <div class="event-overlay">
                             <h5>Vision VS Execution</h5>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.
@@ -161,7 +161,7 @@
 
                 <div class="col-12 col-sm-6 col-lg-4">
                     <div class="card-wrapper">
-                        <img src="{{ asset('images/past-event.jpg') }}" alt="Event" class="event-image" />
+                        <img src="{{ asset('images/past-event.jpg') }}" loading='lazy' alt="Event" class="event-image" />
                         <div class="event-overlay brown">
                             <h5>Vision VS Execution</h5>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.
@@ -176,7 +176,7 @@
 
                 <div class="col-12 col-sm-6 col-lg-4">
                     <div class="card-wrapper">
-                        <img src="{{ asset('images/past-event.jpg') }}" alt="Event" class="event-image" />
+                        <img src="{{ asset('images/past-event.jpg') }}" loading='lazy' alt="Event" class="event-image" />
                         <div class="event-overlay">
                             <h5>Vision VS Execution</h5>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.
@@ -191,7 +191,7 @@
 
                 <div class="col-12 col-sm-6 col-lg-4">
                     <div class="card-wrapper">
-                        <img src="{{ asset('images/past-event.jpg') }}" alt="Event" class="event-image" />
+                        <img src="{{ asset('images/past-event.jpg') }}" loading='lazy' alt="Event" class="event-image" />
                         <div class="event-overlay brown">
                             <h5>Vision VS Execution</h5>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.
@@ -210,10 +210,10 @@
 
     <section class="event_footer content-section animate-on-scroll mb-2">
         <div id="event_footer_desktop">
-            <img src="{{ asset('images/event_footer-desktop.jpg') }}" alt="Card image">
+            <img src="{{ asset('images/event_footer-desktop.jpg') }}" loading='lazy' alt="Card image">
         </div>
         <div id="event_footer_mobile">
-            <img src="{{ asset('images/event_footer-mobile.jpg') }}" alt="Card image">
+            <img src="{{ asset('images/event_footer-mobile.jpg') }}" loading='lazy' alt="Card image">
         </div>
     </section>
 @endsection
