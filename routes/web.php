@@ -18,5 +18,8 @@ Route::get('/services', function () {
 Route::get('/event', function () {
     return view('event');
 });
+Route::get('/all-events', function () {
+    return view('all-events');
+});
 
 Route::post('/contact', [ContactController::class, 'submitForm'])->name('contact.submit');

@@ -3923,4 +3923,183 @@ section.visible{
     }
 }
 
+
+
+
+/* All Event Page */
+.all_event_hero {
+    margin-top: 2.5rem;
+}
+.all_event_hero #all_event_hero_desktop {
+    display: block;
+}
+.all_event_hero #all_event_hero_desktop img {
+    width: 100%;
+}
+.all_event_hero #all_event_hero_mobile {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .all_event_hero #all_event_hero_desktop {
+        display: none;
+    }
+    .all_event_hero #all_event_hero_mobile {
+        display: block;
+    }
+    .all_event_hero #all_event_hero_mobile img {
+        width: 100%;
+    }
+}
+
+
+
+
+    .track_events .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .track_events .tabs-mobile {
+      display: none;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .track_events .tab-btn {
+      padding: 10px 20px;
+      border: none;
+      background-color: #eee;
+      color: #073B3A;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    .track_events .tab-btn.active {
+      background-color: #073B3A;
+      color: white;
+    }
+
+    .track_events .flex-layout {
+      display: flex;
+      gap: 20px;
+    }
+
+    .track_events .sidebar {
+      width: 30%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .track_events .event-box {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      padding: 15px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .track_events .event-box h4 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .track_events .event-box p {
+      margin: 5px 0 0;
+      color: green;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .track_events .main-content {
+      flex: 1;
+    }
+
+    .track_events .event-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      padding: 20px;
+      margin-bottom: 20px;
+      display: flex;
+      gap: 15px;
+    }
+
+    .track_events .event-card h3 {
+      margin: 0;
+      color: #073B3A;
+      font-size: 20px;
+    }
+
+    .track_events .event-card p {
+      margin: 8px 0;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .track_events .event-card-footer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 15px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .track_events .status {
+      color: green;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .track_events .time {
+      color: orange;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .track_events .btn {
+      border: 2px solid #073B3A;
+      color: #073B3A;
+      padding: 8px 16px;
+      border-radius: 5px;
+      background: transparent;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .track_events .btn:hover {
+      background: #073B3A;
+      color: white;
+    }
+
+    .track_events .tab-panel {
+      display: none;
+    }
+
+    .track_events .tab-panel.active {
+      display: block;
+    }
+
+    /* Responsive for mobile */
+    @media (max-width: 1024px) {
+      .track_events .flex-layout {
+        flex-direction: column;
+      }
+
+      .track_events .sidebar {
+        display: none;
+      }
+
+      .track_events .tabs-mobile {
+        display: flex;
+      }
+    }
+
 /* ==========================================  SERIVCES PAGE ENDS */

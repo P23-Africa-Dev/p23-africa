@@ -20,7 +20,7 @@
                         <p>Quick Links</p>
                         <a href="{{ url('about') }}">Who We Are</a>
                         <a href="{{ url('services') }}">What We Do</a>
-                        <a href="#">Events</a>
+                        <a href="{{ url('event') }}">Events</a>
                         <a href="#">Resource Hub</a>
                         <a href="#">Let’s Collaborate</a>
                     </div>

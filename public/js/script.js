@@ -127,3 +127,19 @@ document.getElementById('backBtn3').addEventListener('click', () => {
 });
 
 
+
+// All event page
+
+    function showTab(tab) {
+      document.querySelectorAll('.tab-panel').forEach(panel => {
+        panel.classList.add('hidden');
+      });
+      document.getElementById(tab).classList.remove('hidden');
+
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('bg-[#073B3A]', 'text-white');
+        btn.classList.add('bg-gray-100', 'text-[#073B3A]');
+      });
+      event.target.classList.add('bg-[#073B3A]', 'text-white');
+      event.target.classList.remove('bg-gray-100', 'text-[#073B3A]');
+    }

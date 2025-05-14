@@ -117,15 +117,6 @@
 
     <section class="past_events">
         <div class="container">
-            <div class="row mb-5">
-                <div class="col-md-6">
-                    <h2 class="event-title">Past Events</h2>
-                    <p class="event-subtitle">
-                        Explore our past events tailored to equip, connect, and empower businesses across Africa and beyond.
-                    </p>
-                </div>
-            </div>
-
             <div class="row g-4">
                 <div class="col-12 col-sm-6 col-lg-4 my-auto">
                     <div class="">
