@@ -3686,10 +3686,10 @@ section.visible{
 }
 
 /* EVENT PAGE */
-.upcoming_events{
-    background: url('../images/bg_event.jpg');
-    margin: 7rem 0px;
-    padding: 6rem 5rem;
+.upcoming_events {
+    background: url("../images/bg_event.jpg");
+    margin: 0rem 0px 7rem 0px;
+    padding: 4rem 5rem;
 }
 .upcoming_events .event-section {
     max-width: 1400px;
@@ -3700,7 +3700,7 @@ section.visible{
     font-size: 24px;
     font-weight: 700;
     font-family: "GT Walsheim ConB";
-    color: #FFFFFF;
+    color: #ffffff;
 }
 
 .upcoming_events .event-card1 .section-subtitle {
@@ -3717,12 +3717,12 @@ section.visible{
 
 .upcoming_events .btn-outline-light2 {
     background-color: #fff;
-    color: #0D4036;
+    color: #0d4036;
     font-weight: 600;
     font-family: "GT Walsheim Con";
     padding: 10px 4rem;
 }
-.upcoming_events .btn-outline-light2 i{
+.upcoming_events .btn-outline-light2 i {
     font-weight: bolder !important;
 }
 .upcoming_events .event-card1 {
@@ -3737,7 +3737,7 @@ section.visible{
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     height: 100%;
 }
-.upcoming_events .event-card p{
+.upcoming_events .event-card p {
     font-size: 16px;
     font-family: "GT Walsheim Con";
 }
@@ -3768,10 +3768,158 @@ section.visible{
 .upcoming_events .btn-book i {
     margin-left: 8px;
 }
+.event_hero {
+    margin-top: 4.5rem;
+}
+.event_hero #event_hero_desktop {
+    display: block;
+}
+.event_hero #event_hero_desktop img {
+    width: 100%;
+}
+.event_hero #event_hero_mobile {
+    display: none;
+}
+
+.event_footer #event_footer_desktop {
+    display: block;
+}
+.event_footer #event_footer_desktop img {
+    width: 100%;
+}
+.event_footer #event_footer_mobile {
+    display: none;
+}
 
 @media (max-width: 768px) {
+    .upcoming_events {
+    margin: 0rem 0px 7rem 0px;
+    padding: 2rem 1rem;
+}
+.upcoming_events .event-card1 {
+    padding: 5px;
+    height: 100%;
+}
     .upcoming_events .event-card.featured {
         transform: none;
+    }
+    .event_hero #event_hero_desktop {
+        display: none;
+    }
+    .event_hero #event_hero_mobile {
+        display: block;
+    }
+    .event_hero #event_hero_mobile img {
+        width: 100%;
+    }
+    .event_footer #event_footer_desktop {
+        display: none;
+    }
+    .event_footer #event_footer_mobile {
+        display: block;
+    }
+}
+
+/* PAST EVENTS */
+.past_events {
+    background-color: #f7f7f7;
+    padding: 2rem;
+}
+.past_events .event-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #00332e;
+    font-family: "GT Walsheim ConB";
+}
+
+.past_events .event-subtitle {
+    color: #00332e;
+    max-width: 340px;
+    font-family: "GT Walsheim Con";
+    font-size: 20px;
+}
+
+.past_events .card-wrapper {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    height: 100%;
+}
+
+.past_events .event-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+}
+
+.past_events .event-overlay {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+    padding: 1.5rem;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+    background: #0d403683;
+    color: #fff;
+    transition: background 0.3s ease;
+    font-family: "GT Walsheim ConB";
+}
+
+.past_events .event-overlay.brown {
+    background: #f0683657;
+}
+
+.past_events .event-overlay h5 {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    font-size: 16px;
+}
+
+.past_events .event-overlay p {
+    margin: 0 0 0.5rem;
+    font-size: 16px;
+    font-family: "GT Walsheim Con";
+}
+
+.past_events .event-meta {
+    font-style: italic;
+    font-size: 0.85rem;
+    text-align: right;
+    font-family: "GT Walsheim Con";
+}
+
+.past_events .view-link {
+    font-weight: 700;
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+    transition: text-decoration 0.3s ease;
+}
+
+.past_events .view-link:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 576px) {
+    .past_events .event-overlay {
+        padding: 1rem;
+    }
+
+    .past_events .event-overlay h5 {
+        font-size: 1rem;
+    }
+
+    .past_events .event-overlay p,
+    .past_events .event-meta {
+        font-size: 0.8rem;
     }
 }
 
