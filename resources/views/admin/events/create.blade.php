@@ -13,12 +13,18 @@
 
                     <form action="{{ route('admin.events.store') }}" method="POST">
                         @csrf
-                        <input name="title" class="form-control mb-2 border border-1 border-dark" placeholder="Event Title" required><br>
-                        <input name="subtitle" class="form-control mb-2 border border-1 border-dark" placeholder="Subtitle (optional)"><br>
-                        <textarea name="description" class="form-control mb-2 border border-1 border-dark" rows="5" placeholder="Description" required></textarea><br>
-                        <input type="url" name="link" class="form-control mb-2 border border-1 border-dark" placeholder="Event Link" required><br>
-                        <input type="date" name="event_date" class="form-control mb-2 border border-1 border-dark" required><br>
-                        <input type="time" name="event_time" class="form-control mb-2 border border-1 border-dark" required><br>
+                        <input name="title" class="form-control mb-2 border border-1 border-dark"
+                            placeholder="Event Title" required><br>
+                        <input name="subtitle" class="form-control mb-2 border border-1 border-dark"
+                            placeholder="Subtitle (optional)"><br>
+                        <textarea name="description" class="form-control mb-2 border border-1 border-dark" rows="5"
+                            placeholder="Description" required></textarea><br>
+                        <input type="url" name="link" class="form-control mb-2 border border-1 border-dark"
+                            placeholder="Event Link" required><br>
+                        <input type="date" name="event_date" class="form-control mb-2 border border-1 border-dark"
+                            required><br>
+                        <input type="time" name="event_time" class="form-control mb-2 border border-1 border-dark"
+                            required><br>
                         <button type="submit" class="btn btn-dark w-25">Submit</button>
                     </form>
                 </div>

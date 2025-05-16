@@ -26,9 +26,9 @@
                             Explore upcoming events tailored to equip, connect, and empower businesses across Africa and
                             beyond.
                         </p>
-                        <button class="btn btn-outline-light2 mt-3">
+                        <a href="{{ url('all-events') }}" class="btn btn-outline-light2 mt-3">
                             See All Events <i class="bi bi-arrow-right px-3"></i>
-                        </button>
+                        </a>
                     </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-4">

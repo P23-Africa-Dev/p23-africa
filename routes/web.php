@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\UserEventController;
 use App\Models\Event;
 
 Route::get('/', [SliderController::class, 'showSlider'])->name('homepage');
@@ -21,21 +22,23 @@ Route::get('/services', function () {
 Route::get('/event', function () {
     return view('event');
 });
-Route::get('/all-events', function () {
-    return view('all-events');
-});
+// Route::get('/all-events', function () {
+//     return view('all-events');
+// });
 
 Route::post('/contact', [ContactController::class, 'submitForm'])->name('contact.submit');
+
+Route::get('/events/{slug}', [UserEventController::class, 'show'])->name('events.show');
 
 // Route::get('/', function () {
 //     return view('welcome');
 // });
 
 
-// Route::get('/events', function () {
-//     $events = Event::all();
-//     return view('events.index', compact('events'));
-// });
+Route::get('/all-events', function () {
+    $events = Event::all();
+    return view('all-events', compact('events'));
+});
 
 
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {

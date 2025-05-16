@@ -4043,6 +4043,7 @@ section.visible{
 .track_events .event-card img{
     width: 40px;
     height: 40px;
+    margin-right: 0.5rem;
 }
 .track_events .event-card h3 {
     margin: 0;
@@ -4051,7 +4052,14 @@ section.visible{
     font-weight: 800;
     font-family: "GT Walsheim ConB";
 }
-
+.track_events .event-card h3 a{
+    color: #0D4036;
+    text-decoration: none;
+    transition: 500ms;
+}
+.track_events .event-card h3 a:hover{
+    color: #F06836;
+}
 .track_events .event-card p {
     margin: 8px 0;
     font-size: 16px ;

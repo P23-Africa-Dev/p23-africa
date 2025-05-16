@@ -10,8 +10,12 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <h2>Admin Dashboard</h2>
-                    <a href="{{ route('admin.events.index') }}">Manage Events</a>
+                    <fieldset class="border border-dark rounded-3 p-3">
+                         <legend class="float-none w-auto px-3"><h2>Admin Dashboard</h2></legend>
+                        <div class="my-3">
+                            <a href="{{ route('admin.events.index') }}" class="link-dark">Manage Events <i class="fa fa-arrow-right"></i></a>
+                        </div>
+                    </fieldset>
                 </div>
             </div>
         </div>

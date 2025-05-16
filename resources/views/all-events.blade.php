@@ -48,18 +48,20 @@
                 <div class="main-content">
                     <!-- This Month -->
                     <div id="month" class="tab-panel active">
+                        @foreach($events as $event)
                         <div class="event-card">
                             {{-- <div style="font-size: 24px;">📅</div> --}}
                             <div>
-                                <h3><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""> Event Name</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                <h3><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""><a href="{{ route('events.show', $event->slug) }}"> {{ $event->title }} <i> ({{ $event->subtitle }})</i></a></h3>
+                                <p>{!! Str::limit($event->description, 233) !!}</p>
                                 <div class="event-card-footer">
-                                    <span class="status">Happening in 3hr</span>
-                                    <span class="time">2:00PM - 3:30PM</span>
+                                    <span class="status" id="countdown-{{ $event->id }}">Happening in 3hr</span>
+                                    <span class="time">{{ $event->event_time }} - 5:30PM</span>
                                     <button class="btn">Book A Seat →</button>
                                 </div>
                             </div>
                         </div>
+                        @endforeach
 
                         <!-- Duplicate for more events -->
                     </div>
@@ -67,9 +69,9 @@
                     <!-- Next Month -->
                     <div id="next" class="tab-panel">
                         <div class="event-card">
-                            <div style="font-size: 24px;">📅</div>
+                            {{-- <div style="font-size: 24px;">📅</div> --}}
                             <div>
-                                <h3>Next Month Event</h3>
+                                <h3><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""> Next Month Event</h3>
                                 <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
                                     veniam.</p>
                                 <div class="event-card-footer">
@@ -87,5 +89,16 @@
             </div>
         </div>
     </section>
-
 @endsection
+
+    <script>
+        let countDownDate{{ $event->id }} = new Date("{{ $event->event_date }} {{ $event->event_time }}").getTime();
+        let x{{ $event->id }} = setInterval(function() {
+            let now = new Date().getTime();
+            let distance = countDownDate{{ $event->id }} - now;
+            let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById("countdown-{{ $event->id }}").innerHTML = 
+                distance < 0 ? "Event Started" : hours + "h " + minutes + "m left";
+        }, 1000);
+    </script>

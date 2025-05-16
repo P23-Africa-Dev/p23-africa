@@ -2,9 +2,34 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Event extends Model
 {
-    //
+    use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'slug',
+        'subtitle',
+        'description',
+        'link',
+        'event_date',
+        'event_time'
+    ];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($event) {
+            $event->slug = Str::slug($event->title);
+        });
+
+        static::updating(function ($event) {
+            $event->slug = Str::slug($event->title);
+        });
+    }
 }

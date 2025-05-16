@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Mews\Purifier\Facades\Purifier;
 
 class EventController extends Controller
 {
@@ -30,17 +31,21 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'link' => 'required|url',
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'subtitle' => 'nullable|string|max:255',
+            'description' => 'required|string',
+            'link' => 'nullable|url',
             'event_date' => 'required|date',
             'event_time' => 'required'
         ]);
 
-        Event::create($request->all());
+        $validated['description'] = Purifier::clean($request->description); // Sanitize HTML
 
-        return redirect()->route('admin.events.index')->with('success', 'Event created');
+        // Event::create($request->all());
+        Event::create($validated);
+
+        return redirect()->route('admin.events.index')->with('success', 'Event created successfully.');
     }
 
     /**
@@ -64,7 +69,7 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
-        $request->validate([
+        $validated = $request->validate([
             'title' => 'required',
             'description' => 'required',
             'link' => 'required|url',
@@ -72,7 +77,10 @@ class EventController extends Controller
             'event_time' => 'required'
         ]);
 
-        $event->update($request->all());
+        $validated['description'] = Purifier::clean($request->description); // Sanitize HTML
+
+        // $event->update($request->all());
+        $event->update($validated);
 
         return redirect()->route('admin.events.index')->with('success', 'Event updated');
     }

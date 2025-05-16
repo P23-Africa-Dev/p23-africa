@@ -12,19 +12,45 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
 
-                    <a href="{{ route('admin.events.create') }}">Create Event</a>
+                    <a href="{{ route('admin.events.create') }}" class="btn btn-dark">Create Event</a>
 
-                    @foreach ($events as $event)
-                        <div>
-                            <h3>{{ $event->title }}</h3>
-                            <p>{{ $event->subtitle }}</p>
-                            <a href="{{ route('admin.events.edit', $event) }}">Edit</a>
-                            <form action="{{ route('admin.events.destroy', $event) }}" method="POST">
-                                @csrf @method('DELETE')
-                                <button type="submit">Delete</button>
-                            </form>
-                        </div>
-                    @endforeach
+                    <div class="my-5">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Subtitle</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($events as $event)
+                                    <tr>
+                                        <td>{{ $event->title }}</td>
+                                        <td>{{ $event->subtitle }}</td>
+                                        <td>{{ $event->event_date }}</td>
+                                        <td>{{ $event->event_time }}</td>
+                                        <td>
+                                            <span class="d-flex justify-content-center">
+                                                <a href="{{ route('admin.events.edit', $event) }}"
+                                                    class="fa fa-edit link-primary mr-2"></a>
+
+                                                <form action="{{ route('admin.events.destroy', $event) }}"
+                                                    method="POST" class="d-inline ml-2">
+                                                    @csrf @method('DELETE')
+                                                    <button type="submit" class="fa fa-trash link-danger"></button>
+                                                </form>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                    </div>
+
                 </div>
             </div>
         </div>
