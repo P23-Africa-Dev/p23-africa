@@ -5,7 +5,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head> --}}
 
-
 @section('content')
     <section class="all_event_hero content-section animate-on-scroll">
         <div id="all_event_hero_desktop">
@@ -31,16 +30,19 @@
                 <!-- Sidebar (Desktop Only) -->
                 <div class="sidebar1">
                     <div class="event-box">
-                            <h4><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""> 1st April - 30th April</h4>
-                            <p>Happening This Month</p>
+                        <h4><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""> 1st April - 30th
+                            April</h4>
+                        <p>Happening This Month</p>
                     </div>
                     <div class="event-box">
-                            <h4><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""> 1st May - 31st May</h4>
-                            <p>Happening Next Month</p>
+                        <h4><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""> 1st May - 31st May
+                        </h4>
+                        <p>Happening Next Month</p>
                     </div>
                     <div class="event-box">
-                            <h4><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""> 1st June - 30th June</h4>
-                            <p>Happening In Two Month</p>
+                        <h4><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""> 1st June - 30th
+                            June</h4>
+                        <p>Happening In Two Month</p>
                     </div>
                 </div>
 
@@ -48,19 +50,24 @@
                 <div class="main-content">
                     <!-- This Month -->
                     <div id="month" class="tab-panel active">
-                        @foreach($events as $event)
-                        <div class="event-card">
-                            {{-- <div style="font-size: 24px;">📅</div> --}}
-                            <div>
-                                <h3><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""><a href="{{ route('events.show', $event->slug) }}"> {{ $event->title }} <i> ({{ $event->subtitle }})</i></a></h3>
-                                <p>{!! Str::limit($event->description, 233) !!}</p>
-                                <div class="event-card-footer">
-                                    <span class="status" id="countdown-{{ $event->id }}">Happening in 3hr</span>
-                                    <span class="time">{{ $event->event_time }} - 5:30PM</span>
-                                    <button class="btn">Book A Seat →</button>
+                        @foreach ($events as $event)
+                            <div class="event-card">
+                                {{-- <div style="font-size: 24px;">📅</div> --}}
+                                <div>
+                                    <h3><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""><a
+                                            href="{{ route('events.show', $event->slug) }}"> {{ $event->title }} <i>
+                                                ({{ $event->subtitle }})</i></a></h3>
+                                    <p>{!! Str::limit($event->description, 233) !!}</p>
+                                    <div class="event-card-footer">
+                                        <span class="countdown status" id="countdown-{{ $event->id }}"
+                                            data-event-id="{{ $event->id }}"
+                                            data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}">
+                                            Loading...</span>
+                                        <span class="time">{{ $event->event_time }} - 5:30PM</span>
+                                        <button class="btn">Book A Seat →</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         @endforeach
 
                         <!-- Duplicate for more events -->
@@ -71,7 +78,8 @@
                         <div class="event-card">
                             {{-- <div style="font-size: 24px;">📅</div> --}}
                             <div>
-                                <h3><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""> Next Month Event</h3>
+                                <h3><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""> Next Month
+                                    Event</h3>
                                 <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
                                     veniam.</p>
                                 <div class="event-card-footer">
@@ -91,14 +99,37 @@
     </section>
 @endsection
 
-    <script>
-        let countDownDate{{ $event->id }} = new Date("{{ $event->event_date }} {{ $event->event_time }}").getTime();
-        let x{{ $event->id }} = setInterval(function() {
-            let now = new Date().getTime();
-            let distance = countDownDate{{ $event->id }} - now;
-            let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            document.getElementById("countdown-{{ $event->id }}").innerHTML = 
-                distance < 0 ? "Event Started" : hours + "h " + minutes + "m left";
-        }, 1000);
-    </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        function updateCountdowns() {
+            const countdownElements = document.querySelectorAll('.countdown');
+
+            countdownElements.forEach(el => {
+                const dateTime = el.dataset.eventDatetime;
+                const countDownDate = new Date(dateTime).getTime();
+
+                const now = new Date().getTime();
+                const distance = countDownDate - now;
+
+                if (distance < 0) {
+                    el.innerHTML = "Event Started";
+                    return;
+                }
+
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                // const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                el.innerHTML = `Happening in ${hours}h ${minutes}m`;
+            });
+        }
+
+        // Show countdown immediately
+        updateCountdowns();
+
+        // Then keep updating every minute
+        setInterval(updateCountdowns, 60000);
+    });
+</script>
+

@@ -3722,6 +3722,10 @@ section.visible{
     font-family: "GT Walsheim Con";
     padding: 10px 4rem;
 }
+.upcoming_events .btn-outline-light2:hover{
+    color: #fff;
+    border: 1px solid #fff;
+}
 .upcoming_events .btn-outline-light2 i {
     font-weight: bolder !important;
 }
