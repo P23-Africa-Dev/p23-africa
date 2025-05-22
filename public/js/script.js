@@ -11,8 +11,10 @@ const heightRem = 2.5;
 
 function createNumberList(id, values) {
     const container = document.getElementById(id);
-    container.style.overflow = "hidden";
-    container.style.height = `${heightRem}rem`;
+    if (container) {
+        container.style.overflow = "hidden";
+        container.style.height = `${heightRem}rem`;
+    }
 
     const span = document.createElement("span");
     span.classList.add("slide");
@@ -26,7 +28,9 @@ function createNumberList(id, values) {
         span.appendChild(div);
     });
 
-    container.appendChild(span);
+    if(container){
+        container.appendChild(span);
+    }
 }
 
 function animateSlide(id, values) {
@@ -109,19 +113,37 @@ document.querySelectorAll("[data-target]").forEach((item) => {
     });
 });
 
-document.getElementById("backBtn1").addEventListener("click", () => {
-    submenuElements[0].classList.remove("active");
-    mainMenu.classList.remove("hide");
+document.addEventListener("DOMContentLoaded", function () {
+    const someElement0 = document.getElementById("backBtn1");
+
+    if (someElement0) {
+        someElement0.addEventListener("click", function () {
+            submenuElements[0].classList.remove("active");
+            mainMenu.classList.remove("hide");
+        });
+    }
 });
 
-document.getElementById("backBtn2").addEventListener("click", () => {
-    submenuElements[1].classList.remove("active");
-    mainMenu.classList.remove("hide");
+document.addEventListener("DOMContentLoaded", function () {
+    const someElement = document.getElementById("backBtn2");
+
+    if (someElement) {
+        someElement.addEventListener("click", function () {
+            submenuElements[1].classList.remove("active");
+            mainMenu.classList.remove("hide");
+        });
+    }
 });
 
-document.getElementById("backBtn3").addEventListener("click", () => {
-    submenuElements[2].classList.remove("active");
-    mainMenu.classList.remove("hide");
+document.addEventListener("DOMContentLoaded", function () {
+    const someElement2 = document.getElementById("backBtn3");
+
+    if (someElement2) {
+        someElement2.addEventListener("click", function () {
+            submenuElements[2].classList.remove("active");
+            mainMenu.classList.remove("hide");
+        });
+    }
 });
 
 // All event page

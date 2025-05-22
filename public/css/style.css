@@ -2033,6 +2033,7 @@ section.visible{
         color: #fff;
         margin: 4px 0;
         font-size: 16px;
+        font-weight: 400 !important;
         letter-spacing: 0.5px;
     }
 
@@ -3688,7 +3689,7 @@ section.visible{
 /* EVENT PAGE */
 .upcoming_events {
     background: url("../images/bg_event.jpg");
-    margin: 0rem 0px 7rem 0px;
+    margin: 0rem 0px 0rem 0px;
     padding: 4rem 5rem;
 }
 .upcoming_events .event-section {
@@ -3722,7 +3723,7 @@ section.visible{
     font-family: "GT Walsheim Con";
     padding: 10px 4rem;
 }
-.upcoming_events .btn-outline-light2:hover{
+.upcoming_events .btn-outline-light2:hover {
     color: #fff;
     border: 1px solid #fff;
 }
@@ -3733,6 +3734,10 @@ section.visible{
     padding: 24px;
     height: 100%;
 }
+.upcoming_events .event-card #img {
+    margin-right: 0.5rem;
+    width: 48px;
+}
 .upcoming_events .event-card {
     background: #fff;
     color: #00332e;
@@ -3740,6 +3745,10 @@ section.visible{
     padding: 24px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     height: 100%;
+}
+.upcoming_events .event-card img {
+    margin-right: 0.5rem;
+    width: 48px;
 }
 .upcoming_events .event-card p {
     font-size: 16px;
@@ -3773,15 +3782,30 @@ section.visible{
     margin-left: 8px;
 }
 .event_hero {
-    margin-top: 4.5rem;
+    margin-top: 5.5rem;
+    width: 100%;
+    margin-bottom: -6rem;
 }
 .event_hero #event_hero_desktop {
     display: block;
 }
 .event_hero #event_hero_desktop img {
     width: 100%;
+    max-height: 600px;
+    object-fit: cover;
+    object-position: top;
 }
-.event_hero #event_hero_mobile {
+/* .event_hero #event_hero_mobile {
+    display: none;
+} */
+
+.event_hero #event_hero_desktop1 {
+    display: block;
+}
+.event_hero #event_hero_desktop1 img {
+    width: 100%;
+}
+.event_hero #event_hero_mobile1 {
     display: none;
 }
 
@@ -3807,13 +3831,13 @@ section.visible{
     .upcoming_events .event-card.featured {
         transform: none;
     }
-    .event_hero #event_hero_desktop {
+    .event_hero #event_hero_desktop1 {
         display: none;
     }
-    .event_hero #event_hero_mobile {
+    .event_hero #event_hero_mobile1 {
         display: block;
     }
-    .event_hero #event_hero_mobile img {
+    .event_hero #event_hero_mobile1 img {
         width: 100%;
     }
     .event_footer #event_footer_desktop {
@@ -3822,12 +3846,17 @@ section.visible{
     .event_footer #event_footer_mobile {
         display: block;
     }
+    .event_footer #event_footer_mobile img {
+        width: 100%;
+    }
 }
 
 /* PAST EVENTS */
 .past_events {
-    background-color: #f7f7f7;
-    padding: 2rem;
+    /* background-color: #fff; */
+    background: linear-gradient(#ffffffbe, #ffffffbe),
+        url("../images/bg-grey.png");
+    padding: 3rem;
 }
 .past_events .event-title {
     font-size: 24px;
@@ -3857,6 +3886,10 @@ section.visible{
     object-fit: cover;
     display: block;
 }
+.past_events #event-image {
+    filter: grayscale(1) contrast(1.5) brightness(1);
+    mix-blend-mode: multiply;
+}
 
 .past_events .event-overlay {
     position: absolute;
@@ -3877,11 +3910,11 @@ section.visible{
 }
 
 .past_events .event-overlay.brown {
-    background: #f0683657;
+    background: #f0683685;
 }
 
 .past_events .event-overlay h5 {
-    font-weight: 700;
+    font-weight: 600;
     margin-bottom: 0.5rem;
     font-size: 16px;
 }
@@ -3889,6 +3922,7 @@ section.visible{
 .past_events .event-overlay p {
     margin: 0 0 0.5rem;
     font-size: 16px;
+    letter-spacing: 1px;
     font-family: "GT Walsheim Con";
 }
 
@@ -3936,6 +3970,7 @@ section.visible{
 }
 .all_event_hero #all_event_hero_desktop img {
     width: 100%;
+    height: auto;
 }
 .all_event_hero #all_event_hero_mobile {
     display: none;
@@ -3953,14 +3988,12 @@ section.visible{
     }
 }
 
-
-
-
-.track_events{
-      margin: 5rem 0;
-      padding: 0;
-      background: #fff;
-      color: #333;
+.track_events {
+    padding: 0;
+    background: linear-gradient(#ffffffbe, #ffffffbe),
+        url("../images/bg-grey.png");
+    padding: 2rem 0;
+    color: #333;
 }
 .track_events .container {
     max-width: 1200px;
@@ -4009,6 +4042,8 @@ section.visible{
     display: block;
     gap: 10px;
     align-items: center;
+    cursor: pointer;
+    color: #0d4036;
 }
 
 .track_events .event-box h4 {
@@ -4017,18 +4052,32 @@ section.visible{
     font-weight: bold;
     margin-bottom: 2rem;
     font-family: "GT Walsheim ConB";
-    color: #0D4036;
+    /* color: #0d4036; */
 }
-.track_events .event-box img{
+.track_events .event-box img {
     width: 40px;
     height: 40px;
 }
 .track_events .event-box p {
     margin: 5px 0 0;
-    color: #009A49;
+    color: #009a49;
     font-size: 16px;
     font-weight: 700;
     font-family: "GT Walsheim Con";
+    text-shadow: 0px 3px 2px #00000041;
+}
+.track_events .active-class {
+    background: #0d4036;
+}
+.track_events .active-class img {
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+}
+.track_events .active-class p{
+    color: #F06836;
+}
+.track_events .active-class h4 {
+    color: #fff;
 }
 
 .track_events .main-content {
@@ -4044,30 +4093,30 @@ section.visible{
     display: flex;
     gap: 15px;
 }
-.track_events .event-card img{
+.track_events .event-card img {
     width: 40px;
     height: 40px;
     margin-right: 0.5rem;
 }
 .track_events .event-card h3 {
     margin: 0;
-    color: #0D4036;
+    color: #0d4036;
     font-size: 24px;
     font-weight: 800;
     font-family: "GT Walsheim ConB";
 }
-.track_events .event-card h3 a{
-    color: #0D4036;
+.track_events .event-card h3 a {
+    color: #0d4036;
     text-decoration: none;
     transition: 500ms;
 }
-.track_events .event-card h3 a:hover{
-    color: #F06836;
+.track_events .event-card h3 a:hover {
+    color: #f06836;
 }
 .track_events .event-card p {
     margin: 8px 0;
-    font-size: 16px ;
-    color: #0D4036;
+    font-size: 16px;
+    color: #0d4036;
     font-family: "GT Walsheim Con";
     font-weight: 300;
 }
@@ -4079,35 +4128,39 @@ section.visible{
     margin-top: 15px;
     align-items: center;
     justify-content: space-between;
+    width: 70%;
 }
 
 .track_events .status {
-    color: #009A49;
+    color: #009a49;
     font-weight: 700;
     font-size: 16px;
     font-family: "GT Walsheim Con";
+    text-shadow: 0px 3px 2px #00000041;
 }
 
 .track_events .time {
-    color: #F06836;
+    color: #f06836;
     font-weight: 700;
     font-size: 16px;
     font-family: "GT Walsheim Con";
+    text-shadow: 0px 3px 2px #00000041;
 }
 
 .track_events .btn {
-    border: 2px solid #0D4036;
-    color: #0D4036;
+    border: 2px solid #0d4036;
+    color: #0d4036;
     padding: 8px 16px;
     border-radius: 10px;
     background: transparent;
     cursor: pointer;
     font-size: 16px;
     font-weight: 700;
+    font-family: "GT Walsheim Con";
 }
 
 .track_events .btn:hover {
-    background: #073b3a;
+    background: #0d4036;
     color: white;
 }
 
@@ -4118,6 +4171,7 @@ section.visible{
 .track_events .tab-panel.active {
     display: block;
 }
+
 
 /* Responsive for mobile */
 @media (max-width: 1024px) {

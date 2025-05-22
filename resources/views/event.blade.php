@@ -4,10 +4,10 @@
 
 @section('content')
     <section class="event_hero content-section animate-on-scroll">
-        <div id="event_hero_desktop">
+        <div id="event_hero_desktop1">
             <img src="{{ asset('images/event_hero_header.png') }}" loading='lazy' alt="Card image">
         </div>
-        <div id="event_hero_mobile">
+        <div id="event_hero_mobile1">
             <img src="{{ asset('images/event_hero_mobile.jpg') }}" loading='lazy' alt="Card image">
         </div>
     </section>
@@ -26,32 +26,53 @@
                             Explore upcoming events tailored to equip, connect, and empower businesses across Africa and
                             beyond.
                         </p>
-                        <a href="{{ url('all-events') }}" class="btn btn-outline-light2 mt-3">
+                        <a href="{{ route('events.all-events') }}" class="btn btn-outline-light2 mt-3">
                             See All Events <i class="bi bi-arrow-right px-3"></i>
                         </a>
                     </div>
                 </div>
+                                @foreach($events as $event)
+    @if($loop->first)
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="event-card featured h-100">
                         <div class="d-flex align-items-center mb-2">
-                            <div class="event-icon">📅</div>
-                            <div class="event-title">Vision & Execution</div>
+                            {{-- <div class="event-icon">📅</div> --}}
+                            <img src="{{ asset('images/calendar-white.png') }}" id="img" loading='lazy' alt="">
+                            <div class="event-title">{{ $event->title }}</div>
                         </div>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua.
+                            {!! Str::limit($event->description, 233) !!}
                         </p>
-                        <button class="btn btn-outline-light btn-book">
+                        <a href="{{ route('events.show', $event->slug) }}" class="btn btn-outline-light btn-book">
                             Book A Seat <i class="bi bi-arrow-right"></i>
-                        </button>
+                        </a>
                     </div>
                 </div>
+                @else
 
                 <!-- Reusable Event Cards -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="event-card h-100">
                         <div class="d-flex align-items-center mb-2">
-                            <div class="event-icon">📅</div>
+                            {{-- <div class="event-icon">📅</div> --}}
+                            <img src="{{ asset('images/calendar.png') }}" loading='lazy' alt="">
+                            <div class="event-title">{{ $event->title }}</div>
+                        </div>
+                        <p>
+                            {!! Str::limit($event->description, 233) !!}
+                        </p>
+                        <a href="{{ route('events.show', $event->slug) }}" class="btn btn-outline-dark btn-book">
+                            Book A Seat <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                    @endif
+@endforeach
+
+                {{-- <div class="col-12 col-md-6 col-lg-4">
+                    <div class="event-card h-100">
+                        <div class="d-flex align-items-center mb-2">
+                            <img src="{{ asset('images/calendar.png') }}" loading='lazy' alt="">
                             <div class="event-title">Event Name</div>
                         </div>
                         <p>
@@ -67,7 +88,7 @@
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="event-card h-100">
                         <div class="d-flex align-items-center mb-2">
-                            <div class="event-icon">📅</div>
+                            <img src="{{ asset('images/calendar.png') }}" loading='lazy' alt="">
                             <div class="event-title">Event Name</div>
                         </div>
                         <p>
@@ -83,7 +104,7 @@
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="event-card h-100">
                         <div class="d-flex align-items-center mb-2">
-                            <div class="event-icon">📅</div>
+                            <img src="{{ asset('images/calendar.png') }}" loading='lazy' alt="">
                             <div class="event-title">Event Name</div>
                         </div>
                         <p>
@@ -94,23 +115,7 @@
                             Book A Seat <i class="bi bi-arrow-right"></i>
                         </button>
                     </div>
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="event-card h-100">
-                        <div class="d-flex align-items-center mb-2">
-                            <div class="event-icon">📅</div>
-                            <div class="event-title">Event Name</div>
-                        </div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud
-                            exercitation ullamco.
-                        </p>
-                        <button class="btn btn-outline-dark btn-book">
-                            Book A Seat <i class="bi bi-arrow-right"></i>
-                        </button>
-                    </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </section>
@@ -128,23 +133,29 @@
                     </div>
                 </div>
                 <!-- Event Card -->
+                @foreach ($past_events as $past_event)
                 <div class="col-12 col-sm-6 col-lg-4">
                     <div class="card-wrapper">
-                        <img src="{{ asset('images/past-event.jpg') }}" loading='lazy' alt="Event" class="event-image" />
+                        @if ($past_event->image)
+                            <img src="{{ asset('storage/' . $past_event->image) }}" loading='lazy' id="event-image" alt="Event" class="event-image" />
+                        @else
+                            <img src="{{ asset('images/past-event.jpg') }}" loading='lazy' alt="Event" class="event-image" />
+                        @endif
+                        
                         <div class="event-overlay brown">
-                            <h5>Vision VS Execution</h5>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.
-                            </p>
+                            <h5>{{ $past_event->title }}</h5>
+                            <p>{!! Str::limit($past_event->description, 80) !!}</p>
                             <div class="d-flex justify-content-between align-items-center">
-                                <a href="#" class="view-link">View Gallery →</a>
+                                <a href="{{ route('events.show', $past_event->slug) }}" class="view-link">View Gallery →</a>
                                 <span class="event-meta">Virtual (Google Meet)</span>
                             </div>
                         </div>
                     </div>
                 </div>
+                @endforeach
 
                 <!-- Repeat Cards -->
-                <div class="col-12 col-sm-6 col-lg-4">
+                {{-- <div class="col-12 col-sm-6 col-lg-4">
                     <div class="card-wrapper">
                         <img src="{{ asset('images/past-event.jpg') }}" loading='lazy' alt="Event" class="event-image" />
                         <div class="event-overlay">
@@ -202,7 +213,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
             </div>
         </div>

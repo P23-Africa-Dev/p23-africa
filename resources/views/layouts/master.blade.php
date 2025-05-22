@@ -5,9 +5,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
         <title>@yield('title')</title>
-
-
         <meta name="description"
             content="Expand and grow your business in Africa with expert business consulting. P23 Africa helps entrepreneurs, SMEs, and international businesses with strategy, expansion, marketing, operational efficiency and tailored solutions to thrive in African markets. Get started today!">
         <meta name="keywords"
@@ -28,7 +27,9 @@
             href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
             rel="stylesheet" />
 
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        {{-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> --}}
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
@@ -48,6 +49,13 @@
 
             /* Apply animation styles ONLY to sections with 'animate-on-scroll' */
         </style>
+        {{-- <script>
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        </script> --}}
     </head>
 
     <body>

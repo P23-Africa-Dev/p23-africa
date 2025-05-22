@@ -17,8 +17,15 @@ class Event extends Model
         'description',
         'link',
         'event_date',
-        'event_time'
+        'event_time',
+        'image'
     ];
+
+    // public function isPublic()
+    // {
+    //     return $this->type === 'public';
+    // }
+
 
     public static function boot()
     {

@@ -15,6 +15,22 @@
                     <a href="{{ route('admin.events.create') }}" class="btn btn-dark">Create Event</a>
 
                     <div class="my-5">
+                        @if (session('success'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ session('success') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                        @endif
+
+                        @if (session('error'))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                {{ session('error') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                        @endif
+
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -34,13 +50,19 @@
                                         <td>{{ $event->event_time }}</td>
                                         <td>
                                             <span class="d-flex justify-content-center">
-                                                <a href="{{ route('admin.events.edit', $event) }}"
-                                                    class="fa fa-edit link-primary mr-2"></a>
+                                                <button class="btn"><a
+                                                        href="{{ route('events.show', $event->slug) }}" target="_blank"
+                                                        class="fa fa-eye link-dark"></a></button>
+
+                                                <button class="btn"><a
+                                                        href="{{ route('admin.events.edit', $event) }}"
+                                                        class="fa fa-edit link-primary"></a></button>
 
                                                 <form action="{{ route('admin.events.destroy', $event) }}"
-                                                    method="POST" class="d-inline ml-2">
+                                                    method="POST" class="d-inline">
                                                     @csrf @method('DELETE')
-                                                    <button type="submit" class="fa fa-trash link-danger"></button>
+                                                    <button type="submit" class="btn"><i
+                                                            class="fa fa-trash link-danger"></i></button>
                                                 </form>
                                             </span>
                                         </td>

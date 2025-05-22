@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Mews\Purifier\Facades\Purifier;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class EventController extends Controller
 {
@@ -15,6 +18,9 @@ class EventController extends Controller
     public function index()
     {
         $events = Event::latest()->get();
+        // $events = Event::orderBy('event_date', 'asc')->orderBy('event_time', 'asc')->get();
+
+
         return view('admin.events.index', compact('events'));
     }
 
@@ -37,9 +43,25 @@ class EventController extends Controller
             'description' => 'required|string',
             'link' => 'nullable|url',
             'event_date' => 'required|date',
-            'event_time' => 'required'
+            'event_time' => 'required',
+            'image' => 'nullable',
+            'visibility' => 'required|in:public,private',
         ]);
 
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('events', 'public');
+        }
+
+        $validated['slug'] = Str::slug($validated['title']);
+
+        if ($validated['visibility'] === 'public') {
+            $validated['link'] = $request->link;
+        } else {
+            $validated['link'] = null; // clear for private
+        }
+
+        // $validated['slug'] = Str::slug($validated['title']);
+        // $validated['link'] = url('/events/' . $validated['slug']); // Auto-generate link
         $validated['description'] = Purifier::clean($request->description); // Sanitize HTML
 
         // Event::create($request->all());
@@ -70,19 +92,45 @@ class EventController extends Controller
     public function update(Request $request, Event $event)
     {
         $validated = $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'link' => 'required|url',
+            'title' => 'required|string|max:255',
+            'subtitle' => 'nullable|string|max:255',
+            'description' => 'required|string',
+            // 'link' => 'required|url',
             'event_date' => 'required|date',
-            'event_time' => 'required'
+            'event_time' => 'required',
+            'image' => 'nullable|image|max:2048', // optional image validation
         ]);
 
-        $validated['description'] = Purifier::clean($request->description); // Sanitize HTML
+        // Remove current image if requested
+        if ($request->has('remove_image') && $event->image) {
+            Storage::disk('public')->delete($event->image);
+            $event->image = null;
+        }
 
-        // $event->update($request->all());
+        // Upload new image if provided
+        if ($request->hasFile('image')) {
+            // Delete old image
+            if ($event->image) {
+                Storage::disk('public')->delete($event->image);
+            }
+
+            $validated['image'] = $request->file('image')->store('events', 'public');
+        } else {
+            // Keep the old image if no new one and not removed
+            unset($validated['image']);
+        }
+
+        // $validated['slug'] = Str::slug($validated['title']);
+        // $validated['link'] = url('/events/' . $validated['slug']); // Auto-generate updated link
+        
+
+        // Sanitize and slugify
+        $validated['description'] = Purifier::clean($request->description);
+        $validated['slug'] = Str::slug($validated['title']);
+
         $event->update($validated);
 
-        return redirect()->route('admin.events.index')->with('success', 'Event updated');
+        return redirect()->route('admin.events.index')->with('success', 'Event updated successfully.');
     }
 
     /**
