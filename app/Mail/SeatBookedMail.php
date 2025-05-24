@@ -26,7 +26,7 @@ class SeatBookedMail extends Mailable
 
     public function build()
     {
-        return $this->subject($this->event->title)
+        return $this->subject('Invitation: From P23 Africa x Event - ' . $this->event->title)
             ->view('emails.seat-booked');
     }
     

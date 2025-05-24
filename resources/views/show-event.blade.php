@@ -102,22 +102,6 @@
         background: linear-gradient(#ffffffbe, #ffffffbe),
             url("../images/bg-grey.png");
     }
-
-    #seatForm input {
-        border: 0;
-        border-bottom: 2px solid #0D4036;
-        box-shadow: 2px 2px 4px #0000008e;
-    }
-
-    #seatForm .btn {
-        background-color: #0D4036;
-        color: #fff;
-        font-family: 'GT Walsheim Con';
-    }
-
-    .modal-content {
-        border-radius: 1rem;
-    }
 </style>
 
 
@@ -127,7 +111,11 @@
             <div class="px-md-5">
                 <div id="event_hero_desktop" class="px-md-4">
                     @if ($event->image)
-                        <img src="{{ asset('storage/' . $event->image) }}" loading='lazy' class="" alt="Event Image">
+                        <div class="event-wrapper">
+                            <img src="{{ asset('images/event-frame.png') }}" alt="Frame" class="frame-img">
+                            <img src="{{ asset('storage/' . $event->image) }}" alt="Main Event" class="main-img">
+                        </div>
+                        {{-- <img src="{{ asset('storage/' . $event->image) }}" loading='lazy' class="" alt="Event Image"> --}}
                     @else
                         <img src="{{ asset('images/event-frame.png') }}" loading='lazy' alt="Event Frame">
                     @endif
@@ -141,7 +129,7 @@
             </div>
         </section>
 
-        <br><br><br>
+        
 
         <section class="about-event">
             <div class="container py-5">
@@ -196,8 +184,9 @@
                     <div class="d-flex">
 
                         <button class="btn me-4 mb-3 px-5 py-2 btn-color" id="actionBtn"
-                            data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}" data-event-link="{{ $event->link }}" data-bs-toggle="modal"
-                            data-bs-target="#seatModal">Book A Seat <i class="fas fa-arrow-right ms-2"></i></button>
+                            data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
+                            data-event-link="{{ $event->link }}" data-bs-toggle="modal" data-bs-target="#seatModal">Book A
+                            Seat <i class="fas fa-arrow-right ms-2"></i></button>
 
                         <!-- Event page button -->
                         {{-- <button id="actionBtn" class="btn btn-success"
@@ -234,51 +223,9 @@
             </div>
         </section>
 
-        <!-- Seat Booking Modal -->
-        <div class="modal fade w-100" id="seatModal" tabindex="-1" aria-labelledby="seatModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content rounded-4 py-3 px-5">
-                    <div class="modal-header border-0">
-                        {{-- <h5 class="modal-title text-success" id="seatModalLabel">Book a Seat</h5> --}}
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body text-center">
-                        <p class="mb-2" style="color: #0D4036; font-weight: 500; font-family: 'GT Walsheim Con';">et
-                            dolore
-                            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                            ullamco laboris nisi</p><br>
-                        <form id="seatForm">
-                            @csrf
-                            <input type="text" name="name" class="form-control mb-5" placeholder="Full name" required>
-                            <input type="email" name="email" class="form-control mb-5" placeholder="Email" required>
-                            <input type="text" name="phone" class="form-control mb-5" placeholder="Phone no." required>
+        @include('include.book-seat')
 
-                            <button type="submit" class="btn w-50" id="submitBtn">
-                                <span class="spinner-border spinner-border-sm me-2 d-none" role="status"
-                                    id="submitSpinner"></span>
-                                Submit <i class="bi bi-arrow-right ms-2"></i>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Success Popup Modal -->
-        <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content text-center p-4 border-0 shadow rounded-4">
-                    <h5 class="mb-3" style="color: #0D4036; font-weight: 500; font-family: 'GT Walsheim Con';">
-                        Thank you for signing up. We've sent event details to your email <br>
-                        <span class="">— please check your inbox.</span>
-                    </h5>
-                    <a href="{{ route('events.all-events') }}" class="btn mt-3"
-                        style="background-color: #0D4036; color: #fff; font-family: 'GT Walsheim Con';">
-                        View Other Events <i class="bi bi-arrow-right ms-2"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
 
         @if (session('invalid_seat'))
             <script>
@@ -308,90 +255,9 @@
 
 
 @endsection
+@include('include.bookjs')
 
 <script>
-    //Access Live Event Page
-    document.addEventListener('DOMContentLoaded', function() {
-        const btn = document.getElementById('actionBtn');
-        const eventDateTime = new Date(btn.dataset.eventDatetime);
-        const eventLink = btn.dataset.eventLink;
-
-        function updateButtonState() {
-            const now = new Date();
-            if (now >= eventDateTime) {
-                btn.textContent = "Join Event";
-                btn.classList.remove('btn-color');
-                btn.classList.add('btn-primary');
-
-                btn.removeAttribute('data-bs-toggle', 'modal');
-                btn.removeAttribute('data-bs-target', '#joinEventModal');
-
-                // Add click-to-redirect
-                btn.addEventListener('click', function() {
-                    window.open(eventLink, '_blank');
-                }, {
-                    once: true
-                });
-            }
-        }
-
-        updateButtonState();
-        setInterval(updateButtonState, 60000);
-    });
-
-
-    // Pop Up
-    document.addEventListener('DOMContentLoaded', function() {
-        const seatForm = document.getElementById('seatForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const spinner = document.getElementById('submitSpinner');
-
-        seatForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            // Show loading spinner
-            spinner.classList.remove('d-none');
-            submitBtn.disabled = true;
-
-            const formData = new FormData(seatForm);
-
-            fetch("{{ route('seats.store', $event->id) }}", {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                    },
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    spinner.classList.add('d-none');
-                    submitBtn.disabled = false;
-
-                    if (data.success) {
-                        alert('Something went wrong. Please try again.');
-                    } else {
-                        seatForm.reset();
-                        const seatModal = bootstrap.Modal.getInstance(document.getElementById(
-                            'seatModal'));
-                        seatModal.hide();
-
-                        const successModal = new bootstrap.Modal(document.getElementById(
-                            'successModal'));
-                        successModal.show();
-                    }
-                })
-                .catch(error => {
-                    console.error(error);
-                    spinner.classList.add('d-none');
-                    submitBtn.disabled = false;
-                    alert('Error submitting the form.');
-                });
-        });
-    });
-
-
-
-
     // Counter
     let count = 1;
 

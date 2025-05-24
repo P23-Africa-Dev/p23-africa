@@ -96,9 +96,12 @@
                                                 $endTime = $startTime->copy()->addMinutes(90);
                                             @endphp
 
-                                            <span
-                                                class="time">{{ $startTime->format('g:i A') }} - {{ $endTime->format('g:i A') }}</span>
-                                            <button class="btn">Book A Seat →</button>
+                                            <span class="time">{{ $startTime->format('g:i A') }} -
+                                                {{ $endTime->format('g:i A') }}</span>
+                                            <button class="btn" id="actionBtn"
+                                                data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
+                                                data-event-link="{{ $event->link }}" data-bs-toggle="modal"
+                                                data-bs-target="#seatModal">Book A Seat →</button>
                                         </div>
                                     </div>
                                 </div>
@@ -136,10 +139,14 @@
             </div>
         </div>
     </section>
+
+
+     @include('include.book-seat')
 @endsection
 
 {{-- <script src="{{ asset('js/event.js') }}"></script> --}}
 
+@include('include.bookjs')
 <script>
     // Event End Time
     document.addEventListener('DOMContentLoaded', function() {

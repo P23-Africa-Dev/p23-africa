@@ -3784,17 +3784,42 @@ section.visible{
 .event_hero {
     margin-top: 5.5rem;
     width: 100%;
-    margin-bottom: -6rem;
+    margin-bottom: -4rem;
 }
 .event_hero #event_hero_desktop {
     display: block;
 }
-.event_hero #event_hero_desktop img {
+.event_hero #event_hero_desktop .event-wrapper {
+    position: relative;
+    width: fit-content;
+    margin: 40px auto;
+}
+.event_hero #event_hero_desktop .event-wrapper .frame-img {
+    display: block;
+    width: 101%;
+    /* max-width: 1000px; */
+    height: auto;
+    z-index: 1;
+}
+
+.event_hero #event_hero_desktop .event-wrapper .main-img {
+    position: absolute;
+    bottom: 90px; /* Adjust based on your design */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 63%; /* Adjust to fit frame */
+    max-height: 420px;
+    object-fit: cover;
+    z-index: 2;
+    border-radius: 10px;
+}
+
+/* .event_hero #event_hero_desktop img {
     width: 100%;
     max-height: 600px;
     object-fit: cover;
     object-position: top;
-}
+} */
 /* .event_hero #event_hero_mobile {
     display: none;
 } */
@@ -3820,6 +3845,21 @@ section.visible{
 }
 
 @media (max-width: 768px) {
+    .event_hero #event_hero_desktop .event-wrapper .frame-img {
+        display: block;
+        width: 95%;
+        /* max-width: 1000px; */
+        height: auto;
+        z-index: 1;
+    }
+    .event_hero #event_hero_desktop .event-wrapper .main-img {
+        position: absolute;
+        bottom: -20px; /* Adjust based on your design */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 63%; /* Adjust to fit frame */
+        max-height: 200px;
+    }
     .upcoming_events {
         margin: 0rem 0px 7rem 0px;
         padding: 2rem 1rem;
@@ -4073,8 +4113,8 @@ section.visible{
     -webkit-filter: invert(100%);
     filter: invert(100%);
 }
-.track_events .active-class p{
-    color: #F06836;
+.track_events .active-class p {
+    color: #f06836;
 }
 .track_events .active-class h4 {
     color: #fff;
@@ -4171,7 +4211,6 @@ section.visible{
 .track_events .tab-panel.active {
     display: block;
 }
-
 
 /* Responsive for mobile */
 @media (max-width: 1024px) {
