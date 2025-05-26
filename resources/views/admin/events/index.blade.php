@@ -38,6 +38,7 @@
                                     <th>Subtitle</th>
                                     <th>Date</th>
                                     <th>Time</th>
+                                    <th>Type</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -48,6 +49,7 @@
                                         <td>{{ $event->subtitle }}</td>
                                         <td>{{ $event->event_date }}</td>
                                         <td>{{ $event->event_time }}</td>
+                                        <td>{{ $event->visibility }}</td>
                                         <td>
                                             <span class="d-flex justify-content-center">
                                                 <button class="btn"><a
