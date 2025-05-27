@@ -25,10 +25,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
-                <p class="mb-2" style="color: #0D4036; font-weight: 500; font-family: 'GT Walsheim Con';">et
-                    dolore
-                    magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi</p><br>
+                <p class="mb-2" style="color: #0D4036; font-weight: 500; font-family: 'GT Walsheim Con';"><em>Book your seat to be a part of this exclusive event and gain valuable insights from trusted experts.</em></p><br>
                 <form id="seatForm">
                     @csrf
                     <input type="text" name="name" class="form-control mb-5" placeholder="Full name" required>

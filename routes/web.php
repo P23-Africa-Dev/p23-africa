@@ -58,6 +58,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/seats', [\App\Http\Controllers\Admin\SeatController::class, 'index'])->name('admin.seats.index');
 
     Route::resource('/events', EventController::class);
+    Route::get('/events/{event}/bookings', [EventController::class, 'showBookings'])->name('events.bookings');
 });
 
 

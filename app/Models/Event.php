@@ -18,6 +18,7 @@ class Event extends Model
         'link',
         'event_date',
         'event_time',
+        'venue',
         'image'
     ];
 
@@ -26,6 +27,11 @@ class Event extends Model
     //     return $this->type === 'public';
     // }
 
+
+    public function seats()
+    {
+        return $this->hasMany(\App\Models\Seat::class);
+    }
 
     public static function boot()
     {

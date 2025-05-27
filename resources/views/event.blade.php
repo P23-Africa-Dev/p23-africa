@@ -39,7 +39,7 @@
                                     {{-- <div class="event-icon">📅</div> --}}
                                     <img src="{{ asset('images/calendar-white.png') }}" id="img" loading='lazy'
                                         alt="">
-                                    <div class="event-title">{{ $event->title }}</div>
+                                    <div class="event-title"><a href="{{ route('events.show', $event->slug) }}">{{ Str::limit($event->title, 20) }}</a></div>
                                 </div>
                                 <p>
                                     {!! Str::limit($event->description, 233) !!}
@@ -58,7 +58,7 @@
                                 <div class="d-flex align-items-center mb-2">
                                     {{-- <div class="event-icon">📅</div> --}}
                                     <img src="{{ asset('images/calendar.png') }}" loading='lazy' alt="">
-                                    <div class="event-title">{{ $event->title }}</div>
+                                    <div class="event-title"><a href="{{ route('events.show', $event->slug) }}">{{ Str::limit($event->title, 20) }}</a></div>
                                 </div>
                                 <p>
                                     {!! Str::limit($event->description, 233) !!}

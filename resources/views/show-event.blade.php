@@ -159,7 +159,7 @@
                                     <div class="d-flex align-items-center justify-content-center">
                                         <i class="fas fa-map-marker-alt fa-2x me-3"></i>
                                         <p>
-                                            <strong>Google Meet</strong><br />
+                                            <strong>{{ $event->venue ?? 'Google Meet' }}</strong><br />
                                             <strong>1hr 30mins</strong>
                                         </p>
                                     </div>

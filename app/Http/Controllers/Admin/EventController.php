@@ -18,10 +18,17 @@ class EventController extends Controller
     public function index()
     {
         $events = Event::latest()->get();
+        // $events = Event::orderBy('event_date')->get();
         // $events = Event::orderBy('event_date', 'asc')->orderBy('event_time', 'asc')->get();
 
 
         return view('admin.events.index', compact('events'));
+    }
+
+    public function showBookings(Event $event)
+    {
+        $bookings = $event->seats()->with('event')->get();
+        return view('admin.events.bookings', compact('event', 'bookings'));
     }
 
     /**
@@ -44,6 +51,7 @@ class EventController extends Controller
             'link' => 'nullable|url',
             'event_date' => 'required|date',
             'event_time' => 'required',
+            'venue' => 'required|string|max:255',
             'image' => 'nullable',
             'visibility' => 'required|in:public,private',
         ]);
@@ -98,6 +106,7 @@ class EventController extends Controller
             // 'link' => 'required|url',
             'event_date' => 'required|date',
             'event_time' => 'required',
+            'venue' => 'required|string|max:255',
             'image' => 'nullable|image|max:2048', // optional image validation
         ]);
 

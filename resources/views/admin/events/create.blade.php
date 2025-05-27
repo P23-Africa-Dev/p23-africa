@@ -26,6 +26,8 @@
                             required><br>
                         <input type="time" name="event_time" class="form-control mb-2 border border-1 border-dark"
                             required><br>
+                        <input name="venue" class="form-control mb-2 border border-1 border-dark"
+                            placeholder="Venue: e.g Google meet or a Physical location"><br>
 
                         <!-- Visibility Selector -->
                         <div class="mb-4">

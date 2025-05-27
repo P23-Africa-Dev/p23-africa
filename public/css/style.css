@@ -3760,6 +3760,12 @@ section.visible{
     transform: rotate(-3deg);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 }
+.upcoming_events .event-card.featured .event-title a{
+    color: #fff;
+}
+.upcoming_events .event-card.featured .event-title a:hover{
+    color: #d6d6d6;
+}
 
 .upcoming_events .event-icon {
     font-size: 1.5rem;
@@ -3770,6 +3776,14 @@ section.visible{
     font-weight: 700;
     font-size: 24px;
     font-family: "GT Walsheim ConB";
+}
+.upcoming_events .event-title a{
+    text-decoration: none;
+    color: #00332e;
+}
+.upcoming_events .event-title a:hover{
+    text-decoration: underline;
+    color: #00332e;
 }
 
 .upcoming_events .btn-book {

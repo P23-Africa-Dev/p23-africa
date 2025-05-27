@@ -53,6 +53,10 @@
                                         <td>
                                             <span class="d-flex justify-content-center">
                                                 <button class="btn"><a
+                                                        href="{{ route('admin.events.bookings', $event->id) }}" target="_blank"
+                                                        class="fa fa-users link-dark"></a></button>
+
+                                                <button class="btn"><a
                                                         href="{{ route('events.show', $event->slug) }}" target="_blank"
                                                         class="fa fa-eye link-dark"></a></button>
 
