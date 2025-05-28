@@ -45,8 +45,8 @@
                             <tbody>
                                 @foreach ($events as $event)
                                     <tr>
-                                        <td>{{ $event->title }}</td>
-                                        <td>{{ $event->subtitle }}</td>
+                                        <td>{{ Str::limit($event->title, 23) }}</td>
+                                        <td>{{ Str::limit($event->subtitle, 20) }}</td>
                                         <td>{{ $event->event_date }}</td>
                                         <td>{{ $event->event_time }}</td>
                                         <td>{{ $event->visibility }}</td>

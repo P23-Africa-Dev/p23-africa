@@ -14,11 +14,25 @@
     .track_events #search-input {
         width: 432px;
         border-radius: 10px;
-        border: 2px solid #0000004D
+        border: 2px solid #0000004D;
+    }
+
+    .track_events #search {
+        float: inline-end;
     }
 
     .track_events #search-input::placeholder {
         font-family: "GT Walsheim Con";
+    }
+
+    @media (max-width: 768px) {
+        .track_events #search-input {
+            max-width: 100%;
+        }
+
+        .track_events #search {
+            float: none;
+        }
     }
 </style>
 
@@ -35,14 +49,17 @@
 
     <section class="track_events">
         <div class="container">
-            <div class="d-flex justify-content-between mb-5">
-                <div>
+            <div class="row justify-content-between mb-5">
+                <div class="col-md-6">
 
                 </div>
-                <div class="position-relative">
-                    <input type="text" id="search-input" class="form-control" placeholder="Search your preferred event">
-                    <div id="suggestion-box" class="list-group position-absolute w-100 shadow-sm"
-                        style="z-index: 1000; display: none;"></div>
+                <div class="col-md-6">
+                    <div class="position-relative" id="search">
+                        <input type="text" id="search-input" class="form-control"
+                            placeholder="Search your preferred event">
+                        <div id="suggestion-box" class="list-group position-absolute w-100 shadow-sm"
+                            style="z-index: 1000; display: none;"></div>
+                    </div>
                 </div>
             </div>
             <!-- Mobile Tabs -->
@@ -101,7 +118,7 @@
 
                                             <span class="time">{{ $startTime->format('g:i A') }} -
                                                 {{ $endTime->format('g:i A') }}</span>
-                                            <button class="btn actionBtn" data-event-id="{{ $event->id }}"
+                                            <button class="btn actionBtn" id="actionBtn" data-event-id="{{ $event->id }}"
                                                 data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
                                                 data-event-link="{{ $event->link }}" data-bs-toggle="modal"
                                                 data-bs-target="#seatModal">Book A Seat →</button>
@@ -119,21 +136,49 @@
                     </div>
 
                     <!-- Next Month -->
-                    <div id="next" class="tab-panel">
-                        <div class="event-card">
-                            {{-- <div style="font-size: 24px;">📅</div> --}}
-                            <div>
-                                <h3><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""> Next Month
-                                    Event</h3>
-                                <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                    veniam.</p>
-                                <div class="event-card-footer">
-                                    <span class="status">Happening in 3 Days</span>
-                                    <span class="time">4:00PM - 5:30PM</span>
-                                    <button class="btn">Book A Seat →</button>
+                    <div id="next" class="">
+                    <div id="month" class="">
+                        <div id="event-list">
+                            @foreach ($events as $event)
+                                <div class="event-card">
+                                    {{-- <div style="font-size: 24px;">📅</div> --}}
+                                    <div>
+                                        <h3><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""><a
+                                                href="{{ route('events.show', $event->slug) }}"> {{ $event->title }} <i>
+                                                    @if ($event->subtitle)
+                                                        ({{ $event->subtitle }})
+                                                    @endif
+
+                                                </i></a></h3>
+                                        <p>{!! Str::limit($event->description, 233) !!}</p>
+                                        <div class="event-card-footer">
+                                            <span class="countdown status"
+                                                data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}">
+                                                Loading...</span>
+
+                                            @php
+                                                $startTime = \Carbon\Carbon::parse($event->event_time);
+                                                $endTime = $startTime->copy()->addMinutes(90);
+                                            @endphp
+
+                                            <span class="time">{{ $startTime->format('g:i A') }} -
+                                                {{ $endTime->format('g:i A') }}</span>
+                                            <button class="btn actionBtn" id="actionBtn" data-event-id="{{ $event->id }}"
+                                                data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
+                                                data-event-link="{{ $event->link }}" data-bs-toggle="modal"
+                                                data-bs-target="#seatModal">Book A Seat →</button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            @endforeach
                         </div>
+
+
+                        <!-- Duplicate for more events -->
+                        <div class="mt-4">
+                            {{ $events->links('pagination::simple-bootstrap-5') }}
+                        </div>
+                    </div>
 
                         <!-- More events -->
                     </div>

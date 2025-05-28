@@ -112,12 +112,16 @@
                 <div id="event_hero_desktop" class="px-md-4">
                     @if ($event->image)
                         <div class="event-wrapper">
-                            <img src="{{ asset('images/event-frame.png') }}" alt="Frame" class="frame-img">
-                            <img src="{{ asset('storage/' . $event->image) }}" alt="Main Event" class="main-img">
+                            <img src="{{ asset('images/event-frame.png') }}" loading='lazy' alt="Frame" class="frame-img">
+                            <img src="{{ asset('storage/' . $event->image) }}" loading='lazy' alt="Main Event"
+                                class="main-img">
                         </div>
                         {{-- <img src="{{ asset('storage/' . $event->image) }}" loading='lazy' class="" alt="Event Image"> --}}
                     @else
-                        <img src="{{ asset('images/event-frame.png') }}" loading='lazy' alt="Event Frame">
+                        <div class="event-wrapper">
+                            <img src="{{ asset('images/event-frame.png') }}" loading='lazy' alt="Event Frame"
+                                class="frame-img">
+                        </div>
                     @endif
                 </div>
                 {{-- <div id="event_hero_desktop" class="px-md-4">
@@ -129,7 +133,7 @@
             </div>
         </section>
 
-        
+
 
         <section class="about-event">
             <div class="container py-5">
@@ -183,7 +187,8 @@
                 <div class="align-items-center mt-5">
                     <div class="d-flex">
 
-                        <button class="btn me-4 mb-3 px-5 py-2 btn-color actionBtn" data-event-id="{{ $event->id }}"
+                        <button class="btn me-4 mb-3 px-5 py-2 btn-color actionBtn" id="actionBtn"
+                            data-event-id="{{ $event->id }}"
                             data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
                             data-event-link="{{ $event->link }}" data-bs-toggle="modal" data-bs-target="#seatModal">Book A
                             Seat <i class="fas fa-arrow-right ms-2"></i></button>
@@ -241,8 +246,8 @@
                     <form method="POST" action="{{ route('event.join') }}">
                         @csrf
                         <input type="hidden" name="event_id" value="{{ $event->id }}">
-                        <input type="text" name="seat_code" class="form-control mb-3"
-                            placeholder="Enter your seat code" required>
+                        <input type="text" name="seat_code" class="form-control mb-3" placeholder="Enter your seat code"
+                            required>
                         <button type="submit" class="btn btn-dark w-100">Join Event</button>
                     </form>
                 </div>
