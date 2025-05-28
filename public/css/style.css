@@ -3760,10 +3760,10 @@ section.visible{
     transform: rotate(-3deg);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 }
-.upcoming_events .event-card.featured .event-title a{
+.upcoming_events .event-card.featured .event-title a {
     color: #fff;
 }
-.upcoming_events .event-card.featured .event-title a:hover{
+.upcoming_events .event-card.featured .event-title a:hover {
     color: #d6d6d6;
 }
 
@@ -3777,11 +3777,11 @@ section.visible{
     font-size: 24px;
     font-family: "GT Walsheim ConB";
 }
-.upcoming_events .event-title a{
+.upcoming_events .event-title a {
     text-decoration: none;
     color: #00332e;
 }
-.upcoming_events .event-title a:hover{
+.upcoming_events .event-title a:hover {
     text-decoration: underline;
     color: #00332e;
 }
@@ -3875,7 +3875,7 @@ section.visible{
         max-height: 200px;
     }
     .upcoming_events {
-        margin: 0rem 0px 7rem 0px;
+        margin: 7rem 0px 7rem 0px;
         padding: 2rem 1rem;
     }
     .upcoming_events .event-card1 {
@@ -4001,6 +4001,10 @@ section.visible{
 }
 
 @media (max-width: 576px) {
+    .past_events {
+        padding: 0;
+        margin-bottom: 2rem;
+    }
     .past_events .event-overlay {
         padding: 1rem;
     }
@@ -4224,6 +4228,18 @@ section.visible{
 
 .track_events .tab-panel.active {
     display: block;
+}
+
+@media (max-width: 700px) {
+.track_events .event-card-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 15px;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
 }
 
 /* Responsive for mobile */

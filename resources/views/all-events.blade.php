@@ -118,7 +118,8 @@
 
                                             <span class="time">{{ $startTime->format('g:i A') }} -
                                                 {{ $endTime->format('g:i A') }}</span>
-                                            <button class="btn actionBtn" id="actionBtn" data-event-id="{{ $event->id }}"
+                                            <button class="btn actionBtn" id="actionBtn"
+                                                data-event-id="{{ $event->id }}"
                                                 data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
                                                 data-event-link="{{ $event->link }}" data-bs-toggle="modal"
                                                 data-bs-target="#seatModal">Book A Seat →</button>
@@ -137,48 +138,50 @@
 
                     <!-- Next Month -->
                     <div id="next" class="">
-                    <div id="month" class="">
-                        <div id="event-list">
-                            @foreach ($events as $event)
-                                <div class="event-card">
-                                    {{-- <div style="font-size: 24px;">📅</div> --}}
-                                    <div>
-                                        <h3><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""><a
-                                                href="{{ route('events.show', $event->slug) }}"> {{ $event->title }} <i>
-                                                    @if ($event->subtitle)
-                                                        ({{ $event->subtitle }})
-                                                    @endif
+                        <div id="" class="">
+                            <div id="">
+                                @foreach ($next_month_events as $event)
+                                    <div class="event-card">
+                                        {{-- <div style="font-size: 24px;">📅</div> --}}
+                                        <div>
+                                            <h3><img src="{{ asset('images/calendar.png') }}" loading='lazy'
+                                                    alt=""><a href="{{ route('events.show', $event->slug) }}">
+                                                    {{ $event->title }} <i>
+                                                        @if ($event->subtitle)
+                                                            ({{ $event->subtitle }})
+                                                        @endif
 
-                                                </i></a></h3>
-                                        <p>{!! Str::limit($event->description, 233) !!}</p>
-                                        <div class="event-card-footer">
-                                            <span class="countdown status"
-                                                data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}">
-                                                Loading...</span>
+                                                    </i></a></h3>
+                                            <p>{!! Str::limit($event->description, 233) !!}</p>
+                                            <div class="event-card-footer">
+                                                <span class="countdown status"
+                                                    data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}">
+                                                    Loading...</span>
 
-                                            @php
-                                                $startTime = \Carbon\Carbon::parse($event->event_time);
-                                                $endTime = $startTime->copy()->addMinutes(90);
-                                            @endphp
+                                                @php
+                                                    $startTime = \Carbon\Carbon::parse($event->event_time);
+                                                    $endTime = $startTime->copy()->addMinutes(90);
+                                                @endphp
 
-                                            <span class="time">{{ $startTime->format('g:i A') }} -
-                                                {{ $endTime->format('g:i A') }}</span>
-                                            <button class="btn actionBtn" id="actionBtn" data-event-id="{{ $event->id }}"
-                                                data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
-                                                data-event-link="{{ $event->link }}" data-bs-toggle="modal"
-                                                data-bs-target="#seatModal">Book A Seat →</button>
+                                                <span class="time">{{ $startTime->format('g:i A') }} -
+                                                    {{ $endTime->format('g:i A') }}</span>
+                                                <button class="btn actionBtn" id="actionBtn"
+                                                    data-event-id="{{ $event->id }}"
+                                                    data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
+                                                    data-event-link="{{ $event->link }}" data-bs-toggle="modal"
+                                                    data-bs-target="#seatModal">Book A Seat →</button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
-                        </div>
+                                @endforeach
+                            </div>
 
 
-                        <!-- Duplicate for more events -->
-                        <div class="mt-4">
-                            {{ $events->links('pagination::simple-bootstrap-5') }}
+                            <!-- Duplicate for more events -->
+                            <div class="mt-4">
+                                {{ $events->links('pagination::simple-bootstrap-5') }}
+                            </div>
                         </div>
-                    </div>
 
                         <!-- More events -->
                     </div>

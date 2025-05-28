@@ -65,8 +65,9 @@
                                                         class="fa fa-edit link-primary"></a></button>
 
                                                 <form action="{{ route('admin.events.destroy', $event) }}"
-                                                    method="POST" class="d-inline">
-                                                    @csrf @method('DELETE')
+                                                    method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this event? This action cannot be undone.');">
+                                                    @csrf 
+                                                    @method('DELETE')
                                                     <button type="submit" class="btn"><i
                                                             class="fa fa-trash link-danger"></i></button>
                                                 </form>

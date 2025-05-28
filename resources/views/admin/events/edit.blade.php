@@ -32,11 +32,19 @@
                             <textarea name="description" class="form-control" id="description" rows="6" required>{!! old('description', $event->description) !!}</textarea>
                         </div>
 
-                        <div class="mb-3">
-                            <label>Event Link</label>
-                            <input type="url" name="link" class="form-control"
-                                value="{{ old('link', $event->link) }}" disabled>
-                        </div>
+                        @if ($event->visibility === 'public')
+                            <div class="mb-3">
+                                <label>Event Link</label>
+                                <input type="url" name="link" class="form-control"
+                                    value="{{ old('link', $event->link) }}">
+                            </div>
+                        @else
+                            <div class="mb-3">
+                                <label>Event Link</label>
+                                <input type="url" name="" class="form-control"
+                                    value="{{ old('link', $event->link) }}" disabled>
+                            </div>
+                        @endif
 
                         <div class="mb-3">
                             <label>Date</label>

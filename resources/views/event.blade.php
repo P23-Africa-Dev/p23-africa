@@ -127,7 +127,7 @@
 
     <section class="past_events">
         <div class="container">
-            <div class="row g-4">
+            <div class="row g-md-5 g-4">
                 <div class="col-12 col-sm-6 col-lg-4 my-auto">
                     <div class="">
                         <h2 class="event-title">Past Events</h2>

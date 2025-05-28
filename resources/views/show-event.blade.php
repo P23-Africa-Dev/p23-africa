@@ -56,9 +56,31 @@
         padding: 40px 0px 30px 35px;
     }
 
+    .about-event #mobile {
+        display: none;
+    }
     .about-event .event-time p {
         font-size: 20px;
         font-family: 'GT Walsheim Con';
+    }
+
+    @media (max-width: 700px) {
+        .about-event #mobile {
+            display: block;
+        }
+
+        .about-event #desktop {
+            display: none;
+        }
+
+        .about-event .event-time {
+            background: url("../images/event-box.png") no-repeat center center;
+            width: 100%;
+            padding: 40px 0px 30px 0px;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+        }
     }
 
     .about-event .btn-color {
@@ -148,7 +170,7 @@
 
                     <!-- Event Details -->
                     <div class="col-md-6">
-                        <div class="event-time rounded-3 mb-5 text-white">
+                        <div class="event-time rounded-3 mb-5 text-white" id="desktop">
                             <div class="row">
                                 <div class="col-6">
                                     <div class="d-flex align-items-center justify-content-center">
@@ -182,6 +204,30 @@
                 dolore magna aliqua.
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
             </p> --}}
+
+
+                <div class="event-time rounded-3 mb-5 text-white" id="mobile">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <i class="fas fa-calendar-alt fa-2x me-3"></i>
+                                <p>
+                                    <strong>{{ \Carbon\Carbon::parse($event->event_date)->format('jS F, Y') }}</strong><br />
+                                    <strong>{{ \Carbon\Carbon::parse($event->event_time)->format('g:i A') }}</strong>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <i class="fas fa-map-marker-alt fa-2x me-3"></i>
+                                <p>
+                                    <strong>{{ $event->venue ?? 'Google Meet' }}</strong><br />
+                                    <strong>1hr 30mins</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Buttons and Counter -->
                 <div class="align-items-center mt-5">

@@ -103,7 +103,7 @@ class EventController extends Controller
             'title' => 'required|string|max:255',
             'subtitle' => 'nullable|string|max:255',
             'description' => 'required|string',
-            // 'link' => 'required|url',
+            'link' => 'nullable|url',
             'event_date' => 'required|date',
             'event_time' => 'required',
             'venue' => 'required|string|max:255',
@@ -128,6 +128,10 @@ class EventController extends Controller
             // Keep the old image if no new one and not removed
             unset($validated['image']);
         }
+
+        // if ($validated['visibility'] === 'public') {
+        //     $validated['link'] = $request->link;
+        // }
 
         // $validated['slug'] = Str::slug($validated['title']);
         // $validated['link'] = url('/events/' . $validated['slug']); // Auto-generate updated link

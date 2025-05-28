@@ -40,7 +40,16 @@ class UserEventController extends Controller
             ->orderBy('event_time', 'asc')
             ->paginate(6); // You can change 6 to however many events you want per page
 
-        return view('all-events', compact('events'));
+        $startOfNextMonth = Carbon::now()->startOfMonth()->addMonth();
+        $endOfNextMonth = Carbon::now()->endOfMonth()->addMonth();
+
+        $next_month_events = Event::whereDate('event_date', '>=', $startOfNextMonth)
+            ->whereDate('event_date', '<=', $endOfNextMonth)
+            ->orderBy('event_date', 'asc')
+            ->orderBy('event_time', 'asc')
+            ->paginate(6); // Or however many per page
+
+        return view('all-events', compact('events', 'next_month_events'));
     }
 
 
