@@ -28,6 +28,7 @@
                 <p class="mb-2" style="color: #0D4036; font-weight: 500; font-family: 'GT Walsheim Con';"><em>Book your seat to be a part of this exclusive event and gain valuable insights from trusted experts.</em></p><br>
                 <form id="seatForm">
                     @csrf
+                    <input type="hidden" name="event_id" id="event_id">
                     <input type="text" name="name" class="form-control mb-5" placeholder="Full name" required>
                     <input type="email" name="email" class="form-control mb-5" placeholder="Email" required>
                     <input type="text" name="phone" class="form-control mb-5" placeholder="Phone no." required>

@@ -34,8 +34,10 @@ class UserEventController extends Controller
     }
 
     public function allEvents(){
-        $events = Event::whereRaw("CONCAT(event_date, ' ', event_time) >= ?", [now()])
-            ->orderByRaw("CONCAT(event_date, ' ', event_time) ASC")
+        $events = Event::whereDate('event_date', '>=', now())
+            // ->orderByRaw("CONCAT(event_date, ' ', event_time) ASC")
+            ->orderBy('event_date', 'asc')
+            ->orderBy('event_time', 'asc')
             ->paginate(6); // You can change 6 to however many events you want per page
 
         return view('all-events', compact('events'));

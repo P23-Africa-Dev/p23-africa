@@ -20,7 +20,9 @@ Route::get('/about', function () {
 Route::get('/services', function () {
     return view('services');
 });
-Route::post('/events/{event}/book-seat', [SeatController::class, 'store'])->name('seats.store');
+// Route::post('/events/{event}/book-seat', [SeatController::class, 'store'])->name('seats.store');
+Route::post('/book-seat/{event_id}', [SeatController::class, 'store'])->name('seats.store');
+
 Route::get('/events', [UserEventController::class, 'eventPage'])->name('event');
 
 // Route::get('/all-events', [UserEventController::class, 'allEvents'])->name('events.all-events');

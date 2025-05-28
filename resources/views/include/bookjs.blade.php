@@ -30,51 +30,60 @@
 
 
     // Pop Up
-    document.addEventListener('DOMContentLoaded', function() {
-        const seatForm = document.getElementById('seatForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const spinner = document.getElementById('submitSpinner');
+document.addEventListener('DOMContentLoaded', function () {
+    const seatForm = document.getElementById('seatForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const spinner = document.getElementById('submitSpinner');
+    const eventIdInput = document.getElementById('event_id');
+    let currentEventId = null;
 
-        seatForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            // Show loading spinner
-            spinner.classList.remove('d-none');
-            submitBtn.disabled = true;
-
-            const formData = new FormData(seatForm);
-
-            fetch("{{ route('seats.store', $event->id) }}", {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                    },
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    spinner.classList.add('d-none');
-                    submitBtn.disabled = false;
-
-                    if (data.success) {
-                        alert('Something went wrong. Please try again.');
-                    } else {
-                        seatForm.reset();
-                        const seatModal = bootstrap.Modal.getInstance(document.getElementById(
-                            'seatModal'));
-                        seatModal.hide();
-
-                        const successModal = new bootstrap.Modal(document.getElementById(
-                            'successModal'));
-                        successModal.show();
-                    }
-                })
-                .catch(error => {
-                    console.error(error);
-                    spinner.classList.add('d-none');
-                    submitBtn.disabled = false;
-                    alert('Error submitting the form.');
-                });
+    // Attach click listener to all "Book A Seat" buttons
+    document.querySelectorAll('.actionBtn').forEach(button => {
+        button.addEventListener('click', function () {
+            currentEventId = this.getAttribute('data-event-id');
+            eventIdInput.value = currentEventId;
         });
     });
+
+    seatForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        if (!currentEventId) {
+            alert("Event ID not found. Please try again.");
+            return;
+        }
+
+        spinner.classList.remove('d-none');
+        submitBtn.disabled = true;
+
+        const formData = new FormData(seatForm);
+
+        fetch(`/book-seat/${currentEventId}`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                spinner.classList.add('d-none');
+                submitBtn.disabled = false;
+
+                if (data.success === false) {
+                    alert('Something went wrong. Please try again.');
+                } else {
+                    seatForm.reset();
+                    bootstrap.Modal.getInstance(document.getElementById('seatModal')).hide();
+                    new bootstrap.Modal(document.getElementById('successModal')).show();
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                spinner.classList.add('d-none');
+                submitBtn.disabled = false;
+                alert('Error submitting the form.');
+            });
+    });
+});
 </script>

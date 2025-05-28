@@ -20,16 +20,17 @@ class SeatController extends Controller
         ]);
 
         $seatCode = 'P23-' . strtoupper(Str::random(9));
+        $event = Event::findOrFail($event_id);
 
         $seat  = Seat::create([
-            'event_id' => $event_id,
+            'event_id' => $event->id,
             'name' => $validated['name'],
             'email' => $validated['email'],
             'phone' => $validated['phone'],
             'seat_code' => $seatCode,
         ]);
 
-        $event = Event::findOrFail($event_id);
+        // $event = Event::findOrFail($event_id);
 
         // Determine which link to send
         $link = $event->visibility === 'public'

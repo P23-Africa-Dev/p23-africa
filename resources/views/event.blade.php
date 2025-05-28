@@ -44,7 +44,7 @@
                                 <p>
                                     {!! Str::limit($event->description, 233) !!}
                                 </p>
-                                <a href="{{ route('events.show', $event->slug) }}" class="btn btn-outline-light btn-book" id="actionBtn" data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
+                                <a href="{{ route('events.show', $event->slug) }}" class="btn btn-outline-light btn-book actionBtn" data-event-id="{{ $event->id }}" data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
                                     data-event-link="{{ $event->link }}" data-bs-toggle="modal"
                                     data-bs-target="#seatModal">
                                     Book A Seat <i class="bi bi-arrow-right"></i>

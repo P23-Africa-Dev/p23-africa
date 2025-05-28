@@ -183,7 +183,7 @@
                 <div class="align-items-center mt-5">
                     <div class="d-flex">
 
-                        <button class="btn me-4 mb-3 px-5 py-2 btn-color" id="actionBtn"
+                        <button class="btn me-4 mb-3 px-5 py-2 btn-color actionBtn" data-event-id="{{ $event->id }}"
                             data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
                             data-event-link="{{ $event->link }}" data-bs-toggle="modal" data-bs-target="#seatModal">Book A
                             Seat <i class="fas fa-arrow-right ms-2"></i></button>

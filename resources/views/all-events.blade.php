@@ -83,7 +83,10 @@
                                     <div>
                                         <h3><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""><a
                                                 href="{{ route('events.show', $event->slug) }}"> {{ $event->title }} <i>
-                                                    ({{ $event->subtitle }})
+                                                    @if ($event->subtitle)
+                                                        ({{ $event->subtitle }})
+                                                    @endif
+
                                                 </i></a></h3>
                                         <p>{!! Str::limit($event->description, 233) !!}</p>
                                         <div class="event-card-footer">
@@ -98,7 +101,7 @@
 
                                             <span class="time">{{ $startTime->format('g:i A') }} -
                                                 {{ $endTime->format('g:i A') }}</span>
-                                            <button class="btn" id="actionBtn"
+                                            <button class="btn actionBtn" data-event-id="{{ $event->id }}"
                                                 data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
                                                 data-event-link="{{ $event->link }}" data-bs-toggle="modal"
                                                 data-bs-target="#seatModal">Book A Seat →</button>
@@ -141,7 +144,7 @@
     </section>
 
 
-     @include('include.book-seat')
+    @include('include.book-seat')
 @endsection
 
 {{-- <script src="{{ asset('js/event.js') }}"></script> --}}
