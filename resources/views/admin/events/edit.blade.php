@@ -50,6 +50,12 @@
                                 value="{{ old('event_time', $event->event_time) }}" required>
                         </div>
 
+                        <div class="mb-3">
+                            <label>Venue</label>
+                            <input type="text" name="venue" class="form-control"
+                                value="{{ old('venue', $event->venue) }}" required>
+                        </div>
+
                         <div class="mb-5">
                             @if ($event->image)
                                 <label class="text-nowrap pr-3 mb-1">Replace Image</label>

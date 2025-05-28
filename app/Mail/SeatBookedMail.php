@@ -18,16 +18,27 @@ class SeatBookedMail extends Mailable
      */
     // public $seat;
 
-    public function __construct(public $booking, public $event, public $link)
+    public $booking;
+    public $event;
+    public $link;
+
+    public function __construct($booking, $event, $link)
     {
-        
+        $this->booking = $booking;
+        $this->event = $event;
+        $this->link = $link;
     }
 
 
     public function build()
     {
         return $this->subject('Invitation: From P23 Africa x Event - ' . $this->event->title)
-            ->view('emails.seat-booked');
+            ->view('emails.seat-booked')
+            ->with([
+                'booking' => $this->booking,
+                'event' => $this->event,
+                'link' => $this->link,
+            ]);
     }
     
     /**

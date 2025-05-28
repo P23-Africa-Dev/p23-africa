@@ -21,7 +21,7 @@ class SeatController extends Controller
 
         $seatCode = 'P23-' . strtoupper(Str::random(9));
 
-        $seat = Seat::create([
+        $seat  = Seat::create([
             'event_id' => $event_id,
             'name' => $validated['name'],
             'email' => $validated['email'],
@@ -29,15 +29,9 @@ class SeatController extends Controller
             'seat_code' => $seatCode,
         ]);
 
-        $event = Event::find($event_id);
-
-        // Generate unique access link for private events
-        // $link = $event->visibility === 'private'
-        //     ? url("/event/join/{$event->slug}/{$seatCode}")
-        //     : $event->link;
+        $event = Event::findOrFail($event_id);
 
         // Determine which link to send
-        // $link = $event->visibility === 'public' ? $event->link : route('private.access', ['code' => $seatCode]);
         $link = $event->visibility === 'public'
             ? $event->link
             : route('private.access', ['slug' => $event->slug, 'code' => $seatCode]);

@@ -1,11 +1,7 @@
-<!-- resources/views/emails/seat-booked.blade.php -->
-{{-- <p>Hello {{ $seat->name }},</p>
-<p>Thank you for booking a seat for the event. Your unique seat code is:</p>
-<h3>{{ $seat->seat_code }}</h3>
-<p>We look forward to seeing you at the event.</p> --}}
 
 @php
-    $firstName = explode(' ', $booking->name)[0];
+    // $firstName = explode(' ', $booking->name)[0];
+     $firstName = explode(' ', $booking->name)[0] ?? 'Guest';
     // $event = $booking->event ?? $event;
     $event = $booking->event ?? $event ?? null;
 @endphp
@@ -50,5 +46,6 @@
 <p>Looking forward to seeing you online!</p>
 
 @else
-    <p>Event or access details could not be retrieved. Please contact support.</p>
+    <p>Event or access details could not be retrieved. Please contact support 
+        <a href="mailto:support@p23africa.com">support@p23africa.com</a> or try booking event again!</p>
 @endif
