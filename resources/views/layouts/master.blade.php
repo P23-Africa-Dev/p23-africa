@@ -7,14 +7,10 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
         <title>@yield('title')</title>
-        <meta name="description"
-            content="Expand and grow your business in Africa with expert business consulting. P23 Africa helps entrepreneurs, SMEs, and international businesses with strategy, expansion, marketing, operational efficiency and tailored solutions to thrive in African markets. Get started today!">
-        <meta name="keywords"
-            content="Expand and grow your business in Africa with expert business consulting. P23 Africa helps entrepreneurs, SMEs, and international businesses with strategy, expansion, marketing, operational efficiency and tailored solutions to thrive in African markets. Get started today!">
-        <meta name="author" content="Nurudeen O. Daniju">
-        <meta name="generator" content="Business Consulting & Growth Solutions for Africa | P23 Africa">
-        {{-- <meta property="og:image" content="images/building002.jpeg"> --}}
+        
         <link rel="shortcut icon" href="{{ asset('images/Logo.png') }}" type="image/x-icon">
+
+        @yield('meta')
 
 
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">

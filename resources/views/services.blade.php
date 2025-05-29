@@ -1,6 +1,16 @@
 @extends('layouts.master')
 @section('title', 'Services | P23 Africa')
 
+@section('meta')
+    <meta name="description"
+        content="Business Strategy | Marketing & Sales | Operation & Efficiency | Expansion">
+    <meta name="keywords"
+        content="Expand and grow your business in Africa with expert business consulting. P23 Africa helps entrepreneurs, SMEs, and international businesses with strategy, expansion, marketing, operational efficiency and tailored solutions to thrive in African markets. Get started today!">
+    <meta name="author" content="Nurudeen O. Daniju">
+    <meta name="generator" content="Business Consulting & Growth Solutions for Africa | P23 Africa">
+    <meta property="og:image" content="{{ asset('images/servces-bg.png') }}">
+@endsection
+
 
 @section('content')
     <section class="services-hero about animate-on-scroll">

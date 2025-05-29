@@ -1,5 +1,14 @@
 @extends('layouts.master')
 @section('title', 'About | P23 Africa')
+@section('meta')
+    <meta name="description"
+        content="Expand and grow your business in Africa with expert business consulting. P23 Africa helps entrepreneurs, SMEs, and international businesses with strategy, expansion, marketing, operational efficiency and tailored solutions to thrive in African markets. Get started today!">
+    <meta name="keywords"
+        content="Expand and grow your business in Africa with expert business consulting. P23 Africa helps entrepreneurs, SMEs, and international businesses with strategy, expansion, marketing, operational efficiency and tailored solutions to thrive in African markets. Get started today!">
+    <meta name="author" content="Nurudeen O. Daniju">
+    <meta name="generator" content="Business Consulting & Growth Solutions for Africa | P23 Africa">
+    <meta property="og:image" content="{{ asset('images/about-header.jpg') }}">
+@endsection
 
 
 @section('content')
@@ -51,7 +60,9 @@
                         <h5>Our Mission <span></span></h5>
                         <strong class="my-2">Business Empowerment</strong>
                         <p>
-                            Our mission is to empower African businesses to thrive and innovate through strategic guidance and transformative solutions. We are committed to fostering sustainable growth, driving impactful change, and unlocking the full potential of businesses across the continent.
+                            Our mission is to empower African businesses to thrive and innovate through strategic guidance
+                            and transformative solutions. We are committed to fostering sustainable growth, driving
+                            impactful change, and unlocking the full potential of businesses across the continent.
                         </p>
                     </div>
                     <div class="col-md-6">
@@ -60,7 +71,9 @@
                         </div>
                         <strong class="my-2">Excellence, Integrity, and Collaboration</strong>
                         <p>
-                            With a vision rooted in excellence, integrity, and collaboration, we aspire to be the catalyst for Africa's economic advancement, empowering clients to navigate challenges, seize opportunities, and shape a prosperous future for generations to come.
+                            With a vision rooted in excellence, integrity, and collaboration, we aspire to be the catalyst
+                            for Africa's economic advancement, empowering clients to navigate challenges, seize
+                            opportunities, and shape a prosperous future for generations to come.
                         </p>
                     </div>
                 </div>
@@ -72,7 +85,8 @@
 
     <section class="growth-section animate-on-scroll">
         <div class="container">
-            <h5 class="my-auto"><img src="{{ asset('images/line.png') }}" loading='lazy' alt=""> Our Three pillars to ensure success</h5>
+            <h5 class="my-auto"><img src="{{ asset('images/line.png') }}" loading='lazy' alt=""> Our Three pillars
+                to ensure success</h5>
             <h2>Empowering your growth <br> through;</h2>
         </div>
     </section>

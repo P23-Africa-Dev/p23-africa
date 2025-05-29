@@ -3868,11 +3868,12 @@ section.visible{
     }
     .event_hero #event_hero_desktop .event-wrapper .main-img {
         position: absolute;
-        bottom: -20px; /* Adjust based on your design */
-        left: 50%;
+        bottom: 15px; /* Adjust based on your design */
+        left: 47%;
         transform: translateX(-50%);
         width: 63%; /* Adjust to fit frame */
-        max-height: 200px;
+        height: 150px;
+        object-fit: cover;
     }
     .upcoming_events {
         margin: 7rem 0px 7rem 0px;

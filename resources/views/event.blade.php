@@ -1,6 +1,16 @@
 @extends('layouts.master')
 @section('title', 'Event | P23 Africa')
 
+@section('meta')
+    <meta name="description"
+        content="Expand and grow your business in Africa with expert business consulting. P23 Africa helps entrepreneurs, SMEs, and international businesses with strategy, expansion, marketing, operational efficiency and tailored solutions to thrive in African markets. Get started today!">
+    <meta name="keywords"
+        content="Expand and grow your business in Africa with expert business consulting. P23 Africa helps entrepreneurs, SMEs, and international businesses with strategy, expansion, marketing, operational efficiency and tailored solutions to thrive in African markets. Get started today!">
+    <meta name="author" content="Nurudeen O. Daniju">
+    <meta name="generator" content="Business Consulting & Growth Solutions for Africa | P23 Africa">
+    <meta property="og:image" content="{{ asset('images/event_hero_header.jpg') }}">
+@endsection
+
 
 @section('content')
     <section class="event_hero content-section animate-on-scroll">
@@ -20,7 +30,7 @@
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="event-card1 h-100">
                         <div class="d-flex align-items-center mb-2">
-                            <div class="section-title">Upcoming Event For The Year</div>
+                            <div class="section-title">Upcoming Events For The Year</div>
                         </div>
                         <p class="section-subtitle">
                             Explore upcoming events tailored to equip, connect, and empower businesses across Africa and

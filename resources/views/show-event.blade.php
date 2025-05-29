@@ -1,5 +1,20 @@
 @extends('layouts.master')
-@section('title', 'Event | P23 Africa')
+@section('title')
+    {{ $event->title }}
+    @if ($event->subtitle)
+        ({{ $event->subtitle }})
+    @endif
+    | P23 Africa
+@endsection
+
+@section('meta')
+    <meta property="og:image" content="{{ asset('storage/' . $event->image) }}">
+    <meta name="description" content="{!! $event->description !!}">
+
+    <meta name="keywords" content="{!! $event->description !!}">
+    <meta name="author" content="Nurudeen O. Daniju">
+    <meta name="generator" content="{!! $event->description !!}">
+@endsection
 
 <style>
     .bg-success {
@@ -59,12 +74,25 @@
     .about-event #mobile {
         display: none;
     }
+
     .about-event .event-time p {
         font-size: 20px;
         font-family: 'GT Walsheim Con';
     }
 
     @media (max-width: 700px) {
+        .about-event {
+            margin: 5rem 0;
+        }
+
+        .about-event h1 {
+            font-size: 40px;
+        }
+
+        .about-event h3 {
+            font-size: 32px;
+        }
+
         .about-event #mobile {
             display: block;
         }
@@ -134,7 +162,8 @@
                 <div id="event_hero_desktop" class="px-md-4">
                     @if ($event->image)
                         <div class="event-wrapper">
-                            <img src="{{ asset('images/event-frame.png') }}" loading='lazy' alt="Frame" class="frame-img">
+                            <img src="{{ asset('images/event-frame.png') }}" loading='lazy' alt="Frame"
+                                class="frame-img">
                             <img src="{{ asset('storage/' . $event->image) }}" loading='lazy' alt="Main Event"
                                 class="main-img">
                         </div>
@@ -303,8 +332,6 @@
 
         <br><br>
     </section>
-
-
 @endsection
 @include('include.bookjs')
 
