@@ -78,23 +78,42 @@
                 <button class="tab-btn" onclick="switchTab('next', this)">Happening Next Month</button>
             </div>
 
+            @php
+                use Carbon\Carbon;
+
+                $thisMonth = Carbon::now();
+                $nextMonth = $thisMonth->copy()->addMonth();
+                $twoMonths = $thisMonth->copy()->addMonths(2);
+
+                function getMonthRange(Carbon $date)
+                {
+                    $start = $date->copy()->startOfMonth();
+                    $end = $date->copy()->endOfMonth();
+
+                    $startDay = $start->format('jS');
+                    $monthYear = $start->format('F');
+
+                    $endDay = $end->format('jS');
+
+                    return "{$startDay} {$monthYear} - {$endDay} {$monthYear}";
+                }
+            @endphp
+
             <div class="flex-layout">
 
                 <!-- Sidebar (Desktop Only) -->
                 <div class="sidebar1">
                     <div class="event-box filter-btn" data-filter="this_month">
-                        <h4><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""> 1st April - 30th
-                            April</h4>
+                        <h4><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""> {{ getMonthRange($thisMonth) }}</h4>
                         <p>Happening This Month</p>
                     </div>
                     <div class="event-box filter-btn" data-filter="next_month">
-                        <h4><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""> 1st May - 31st May
+                        <h4><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""> {{ getMonthRange($nextMonth) }}
                         </h4>
                         <p>Happening Next Month</p>
                     </div>
                     <div class="event-box filter-btn" data-filter="two_months">
-                        <h4><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""> 1st June - 30th
-                            June</h4>
+                        <h4><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""> {{ getMonthRange($twoMonths) }}</h4>
                         <p>Happening In Two Month</p>
                     </div>
                 </div>

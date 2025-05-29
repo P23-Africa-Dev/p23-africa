@@ -20,9 +20,18 @@
 
 
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @env('local')
+            @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @endenv
+        
+        <!--{{-- Use built assets on production --}}-->
+        @env('production')
+            <link rel="stylesheet" href="{{ asset('build/assets/app-DTNRFIno.css') }}">
+            <script src="{{ asset('build/assets/app-Bf4POITK.js') }}" defer></script>
+        @endenv
 
         <x-head.tinymce-config/>
     </head>
@@ -43,6 +52,7 @@
             <main>
                 {{ $slot }}
             </main>
+            
         </div>
     </body>
 </html>
