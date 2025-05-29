@@ -6,7 +6,7 @@
     $event = $booking->event ?? $event ?? null;
 @endphp
 
-@if ($event && $link)
+@if ($event)
 <p>Hi {{ $firstName }},</p>
 
 <p>Thank you for registering! You’re officially confirmed for our upcoming virtual event:</p>
