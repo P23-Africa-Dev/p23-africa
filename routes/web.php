@@ -20,6 +20,9 @@ Route::get('/about', function () {
 Route::get('/services', function () {
     return view('services');
 });
+Route::get('/sales', function () {
+    return view('sales');
+})->name('sales');
 // Route::post('/events/{event}/book-seat', [SeatController::class, 'store'])->name('seats.store');
 Route::post('/book-seat/{event_id}', [SeatController::class, 'store'])->name('seats.store');
 

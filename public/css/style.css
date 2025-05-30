@@ -4232,15 +4232,15 @@ section.visible{
 }
 
 @media (max-width: 700px) {
-.track_events .event-card-footer {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-top: 15px;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-}
+    .track_events .event-card-footer {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-top: 15px;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
 }
 
 /* Responsive for mobile */
@@ -4259,3 +4259,955 @@ section.visible{
 }
 
 /* ==========================================  SERIVCES PAGE ENDS */
+
+.sales .sales-growth-section {
+    color: #fff;
+    margin-top: 4rem;
+}
+
+.sales .content-row {
+    padding-top: 80px;
+    padding-bottom: 40px;
+    /* background-image: url(../images/stk-intro-banner.png); */
+    /* background-color: #0d4036;
+    background-blend-mode: overlay; */
+    background: linear-gradient(#0d4036f3, #0d4036f3),
+        url("../images/audit-bg.png");
+}
+
+.sales .content-row .container {
+    /* background: linear-gradient(#0d4036, #0d4036), url("../images/audit-bg.png"); */
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.sales .content-row h1 span,
+.sales .content-row h2 span {
+    color: #52ccb4;
+}
+
+.sales .content-row h1 {
+    font-size: 60px !important;
+    font-weight: 900;
+    font-weight: bold;
+    font-family: "GT Walsheim Bold";
+}
+
+.sales .content-row h2 {
+    font-size: 60px !important;
+    margin-left: 6rem;
+    font-weight: 300;
+    font-family: "GT Walsheim Con";
+}
+
+.sales .sales-divider {
+    width: 70px;
+    height: 1.5px;
+    background-color: #fff;
+}
+.sales .sales-toolkit-info {
+    max-width: 500px;
+    justify-content: end;
+}
+.sales .sales-toolkit-info .lead-sm {
+    font-size: 18px !important;
+    font-family: "GT Walsheim Pro";
+}
+.sales .sales-toolkit-info .lead-sm strong {
+    font-size: 20px !important;
+}
+
+.sales .sales-toolkit-info {
+    margin-top: 30px;
+}
+
+.sales .stats-row {
+    margin-top: 20px;
+    font-family: "GT Walsheim Con";
+    width: 100%;
+}
+.sales .stats-row h3 {
+    font-size: 25px;
+}
+.sales .stats-row p {
+    font-weight: 275;
+    color: #ffffffb0;
+    letter-spacing: 1;
+    font-size: 12px;
+}
+
+.sales .video-container {
+    position: relative;
+    width: 100%;
+    height: 90vh;
+    padding: 0px 0px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.sales .video-container img {
+    display: block;
+    object-fit: cover;
+    object-position: top;
+    height: 100%;
+    width: 100%;
+    border-radius: 30px;
+    /* box-shadow: 20px 20px #0d4036; */
+}
+
+/* Shadow overlays */
+.sales .video-container::before,
+.sales .video-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 650px;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.sales .video-container::before {
+    left: 25;
+    background: linear-gradient(to right, #0d4036, transparent);
+}
+
+.sales .video-container::after {
+    right: 0;
+    background: linear-gradient(to left, #0d4036, transparent);
+}
+
+/* .video-fade-overlay {
+    content: "";
+    position: absolute;
+    right: 0;
+    left: 0;
+    height: 120px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.video-fade-right {
+    right: 1;
+    background: linear-gradient(to left, #003c32, rgba(0, 60, 50, 0));
+}
+
+.video-fade-left {
+    left: -16px;
+    background: linear-gradient(to right, #003c32, rgba(0, 60, 50, 0));
+} */
+
+.sales .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to top,
+        var(--overlay-gradient-end),
+        var(--overlay-gradient-start)
+    );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.sales .play-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    transition: transform 0.2s ease-in-out;
+}
+
+.sales .play-button:hover {
+    transform: scale(1.1);
+}
+
+.sales .play-button svg {
+    color: #fff;
+    fill: #193e47;
+    /* filter: drop-shadow(0 0 5px #193E47); */
+}
+
+@media screen and (max-width: 580px) {
+    .sales .sales-growth-section {
+        color: #fff;
+        margin-top: 2rem;
+    }
+}
+
+/* =====================================  HOW IT WORKS */
+
+.sales .how-it-works-section {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    overflow: hidden;
+    background-image: url(../images/stk-intro-banner.png);
+    /* background-blend-mode: overlay; */
+}
+
+.sales .works-heading {
+    color: #0d4036;
+}
+
+.sales .works-heading p {
+    padding-left: 40px;
+    font-size: 20px;
+    font-weight: 800;
+    position: relative;
+    display: inline-block;
+    margin-left: 60px;
+}
+
+.sales .works-heading p::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -60px;
+    width: 80px;
+    height: 2px;
+    background-color: #0d4036;
+    transform: translateY(-50%);
+}
+.sales .works-heading p {
+    font-family: "GT Walsheim ConB";
+    color: #0d4036;
+}
+.sales .works-heading h2 {
+    font-weight: bolder;
+    font-size: 26px;
+    font-family: "GT Walsheim Bold";
+    color: #0d4036;
+}
+
+/* --------------------- HOW IT WORKS SECTION */
+
+.sales .how-it-works-section {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    overflow: hidden;
+    background-image: url(../images/stk-intro-banner.png);
+    /* background-blend-mode: overlay; */
+}
+.sales .how-it-works-section img {
+    width: 100%;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.sales .how-it-works-section img:hover {
+    transform: translateY(-5px);
+}
+.sales .works-heading {
+    color: #0d4036;
+}
+
+.sales .works-heading p {
+    padding-left: 40px;
+    font-size: 20px;
+    font-weight: 800;
+    position: relative;
+    display: inline-block;
+    margin-left: 60px;
+}
+
+.sales .works-heading p::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -60px;
+    width: 80px;
+    height: 2px;
+    background-color: #0d4036;
+    transform: translateY(-50%);
+}
+
+.sales .works-heading h2 {
+    font-weight: 900;
+    font-size: 26px;
+}
+
+/* --------------------- HOW IT WORKS SECTION */
+
+.sales .how-it-works-card {
+    border-radius: 20px;
+    height: auto;
+    min-height: 400px;
+    display: flex;
+    /* position: relative;
+  z-index: 3; */
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sales .how-it-works-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.sales .how-it-works-card .card-body {
+    flex-grow: 1;
+}
+
+.sales .how-it-works-card .card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.sales .how-it-works-card .card-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.sales .bg-dark-card-color {
+    background-color: #193e47;
+    color: #fff;
+}
+.sales .bg-light-green {
+    background-color: #1deaa5;
+}
+
+/* Card 1 & 4 Background Elements (Arrows) */
+.sales .card-background-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.sales .card-background-elements img {
+    width: 80px;
+    height: 80px;
+}
+.sales .card-background-elements .bg-bottom-element {
+    position: relative;
+    top: 45px;
+    gap: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sales .card-background-elements .bg-top-element {
+    position: relative;
+    top: -20px;
+    gap: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Card 2 Specific Styles (Image Card) */
+.sales .card-img-top-wrapper {
+    width: calc(100% + 40px);
+    height: 300px;
+    margin: -20px -20px 0;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e0e0e0; /* Neutral background for image wrapper */
+}
+
+.sales .how-it-works-card .bg-inner {
+    background-color: #c7b5f3;
+    color: #193e47;
+    max-height: 300px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    z-index: 3;
+}
+
+.sales .arrow-card-3 {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    z-index: 2;
+}
+.sales .arrow-card-3-top-right {
+    top: -10px;
+    right: 60px;
+}
+.sales .arrow-card-3-bottom-left {
+    bottom: 0;
+    left: 60px;
+}
+
+.sales .card-img-top-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.sales .how-it-works-card .cards-text {
+    padding-bottom: 30px;
+}
+
+/* ---------------------------BUSINESS AUDIT SECTION */
+
+.sales .business-audit {
+    /* background-color: #203e45; */
+    padding: 4rem 0;
+    background: linear-gradient(#1a3e47ee, #23444cea),
+        url("../images/audit-bg.png");
+    /* background-blend-mode: overlay; */
+    color: #fff;
+}
+
+.sales .business-audit .text-section h1 {
+    font-size: 30px !important;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    font-family: "GT Walsheim Black";
+}
+
+.sales .business-audit .text-section p {
+    font-size: 22px;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    font-family: "GT Walsheim Con";
+}
+
+.sales .business-audit .custom-button {
+    background-color: #edba5a;
+    color: #193e47;
+    font-weight: 500;
+    padding: 0.7rem 2rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease;
+    font-family: "GT Walsheim Pro";
+}
+
+.sales .business-audit .custom-button:hover {
+    background-color: #a0d802;
+    color: #193e47;
+}
+
+.sales .image-container {
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.sales .image-container img {
+    border-radius: 0.75rem;
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.sales .image-description {
+    color: #ffffff;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    text-align: center;
+}
+
+/* ---------------------------OFFER SECTION */
+
+.sales .offer-section {
+    background-color: #f8f8f8;
+    padding: 4rem 0;
+    text-align: center;
+    overflow: hidden;
+    color: #0d4036;
+    background-image: url(../images/stk-intro-banner.png);
+}
+
+.sales .offer-section h2 {
+    color: #0d4036;
+    font-size: 40px;
+    font-weight: 900;
+    margin-bottom: 3rem;
+    font-family: "GT Walsheim Black" !important;
+}
+
+.sales .offer-item {
+    position: relative;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sales .offer-item .number {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #193e47;
+    line-height: 2;
+    margin-bottom: 1rem;
+    height: auto;
+    font-family: "GT Walsheim Black" !important;
+}
+
+.sales .offer-item .dot {
+    width: 15px;
+    height: 15px;
+    background-color: #193e47;
+    border-radius: 50%;
+    margin-bottom: 1.5rem;
+    z-index: 2;
+    position: relative;
+}
+
+.sales .offer-item p {
+    color: #193e47;
+    font-size: 28px;
+    line-height: 1.5;
+    font-family: "GT Walsheim Con" !important;
+}
+
+/*=================================================  CLIENT SECTION */
+
+.sales .clients-section {
+    background-color: #97c4c7;
+    /* padding: 4rem 0; */
+    text-align: center;
+    width: 100%;
+    background-position: bottom;
+    padding: 60px 20px 260px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.sales .clients-section h2 {
+    color: #0d4036;
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 3rem;
+    position: relative;
+    display: inline-block;
+    font-family: "GT Walsheim Con";
+}
+
+.sales .clients-section h2::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -60px;
+    width: 40px;
+    height: 2px;
+    background-color: #0d4036;
+    transform: translateY(-50%);
+}
+.sales .clients-section-main {
+    padding-bottom: 1rem;
+}
+.sales .clients-section-main .clients-container {
+    position: relative;
+    z-index: 2;
+    margin-top: -250px; /* Pull cards up into the section */
+    margin-bottom: 4rem;
+}
+.sales .clients-section-main .clients-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+.sales .clients-section-main .clients {
+    padding: 0px 10px;
+}
+.sales .clients-section-main .client-card {
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+    color: #0d4036;
+    height: 100%;
+    position: relative;
+    z-index: 2;
+}
+
+.sales .client-card img {
+    width: 365px !important;
+    height: 510px !important;
+    max-width: 100%;
+    object-fit: cover;
+    object-position: top;
+    padding: 0px;
+    border-radius: 1rem;
+    margin-bottom: 20px;
+}
+
+.sales .client-card h4 {
+    font-weight: bold;
+    font-family: "GT Walsheim Con";
+}
+.clients-container .slider-controls {
+    display: none;
+}
+
+@media screen and (max-width: 580px) {
+    .clients-section {
+        padding: 30px 20px 260px;
+        margin-top: -6rem !important;
+    }
+    /* .testimonial-section-main{
+        overflow: hidden;
+        width: 100%;
+    } */
+    .clients-container {
+        overflow: hidden;
+        width: 100%;
+        padding-bottom: 80px;
+        margin-bottom: 1rem;
+    }
+    .clients-section h2 {
+        font-size: 26px;
+        text-align: center;
+    }
+    .client-card {
+        /* box-shadow: 2px 2px 6px #0000005b; */
+    }
+    /* .client-card:hover {
+        background: #fff;
+        color: #07483e;
+    } */
+    .client-card h4 {
+        font-weight: 275 !important;
+        font-size: 20px !important;
+    }
+    .client-card p {
+        font-size: 16px !important;
+        /* color: #0D4036; */
+        font-weight: 300;
+        margin-top: 10px;
+        line-height: 24px;
+    }
+    .client-card img {
+        width: 365px !important;
+        height: 565px !important;
+        object-fit: cover;
+        border-radius: 50%;
+        object-position: top;
+    }
+
+    .clients-container .clients-wrapper {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+        justify-content: center;
+        gap: 0px;
+        margin-top: -40px; /* Pull cards up into the section */
+        /* width: 100%; 3 slides */
+    }
+    .clients-container .clients {
+        width: 100%;
+        flex-shrink: 0;
+        /* padding: 40px 20px; */
+        text-align: center;
+    }
+    .clients-container .slider-controls {
+        position: absolute;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 40px;
+    }
+    /* #horiz {
+        margin-top: 0rem;
+        margin-bottom: 2rem;
+        border: 0px solid #0000002d;
+    } */
+    .clients-container .slider-controls .arrow {
+        cursor: pointer;
+        transition: color 0.3s;
+        user-select: none;
+    }
+}
+
+/*=================================================  TRAINED SECTION */
+
+.sales .trained-teams-section {
+    background-color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+    margin-top: 0rem;
+    margin-bottom: 50px;
+    border-top: 2px dashed #d0d0d0;
+    border-bottom: 2px dashed #d0d0d0;
+    font-family: "GT Walsheim Black";
+}
+
+.sales .trained-teams-section h2 {
+    font-size: 64px;
+    font-weight: 300;
+    color: #0d4036;
+    margin-bottom: 0;
+    font-family: "GT Walsheim Con";
+}
+
+.sales .trained-teams-section h2 strong {
+    color: #193e47;
+    font-weight: bold;
+}
+
+/* ========================= LEAD SECTION */
+.sales .lead-section {
+    background-color: #2f626e;
+    color: #fff;
+    padding: 0rem 0rem;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    background: linear-gradient(#193e47f5, #193e47f5),
+        url(../images/audit-bg.png);
+}
+
+.sales .lead-section .image-box {
+    position: relative;
+    /* clip-path: polygon(10% 0, 80% 10%, 50% 150%, 0% 100%); */
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    left: -15px;
+}
+
+.sales .lead-section .image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.sales .lead-section .content-box {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.sales .lead-section h2 {
+    font-weight: 700;
+    font-size: 36px;
+    font-family: "GT Walsheim Black";
+    color: #fff;
+}
+
+.sales .lead-section p {
+    color: #e0e0e0;
+    margin-top: 0.75rem;
+    font-size: 20px;
+    font-family: "GT Walsheim Con";
+}
+
+.sales .lead-section .cta-btn {
+    background-color: #edba5a;
+    color: #193e47;
+    font-weight: 400;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    font-family: "GT Walsheim Con";
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    width: fit-content;
+}
+
+.sales .lead-section .cta-btn:hover {
+    background-color: #a0d802;
+    color: #193e47;
+}
+
+.sales .lead-section .pattern-shape {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+}
+
+.sales .pattern-top-right {
+    top: 1rem;
+    right: 1rem;
+}
+
+.sales .pattern-bottom-right {
+    bottom: 1rem;
+    right: 2rem;
+}
+
+/* Media Queries (min-width approach) */
+
+@media (min-width: 768px) {
+    .sales .content-row h1 {
+        font-size: 48px;
+    }
+    .sales .content-row h2 {
+        font-size: 35px;
+    }
+
+    .sales .sales-toolkit-info {
+        margin-top: 0px;
+        padding-top: 0px;
+    }
+
+    .sales .sales-toolkit-info .lead-sm {
+        font-size: 1.9em;
+    }
+
+    .sales .how-it-works-card {
+        height: 500px;
+        min-height: auto;
+    }
+
+    .sales .how-it-works-card.bg-light-card-2 .card-img-top-wrapper {
+        height: 250px;
+    }
+
+    /* ---------------------------OFFER SECTION */
+    .sales .offer-item {
+        margin-bottom: 0;
+    }
+
+    .sales .offer-item:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateY(-50%);
+        width: calc(100% - 30px);
+        height: 2px;
+        background-color: #193e47;
+        z-index: 1;
+    }
+
+    .sales .offer-item .dot {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@media (min-width: 992px) {
+    .sales .content-row h1 {
+        font-size: 48px;
+    }
+
+    .sales .content-row h2 {
+        font-size: 28px;
+    }
+
+    .sales .sales-divider {
+        transform: translate(-50px, 50px) rotate(90deg);
+    }
+
+    .sales .how-it-works-section {
+        padding-top: 80px;
+        padding-bottom: 80px;
+    }
+
+    .sales .works-heading h2 {
+        font-size: 40px;
+    }
+
+    .sales .business-audit .text-section {
+        padding-top: 50px;
+    }
+    .sales .business-audit .text-section h1 {
+        font-size: 1.6rem;
+        font-family: "GT Walsheim Black";
+    }
+
+    .sales .image-container {
+        max-height: 400px;
+        margin-top: 50px;
+    }
+
+    /*=================================================  CLIENTS SECTION */
+
+    .sales .client-card {
+        max-height: 200px;
+    }
+
+    .sales .clients-section h2 {
+        font-size: 1.8rem;
+    }
+
+    /*=================================================  TRAINED SECTION */
+
+    .sales .trained-teams-section {
+        margin-top: 20rem;
+    }
+}
+
+@media (min-width: 1440px) {
+    .sales .content-row h1 {
+        font-size: 68px;
+    }
+    .sales .content-row h2 {
+        transform: translate(160px);
+    }
+    .sales .sales-toolkit-info {
+        /* max-width: 400px; */
+        padding-right: 30px;
+    }
+
+    .sales .sales-toolkit-info .lead-sm {
+        font-size: 1.4rem;
+    }
+
+    .sales .video-container {
+        height: 70vh;
+    }
+
+    .sales .video-container img {
+        box-shadow: 0px 10px 15px 29px rgba(0, 0, 0, 0.1);
+    }
+
+    .sales .overlay {
+        background: linear-gradient(
+            to right,
+            rgba(0, 0, 0, 0.224) 0%,
+            /* Dark on the far left */ rgba(0, 0, 0, 0.05) 20%,
+            /* Transparent starting at 20% from left */ rgba(0, 0, 0, 0) 80%,
+            /* Remains transparent up to 80% from left */ rgba(0, 0, 0, 0.161)
+                100% /* Dark again from 80% to the far right */
+        );
+    }
+
+    /* --------------------- HOW IT WORKS SECTION */
+
+    .sales .how-it-works-card .bg-inner {
+        max-height: 350px;
+    }
+
+    /* ---------------------------OFFER SECTION */
+    .sales .offer-item .number {
+        padding-bottom: 30px;
+    }
+    .sales .offer-item .dot {
+        width: 20px;
+        height: 20px;
+        margin-bottom: 2rem;
+    }
+
+    .sales .offer-item p {
+        font-size: 1.6rem;
+        text-align: center;
+        padding-top: 10px;
+    }
+}
