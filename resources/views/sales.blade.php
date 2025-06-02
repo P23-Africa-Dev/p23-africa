@@ -10,6 +10,7 @@
     <meta property="og:image" content="{{ asset('images/about-header.jpg') }}">
 @endsection
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 @section('content')
     <section class="sales">
@@ -32,15 +33,15 @@
                                 </p>
                                 <div class="row text-center stats-row">
                                     <div class="col-4">
-                                        <h3 class="fw-bold mb-0">05 +</h3>
+                                        <h3 class="fw-bold mb-0 numbers" id="countries">05 +</h3>
                                         <p class="text-uppercase">Countries</p>
                                     </div>
                                     <div class="col-4">
-                                        <h3 class="fw-bold mb-0">1000 +</h3>
+                                        <h3 class="fw-bold mb-0 numbers" id="businessess">1000 +</h3>
                                         <p class="text-uppercase">Businesses</p>
                                     </div>
                                     <div class="col-4">
-                                        <h3 class="fw-bold mb-0">100 +</h3>
+                                        <h3 class="fw-bold mb-0 numbers" id="partnerships">100 +</h3>
                                         <p class="text-uppercase">Partnership</p>
                                     </div>
                                 </div>
@@ -49,7 +50,9 @@
                     </div>
                 </div>
 
-                <div class="row video-row position-relative">
+
+
+                <div class="">
                     <div class="col-12 p-0">
 
                         {{-- <div class="video-fade-overlay video-fade-right"></div>
@@ -137,7 +140,13 @@
             <div class="container">
                 <h2>This offer is perfect for</h2>
                 <div class="row justify-content-center">
-                    <div class="col-6 col-md-6 col-lg-3">
+                    <div class="desktop">
+                        <img src="{{ asset('images/sales-count-desktop.png') }}" loading="lazy" alt="Offer">
+                    </div>
+                    <div class="mobile">
+                        <img src="{{ asset('images/sales-count-mobile.png') }}" loading="lazy" alt="Offer">
+                    </div>
+                    {{-- <div class="col-6 col-md-6 col-lg-3">
                         <div class="offer-item">
                             <div class="number">01</div>
                             <div class="dot"></div>
@@ -164,7 +173,7 @@
                             <div class="dot"></div>
                             <p>Sales teams without a working system</p>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </section>
@@ -175,14 +184,29 @@
             </div>
         </section>
 
-        <section class="clients-section-main">
+        <div class="clients-section-main">
             <div class="container clients-container">
                 <div class="clients-wrapper">
                     <div class="clients">
                         <div class="client-card">
-                            <img src="{{ asset('images/testimony-3.png') }}" loading="lazy" alt="Client 1"
-                                class="" />
-                            <div class="d-flex justify-content-between my-auto align-items-center w-full">
+                            <div class="mobile">
+                                <img src="{{ asset('images/test1.png') }}" loading="lazy" alt="Testimonial">
+                            </div>
+                            <div class="image-wrapper">
+                                <img src="{{ asset('images/testimony-3.png') }}" loading="lazy" alt="Client 1"
+                                    class="" />
+                                <div class="overlay">
+                                    <div class="overlay-text">
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa-regular fa-star"></span> <br><br>
+                                        "Before this, our sales process was scattered—leads fell through the cracks every week. After the training and toolkit, our team now has a rhythm, and we’ve seen a 40% increase in closed deals."
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between my-auto align-items-center w-full px-md-0 px-4">
                                 <h4>Julian Magi</h4>
                                 <p>Sales Manager</p>
                             </div>
@@ -190,9 +214,24 @@
                     </div>
                     <div class="clients">
                         <div class="client-card">
-                            <img src="{{ asset('images/testimony-4.png') }}" loading="lazy" alt="Client 2"
-                                class="" />
-                            <div class="d-flex justify-content-between my-auto align-items-center w-full">
+                            <div class="mobile">
+                                <img src="{{ asset('images/test2.png') }}" loading="lazy" alt="Testimonial">
+                            </div>
+                            <div class="image-wrapper">
+                                <img src="{{ asset('images/testimony-4.png') }}" loading="lazy" alt="Client 2"
+                                    class="" />
+                                <div class="overlay">
+                                    <div class="overlay-text">
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa-regular fa-star"></span> <br><br>
+                                        "Before this, our sales process was scattered—leads fell through the cracks every week. After the training and toolkit, our team now has a rhythm, and we’ve seen a 40% increase in closed deals."
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between my-auto align-items-center w-full px-md-0 px-4">
                                 <h4>Julian Magi</h4>
                                 <p>Sales Manager</p>
                             </div>
@@ -200,9 +239,24 @@
                     </div>
                     <div class="clients">
                         <div class="client-card last">
-                            <img src="{{ asset('images/client-last.jpg') }}" loading="lazy" alt="Client 3"
-                                class="" />
-                            <div class="d-flex justify-content-between my-auto align-items-center w-full">
+                            <div class="mobile">
+                                <img src="{{ asset('images/test3.png') }}" loading="lazy" alt="Testimonial">
+                            </div>
+                            <div class="image-wrapper">
+                                <img src="{{ asset('images/client-last.jpg') }}" loading="lazy" alt="Client 3"
+                                    class="" />
+                                <div class="overlay">
+                                    <div class="overlay-text">
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa-regular fa-star"></span> <br><br>
+                                        "Before this, our sales process was scattered—leads fell through the cracks every week. After the training and toolkit, our team now has a rhythm, and we’ve seen a 40% increase in closed deals."
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between my-auto align-items-center w-full px-md-0 px-4">
                                 <h4>Julian Magi</h4>
                                 <p>Sales Manager</p>
                             </div>
@@ -217,7 +271,7 @@
                                 alt=""></i></span>
                 </div>
             </div>
-        </section>
+        </div>
 
         <section class="trained-teams-section">
             <div class="container">
@@ -262,6 +316,35 @@
 
 
 <script>
+    $(document).ready(function() {
+        // Define range flows
+        const ranges = {
+            countries: ["00", "05", 10, 15, 20],
+            businessess: [500, 1000, 1500, 2000, 3000],
+            partnerships: [100, 300, 600, 800, 1000]
+        };
+
+        // Animation function
+        function animateNumbers(id, values, interval = 500) {
+            let index = 0;
+
+            function update() {
+                if (index < values.length) {
+                    $(`#${id}`).text(values[index] + " +");
+                    index++;
+                    setTimeout(update, interval);
+                }
+            }
+            update();
+        }
+
+        // Trigger animations
+        animateNumbers("countries", ranges.countries);
+        animateNumbers("businessess", ranges.businessess);
+        animateNumbers("partnerships", ranges.partnerships);
+    });
+
+
     $(function() {
         const $wrapper = $('.clients-wrapper');
         const $testimonials = $('.clients');
@@ -305,198 +388,5 @@
         $(window).resize(function() {
             updateWidths();
         });
-    });
-
-
-
-
-    // Navbar Toggler Icon
-    const navbarToggler = document.querySelector(".navbar-toggler");
-    const togglerIcon = navbarToggler.querySelector(".navbar-toggler-icon");
-
-    navbarToggler.addEventListener("click", () => {
-        if (navbarToggler.getAttribute("aria-expanded") === "true") {
-            togglerIcon.classList.remove("navbar-toggler-icon");
-            togglerIcon.innerHTML = '<i class="bi bi-x-lg fs-4"></i>'; // Using Bootstrap Icons
-        } else {
-            togglerIcon.classList.add("navbar-toggler-icon");
-            togglerIcon.innerHTML = "";
-        }
-    });
-
-    // JQUERY - OWL-CAROUSEL
-
-    jQuery(document).ready(function($) {
-        // FadeOut Carousel (Intro Slider)
-        $(".fadeOut").owlCarousel({
-            items: 1,
-            loop: true,
-            autoplay: true,
-            autoplayTimeout: 5000,
-            animateOut: "fadeOut",
-            margin: 0,
-            nav: true,
-            dots: false,
-            mouseDrag: false,
-            touchDrag: false,
-            pullDrag: false,
-            smartSpeed: 2000,
-            slideTransition: "linear",
-        });
-
-        $("#testimonial-carousel").owlCarousel({
-            items: 1,
-            margin: 20,
-            loop: true,
-            nav: true,
-            dots: false,
-            autoplay: true,
-            navText: [
-                '<i class="bi bi-chevron-left"></i>',
-                '<i class="bi bi-chevron-right"></i>',
-            ],
-            responsive: {
-                768: {
-                    items: 2
-                },
-                992: {
-                    items: 3
-                },
-            },
-        });
-
-        // Gallery - Slide Right
-        var slideRight = $(".slide-right").owlCarousel({
-            loop: true,
-            margin: 10,
-            nav: false,
-            dots: false,
-            autoplay: true,
-            autoplayTimeout: 3000,
-            autoplayHoverPause: false,
-            smartSpeed: 9000,
-            slideTransition: "linear",
-            rtl: true,
-
-            responsive: {
-                0: {
-                    items: 1
-                },
-                576: {
-                    items: 2
-                },
-                768: {
-                    items: 3
-                },
-                992: {
-                    items: 3
-                }, // for desktops
-                1200: {
-                    items: 3
-                }, // extra large screens
-            },
-        });
-
-        // Gallery - Slide Left
-        var slideLeft = $(".slide-left").owlCarousel({
-            loop: true,
-            margin: 10,
-            nav: false,
-            dots: false,
-            autoplay: true,
-            autoplayTimeout: 3500,
-            autoplayHoverPause: false,
-            smartSpeed: 9000,
-            slideTransition: "linear",
-            responsive: {
-                0: {
-                    items: 1
-                },
-                576: {
-                    items: 2
-                },
-                768: {
-                    items: 3
-                },
-                992: {
-                    items: 3
-                }, // for desktops
-                1200: {
-                    items: 3
-                }, // extra large screens
-            },
-        });
-
-        // Trigger refresh on resize to prevent layout scatter
-        $(window).resize(function() {
-            if (!slideRight.hasClass("owl-loaded")) {
-                slideRight.trigger("refresh");
-            }
-            if (!slideLeft.hasClass("owl-loaded")) {
-                slideLeft.trigger("refresh");
-            }
-        });
-    });
-
-    // Gallery Lightbox
-    const lightbox = GLightbox({
-        selector: ".glightbox",
-        touchNavigation: true,
-        loop: true,
-        zoomable: true,
-    });
-
-    document.addEventListener("DOMContentLoaded", function() {
-        // Galley Page Image Effect
-        const imageModal = document.getElementById("imageModal");
-        imageModal.addEventListener("show.bs.modal", (event) => {
-            const triggerElement = event.relatedTarget;
-
-            const imageSrc = triggerElement.getAttribute("data-image");
-            const imageTitle = triggerElement.getAttribute("data-title");
-
-            const modalTitle = imageModal.querySelector(".modal-title");
-            const modalImage = imageModal.querySelector(".modal-body img");
-
-            modalTitle.textContent = imageTitle;
-            modalImage.src = imageSrc;
-        });
-    });
-
-    // Go to Top Button
-    const goToTopBtn = document.getElementById("goToTopBtn");
-
-    window.onscroll = function() {
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            goToTopBtn.classList.add("show");
-        } else {
-            goToTopBtn.classList.remove("show");
-        }
-    };
-
-    goToTopBtn.addEventListener("click", function() {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-    });
-
-    window.addEventListener("DOMContentLoaded", () => {
-        const pointer = document.getElementById("pointer-icon");
-
-        // Position the pointer near the "Drive to Location" button
-        const driveBtn = document.querySelector(".btn-sign");
-        if (driveBtn) {
-            const rect = driveBtn.getBoundingClientRect();
-            pointer.style.top = `${rect.top - 30 + window.scrollY}px`;
-            pointer.style.left = `${
-      rect.left + rect.width / 2 - 10 + window.scrollX
-    }px`;
-        }
-
-        // Hide the pointer after 5 seconds
-        setTimeout(() => {
-            pointer.classList.add("fade-out");
-        }, 9000);
     });
 </script>

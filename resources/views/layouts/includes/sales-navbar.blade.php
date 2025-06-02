@@ -1,4 +1,4 @@
-<div id="navbar" class="fixed-top navbar-full">
+<div id="navbar" class="fixed-top navbar-full navbar-full-sales">
     <div id="">
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
@@ -10,8 +10,8 @@
                     <img src="{{ asset('images/hamburger.png') }}" loading='lazy' alt="">
                 </div>
 
-                <div class="collapse navbar-collapse main-nav">
-                    <ul class="navbar-nav me-auto ms-auto mb-2 mb-lg-0" id="nav">
+                <div class="collapse navbar-collapse main-nav mx-5">
+                    <ul class="navbar-nav me-auto ms-auto mx-auto mb-2 mb-lg-0" id="nav">
                         <li class="nav-item">
                             <a class="nav-link mx-5" href="{{ route('sales') }}">Home </a>
                         </li>

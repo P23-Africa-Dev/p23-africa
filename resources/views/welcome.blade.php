@@ -95,10 +95,9 @@
                     in Africa to thrive in competitive markets.
                 </p>
                 <div>
-                    <a href="{{ url('about') }}" class="text-decoration-none learn-more">
-                        <span>Learn more </span>
+                    <a href="{{ url('about') }}" class="text-decoration-none learn-more" title="Learn more about P23 Africa">
+                        Learn more about P23 Africa
                         <img src="{{ asset('images/arrow.png') }}" loading='lazy' alt="">
-
                     </a>
                 </div>
             </div>
