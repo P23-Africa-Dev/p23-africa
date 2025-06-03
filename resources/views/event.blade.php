@@ -22,8 +22,8 @@
         </div>
     </section>
 
-    <section class="upcoming_events">
-        <div class="event-section">
+    <section class="upcoming_events content-section animate-on-scroll">
+        <div class="event-section py-2">
             <!-- Events Grid -->
             <div class="row g-md-5 g-4">
                 <!-- Featured Card -->
@@ -49,16 +49,39 @@
                                     {{-- <div class="event-icon">📅</div> --}}
                                     <img src="{{ asset('images/calendar-white.png') }}" id="img" loading='lazy'
                                         alt="">
-                                    <div class="event-title"><a href="{{ route('events.show', $event->slug) }}">{{ Str::limit($event->title, 20) }}</a></div>
+                                    <div class="event-title"><a
+                                            href="{{ route('events.show', $event->slug) }}">{{ Str::limit($event->title, 20) }}</a>
+                                    </div>
                                 </div>
                                 <p>
                                     {!! Str::limit($event->description, 233) !!}
-                                </p>
-                                <a href="{{ route('events.show', $event->slug) }}" class="btn btn-outline-light btn-book actionBtn" id="actionBtn" data-event-id="{{ $event->id }}" data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
-                                    data-event-link="{{ $event->link }}" data-bs-toggle="modal"
-                                    data-bs-target="#seatModal">
-                                    Book A Seat <i class="bi bi-arrow-right"></i>
-                                </a>
+                                </p><br>
+                                <div class="d-flex justify-content-between align-items-center my-auto btn-book">
+                                    <div>
+                                        <a href="{{ route('events.show', $event->slug) }}"
+                                            class="btn btn-outline-light actionBtn" id="actionBtn"
+                                            data-event-id="{{ $event->id }}"
+                                            data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
+                                            data-event-link="{{ $event->link }}" data-bs-toggle="modal"
+                                            data-bs-target="#seatModal">
+                                            Book A Seat <i class="bi bi-arrow-right"></i>
+                                        </a>
+                                        {{-- <a href="{{ route('events.show', $event->slug) }}"
+                                            class="btn btn-outline-light btn-book actionBtn" id="actionBtn"
+                                            data-event-id="{{ $event->id }}"
+                                            data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
+                                            data-event-link="{{ $event->link }}" data-bs-toggle="modal"
+                                            data-bs-target="#seatModal">
+                                            Book A Seat <i class="bi bi-arrow-right"></i>
+                                        </a> --}}
+                                    </div>
+
+                                    <div>
+                                        <a href="{{ route('events.show', $event->slug) }}" class="details">
+                                            View Details <i class="bi bi-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     @else
@@ -68,17 +91,37 @@
                                 <div class="d-flex align-items-center mb-2">
                                     {{-- <div class="event-icon">📅</div> --}}
                                     <img src="{{ asset('images/calendar.png') }}" loading='lazy' alt="">
-                                    <div class="event-title"><a href="{{ route('events.show', $event->slug) }}">{{ Str::limit($event->title, 20) }}</a></div>
+                                    <div class="event-title"><a
+                                            href="{{ route('events.show', $event->slug) }}">{{ Str::limit($event->title, 20) }}</a>
+                                    </div>
                                 </div>
                                 <p>
                                     {!! Str::limit($event->description, 233) !!}
-                                </p>
-                                <a href="{{ route('events.show', $event->slug) }}" class="btn btn-outline-dark btn-book"
+                                </p><br>
+                                <div class="d-flex justify-content-between align-items-center my-auto btn-book">
+                                    <div>
+                                        <a href="{{ route('events.show', $event->slug) }}"
+                                            class="btn btn-outline-dark actionBtn" id="actionBtn"
+                                            data-event-id="{{ $event->id }}"
+                                            data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
+                                            data-event-link="{{ $event->link }}" data-bs-toggle="modal"
+                                            data-bs-target="#seatModal">
+                                            Book A Seat <i class="bi bi-arrow-right"></i>
+                                        </a>
+                                    </div>
+
+                                    <div>
+                                        <a href="{{ route('events.show', $event->slug) }}" class="details">
+                                            View Details <i class="bi bi-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                {{-- <a href="{{ route('events.show', $event->slug) }}" class="btn btn-outline-dark btn-book"
                                     id="actionBtn" data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
                                     data-event-link="{{ $event->link }}" data-bs-toggle="modal"
                                     data-bs-target="#seatModal">
                                     Book A Seat <i class="bi bi-arrow-right"></i>
-                                </a>
+                                </a> --}}
                             </div>
                         </div>
                     @endif
@@ -135,7 +178,7 @@
         </div>
     </section>
 
-    <section class="past_events">
+    <section class="past_events content-section animate-on-scroll">
         <div class="container">
             <div class="row g-md-5 g-4">
                 <div class="col-12 col-sm-6 col-lg-4 my-auto">

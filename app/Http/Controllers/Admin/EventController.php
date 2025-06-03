@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\EventReminderMail;
 use App\Models\Event;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Mews\Purifier\Facades\Purifier;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -17,9 +19,14 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events = Event::latest()->get();
-        // $events = Event::orderBy('event_date')->get();
-        // $events = Event::orderBy('event_date', 'asc')->orderBy('event_time', 'asc')->get();
+        $now = Carbon::now();
+
+        $events = Event::select('*')
+            ->orderByRaw("CASE WHEN CONCAT(event_date, ' ', event_time) >= ? THEN 0 ELSE 1 END", [$now])
+            ->orderBy('event_date')
+            ->orderBy('event_time')
+            ->get();
+        // $events = Event::latest()->get();
 
 
         return view('admin.events.index', compact('events'));
@@ -153,5 +160,22 @@ class EventController extends Controller
     {
         $event->delete();
         return redirect()->route('admin.events.index')->with('success', 'Event deleted');
+    }
+
+    public function sendReminder(Request $request, $eventId)
+    {
+        $event = Event::with('seats')->findOrFail($eventId);
+
+        foreach ($event->seats as $seat) {
+            $firstName = explode(' ', $seat->name)[0] ?? 'Guest';
+
+            $link = $event->visibility === 'public'
+                ? $event->link
+                : route('private.access', ['slug' => $event->slug, 'code' => $seat->seat_code]);
+
+            Mail::to($seat->email)->send(new EventReminderMail($seat, $event, $link, $firstName));
+        }
+
+        return back()->with('success', 'Reminder emails sent successfully.');
     }
 }

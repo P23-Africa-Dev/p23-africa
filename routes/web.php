@@ -60,6 +60,10 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         return view('admin.dashboard');
     })->name('dashboard');
 
+    Route::post('/events/{id}/send-reminder', [EventController::class, 'sendReminder'])
+        ->name('events.sendReminder');
+
+
     Route::get('/seats', [\App\Http\Controllers\Admin\SeatController::class, 'index'])->name('admin.seats.index');
 
     Route::resource('/events', EventController::class);

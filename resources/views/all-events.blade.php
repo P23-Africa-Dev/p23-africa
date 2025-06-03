@@ -57,7 +57,7 @@
     </section>
 
 
-    <section class="track_events">
+    <section class="track_events content-section animate-on-scroll">
         <div class="container">
             <div class="row justify-content-between mb-5">
                 <div class="col-md-6">

@@ -6,7 +6,6 @@
         </h2>
     </x-slot>
 
-
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -40,6 +39,7 @@
                                     <th>Time</th>
                                     <th>Type</th>
                                     <th>Action</th>
+                                    {{-- <th>Action</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -53,8 +53,8 @@
                                         <td>
                                             <span class="d-flex justify-content-center">
                                                 <button class="btn"><a
-                                                        href="{{ route('admin.events.bookings', $event->id) }}" target="_blank"
-                                                        class="fa fa-users link-dark"></a></button>
+                                                        href="{{ route('admin.events.bookings', $event->id) }}"
+                                                        target="_blank" class="fa fa-users link-dark"></a></button>
 
                                                 <button class="btn"><a
                                                         href="{{ route('events.show', $event->slug) }}" target="_blank"
@@ -65,12 +65,34 @@
                                                         class="fa fa-edit link-primary"></a></button>
 
                                                 <form action="{{ route('admin.events.destroy', $event) }}"
-                                                    method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this event? This action cannot be undone.');">
-                                                    @csrf 
+                                                    method="POST" class="d-inline"
+                                                    onsubmit="return confirm('Are you sure you want to delete this event? This action cannot be undone.');">
+                                                    @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn"><i
                                                             class="fa fa-trash link-danger"></i></button>
                                                 </form>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span>
+                                                @php
+                                                    $eventDateTime = \Carbon\Carbon::parse(
+                                                        $event->event_date . ' ' . $event->event_time,
+                                                    );
+                                                    $now = \Carbon\Carbon::now();
+                                                    $hoursUntilEvent = $now->diffInHours($eventDateTime, false); // negative if past
+                                                @endphp
+
+                                                @if ($hoursUntilEvent <= 24 && $hoursUntilEvent > 0)
+                                                    <form action="{{ route('admin.events.sendReminder', $event->id) }}"
+                                                        method="POST"
+                                                        onsubmit="return confirm('Send reminder emails to all participants?')">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-primary">Send Reminder
+                                                            Now</button>
+                                                    </form>
+                                                @endif
                                             </span>
                                         </td>
                                     </tr>

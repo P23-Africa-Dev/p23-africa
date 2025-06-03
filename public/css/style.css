@@ -464,13 +464,15 @@ section.visible{
     font-style: italic;
     color: #52ccb4;
     font-family: "IvyOra Text";
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+    font-size: 72px;
 }
 .hero-text h1 #fonts {
     font-style: italic;
     color: #52ccb4;
     font-family: "IvyOra Text";
     letter-spacing: 2px;
+    font-size: 72px;
 }
 
 .hero-text p {
@@ -3811,11 +3813,15 @@ section.visible{
 }
 
 .upcoming_events .btn-book {
-    margin-top: 20px;
     font-weight: 600;
     font-family: "GT Walsheim Con";
 }
-
+.upcoming_events .btn-book .details {
+    color: #52ccb4;
+}
+.upcoming_events .btn-book .details:hover {
+    color: #3c9b88;
+}
 .upcoming_events .btn-book i {
     margin-left: 8px;
 }
@@ -3883,6 +3889,11 @@ section.visible{
 }
 
 @media (max-width: 768px) {
+    .event_hero {
+        margin-top: 3.9rem;
+        width: 100%;
+        margin-bottom: -10rem;
+    }
     .event_hero #event_hero_desktop .event-wrapper .frame-img {
         display: block;
         width: 95%;
@@ -3901,7 +3912,7 @@ section.visible{
     }
     .upcoming_events {
         margin: 7rem 0px 7rem 0px;
-        padding: 2rem 1rem;
+        padding: 4rem 1rem;
     }
     .upcoming_events .event-card1 {
         padding: 5px;
@@ -4316,17 +4327,19 @@ section.visible{
 }
 
 .sales .content-row h1 {
-    font-size: 60px !important;
+    font-size: 65px !important;
     font-weight: 900;
     font-weight: bold;
     font-family: "GT Walsheim Bold";
+    text-align: left;
 }
 
 .sales .content-row h2 {
-    font-size: 60px !important;
-    margin-left: 6rem;
+    font-size: 61px !important;
+    margin-left: 0rem;
     font-weight: 300;
     font-family: "GT Walsheim Con";
+    text-align: left;
 }
 
 .sales .sales-divider {
@@ -4461,6 +4474,12 @@ section.visible{
     fill: #193e47;
     /* filter: drop-shadow(0 0 5px #193E47); */
 }
+.sales .video-container .desktop {
+    display: block;
+}
+.sales .video-container .mobile {
+    display: none;
+}
 
 @media screen and (max-width: 580px) {
     .sales .content-row {
@@ -4472,11 +4491,15 @@ section.visible{
         margin-top: 2rem;
     }
     .sales .content-row h1 {
-        font-size: 33px !important;
+        font-size: 37px !important;
+        /* float: inline-start; */
+        text-align: left;
     }
     .sales .content-row h2 {
-        font-size: 31px !important;
-        margin-left: 3rem;
+        font-size: 33px !important;
+        /* float: inline-end; */
+        margin-left: 0rem;
+        text-align: right;
     }
     /* Shadow overlays */
     .sales .video-container::before,
@@ -4484,14 +4507,26 @@ section.visible{
         content: "";
         position: absolute;
         top: 0;
-        width: 100px;
+        width: 0px;
         height: 100%;
         z-index: 2;
         pointer-events: none;
     }
     .sales .video-container::before {
         left: 0;
-        background: linear-gradient(to right, #0d4036, transparent);
+        background: linear-gradient(to right, #0d403600, transparent);
+    }
+    .sales .video-container {
+        padding: 0 15px;
+    }
+    .sales .video-container img {
+        width: 100%;
+    }
+    .sales .video-container .desktop {
+        display: none;
+    }
+    .sales .video-container .mobile {
+        display: block;
     }
 }
 
@@ -4537,6 +4572,21 @@ section.visible{
     font-size: 26px;
     font-family: "GT Walsheim Bold";
     color: #0d4036;
+}
+.sales .how-it-works-section .mobile {
+    display: none;
+}
+.sales .how-it-works-section .desktop {
+    display: block;
+}
+
+@media screen and (max-width: 580px) {
+    .sales .how-it-works-section .mobile {
+        display: block;
+    }
+    .sales .how-it-works-section .desktop {
+        display: none;
+    }
 }
 
 /* --------------------- HOW IT WORKS SECTION */
@@ -4951,7 +5001,7 @@ section.visible{
 }
 
 .sales .client-card .image-wrapper img {
-    width: 365px !important;
+    width: 100% !important;
     height: 510px !important;
     max-width: 100%;
     object-fit: cover;

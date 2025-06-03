@@ -7,7 +7,7 @@
         content="Expand and grow your business in Africa with expert business consulting. P23 Africa helps entrepreneurs, SMEs, and international businesses with strategy, expansion, marketing, operational efficiency and tailored solutions to thrive in African markets. Get started today!">
     <meta name="author" content="Nurudeen O. Daniju">
     <meta name="generator" content="Business Consulting & Growth Solutions for Africa | P23 Africa">
-    <meta property="og:image" content="{{ asset('images/about-header.jpg') }}">
+    <meta property="og:image" content="{{ asset('images/intro-bg.png') }}">
 @endsection
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -59,9 +59,10 @@
                         <div class="video-fade-overlay video-fade-left"></div> --}}
 
                         <div class="video-container">
-                            <img src="{{ asset('images/intro-bg.png') }}" alt="Sales Growth Video" class="" />
+                            <img src="{{ asset('images/intro-bg.png') }}" alt="Sales Growth Video" class="desktop" />
+                            <img src="{{ asset('images/intro-bg-mobile.png') }}" alt="Sales Growth Video" class="mobile" />
                             <div class="overlay d-flex justify-content-center align-items-center">
-                                <button class="play-button" aria-label="Play video">
+                                <button class="play-button" aria-label="Play video" id="play-video-btn">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="#fff"
                                         class="bi bi-play-circle-fill" viewBox="0 0 16 16">
                                         <path
@@ -70,6 +71,25 @@
                                 </button>
                             </div>
                         </div>
+
+                        <!-- Bootstrap Modal for Video -->
+                        <div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content bg-dark">
+                                    <div class="modal-header border-0">
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body p-0">
+                                        <div class="ratio ratio-16x9">
+                                            <iframe id="videoIframe" src="" title="YouTube video"
+                                                allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -84,21 +104,27 @@
                     </div>
                 </div>
 
-                <div class="row justify-content-center g-2 pb-5">
-                    <div class="col-12 col-md-6 col-lg-3 d-flex">
-                        <img src="{{ asset('images/work-card1.png') }}" loading="lazy" alt="">
-                    </div>
+                <div class="mobile">
+                    <img src="{{ asset('images/work-card-mobile.png') }}" loading="lazy" alt="Work Card">
+                </div>
 
-                    <div class="col-12 col-md-6 col-lg-3 d-flex">
-                        <img src="{{ asset('images/work-card2.png') }}" loading="lazy" alt="">
-                    </div>
+                <div class="desktop">
+                    <div class="row justify-content-center g-2 pb-5">
+                        <div class="col-12 col-md-6 col-lg-3 d-flex">
+                            <img src="{{ asset('images/work-card1.png') }}" loading="lazy" alt="Work Card">
+                        </div>
 
-                    <div class="col-12 col-md-6 col-lg-3 position-relative">
-                        <img src="{{ asset('images/work-card3.png') }}" loading="lazy" alt="">
-                    </div>
+                        <div class="col-12 col-md-6 col-lg-3 d-flex">
+                            <img src="{{ asset('images/work-card2.png') }}" loading="lazy" alt="Work Card">
+                        </div>
 
-                    <div class="col-12 col-md-6 col-lg-3 d-flex">
-                        <img src="{{ asset('images/work-card4.png') }}" loading="lazy" alt="">
+                        <div class="col-12 col-md-6 col-lg-3 position-relative">
+                            <img src="{{ asset('images/work-card3.png') }}" loading="lazy" alt="Work Card">
+                        </div>
+
+                        <div class="col-12 col-md-6 col-lg-3 d-flex">
+                            <img src="{{ asset('images/work-card4.png') }}" loading="lazy" alt="Work Card">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -115,9 +141,9 @@
                                 your current setup and show you where leads are slipping
                                 through. No pressure. Just clarity.
                             </p>
-                            <button class="btn custom-button">
+                            <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3tzdnFU-zme-lCpKoHGZktqjUVs4rll_QJtcUzK71d9-l3M0WIFvjtnJpLmosUraV8XkUJeD_k" target="_blank" class="btn custom-button">
                                 Yes, I Want My Free Audit
-                            </button>
+                            </a>
                         </div>
                     </div>
 
@@ -202,12 +228,14 @@
                                         <span class="fa fa-star"></span>
                                         <span class="fa fa-star"></span>
                                         <span class="fa-regular fa-star"></span> <br><br>
-                                        "Before this, our sales process was scattered—leads fell through the cracks every week. After the training and toolkit, our team now has a rhythm, and we’ve seen a 40% increase in closed deals."
+                                        "Before this, our sales process was scattered—leads fell through the cracks every
+                                        week. After the training and toolkit, our team now has a rhythm, and we’ve seen a
+                                        40% increase in closed deals."
                                     </div>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-between my-auto align-items-center w-full px-md-0 px-4">
-                                <h4>Julian Magi</h4>
+                            <div class="d-flex justify-content-between my-auto align-items-center w-full px-md-2 px-4">
+                                <h4>Juliet Chukwudi</h4>
                                 <p>Sales Manager</p>
                             </div>
                         </div>
@@ -227,13 +255,15 @@
                                         <span class="fa fa-star"></span>
                                         <span class="fa fa-star"></span>
                                         <span class="fa-regular fa-star"></span> <br><br>
-                                        "Before this, our sales process was scattered—leads fell through the cracks every week. After the training and toolkit, our team now has a rhythm, and we’ve seen a 40% increase in closed deals."
+                                        "Before this, our sales process was scattered—leads fell through the cracks every
+                                        week. After the training and toolkit, our team now has a rhythm, and we’ve seen a
+                                        40% increase in closed deals."
                                     </div>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-between my-auto align-items-center w-full px-md-0 px-4">
-                                <h4>Julian Magi</h4>
-                                <p>Sales Manager</p>
+                            <div class="d-flex justify-content-between my-auto align-items-center w-full px-md-2 px-4">
+                                <h4>James Owoicho</h4>
+                                <p>Marketing Manager</p>
                             </div>
                         </div>
                     </div>
@@ -252,13 +282,15 @@
                                         <span class="fa fa-star"></span>
                                         <span class="fa fa-star"></span>
                                         <span class="fa-regular fa-star"></span> <br><br>
-                                        "Before this, our sales process was scattered—leads fell through the cracks every week. After the training and toolkit, our team now has a rhythm, and we’ve seen a 40% increase in closed deals."
+                                        "Before this, our sales process was scattered—leads fell through the cracks every
+                                        week. After the training and toolkit, our team now has a rhythm, and we’ve seen a
+                                        40% increase in closed deals."
                                     </div>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-between my-auto align-items-center w-full px-md-0 px-4">
-                                <h4>Julian Magi</h4>
-                                <p>Sales Manager</p>
+                            <div class="d-flex justify-content-between my-auto align-items-center w-full px-md-2 px-4">
+                                <h4>Vera Agugam</h4>
+                                <p>Team Lead</p>
                             </div>
                         </div>
                     </div>
@@ -296,7 +328,7 @@
                                 No guesswork. No CRM overwhelm. Just real systems that deliver
                                 results.
                             </p>
-                            <a href="#" class="cta-btn">
+                            <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3tzdnFU-zme-lCpKoHGZktqjUVs4rll_QJtcUzK71d9-l3M0WIFvjtnJpLmosUraV8XkUJeD_k" target="_blank" class="cta-btn">
                                 Claim my sales Audit Now!
                                 <span>→</span>
                             </a>
@@ -316,6 +348,22 @@
 
 
 <script>
+    $(document).ready(function() {
+        const videoURL = "https://www.youtube.com/embed/l8JvWxEFVW0?si=wTv4YqzGjwfhf53M";
+
+        $('#play-video-btn').on('click', function() {
+            $('#videoIframe').attr('src', videoURL);
+            const videoModal = new bootstrap.Modal(document.getElementById('videoModal'));
+            videoModal.show();
+        });
+
+        // Clear video when modal is closed
+        $('#videoModal').on('hidden.bs.modal', function() {
+            $('#videoIframe').attr('src', '');
+        });
+    });
+
+
     $(document).ready(function() {
         // Define range flows
         const ranges = {
