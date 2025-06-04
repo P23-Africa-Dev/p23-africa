@@ -280,7 +280,9 @@
                                         <span class="fa fa-star"></span>
                                         <span class="fa fa-star"></span>
                                         <span class="fa fa-star"></span> <br><br>
-                                        "As someone with seven years of experience in manufacturing and sales, this training and toolkit have equipped me better than ever before. My outputs are now more organized, intentional, and productive."
+                                        "As someone with seven years of experience in manufacturing and sales, this training
+                                        and toolkit have equipped me better than ever before. My outputs are now more
+                                        organized, intentional, and productive."
                                     </div>
                                 </div>
                             </div>
@@ -305,7 +307,10 @@
                                         <span class="fa fa-star"></span>
                                         <span class="fa fa-star"></span>
                                         <span class="fa fa-star"></span> <br><br>
-                                        "I took this leap of faith to further improve my team's performance, and it’s been absolutely worth it. My team is now in sync and performing better than ever, recording up to a 30% increase in productivity in just our first month of implementing it."
+                                        "I took this leap of faith to further improve my team's performance, and it’s been
+                                        absolutely worth it. My team is now in sync and performing better than ever,
+                                        recording up to a 30% increase in productivity in just our first month of
+                                        implementing it."
                                     </div>
                                 </div>
                             </div>
@@ -339,11 +344,78 @@
                 <div class="row g-0">
                     <div class="col-md-6 col-lg-5 d-none d-md-block">
                         <div class="image-box">
-                            <img src="{{ asset('images/cta-bg.png') }}" loading="lazy" alt="Business People" />
+                            <img src="{{ asset('images/cta-bg.png') }}" loading="lazy" class="image1"
+                                alt="Business People" />
+                        </div>
+                        <div class="image-box2">
+                            <img src="{{ asset('images/cta-bg.png') }}" loading="lazy" class="image2"
+                                alt="Business People" />
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-7">
                         <div class="content-box">
+                            <div class="pricing">
+                                <div id="pack">
+                                    <h2>Packages</h2>
+                                    {{-- <hr> --}}
+                                </div>
+                                <div class="price">
+                                    <div class="row col-md-10">
+                                        <div class="col-6">
+                                            <div class="card px-2 px-md-4 py-3 mx-0 h-100">
+                                                <strong>Standard</strong>
+                                                <p>
+                                                    Perfect for startups and small teams looking to build a basic but
+                                                    effective
+                                                    sales system.
+                                                </p>
+                                                <b>Includes:</b>
+                                                <ul class="para">
+                                                    <li>Half-day Sales Training Sales script templates (email, call, DM)
+                                                    </li>
+                                                    <li>Sales tracking spreadsheet (editable)</li>
+                                                    <li>Lead qualification checklist</li>
+                                                    <li>30-minute onboarding session</li>
+                                                    <li>Email support (7 days post-purchase)</li>
+                                                </ul>
+
+
+                                                <span class="d-flex">
+                                                    <h1>$280</h1><small>/one-time</small>
+                                                </span>
+                                                <a href="#" class="btn">Standard</a>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="card px-2 px-md-4 py-3 mx-0 h-100" id="pro">
+                                                <strong>Pro</strong>
+                                                <p>
+                                                    For businesses ready to optimise and scale their sales process.
+                                                </p>
+
+                                                <b>Includes:</b>
+                                                <ul>
+                                                    <li>Full-day sales training Customised sales playbook tailored to your
+                                                        business</li>
+                                                    <li>Objection-handling guide</li>
+                                                    <li>1x 60-minute strategy call</li>
+                                                    <li>Sales process audit + recommendations</li>
+                                                    <li>30 days of email + WhatsApp support</li>
+                                                    <li>Bonus: Lead pipeline tracker (advanced version)</li>
+                                                </ul>
+
+                                                <div class="d-flex">
+                                                    <h1>$500</h1><small>/one-time</small>
+                                                </div>
+                                                <a href="#" class="btn">Pro</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- <small>Starting from: </small>
+                            <h1>$280</h1><br> --}}
                             <h2>Ready To Turn Leads Into Revenue?</h2>
                             <p>
                                 No guesswork. No CRM overwhelm. Just real systems that deliver
