@@ -69,12 +69,19 @@
                                             d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z" />
                                     </svg>
                                 </button>
+                                <button class="play-button" aria-label="Play video" id="play-video-btn2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="#fff"
+                                        class="bi bi-play-circle-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z" />
+                                    </svg>
+                                </button>
                             </div>
                         </div>
 
                         <!-- Bootstrap Modal for Video -->
                         <div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                            <div class="modal-dialog modal-dialog-centered custom-modal">
                                 <div class="modal-content bg-dark">
                                     <div class="modal-header border-0">
                                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
@@ -83,6 +90,23 @@
                                     <div class="modal-body p-0">
                                         <div class="ratio ratio-16x9">
                                             <iframe id="videoIframe" src="" title="YouTube video"
+                                                allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="videoModal2" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered custom-modal">
+                                <div class="modal-content bg-dark">
+                                    <div class="modal-header border-0">
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body p-0">
+                                        <div class="ratio ratio-16x9">
+                                            <iframe id="videoIframe2" src="" title="YouTube video"
                                                 allow="autoplay; encrypted-media" allowfullscreen></iframe>
                                         </div>
                                     </div>
@@ -141,7 +165,8 @@
                                 your current setup and show you where leads are slipping
                                 through. No pressure. Just clarity.
                             </p>
-                            <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3tzdnFU-zme-lCpKoHGZktqjUVs4rll_QJtcUzK71d9-l3M0WIFvjtnJpLmosUraV8XkUJeD_k" target="_blank" class="btn custom-button">
+                            <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3tzdnFU-zme-lCpKoHGZktqjUVs4rll_QJtcUzK71d9-l3M0WIFvjtnJpLmosUraV8XkUJeD_k"
+                                target="_blank" class="btn custom-button">
                                 Yes, I Want My Free Audit
                             </a>
                         </div>
@@ -227,7 +252,7 @@
                                         <span class="fa fa-star"></span>
                                         <span class="fa fa-star"></span>
                                         <span class="fa fa-star"></span>
-                                        <span class="fa-regular fa-star"></span> <br><br>
+                                        <span class="fa fa-star"></span> <br><br>
                                         "Before this, our sales process was scattered—leads fell through the cracks every
                                         week. After the training and toolkit, our team now has a rhythm, and we’ve seen a
                                         40% increase in closed deals."
@@ -254,10 +279,8 @@
                                         <span class="fa fa-star"></span>
                                         <span class="fa fa-star"></span>
                                         <span class="fa fa-star"></span>
-                                        <span class="fa-regular fa-star"></span> <br><br>
-                                        "Before this, our sales process was scattered—leads fell through the cracks every
-                                        week. After the training and toolkit, our team now has a rhythm, and we’ve seen a
-                                        40% increase in closed deals."
+                                        <span class="fa fa-star"></span> <br><br>
+                                        "As someone with seven years of experience in manufacturing and sales, this training and toolkit have equipped me better than ever before. My outputs are now more organized, intentional, and productive."
                                     </div>
                                 </div>
                             </div>
@@ -281,10 +304,8 @@
                                         <span class="fa fa-star"></span>
                                         <span class="fa fa-star"></span>
                                         <span class="fa fa-star"></span>
-                                        <span class="fa-regular fa-star"></span> <br><br>
-                                        "Before this, our sales process was scattered—leads fell through the cracks every
-                                        week. After the training and toolkit, our team now has a rhythm, and we’ve seen a
-                                        40% increase in closed deals."
+                                        <span class="fa fa-star"></span> <br><br>
+                                        "I took this leap of faith to further improve my team's performance, and it’s been absolutely worth it. My team is now in sync and performing better than ever, recording up to a 30% increase in productivity in just our first month of implementing it."
                                     </div>
                                 </div>
                             </div>
@@ -328,7 +349,8 @@
                                 No guesswork. No CRM overwhelm. Just real systems that deliver
                                 results.
                             </p>
-                            <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3tzdnFU-zme-lCpKoHGZktqjUVs4rll_QJtcUzK71d9-l3M0WIFvjtnJpLmosUraV8XkUJeD_k" target="_blank" class="cta-btn">
+                            <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3tzdnFU-zme-lCpKoHGZktqjUVs4rll_QJtcUzK71d9-l3M0WIFvjtnJpLmosUraV8XkUJeD_k"
+                                target="_blank" class="cta-btn">
                                 Claim my sales Audit Now!
                                 <span>→</span>
                             </a>
@@ -360,6 +382,21 @@
         // Clear video when modal is closed
         $('#videoModal').on('hidden.bs.modal', function() {
             $('#videoIframe').attr('src', '');
+        });
+    });
+
+    $(document).ready(function() {
+        const videoURL2 = "https://www.youtube.com/embed/unzc3SdI4dg?si=X4L6veRWbw7rjcgP";
+
+        $('#play-video-btn2').on('click', function() {
+            $('#videoIframe2').attr('src', videoURL2);
+            const videoModal2 = new bootstrap.Modal(document.getElementById('videoModal2'));
+            videoModal2.show();
+        });
+
+        // Clear video when modal is closed
+        $('#videoModal2').on('hidden.bs.modal', function() {
+            $('#videoIframe2').attr('src', '');
         });
     });
 
