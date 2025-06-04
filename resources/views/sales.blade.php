@@ -362,53 +362,63 @@
                                 <div class="price">
                                     <div class="row col-md-10">
                                         <div class="col-6">
-                                            <div class="card px-2 px-md-4 py-3 mx-0 h-100">
-                                                <strong>Standard</strong>
-                                                <p>
-                                                    Perfect for startups and small teams looking to build a basic but
-                                                    effective
-                                                    sales system.
-                                                </p>
-                                                <b>Includes:</b>
-                                                <ul class="para">
-                                                    <li>Half-day Sales Training Sales script templates (email, call, DM)
-                                                    </li>
-                                                    <li>Sales tracking spreadsheet (editable)</li>
-                                                    <li>Lead qualification checklist</li>
-                                                    <li>30-minute onboarding session</li>
-                                                    <li>Email support (7 days post-purchase)</li>
-                                                </ul>
+                                            <div class="card px-2 px-md-4 py-3 mx-0 d-flex flex-column h-100 w-100">
+                                                <div>
+                                                    <strong>Standard</strong>
+                                                    <p>
+                                                        Perfect for startups and small teams looking to build a basic but
+                                                        effective
+                                                        sales system.
+                                                    </p>
+                                                    <b>Includes:</b>
+                                                    <ul class="para">
+                                                        <li>Half-day Sales Training Sales script templates (email, call, DM)
+                                                        </li>
+                                                        <li>Sales tracking spreadsheet (editable)</li>
+                                                        <li>Lead qualification checklist</li>
+                                                        <li>30-minute onboarding session</li>
+                                                        <li>Email support (7 days post-purchase)</li>
+                                                    </ul>
+                                                </div>
 
 
-                                                <span class="d-flex">
-                                                    <h1>$280</h1><small>/one-time</small>
-                                                </span>
-                                                <a href="#" class="btn">Standard</a>
-
+                                                <div class="mt-auto">
+                                                    <span class="d-flex">
+                                                        <h1>$280</h1><small>/one-time</small>
+                                                    </span>
+                                                    <a href="#" class="btn w-100">Standard</a>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-6">
-                                            <div class="card px-2 px-md-4 py-3 mx-0 h-100" id="pro">
-                                                <strong>Pro</strong>
-                                                <p>
-                                                    For businesses ready to optimise and scale their sales process.
-                                                </p>
 
-                                                <b>Includes:</b>
-                                                <ul>
-                                                    <li>Full-day sales training Customised sales playbook tailored to your
-                                                        business</li>
-                                                    <li>Objection-handling guide</li>
-                                                    <li>1x 60-minute strategy call</li>
-                                                    <li>Sales process audit + recommendations</li>
-                                                    <li>30 days of email + WhatsApp support</li>
-                                                    <li>Bonus: Lead pipeline tracker (advanced version)</li>
-                                                </ul>
+                                        <div class="col-6 d-flex">
+                                            <div class="card px-2 px-md-4 py-3 mx-0 d-flex flex-column h-100 w-100"
+                                                id="pro">
+                                                <div>
+                                                    <strong>Pro</strong>
+                                                    <p>
+                                                        For businesses ready to optimise and scale their sales process.
+                                                    </p>
 
-                                                <div class="d-flex">
-                                                    <h1>$500</h1><small>/one-time</small>
+                                                    <b>Includes:</b>
+                                                    <ul>
+                                                        <li>Full-day sales training Customised sales playbook tailored to
+                                                            your
+                                                            business</li>
+                                                        <li>Objection-handling guide</li>
+                                                        <li>1x 60-minute strategy call</li>
+                                                        <li>Sales process audit + recommendations</li>
+                                                        <li>30 days of email + WhatsApp support</li>
+                                                        <li>Bonus: Lead pipeline tracker (advanced version)</li>
+                                                    </ul>
                                                 </div>
-                                                <a href="#" class="btn">Pro</a>
+
+                                                <div class="mt-auto">
+                                                    <div class="d-flex">
+                                                        <h1>$500</h1><small>/one-time</small>
+                                                    </div>
+                                                    <a href="#" class="btn w-100">Pro</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

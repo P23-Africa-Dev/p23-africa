@@ -13,7 +13,7 @@
 
 
 @section('content')
-    <section class="event_hero content-section animate-on-scroll">
+    <section class="event_hero animate-on-scroll">
         <div id="event_hero_desktop1">
             <img src="{{ asset('images/event_hero_header.png') }}" loading='lazy' alt="Card image">
         </div>
@@ -22,7 +22,7 @@
         </div>
     </section>
 
-    <section class="upcoming_events content-section animate-on-scroll">
+    <section class="upcoming_events animate-on-scroll">
         <div class="event-section py-2">
             <!-- Events Grid -->
             <div class="row g-md-5 g-4">
@@ -178,7 +178,7 @@
         </div>
     </section>
 
-    <section class="past_events content-section animate-on-scroll">
+    <section class="past_events animate-on-scroll">
         <div class="container">
             <div class="row g-md-5 g-4">
                 <div class="col-12 col-sm-6 col-lg-4 my-auto">

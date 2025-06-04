@@ -187,14 +187,14 @@ section.visible{
     transform: translateY(0);
 } */
 .animate-on-scroll {
-    opacity: 0;
-    transform: translateY(50px);
-    transition: all 0.6s ease-out;
+    opacity: 0 !important;
+    transform: translateY(50px) !important;
+    transition: all 0.6s ease-out !important;
 }
 
 .animate-on-scroll.visible {
-    opacity: 1;
-    transform: translateY(0);
+    opacity: 1 !important;
+    transform: translateY(0) !important;
 }
 .navbar-full .navbar {
     padding: 10px 60px;
@@ -5249,7 +5249,7 @@ section.visible{
     object-fit: contain;
 }
 
-.sales .lead-section .image-box .images2{
+.sales .lead-section .image-box .images2 {
     /* position: relative;
     left: 90px;
     top: 90px;
@@ -5302,74 +5302,75 @@ section.visible{
     color: #193e47;
 }
 
-    .sales .lead-section .content-box .pricing {
-        font-family: "GT Walsheim Con" !important;
-        margin-bottom: 4rem;
-        z-index: 60 !important;
-    }
-    .sales .lead-section .content-box .pricing .price{
-        display: flex;
-        justify-content: center;
-    }
-    .sales .lead-section .content-box .pricing strong {
-        font-size: 18px !important;
-        font-family: "GT Walsheim Con";
-        color: #193e47;
-    }
-    .sales .lead-section .content-box .pricing #pro {
-        background-color: rgb(216, 202, 123);
-    }
-    .sales .lead-section .content-box .pricing p {
-        font-size: 14px !important;
-        color: #000 !important;
-    }
-    .sales .lead-section .content-box .pricing #pack {
-        margin-left: auto;
-        margin-right: auto;
-        align-items: center;
-        margin-bottom: 2rem;
-    }
-    .sales .lead-section .content-box .pricing h2 {
-        font-size: 50px !important;
-        text-align: center;
-    }
-    .sales .lead-section .content-box .pricing hr {
-        width: 20%;
-        margin-left: auto;
-        margin-right: auto;
-        display: flex;
-        text-align: center;
-        justify-content: center;
-        border: 2px solid;
-    }
-    .sales .lead-section .content-box .pricing .para {
-        margin-bottom: 3.6rem;
-    }
-    .sales .lead-section .content-box .pricing b {
-        font-size: 14px;
-        display: block;
-    }
-    .sales .lead-section .content-box .pricing ul {
-        margin-left: -20px;
-    }
-    .sales .lead-section .content-box .pricing ul li {
-        font-size: 13px !important;
-    }
-    .sales .lead-section .content-box .pricing h1 {
-        font-size: 35px !important;
-        font-weight: bold !important;
-        font-family: "GT Walsheim ConB" !important;
-        color: #193e47;
-    }
-    .sales .lead-section .content-box .pricing small {
-        /* font-weight: bold; */
-        font-style: italic;
-    }
-    .sales .lead-section .content-box .pricing a {
-        font-size: 14px !important;
-        background-color: #193e47;
-        color: #fff;
-    }
+.sales .lead-section .content-box .pricing {
+    font-family: "GT Walsheim Con" !important;
+    margin-bottom: 4rem;
+    z-index: 60 !important;
+}
+.sales .lead-section .content-box .pricing .price {
+    display: flex;
+    justify-content: center;
+}
+.sales .lead-section .content-box .pricing strong {
+    font-size: 18px !important;
+    font-family: "GT Walsheim Con";
+    color: #193e47;
+}
+.sales .lead-section .content-box .pricing #pro {
+    background-color: rgb(216, 202, 123);
+}
+.sales .lead-section .content-box .pricing p {
+    font-size: 14px !important;
+    color: #000 !important;
+}
+.sales .lead-section .content-box .pricing #pack {
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+.sales .lead-section .content-box .pricing h2 {
+    font-size: 50px !important;
+    text-align: center;
+}
+/* .sales .lead-section .content-box .pricing hr {
+    width: 20%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    border: 2px solid;
+} */
+.sales .lead-section .content-box .pricing .para {
+    /* margin-bottom: 3.6rem; */
+}
+.sales .lead-section .content-box .pricing b {
+    font-size: 14px;
+    display: block;
+}
+.sales .lead-section .content-box .pricing ul {
+    margin-left: -20px;
+}
+.sales .lead-section .content-box .pricing ul li {
+    font-size: 13px !important;
+}
+.sales .lead-section .content-box .pricing h1 {
+    font-size: 35px !important;
+    font-weight: bold !important;
+    font-family: "GT Walsheim ConB" !important;
+    color: #193e47;
+}
+.sales .lead-section .content-box .pricing small {
+    font-weight: bold;
+    font-style: italic;
+    color: #193e47;
+}
+.sales .lead-section .content-box .pricing a {
+    font-size: 14px !important;
+    background-color: #193e47;
+    color: #fff;
+}
 
 @media screen and (max-width: 580px) {
     .sales .lead-section {
