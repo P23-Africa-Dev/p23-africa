@@ -19,7 +19,7 @@
                             <a class="nav-link mx-5" href="#">How it works</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mx-5" href="#">Quiz</a>
+                            <a class="nav-link mx-5" href="{{ route('quiz') }}">Quiz</a>
                         </li>
                     </ul>   
 
@@ -63,7 +63,7 @@
                         <a class="nav-link" href="#">How it works</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Quiz</a>
+                        <a class="nav-link" href="{{ route('quiz') }}">Quiz</a>
                     </li>
                 </ul>
 

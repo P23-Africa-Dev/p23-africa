@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        @yield('meta')
+
+        <title>@yield('title')</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+        <link rel="stylesheet" href="{{ asset('css/quiz.css') }}" />
+        <link rel="shortcut icon" href="{{ asset('images/Logo.png') }}" type="image/x-icon">
+
+    </head>
+
+    <body>
+
+        <main>
+            @yield('content')
+        </main>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            // Quiz Navbar Toggler Icon
+            const navbarToggler = document.querySelector(".navbar-toggler");
+            const togglerIcon = navbarToggler.querySelector(".navbar-toggler-icon");
+
+            navbarToggler.addEventListener("click", () => {
+                if (navbarToggler.getAttribute("aria-expanded") === "true") {
+                    togglerIcon.classList.remove("navbar-toggler-icon");
+                    togglerIcon.innerHTML = '<i class="bi bi-x-lg fs-4"></i>'; // Using Bootstrap Icons
+                } else {
+                    togglerIcon.classList.add("navbar-toggler-icon");
+                    togglerIcon.innerHTML = "";
+                }
+            });
+        </script>
+    </body>
+
+</html>

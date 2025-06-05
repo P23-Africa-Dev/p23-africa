@@ -23,6 +23,20 @@ Route::get('/services', function () {
 Route::get('/sales', function () {
     return view('sales');
 })->name('sales');
+
+Route::get('/quiz', function () {
+    return view('sales-quiz');
+})->name('quiz');
+
+Route::get('/quiz-result-a', fn() => view('quiz-answers.result-a'));
+Route::get('/quiz-result-b', fn() => view('quiz-answers.result-b'));
+Route::get('/quiz-result-c', fn() => view('quiz-answers.result-c'));
+
+
+Route::get('/start-quiz', function () {
+    return view('start-quiz');
+})->name('start-quiz');
+
 // Route::post('/events/{event}/book-seat', [SeatController::class, 'store'])->name('seats.store');
 Route::post('/book-seat/{event_id}', [SeatController::class, 'store'])->name('seats.store');
 
