@@ -7,7 +7,10 @@ use App\Http\Controllers\SliderController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\SeatController;
 use App\Http\Controllers\UserEventController;
+use App\Mail\ChallengeSubmission;
 use App\Models\Event;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 Route::get('/', [SliderController::class, 'showSlider'])->name('homepage');
 
@@ -36,6 +39,15 @@ Route::get('/quiz-result-c', fn() => view('quiz-answers.result-c'));
 Route::get('/start-quiz', function () {
     return view('start-quiz');
 })->name('start-quiz');
+
+Route::post('/submit-challenge', function (Request $request) {
+    $data = $request->only(['challenge1', 'challenge2', 'challenge3', 'label']);
+
+    Mail::to('nurudeen@p23africa.com')->send(new ChallengeSubmission($data));
+
+    return response()->json(['status' => 'success']);
+});
+
 
 // Route::post('/events/{event}/book-seat', [SeatController::class, 'store'])->name('seats.store');
 Route::post('/book-seat/{event_id}', [SeatController::class, 'store'])->name('seats.store');
