@@ -41,6 +41,30 @@
         url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedBold.woff")
             format("woff"); /* Adjust file names and paths as needed */
 }
+@font-face {
+    font-family: "GT Walsheim ProCBO"; /* Name your font family */
+
+    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedBlackOblique.woff2")
+            format("woff2"),
+        url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedBlackOblique.woff")
+            format("woff"); /* Adjust file names and paths as needed */
+}
+@font-face {
+    font-family: "GT Walsheim ProCUB"; /* Name your font family */
+
+    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedUltraBold.woff2")
+            format("woff2"),
+        url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedUltraBold.woff")
+            format("woff"); /* Adjust file names and paths as needed */
+}
+@font-face {
+    font-family: "GT Walsheim ProCB"; /* Name your font family */
+
+    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedBlack.woff2")
+            format("woff2"),
+        url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedBlack.woff")
+            format("woff"); /* Adjust file names and paths as needed */
+}
 
 body {
     font-family: "GT Walsheim Pro";
@@ -180,11 +204,11 @@ body {
     font-family: "GT Walsheim Con" !important;
 }
 .quiz-section .quiz-content h1 {
+    font-family: "GT Walsheim ProCB" !important;
     font-size: 53px;
-    font-weight: bolder;
+    font-weight: 500;
     margin-bottom: 20px;
     line-height: 50px;
-    font-family: "GT Walsheim Black" !important;
 }
 
 .quiz-section .quiz-content .box-content-area p.quiz-hint {
@@ -228,17 +252,17 @@ body {
     z-index: 2;
     width: 100%;
 }
-.quiz-section .quiz-image-area img{
-  height: 80vh;
-  object-fit: contain;
-  position: relative;
-  right: 40px;
+.quiz-section .quiz-image-area img {
+    height: 80vh;
+    object-fit: contain;
+    position: relative;
+    right: 86px;
 }
 .quiz-image-area .quiz-intro-overlay {
     position: absolute;
     background-color: #0d4036;
     height: 84.5%;
-    width: 100%;
+    width: 86% !important;
     bottom: 0;
     z-index: -1;
 }
@@ -260,7 +284,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    max-height: 300px;
+    max-height: 200px;
     padding: 80px 30px;
     border-radius: 0 0 20% 20%;
     position: relative;
@@ -271,8 +295,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 50px 10px;
-    margin-top: 60px;
+    padding: 30px 10px;
+    margin-top: 0px;
     position: relative;
     border-radius: 25px;
 }
@@ -286,24 +310,26 @@ body {
     line-height: 1.4;
     text-align: center;
     border-top: 2px solid #fff;
+    text-transform: uppercase;
 }
 
 .main-quiz-section .question-number-circle {
     background-color: #ffffff;
-    border: 3px solid #1e927b;
+    border: 5px solid #1e927b;
     border-radius: 50%;
     width: 80px;
     height: 80px;
-    padding: 20px;
+    padding: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 40px;
+    font-family: "GT Walsheim ProCB";
     font-weight: bold;
     font-weight: bold;
     color: #000;
     position: absolute;
-    top: -40px;
+    top: -55px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
@@ -346,12 +372,13 @@ body {
 .main-quiz-section .main-quiz-body .answer-options {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 20px;
     margin-bottom: 30px;
 }
 
 .main-quiz-section .main-quiz-body .answer-item {
     background-color: #f8f8f8;
+    color: #0d4036;
     border-radius: 50px;
     padding: 15px 20px 15px 40px;
     display: flex;
@@ -359,12 +386,22 @@ body {
     text-align: left;
     cursor: pointer;
     transition: background-color 0.2s ease, transform 0.2s ease;
-    box-shadow: 0px 16px 15px 7px rgba(0, 0, 0, 0.1);
+    box-shadow: 10px 10px 6px rgba(0, 0, 0, 0.411);
 }
 
-.main-quiz-section .main-quiz-body .answer-item:hover {
-    background-color: #efefef;
+.main-quiz-section .main-quiz-body .answer-item:hover,
+.main-quiz-section .main-quiz-body .answer-item:focus {
+    background-color: #0a3d43;
+    color: #fff;
     transform: translateY(-2px);
+}
+
+/* .main-quiz-section .main-quiz-body .answer-item:hover .answer-text{
+    color: #fff;
+} */
+.main-quiz-section .main-quiz-body .answer-item.selected {
+    background-color: #0a3d43 !important;
+    color: #fff !important;
 }
 
 .main-quiz-section .main-quiz-body .answer-item .answer-letter {
@@ -383,7 +420,6 @@ body {
 
 .main-quiz-section .main-quiz-body .answer-item .answer-text {
     margin: 0;
-    color: #0d4036;
     font-size: 17px;
     flex-grow: 1;
     font-weight: 500;
@@ -538,6 +574,7 @@ body {
         margin: -1rem 1.3rem 1rem;
         background-color: #fff;
         border-radius: 0px 0px 50px 50px;
+        box-shadow: 0px 10px 10px 0px #2121214D;
     }
     .main-quiz-body .quiz-body-container {
         max-width: 500px;
@@ -547,6 +584,10 @@ body {
     .main-quiz-section .quiz-header {
         border-radius: 50px 50px 0px 0px;
     }
+}
+
+.quiz-section .quiz-content .intro-content {
+    margin-left: 1.5%;
 }
 
 @media (min-width: 1440px) {
@@ -576,5 +617,20 @@ body {
     }
     .quiz-section .quiz-content .quiz-hint {
         font-size: 15px;
+    }
+}
+
+@media (max-width: 580px) {
+    .navbar-custom {
+        background-color: #fff;
+        position: static;
+        width: 100%;
+        top: 0px;
+        position: relative;
+        z-index: 5;
+        position: fixed;
+    }
+    .quiz-section {
+        margin-top: 6rem;
     }
 }

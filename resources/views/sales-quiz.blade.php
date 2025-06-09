@@ -15,7 +15,7 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-custom">
             <div class="navbar-overlay d-none d-lg-block"></div>
-            <div class="container d-flex align-items-center justify-content-between">
+            <div class="container-fluid px-md-5 d-flex align-items-center justify-content-between">
                 <!-- Logo -->
                 <a class="navbar-brand d-flex align-items-center" href="{{ route('homepage') }}">
                     <img src="{{ asset('images/logo2.png') }}" alt="">
@@ -34,8 +34,7 @@
                             <a class="nav-link" href="{{ route('quiz') }}"> <span class="nav-main-text">Home</span> </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><span class="nav-main-text"
-                                    style="margin-right: 6px;">How</span> It Works</a>
+                            <a class="nav-link" href="#">How It Works</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('quiz') }}">Quiz</a>
