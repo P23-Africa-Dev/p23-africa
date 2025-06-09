@@ -31,12 +31,12 @@ Route::get('/quiz', function () {
     return view('sales-quiz');
 })->name('quiz');
 
-Route::get('/quiz-result-a', fn() => view('quiz-answers.result-a'));
-Route::get('/quiz-result-b', fn() => view('quiz-answers.result-b'));
-Route::get('/quiz-result-c', fn() => view('quiz-answers.result-c'));
+Route::get('/quiz/result/fragile-funnel', fn() => view('quiz-answers.result-a'));
+Route::get('/quiz/result/hidden-powerhouse', fn() => view('quiz-answers.result-b'));
+Route::get('/quiz/result/cloudy-climber', fn() => view('quiz-answers.result-c'));
 
 
-Route::get('/start-quiz', function () {
+Route::get('/quiz/start', function () {
     return view('start-quiz');
 })->name('start-quiz');
 

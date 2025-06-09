@@ -17,11 +17,10 @@
                     <div class="header-section mb-4">
                         <h1>
                             <span>YOU ARE THE</span>
-                            FRAGILE FUNNEL
+                            <span id="typing-title" class="typing-text"></span>
                         </h1>
-                        <p>
-                            Your Revenue Stream Is Vulnerable—Small Cracks Today Could Become
-                            Big Breaks Tomorrow.
+                        <p id="typing-subtitle" class="typing-text">
+
                         </p>
                     </div>
 
@@ -53,7 +52,7 @@
                     <div class="metrics-section mb-4">
                         <div class="metric">
                             <div class="progress-bar-container purple-bg mb-3">
-                                <div class="progress-fill purple"></div>
+                                <div class="progress-fill purple" data-width="35%"></div>
                             </div>
                             <div class="metric-item purple">
                                 <div class="color-box purple"></div>
@@ -62,7 +61,7 @@
                         </div>
                         <div class="metric">
                             <div class="progress-bar-container green-bg mb-3">
-                                <div class="progress-fill green"></div>
+                                <div class="progress-fill green" data-width="35%"></div>
                             </div>
                             <div class="metric-item green">
                                 <div class="color-box"></div>
@@ -71,7 +70,7 @@
                         </div>
                         <div class="metric">
                             <div class="progress-bar-container yellow-bg mb-3">
-                                <div class="progress-fill yellow"></div>
+                                <div class="progress-fill yellow" data-width="30%"></div>
                             </div>
                             <div class="metric-item yellow">
                                 <div class="color-box"></div>
@@ -128,4 +127,61 @@
             </div>
         </div>
     </section>
+
+
+    <script>
+        // Animate when the element is in view
+        document.addEventListener("DOMContentLoaded", () => {
+            const fills = document.querySelectorAll(".progress-fill");
+
+            fills.forEach(fill => {
+                const targetWidth = fill.getAttribute("data-width");
+
+                setTimeout(() => {
+                    fill.style.width = targetWidth;
+                }, 500);
+            });
+        });
+
+
+
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const title = "FRAGILE FUNNEL";
+            const subtitle =
+                "Your Revenue Stream Is Vulnerable—Small Cracks Today Could Become Big Breaks Tomorrow.";
+
+            const titleEl = document.getElementById("typing-title");
+            const subtitleEl = document.getElementById("typing-subtitle");
+
+            let titleIndex = 0;
+            let subtitleIndex = 0;
+
+            function typeTitle() {
+                if (titleIndex < title.length) {
+                    titleEl.textContent += title.charAt(titleIndex);
+                    titleIndex++;
+                    setTimeout(typeTitle, 100);
+                } else {
+                    // Delay before typing subtitle
+                    setTimeout(typeSubtitle, 400);
+                }
+            }
+
+            function typeSubtitle() {
+                if (subtitleIndex < subtitle.length) {
+                    subtitleEl.textContent += subtitle.charAt(subtitleIndex);
+                    subtitleIndex++;
+                    setTimeout(typeSubtitle, 40);
+                } else {
+                    // Typing is complete — remove blinking cursor
+                    subtitleEl.classList.remove("typing-text");
+                }
+            }
+
+            // Start typing as soon as DOM is ready
+            typeTitle();
+        });
+    </script>
 @endsection

@@ -52,7 +52,7 @@
                     <div class="metrics-section mb-4">
                         <div class="metric">
                             <div class="progress-bar-container purple-bg mb-3">
-                                <div class="progress-fill purple" style="width: 40%;"></div>
+                                <div class="progress-fill purple" data-width="40%"></div>
                             </div>
                             <div class="metric-item purple">
                                 <div class="color-box purple"></div>
@@ -61,7 +61,7 @@
                         </div>
                         <div class="metric">
                             <div class="progress-bar-container green-bg mb-3">
-                                <div class="progress-fill green"></div>
+                                <div class="progress-fill green" data-width="35%"></div>
                             </div>
                             <div class="metric-item green">
                                 <div class="color-box"></div>
@@ -70,7 +70,7 @@
                         </div>
                         <div class="metric">
                             <div class="progress-bar-container yellow-bg mb-3">
-                                <div class="progress-fill yellow" style="width: 25%;"></div>
+                                <div class="progress-fill yellow" data-width="25%"></div>
                             </div>
                             <div class="metric-item yellow">
                                 <div class="color-box"></div>
@@ -100,7 +100,8 @@
                             <div class=" solution-section mb-2">
                                 <h3 class="mb-3">What You Need:</h3>
                                 <p>
-                                     A tailored growth plan. Now’s the time to identify advanced strategies: tightening conversion points, exploring new channels, or creating scalable systems.
+                                    A tailored growth plan. Now’s the time to identify advanced strategies: tightening
+                                    conversion points, exploring new channels, or creating scalable systems.
                                 </p>
                             </div>
 
@@ -124,4 +125,19 @@
             </div>
         </div>
     </section>
+
+    <script>
+        // Animate when the element is in view
+        document.addEventListener("DOMContentLoaded", () => {
+            const fills = document.querySelectorAll(".progress-fill");
+
+            fills.forEach(fill => {
+                const targetWidth = fill.getAttribute("data-width");
+
+                setTimeout(() => {
+                    fill.style.width = targetWidth;
+                }, 500);
+            });
+        });
+    </script>
 @endsection

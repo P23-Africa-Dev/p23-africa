@@ -433,7 +433,7 @@
                             </p>
                             <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3tzdnFU-zme-lCpKoHGZktqjUVs4rll_QJtcUzK71d9-l3M0WIFvjtnJpLmosUraV8XkUJeD_k"
                                 target="_blank" class="cta-btn">
-                                Claim my sales Audit Now!
+                                Claim My Free Sales Audit!
                                 <span>→</span>
                             </a>
                         </div>

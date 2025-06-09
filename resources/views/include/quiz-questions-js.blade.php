@@ -155,7 +155,7 @@
             // Submit final step
             nextBtn.disabled = true;
             const originalText = nextBtn.innerHTML;
-            nextBtn.innerHTML = `<span class="spinner"></span> Sending...`;
+            nextBtn.innerHTML = `<span class="spinner"></span> Analysing...`;
 
             const challenge1 = document.getElementById("challenge1")?.value ?? '';
             const challenge2 = document.getElementById("challenge2")?.value ?? '';
@@ -197,11 +197,11 @@
 
                 // Redirect based on result
                 if (topChoice === 'A') {
-                    window.location.href = "/quiz-result-a";
+                    window.location.href = "/quiz/result/fragile-funnel";
                 } else if (topChoice === 'B') {
-                    window.location.href = "/quiz-result-b";
+                    window.location.href = "/quiz/result/hidden-powerhouse";
                 } else {
-                    window.location.href = "/quiz-result-c";
+                    window.location.href = "/quiz/result/cloudy-climber";
                 }
 
             } catch (error) {

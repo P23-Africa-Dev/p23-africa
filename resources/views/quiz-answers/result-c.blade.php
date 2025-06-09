@@ -52,7 +52,7 @@
                     <div class="metrics-section mb-4">
                         <div class="metric">
                             <div class="progress-bar-container purple-bg mb-3">
-                                <div class="progress-fill purple" style="width: 40%;"></div>
+                                <div class="progress-fill purple" data-width="40%"></div>
                             </div>
                             <div class="metric-item purple">
                                 <div class="color-box purple"></div>
@@ -61,7 +61,7 @@
                         </div>
                         <div class="metric">
                             <div class="progress-bar-container green-bg mb-3">
-                                <div class="progress-fill green"></div>
+                                <div class="progress-fill green" data-width="35%"></div>
                             </div>
                             <div class="metric-item green">
                                 <div class="color-box"></div>
@@ -70,7 +70,7 @@
                         </div>
                         <div class="metric">
                             <div class="progress-bar-container yellow-bg mb-3">
-                                <div class="progress-fill yellow" style="width: 30%;"></div>
+                                <div class="progress-fill yellow" data-width="30%"></div>
                             </div>
                             <div class="metric-item yellow">
                                 <div class="color-box"></div>
@@ -100,14 +100,16 @@
                             <div class=" solution-section mb-2">
                                 <h3 class="mb-3">What You Need:</h3>
                                 <p>
-                                     A proper growth strategy with practical, affordable systems. A few well-placed tools, a clear action plan, and team alignment can unlock serious gains.
+                                    A proper growth strategy with practical, affordable systems. A few well-placed tools, a
+                                    clear action plan, and team alignment can unlock serious gains.
                                 </p>
                             </div>
 
                             <div class=" next-step-section">
                                 <h3 class="mb-3">Next Step:</h3>
                                 <p>
-                                    Let’s review your business together. Our audit can show you what’s working, what’s not—and how to scale without burning out.
+                                    Let’s review your business together. Our audit can show you what’s working, what’s
+                                    not—and how to scale without burning out.
                                 </p>
                             </div>
                         </div>
@@ -124,4 +126,21 @@
             </div>
         </div>
     </section>
+
+
+
+    <script>
+    // Animate when the element is in view
+    document.addEventListener("DOMContentLoaded", () => {
+        const fills = document.querySelectorAll(".progress-fill");
+
+        fills.forEach(fill => {
+            const targetWidth = fill.getAttribute("data-width");
+
+            setTimeout(() => {
+                fill.style.width = targetWidth;
+            }, 500);
+        });
+    });
+</script>
 @endsection
