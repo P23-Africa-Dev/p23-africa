@@ -27,7 +27,7 @@ const questions = [
     {
         question: "Are your team’s targets clear and regularly reviewed?",
         options: {
-            A: "No ",
+            A: "No",
             B: "Kind Of",
             C: "Yes—targets are tracked and discussed"
         }
@@ -86,12 +86,12 @@ function loadQuestion() {
             <span class="answer-letter">${key}</span>
             <p class="answer-text">${q.options[key]}</p>
         `;
-        div.onclick = function () {
+        div.addEventListener("click", function () {
             document.querySelectorAll(".answer-item").forEach(item => item.classList.remove("selected"));
             div.classList.add("selected");
             document.getElementById("nextBtn").disabled = false;
             selectedAnswers[currentQuestion] = key;
-        };
+        });
         answerContainer.appendChild(div);
     }
 
@@ -99,8 +99,8 @@ function loadQuestion() {
 }
 
 document.getElementById("nextBtn").addEventListener("click", function () {
-    currentQuestion++;
-    if (currentQuestion < questions.length) {
+    if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
         loadQuestion();
     } else {
         showResult();
@@ -110,7 +110,7 @@ document.getElementById("nextBtn").addEventListener("click", function () {
 function showResult() {
     const counts = { A: 0, B: 0, C: 0 };
     selectedAnswers.forEach(ans => {
-        if (counts[ans]) counts[ans]++;
+        if (ans && counts[ans] !== undefined) counts[ans]++;
     });
 
     let topChoice = 'A';

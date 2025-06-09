@@ -12,7 +12,7 @@
 @endsection
 
 @section('content')
-    <section class="main-quiz-section min-vh-10">
+    <section class="main-quiz-section min-vh-10 mt-3">
         <div class="desktop-quiz-bg-overlay mt-4">
             <img class="main-quiz-left-bg" src="{{ asset('images/main-quiz-left-bg.png') }}" alt="" />
             <img class="main-quiz-right-bg" src="{{ asset('images/main-quiz-right-bg.png') }}" alt="" />
