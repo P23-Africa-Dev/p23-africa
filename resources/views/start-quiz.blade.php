@@ -30,18 +30,31 @@
                         <h2 class="question-text" id="questionText"></h2>
                     </div>
                 </div>
-                <div class="main-quiz-body">
-                    <div class="quiz-body-container">
-                        <div class="answer-options" id="answerOptions"></div>
-                        <div class="quiz-navigation">
-                            <button class="btn next-question-btn" id="nextBtn" disabled>
-                                <i class="bi bi-arrow-right"></i>
-                            </button>
+                <div>
+                    <div class="main-quiz-body">
+                        <div class="quiz-body-container">
+                            <div id="quizWrapper">
+                                <div class="answer-options" id="answerOptions"></div>
+                                <div class="quiz-navigation">
+                                    <button class="btn next-question-btn" id="nextBtn" disabled>
+                                        <i class="bi bi-arrow-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Add this hidden form in your HTML -->
+                            <div id="emailFormWrapper" style="display: none; text-align: center;">
+                                <h3>Almost Done! Enter your email to see your results</h3>
+                                <input type="email" class="form-control mb-4" id="userEmail" placeholder="Your Email" required />
+                                <button class="btn next-question-btn" id="submitQuizBtn">Submit & See Results</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
 
 
         {{-- <div class="main-quiz-card">

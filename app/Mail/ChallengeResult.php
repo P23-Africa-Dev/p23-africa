@@ -9,33 +9,26 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ChallengeSubmission extends Mailable
+class ChallengeResult extends Mailable
 {
     use Queueable, SerializesModels;
-
-    public $challenge1;
-    public $challenge2;
-    public $challenge3;
-    public $label;
 
     /**
      * Create a new message instance.
      */
+    public $data;
+
     public function __construct($data)
     {
-        $this->challenge1 = $data['challenge1'] ?? '';
-        $this->challenge2 = $data['challenge2'] ?? '';
-        $this->challenge3 = $data['challenge3'] ?? '';
-        $this->label      = $data['label'] ?? '';
+        $this->data = $data;
     }
-
 
     public function build()
     {
-        return $this->subject('New Challenge Submission from Quiz')
-            ->view('emails.challenge-submission');
+        return $this->subject('Your Quiz Result: ' . $this->data['label'])
+            ->view('emails.challenge_result')
+            ->with(['label' => $this->data['label']]);
     }
-    
 
     /**
      * Get the message envelope.
@@ -43,7 +36,7 @@ class ChallengeSubmission extends Mailable
     // public function envelope(): Envelope
     // {
     //     return new Envelope(
-    //         subject: 'Challenge Submission',
+    //         subject: 'Challenge Result',
     //     );
     // }
 

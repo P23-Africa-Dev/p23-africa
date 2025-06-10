@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ChallengeResult;
+use App\Mail\ChallengeSubmission;
 use Illuminate\Support\Facades\Mail;
 
 use Illuminate\Http\Request;
@@ -10,22 +12,22 @@ class QuizController extends Controller
 {
     public function submitChallenge(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'challenge1' => 'nullable|string',
             'challenge2' => 'nullable|string',
             'challenge3' => 'nullable|string',
-            'label' => 'required|in:FRAGILE FUNNEL,Hidden Powerhouse,Cloudy Climber'
+            'label' => 'required|in:FRAGILE FUNNEL,Hidden Powerhouse,Cloudy Climber',
+            'email' => 'nullable|email'
         ]);
 
-        $content = "New Quiz Challenge Submission:\n\n"
-            . "Category: {$request->label}\n"
-            . "Challenge 1: {$request->challenge1}\n"
-            . "Challenge 2: {$request->challenge2}\n"
-            . "Challenge 3: {$request->challenge3}";
+        // Send to company
+        Mail::to('nurudeen@p23africa.com')->send(new ChallengeSubmission($data));
 
-        Mail::raw($content, function ($message) {
-            $message->to('nurudeen@p23africa.com')->subject('Quiz Challenge Submission');
-        });
+        // Send to user
+        if (!empty($data['email'])) {
+            Mail::to($data['email'])->send(new ChallengeResult($data));
+        }   
+
 
         return response()->json(['status' => 'ok']);
     }

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\QuizController;
 use App\Http\Controllers\SeatController;
 use App\Http\Controllers\UserEventController;
 use App\Mail\ChallengeSubmission;
@@ -40,13 +41,20 @@ Route::get('/quiz/start', function () {
     return view('start-quiz');
 })->name('start-quiz');
 
-Route::post('/submit-challenge', function (Request $request) {
-    $data = $request->only(['challenge1', 'challenge2', 'challenge3', 'label']);
+// Route::get('/test-email', function () {
+//     return view('emails.challenge_result', ['label' => 'Hidden Powerhouse']);
+// });
 
-    Mail::to('nurudeen@p23africa.com')->send(new ChallengeSubmission($data));
 
-    return response()->json(['status' => 'success']);
-});
+// Route::post('/submit-challenge', function (Request $request) {
+//     $data = $request->only(['challenge1', 'challenge2', 'challenge3', 'label']);
+
+//     Mail::to('nurudeen@p23africa.com')->send(new ChallengeSubmission($data));
+
+//     return response()->json(['status' => 'success']);
+// });
+Route::post('/submit-challenge', [QuizController::class, 'submitChallenge']);
+
 
 
 // Route::post('/events/{event}/book-seat', [SeatController::class, 'store'])->name('seats.store');

@@ -145,73 +145,93 @@
         }
     }
 
-    document.getElementById("nextBtn").addEventListener("click", async function() {
-        const nextBtn = this;
-
+    document.getElementById("nextBtn").addEventListener("click", function() {
         if (currentQuestion < questions.length - 1) {
             currentQuestion++;
             loadQuestion();
-        } else {
-            // Submit final step
-            nextBtn.disabled = true;
-            const originalText = nextBtn.innerHTML;
-            nextBtn.innerHTML = `<span class="spinner"></span> Analysing...`;
 
-            const challenge1 = document.getElementById("challenge1")?.value ?? '';
-            const challenge2 = document.getElementById("challenge2")?.value ?? '';
-            const challenge3 = document.getElementById("challenge3")?.value ?? '';
-
-            const counts = {
-                A: 0,
-                B: 0,
-                C: 0
-            };
-            selectedAnswers.slice(0, 7).forEach(ans => {
-                if (ans && counts.hasOwnProperty(ans)) counts[ans]++;
-            });
-
-            const topChoice = Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
-
-            const label = topChoice === 'A' ? 'FRAGILE FUNNEL' :
-                topChoice === 'B' ? 'HIDDEN POWERHOUSE' : 'CLOUDY CLIMBER';
-
-            try {
-                const response = await fetch("/submit-challenge", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')
-                            .getAttribute("content")
-                    },
-                    body: JSON.stringify({
-                        challenge1,
-                        challenge2,
-                        challenge3,
-                        label
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error("Submission failed");
-                }
-
-                // Redirect based on result
-                if (topChoice === 'A') {
-                    window.location.href = "/quiz/result/fragile-funnel";
-                } else if (topChoice === 'B') {
-                    window.location.href = "/quiz/result/hidden-powerhouse";
-                } else {
-                    window.location.href = "/quiz/result/cloudy-climber";
-                }
-
-            } catch (error) {
-                console.error("Submission error:", error);
-                nextBtn.innerHTML = originalText;
-                nextBtn.disabled = false;
-                alert("Something went wrong. Please try again.");
+            if (currentQuestion === questions.length - 1) {
+                this.textContent = "Continue →";
             }
+        } else {
+            // Hide quiz and show email input
+            document.getElementById("quizWrapper").style.display = "none";
+            document.getElementById("emailFormWrapper").style.display = "block";
         }
     });
+
+
+    document.getElementById("submitQuizBtn").addEventListener("click", async function() {
+        const email = document.getElementById("userEmail").value.trim();
+
+        if (!validateEmail(email)) {
+            alert("Please enter a valid email address.");
+            return;
+        }
+
+        this.disabled = true;
+        this.innerHTML = `<span class="spinner"></span> Analysing...`;
+
+        const challenge1 = document.getElementById("challenge1")?.value ?? '';
+        const challenge2 = document.getElementById("challenge2")?.value ?? '';
+        const challenge3 = document.getElementById("challenge3")?.value ?? '';
+
+        const counts = {
+            A: 0,
+            B: 0,
+            C: 0
+        };
+        selectedAnswers.slice(0, 7).forEach(ans => {
+            if (ans && counts.hasOwnProperty(ans)) counts[ans]++;
+        });
+
+        const topChoice = Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
+
+        const label = topChoice === 'A' ? 'FRAGILE FUNNEL' :
+            topChoice === 'B' ? 'HIDDEN POWERHOUSE' : 'CLOUDY CLIMBER';
+
+        try {
+            const response = await fetch("/submit-challenge", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute(
+                        "content")
+                },
+                body: JSON.stringify({
+                    challenge1,
+                    challenge2,
+                    challenge3,
+                    label,
+                    email
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error("Submission failed");
+            }
+
+            // Redirect based on result
+            if (topChoice === 'A') {
+                window.location.href = "/quiz/result/fragile-funnel";
+            } else if (topChoice === 'B') {
+                window.location.href = "/quiz/result/hidden-powerhouse";
+            } else {
+                window.location.href = "/quiz/result/cloudy-climber";
+            }
+
+        } catch (error) {
+            console.error("Submission error:", error);
+            alert("Something went wrong. Please try again.");
+            this.innerHTML = "Submit & See Results";
+            this.disabled = false;
+        }
+    });
+
+    function validateEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
 
     window.onload = loadQuestion;
 </script>
