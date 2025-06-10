@@ -32,18 +32,18 @@ Route::get('/quiz', function () {
     return view('sales-quiz');
 })->name('quiz');
 
-Route::get('/quiz/result/fragile-funnel', fn() => view('quiz-answers.result-a'));
-Route::get('/quiz/result/hidden-powerhouse', fn() => view('quiz-answers.result-b'));
-Route::get('/quiz/result/cloudy-climber', fn() => view('quiz-answers.result-c'));
+Route::get('/quiz/result/fragile-funnel', fn() => view('quiz-answers.result-a'))->name('fragile-funnel');
+Route::get('/quiz/result/hidden-powerhouse', fn() => view('quiz-answers.result-b'))->name('hidden-powerhouse');
+Route::get('/quiz/result/cloudy-climber', fn() => view('quiz-answers.result-c'))->name('cloudy-climber');
 
 
 Route::get('/quiz/start', function () {
     return view('start-quiz');
 })->name('start-quiz');
 
-// Route::get('/test-email', function () {
-//     return view('emails.challenge_result', ['label' => 'Hidden Powerhouse']);
-// });
+Route::get('/test-email', function () {
+    return view('emails.challenge_result', ['label' => 'Hidden Powerhouse']);
+});
 
 
 // Route::post('/submit-challenge', function (Request $request) {

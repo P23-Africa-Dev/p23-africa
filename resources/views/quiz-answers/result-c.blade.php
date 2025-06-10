@@ -17,10 +17,10 @@
                     <div class="header-section mb-4">
                         <h1>
                             <span>YOU ARE THE</span>
-                            Cloudy Climber
+                            <span id="typing-title" class="typing-text"></span>
                         </h1>
-                        <p>
-                            You’re on the path—but a little clarity could make your next step a leap.
+                        <p id="typing-subtitle" class="typing-text">
+
                         </p>
                     </div>
 
@@ -130,17 +130,55 @@
 
 
     <script>
-    // Animate when the element is in view
-    document.addEventListener("DOMContentLoaded", () => {
-        const fills = document.querySelectorAll(".progress-fill");
+        // Animate when the element is in view
+        document.addEventListener("DOMContentLoaded", () => {
+            const fills = document.querySelectorAll(".progress-fill");
 
-        fills.forEach(fill => {
-            const targetWidth = fill.getAttribute("data-width");
+            fills.forEach(fill => {
+                const targetWidth = fill.getAttribute("data-width");
 
-            setTimeout(() => {
-                fill.style.width = targetWidth;
-            }, 500);
+                setTimeout(() => {
+                    fill.style.width = targetWidth;
+                }, 500);
+            });
         });
-    });
-</script>
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const title = "Cloudy Climber";
+            const subtitle =
+                "You’re on the path—but a little clarity could make your next step a leap.";
+
+            const titleEl = document.getElementById("typing-title");
+            const subtitleEl = document.getElementById("typing-subtitle");
+
+            let titleIndex = 0;
+            let subtitleIndex = 0;
+
+            function typeTitle() {
+                if (titleIndex < title.length) {
+                    titleEl.textContent += title.charAt(titleIndex);
+                    titleIndex++;
+                    setTimeout(typeTitle, 100);
+                } else {
+                    // Delay before typing subtitle
+                    setTimeout(typeSubtitle, 400);
+                }
+            }
+
+            function typeSubtitle() {
+                if (subtitleIndex < subtitle.length) {
+                    subtitleEl.textContent += subtitle.charAt(subtitleIndex);
+                    subtitleIndex++;
+                    setTimeout(typeSubtitle, 40);
+                } else {
+                    // Typing is complete — remove blinking cursor
+                    subtitleEl.classList.remove("typing-text");
+                }
+            }
+
+            // Start typing as soon as DOM is ready
+            typeTitle();
+        });
+    </script>
 @endsection
