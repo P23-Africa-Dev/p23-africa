@@ -9,6 +9,8 @@
     <meta property="og:image" content="{{ asset('images/fragile_funnel.png') }}">
 @endsection
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 @section('content')
     <section class="fragile">
         <div class="fragile-funnel-container container">
@@ -118,10 +120,37 @@
                         <div class="buttons-group gap-3">
                             <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3tzdnFU-zme-lCpKoHGZktqjUVs4rll_QJtcUzK71d9-l3M0WIFvjtnJpLmosUraV8XkUJeD_k"
                                 target="_blank" class="btn btn-purple-outline">Book Business Audit Now!</a>
-                            <a href="#" class="btn btn-dark-green">
+                            <button class="btn btn-dark-green" id="play-video-btn">
                                 Get Growth Tips
                                 <i class="bi bi-arrow-right"></i>
-                            </a>
+                            </button>
+                            <button class="btn btn-dark-green" id="play-video-btn2">
+                                Get Growth Tips
+                                <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Video Modal -->
+        <div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered custom-modal">
+                <div class="modal-content bg-dark text-white">
+                    <div class="modal-header border-0">
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-0 text-center">
+                        <div class="ratio ratio-16x9" id="youtubePlayerContainer">
+                            <div id="youtubePlayer"></div>
+                        </div>
+
+                        <!-- Hidden Appointment Button -->
+                        <div id="appointmentButtonContainer" class="py-3" style="display: none;">
+                            <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3tzdnFU-zme-lCpKoHGZktqjUVs4rll_QJtcUzK71d9-l3M0WIFvjtnJpLmosUraV8XkUJeD_k"
+                                target="_blank" class="btn btn-success animate-pop-in">Book Business Audit Now!</a>
                         </div>
                     </div>
                 </div>
@@ -184,5 +213,77 @@
             // Start typing as soon as DOM is ready
             typeTitle();
         });
+
+        // Video Modal
+        let player;
+
+        const videoMap = {
+            desktop: "https://www.youtube.com/embed/l8JvWxEFVW0?si=wTv4YqzGjwfhf53M",
+            mobile: "https://www.youtube.com/embed/unzc3SdI4dg?si=X4L6veRWbw7rjcgP" // Replace with your mobile video
+        };
+
+        function createYouTubePlayer(videoURL) {
+            const videoId = new URL(videoURL).pathname.split("/embed/")[1].split("?")[0];
+
+            player = new YT.Player("youtubePlayer", {
+                height: "390",
+                width: "640",
+                videoId: videoId,
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            event.target.playVideo();
+        }
+
+        function onPlayerStateChange(event) {
+            // State 0 = Ended
+            if (event.data === YT.PlayerState.ENDED) {
+                const btn = document.getElementById('appointmentButtonContainer');
+                btn.style.display = 'block';
+                btn.classList.add('animate-pop-in');
+            }
+        }
+
+        // jQuery ready
+        $(document).ready(function() {
+            const videoModal = new bootstrap.Modal(document.getElementById('videoModal'));
+
+            $('#play-video-btn').on('click', function() {
+                openVideo(videoMap.desktop);
+            });
+
+            $('#play-video-btn2').on('click', function() {
+                openVideo(videoMap.mobile);
+            });
+
+            function openVideo(videoUrl) {
+                // Clear previous video
+                $('#youtubePlayer').html('');
+                $('#appointmentButtonContainer').hide().removeClass('animate-pop-in');
+
+                videoModal.show();
+
+                // Load new video
+                setTimeout(() => {
+                    createYouTubePlayer(videoUrl);
+                }, 300);
+            }
+
+            // Clean up when modal is closed
+            $('#videoModal').on('hidden.bs.modal', function() {
+                if (player && player.destroy) {
+                    player.destroy();
+                }
+                $('#youtubePlayer').html('');
+                $('#appointmentButtonContainer').hide().removeClass('animate-pop-in');
+            });
+        });
     </script>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
 @endsection

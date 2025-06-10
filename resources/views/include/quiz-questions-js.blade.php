@@ -163,11 +163,17 @@
 
     document.getElementById("submitQuizBtn").addEventListener("click", async function() {
         const email = document.getElementById("userEmail").value.trim();
+        const name = document.getElementById("userName").value.trim();
 
-        // if (!validateEmail(email)) {
-        //     alert("Please enter a valid email address.");
-        //     return;
-        // }
+        if (!validateEmail(email)) {
+            alert("Please enter a valid email address.");
+            return;
+        }
+
+        if (name.length < 2) {
+            alert("Please enter your full name.");
+            return;
+        }
 
         this.disabled = true;
         this.innerHTML = `<span class="spinner"></span> Analysing...`;
@@ -203,7 +209,8 @@
                     challenge2,
                     challenge3,
                     label,
-                    email
+                    email,
+                    name
                 })
             });
 

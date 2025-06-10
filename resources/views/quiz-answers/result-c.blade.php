@@ -133,40 +133,23 @@
             </div>
         </div>
 
-        <!-- Bootstrap Modal for Video -->
+        <!-- Video Modal -->
         <div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered custom-modal">
-                <div class="modal-content bg-dark">
+                <div class="modal-content bg-dark text-white">
                     <div class="modal-header border-0">
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                     </div>
-                    <div class="modal-body p-0">
-                        <div class="ratio ratio-16x9 mb-3">
+                    <div class="modal-body p-0 text-center">
+                        <div class="ratio ratio-16x9" id="youtubePlayerContainer">
                             <div id="youtubePlayer"></div>
-                            {{-- <iframe id="videoIframe" src="" title="YouTube video" allow="autoplay; encrypted-media"
-                                allowfullscreen></iframe> --}}
                         </div>
-                        <!-- Hidden Button Initially -->
-                        <div class="text-center mb-4" id="appointmentButtonContainer" style="display: none;">
-                            <button class="btn btn-success">Book Appointment</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="modal fade" id="videoModal2" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered custom-modal">
-                <div class="modal-content bg-dark">
-                    <div class="modal-header border-0">
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body p-0">
-                        <div class="ratio ratio-16x9">
-                            <iframe id="videoIframe2" src="" title="YouTube video"
-                                allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        <!-- Hidden Appointment Button -->
+                        <div id="appointmentButtonContainer" class="py-3" style="display: none;">
+                            <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3tzdnFU-zme-lCpKoHGZktqjUVs4rll_QJtcUzK71d9-l3M0WIFvjtnJpLmosUraV8XkUJeD_k"
+                                target="_blank" class="btn btn-success animate-pop-in">Book Business Audit Now!</a>
                         </div>
                     </div>
                 </div>
@@ -229,79 +212,74 @@
         });
 
 
-        // $(document).ready(function() {
-        //     const videoURL = "https://www.youtube.com/embed/l8JvWxEFVW0?si=wTv4YqzGjwfhf53M";
 
-        //     $('#play-video-btn').on('click', function() {
-        //         $('#videoIframe').attr('src', videoURL);
-        //         const videoModal = new bootstrap.Modal(document.getElementById('videoModal'));
-        //         videoModal.show();
-        //     });
+        // Video Modal
+        let player;
 
-        //     // Clear video when modal is closed
-        //     $('#videoModal').on('hidden.bs.modal', function() {
-        //         $('#videoIframe').attr('src', '');
-        //     });
-        // });
+        const videoMap = {
+            desktop: "https://www.youtube.com/embed/l8JvWxEFVW0?si=wTv4YqzGjwfhf53M",
+            mobile: "https://www.youtube.com/embed/unzc3SdI4dg?si=X4L6veRWbw7rjcgP" // Replace with your mobile video
+        };
 
-    let player;
+        function createYouTubePlayer(videoURL) {
+            const videoId = new URL(videoURL).pathname.split("/embed/")[1].split("?")[0];
 
-    function onYouTubeIframeAPIReady() {
-        player = new YT.Player('youtubePlayer', {
-            height: '360',
-            width: '640',
-            videoId: 'l8JvWxEFVW0',
-            playerVars: {
-                autoplay: 0,
-                modestbranding: 1,
-                rel: 0
-            },
-            events: {
-                'onStateChange': onPlayerStateChange
-            }
-        });
-    }
-
-    function onPlayerStateChange(event) {
-        if (event.data === YT.PlayerState.ENDED) {
-            // Show the "Book Appointment" button
-            document.getElementById('appointmentButtonContainer').style.display = 'block';
+            player = new YT.Player("youtubePlayer", {
+                height: "390",
+                width: "640",
+                videoId: videoId,
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
         }
-    }
 
-    $(document).ready(function () {
-        const videoModalEl = document.getElementById('videoModal');
-        const videoModal = new bootstrap.Modal(videoModalEl);
+        function onPlayerReady(event) {
+            event.target.playVideo();
+        }
 
-        $('#play-video-btn').on('click', function () {
-            videoModal.show();
-        });
-
-        // When modal is closed, destroy and reset video + button
-        $('#videoModal').on('hidden.bs.modal', function () {
-            if (player && player.destroy) {
-                player.destroy();
+        function onPlayerStateChange(event) {
+            // State 0 = Ended
+            if (event.data === YT.PlayerState.ENDED) {
+                const btn = document.getElementById('appointmentButtonContainer');
+                btn.style.display = 'block';
+                btn.classList.add('animate-pop-in');
             }
-            document.getElementById('appointmentButtonContainer').style.display = 'none';
-            document.getElementById('youtubePlayer').innerHTML = '<div id="youtubePlayer"></div>'; // reset player container
-        });
-    });
+        }
 
-
-
-
+        // jQuery ready
         $(document).ready(function() {
-            const videoURL2 = "https://www.youtube.com/embed/unzc3SdI4dg?si=X4L6veRWbw7rjcgP";
+            const videoModal = new bootstrap.Modal(document.getElementById('videoModal'));
 
-            $('#play-video-btn2').on('click', function() {
-                $('#videoIframe2').attr('src', videoURL2);
-                const videoModal2 = new bootstrap.Modal(document.getElementById('videoModal2'));
-                videoModal2.show();
+            $('#play-video-btn').on('click', function() {
+                openVideo(videoMap.desktop);
             });
 
-            // Clear video when modal is closed
-            $('#videoModal2').on('hidden.bs.modal', function() {
-                $('#videoIframe2').attr('src', '');
+            $('#play-video-btn2').on('click', function() {
+                openVideo(videoMap.mobile);
+            });
+
+            function openVideo(videoUrl) {
+                // Clear previous video
+                $('#youtubePlayer').html('');
+                $('#appointmentButtonContainer').hide().removeClass('animate-pop-in');
+
+                videoModal.show();
+
+                // Load new video
+                setTimeout(() => {
+                    createYouTubePlayer(videoUrl);
+                }, 300);
+            }
+
+            // Clean up when modal is closed
+            $('#videoModal').on('hidden.bs.modal', function() {
+                if (player && player.destroy) {
+                    player.destroy();
+                }
+                $('#youtubePlayer').html('');
+                $('#appointmentButtonContainer').hide().removeClass('animate-pop-in');
             });
         });
     </script>

@@ -18,6 +18,7 @@ class ChallengeSubmission extends Mailable
     public $challenge3;
     public $label;
     public $email;
+    public $name;
 
     /**
      * Create a new message instance.
@@ -29,6 +30,7 @@ class ChallengeSubmission extends Mailable
         $this->challenge3 = $data['challenge3'] ?? '';
         $this->label      = $data['label'] ?? '';
         $this->email = $data['email'] ?? '';
+        $this->name = $data['name'];
     }
 
 

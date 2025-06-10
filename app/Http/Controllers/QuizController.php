@@ -17,7 +17,8 @@ class QuizController extends Controller
             'challenge2' => 'nullable|string',
             'challenge3' => 'nullable|string',
             'label' => 'required|in:FRAGILE FUNNEL,HIDDEN POWERHOUSE,CLOUDY CLIMBER',
-            'email' => 'nullable|email'
+            'email' => 'nullable|email',
+            'name' => 'required|string|max:255',
         ]);
 
         // Send to company

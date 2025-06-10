@@ -31,7 +31,7 @@
                 <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                     <ul class="navbar-nav nav-center-links">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('quiz') }}"> <span class="nav-main-text">Home</span> </a>
+                            <a class="nav-link" href="{{ route('sales') }}"> <span class="nav-main-text">Home</span> </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">How It Works</a>

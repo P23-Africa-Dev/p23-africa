@@ -12,6 +12,7 @@
     <p><strong>Challenge 3:</strong> {{ $challenge3 ?: 'Not provided' }}</p>
 
     <br>
+    <p><strong>User Name:</strong> {{ $name }}</p>
     <p><strong>User Email:</strong> <a href="mailto:{{$email}}">{{ $email ?? 'Not provided' }}</a> </p>
 </body>
 </html>

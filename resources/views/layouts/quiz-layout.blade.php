@@ -35,6 +35,26 @@
                     border-color: rgba(0, 0, 0, 0);
                 }
             }
+
+            @keyframes popIn {
+                0% {
+                    opacity: 0;
+                    transform: scale(0.8);
+                }
+
+                60% {
+                    opacity: 1;
+                    transform: scale(1.1);
+                }
+
+                100% {
+                    transform: scale(1);
+                }
+            }
+
+            .animate-pop-in {
+                animation: popIn 0.6s ease-out;
+            }
         </style>
     </head>
 
@@ -60,7 +80,6 @@
                     togglerIcon.innerHTML = "";
                 }
             });
-
         </script>
     </body>
 
