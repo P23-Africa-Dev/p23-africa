@@ -45,7 +45,7 @@
                             <!-- Add this hidden form in your HTML -->
                             <div id="emailFormWrapper" style="display: none; text-align: center;">
                                 <h3>Almost Done! Enter your email to see your results</h3>
-                                <input type="email" class="form-control mb-4" id="userEmail" placeholder="Your Email" required />
+                                <input type="email" class="form-control mb-4" id="userEmail" placeholder="Your Email (Optional)" required />
                                 <button class="btn next-question-btn" id="submitQuizBtn">Submit & See Results</button>
                             </div>
                         </div>

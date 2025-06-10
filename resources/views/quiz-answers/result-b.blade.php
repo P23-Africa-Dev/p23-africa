@@ -114,7 +114,7 @@
                         </div>
 
                         <div class="buttons-group gap-3">
-                            <a href="#" class="btn btn-purple-outline">Book Business Audit Now!</a>
+                            <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3tzdnFU-zme-lCpKoHGZktqjUVs4rll_QJtcUzK71d9-l3M0WIFvjtnJpLmosUraV8XkUJeD_k" target="_blank" class="btn btn-purple-outline">Book Business Audit Now!</a>
                             <a href="#" class="btn btn-dark-green">
                                 Get Growth Tips
                                 <i class="bi bi-arrow-right"></i>

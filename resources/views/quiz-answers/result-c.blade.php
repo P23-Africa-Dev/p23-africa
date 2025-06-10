@@ -9,6 +9,8 @@
     <meta property="og:image" content="{{ asset('images/cloudy_climber.png') }}">
 @endsection
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 @section('content')
     <section class="fragile">
         <div class="fragile-funnel-container container">
@@ -115,11 +117,56 @@
                         </div>
 
                         <div class="buttons-group gap-3">
-                            <a href="#" class="btn btn-purple-outline">Book Business Audit Now!</a>
-                            <a href="#" class="btn btn-dark-green">
+                            <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3tzdnFU-zme-lCpKoHGZktqjUVs4rll_QJtcUzK71d9-l3M0WIFvjtnJpLmosUraV8XkUJeD_k"
+                                target="_blank" class="btn btn-purple-outline">Book Business Audit Now!</a>
+                            <button class="btn btn-dark-green" id="play-video-btn">
                                 Get Growth Tips
                                 <i class="bi bi-arrow-right"></i>
-                            </a>
+                            </button>
+                            <button class="btn btn-dark-green" id="play-video-btn2">
+                                Get Growth Tips
+                                <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bootstrap Modal for Video -->
+        <div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered custom-modal">
+                <div class="modal-content bg-dark">
+                    <div class="modal-header border-0">
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-0">
+                        <div class="ratio ratio-16x9 mb-3">
+                            <div id="youtubePlayer"></div>
+                            {{-- <iframe id="videoIframe" src="" title="YouTube video" allow="autoplay; encrypted-media"
+                                allowfullscreen></iframe> --}}
+                        </div>
+                        <!-- Hidden Button Initially -->
+                        <div class="text-center mb-4" id="appointmentButtonContainer" style="display: none;">
+                            <button class="btn btn-success">Book Appointment</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="videoModal2" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered custom-modal">
+                <div class="modal-content bg-dark">
+                    <div class="modal-header border-0">
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-0">
+                        <div class="ratio ratio-16x9">
+                            <iframe id="videoIframe2" src="" title="YouTube video"
+                                allow="autoplay; encrypted-media" allowfullscreen></iframe>
                         </div>
                     </div>
                 </div>
@@ -180,5 +227,84 @@
             // Start typing as soon as DOM is ready
             typeTitle();
         });
+
+
+        // $(document).ready(function() {
+        //     const videoURL = "https://www.youtube.com/embed/l8JvWxEFVW0?si=wTv4YqzGjwfhf53M";
+
+        //     $('#play-video-btn').on('click', function() {
+        //         $('#videoIframe').attr('src', videoURL);
+        //         const videoModal = new bootstrap.Modal(document.getElementById('videoModal'));
+        //         videoModal.show();
+        //     });
+
+        //     // Clear video when modal is closed
+        //     $('#videoModal').on('hidden.bs.modal', function() {
+        //         $('#videoIframe').attr('src', '');
+        //     });
+        // });
+
+    let player;
+
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('youtubePlayer', {
+            height: '360',
+            width: '640',
+            videoId: 'l8JvWxEFVW0',
+            playerVars: {
+                autoplay: 0,
+                modestbranding: 1,
+                rel: 0
+            },
+            events: {
+                'onStateChange': onPlayerStateChange
+            }
+        });
+    }
+
+    function onPlayerStateChange(event) {
+        if (event.data === YT.PlayerState.ENDED) {
+            // Show the "Book Appointment" button
+            document.getElementById('appointmentButtonContainer').style.display = 'block';
+        }
+    }
+
+    $(document).ready(function () {
+        const videoModalEl = document.getElementById('videoModal');
+        const videoModal = new bootstrap.Modal(videoModalEl);
+
+        $('#play-video-btn').on('click', function () {
+            videoModal.show();
+        });
+
+        // When modal is closed, destroy and reset video + button
+        $('#videoModal').on('hidden.bs.modal', function () {
+            if (player && player.destroy) {
+                player.destroy();
+            }
+            document.getElementById('appointmentButtonContainer').style.display = 'none';
+            document.getElementById('youtubePlayer').innerHTML = '<div id="youtubePlayer"></div>'; // reset player container
+        });
+    });
+
+
+
+
+        $(document).ready(function() {
+            const videoURL2 = "https://www.youtube.com/embed/unzc3SdI4dg?si=X4L6veRWbw7rjcgP";
+
+            $('#play-video-btn2').on('click', function() {
+                $('#videoIframe2').attr('src', videoURL2);
+                const videoModal2 = new bootstrap.Modal(document.getElementById('videoModal2'));
+                videoModal2.show();
+            });
+
+            // Clear video when modal is closed
+            $('#videoModal2').on('hidden.bs.modal', function() {
+                $('#videoIframe2').attr('src', '');
+            });
+        });
     </script>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
 @endsection

@@ -339,6 +339,12 @@ body {
     background-size: cover;
     background-position: center;
 }
+@media screen and (max-width: 580px) {
+    .main-quiz-section .question-number-circle {
+        top: -40px;
+        padding: 30px;
+    }
+}
 
 .main-quiz-section .main-quiz-header .progress-container {
     width: 80%;
@@ -471,7 +477,8 @@ body {
     width: 100%;
 }
 
-.challenge-box input,  .challenge-box input::placeholder{
+.challenge-box input,
+.challenge-box input::placeholder {
     font-family: "GT Walsheim Con";
     letter-spacing: 0.5px;
 }
@@ -714,6 +721,12 @@ body {
     text-transform: uppercase !important;
 }
 
+@media screen and (max-width: 580px) {
+    .fragile-funnel-container .header-section h1 .typing-text {
+        font-size: 47px !important;
+    }
+}
+
 .fragile-funnel-container .header-section h1 span {
     font-family: "Montserrat", sans-serif;
     font-weight: 400;
@@ -894,23 +907,31 @@ body {
     z-index: 4;
 }
 .fragile-funnel-container .right-panel-container {
+    position: relative;
+    /* left: -3%; */
     background-color: #0a3d43;
+    /* background: url('../images/answer-bg.png'); */
+    background-size: cover;
     color: #fff;
     padding: 30px;
+    /* padding: 30px 60px; */
     border-radius: 30px;
-    border: 2px solid #a3e6bdb2;
+    /* border: 2px solid #a3e6bdb2; */
+    z-index: 1;
 }
 
 .fragile-funnel-container .right-panel .edge-shape {
     position: absolute;
     background-color: #0a3d43;
-    top: -12px;
+    top: -13px;
     left: 9%;
     transform: rotate(41deg);
     width: 35px;
     height: 25px;
-    border: 2px solid #a3e6bdb2;
-    z-index: -2;
+    z-index: 0;
+    /* border: 2px solid #a3e6bdb2; */
+    border-right: none;
+    border-top: none;
 }
 
 .fragile-funnel-container .right-panel h3 {
@@ -1228,5 +1249,40 @@ body {
 
     .fragile-funnel-container .header-section h1 {
         font-size: 3.2rem;
+    }
+}
+
+.fragile .custom-modal {
+    max-width: 70%; /* Adjust width as needed */
+    width: 70%;
+}
+.fragile .custom-modal .modal-content {
+    height: auto; /* Adjust height as needed */
+}
+.fragile .custom-modal iframe {
+    height: 100% !important;
+    width: 100% !important;
+}
+.fragile #play-video-btn2 {
+    display: none;
+}
+@media screen and (max-width: 580px) {
+    .fragile .custom-modal {
+        max-width: 100%;
+        width: 100%;
+        height: auto;
+    }
+    .fragile .custom-modal .modal-content {
+        height: auto; /* Adjust height as needed */
+    }
+    .fragile .custom-modal iframe {
+        height: 100% !important;
+        width: 100% !important;
+    }
+    .fragile #play-video-btn {
+        display: none;
+    }
+    .fragile #play-video-btn2 {
+        display: block;
     }
 }

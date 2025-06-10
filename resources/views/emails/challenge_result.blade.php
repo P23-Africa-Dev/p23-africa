@@ -38,7 +38,7 @@
             <br><br>
             <p>Thanks for completing the quiz!</p><br>
             <a href="{{ route('fragile-funnel') }}" class="btn btn-primary">Full Result</a>
-        @elseif($label == 'Hidden Powerhouse')
+        @elseif($label == 'HIDDEN POWERHOUSE')
             <p>Your revenue stream is vulnerable—small cracks today could become big breaks tomorrow.</p>
             <br>
             <h4 class="mb-2">Signs Of Readiness To Scale:</h4>

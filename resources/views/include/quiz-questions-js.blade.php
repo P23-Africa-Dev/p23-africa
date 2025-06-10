@@ -164,10 +164,10 @@
     document.getElementById("submitQuizBtn").addEventListener("click", async function() {
         const email = document.getElementById("userEmail").value.trim();
 
-        if (!validateEmail(email)) {
-            alert("Please enter a valid email address.");
-            return;
-        }
+        // if (!validateEmail(email)) {
+        //     alert("Please enter a valid email address.");
+        //     return;
+        // }
 
         this.disabled = true;
         this.innerHTML = `<span class="spinner"></span> Analysing...`;

@@ -60,6 +60,7 @@
                     togglerIcon.innerHTML = "";
                 }
             });
+
         </script>
     </body>
 
