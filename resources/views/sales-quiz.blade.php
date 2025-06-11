@@ -17,8 +17,8 @@
             <div class="navbar-overlay d-none d-lg-block"></div>
             <div class="container-fluid px-md-5 d-flex align-items-center justify-content-between">
                 <!-- Logo -->
-                <a class="navbar-brand d-flex align-items-center" href="{{ route('homepage') }}">
-                    <img src="{{ asset('images/logo2.png') }}" alt="">
+                <a class="navbar-brand d-flex align-items-center" style="visibility: hidden;" href="{{ route('homepage') }}">
+                    <img src="{{ asset('images/Logo2.png') }}" alt="">
                 </a>
 
                 <!-- Toggler -->
