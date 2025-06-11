@@ -51,7 +51,8 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         // ✅ Add your custom middleware here
         'is_admin' => \App\Http\Middleware\IsAdmin::class,
-        
+        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+    
         // 'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,

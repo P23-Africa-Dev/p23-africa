@@ -11,7 +11,26 @@ use App\Http\Controllers\UserEventController;
 use App\Mail\ChallengeSubmission;
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Inertia\Inertia;
+
+
+
+Route::middleware('web')->group(function () {
+    Route::get('/login', function () {
+        if (Auth::check()) {
+            return redirect('/admin/dashboard');
+        }
+
+        // Breeze with Blade:
+        return view('auth.login');
+
+        // OR Jetstream/Breeze with Inertia:
+        // return Inertia::render('Auth/Login');
+    })->name('login');
+});
+
 
 Route::get('/', [SliderController::class, 'showSlider'])->name('homepage');
 
