@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\SeatController;
 use App\Http\Controllers\UserEventController;
@@ -17,18 +18,28 @@ use Inertia\Inertia;
 
 
 
-Route::middleware('web')->group(function () {
-    Route::get('/login', function () {
-        if (Auth::check()) {
-            return redirect('/admin/dashboard');
-        }
+Route::get('/admin/login', [LoginController::class, 'viewLogin'])->name('login');
+// Route::get('/login', [LoginController::class, 'viewLogin'])->name('login');
+// Route::get('/admin/login', function () {
+//     if (Auth::check()) {
+//         return redirect('/admin/dashboard');
+//     }
 
-        // Breeze with Blade:
-        return view('auth.login');
+//     // Breeze with Blade:
+//     return view('auth.login');
 
-        // OR Jetstream/Breeze with Inertia:
-        // return Inertia::render('Auth/Login');
-    })->name('login');
+// })->name('login');
+// Route::get('/login', function () {
+//     if (Auth::check()) {
+//         return redirect('/admin/dashboard');
+//     }
+
+//     // Breeze with Blade:
+//     return view('auth.login');
+// })->name('login');
+Route::post('/admin/login', [LoginController::class, 'login'])->name('login_user');
+Route::get('/login', function () {
+    return redirect('/admin/login');
 });
 
 
