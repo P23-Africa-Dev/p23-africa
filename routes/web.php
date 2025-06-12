@@ -7,6 +7,7 @@ use App\Http\Controllers\SliderController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\QuizController;
+use App\Http\Controllers\ResourceHubController;
 use App\Http\Controllers\SeatController;
 use App\Http\Controllers\UserEventController;
 use App\Mail\ChallengeSubmission;
@@ -43,6 +44,8 @@ Route::get('/sales', function () {
 Route::get('/quiz', function () {
     return view('sales-quiz');
 })->name('quiz');
+
+Route::get('/resource-hub', [ResourceHubController::class, 'resourceHub'])->name('resource-hub');
 
 Route::get('/quiz/result/fragile-funnel', fn() => view('quiz-answers.result-a'))->name('fragile-funnel');
 Route::get('/quiz/result/hidden-powerhouse', fn() => view('quiz-answers.result-b'))->name('hidden-powerhouse');

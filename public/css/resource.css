@@ -1,0 +1,165 @@
+@font-face {
+    font-family: "GT Walsheim Pro"; /* Name your font family */
+
+    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff2")
+            format("woff2"),
+        url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff")
+            format("woff"); /* Adjust file names and paths as needed */
+}
+
+@font-face {
+    font-family: "GT Walsheim Con"; /* Name your font family */
+
+    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedRegular.woff2")
+            format("woff2"),
+        url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff")
+            format("woff"); /* Adjust file names and paths as needed */
+}
+
+@font-face {
+    font-family: "GT Walsheim Bold"; /* Name your font family */
+
+    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-Black.woff2")
+            format("woff2"),
+        url("../fonts/gt-walsheim-pro/GTWalsheimPro-Black.woff") format("woff"); /* Adjust file names and paths as needed */
+}
+@font-face {
+    font-family: "GT Walsheim Black"; /* Name your font family */
+
+    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-Bold.woff2")
+            format("woff2"),
+        url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff")
+            format("woff"); /* Adjust file names and paths as needed */
+}
+@font-face {
+    font-family: "GT Walsheim ConB"; /* Name your font family */
+
+    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedBold.woff2")
+            format("woff2"),
+        url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedBold.woff")
+            format("woff"); /* Adjust file names and paths as needed */
+}
+
+@font-face {
+    font-family: "IvyOra Text"; /* Name your font family */
+
+    src: url("../fonts/ivyora-text/IvyOraText-RegularItalic.woff2")
+            format("woff2"),
+        url("../fonts/ivyora-text/IvyOraText-RegularItalic.woff") format("woff"); /* Adjust file names and paths as needed */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    /* background-color: #4D787B; */
+    font-family: "GT Walsheim Con";
+    color: white;
+}
+
+/* Navbar Styling */
+.navbar {
+    background-color: #4d787b;
+    padding: 1rem 2rem;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.navbar-brand span {
+    border-bottom: 3px solid white;
+    padding-right: 2px;
+}
+
+.nav-link {
+    color: white !important;
+    margin-right: 20px;
+    font-size: 0.95rem;
+}
+
+.subscribe-btn {
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    border-radius: 8px;
+    padding: 5px 15px;
+    font-size: 0.9rem;
+}
+
+.subscribe-btn:hover {
+    background-color: white;
+    color: #4d787b;
+}
+
+.social-icons i {
+    font-size: 1rem;
+    color: white;
+    margin-left: 12px;
+}
+
+/* Blog Section Styling */
+.blog-section{
+    background-color: #4d787b;
+}
+.blog-section .container {
+    padding: 80px 100px;
+}
+
+.blog-title {
+    font-size: 40px;
+    font-weight: 700;
+    color: #b7d3d3;
+}
+
+.blog-date {
+    font-size: 16px;
+    color: #ddeeee;
+    margin-bottom: 10px;
+    font-weight: 400;
+}
+
+.blog-description {
+    font-size: 16px;
+    color: #ddeeee;
+    max-width: 450px;
+    font-weight: 400;
+}
+
+.btn-custom {
+    background-color: white;
+    color: #003638;
+    font-weight: 500;
+    border-radius: 5px;
+    padding: 9px 55px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-custom:hover {
+    background-color: #e0e0e0;
+}
+
+.image-container {
+    /* background-color: #F4EFE8;
+      border-top-left-radius: 50%;
+      border-top-right-radius: 50%; */
+    overflow: hidden;
+    max-width: 739px;
+    max-height: 532px;
+    margin: auto;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+}
