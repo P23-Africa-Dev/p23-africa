@@ -19,24 +19,6 @@ use Inertia\Inertia;
 
 
 Route::get('/admin/login', [LoginController::class, 'viewLogin'])->name('login');
-// Route::get('/login', [LoginController::class, 'viewLogin'])->name('login');
-// Route::get('/admin/login', function () {
-//     if (Auth::check()) {
-//         return redirect('/admin/dashboard');
-//     }
-
-//     // Breeze with Blade:
-//     return view('auth.login');
-
-// })->name('login');
-// Route::get('/login', function () {
-//     if (Auth::check()) {
-//         return redirect('/admin/dashboard');
-//     }
-
-//     // Breeze with Blade:
-//     return view('auth.login');
-// })->name('login');
 Route::post('/admin/login', [LoginController::class, 'login'])->name('login_user');
 Route::get('/login', function () {
     return redirect('/admin/login');
