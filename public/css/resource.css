@@ -75,8 +75,9 @@ body {
     font-size: 1.5rem;
 }
 
-.navbar-brand span {
-    border-bottom: 3px solid white;
+.navbar-brand img {
+    height: auto;
+    width: 62px;
     padding-right: 2px;
 }
 

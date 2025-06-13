@@ -19,7 +19,9 @@
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg">
             <div class="container">
-                <a class="navbar-brand" href="#"><span>P23</span> Africa</a>
+                <a class="navbar-brand" href="#">
+                    <img src="{{ asset('images/logo.png') }}" loading='lazy' alt="">
+                </a>
                 <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon text-white"></span>
