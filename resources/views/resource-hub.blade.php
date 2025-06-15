@@ -26,4 +26,8 @@
             </div>
         </div>
     </section>
+
+    <section class="mind-behind-insight">
+
+    </section>
 @endsection
