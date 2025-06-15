@@ -174,7 +174,24 @@ body {
 }
 
 .mind-behind-insight .team-card {
-    background-color: #224a58; /* Plain dark blue */
+    /* background-color: #224a58;  */
+    background-image: url('../images/blue-gb.png');
+    background-size: cover;
+    background-position: center;
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    height: 370px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.mind-behind-insight .team-card.mid {
+    /* background-color: #224a58;  */
+    background-image: url('../images/gold-bg.png');
+    background-size: cover;
+    background-position: center;
     border-radius: 15px;
     position: relative;
     overflow: hidden;
@@ -186,9 +203,12 @@ body {
 }
 
 .mind-behind-insight .team-card img {
-    width: 100%;
-    height: auto;
+    width: 375px;
+    height: 100%;
     object-fit: cover;
+}
+.mind-behind-insight .team-card.first img, .mind-behind-insight .team-card.mid img{
+    object-position: 0px -45px !important;
 }
 
 .mind-behind-insight .team-name {
