@@ -11,8 +11,10 @@ use App\Http\Controllers\ResourceHubController;
 use App\Http\Controllers\SeatController;
 use App\Http\Controllers\UserEventController;
 use App\Mail\ChallengeSubmission;
+use App\Models\Click;
 use App\Models\Event;
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
@@ -24,6 +26,22 @@ Route::post('/admin/login', [LoginController::class, 'login'])->name('login_user
 Route::get('/login', function () {
     return redirect('/admin/login');
 });
+
+/**
+ * This route increments the click counter and redirects to the target route.
+ */
+Route::get('/our-sales', function () {
+    $routeName = 'sales';
+
+    $click = Click::firstOrCreate(
+        ['route_name' => $routeName],
+        ['click_count' => 0]
+    );
+
+    $click->increment('click_count');
+
+    return redirect()->route($routeName);
+})->name('redirect.with.count');
 
 
 Route::get('/', [SliderController::class, 'showSlider'])->name('homepage');
@@ -44,6 +62,25 @@ Route::get('/sales', function () {
 Route::get('/quiz', function () {
     return view('sales-quiz');
 })->name('quiz');
+
+/**
+ * Route to display click counts.
+ */
+Route::get('/clicks-report', function () {
+    $filter = Request::get('filter', 'all');
+
+    $clicks = Click::query();
+
+    if ($filter === 'today') {
+        $clicks->whereDate('updated_at', today());
+    } elseif ($filter === '7days') {
+        $clicks->where('updated_at', '>=', now()->subDays(7));
+    }
+
+    $clicks = $clicks->get();
+
+    return view('clicks.clicks-report', compact('clicks', 'filter'));
+})->name('clicks.report');
 
 Route::get('/resource-hub', [ResourceHubController::class, 'resourceHub'])->name('resource-hub');
 
