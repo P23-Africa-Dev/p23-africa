@@ -90,69 +90,109 @@
 
         <section class="blog">
             <div class="container blog-section">
-                <div class="blog-title text-uppercase mb-2">Our Most Recent Blogs</div>
-                <div class="blog-subtitle">Explore Expert Articles, Market Trends, And Practical Advice To Scale Your
-                    Business
-                    Across Africa And Beyond.</div>
-
-                <div class="row">
-                    <div class="col-md-6">
+                <div class="row2">
+                    <div class="column">
+                        <div class="blog-title text-uppercase mb-2">Our Most Recent Blogs</div>
+                        <div class="blog-subtitle">Explore Expert Articles, Market Trends, And Practical Advice To Scale
+                            Your
+                            Business
+                            Across Africa And Beyond.</div>
                         <div class="blog-card blog-blue">
                             <div class="date">1st May 2025</div>
                             <div class="heading">Understanding Buyer Habits</div>
                             <div class="content">
-                                Buyer habits in Africa are evolving fast, often driven by digital access and generational
-                                preferences. As more buyers rely on smartphones and digital media, the sales journey has
-                                shifted. Today’s buyer seeks education and guidance before making decisions...
+                                Buyer habits in Africa are evolving fast, driven by digital adoption and a growing middle
+                                class, but differences across regions and trust issues still pose challenges. Buyer habits
+                                in Africa are evolving fast, driven by digital adoption and a growing middle class, but
+                                differences across regions and trust issues still pose challenges. Buyer habits in Africa
+                                are evolving fast, driven by digital adoption and a growing middle class, but differences
+                                across regions and trust issues still pose challenges. Buyer habits in Africa are evolving
+                                fast, driven by digital adoption and a growing middle class, but differences across regions
+                                and trust issues still pose challenges.
                             </div>
                             <button class="read-more-btn">Read More →</button>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="blog-card blog-green">
-                            <div class="date">1st May 2025</div>
-                            <div class="heading">Understanding Buyer Habits</div>
-                            <div class="content">
-                                This is a shorter post to show height flexibility.
-                            </div>
-                            <button class="read-more-btn">Read More →</button>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="blog-card blog-pink">
-                            <div class="date">1st May 2025</div>
-                            <div class="heading">Understanding Buyer Habits</div>
-                            <div class="content">
-                                Buyer habits in Africa are evolving fast, often driven by digital access and generational
-                                preferences. Today’s buyer seeks education and guidance before making decisions. As such,
-                                marketers must use targeted content, influencers, and digital tools to remain relevant in
-                                Africa’s evolving market landscape.
-                            </div>
-                            <button class="read-more-btn">Read More →</button>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
+
                         <div class="blog-card blog-yellow">
                             <div class="date">1st May 2025</div>
                             <div class="heading">Understanding Buyer Habits</div>
                             <div class="content">
-                                Another short version to create visual imbalance across the layout.
+                                Buyer habits in Africa are evolving fast, driven by digital adoption and a growing middle
+                                class, but differences across regions and trust issues still pose challenges. Buyer habits
+                                in Africa are evolving fast, driven by digital adoption and a growing middle class, but
+                                differences across regions and trust issues still pose challenges. Buyer habits in Africa
+                                are evolving fast, driven by digital adoption and a growing middle class, but differences
+                                across regions and trust issues still pose challenges. Buyer habits in Africa are evolving
+                                fast, driven by digital adoption and a growing middle class, but differences across regions
+                                and trust issues still pose challenges.
                             </div>
                             <button class="read-more-btn">Read More →</button>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="blog-card blog-gray">
+
+                        <div class="blog-card blog-green">
                             <div class="date">1st May 2025</div>
                             <div class="heading">Understanding Buyer Habits</div>
                             <div class="content">
-                                Buyer habits in Africa are evolving fast, often driven by digital access and generational
-                                preferences. The growth of smartphones and digital payment systems continues to change how
-                                African consumers behave. Marketers and business owners need to adapt fast...
+                                Buyer habits in Africa are evolving fast, driven by digital adoption and a growing middle
+                                class, but differences across regions and trust issues still pose challenges. Buyer habits
+                                in Africa are evolving fast, driven by digital adoption and a growing middle class, but
+                                differences across regions and trust issues still pose challenges.
                             </div>
                             <button class="read-more-btn">Read More →</button>
                         </div>
                     </div>
+                    <div class="column">
+                        <div class="blog-card blog-green">
+                            <div class="date">1st May 2025</div>
+                            <div class="heading">Understanding Buyer Habits</div>
+                            <div class="content">
+                                Buyer habits in Africa are evolving fast, driven by digital adoption and a growing middle
+                                class, but differences across regions and trust issues still pose challenges. Buyer habits
+                                in Africa are evolving fast, driven by digital adoption and a growing middle class, but
+                                differences across regions and trust issues still pose challenges.
+                            </div>
+                            <button class="read-more-btn">Read More →</button>
+                        </div>
+
+                        <div class="blog-card blog-pink">
+                            <div class="date">1st May 2025</div>
+                            <div class="heading">Understanding Buyer Habits</div>
+                            <div class="content">
+                                Buyer habits in Africa are evolving fast, driven by digital adoption and a growing middle
+                                class, but differences across regions and trust issues still pose challenges. Buyer habits
+                                in Africa are evolving fast, driven by digital adoption and a growing middle class, but
+                                differences across regions and trust issues still pose challenges. Buyer habits in Africa
+                                are evolving fast, driven by digital adoption and a growing middle class, but differences
+                                across regions and trust issues still pose challenges. Buyer habits in Africa are evolving
+                                fast, driven by digital adoption and a growing middle class, but differences across regions
+                                and trust issues still pose challenges.
+                            </div>
+                            <button class="read-more-btn">Read More →</button>
+                        </div>
+
+                        <div class="blog-card blog-blue">
+                            <div class="date">1st May 2025</div>
+                            <div class="heading">Understanding Buyer Habits</div>
+                            <div class="content">
+                                Buyer habits in Africa are evolving fast, driven by digital adoption and a growing middle
+                                class, but differences across regions and trust issues still pose challenges. Buyer habits
+                                in Africa are evolving fast, driven by digital adoption and a growing middle class, but
+                                differences across regions and trust issues still pose challenges. Buyer habits in Africa
+                                are evolving fast, driven by digital adoption and a growing middle class, but differences
+                                across regions and trust issues still pose challenges. Buyer habits in Africa are evolving
+                                fast, driven by digital adoption and a growing middle class, but differences across regions
+                                and trust issues still pose challenges.
+                            </div>
+                            <button class="read-more-btn">Read More →</button>
+                        </div>
+
+                        <div class="">
+                            <a href="#" class="btn btn-archive"><span>Read More </span> <span class="mx-2"></span> <span> →</span></a>
+                        </div>
+                    </div>
+                    {{-- <div class="column">
+
+                    </div> --}}
                 </div>
             </div>
         </section>

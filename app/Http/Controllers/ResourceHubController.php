@@ -9,4 +9,8 @@ class ResourceHubController extends Controller
     public function resourceHub(){
         return view('resource-hub');
     }
+
+    public function resourceDetails(){
+        return view('view-resource');
+    }
 }

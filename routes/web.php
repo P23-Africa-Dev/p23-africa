@@ -83,6 +83,7 @@ Route::get('/clicks-report', function () {
 })->name('clicks.report');
 
 Route::get('/resource-hub', [ResourceHubController::class, 'resourceHub'])->name('resource-hub');
+Route::get('/resource/resource-details', [ResourceHubController::class, 'resourceDetails'])->name('resource-details');
 
 Route::get('/quiz/result/fragile-funnel', fn() => view('quiz-answers.result-a'))->name('fragile-funnel');
 Route::get('/quiz/result/hidden-powerhouse', fn() => view('quiz-answers.result-b'))->name('hidden-powerhouse');
