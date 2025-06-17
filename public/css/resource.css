@@ -343,12 +343,14 @@ body {
 
 .blog .blog-card .read-more-btn {
     background-color: #fff;
-    border: 1px solid #1b3a2b;
-    padding: 8px 20px;
+    border: 1px solid #0D4036;
+    padding: 8px 50px;
+    color: #0D4036;
     font-size: 14px;
     font-weight: 600;
     border-radius: 4px;
     transition: 0.3s ease;
+    text-decoration: none;
 }
 
 .blog .blog-card .read-more-btn:hover {

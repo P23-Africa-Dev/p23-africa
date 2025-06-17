@@ -112,75 +112,41 @@
                                     <div class="date">{{ \Carbon\Carbon::parse($blog->created_at)->format('l, F jS Y') }}
                                     </div>
                                     <div class="heading">{{ $blog->title }}</div>
-                                    <div class="content">
+                                    <div class="content mb-4">
                                         {!! \Illuminate\Support\Str::limit($blog->content_1, 600) !!}
                                     </div>
-                                    <button class="read-more-btn">Read More →</button>
+                                    <a href="{{ route('resource-show', $blog->slug) }}" class="read-more-btn">Read More →</a>
                                 </div>
                             @endif
                         @endforeach
                     </div>
                     <div class="column">
                         @foreach ($blogs as $index => $blog)
-                            @if ($index > 3 && $index < 3)
+                            @if ($index >= 3 && $index < 6)
                                 @php
                                     $bgClasses = [
                                         'blog-green', // Green
                                         'blog-pink', // Red
                                         'blog-blue', // Blue
                                     ];
+                                    $bgIndex = $index - 3;
                                 @endphp
-                                <div class="blog-card {{ $bgClasses[$index] }}">
+                                <div class="blog-card {{ $bgClasses[$bgIndex] }}">
                                     <div class="date">{{ \Carbon\Carbon::parse($blog->created_at)->format('l, F jS Y') }}</div>
                                     <div class="heading">{{ $blog->title }}</div>
-                                    <div class="content">
+                                    <div class="content mb-4">
                                         {!! \Illuminate\Support\Str::limit($blog->content_1, 600) !!}
                                     </div>
-                                    <button class="read-more-btn">Read More →</button>
+                                    <a href="{{ route('resource-show', $blog->slug) }}" class="read-more-btn">Read More →</a>
                                 </div>
                             @endif
                         @endforeach
-
-                        {{-- <div class="blog-card blog-pink">
-                            <div class="date">1st May 2025</div>
-                            <div class="heading">Understanding Buyer Habits</div>
-                            <div class="content">
-                                Buyer habits in Africa are evolving fast, driven by digital adoption and a growing middle
-                                class, but differences across regions and trust issues still pose challenges. Buyer habits
-                                in Africa are evolving fast, driven by digital adoption and a growing middle class, but
-                                differences across regions and trust issues still pose challenges. Buyer habits in Africa
-                                are evolving fast, driven by digital adoption and a growing middle class, but differences
-                                across regions and trust issues still pose challenges. Buyer habits in Africa are evolving
-                                fast, driven by digital adoption and a growing middle class, but differences across regions
-                                and trust issues still pose challenges.
-                            </div>
-                            <button class="read-more-btn">Read More →</button>
-                        </div>
-
-                        <div class="blog-card blog-blue">
-                            <div class="date">1st May 2025</div>
-                            <div class="heading">Understanding Buyer Habits</div>
-                            <div class="content">
-                                Buyer habits in Africa are evolving fast, driven by digital adoption and a growing middle
-                                class, but differences across regions and trust issues still pose challenges. Buyer habits
-                                in Africa are evolving fast, driven by digital adoption and a growing middle class, but
-                                differences across regions and trust issues still pose challenges. Buyer habits in Africa
-                                are evolving fast, driven by digital adoption and a growing middle class, but differences
-                                across regions and trust issues still pose challenges. Buyer habits in Africa are evolving
-                                fast, driven by digital adoption and a growing middle class, but differences across regions
-                                and trust issues still pose challenges.
-                            </div>
-                            <button class="read-more-btn">Read More →</button>
-                        </div> --}}
 
                         <div class="">
                             <a href="#" class="btn btn-archive"><span>Read More </span> <span class="mx-2"></span>
                                 <span> →</span></a>
                         </div>
                     </div>
-                    {{-- <div class="column">
-
-                    </div> --}}
                 </div>
             </div>
         </section>
