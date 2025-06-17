@@ -13,6 +13,21 @@
 
         <!-- Font Awesome for icons -->
         <script src="https://kit.fontawesome.com/3df60fe6e2.js" crossorigin="anonymous"></script>
+        <style>
+            .navbar .mobile {
+                display: none !important;
+            }
+
+            @media screen and (max-width: 580px) {
+                .navbar .mobile {
+                    display: block !important;
+                }
+
+                .navbar .desktop {
+                    display: none !important;
+                }
+            }
+        </style>
     </head>
 
     <body>
@@ -22,9 +37,9 @@
                 <a class="navbar-brand" href="#">
                     <img src="{{ asset('images/logo.png') }}" loading='lazy' alt="">
                 </a>
-                <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse"
+                <button class="navbar-toggler text-white border-1 border-light" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon text-white"></span>
+                    <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                     <ul class="navbar-nav">
@@ -34,8 +49,19 @@
                         <li class="nav-item"><a class="nav-link" href="#">Resource Hub</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Let’s Collaborate</a></li>
                     </ul>
+
+                    <div class="d-flex align-items-right mobile">
+                        <button class="subscribe-btn me-3">Subscribe</button>
+                        <div class="social-icons">
+                            <i class="fab fa-linkedin-in"></i>
+                            <i class="fab fa-facebook-f"></i>
+                            <i class="fab fa-instagram"></i>
+                            <i class="fab fa-youtube"></i>
+                        </div>
+                    </div>
                 </div>
-                <div class="d-flex align-items-center">
+
+                <div class="d-flex align-items-right desktop">
                     <button class="subscribe-btn me-3">Subscribe</button>
                     <div class="social-icons">
                         <i class="fab fa-linkedin-in"></i>
@@ -107,7 +133,8 @@
                         <div class="social-icons mt-2 d-flex">
                             <a href="https://linkedin.com/company/p23-africa/" target="_blank"><i
                                     class="fab fa-linkedin"></i></a>
-                            <a href="https://facebook.com/p23africa" target="_blank"><i class="fab fa-facebook"></i></a>
+                            <a href="https://facebook.com/p23africa" target="_blank"><i
+                                    class="fab fa-facebook"></i></a>
                             <a href="https://www.instagram.com/p23africa/" target="_blank"><i
                                     class="fab fa-instagram"></i></a>
                             <a href="#"><i class="fab fa-youtube"></i></a>

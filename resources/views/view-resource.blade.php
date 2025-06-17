@@ -7,7 +7,7 @@
             <!-- Heading Section -->
             <section class="resourse-details-header">
                 <div class="header">
-                    <span>INTRO</span>
+                    {{-- <span>INTRO</span> --}}
                     <h2 class="section-title">{{ $blog->title }}</h2>
                     <p class="section-subtitle">
                         {{ $blog->subtitle }}

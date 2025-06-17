@@ -2,7 +2,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Create Event') }}
+            {{ __('Edit Resource Blog') }}
         </h2>
     </x-slot>
 
@@ -19,17 +19,17 @@
                         @endif
 
                         <input name="title" value="{{ old('title', $blog->title ?? '') }}" placeholder="Blog Title"
-                            required class="form-control mb-2 border border-1 border-dark">
+                            required class="form-control mb-4 border border-1 border-dark">
                         <input name="subtitle" value="{{ old('subtitle', $blog->subtitle ?? '') }}"
-                            placeholder="Blog Subtitle" class="form-control mb-2">
+                            placeholder="Blog Subtitle" class="form-control mb-4 border border-1 border-dark">
 
-                        <textarea name="content_1" class="form-control mb-2 border border-1 border-dark" placeholder="First Content" required>{{ old('content_1', $blog->content_1 ?? '') }}</textarea>
+                        <textarea name="content_1" class="form-control mb-4 border border-1 border-dark" placeholder="First Content" required>{{ old('content_1', $blog->content_1 ?? '') }}</textarea>
 
                         <input type="file" name="image" id="image"
-                            class="form-control mb-2 border border-1 border-dark" accept="image/*">
-                        @if (isset($blog) && $blog->image_path)
+                            class="form-control p-2 mb-3 border border-1 border-dark" accept="image/*">
+                        {{-- @if (isset($blog) && $blog->image_path)
                             <img src="{{ asset('storage/' . $blog->image_path) }}" width="200" class="mb-2">
-                        @endif
+                        @endif --}}
 
                         @if ($blog->image_path)
                             <div class="mb-2 position-relative" id="previewContainer" style="max-width: 300px;">
@@ -66,7 +66,8 @@
                             </div>
                         @endif
 
-                        <textarea name="content_2" class="form-control mb-2 border border-1 border-dark" placeholder="Second Content">{{ old('content_2', $blog->content_2 ?? '') }}</textarea>
+                        <br>
+                        <textarea name="content_2" class="form-control mb-4 border border-1 border-dark" placeholder="Second Content">{{ old('content_2', $blog->content_2 ?? '') }}</textarea>
 
                         <button type="submit"
                             class="btn btn-dark w-25">{{ isset($blog) ? 'Update' : 'Publish' }}</button>

@@ -107,6 +107,10 @@ body {
     margin-left: 12px;
 }
 
+
+
+
+
 .whole-resource {
     background: linear-gradient(#e4e7dcc9, #e4e7dcc9),
         url("../images/resource-bg.png");
@@ -156,9 +160,6 @@ body {
 }
 
 .blog-sec .image-container {
-    /* background-color: #F4EFE8;
-      border-top-left-radius: 50%;
-      border-top-right-radius: 50%; */
     overflow: hidden;
     max-width: 739px;
     max-height: 532px;
@@ -168,6 +169,26 @@ body {
 .blog-sec .image-container img {
     width: 100%;
     height: 100%;
+}
+
+@media screen and (max-width: 580px) {
+    .blog-sec .container {
+        padding: 80px 20px;
+    }
+    .blog-sec .image-container {
+        overflow: hidden;
+        width: 100%;
+        height: auto;
+        margin: 0 auto;
+    }
+    .blog-sec .image-container img {
+        width: 100%;
+        height: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        object-fit: cover;
+        object-position: -50px center;
+    }
 }
 
 /* MIND BEHIND INSIGHT */
@@ -343,9 +364,9 @@ body {
 
 .blog .blog-card .read-more-btn {
     background-color: #fff;
-    border: 1px solid #0D4036;
+    border: 1px solid #0d4036;
     padding: 8px 50px;
-    color: #0D4036;
+    color: #0d4036;
     font-size: 14px;
     font-weight: 600;
     border-radius: 4px;
@@ -440,32 +461,32 @@ body {
 }
 
 /* VIEW RESOURCE PAGE */
-.whole-view-resource{
+.whole-view-resource {
     background-color: #e6e7dc;
 }
-.resourse-details-header .header{
-          /* background-color: #fff; */
-      padding: 60px 20px 30px;
-      /* text-align: center; */
-      position: relative;
+.resourse-details-header .header {
+    /* background-color: #fff; */
+    padding: 60px 20px 30px;
+    /* text-align: center; */
+    position: relative;
 }
-.resourse-details-header .header span{
-      font-size: 24;
-      font-weight: 400;
-      color: #0D4036;
+.resourse-details-header .header span {
+    font-size: 24;
+    font-weight: 400;
+    color: #0d4036;
 }
 .resourse-details-header .section-title {
-      font-size: 48px;
-      font-weight: 800;
-      margin-bottom: 10px;
-      color: #0D4036;
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    color: #0d4036;
 }
 
 .resourse-details-header .section-subtitle {
-      font-size: 18px;
-      max-width: 700px;
-      /* margin: 0 auto; */
-      color: #5a5a5a;
+    font-size: 18px;
+    max-width: 700px;
+    /* margin: 0 auto; */
+    color: #5a5a5a;
 }
 
 .whole-view-resource .dotted-divider {
@@ -545,9 +566,6 @@ body {
         font-size: 20px;
     }
 }
-
-
-
 
 /* FOOTER */
 /* FOOTER */

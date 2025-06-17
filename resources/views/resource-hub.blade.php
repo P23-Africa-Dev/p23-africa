@@ -92,11 +92,13 @@
             <div class="container blog-section">
                 <div class="row2">
                     <div class="column">
-                        <div class="blog-title text-uppercase mb-2">Our Most Recent Blogs</div>
-                        <div class="blog-subtitle">Explore Expert Articles, Market Trends, And Practical Advice To Scale
-                            Your
-                            Business
-                            Across Africa And Beyond.</div>
+                        <div class="py-5">
+                            <div class="blog-title text-uppercase mb-2">Our Most Recent Blogs</div>
+                            <div class="blog-subtitle">Explore Expert Articles, Market Trends, And Practical Advice To Scale
+                                Your
+                                Business
+                                Across Africa And Beyond.</div>
+                        </div>
 
                         @foreach ($blogs as $index => $blog)
                             @if ($index < 3)
@@ -115,7 +117,8 @@
                                     <div class="content mb-4">
                                         {!! \Illuminate\Support\Str::limit($blog->content_1, 600) !!}
                                     </div>
-                                    <a href="{{ route('resource-show', $blog->slug) }}" class="read-more-btn">Read More →</a>
+                                    <a href="{{ route('resource-show', $blog->slug) }}" class="read-more-btn">Read More
+                                        →</a>
                                 </div>
                             @endif
                         @endforeach
@@ -132,12 +135,14 @@
                                     $bgIndex = $index - 3;
                                 @endphp
                                 <div class="blog-card {{ $bgClasses[$bgIndex] }}">
-                                    <div class="date">{{ \Carbon\Carbon::parse($blog->created_at)->format('l, F jS Y') }}</div>
+                                    <div class="date">{{ \Carbon\Carbon::parse($blog->created_at)->format('l, F jS Y') }}
+                                    </div>
                                     <div class="heading">{{ $blog->title }}</div>
                                     <div class="content mb-4">
                                         {!! \Illuminate\Support\Str::limit($blog->content_1, 600) !!}
                                     </div>
-                                    <a href="{{ route('resource-show', $blog->slug) }}" class="read-more-btn">Read More →</a>
+                                    <a href="{{ route('resource-show', $blog->slug) }}" class="read-more-btn">Read More
+                                        →</a>
                                 </div>
                             @endif
                         @endforeach
