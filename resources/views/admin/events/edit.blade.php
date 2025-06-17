@@ -99,11 +99,11 @@
                                 </button> --}}
                             </div>
 
-                            <div class="form-check mt-1 mb-5">
-                                <input type="checkbox" name="remove_image" value="1" class="form-check-input"
-                                    id="removeImageCheck">
-                                <label class="form-check-label" for="removeImageCheck">Remove current image</label>
-                            </div>
+                                <div class="form-check mt-1 mb-5">
+                                    <input type="checkbox" name="remove_image" value="1" class="form-check-input"
+                                        id="removeImageCheck">
+                                    <label class="form-check-label" for="removeImageCheck">Remove current image</label>
+                                </div>
                         @else
                             <div class="mb-5 position-relative" id="previewContainer"
                                 style="max-width: 300px; display: none;">

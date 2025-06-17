@@ -15,6 +15,10 @@
                         <div class="my-3">
                             <a href="{{ route('admin.events.index') }}" class="link-dark">Manage Events <i class="fa fa-arrow-right"></i></a>
                         </div>
+                        <hr>
+                        <div class="my-3">
+                            <a href="{{ route('admin.blogs.index') }}" class="link-dark">Resource Hub <i class="fa fa-arrow-right"></i></a>
+                        </div>
                     </fieldset>
                 </div>
             </div>

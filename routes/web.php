@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
@@ -83,7 +84,7 @@ Route::get('/clicks-report', function () {
 })->name('clicks.report');
 
 Route::get('/resource-hub', [ResourceHubController::class, 'resourceHub'])->name('resource-hub');
-Route::get('/resource/resource-details', [ResourceHubController::class, 'resourceDetails'])->name('resource-details');
+Route::get('/resource/{slug}', [ResourceHubController::class, 'resourceDetails'])->name('resource-show');
 
 Route::get('/quiz/result/fragile-funnel', fn() => view('quiz-answers.result-a'))->name('fragile-funnel');
 Route::get('/quiz/result/hidden-powerhouse', fn() => view('quiz-answers.result-b'))->name('hidden-powerhouse');
@@ -155,6 +156,8 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 
     Route::resource('/events', EventController::class);
     Route::get('/events/{event}/bookings', [EventController::class, 'showBookings'])->name('events.bookings');
+
+    Route::resource('blogs', BlogController::class);
 });
 
 
