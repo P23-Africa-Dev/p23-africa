@@ -20,4 +20,9 @@ class ResourceHubController extends Controller
     public function archivePage(){
         return view('archive');
     }
+
+    public function archiveList()
+    {
+        return view('archive-list');
+    }
 }
