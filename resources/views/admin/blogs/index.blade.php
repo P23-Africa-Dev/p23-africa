@@ -11,7 +11,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 table-responsive">
 
-                    <a href="{{ route('admin.blogs.create') }}" class="btn btn-dark">Create Event</a>
+                    <a href="{{ route('admin.blogs.create') }}" class="btn btn-dark">Create Resource Blogs</a>
 
                     <div class="my-5">
                         @if (session('success'))

@@ -43,10 +43,10 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                     <ul class="navbar-nav">
-                        <li class="nav-item"><a class="nav-link" href="#">Who We Are</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">What We Do</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Our Events</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Resource Hub</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url('about') }}">Who We Are</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url('services') }}">What We Do</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('event') }}">Our Events</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('resource-hub') }}">Resource Hub</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Let’s Collaborate</a></li>
                     </ul>
 
@@ -102,7 +102,7 @@
                         <a href="{{ url('about') }}">Who We Are</a>
                         <a href="{{ url('services') }}">What We Do</a>
                         <a href="{{ route('event') }}">Events</a>
-                        <a href="#">Resource Hub</a>
+                        <a href="{{ route('resource-hub') }}">Resource Hub</a>
                         <a href="#">Let’s Collaborate</a>
                     </div>
 

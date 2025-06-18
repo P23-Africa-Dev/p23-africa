@@ -21,7 +21,7 @@
                         <a href="{{ url('about') }}">Who We Are</a>
                         <a href="{{ url('services') }}">What We Do</a>
                         <a href="{{ route('event') }}">Events</a>
-                        <a href="#">Resource Hub</a>
+                        <a href="{{ route('resource-hub') }}">Resource Hub</a>
                         <a href="#">Let’s Collaborate</a>
                     </div>
 

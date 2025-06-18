@@ -87,7 +87,7 @@
                             <a class="nav-link" href="{{ route('event') }}">Events</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Resource Hub</a>
+                            <a class="nav-link" href="{{ route('resource-hub') }}">Resource Hub</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Let’s Collaborate</a>
@@ -137,7 +137,7 @@
                         <a class="nav-link" href="{{ route('event') }}">Events</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Resource Hub</a>
+                        <a class="nav-link" href="{{ route('resource-hub') }}">Resource Hub</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Let’s Collaborate</a>
