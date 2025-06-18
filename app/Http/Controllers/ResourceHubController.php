@@ -16,4 +16,8 @@ class ResourceHubController extends Controller
         $blog = Blog::where('slug', $slug)->firstOrFail();
         return view('view-resource', compact('blog'));
     }
+
+    public function archivePage(){
+        return view('archive');
+    }
 }

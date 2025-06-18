@@ -86,6 +86,8 @@ Route::get('/clicks-report', function () {
 Route::get('/resource-hub', [ResourceHubController::class, 'resourceHub'])->name('resource-hub');
 Route::get('/resource/{slug}', [ResourceHubController::class, 'resourceDetails'])->name('resource-show');
 
+Route::get('/resource/archive', [ResourceHubController::class, 'archivePage'])->name('archive-page');
+
 Route::get('/quiz/result/fragile-funnel', fn() => view('quiz-answers.result-a'))->name('fragile-funnel');
 Route::get('/quiz/result/hidden-powerhouse', fn() => view('quiz-answers.result-b'))->name('hidden-powerhouse');
 Route::get('/quiz/result/cloudy-climber', fn() => view('quiz-answers.result-c'))->name('cloudy-climber');

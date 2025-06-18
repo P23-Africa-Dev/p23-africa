@@ -148,7 +148,7 @@
                         @endforeach
 
                         <div class="">
-                            <a href="#" class="btn btn-archive"><span>Read More </span> <span class="mx-2"></span>
+                            <a href="{{ route('archive-page') }}" class="btn btn-archive"><span>View Archived Blogs </span> <span class="mx-2"></span>
                                 <span> →</span></a>
                         </div>
                     </div>
