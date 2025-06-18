@@ -1,5 +1,5 @@
 @extends('layouts.res-layout')
-@section('title', 'Resource Hub | P23 Africa')
+@section('title', 'Archive | P23 Africa')
 
 @section('content')
 <section class="archive">
