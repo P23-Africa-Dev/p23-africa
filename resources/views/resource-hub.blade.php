@@ -100,8 +100,8 @@
                                 Across Africa And Beyond.</div>
                         </div>
 
-                        @foreach ($blogs as $index => $blog)
-                            @if ($index < 3)
+                        @foreach ($recentBlogs->take(3) as $index => $blog)
+                            {{-- @if ($index < 3) --}}
                                 @php
                                     $bgClasses = [
                                         'blog-blue', // Green
@@ -120,12 +120,12 @@
                                     <a href="{{ route('resource-show', $blog->slug) }}" class="read-more-btn">Read More
                                         →</a>
                                 </div>
-                            @endif
+                            {{-- @endif --}}
                         @endforeach
                     </div>
                     <div class="column">
-                        @foreach ($blogs as $index => $blog)
-                            @if ($index >= 3 && $index < 6)
+                        @foreach ($recentBlogs->slice(3, 3) as $index => $blog)
+                            {{-- @if ($index >= 3 && $index < 6) --}}
                                 @php
                                     $bgClasses = [
                                         'blog-green', // Green
@@ -144,11 +144,11 @@
                                     <a href="{{ route('resource-show', $blog->slug) }}" class="read-more-btn">Read More
                                         →</a>
                                 </div>
-                            @endif
+                            {{-- @endif --}}
                         @endforeach
 
                         <div class="">
-                            <a href="{{ route('archive-page') }}" class="btn btn-archive"><span>View Archived Blogs </span> <span class="mx-2"></span>
+                            <a href="{{ route('archive-list') }}" class="btn btn-archive"><span>View Archived Blogs </span> <span class="mx-2"></span>
                                 <span> →</span></a>
                         </div>
                     </div>

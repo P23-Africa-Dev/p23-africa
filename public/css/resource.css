@@ -749,6 +749,10 @@ body {
     border-radius: 10px;
     overflow: hidden;
     padding: 20px;
+    transition: 500ms;
+}
+.archive-list .blog-card:hover{
+    transform: scale(1.05);
 }
 
 .archive-list .blog-text {
@@ -759,17 +763,27 @@ body {
 .archive-list .blog-category {
     font-size: 13px;
     color: #0D4036;
-    margin-bottom: 0px;
+    margin-bottom: 15px;
 }
 
-.archive-list .blog-title {
+.archive-list .blog-title a {
     font-size: 46px;
-    display: inline;
+    /* display: inline; */
     font-weight: bolder;
     color: #013220;
     margin: 0 0 10px;
     font-family: 'ProCB';
     font-style: normal;
+    line-height: 3rem;
+    text-decoration: none;
+    transition: 500ms;
+}
+/* .archive-list .blog-title a{
+    color: #013220;
+} */
+.archive-list .blog-title a:hover{
+    color: #013220c7;
+    text-decoration: underline;
 }
 
 .archive-list .blog-subtitle {
