@@ -14,11 +14,14 @@
                     </p>
                 </div>
             </section>
-
+        </section>
+        <div class="side-image">
+            <img src="{{ asset('images/view-resource-side.png') }}" alt="">
+        </div>
+        <section class="resourse-details-content">
             <div class="dotted-divider"></div>
-
             <!-- Article Section -->
-            <section class="resourse-details-content">
+            <section class="container py-5">
                 <div class="row align-items-center">
                     <div class="col-12 my-5 mt-md-0">
                         {{-- <div class="article-title">Finibus Bonorum et Malorum</div> --}}
@@ -42,7 +45,7 @@
                             <p>
                                 {!! nl2br(e($blog->content_2)) !!}
                             </p>
-                            <a href="{{ route('resource-hub') }}" class="cta-button">Get More Insights →</a>
+                            <a href="{{ route('resource-hub') }}" class="cta-button">Get More Insights <span class="mx-2"></span> →</a>
                         </div>
                     </div>
                 </div>
