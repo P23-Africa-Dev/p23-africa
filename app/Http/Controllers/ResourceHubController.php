@@ -29,10 +29,20 @@ class ResourceHubController extends Controller
 
     public function archiveList()
     {
-        $olderBlogs = Blog::orderBy('created_at', 'desc')
-            ->skip(6)
-            ->paginate(12);
+        $page = request()->get('page', 1); // Get the current page
+        $perPage = 12;
 
-        return view('archive-list', compact('olderBlogs'));
+        $blogs = Blog::latest()->get(); // Get all blogs
+
+        $sliced = $blogs->slice(6 + ($page - 1) * $perPage, $perPage); // Skip first 6, then paginate
+        $paginated = new \Illuminate\Pagination\LengthAwarePaginator(
+            $sliced,
+            $blogs->count() - 6,
+            $perPage,
+            $page,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
+
+        return view('archive-list', ['olderBlogs' => $paginated]);
     }
 }

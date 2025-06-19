@@ -8,7 +8,7 @@
         {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
         <title>@yield('title')</title>
         
-        <link rel="shortcut icon" href="{{ asset('images/Logo.png') }}" type="image/x-icon">
+        <link rel="shortcut icon" href="{{ asset('images/logo.png') }}" type="image/x-icon">
 
         @yield('meta')
 

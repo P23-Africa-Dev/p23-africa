@@ -139,7 +139,7 @@
                                     </div>
                                     <div class="heading">{{ $blog->title }}</div>
                                     <div class="content mb-4">
-                                        {!! \Illuminate\Support\Str::limit($blog->content_1, 600) !!}
+                                        {!! \Illuminate\Support\Str::limit($blog->content_1, 1200) !!}
                                     </div>
                                     <a href="{{ route('resource-show', $blog->slug) }}" class="read-more-btn">Read More
                                         →</a>
@@ -148,7 +148,7 @@
                         @endforeach
 
                         <div class="">
-                            <a href="{{ route('archive-list') }}" class="btn btn-archive"><span>View Archived Blogs </span> <span class="mx-2"></span>
+                            <a href="{{ route('archive-page') }}" class="btn btn-archive"><span>View Archived Blogs </span> <span class="mx-2"></span>
                                 <span> →</span></a>
                         </div>
                     </div>

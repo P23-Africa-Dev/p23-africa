@@ -385,8 +385,8 @@ body {
 
 .blog .blog-card .read-more-btn {
     background-color: #fff;
-    border: 1px solid #0d4036;
-    padding: 8px 50px;
+    /* border: 1px solid #0d4036; */
+    padding: 10px 50px;
     color: #0d4036;
     font-size: 14px;
     font-weight: 600;
@@ -745,7 +745,7 @@ body {
     justify-content: space-between;
     align-items: stretch;
     margin-bottom: 30px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.514);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.137);
     border-radius: 10px;
     overflow: hidden;
     padding: 20px;
@@ -808,7 +808,7 @@ body {
 
 .archive-list .cta-button {
     text-align: center;
-    margin-top: 40px;
+    margin-top: 90px;
 }
 
 .archive-list .cta-button a {

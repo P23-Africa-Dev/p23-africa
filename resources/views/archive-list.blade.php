@@ -25,7 +25,7 @@
             @endforeach
 
             <div class="mt-4">
-                {{ $olderBlogs->links() }}
+                {{ $olderBlogs->links('pagination::simple-bootstrap-5') }}
             </div>
 
             <!-- Blog Card 2 -->
@@ -46,7 +46,7 @@
 
             <!-- Call to Action -->
             <div class="cta-button">
-                <a href="#">Get Latest Insights →</a>
+                <a href="{{ route('resource-hub') }}">Get Latest Insights →</a>
             </div>
         </div>
     </section>
