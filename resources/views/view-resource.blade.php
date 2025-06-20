@@ -1,5 +1,21 @@
 @extends('layouts.res-layout')
-@section('title', 'Resource Details | P23 Africa')
+
+@section('title')
+    {{ $blog->title }}
+    @if ($blog->subtitle)
+        ({{ $blog->subtitle }})
+    @endif
+    Resource Details | P23 Africa
+@endsection
+
+@section('meta')
+    <meta property="og:image" content="{{ asset('storage/' . $blog->image_path) }}">
+    <meta name="description" content="{!! nl2br(e($blog->content_1)) !!}">
+
+    <meta name="keywords" content="{!! nl2br(e($blog->content_1)) !!}">
+    <meta name="author" content="Nurudeen O. Daniju">
+    <meta name="generator" content="{!! nl2br(e($blog->content_1)) !!}">
+@endsection
 
 @section('content')
     <section class="whole-view-resource">
@@ -16,7 +32,7 @@
             </section>
         </section>
         <div class="side-image">
-            <img src="{{ asset('images/view-resource-side.png') }}" alt="">
+            <img src="{{ asset('images/view-resource-side.png') }}" loading='lazy' alt="">
         </div>
         <section class="resourse-details-content">
             <div class="dotted-divider"></div>
@@ -35,9 +51,11 @@
                     </div>
                     <div class="col-md-6">
                         @if ($blog->image_path)
-                            <img src="{{ asset('storage/' . $blog->image_path) }}" alt="Insight Image" class="article-img" />
+                            <img src="{{ asset('storage/' . $blog->image_path) }}" loading='lazy' alt="Insight Image"
+                                class="article-img" />
                         @else
-                            <img src="{{ asset('images/resource-detail.png') }}" alt="Insight Image" class="article-img" />
+                            <img src="{{ asset('images/resource-detail.png') }}" loading='lazy' alt="Insight Image"
+                                class="article-img" />
                         @endif
                     </div>
                     <div class="col-md-6 mt-4 mt-md-0">
@@ -45,7 +63,8 @@
                             <p>
                                 {!! nl2br(e($blog->content_2)) !!}
                             </p>
-                            <a href="{{ route('resource-hub') }}" class="cta-button">Get More Insights <span class="mx-2"></span> →</a>
+                            <a href="{{ route('resource-hub') }}" class="cta-button">Get More Insights <span
+                                    class="mx-2"></span> →</a>
                         </div>
                     </div>
                 </div>

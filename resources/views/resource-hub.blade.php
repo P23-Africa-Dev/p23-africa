@@ -1,6 +1,16 @@
 @extends('layouts.res-layout')
 @section('title', 'Resource Hub | P23 Africa')
 
+@section('meta')
+    <meta name="description"
+        content="Explore Expert Articles, Market Trends, And Practical Advice To Scale Your Business Across Africa And Beyond.">
+    <meta name="keywords"
+        content="Explore Expert Articles, Market Trends, And Practical Advice To Scale Your Business Across Africa And Beyond.">
+    <meta name="author" content="Nurudeen O. Daniju">
+    <meta name="generator" content="Explore Expert Articles, Market Trends, And Practical Advice To Scale Your Business Across Africa And Beyond | P23 Africa">
+    <meta property="og:image" content="{{ asset('images/resource-header.png') }}">
+@endsection
+
 @section('content')
     <section class="whole-resource">
         <!-- Blog Section -->
@@ -21,7 +31,7 @@
                     </div>
                     <div class="col-lg-6 d-flex justify-content-center">
                         <div class="image-container">
-                            <img src="{{ asset('images/resource-header.png') }}" alt="Woman Image" />
+                            <img src="{{ asset('images/resource-header.png') }}" loading='lazy' alt="Woman Image" />
                         </div>
                     </div>
                 </div>
@@ -37,19 +47,19 @@
                     <div class="col-md-4 mb-4">
                         <div class="team-card first">
                             <div class="team-name">Name<br>Surname</div>
-                            <img src="{{ asset('images/first-mind.png') }}" alt="Person 1">
+                            <img src="{{ asset('images/first-mind.png') }}" loading='lazy' alt="Person 1">
                         </div>
                     </div>
                     <div class="col-md-4 mb-4">
                         <div class="team-card mid">
                             <div class="team-name">Name<br>Surname</div>
-                            <img src="{{ asset('images/second-mind.png') }}" alt="Person 2">
+                            <img src="{{ asset('images/second-mind.png') }}" loading='lazy' alt="Person 2">
                         </div>
                     </div>
                     <div class="col-md-4 mb-4">
                         <div class="team-card">
                             <div class="team-name">Name<br>Surname</div>
-                            <img src="{{ asset('images/third-mind.png') }}" alt="Person 3">
+                            <img src="{{ asset('images/third-mind.png') }}" loading='lazy' alt="Person 3">
                         </div>
                     </div>
                 </div>
@@ -61,19 +71,19 @@
                             <div class="carousel-item-custom">
                                 <div class="team-card">
                                     <div class="team-name">Name<br>Surname</div>
-                                    <img src="{{ asset('images/first-mind.png') }}" alt="Person 1">
+                                    <img src="{{ asset('images/first-mind.png') }}" loading='lazy' alt="Person 1">
                                 </div>
                             </div>
                             <div class="carousel-item-custom">
                                 <div class="team-card mid">
                                     <div class="team-name">Name<br>Surname</div>
-                                    <img src="{{ asset('images/second-mind.png') }}" alt="Person 2">
+                                    <img src="{{ asset('images/second-mind.png') }}" loading='lazy' alt="Person 2">
                                 </div>
                             </div>
                             <div class="carousel-item-custom">
                                 <div class="team-card">
                                     <div class="team-name">Name<br>Surname</div>
-                                    <img src="{{ asset('images/third-mind.png') }}" alt="Person 3">
+                                    <img src="{{ asset('images/third-mind.png') }}" loading='lazy' alt="Person 3">
                                 </div>
                             </div>
                         </div>

@@ -286,8 +286,7 @@
                 <div class="card-body">
                     <div class="date">30th April 2025</div>
                     <h5>State of Funding 2025</h5>
-                    <p>Our solutions are designed to be flexible and performance focused. They can be delivered in-person,
-                        or more commonly</p>
+                    <p>Africa’s funding landscape in 2025 shows steady growth, but challenges like tighter global capital and cautious investor sentiment remain.</p>
                 </div>
             </div>
 
@@ -296,8 +295,7 @@
                 <div class="card-body">
                     <div class="date">1st May 2025</div>
                     <h5>Understanding buyer habits</h5>
-                    <p>Our solutions are designed to be flexible and performance focused. They can be delivered in-person,
-                        or more commonly</p>
+                    <p>Buyer habits in Africa are evolving fast, driven by digital adoption and a growing middle class, but differences across regions and trust issues still pose challenges.</p>
                 </div>
             </div>
 
@@ -306,8 +304,7 @@
                 <div class="card-body">
                     <div class="date">2nd May 2025</div>
                     <h5>Top Agri sectors to watch</h5>
-                    <p>Our solutions are designed to be flexible and performance focused. They can be delivered in-person,
-                        or more commonly</p>
+                    <p>Africa’s agriculture sector is full of opportunity, with agri-tech, food processing, and sustainable farming emerging as key areas to watch.</p>
                 </div>
             </div>
 
@@ -327,8 +324,7 @@
                 <div class="card-body">
                     <div class="date">30th April 2025</div>
                     <h5>State of Funding 2025</h5>
-                    <p>Our solutions are designed to be flexible and performance focused. They can be delivered in-person,
-                        or more commonly</p>
+                    <p>Africa’s funding landscape in 2025 shows steady growth, but challenges like tighter global capital and cautious investor sentiment remain.</p>
                 </div>
             </div>
 
@@ -337,8 +333,7 @@
                 <div class="card-body">
                     <div class="date">1st May 2025</div>
                     <h5>Understanding buyer habits</h5>
-                    <p>Our solutions are designed to be flexible and performance focused. They can be delivered in-person,
-                        or more commonly</p>
+                    <p>Buyer habits in Africa are evolving fast, driven by digital adoption and a growing middle class, but differences across regions and trust issues still pose challenges.</p>
                 </div>
             </div>
 
@@ -347,8 +342,7 @@
                 <div class="card-body">
                     <div class="date">2nd May 2025</div>
                     <h5>Top Agri sectors to watch</h5>
-                    <p>Our solutions are designed to be flexible and performance focused. They can be delivered in-person,
-                        or more commonly</p>
+                    <p>Africa’s agriculture sector is full of opportunity, with agri-tech, food processing, and sustainable farming emerging as key areas to watch.</p>
                 </div>
             </div>
 

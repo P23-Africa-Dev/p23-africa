@@ -1,6 +1,16 @@
 @extends('layouts.res-layout')
 @section('title', 'Archive | P23 Africa')
 
+@section('meta')
+    <meta name="description"
+        content="Explore Expert Articles, Market Trends, And Practical Advice To Scale Your Business Across Africa And Beyond.">
+    <meta name="keywords"
+        content="Explore Expert Articles, Market Trends, And Practical Advice To Scale Your Business Across Africa And Beyond.">
+    <meta name="author" content="Nurudeen O. Daniju">
+    <meta name="generator" content="Explore Expert Articles, Market Trends, And Practical Advice To Scale Your Business Across Africa And Beyond | P23 Africa">
+    <meta property="og:image" content="{{ asset('images/archive-header.png') }}">
+@endsection
+
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
 <style>
@@ -54,7 +64,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <img src="{{ asset('images/archive-header.png') }}" alt="">
+                        <img src="{{ asset('images/archive-header.png') }}" loading='lazy' alt="">
                     </div>
                     <div class="search mobile">
                         <div class="search-bar">
