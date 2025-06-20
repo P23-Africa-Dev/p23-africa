@@ -18,10 +18,10 @@
                     <div class="col-md-7 hero-text my-auto">
                         <h1>Driving <span id="font">Successful</span><br><span id="buss">Businesses
                                 Across</span><br><img src="{{ asset('images/dot.png') }}" loading='lazy' id="dot" alt=""><span
-                                id="fonts"> Africa</span></h1>
+                                id="fonts"> Global Market</span></h1>
                         <br>
                         <p>
-                            We help local and global businesses grow by providing clear,<span
+                            We help businesses in Africa, Europe, and America grow by providing clear,<span
                                 class="mx-1"></span>practical solutions that fit their needs.
                         </p>
                         <br>
@@ -65,7 +65,7 @@
         <div class="me-auto ms-auto" style="width: 65%;">
             <h3>
                 We work with businesses at every stage, helping them grow, solve critical challenges, and drive
-                transformative change across Africa.
+                transformative change.
             </h3>
         </div>
     </section>
@@ -87,12 +87,12 @@
             <div class="col-md-6 d-flex flex-column justify-content-center" style="">
                 <h2 class="fw-bold mb-4">Who We Are</h2>
                 <p class="mb-3">
-                    Growing a business in Africa takes more than ambition, <span class="minor">it takes local knowledge,
+                    Growing a business takes more than ambition, <span class="minor">it takes local knowledge,
                         the right support, and solutions that work on the ground.</span>
                 </p>
                 <p class="mb-3">
                     At P23 Africa, we are a team of seasoned business consultants with a passion for empowering businesses
-                    in Africa to thrive in competitive markets.
+                    globally to thrive in competitive markets.
                 </p>
                 <div>
                     <a href="{{ url('about') }}" class="text-decoration-none learn-more" title="Learn more about P23 Africa">

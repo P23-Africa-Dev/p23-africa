@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Blog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ResourceHubController extends Controller
 {
@@ -44,5 +45,36 @@ class ResourceHubController extends Controller
         );
 
         return view('archive-list', ['olderBlogs' => $paginated]);
+    }
+
+    public function searchArchive(Request $request)
+    {
+        $search = $request->get('query');
+
+        $results = DB::table('blogs')
+            ->where('title', 'like', '%' . $search . '%')
+            ->orWhere('subtitle', 'like', '%' . $search . '%')
+            ->orWhere('content_1', 'like', '%' . $search . '%')
+            ->orderByRaw("CASE 
+                        WHEN title LIKE ? THEN 1
+                        WHEN subtitle LIKE ? THEN 2
+                        ELSE 3
+                     END", ["%$search%", "%$search%"])
+            ->limit(6)
+            ->get();
+
+        $html = '';
+        foreach ($results as $blog) {
+            $url = route('resource-show', $blog->slug);
+            $html .= "
+        <div class='search-suggestion'>
+            <a href='{$url}'>
+                <strong>{$blog->title}</strong><br>
+                <small>{$blog->subtitle}</small>
+            </a>
+        </div>";
+        }
+
+        return response()->json(['html' => $html]);
     }
 }

@@ -1,23 +1,60 @@
 @extends('layouts.res-layout')
 @section('title', 'Archive | P23 Africa')
 
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+<style>
+    .search-dropdown {
+        background: white;
+        border: 1px solid #ccc;
+        max-height: 250px;
+        overflow-y: auto;
+        position: absolute;
+        top: 50px;
+        z-index: 10;
+        width: 100%;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-suggestion {
+        padding: 10px;
+        cursor: pointer;
+        border-bottom: 2px solid #0d403644;
+        padding-bottomom: 1rem;
+        padding-top: 1rem;
+    }
+
+    .search-suggestion:hover {
+        background-color: #f0f0f0;
+    }
+</style>
+
+
 @section('content')
     <section class="archive">
         <section class="archive-header">
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-md-6 my-auto">
+                    <div class="col-md-6 my-md-auto my-4">
                         <h1>Explore Our Archive of Business <span>Blogs</span> And <span>Reports</span></h1>
 
-                        <div class="search">
-                            <form action="">
-                                <input type="text" placeholder="Search your preferred Blog">
-                                <button type="submit">Search</button>
-                            </form>
+                        <div class="search desktop">
+                            <div class="search-bar">
+                                <input type="text" id="searchInput" placeholder="Search your preferred Blog"
+                                    autocomplete="off">
+                                <div id="searchResults" class="search-dropdown d-none"></div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <img src="{{ asset('images/archive-header.png') }}" alt="">
+                    </div>
+                    <div class="search mobile">
+                        <div class="search-bar">
+                            <input type="text" id="searchInput" placeholder="Search your preferred Blog"
+                                autocomplete="off">
+                            <div id="searchResults" class="search-dropdown d-none"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -91,3 +128,38 @@
         </section>
     </section>
 @endsection
+
+<script>
+    $(document).ready(function() {
+        $('#searchInput').on('input', function() {
+            let query = $(this).val().trim();
+
+            if (query.length < 2) {
+                $('#searchResults').addClass('d-none').empty();
+                return;
+            }
+
+            $.ajax({
+                url: '{{ route('archive.search') }}',
+                method: 'GET',
+                data: {
+                    query
+                },
+                success: function(response) {
+                    if (response.html) {
+                        $('#searchResults').html(response.html).removeClass('d-none');
+                    } else {
+                        $('#searchResults').html('<div class="p-2">No results found</div>')
+                            .removeClass('d-none');
+                    }
+                }
+            });
+        });
+
+        $(document).click(function(e) {
+            if (!$(e.target).closest('.search-bar').length) {
+                $('#searchResults').addClass('d-none');
+            }
+        });
+    });
+</script>

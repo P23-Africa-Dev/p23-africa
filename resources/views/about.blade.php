@@ -31,7 +31,7 @@
                     <p class="descriptions">
                         {{-- <p class="descriptions"> --}}
                         <b>Africa-focused, globally relevant</b> <br> P23 Africa are a team of seasoned professionals
-                        helping businesses across Africa scale in a competitive and rapidly-changing market.
+                        helping businesses across sectors scale in a competitive and rapidly-changing market.
                     </p>
 
                     <!-- Contact Button -->
@@ -60,7 +60,7 @@
                         <h5>Our Mission <span></span></h5>
                         <strong class="my-2">Business Empowerment</strong>
                         <p>
-                            Our mission is to empower African businesses to thrive and innovate through strategic guidance
+                            Our mission is to empower global businesses to thrive and innovate through strategic guidance
                             and transformative solutions. We are committed to fostering sustainable growth, driving
                             impactful change, and unlocking the full potential of businesses across the continent.
                         </p>
@@ -72,7 +72,7 @@
                         <strong class="my-2">Excellence, Integrity, and Collaboration</strong>
                         <p>
                             With a vision rooted in excellence, integrity, and collaboration, we aspire to be the catalyst
-                            for Africa's economic advancement, empowering clients to navigate challenges, seize
+                            for economic advancement, empowering clients to navigate challenges, seize
                             opportunities, and shape a prosperous future for generations to come.
                         </p>
                     </div>

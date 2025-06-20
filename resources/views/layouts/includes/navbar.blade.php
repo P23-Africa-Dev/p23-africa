@@ -90,12 +90,12 @@
                             <a class="nav-link" href="{{ route('resource-hub') }}">Resource Hub</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Let’s Collaborate</a>
+                            <a class="nav-link" href="{{ url('contact') }}">Let’s Collaborate</a>
                         </li>
                     </ul>
 
                     <div class="contact">
-                        <a href="#" class="btn" id="btn">Contact Us</a>
+                        <a href="{{ url('contact') }}" class="btn" id="btn">Contact Us</a>
                     </div>
 
 
@@ -140,7 +140,7 @@
                         <a class="nav-link" href="{{ route('resource-hub') }}">Resource Hub</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Let’s Collaborate</a>
+                        <a class="nav-link" href="{{ url('contact') }}">Let’s Collaborate</a>
                     </li>
                 </ul>
 

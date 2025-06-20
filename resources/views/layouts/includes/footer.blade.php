@@ -22,7 +22,7 @@
                         <a href="{{ url('services') }}">What We Do</a>
                         <a href="{{ route('event') }}">Events</a>
                         <a href="{{ route('resource-hub') }}">Resource Hub</a>
-                        <a href="#">Let’s Collaborate</a>
+                        <a href="{{ url('contact') }}">Let’s Collaborate</a>
                     </div>
 
                     <div class="col-md-2 footer-links strategy">

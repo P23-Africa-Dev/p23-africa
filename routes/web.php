@@ -88,6 +88,8 @@ Route::get('/resource/{slug}', [ResourceHubController::class, 'resourceDetails']
 
 Route::get('/res/archive', [ResourceHubController::class, 'archivePage'])->name('archive-page');
 Route::get('/res/archive/list', [ResourceHubController::class, 'archiveList'])->name('archive-list');
+Route::get('/res/archive/search', [ResourceHubController::class, 'searchArchive'])->name('archive.search');
+
 
 Route::get('/quiz/result/fragile-funnel', fn() => view('quiz-answers.result-a'))->name('fragile-funnel');
 Route::get('/quiz/result/hidden-powerhouse', fn() => view('quiz-answers.result-b'))->name('hidden-powerhouse');

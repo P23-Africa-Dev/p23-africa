@@ -4276,6 +4276,22 @@ section.visible{
         justify-content: space-between;
         width: 100%;
     }
+
+    .track_events .status {
+        color: #009a49;
+        font-weight: 700;
+        font-size: 16px;
+        font-family: "GT Walsheim Con";
+        text-shadow: 0px 2px 2px #00000025;
+    }
+
+    .track_events .time {
+        color: #f06836;
+        font-weight: 700;
+        font-size: 16px;
+        font-family: "GT Walsheim Con";
+        text-shadow: 0px 2px 2px #00000025;
+    }
 }
 
 /* Responsive for mobile */

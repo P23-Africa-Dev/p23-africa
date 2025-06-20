@@ -654,26 +654,46 @@ body {
 .archive .archive-header .search {
     margin-top: 2rem;
 }
-.archive .archive-header .search form {
+.archive .archive-header .search.mobile {
+    display: none;
+}
+.archive .archive-header .search .search-bar {
+    position: relative;
     display: flex;
     gap: 10px;
 }
-.archive .archive-header .search form input {
+.archive .archive-header .search .search-bar input {
     padding: 18px 21px;
-    width: 320px;
+    width: 90%;
     border-radius: 5px;
     gap: 10px;
     height: 50px;
     border: 2px solid #0000004d;
 }
-.archive .archive-header .search form input::placeholder {
+@media screen and (max-width: 600px) {
+    .archive .archive-header h1 {
+        font-size: 60px;
+        line-height: 4.5rem;
+    }
+    .archive .archive-header .search .search-bar input {
+        width: 100%;
+        margin-bottom: 3rem;
+    }
+    .archive .archive-header .search.mobile {
+        display: block;
+    }
+    .archive .archive-header .search.desktop {
+        display: none;
+    }
+}
+.archive .archive-header .search .search-bar input::placeholder {
     font-size: 16px;
     font-weight: 400;
     letter-spacing: 0.5px;
     text-transform: capitalize;
     color: #0d403666;
 }
-.archive .archive-header .search form button {
+.archive .archive-header .search .search-bar button {
     padding: 10px;
     gap: 10px;
     border-radius: 5px;
@@ -740,6 +760,7 @@ body {
     font-size: 13px;
     margin: 0;
     width: 240px;
+    line-height: 15px;
 }
 
 .archive-card .dark-text {

@@ -80,7 +80,7 @@
                                     <img src="{{ asset('images/target-03.png') }}" loading='lazy' alt="">
                                     <h4 class="text-left">Market Entry</h4>
         
-                                    <p>We help you successfully enter and grow in African markets. Our team provides expert guidance on local regulations, business culture, and market opportunities across the continent. We develop tailored entry strategies, connect you with trusted local partners, and support you through every step—from market research to launch. Whether you’re expanding into one country or across multiple regions, we make your move into Africa smooth, strategic, and successful.</p>
+                                    <p>We help you successfully enter and grow in a variety of markets. Our team provides expert guidance on local regulations, business culture, and market opportunities across the continent. We develop tailored entry strategies, connect you with trusted local partners, and support you through every step—from market research to launch. Whether you’re expanding into one country or across multiple regions, we make your move into Africa, Europe, and America smooth, strategic, and successful.</p>
                                 </div>
                              </div>
                         </div>
@@ -158,7 +158,7 @@
                     <p class="">
                         We partner with entrepreneurs and businesses to understand their unique  needs, align them with their goals, and set a clear path to execution and results. 
                         <br><br>
-                        Our consulting services come with personalised and hands-on support, and our team is committed to excellence, intergrity and collaboration.Let's help you thrive in the dynamic and unpredictable African market.
+                        Our consulting services come with personalised and hands-on support, and our team is committed to excellence, intergrity and collaboration.Let's help you thrive in the dynamic and unpredictable global market.
                     </p>
                     <div id="contact">
                         <a href="{{ url('contact') }}" class="read-more">Contact Us <span>→</span></a>
