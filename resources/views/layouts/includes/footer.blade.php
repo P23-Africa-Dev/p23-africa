@@ -13,7 +13,7 @@
                         <a href="{{ url('about') }}">About Us</a>
                         <a href="#">Business Referral Network</a>
                         <a href="#">University Partnership</a>
-                        <a href="#">The 54th Pitch</a>
+                        <a href="https://the54thpitch.co.uk">The 54th Pitch</a>
                     </div>
 
                     <div class="col-md-2 col-lg-2 col-4 footer-links footer-quick-links">
@@ -41,7 +41,7 @@
                             <a href="https://linkedin.com/company/p23-africa/" target="_blank"><i class="fab fa-linkedin"></i></a>
                             <a href="https://facebook.com/p23africa" target="_blank"><i class="fab fa-facebook"></i></a>
                             <a href="https://www.instagram.com/p23africa/" target="_blank"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-youtube"></i></a>
+                            <a href="https://www.youtube.com/channel/UCmhdbCCyjpINgZ0Fgu20ZBQ" target="_blank"><i class="fab fa-youtube"></i></a>
                         </div>
                     </div>
 
@@ -51,7 +51,7 @@
                             <a href="https://linkedin.com/company/p23-africa/" target="_blank"><i class="fab fa-linkedin"></i></a>
                             <a href="https://facebook.com/p23africa" target="_blank"><i class="fab fa-facebook"></i></a>
                             <a href="https://www.instagram.com/p23africa/" target="_blank"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-youtube"></i></a>
+                            <a href="https://www.youtube.com/channel/UCmhdbCCyjpINgZ0Fgu20ZBQ" target="_black"><i class="fab fa-youtube"></i></a>
                         </div>
                     </div>
                     

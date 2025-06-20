@@ -34,7 +34,7 @@
                                             <p>Connecting students with real-world research opportunities</p>
                                         </div>
                                         <div class="col-md-3">
-                                            <a href="#" class="d-block mb-3"><b>The 54th Pitch</b></a>
+                                            <a href="https://the54thpitch.co.uk" class="d-block mb-3"><b>The 54th Pitch</b></a>
                                             <p>Helping established businesses secure grant funding through expert pitch
                                                 programs</p>
                                         </div>
@@ -110,7 +110,7 @@
                                 class="fab fa-facebook mx-1"></i></a>
                         <a href="https://www.instagram.com/p23africa/" target="_blank"><i
                                 class="bi bi-instagram mx-1"></i></a>
-                        <a href="#"><i class="fab fa-youtube mx-1"></i></a>
+                        <a href="https://www.youtube.com/channel/UCmhdbCCyjpINgZ0Fgu20ZBQ" target="_blank"><i class="fab fa-youtube mx-1"></i></a>
                     </div>
                 </div>
         </nav>
@@ -158,7 +158,7 @@
                     <a href="https://facebook.com/p23africa" target="_blank"><i class="fab fa-facebook mx-1"></i></a>
                     <a href="https://www.instagram.com/p23africa/" target="_blank"><i
                             class="fab fa-instagram mx-1"></i></a>
-                    <a href="#"><i class="fab fa-youtube mx-1"></i></a>
+                    <a href="https://www.youtube.com/channel/UCmhdbCCyjpINgZ0Fgu20ZBQ" target="_blank"><i class="fab fa-youtube mx-1"></i></a>
                 </div>
             </div>
 
@@ -194,7 +194,7 @@
                     </li>
                     <hr>
                     <li>
-                        <a class="nav-link">
+                        <a href="https://the54thpitch.co.uk" class="nav-link">
                             <h5>The 54th Pitch</h5>
                             <p>
                                 Helping established businesses secure grant funding through expert pitch programs

@@ -50,17 +50,26 @@
                         <li class="nav-item"><a class="nav-link" href="{{ url('about') }}">Who We Are</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ url('services') }}">What We Do</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('event') }}">Our Events</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('resource-hub') }}">Resource Hub</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Let’s Collaborate</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('resource-hub') }}">Resource Hub</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url('contact') }}">Let’s Collaborate</a></li>
                     </ul>
 
                     <div class="d-flex align-items-right mobile">
                         <button class="subscribe-btn me-3">Subscribe</button>
                         <div class="social-icons">
-                            <i class="fab fa-linkedin-in"></i>
-                            <i class="fab fa-facebook-f"></i>
-                            <i class="fab fa-instagram"></i>
-                            <i class="fab fa-youtube"></i>
+                            <a href="https://linkedin.com/company/p23-africa/" target="_blank">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="https://facebook.com/p23africa" target="_blank">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="https://www.instagram.com/p23africa/" target="_blank">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://www.youtube.com/channel/UCmhdbCCyjpINgZ0Fgu20ZBQ" target="_blank">
+                                <i class="fab fa-youtube"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -68,10 +77,18 @@
                 <div class="d-flex align-items-right desktop">
                     <button class="subscribe-btn me-3">Subscribe</button>
                     <div class="social-icons">
-                        <i class="fab fa-linkedin-in"></i>
-                        <i class="fab fa-facebook-f"></i>
-                        <i class="fab fa-instagram"></i>
-                        <i class="fab fa-youtube"></i>
+                        <a href="https://linkedin.com/company/p23-africa/" target="_blank">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://facebook.com/p23africa" target="_blank">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/p23africa/" target="_blank">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.youtube.com/channel/UCmhdbCCyjpINgZ0Fgu20ZBQ" target="_blank">
+                            <i class="fab fa-youtube"></i>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -107,7 +124,7 @@
                         <a href="{{ url('services') }}">What We Do</a>
                         <a href="{{ route('event') }}">Events</a>
                         <a href="{{ route('resource-hub') }}">Resource Hub</a>
-                        <a href="#">Let’s Collaborate</a>
+                        <a href="{{ url('contact') }}">Let’s Collaborate</a>
                     </div>
 
                     <div class="col-md-2 footer-links strategy">
@@ -125,10 +142,13 @@
                         <div class="social-icons mt-2 d-flex">
                             <a href="https://linkedin.com/company/p23-africa/" target="_blank"><i
                                     class="fab fa-linkedin"></i></a>
-                            <a href="https://facebook.com/p23africa" target="_blank"><i class="fab fa-facebook"></i></a>
+                            <a href="https://facebook.com/p23africa" target="_blank"><i
+                                    class="fab fa-facebook"></i></a>
                             <a href="https://www.instagram.com/p23africa/" target="_blank"><i
                                     class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-youtube"></i></a>
+                            <a href="https://www.youtube.com/channel/UCmhdbCCyjpINgZ0Fgu20ZBQ" target="_blank">
+                                <i class="fab fa-youtube"></i>
+                            </a>
                         </div>
                     </div>
 
@@ -141,7 +161,9 @@
                                     class="fab fa-facebook"></i></a>
                             <a href="https://www.instagram.com/p23africa/" target="_blank"><i
                                     class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-youtube"></i></a>
+                            <a href="https://www.youtube.com/channel/UCmhdbCCyjpINgZ0Fgu20ZBQ" target="_blank">
+                                <i class="fab fa-youtube"></i>
+                            </a>
                         </div>
                     </div>
 
