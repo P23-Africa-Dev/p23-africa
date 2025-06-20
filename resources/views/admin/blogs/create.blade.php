@@ -23,13 +23,25 @@
                         <input name="subtitle" value="{{ old('subtitle', $blog->subtitle ?? '') }}"
                             placeholder="Blog Subtitle" class="form-control mb-3 border border-1 border-dark">
 
-                        <textarea name="content_1" class="form-control mb-3 border border-1 border-dark" placeholder="First Content" rows="8" required>{{ old('content_1', $blog->content_1 ?? '') }}</textarea>
+                        <select name="category_id" class="form-control mb-3 border border-1 border-dark">
+                            <option value="">Select Category</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}"
+                                    {{ isset($blog) && $blog->category_id == $category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
 
-                        <input type="file" name="image" id="image" class="form-control p-2 mb-3 border border-1 border-dark" accept="image/*">
+                        <textarea name="content_1" class="form-control mb-3 border border-1 border-dark" placeholder="First Content"
+                            rows="8" required>{{ old('content_1', $blog->content_1 ?? '') }}</textarea>
+
+                        <input type="file" name="image" id="image"
+                            class="form-control p-2 mb-3 border border-1 border-dark" accept="image/*">
                         @if (isset($blog) && $blog->image_path)
                             <img src="{{ asset('storage/' . $blog->image_path) }}" width="200" class="mb-2">
                         @endif
-                                                <div class="mb-5 position-relative" id="previewContainer"
+                        <div class="mb-5 position-relative" id="previewContainer"
                             style="max-width: 300px; display: none;">
                             <img id="imagePreview" src="#" alt="Image Preview" class="img-thumbnail">
 
@@ -53,7 +65,8 @@
                             </button>
                         </div>
 
-                        <textarea name="content_2" class="form-control mb-3 border border-1 border-dark" rows="8" placeholder="Second Content">{{ old('content_2', $blog->content_2 ?? '') }}</textarea>
+                        <textarea name="content_2" class="form-control mb-3 border border-1 border-dark" rows="8"
+                            placeholder="Second Content">{{ old('content_2', $blog->content_2 ?? '') }}</textarea>
 
                         <button type="submit"
                             class="btn btn-dark w-25">{{ isset($blog) ? 'Update' : 'Publish' }}</button>

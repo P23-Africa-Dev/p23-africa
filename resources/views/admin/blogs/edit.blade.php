@@ -23,6 +23,16 @@
                         <input name="subtitle" value="{{ old('subtitle', $blog->subtitle ?? '') }}"
                             placeholder="Blog Subtitle" class="form-control mb-4 border border-1 border-dark">
 
+                        <select name="category_id" class="form-control mb-3 border border-1 border-dark">
+                            <option value="">Select a category</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}"
+                                    {{ isset($blog) && $blog->category_id == $category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
+
                         <textarea name="content_1" class="form-control mb-4 border border-1 border-dark" placeholder="First Content" required>{{ old('content_1', $blog->content_1 ?? '') }}</textarea>
 
                         <input type="file" name="image" id="image"

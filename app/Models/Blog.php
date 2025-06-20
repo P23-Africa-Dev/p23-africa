@@ -13,6 +13,7 @@ class Blog extends Model
         'content_1',
         'content_2',
         'image_path',
+        'category_id',
         'user_id'
     ];
 
@@ -32,5 +33,10 @@ class Blog extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }

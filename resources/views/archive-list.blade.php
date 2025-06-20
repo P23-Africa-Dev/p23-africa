@@ -4,11 +4,16 @@
 @section('content')
     <section class="archive-list">
         <div class="container">
+
+            @if ($category)
+                <h2>Showing results for "{{ $category->name }}"</h2>
+            @endif
             <!-- Blog Card 1 -->
-            @foreach ($olderBlogs as $blog)
+            {{-- @foreach ($olderBlogs as $blog) --}}
+            @foreach ($blogs as $blog)
                 <div class="blog-card">
                     <div class="blog-text">
-                        <div class="blog-category">Blog Category</div>
+                        <div class="blog-category">Category name</div>
                         <div class="blog-title"><a href="{{ route('resource-show', $blog->slug) }}"
                                 class="">{{ $blog->title }}</a></div>
                         <div class="blog-subtitle">
@@ -25,9 +30,16 @@
             @endforeach
 
             <div class="mt-4">
-                {{ $olderBlogs->links('pagination::simple-bootstrap-5') }}
+                {{ $blogs->withQueryString()->links('pagination::simple-bootstrap-5') }}
             </div>
 
+            <br>
+            <h4 class="mt-5">Other Categories:</h4>
+            <div class="category-list">
+                @foreach ($otherCategories as $cat)
+                    <a href="{{ route('archive-list', ['category' => $cat->name]) }}" class="mx-2">{{ $cat->name }}</a> 
+                @endforeach
+            </div>
             <!-- Blog Card 2 -->
             {{-- <div class="blog-card">
                 <div class="blog-text">

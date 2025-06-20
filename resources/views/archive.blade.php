@@ -27,6 +27,13 @@
     .search-suggestion:hover {
         background-color: #f0f0f0;
     }
+
+    .default-box {
+        background-color: #f4f4f4;
+        border: 1px solid #ddd;
+        padding: 20px;
+        margin: 10px 0;
+    }
 </style>
 
 
@@ -60,66 +67,75 @@
             </div>
         </section>
 
+        @php
+            $backgrounds = [
+                'images/archive-card1.png',
+                'images/archive-card2.png',
+                'images/archive-card3.png',
+                'images/archive-card4.png',
+                'images/archive-card5.png',
+            ];
+        @endphp
+
         <section class="archive-card">
             <div class="container">
                 <!-- Box 0 -->
                 <div class="box" style="background-image: url('../images/archive-card0.png');">
-                    {{-- <div class="overlay-number overlay-light">01</div>
-                    <div class="text-wrapper">
-                        <p class="title">Leadership & Executive Insights</p>
-                        <p class="description">Expert-driven articles designed to help professionals stay informed and lead
-                            with impact.</p>
-                    </div> --}}
                 </div>
 
-                <!-- Box 1 -->
-                <div class="box" style="background-image: url('../images/archive-card1.png');">
-                    {{-- <div class="overlay-number overlay-light">01</div> --}}
-                    <div class="text-wrapper">
-                        <p class="title">Leadership & Executive Insights</p>
-                        <p class="description">Expert-driven articles designed to help professionals stay informed and lead
-                            with impact.</p>
-                    </div>
-                </div>
-
+                @foreach ($categories as $index => $category)
+                    @if ($index < 5)
+                        <!-- Box 1 -->
+                        <div class="box" style="background-image: url('{{ asset($backgrounds[$index]) }}');">
+                            <div class="text-wrapper {{ $index === 3 ? 'dark-text' : '' }}">
+                                <p class="title">{{ $category->name }}</p>
+                                <p class="description">{{ $category->description }}</p>
+                            </div>
+                        </div>
+                    @else
+                        <!-- Default Style for Remaining Categories -->
+                        <div class="box default-box">
+                            <div class="text-wrapper">
+                                <p class="title">{{ $category->name }}</p>
+                                <p class="description">{{ $category->description }}</p>
+                            </div>
+                        </div>
+                    @endif
+                @endforeach
                 <!-- Box 2 -->
-                <div class="box" style="background-image: url('../images/archive-card2.png');">
-                    {{-- <div class="overlay-number overlay-light">02</div> --}}
+                {{-- <div class="box" style="background-image: url('../images/archive-card2.png');">
                     <div class="text-wrapper">
                         <p class="title">Business Growth & Strategy</p>
                         <p class="description">Growth-oriented insights to help businesses scale effectively.</p>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Box 3 -->
-                <div class="box" style="background-image: url('../images/archive-card3.png');">
-                    {{-- <div class="overlay-number overlay-light">03</div> --}}
+                {{-- <div class="box" style="background-image: url('../images/archive-card3.png');">
                     <div class="text-wrapper">
                         <p class="title">Referrals & Relationship</p>
                         <p class="description">Build long-term relationships with strategic insights on networking and
                             referrals.</p>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Box 4 -->
-                <div class="box" style="background-image: url('../images/archive-card4.png');">
-                    {{-- <div class="overlay-number overlay-dark">04</div> --}}
+                {{-- <div class="box" style="background-image: url('../images/archive-card4.png');">
                     <div class="text-wrapper dark-text">
                         <p class="title">Workshop & Event Highlights</p>
                         <p class="description">Event coverage and behind-the-scenes from P23’s exclusive business events.
                         </p>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Box 5 -->
-                <div class="box" style="background-image: url('../images/archive-card5.png');">
-                    {{-- <div class="overlay-number overlay-light">05</div> --}}
+                {{-- <div class="box" style="background-image: url('../images/archive-card5.png');">
                     <div class="text-wrapper">
                         <p class="title">Case Studies & Success Stories</p>
                         <p class="description">Real-life stories and testimonials showing measurable success and strategic
                             value.</p>
                     </div>
-                </div>
+                </div> --}}
             </div>
 
             <div class="container btn-cd">

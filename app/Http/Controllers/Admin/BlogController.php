@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -17,7 +18,9 @@ class BlogController extends Controller
     public function index()
     {
         $blogs = Blog::latest()->paginate(10);
-        return view('admin.blogs.index', compact('blogs'));
+        $categories = Category::all();
+
+        return view('admin.blogs.index', compact('blogs', 'categories'));
     }
 
     /**
@@ -25,7 +28,9 @@ class BlogController extends Controller
      */
     public function create()
     {
-        return view('admin.blogs.create');
+        $categories = Category::all();
+
+        return view('admin.blogs.create', compact('categories'));
     }
 
     /**
@@ -33,24 +38,29 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'title' => 'required|string|max:255',
             'subtitle' => 'nullable|string|max:255',
             'content_1' => 'required|string',
             'content_2' => 'nullable|string',
-            'image' => 'nullable|image|max:2048'
+            'image' => 'nullable|image|max:2048',
+            'category_id' => 'nullable|exists:categories,id',
         ]);
 
-        $path = $request->file('image')?->store('blogs', 'public');
+        // ✅ Clean content if needed
+        $data['content_1'] = Purifier::clean($data['content_1']);
+        $data['content_2'] = Purifier::clean($data['content_2']);
 
-        Blog::create([
-            'title' => $request->title,
-            'subtitle' => $request->subtitle,
-            'content_1' => $request->content_1,
-            'content_2' => $request->content_2,
-            'image_path' => $path,
-            'user_id' => Auth::id(),
-        ]);
+        // ✅ Handle image upload
+        if ($request->hasFile('image')) {
+            $data['image_path'] = $request->file('image')->store('blogs', 'public');
+        }
+
+        // ✅ Add user ID (admin creating the blog)
+        $data['user_id'] = Auth::id();
+
+        // ✅ Save the blog
+        Blog::create($data);
 
         return redirect()->route('admin.blogs.index')->with('success', 'Blog created successfully.');
     }
@@ -68,7 +78,9 @@ class BlogController extends Controller
      */
     public function edit(Blog $blog)
     {
-        return view('admin.blogs.edit', compact('blog'));
+        $categories = Category::all();
+
+        return view('admin.blogs.edit', compact('blog', 'categories'));
     }
 
     /**
@@ -76,35 +88,35 @@ class BlogController extends Controller
      */
     public function update(Request $request, Blog $blog)
     {
-        $request->validate([
+        $data = $request->validate([
             'title' => 'required|string|max:255',
             'subtitle' => 'nullable|string|max:255',
             'content_1' => 'required|string',
             'content_2' => 'nullable|string',
-            'image' => 'nullable|image|max:2048'
+            'image' => 'nullable|image|max:2048',
+            'category_id' => 'nullable|exists:categories,id',
         ]);
 
-        // Remove current image if requested
+        // Remove image if requested
         if ($request->has('remove_image') && $blog->image_path) {
             Storage::disk('public')->delete($blog->image_path);
             $blog->image_path = null;
         }
 
+        // Upload new image
         if ($request->hasFile('image')) {
-            if ($blog->image_path) Storage::disk('public')->delete($blog->image_path);
-            $blog->image_path = $request->file('image')->store('blogs', 'public');
+            if ($blog->image_path) {
+                Storage::disk('public')->delete($blog->image_path);
+            }
+            $data['image_path'] = $request->file('image')->store('blogs', 'public');
         }
 
-        // Sanitize and slugify
-        $validated['content_1'] = Purifier::clean($request->description);
-        $validated['content_2'] = Purifier::clean($request->description);
+        // 🛠️ Purify and assign to $data
+        $data['content_1'] = Purifier::clean($data['content_1']);
+        $data['content_2'] = Purifier::clean($data['content_2']);
 
-        $blog->update([
-            'title' => $request->title,
-            'subtitle' => $request->subtitle,
-            'content_1' => $request->content_1,
-            'content_2' => $request->content_2,
-        ]);
+        // Update blog
+        $blog->update($data);
 
         return redirect()->route('admin.blogs.index')->with('success', 'Blog updated.');
     }

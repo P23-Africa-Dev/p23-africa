@@ -18,10 +18,10 @@
                     <div class="col-md-7 hero-text my-auto">
                         <h1>Driving <span id="font">Successful</span><br><span id="buss">Businesses
                                 Across</span><br><img src="{{ asset('images/dot.png') }}" loading='lazy' id="dot" alt=""><span
-                                id="fonts"> Global Market</span></h1>
+                                id="fonts"> Global Markets</span></h1>
                         <br>
                         <p>
-                            We help businesses in Africa, Europe, and America grow by providing clear,<span
+                            We help businesses in Africa, Europe and America grow by providing clear,<span
                                 class="mx-1"></span>practical solutions that fit their needs.
                         </p>
                         <br>

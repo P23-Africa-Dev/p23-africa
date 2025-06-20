@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -25,27 +26,64 @@ class ResourceHubController extends Controller
 
     public function archivePage()
     {
-        return view('archive');
+        $categories = Category::orderBy('id')->get(); // or any preferred ordering
+        return view('archive', compact('categories'));
     }
 
-    public function archiveList()
+    public function archiveList(Request $request)
     {
-        $page = request()->get('page', 1); // Get the current page
+        $page = $request->get('page', 1); // Get the current page
         $perPage = 12;
 
-        $blogs = Blog::latest()->get(); // Get all blogs
+        $categoryName = $request->query('category');
 
-        $sliced = $blogs->slice(6 + ($page - 1) * $perPage, $perPage); // Skip first 6, then paginate
+        if ($categoryName) {
+            // Filter by category if query exists
+            $category = \App\Models\Category::where('name', $categoryName)->firstOrFail();
+            $blogs = \App\Models\Blog::where('category_id', $category->id)
+                ->latest()
+                ->get();
+
+            // No skipping for category view
+            $sliced = $blogs->slice(($page - 1) * $perPage, $perPage);
+            $paginated = new \Illuminate\Pagination\LengthAwarePaginator(
+                $sliced,
+                $blogs->count(),
+                $perPage,
+                $page,
+                ['path' => $request->url(), 'query' => $request->query()]
+            );
+
+            $otherCategories = \App\Models\Category::where('id', '!=', $category->id)->get();
+
+            return view('archive-list', [
+                'blogs' => $paginated,
+                'category' => $category,
+                'otherCategories' => $otherCategories,
+            ]);
+        }
+
+        // Default archive listing (skipping 6 recent)
+        $blogs = \App\Models\Blog::latest()->get();
+
+        $sliced = $blogs->slice(6 + ($page - 1) * $perPage, $perPage);
         $paginated = new \Illuminate\Pagination\LengthAwarePaginator(
             $sliced,
             $blogs->count() - 6,
             $perPage,
             $page,
-            ['path' => request()->url(), 'query' => request()->query()]
+            ['path' => $request->url(), 'query' => $request->query()]
         );
 
-        return view('archive-list', ['olderBlogs' => $paginated]);
+        $otherCategories = \App\Models\Category::all();
+
+        return view('archive-list', [
+            'blogs' => $paginated,
+            'category' => null,
+            'otherCategories' => $otherCategories,
+        ]);
     }
+
 
     public function searchArchive(Request $request)
     {
@@ -76,5 +114,14 @@ class ResourceHubController extends Controller
         }
 
         return response()->json(['html' => $html]);
+    }
+
+    public function categoryView($slug)
+    {
+        $category = Category::where('name', $slug)->firstOrFail();
+        $blogs = $category->blogs()->latest()->paginate(10);
+        $otherCategories = Category::where('id', '!=', $category->id)->get();
+
+        return view('category-blogs', compact('category', 'blogs', 'otherCategories'));
     }
 }

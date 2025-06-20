@@ -80,7 +80,7 @@
                                     <img src="{{ asset('images/target-03.png') }}" loading='lazy' alt="">
                                     <h4 class="text-left">Market Entry</h4>
         
-                                    <p>We help you successfully enter and grow in a variety of markets. Our team provides expert guidance on local regulations, business culture, and market opportunities across the continent. We develop tailored entry strategies, connect you with trusted local partners, and support you through every step—from market research to launch. Whether you’re expanding into one country or across multiple regions, we make your move into Africa, Europe, and America smooth, strategic, and successful.</p>
+                                    <p>We help you successfully enter and grow in a variety of markets. Our team provides expert guidance on local regulations, business culture, and market opportunities across the continent. We develop tailored entry strategies, connect you with trusted local partners, and support you through every step—from market research to launch. Whether you’re expanding into one country or across multiple regions, we make your move into Africa, Europe and America smooth, strategic, and successful.</p>
                                 </div>
                              </div>
                         </div>

@@ -12,11 +12,12 @@
                 <div class="p-6 text-gray-900 table-responsive">
 
                     <a href="{{ route('admin.blogs.create') }}" class="btn btn-dark">Create Resource Blogs</a>
+                    <a href="{{ route('admin.categories.index') }}" class="btn btn-primary">Create New Category</a>
 
                     <div class="my-5">
                         @if (session('success'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                {{ session('success') }}
+                                {{ session('success') }}    
                                 <button type="button" class="btn-close" data-bs-dismiss="alert"
                                     aria-label="Close"></button>
                             </div>

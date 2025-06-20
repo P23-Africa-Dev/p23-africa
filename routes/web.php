@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
@@ -85,6 +86,8 @@ Route::get('/clicks-report', function () {
 
 Route::get('/resource-hub', [ResourceHubController::class, 'resourceHub'])->name('resource-hub');
 Route::get('/resource/{slug}', [ResourceHubController::class, 'resourceDetails'])->name('resource-show');
+Route::get('/res/category/{slug}', [ResourceHubController::class, 'categoryView'])->name('archive.category');
+
 
 Route::get('/res/archive', [ResourceHubController::class, 'archivePage'])->name('archive-page');
 Route::get('/res/archive/list', [ResourceHubController::class, 'archiveList'])->name('archive-list');
@@ -156,6 +159,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::post('/events/{id}/send-reminder', [EventController::class, 'sendReminder'])
         ->name('events.sendReminder');
 
+    Route::resource('/blogs/categories', CategoryController::class);
 
     Route::get('/seats', [\App\Http\Controllers\Admin\SeatController::class, 'index'])->name('admin.seats.index');
 
