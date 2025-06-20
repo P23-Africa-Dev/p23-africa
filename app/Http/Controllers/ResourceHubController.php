@@ -64,7 +64,7 @@ class ResourceHubController extends Controller
         }
 
         // Default archive listing (skipping 6 recent)
-        $blogs = \App\Models\Blog::latest()->get();
+        $blogs = Blog::with(['category', 'user'])->latest()->get();
 
         $sliced = $blogs->slice(6 + ($page - 1) * $perPage, $perPage);
         $paginated = new \Illuminate\Pagination\LengthAwarePaginator(

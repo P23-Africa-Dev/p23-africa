@@ -86,20 +86,24 @@
                 @foreach ($categories as $index => $category)
                     @if ($index < 5)
                         <!-- Box 1 -->
-                        <div class="box" style="background-image: url('{{ asset($backgrounds[$index]) }}');">
-                            <div class="text-wrapper {{ $index === 3 ? 'dark-text' : '' }}">
-                                <p class="title">{{ $category->name }}</p>
-                                <p class="description">{{ $category->description }}</p>
+                        <a href="{{ route('archive-list', ['category' => $category->name]) }}">
+                            <div class="box" style="background-image: url('{{ asset($backgrounds[$index]) }}');">
+                                <div class="text-wrapper {{ $index === 3 ? 'dark-text' : '' }}">
+                                    <p class="title">{{ $category->name }}</p>
+                                    <p class="description">{{ $category->description }}</p>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     @else
                         <!-- Default Style for Remaining Categories -->
-                        <div class="box default-box">
-                            <div class="text-wrapper">
-                                <p class="title">{{ $category->name }}</p>
-                                <p class="description">{{ $category->description }}</p>
+                        <a href="{{ route('archive-list', ['category' => $category->name]) }}">
+                            <div class="box default-box">
+                                <div class="text-wrapper">
+                                    <p class="title">{{ $category->name }}</p>
+                                    <p class="description">{{ $category->description }}</p>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     @endif
                 @endforeach
                 <!-- Box 2 -->

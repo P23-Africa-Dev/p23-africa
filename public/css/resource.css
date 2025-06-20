@@ -719,7 +719,12 @@ body {
     margin-top: 3rem;
     /* padding: 40px 50px; */
 }
-
+.archive-card a{
+    transition: 500ms;
+}
+.archive-card a:hover{
+    transform: scale(1.05);
+}
 .archive-card .box {
     position: relative;
     width: 350px;
@@ -825,6 +830,7 @@ body {
     font-size: 13px;
     color: #0d4036;
     margin-bottom: 15px;
+    text-transform: capitalize;
 }
 
 .archive-list .blog-title a {

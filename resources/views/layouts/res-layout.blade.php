@@ -38,7 +38,7 @@
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg">
             <div class="container">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="{{ route('homepage') }}">
                     <img src="{{ asset('images/logo.png') }}" loading='lazy' alt="">
                 </a>
                 <button class="navbar-toggler text-white border-1 border-light" type="button" data-bs-toggle="collapse"
