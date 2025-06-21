@@ -270,13 +270,12 @@ body {
 
 .mind-behind-insight .team-card img {
     width: 375px;
-    height: auto;
+    height: 100%;
     object-fit: cover;
 }
 .mind-behind-insight .team-card.first img,
-.mind-behind-insight .team-card.mid img,
-.mind-behind-insight .team-card.third img {
-    object-position: 10px 25px !important;
+.mind-behind-insight .team-card.mid img {
+     object-position: 0px -45px !important;
 }
 
 .mind-behind-insight .team-name {

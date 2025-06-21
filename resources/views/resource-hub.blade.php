@@ -50,20 +50,20 @@
                 <div class="row carousel-desktop">
                     <div class="col-md-4 mb-4">
                         <div class="team-card first">
-                            <div class="team-name">Victor<br>Adeniran</div>
-                            <img src="{{ asset('images/victor_blog.png') }}" loading='lazy' alt="Person 1">
+                            <div class="team-name">Name<br>Surname</div>
+                            <img src="{{ asset('images/first-mind.png') }}" loading='lazy' alt="Person 1">
                         </div>
                     </div>
                     <div class="col-md-4 mb-4">
                         <div class="team-card mid">
-                            <div class="team-name">Margaret<br>Agwu</div>
-                            <img src="{{ asset('images/margaret_blog.png') }}" loading='lazy' alt="Person 2">
+                            <div class="team-name">Name<br>Surname</div>
+                            <img src="{{ asset('images/second-mind.png') }}" loading='lazy' alt="Person 2">
                         </div>
                     </div>
                     <div class="col-md-4 mb-4">
                         <div class="team-card third">
-                            <div class="team-name">Motunrayo<br>Ajagbonna</div>
-                            <img src="{{ asset('images/motunrayo_blog.png') }}" loading='lazy' alt="Person 3">
+                            <div class="team-name">Name<br>Surname</div>
+                            <img src="{{ asset('images/third-mind.png') }}" loading='lazy' alt="Person 3">
                         </div>
                     </div>
                 </div>
