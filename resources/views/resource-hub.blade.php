@@ -17,7 +17,11 @@
         <section class="blog-sec">
             <div class="container">
                 <div class="row align-items-center">
-                    <div class="col-lg-6 text-center text-lg-start mb-5 mb-lg-0">
+                    <div class="col-lg-6 text-start mb-5 mb-lg-0">
+                        <div class="mob">
+                            <img src="{{ asset('images/resource-hub.png') }}" loading='lazy' class="mb-3" alt="">
+                            <img src="{{ asset('images/rectangle-line.png') }}" loading='lazy' alt="">
+                        </div>
                         <div class="blog-date">1st May 2025</div>
                         <h2 class="blog-title">Understanding Buyer Habits</h2>
                         <p class="blog-description">
@@ -46,20 +50,20 @@
                 <div class="row carousel-desktop">
                     <div class="col-md-4 mb-4">
                         <div class="team-card first">
-                            <div class="team-name">Name<br>Surname</div>
-                            <img src="{{ asset('images/first-mind.png') }}" loading='lazy' alt="Person 1">
+                            <div class="team-name">Victor<br>Adeniran</div>
+                            <img src="{{ asset('images/victor_blog.png') }}" loading='lazy' alt="Person 1">
                         </div>
                     </div>
                     <div class="col-md-4 mb-4">
                         <div class="team-card mid">
-                            <div class="team-name">Name<br>Surname</div>
-                            <img src="{{ asset('images/second-mind.png') }}" loading='lazy' alt="Person 2">
+                            <div class="team-name">Margaret<br>Agwu</div>
+                            <img src="{{ asset('images/margaret_blog.png') }}" loading='lazy' alt="Person 2">
                         </div>
                     </div>
                     <div class="col-md-4 mb-4">
-                        <div class="team-card">
-                            <div class="team-name">Name<br>Surname</div>
-                            <img src="{{ asset('images/third-mind.png') }}" loading='lazy' alt="Person 3">
+                        <div class="team-card third">
+                            <div class="team-name">Motunrayo<br>Ajagbonna</div>
+                            <img src="{{ asset('images/motunrayo_blog.png') }}" loading='lazy' alt="Person 3">
                         </div>
                     </div>
                 </div>
@@ -70,20 +74,20 @@
                         <div class="carousel-inner-custom" id="carouselSlides">
                             <div class="carousel-item-custom">
                                 <div class="team-card">
-                                    <div class="team-name">Name<br>Surname</div>
-                                    <img src="{{ asset('images/first-mind.png') }}" loading='lazy' alt="Person 1">
+                                    <div class="team-name">Victor<br>Adeniran</div>
+                                    <img src="{{ asset('images/victor_blog.png') }}" loading='lazy' alt="Person 1">
                                 </div>
                             </div>
                             <div class="carousel-item-custom">
                                 <div class="team-card mid">
-                                    <div class="team-name">Name<br>Surname</div>
-                                    <img src="{{ asset('images/second-mind.png') }}" loading='lazy' alt="Person 2">
+                                    <div class="team-name">Margaret<br>Agwu</div>
+                                    <img src="{{ asset('images/margaret_blog.png') }}" loading='lazy' alt="Person 2">
                                 </div>
                             </div>
                             <div class="carousel-item-custom">
                                 <div class="team-card">
-                                    <div class="team-name">Name<br>Surname</div>
-                                    <img src="{{ asset('images/third-mind.png') }}" loading='lazy' alt="Person 3">
+                                    <div class="team-name">Motunrayo<br>Ajagbonna</div>
+                                    <img src="{{ asset('images/motunrayo_blog.png') }}" loading='lazy' alt="Person 3">
                                 </div>
                             </div>
                         </div>
