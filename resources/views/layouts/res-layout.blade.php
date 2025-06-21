@@ -41,12 +41,13 @@
                 <a class="navbar-brand" href="{{ route('homepage') }}">
                     <img src="{{ asset('images/logo.png') }}" loading='lazy' alt="">
                 </a>
-                <button class="navbar-toggler text-white border-1 border-light" type="button" data-bs-toggle="collapse"
+                <button class="navbar-toggler text-white border-0" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
+                    {{-- <span class="navbar-toggler-icon"></span> --}}
+                    <img src="{{ asset('images/hamburger.png') }}" loading='lazy' alt="">
                 </button>
                 <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav pt-md-0 pt-3">
                         <li class="nav-item"><a class="nav-link" href="{{ url('about') }}">Who We Are</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ url('services') }}">What We Do</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('event') }}">Our Events</a></li>
@@ -55,8 +56,8 @@
                         <li class="nav-item"><a class="nav-link" href="{{ url('contact') }}">Let’s Collaborate</a></li>
                     </ul>
 
-                    <div class="d-flex align-items-right mobile">
-                        <button class="subscribe-btn me-3">Subscribe</button>
+                    <div class="d-flex align-items-right mt-5 mobile">
+                        <button class="subscribe-btn me-3 mb-2">Subscribe</button>
                         <div class="social-icons">
                             <a href="https://linkedin.com/company/p23-africa/" target="_blank">
                                 <i class="fab fa-linkedin-in"></i>

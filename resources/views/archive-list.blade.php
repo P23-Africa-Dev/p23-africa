@@ -82,7 +82,7 @@
             <h4 class="mt-5">Other Categories:</h4>
             <div class="category-list">
                 @foreach ($otherCategories as $cat)
-                    <a href="{{ route('archive-list', ['category' => $cat->name]) }}" class="mx-2">{{ $cat->name }}</a>
+                    <a href="{{ route('archive-list', ['category' => $cat->name]) }}" class="mx-2">{{ $cat->name }}</a> * 
                 @endforeach
             </div>
             <!-- Blog Card 2 -->

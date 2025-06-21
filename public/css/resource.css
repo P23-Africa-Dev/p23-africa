@@ -92,6 +92,9 @@ body {
 .navbar {
     background-color: #4d787b;
     padding: 1rem 2rem;
+    position: fixed;
+    width: 100%;
+    z-index: 99;
 }
 
 .navbar-brand {
@@ -140,6 +143,7 @@ body {
 /* Blog Section Styling */
 .blog-sec {
     background-color: #4d787b;
+    padding-top: 5rem;
 }
 .blog-sec .container {
     padding: 80px 100px;
@@ -208,7 +212,7 @@ body {
         margin-left: auto;
         margin-right: auto;
         object-fit: cover;
-        object-position: -50px center;
+        object-position: center !important;
     }
 }
 
@@ -486,13 +490,15 @@ body {
     /* background-color: #e6e7dc; */
     background: linear-gradient(#ecedea91, #ecedea91),
         url("../images/resource-bg.png");
+    padding-top: 4rem;
+    position: relative;
 }
 .resourse-details-content {
     background-color: #e4e7dca1;
 }
 .whole-view-resource .side-image {
     position: absolute;
-    bottom: -7px;
+    bottom: 50%;
     right: 0;
 }
 .resourse-details-header .header {
@@ -632,7 +638,7 @@ body {
         url("../images/resource-bg.png");
 }
 .archive .archive-header {
-    padding-top: 4rem;
+    padding-top: 7rem;
     padding-bottom: 4rem;
 }
 .archive .archive-header h1 {
@@ -802,8 +808,8 @@ body {
 
 /* ARCHIVE LIST */
 .archive-list {
-    margin-top: 4rem;
-    margin-bottom: 4rem;
+    padding-top: 9rem;
+    padding-bottom: 4rem;
 }
 .archive-list .blog-card {
     background: #fff;

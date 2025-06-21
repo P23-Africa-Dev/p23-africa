@@ -31,7 +31,7 @@
                     </div>
                     <div class="col-lg-6 d-flex justify-content-center">
                         <div class="image-container">
-                            <img src="{{ asset('images/resource-header.png') }}" loading='lazy' alt="Woman Image" />
+                            <img src="{{ asset('images/resource-header-cropped.png') }}" loading='lazy' alt="Woman Image" />
                         </div>
                     </div>
                 </div>
