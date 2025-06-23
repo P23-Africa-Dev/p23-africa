@@ -45,7 +45,7 @@
                             {{ $blog->created_at->format('l, F jS Y') }}</div>
                         <div class="content">
                             <p>
-                                {!! nl2br(e($blog->content_1)) !!}
+                                {!! $blog->content_1 !!}
                             </p>
                         </div>
                     </div>
@@ -61,7 +61,7 @@
                     <div class="col-md-6 mt-4 mt-md-0">
                         <div class="content">
                             <p>
-                                {!! nl2br(e($blog->content_2)) !!}
+                                {!! $blog->content_2 !!}
                             </p>
                             <a href="{{ route('resource-hub') }}" class="cta-button">Get More Insights <span
                                     class="mx-2"></span> →</a>

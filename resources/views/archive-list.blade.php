@@ -7,7 +7,8 @@
     <meta name="keywords"
         content="Explore Expert Articles, Market Trends, And Practical Advice To Scale Your Business Across Africa And Beyond.">
     <meta name="author" content="Nurudeen O. Daniju">
-    <meta name="generator" content="Explore Expert Articles, Market Trends, And Practical Advice To Scale Your Business Across Africa And Beyond | P23 Africa">
+    <meta name="generator"
+        content="Explore Expert Articles, Market Trends, And Practical Advice To Scale Your Business Across Africa And Beyond | P23 Africa">
     <meta property="og:image" content="{{ asset('images/archive-header.png') }}">
 @endsection
 
@@ -45,7 +46,8 @@
 
             <div class="search desktop mb-5">
                 <div class="search-bar">
-                    <input type="text" class="form-control" id="searchInput" placeholder="Search your preferred Blog" autocomplete="off">
+                    <input type="text" class="form-control" id="searchInput" placeholder="Search your preferred Blog"
+                        autocomplete="off">
                     <div id="searchResults" class="search-dropdown d-none"></div>
                 </div>
             </div>
@@ -56,22 +58,24 @@
             <!-- Blog Card 1 -->
             {{-- @foreach ($olderBlogs as $blog) --}}
             @foreach ($blogs as $blog)
-                <div class="blog-card">
-                    <div class="blog-text">
-                        <div class="blog-category">{{ $blog->category?->name ?? 'No Category' }}</div>
-                        <div class="blog-title"><a href="{{ route('resource-show', $blog->slug) }}"
-                                class="">{{ $blog->title }}</a></div>
-                        <div class="blog-subtitle">
-                            {{ $blog->subtitle }}
+                <a href="{{ route('resource-show', $blog->slug) }}" class="archive-link">
+                    <div class="blog-card">
+                        <div class="blog-text">
+                            <div class="blog-category">{{ $blog->category?->name ?? 'No Category' }}</div>
+                            <div class="blog-title">{{ $blog->title }}</div>
+                            <div class="blog-subtitle">
+                                {{ $blog->subtitle }}
+                            </div>
+                            <div class="blog-meta">
+                                Written by {{ $blog->user->name }} &nbsp;&nbsp;&nbsp;&nbsp;
+                                {{ \Carbon\Carbon::parse($blog->created_at)->format('l, F jS Y') }}
+                            </div>
                         </div>
-                        <div class="blog-meta">
-                            Written by {{ $blog->user->name }} &nbsp;&nbsp;&nbsp;&nbsp;
-                            {{ \Carbon\Carbon::parse($blog->created_at)->format('l, F jS Y') }}
+                        <div class="blog-image"
+                            style="background-image: url('{{ asset('storage/' . $blog->image_path) }}');">
                         </div>
                     </div>
-                    <div class="blog-image" style="background-image: url('{{ asset('storage/' . $blog->image_path) }}');">
-                    </div>
-                </div>
+                </a>
             @endforeach
 
             <div class="mt-4">
@@ -82,7 +86,8 @@
             <h4 class="mt-5">Other Categories:</h4>
             <div class="category-list">
                 @foreach ($otherCategories as $cat)
-                    <a href="{{ route('archive-list', ['category' => $cat->name]) }}" class="mx-2">{{ $cat->name }}</a> * 
+                    <a href="{{ route('archive-list', ['category' => $cat->name]) }}"
+                        class="mx-2">{{ $cat->name }}</a> *
                 @endforeach
             </div>
             <!-- Blog Card 2 -->
