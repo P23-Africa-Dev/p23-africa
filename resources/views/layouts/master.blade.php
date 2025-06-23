@@ -7,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
         <title> @yield('title') </title>
-        
+
         <link rel="shortcut icon" href="{{ asset('images/logo.png') }}" type="image/x-icon">
 
         @yield('meta')
@@ -33,6 +33,17 @@
             .nav-link.active-custom {
                 color: #0D4036 !important;
                 font-weight: 800 !important;
+            }
+
+            .animate-on-scroll {
+                opacity: 0;
+                transform: translateY(40px);
+                transition: all 0.6s ease-out;
+            }
+
+            .animate-on-scroll.visible {
+                opacity: 1;
+                transform: translateY(0);
             }
 
             /* .content-section {
@@ -102,21 +113,42 @@
 
 
             // ANIMATE ON SCROLL
-            $(document).ready(function() {
-                function animateOnScroll() {
-                    $('.animate-on-scroll').each(function() {
-                        var elementTop = $(this).offset().top;
-                        var windowBottom = $(window).scrollTop() + $(window).height();
+            document.addEventListener("DOMContentLoaded", () => {
+                const sections = document.querySelectorAll(".animate-on-scroll");
 
-                        if (elementTop < windowBottom - 50) {
-                            $(this).addClass('visible');
+                const observer = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("visible");
+                            observer.unobserve(entry
+                                .target); // Remove this line if you want the animation again on scroll
                         }
                     });
-                }
+                }, {
+                    threshold: 0.2
+                });
 
-                animateOnScroll(); // Initial check
-                $(window).on('scroll', animateOnScroll); // On scroll
+                sections.forEach(section => {
+                    observer.observe(section);
+                });
             });
+
+
+            // $(document).ready(function() {
+            //     function animateOnScroll() {
+            //         $('.animate-on-scroll').each(function() {
+            //             var elementTop = $(this).offset().top;
+            //             var windowBottom = $(window).scrollTop() + $(window).height();
+
+            //             if (elementTop < windowBottom - 50) {
+            //                 $(this).addClass('visible');
+            //             }
+            //         });
+            //     }
+
+            //     animateOnScroll(); // Initial check
+            //     $(window).on('scroll', animateOnScroll); // On scroll
+            // });
         </script>
     </body>
 

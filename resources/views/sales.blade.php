@@ -14,7 +14,7 @@
 
 @section('content')
     <section class="sales">
-        <section class="sales-growth-section">
+        <section class="sales-growth-section reveal-section">
             <div class="content-row">
                 <div class="container mx-auto">
                     <div class="row">
@@ -119,7 +119,7 @@
             </div>
         </section>
 
-        <section class="how-it-works-section py-5">
+        <section class="how-it-works-section py-5 reveal-section">
             <div class="container py-lg-5">
                 <div class="row text-left mb-5 works-heading">
                     <div class="col-12">
@@ -154,7 +154,7 @@
             </div>
         </section>
 
-        <section class="business-audit">
+        <section class="business-audit reveal-section">
             <div class="container">
                 <div class="row d-flex flex-lg-row flex-column align-items-start">
                     <div class="col-12 col-lg-6 mb-5 mb-lg-0 text-left text-lg-start">
@@ -187,7 +187,7 @@
             </div>
         </section>
 
-        <section class="offer-section">
+        <section class="offer-section reveal-section">
             <div class="container">
                 <h2>This offer is perfect for</h2>
                 <div class="row justify-content-center">
@@ -229,7 +229,7 @@
             </div>
         </section>
 
-        <section class="clients-section content-section animate-on-scroll">
+        <section class="clients-section reveal-section">
             <div class="container">
                 <h2>Our Happy Clients Say</h2>
             </div>
@@ -331,7 +331,7 @@
             </div>
         </div>
 
-        <section class="trained-teams-section">
+        <section class="trained-teams-section reveal-section">
             <div class="container">
                 <div class="line-top"></div>
                 <h2>Trained <strong>3000+ Teams</strong></h2>
@@ -339,7 +339,7 @@
             </div>
         </section>
 
-        <section class="lead-section">
+        <section class="lead-section reveal-section">
             <div class="container-fluid">
                 <div class="row g-0">
                     <div class="col-md-6 col-lg-5 d-none d-md-block">

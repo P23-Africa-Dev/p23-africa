@@ -31,6 +31,29 @@
                     display: none !important;
                 }
             }
+
+            .reveal-section {
+                opacity: 0;
+                transform: translateY(40px);
+                transition: all 0.6s ease-out;
+            }
+
+            .reveal-section.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+
+            /* .animate-on-scroll {
+                opacity: 0 !important;
+                transform: translateY(50px) !important;
+                transition: all 0.6s ease-out !important;
+            }
+
+            .animate-on-scroll.visible {
+                opacity: 1 !important;
+                transform: translateY(0) !important;
+            } */
         </style>
     </head>
 
@@ -193,6 +216,29 @@
 
         <!-- Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script>
+            // ANIMATE ON SCROLL
+            document.addEventListener("DOMContentLoaded", () => {
+                const sections = document.querySelectorAll(".reveal-section");
+
+                const observer = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("visible");
+                            observer.unobserve(entry
+                            .target); // Remove this line if you want the animation again on scroll
+                        }
+                    });
+                }, {
+                    threshold: 0.2
+                });
+
+                sections.forEach(section => {
+                    observer.observe(section);
+                });
+            });
+        </script>
     </body>
 
 </html>

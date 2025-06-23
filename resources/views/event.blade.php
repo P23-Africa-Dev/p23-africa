@@ -22,7 +22,7 @@
         </div>
     </section>
 
-    <section class="upcoming_events animate-on-scroll">
+    <section class="upcoming_events content-section animate-on-scroll">
         <div class="event-section py-2">
             <!-- Events Grid -->
             <div class="row g-md-5 g-4">
@@ -178,7 +178,7 @@
         </div>
     </section>
 
-    <section class="past_events animate-on-scroll">
+    <section class="past_events content-section animate-on-scroll">
         <div class="container">
             <div class="row g-md-5 g-4">
                 <div class="col-12 col-sm-6 col-lg-4 my-auto">

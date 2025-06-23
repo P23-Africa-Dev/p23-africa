@@ -73,11 +73,15 @@
         url("../fonts/ivyora-text/IvyOraText-RegularItalic.woff") format("woff"); /* Adjust file names and paths as needed */
 }
 
+
+
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
 html {
     scroll-behavior: smooth;
 }
@@ -139,6 +143,9 @@ body {
     background: linear-gradient(#e4e7dcc9, #e4e7dcc9),
         url("../images/resource-bg.png");
 }
+
+
+
 
 /* Blog Section Styling */
 .blog-sec {
@@ -370,10 +377,10 @@ body {
 }
 
 .blog .blog-subtitle {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 700;
     margin-bottom: 40px;
-    max-width: 600px;
+    max-width: 400px;
     color: #0d4036;
 }
 

@@ -11,13 +11,15 @@
     <meta property="og:image" content="{{ asset('images/resource-header.png') }}">
 @endsection
 
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
 @section('content')
     <section class="whole-resource">
         <!-- Blog Section -->
         <section class="blog-sec">
             <div class="container">
                 <div class="row align-items-center">
-                    <div class="col-lg-6 text-start mb-5 mb-lg-0">
+                    <div class="col-lg-6 text-start mb-5 px-md-4 mb-lg-0">
                         <div class="mob">
                             <img src="{{ asset('images/resource-hub.png') }}" loading='lazy' class="mb-3" alt="">
                             <img src="{{ asset('images/rectangle-line.png') }}" loading='lazy' alt="">
@@ -33,7 +35,7 @@
                             <span>&rarr;</span>
                         </a>
                     </div>
-                    <div class="col-lg-6 d-flex justify-content-center">
+                    <div class="col-lg-6 px-md-5 d-flex justify-content-center">
                         <div class="image-container">
                             <img src="{{ asset('images/resource-header-cropped.png') }}" loading='lazy' alt="Woman Image" />
                         </div>
@@ -42,7 +44,7 @@
             </div>
         </section>
 
-        <section class="mind-behind-insight">
+        <section class="mind-behind-insight reveal-section">
             <div class="container py-5">
                 <div class="section-title">Minds Behind the Insights</div>
 
@@ -102,7 +104,7 @@
             </div>
         </section>
 
-        <section class="blog">
+        <section class="blog reveal-section">
             <div class="container blog-section">
                 <div class="row2">
                     <div class="column">
