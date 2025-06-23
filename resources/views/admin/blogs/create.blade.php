@@ -34,10 +34,10 @@
                         </select>
 
                         <textarea name="content_1" class="form-control mb-3 border border-1 border-dark" placeholder="First Content"
-                            rows="8" required>{{ old('content_1', $blog->content_1 ?? '') }}</textarea>
+                            rows="8" id="description" required>{{ old('content_1', $blog->content_1 ?? '') }}</textarea>
 
                         <input type="file" name="image" id="image"
-                            class="form-control p-2 mb-3 border border-1 border-dark" accept="image/*">
+                            class="form-control p-2 my-3 border border-1 border-dark" accept="image/*">
                         @if (isset($blog) && $blog->image_path)
                             <img src="{{ asset('storage/' . $blog->image_path) }}" width="200" class="mb-2">
                         @endif
@@ -66,7 +66,7 @@
                         </div>
 
                         <textarea name="content_2" class="form-control mb-3 border border-1 border-dark" rows="8"
-                            placeholder="Second Content">{{ old('content_2', $blog->content_2 ?? '') }}</textarea>
+                            placeholder="Second Content" id="description2">{{ old('content_2', $blog->content_2 ?? '') }}</textarea>
 
                         <button type="submit"
                             class="btn btn-dark w-25">{{ isset($blog) ? 'Update' : 'Publish' }}</button>

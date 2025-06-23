@@ -40,7 +40,7 @@ class BlogController extends Controller
     {
         $data = $request->validate([
             'title' => 'required|string|max:255',
-            'subtitle' => 'nullable|string|max:255',
+            'subtitle' => 'nullable|string|max:999',
             'content_1' => 'required|string',
             'content_2' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
@@ -90,7 +90,7 @@ class BlogController extends Controller
     {
         $data = $request->validate([
             'title' => 'required|string|max:255',
-            'subtitle' => 'nullable|string|max:255',
+            'subtitle' => 'nullable|string|max:999',
             'content_1' => 'required|string',
             'content_2' => 'nullable|string',
             'image' => 'nullable|image|max:2048',

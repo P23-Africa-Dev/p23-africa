@@ -33,7 +33,7 @@
                             @endforeach
                         </select>
 
-                        <textarea name="content_1" class="form-control mb-4 border border-1 border-dark" placeholder="First Content" required>{{ old('content_1', $blog->content_1 ?? '') }}</textarea>
+                        <textarea name="content_1" id="description" class="form-control mb-4 border border-1 border-dark" placeholder="First Content" required>{{ old('content_1', $blog->content_1 ?? '') }}</textarea>
 
                         <input type="file" name="image" id="image"
                             class="form-control p-2 mb-3 border border-1 border-dark" accept="image/*">
@@ -77,7 +77,7 @@
                         @endif
 
                         <br>
-                        <textarea name="content_2" class="form-control mb-4 border border-1 border-dark" placeholder="Second Content">{{ old('content_2', $blog->content_2 ?? '') }}</textarea>
+                        <textarea name="content_2" id="description2" class="form-control mb-4 border border-1 border-dark" placeholder="Second Content">{{ old('content_2', $blog->content_2 ?? '') }}</textarea>
 
                         <button type="submit"
                             class="btn btn-dark w-25">{{ isset($blog) ? 'Update' : 'Publish' }}</button>
