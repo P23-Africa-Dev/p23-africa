@@ -94,6 +94,22 @@
                                                     </form>
                                                 @endif
                                             </span>
+
+                                            <span>
+                                                @php
+                                                    $eventTimePassed = \Carbon\Carbon::parse($event->date_time)
+                                                        ->addHour()
+                                                        ->lt(now());
+                                                @endphp
+
+                                                @if ($eventTimePassed)
+                                                    <form action="{{ route('admin.events.sendFeedback', $event->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        <button class="btn btn-primary">Send Feedback Request</button>
+                                                    </form>
+                                                @endif
+                                            </span>
                                         </td>
                                     </tr>
                                 @endforeach

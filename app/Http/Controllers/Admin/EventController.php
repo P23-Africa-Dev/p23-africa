@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\EventFeedbackMail;
 use App\Mail\EventReminderMail;
 use App\Models\Event;
+use App\Models\Seat;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -177,5 +179,16 @@ class EventController extends Controller
         }
 
         return back()->with('success', 'Reminder emails sent successfully.');
+    }
+
+    public function sendFeedback(Event $event)
+    {
+        $bookings = Seat::where('event_id', $event->id)->get();
+
+        foreach ($bookings as $booking) {
+            Mail::to($booking->email)->queue(new EventFeedbackMail($event, $booking));
+        }
+
+        return redirect()->back()->with('success', 'Feedback emails sent to attendees.');
     }
 }

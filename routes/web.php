@@ -135,6 +135,9 @@ Route::post('/event/join', [UserEventController::class, 'join'])->name('event.jo
 
 Route::get('/event/live/{slug}/{code}', [UserEventController::class, 'liveEvent'])->name('private.access');
 
+Route::get('/download-ics/{booking}', [App\Http\Controllers\CalendarController::class, 'downloadIcs'])->name('download.ics');
+
+
 
 // Route::get('/events/all-events', function () {
 //     $events = Event::all();
@@ -158,6 +161,8 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 
     Route::post('/events/{id}/send-reminder', [EventController::class, 'sendReminder'])
         ->name('events.sendReminder');
+
+    Route::post('/admin/events/{event}/send-feedback', [EventController::class, 'sendFeedback'])->name('admin.events.sendFeedback');
 
     Route::resource('/blogs/categories', CategoryController::class);
 

@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\EventReminderMails;
 use Illuminate\Console\Command;
 use App\Models\Seat;
 use App\Models\Event;
@@ -11,69 +12,34 @@ use Illuminate\Support\Facades\Mail;
 class SendEventReminders extends Command
 {
     protected $signature = 'reminders:send';
-    protected $description = 'Send email reminders for upcoming events';
+    protected $description = 'Send event reminders 24 hours and 15 minutes before event';
 
     public function handle()
     {
-        $now = Carbon::now();
+        // Send 24-hour reminders
+        $this->sendRemindersForTimeFrame(now()->addDay(), '24hr');
 
-        // 1 Day Before Reminder
-        $dayBefore = $now->copy()->addDay()->toDateString();
-
-        $seatsDayBefore = Seat::whereHas('event', function ($query) use ($dayBefore) {
-            $query->whereDate('event_date', $dayBefore);
-        })->get();
-
-        foreach ($seatsDayBefore as $seat) {
-            $this->sendReminder($seat, 'day-before');
-        }
-
-        // 15 Minutes Before Reminder
-        $fifteenMinutesLater = $now->copy()->addMinutes(15);
-
-        $seats15MinBefore = Seat::whereHas('event', function ($query) use ($fifteenMinutesLater) {
-            $query->whereDate('event_date', $fifteenMinutesLater->toDateString())
-                ->whereTime('event_time', $fifteenMinutesLater->format('H:i:00'));
-        })->get();
-
-        foreach ($seats15MinBefore as $seat) {
-            $this->sendReminder($seat, 'fifteen-minutes');
-        }
-
-        $this->info('Reminders sent.');
+        // Send 15-minute reminders
+        $this->sendRemindersForTimeFrame(now()->addMinutes(15), '15min');
     }
 
-    protected function sendReminder($seat, $type)
+    protected function sendRemindersForTimeFrame($targetTime, $type)
     {
-        $event = $seat->event;
-        $firstName = explode(' ', $seat->name)[0];
+        $events = Event::whereBetween('date_time', [
+            $targetTime->copy()->startOfMinute(),
+            $targetTime->copy()->endOfMinute(),
+        ])->get();
 
-        $link = $event->visibility === 'public'
-            ? $event->link
-            : route('private.access', ['slug' => $event->slug, 'code' => $seat->seat_code]);
+        foreach ($events as $event) {
+            $bookings = $event->bookings; // assumes Event has bookings() relationship
 
-        $data = [
-            'firstName' => $firstName,
-            'eventName' => $event->title,
-            'eventDate' => Carbon::parse($event->event_date)->format('jS F, Y'),
-            'eventTime' => Carbon::parse($event->event_time)->format('g:i A'),
-            'link' => $link,
-        ];
+            foreach ($bookings as $booking) {
+                // Avoid duplicate sends by checking a flag or timestamp if needed (advanced)
 
-        $to = $seat->email;
-
-        if ($type === 'day-before') {
-            Mail::send('emails.reminders.day-before', $data, function ($message) use ($to, $event) {
-                $message->to($to)
-                    ->subject('🚨 1 Day to Go! ' . $event->title . ' is Tomorrow');
-            });
+                Mail::to($booking->email)->send(new EventReminderMails($event, $booking, $type));
+            }
         }
 
-        if ($type === 'fifteen-minutes') {
-            Mail::send('emails.reminders.fifteen-minutes', $data, function ($message) use ($to, $event) {
-                $message->to($to)
-                    ->subject('🔔 Starting Soon: ' . $event->title . ' in 15 Minutes!');
-            });
-        }
+        $this->info("{$type} reminders sent.");
     }
 }
