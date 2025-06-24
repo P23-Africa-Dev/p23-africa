@@ -48,8 +48,8 @@ class BlogController extends Controller
         ]);
 
         // ✅ Clean content if needed
-        $data['content_1'] = Purifier::clean($data['content_1']);
-        $data['content_2'] = Purifier::clean($data['content_2']);
+        // $data['content_1'] = Purifier::clean($data['content_1']);
+        // $data['content_2'] = Purifier::clean($data['content_2']);
 
         // ✅ Handle image upload
         if ($request->hasFile('image')) {
@@ -112,8 +112,8 @@ class BlogController extends Controller
         }
 
         // 🛠️ Purify and assign to $data
-        $data['content_1'] = Purifier::clean($data['content_1']);
-        $data['content_2'] = Purifier::clean($data['content_2']);
+        // $data['content_1'] = Purifier::clean($data['content_1']);
+        // $data['content_2'] = Purifier::clean($data['content_2']);
 
         // Update blog
         $blog->update($data);

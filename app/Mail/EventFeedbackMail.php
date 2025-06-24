@@ -16,13 +16,10 @@ class EventFeedbackMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public $event;
-    public $booking;
 
-    public function __construct($event, $booking)
+    public function __construct(public $event, public $booking)
     {
-        $this->event = $event;
-        $this->booking = $booking;
+
     }
 
     public function build()

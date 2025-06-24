@@ -33,6 +33,11 @@ class Event extends Model
         return $this->hasMany(\App\Models\Seat::class);
     }
 
+    public function feedbacks()
+    {
+        return $this->hasMany(Feedback::class);
+    }
+
     public static function boot()
     {
         parent::boot();

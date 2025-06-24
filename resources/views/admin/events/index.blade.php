@@ -64,6 +64,10 @@
                                                         href="{{ route('admin.events.edit', $event) }}"
                                                         class="fa fa-edit link-primary"></a></button>
 
+                                                <button class="btn"><a
+                                                        href="{{ route('admin.events.feedbacks', $event->id) }}"
+                                                        target="_blank" class="fa-regular fa-comment-dots link-dark"></a></button>
+
                                                 <form action="{{ route('admin.events.destroy', $event) }}"
                                                     method="POST" class="d-inline"
                                                     onsubmit="return confirm('Are you sure you want to delete this event? This action cannot be undone.');">
@@ -97,16 +101,24 @@
 
                                             <span>
                                                 @php
-                                                    $eventTimePassed = \Carbon\Carbon::parse($event->date_time)
-                                                        ->addHour()
-                                                        ->lt(now());
+                                                    $eventDateTime2 = \Carbon\Carbon::parse(
+                                                        $event->event_date . ' ' . $event->event_time,
+                                                    );
+                                                    $now2 = \Carbon\Carbon::now();
+                                                    $hoursUntilEvent2 = $now2->diffInHours($eventDateTime2, true); // negative if past
+
+                                                    // $eventTimePassed = \Carbon\Carbon::parse($event->date_time)
+                                                    //     ->addMinute()
+                                                    //     ->lt(now());
+
                                                 @endphp
 
-                                                @if ($eventTimePassed)
+                                                @if ($hoursUntilEvent2 <= 24 && $hoursUntilEvent2 > 0)
                                                     <form action="{{ route('admin.events.sendFeedback', $event->id) }}"
                                                         method="POST">
                                                         @csrf
-                                                        <button class="btn btn-primary">Send Feedback Request</button>
+                                                        <button type="submit" class="btn btn-dark">Send Feedback
+                                                            Request</button>
                                                     </form>
                                                 @endif
                                             </span>

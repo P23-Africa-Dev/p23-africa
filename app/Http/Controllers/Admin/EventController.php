@@ -186,9 +186,15 @@ class EventController extends Controller
         $bookings = Seat::where('event_id', $event->id)->get();
 
         foreach ($bookings as $booking) {
-            Mail::to($booking->email)->queue(new EventFeedbackMail($event, $booking));
+            Mail::to($booking->email)->send(new EventFeedbackMail($event, $booking));
         }
 
         return redirect()->back()->with('success', 'Feedback emails sent to attendees.');
+    }
+
+    public function viewFeedbacks(Event $event)
+    {
+        $feedbacks = $event->feedbacks()->latest()->get();
+        return view('admin.events.feedbacks', compact('event', 'feedbacks'));
     }
 }
