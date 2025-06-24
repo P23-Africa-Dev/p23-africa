@@ -19,20 +19,22 @@
 
 @section('content')
     <section class="whole-view-resource">
-        <section class="container py-5">
-            <!-- Heading Section -->
-            <section class="resourse-details-header">
-                <div class="header">
-                    {{-- <span>INTRO</span> --}}
-                    <h2 class="section-title">{{ $blog->title }}</h2>
-                    <p class="section-subtitle">
-                        {{ $blog->subtitle }}
-                    </p>
-                </div>
+        <div class="whole-header">
+            <section class="container py-5">
+                <!-- Heading Section -->
+                <section class="resourse-details-header">
+                    <div class="header">
+                        {{-- <span>INTRO</span> --}}
+                        <h2 class="section-title">{{ $blog->title }}</h2>
+                        <p class="section-subtitle">
+                            {{ $blog->subtitle }}
+                        </p>
+                    </div>
+                </section>
             </section>
-        </section>
-        <div class="side-image">
-            <img src="{{ asset('images/view-resource-side.png') }}" loading='lazy' alt="">
+            <div class="side-image">
+                <img src="{{ asset('images/view-resource-side.png') }}" loading='lazy' alt="">
+            </div>
         </div>
         <section class="resourse-details-content">
             <div class="dotted-divider"></div>

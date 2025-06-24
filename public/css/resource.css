@@ -509,6 +509,8 @@ body {
     background: linear-gradient(#ecedea91, #ecedea91),
         url("../images/resource-bg.png");
     padding-top: 4rem;
+}
+.whole-view-resource .whole-header{
     position: relative;
 }
 .resourse-details-content {
@@ -516,7 +518,7 @@ body {
 }
 .whole-view-resource .side-image {
     position: absolute;
-    bottom: 50%;
+    top: 6rem;
     right: 0;
 }
 .resourse-details-header .header {
@@ -574,7 +576,7 @@ body {
     color: #0d4036;
 }
 
-.resourse-details-content .content p {
+.resourse-details-content .content {
     font-size: 16px;
     line-height: 1.6;
     margin-bottom: 15px;
