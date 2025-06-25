@@ -16,12 +16,22 @@ use App\Http\Controllers\UserEventController;
 use App\Mail\ChallengeSubmission;
 use App\Models\Click;
 use App\Models\Event;
+use Illuminate\Support\Facades\Artisan;
 // use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 
+
+Route::get('/run-schedule', function () {
+    if (request()->get('token') !== 'YOUR_SECRET_TOKEN') {
+        abort(403, 'Unauthorized');
+    }
+
+    Artisan::call('schedule:run');
+    return 'Schedule run executed!';
+});
 
 
 Route::get('/admin/login', [LoginController::class, 'viewLogin'])->name('login');
