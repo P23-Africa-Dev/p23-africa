@@ -68,6 +68,10 @@
                                                         href="{{ route('admin.events.feedbacks', $event->id) }}"
                                                         target="_blank" class="fa-regular fa-comment-dots link-dark"></a></button>
 
+                                                <button class="btn"><a
+                                                        href="{{ route('admin.events.clicks', $event->id) }}"
+                                                        target="_blank" class="fa fa-chart-line link-dark"></a></button>
+
                                                 <form action="{{ route('admin.events.destroy', $event) }}"
                                                     method="POST" class="d-inline"
                                                     onsubmit="return confirm('Are you sure you want to delete this event? This action cannot be undone.');">

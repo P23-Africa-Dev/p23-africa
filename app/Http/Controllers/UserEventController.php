@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\EventClick;
+use App\Models\EventClickLog;
 use App\Models\Seat;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Jenssegers\Agent\Agent;
+use Illuminate\Support\Str;
+
 
 class UserEventController extends Controller
 {
@@ -25,13 +30,67 @@ class UserEventController extends Controller
         return view('event',  compact('events', 'past_events'));
     }
 
-    public function show($slug)
+    public function show($slug, Request $request)
     {
         $event = Event::where('slug', $slug)->firstOrFail();
 
 
-        return view('show-event', compact('event'));
+        $deviceId = $request->cookie('device_id') ?? Str::uuid()->toString();
+        $agent = new Agent();
+        $deviceType = $agent->isMobile() ? 'Mobile' : 'Desktop';
+
+        // Store unique visits
+        $existingClick = EventClick::where('event_id', $event->id)
+            ->where('device_identifier', $deviceId)
+            ->first();
+
+        if (!$existingClick) {
+            EventClick::create([
+                'event_id' => $event->id,
+                'device_identifier' => $deviceId,
+                'device_type' => $deviceType,
+            ]);
+        }
+
+        // Always log visits for revisit counting
+        EventClickLog::create([
+            'event_id' => $event->id,
+            'device_id' => $deviceId,
+            'device_type' => $deviceType,
+        ]);
+
+        return response()
+            ->view('show-event', compact('event'))
+            ->cookie('device_id', $deviceId, 60 * 24 * 30); // 30 days
     }
+
+    // public function show($slug, Request $request)
+    // {
+    //     $event = Event::where('slug', $slug)->firstOrFail();
+
+    //     // Detect device type using Jenssegers Agent
+    //     $agent = new Agent();
+    //     $deviceType = $agent->isMobile() ? 'Mobile' : 'Desktop';
+
+    //     // Generate unique device identifier using IP + User-Agent
+    //     $deviceIdentifier = md5($request->ip() . $request->header('User-Agent'));
+
+    //     // Check if this device has already clicked on this event
+    //     $alreadyClicked = EventClick::where('event_id', $event->id)
+    //         ->where('device_identifier', $deviceIdentifier)
+    //         ->exists();
+
+    //     if (!$alreadyClicked) {
+    //         EventClick::create([
+    //             'event_id' => $event->id,
+    //             'device_identifier' => $deviceIdentifier,
+    //             'device_type' => $deviceType,
+    //         ]);
+    //     }
+
+
+    //     return view('show-event', compact('event'));
+    // }
 
     public function allEvents(){
         $events = Event::whereDate('event_date', '>=', now())

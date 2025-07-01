@@ -189,6 +189,8 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::resource('/events', EventController::class);
     Route::get('/events/{event}/bookings', [EventController::class, 'showBookings'])->name('events.bookings');
 
+    Route::get('/events/{event}/clicks', [EventController::class, 'viewClicks'])->name('events.clicks');
+
     Route::resource('blogs', BlogController::class);
 });
 

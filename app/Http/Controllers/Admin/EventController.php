@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Mail\EventFeedbackMail;
 use App\Mail\EventReminderMail;
 use App\Models\Event;
+use App\Models\EventClick;
+use App\Models\EventClickLog;
 use App\Models\Seat;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -196,5 +198,44 @@ class EventController extends Controller
     {
         $feedbacks = $event->feedbacks()->latest()->get();
         return view('admin.events.feedbacks', compact('event', 'feedbacks'));
+    }
+
+    public function viewClicks(Event $event, Request $request)
+    {
+        $filter = $request->get('filter', 'all');
+
+        $logsQuery = EventClickLog::where('event_id', $event->id);
+        $query = EventClick::where('event_id', $event->id);
+
+        // Apply filters
+        if ($filter === 'today') {
+            $logsQuery->whereDate('created_at', Carbon::today());
+            $query->whereDate('created_at', Carbon::today());
+        } elseif ($filter === '7days') {
+            $logsQuery->where('created_at', '>=', Carbon::now()->subDays(7));
+            $query->where('created_at', '>=', Carbon::now()->subDays(7));
+        } elseif ($filter === '30days') {
+            $logsQuery->where('created_at', '>=', Carbon::now()->subDays(30));
+            $query->where('created_at', '>=', Carbon::now()->subDays(30));
+        }
+
+        // Unique device_identifier for unique counts
+        $uniqueClicks = $query->get()->unique('device_identifier');
+
+        $mobileClicks = $uniqueClicks->where('device_type', 'Mobile')->count();
+        $desktopClicks = $uniqueClicks->where('device_type', 'Desktop')->count();
+        $allUniqueClicks = $uniqueClicks->count();
+
+        // All clicks including revisits
+        $allClicksWithRevisits = $logsQuery->count();
+
+        return view('admin.events.clicks_report', compact(
+            'event',
+            'mobileClicks',
+            'desktopClicks',
+            'allUniqueClicks',
+            'allClicksWithRevisits',
+            'filter'
+        ));
     }
 }
