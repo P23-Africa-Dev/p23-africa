@@ -154,8 +154,8 @@ body {
     background-color: white;
     color: #4d787b;
 }
-.social-icons a{
-  text-decoration: none;
+.social-icons a {
+    text-decoration: none;
 }
 .social-icons i {
     font-size: 1rem;
@@ -184,16 +184,16 @@ body {
     -webkit-filter: invert(100%);
     filter: invert(100%);
 }
-.bg-scrolling .subscribe-btn{
-  background-color: #08201b;
-  color: #fff;
-  transition: 500ms;
-  padding: 5px 15px;
+.bg-scrolling .subscribe-btn {
+    background-color: #08201b;
+    color: #fff;
+    transition: 500ms;
+    padding: 5px 15px;
 }
-.bg-scrolling .subscribe-btn:hover{
-  background-color: transparent;
-  border: 1px solid #08201b;
-  color: #08201b;
+.bg-scrolling .subscribe-btn:hover {
+    background-color: transparent;
+    border: 1px solid #08201b;
+    color: #08201b;
 }
 
 .bg-scrolling .social-icons i {
@@ -203,6 +203,7 @@ body {
 }
 
 .whole-brn {
+    background: linear-gradient(#ffffffa9, #ffffffa9), url(../images/brn-gb.png);
 }
 
 /* =====================================================  BRN  START - INTRO SECTION*/
@@ -390,13 +391,13 @@ body {
     text-align: center;
     position: relative;
     overflow: hidden;
-    background-image: linear-gradient(
+    /* background-image: linear-gradient(
             to right,
             #ffffff 0%,
-            /* Left part */ #eaeaea 50%,
-            /* Middle part */ #ffffff 100% /* Right part */
+             #eaeaea 50%,
+             #ffffff 100% 
         ),
-        url(../images/stk-intro-banner.png);
+        url(../images/stk-intro-banner.png); */
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -579,13 +580,13 @@ body {
 /* =======================================  BRN TESTIMONIAL SECTION */
 
 .brn-testimonials-section {
-    background-image: linear-gradient(
+    /* background-image: linear-gradient(
             to right,
             #ffffff 0%,
-            /* Left part */ #eaeaea 50%,
-            /* Middle part */ #ffffff 100% /* Right part */
+             #eaeaea 50%,
+             #ffffff 100%
         ),
-        url(../images/stk-intro-banner.png);
+        url(../images/stk-intro-banner.png); */
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -829,12 +830,7 @@ body {
 
 /* =======================================  BRN CTA SECTION */
 .brn-cta-section {
-    background-image: linear-gradient(
-            to right,
-            #2f626e 0%,
-            /* Left part */ #23444c 50%,
-            /* Middle part */ #1a3e47 100% /* Right part */
-        ),
+    background-image: linear-gradient(#0B1727, #0B1727),
         url(../images/brn-intro-bg-image.png);
     background-position: center;
     background-repeat: no-repeat;
@@ -874,8 +870,9 @@ body {
 }
 
 .brn-cta-section .left-content .button {
-    background-color: #052f32;
-    border: 2px solid #052f32;
+    background-color: #052f3200;
+    border: 2px solid #fff;
+    border-radius: 10px;
     color: #fff;
     padding: 0.5rem 1.4rem;
     font-size: 18px;
@@ -893,7 +890,8 @@ body {
 }
 
 .brn-cta-section .left-content .button:hover {
-    background-color: #193e47d4;
+    background-color: #ffffffd4;
+    color: #0B1727;
 }
 
 /* Responsive adjustments */
@@ -1013,14 +1011,14 @@ body {
     .brn-cta-section .right-image {
         position: relative;
         left: -60%;
-        background-color: transparent;
+        /* background-color: transparent;
         background-image: linear-gradient(
             to left,
             transparent 0%,
             #1a3e47 35%,
             /* middle soft blend */ #1a3e47 0%,
             /* darker toward the end */ #1a3e47 100% /* solid right side */
-        );
+        ); */
     }
 
     .left-container .bottom-image {
@@ -1157,6 +1155,27 @@ body {
         position: relative;
         left: -20%;
     }
+}
+
+/* ============================================ BUSINESS MATCH*/
+.buss-match {
+    margin: 3rem auto;
+}
+.buss-match img {
+    width: 100%;
+    height: auto;
+}
+.valuable-leads {
+}
+.valuable-leads img {
+    width: 100%;
+    height: auto;
+}
+.networking {
+}
+.networking img {
+    width: 100%;
+    height: auto;
 }
 
 /* ============================================ BRN FORM AREA */
@@ -1306,8 +1325,6 @@ body {
         right: 11%;
     }
 }
-
-
 
 /* FOOTER */
 @media screen and (max-width: 580px) {

@@ -261,7 +261,7 @@
                     </div>
                     <div class="grid-item highlight">
                         <div class="item-number">/05</div>
-                        <div class="item-title">Boost Research Impact</div>
+                        <div class="item-title" style="max-width: 300px;">Boost Research Impact</div>
                         <p>
                             Drive meaningful change with data-backed discoveries that extend
                             beyond the classroom.

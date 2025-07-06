@@ -25,6 +25,31 @@
             format("woff"); /* Adjust file names and paths as needed */
 }
 
+@font-face {
+    font-family: "GT Walsheim ProCBO"; /* Name your font family */
+
+    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedBlackOblique.woff2")
+            format("woff2"),
+        url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedBlackOblique.woff")
+            format("woff"); /* Adjust file names and paths as needed */
+}
+@font-face {
+    font-family: "GT Walsheim ProCUB"; /* Name your font family */
+
+    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedUltraBold.woff2")
+            format("woff2"),
+        url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedUltraBold.woff")
+            format("woff"); /* Adjust file names and paths as needed */
+}
+@font-face {
+    font-family: "GT Walsheim ProCB"; /* Name your font family */
+
+    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedBlack.woff2")
+            format("woff2"),
+        url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedBlack.woff")
+            format("woff"); /* Adjust file names and paths as needed */
+}
+
 body {
     font-family: "GT Walsheim Pro";
 }
@@ -586,42 +611,45 @@ Students-page  */
 }
 
 .students-page-policyandresearch-section .section-title {
-    font-size: 1.5rem;
+    font-size: 2.5rem !important;
     font-weight: bold;
     color: #0d4036;
     margin-bottom: 3rem;
     padding: 0px 20px;
+    font-family: "GT Walsheim ProCB";
 }
 .students-page-policyandresearch-section .section-title span {
     font-weight: 300;
     color: #0d4036;
+    font-family: "GT Walsheim Con";
 }
 
 .students-page-policyandresearch-section .policyandresearch-grid-container {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
-    gap: 30px;
+    gap: 10px;
 }
 .students-page-policyandresearch-section .grid-item {
     background-color: transparent;
-    padding: 0.2rem;
-    padding: 7px 40px 7px 20px;
+    /* padding: 0.2rem; */
+    padding: 7px 40px 7px 40px;
 }
 
 .students-page-policyandresearch-section .grid-item .item-number {
     font-size: 1.2rem;
-    font-weight: 500;
+    font-weight: 900;
     color: #000000;
-
     margin-bottom: 0.5rem;
 }
 
 .students-page-policyandresearch-section .grid-item .item-title {
-    font-size: 1.8rem;
+    font-size: 2.5rem;
     font-weight: bold;
     color: #000000;
     margin-bottom: 1rem;
     max-width: 200px;
+    line-height: 40px;
+    font-family: "GT Walsheim ProCB";
 }
 
 .students-page-policyandresearch-section .grid-item p {

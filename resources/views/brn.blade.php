@@ -47,10 +47,11 @@
                                         <div class="dot"></div>
                                     </div>
                                     <div class="send-icon">
-                                        <img class="" src="{{ asset('images/send.png') }}" loading="lazy" class="" alt="" />
+                                        <img class="" src="{{ asset('images/send.png') }}" loading="lazy"
+                                            class="" alt="" />
                                     </div>
-                                    <img class="firstimage" loading="lazy" src="{{ asset('images/brn-intro-card2.jpg') }}" class=""
-                                        alt="" />
+                                    <img class="firstimage" loading="lazy" src="{{ asset('images/brn-intro-card2.jpg') }}"
+                                        class="" alt="" />
                                 </div>
                                 <div class="second">
                                     <div class="card-dots">
@@ -60,14 +61,16 @@
                                     </div>
                                     <div class="card-image">
                                         <div>
-                                            <img src="{{ asset('images/brn-intro-card1.png') }}" loading="lazy" alt="" />
+                                            <img src="{{ asset('images/brn-intro-card1.png') }}" loading="lazy"
+                                                alt="" />
                                         </div>
                                         <p>
                                             "Trusted referrals. <br />
                                             Real business growth."
                                         </p>
                                     </div>
-                                    <img src="{{ asset('images/brn-intro-card1.png') }}" loading="lazy" class="secondimage" alt="" />
+                                    <img src="{{ asset('images/brn-intro-card1.png') }}" loading="lazy" class="secondimage"
+                                        alt="" />
                                 </div>
                             </div>
                         </div>
@@ -93,7 +96,8 @@
                         </div>
                     </div>
                     <div class="operate-card card-2">
-                        <img class="w-full" class="operate-card-image1" loading="lazy" src="{{ asset('images/brn-intro3.png') }}" alt="CEO Image" />
+                        <img class="w-full" class="operate-card-image1" loading="lazy"
+                            src="{{ asset('images/brn-intro3.png') }}" alt="CEO Image" />
                         <div class="card-content">
                             <h3>Build Meaningful Relationships</h3>
                             <p>
@@ -116,6 +120,31 @@
             </div>
             <div class="bottom-left-bg">
                 <img src="{{ asset('images/work-top.png') }}" loading="lazy" alt="" />
+            </div>
+        </section>
+
+        <section class="buss-match">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 my-auto">
+                        <img src="{{ asset('images/business_match_text.png') }}" loading="lazy" alt="Business Match">
+                    </div>
+                    <div class="col-md-8">
+                        <img src="{{ asset('images/business_match.png') }}" loading="lazy" alt="Business Match">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="valuable-leads">
+            <div class="container">
+                <img src="{{ asset('images/valuable_leads.png') }}" loading="lazy" alt="Valuable Leads">
+            </div>
+        </section>
+
+        <section class="networking">
+            <div class="container">
+                <img src="{{ asset('images/networking.png') }}" loading="lazy" alt="Networking">
             </div>
         </section>
 
@@ -270,16 +299,17 @@
             </div>
         </section>
 
-        <section class="brn-cta-section mb-2">
+        <section class="brn-cta-section">
             <div class="container">
                 <div class="row align-items-center gx-5">
                     <div class="d-none d-lg-block  col-lg-6 order-lg-1">
                         <div class="right-image">
-                            <img src="{{ asset('images/cta.png') }}" loading="lazy" alt="" />
+                            <img src="{{ asset('images/cta-bg.png') }}" loading="lazy" alt="" />
                         </div>
                     </div>
                     <div class="col-12 col-lg-6  order-lg-2 left-container">
-                        <img class="top-image" src="{{ asset('images/Vector -cta.png') }}" loading="lazy" alt="" />
+                        <img class="top-image" src="{{ asset('images/Vector -cta.png') }}" loading="lazy"
+                            alt="" />
                         <div class="left-content text-left">
                             <h2>Ready to Grow with Trusted Leaders?</h2>
 
@@ -292,7 +322,8 @@
                                 <i class="bi bi-arrow-right"></i>
                             </a>
                         </div>
-                        <img class="bottom-image" src="{{ asset('images/Vector.png') }}" loading="lazy" loading="lazy" alt="" />
+                        <img class="bottom-image" src="{{ asset('images/Vector.png') }}" loading="lazy" loading="lazy"
+                            alt="" />
                     </div>
                 </div>
             </div>
