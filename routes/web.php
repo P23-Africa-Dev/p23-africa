@@ -76,6 +76,19 @@ Route::get('/quiz', function () {
     return view('sales-quiz');
 })->name('quiz');
 
+// BRN
+Route::get('/brn', function () {
+    return view('brn');
+})->name('brn');
+Route::get('/brn-form', function () {
+    return view('brn-form');
+})->name('brn-form');
+
+// Student
+Route::get('/student', function () {
+    return view('student');
+})->name('student');
+
 /**
  * Route to display click counts.
  */

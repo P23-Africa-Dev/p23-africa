@@ -1,0 +1,1148 @@
+@font-face {
+    font-family: "GT Walsheim Pro"; /* Name your font family */
+
+    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff2")
+            format("woff2"),
+        url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff")
+            format("woff"); /* Adjust file names and paths as needed */
+}
+
+@font-face {
+    font-family: "GT Walsheim Con"; /* Name your font family */
+
+    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedRegular.woff2")
+            format("woff2"),
+        url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff")
+            format("woff"); /* Adjust file names and paths as needed */
+}
+
+@font-face {
+    font-family: "GT Walsheim Bold"; /* Name your font family */
+
+    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-Bold.woff2")
+            format("woff2"),
+        url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff")
+            format("woff"); /* Adjust file names and paths as needed */
+}
+
+body {
+    font-family: "GT Walsheim Pro";
+}
+
+
+
+/* Navbar Styling */
+.navbar {
+    background-color: #0D4036;
+    padding: 1rem 2rem;
+    position: fixed;
+    width: 100%;
+    z-index: 99;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.navbar .navbar-brand img {
+    height: auto;
+    width: 62px;
+    padding-right: 2px;
+}
+
+.navbar .nav-link {
+    color: white !important;
+    margin-right: 20px;
+    font-size: 0.95rem;
+    text-decoration: none;
+}
+
+.subscribe-btn {
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    border-radius: 8px;
+    padding: 5px 15px;
+    font-size: 0.9rem;
+}
+
+.subscribe-btn:hover {
+    background-color: white;
+    color: #4d787b;
+}
+.social-icons a{
+  text-decoration: none;
+}
+.social-icons i {
+    font-size: 1rem;
+    color: white;
+    margin-left: 12px;
+}
+
+.bg-scrolling {
+    background-color: #fff !important;
+    color: #0d4036;
+    box-shadow: 0px 4px 7px #777;
+    z-index: 1000;
+    transition: 500ms;
+}
+.bg-scrolling .nav-link {
+    text-decoration: none;
+    color: #0d4036 !important;
+    font-weight: 500;
+    transition: 400ms;
+}
+.bg-scrolling .nav-link:hover {
+    color: #08201b;
+    font-weight: 700;
+}
+.bg-scrolling .navbar-brand img {
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+}
+.bg-scrolling .subscribe-btn{
+  background-color: #08201b;
+  color: #fff;
+  transition: 500ms;
+  padding: 5px 15px;
+}
+.bg-scrolling .subscribe-btn:hover{
+  background-color: transparent;
+  border: 1px solid #08201b;
+  color: #08201b;
+}
+
+.bg-scrolling .social-icons i {
+    font-size: 1rem;
+    color: #4d787b;
+    margin-left: 12px;
+}
+
+
+
+
+
+/* ======================================================
+===================================================
+===========================================
+Students-page  */
+
+.students-page-intro-section {
+    display: flex;
+    align-items: center;
+    padding: 40px 20px;
+    position: relative;
+
+    overflow: hidden;
+    /* border: 1px solid red; */
+    background-image: linear-gradient(
+            to right,
+            #ffffff 0%,
+            /* Left part */ #eaeaead6 50%,
+            /* Middle part */ #ffffff 100% /* Right part */
+        ),
+        url(../images/stk-intro-banner.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: overlay;
+}
+
+.students-page-intro-section .container {
+    position: relative;
+    z-index: 1;
+}
+
+.students-page-intro-section .left-content {
+    padding-right: 30px;
+}
+
+.students-page-intro-section .badge {
+    background-color: #fae3b9;
+    color: #0d4036;
+    padding: 8px 15px;
+    font-size: 21px;
+    font-weight: 500;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.students-page-intro-section .main-heading {
+    font-size: 2.7rem;
+    font-weight: 900;
+    color: #0d4036;
+    line-height: 1.1;
+    margin-bottom: 25px;
+}
+
+.students-page-intro-section .main-heading .highlight {
+    color: #0d4036;
+    border: 4px dashed #0d4036;
+    text-underline-offset: 8px;
+    background-color: #6beabf;
+}
+
+.students-page-intro-section .description {
+    font-size: 1.2rem;
+    color: #0d4036;
+    line-height: 1.6;
+    margin-bottom: 40px;
+    max-width: 550px;
+}
+
+.students-page-intro-section .join-button {
+    background-color: #0d4036;
+    color: #ffff;
+    padding: 15px 30px;
+    border-radius: 30px;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.students-page-intro-section .join-button:hover {
+    background-color: #0a302a;
+    transform: translateY(-3px);
+    color: #ffff;
+}
+
+.students-page-intro-section .join-button .arrow {
+    margin-left: 20px;
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+.students-page-intro-section .right-content {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    min-height: 560px;
+}
+
+.students-page-intro-section .right-content .student-image {
+    max-width: 380px;
+    height: 430px;
+    border-radius: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+/* =========================================  Students Page Insight Section */
+.student-page-insight-section {
+    padding: 40px 20px;
+
+    position: relative;
+
+    overflow: hidden;
+    /* border: 1px solid red; */
+    background-image: linear-gradient(
+            to right,
+            #ffffff 0%,
+            /* Left part */ #eaeaead6 50%,
+            /* Middle part */ #ffffff 100% /* Right part */
+        ),
+        url(../images/stk-intro-banner.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: overlay;
+}
+
+.student-page-insight-section .section-title {
+    color: #0d4036;
+    font-weight: 700;
+    margin-bottom: 40px;
+    text-align: left;
+}
+
+.student-page-insight-section .card-item {
+    background-color: #edba5a;
+    border-radius: 15px;
+    padding: 30px 40px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    transition: transform 0.3s ease;
+    box-shadow: inset 0 10px 5px -5px rgb(0, 0, 0);
+}
+
+.student-page-insight-section .card-item:hover {
+    transform: translateY(-5px);
+}
+
+.student-page-insight-section .card-item.policymakers {
+    background-color: #0d4036;
+    color: #ffff;
+}
+
+.student-page-insight-section .card-item.researchers {
+    background-color: #97c4c7;
+}
+
+.student-page-insight-section .card-item .card-icon {
+    margin-bottom: 20px;
+    line-height: 1;
+}
+
+.student-page-insight-section .card-item .card-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #0d4036;
+}
+.student-page-insight-section .card-item.policymakers .card-title {
+    color: #ffff;
+}
+.student-page-insight-section .card-item.researchers .card-title {
+    color: #0d4036;
+}
+
+.student-page-insight-section .card-item .card-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    color: #333;
+}
+.student-page-insight-section .card-item.policymakers .card-description {
+    color: #ffff;
+}
+.student-page-insight-section .card-item.researchers .card-description {
+    color: #333;
+}
+
+.student-page-insight-section .card-item .action-button {
+    background-color: #0d4036;
+    color: #ffff;
+    border: none;
+    border-radius: 20px;
+    padding: 15px 25px 12px 40px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    position: relative;
+    margin-top: 30px;
+}
+.student-page-insight-section .card-item .action-button .act-icon {
+    position: absolute;
+    top: -20px;
+    left: 20px;
+}
+.student-page-insight-section .card-item .action-button .act-icon img {
+    width: 40px;
+    height: 40px;
+}
+
+.student-page-insight-section .card-item.policymakers .action-button {
+    background-color: #6beabf;
+    color: #0d4036;
+}
+
+.student-page-insight-section .card-item.researchers .action-button {
+    background-color: #0d4036;
+    color: #ffff;
+}
+
+/* ====================================================  Sudents Driven Section */
+
+.students-page-driven-section {
+    background: url(../images/brn-intro-bg-image.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: overlay;
+    padding: 60px 0px;
+    background-color: #193e47;
+
+    overflow: hidden;
+}
+.students-page-driven-section .container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.page-driven-container {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 60px;
+    position: relative;
+    z-index: 0;
+}
+
+.students-page-driven-section .left-content {
+    text-align: center;
+    color: #fff;
+    padding: 0px 40px;
+}
+
+.students-page-driven-section .left-content h1 {
+    font-size: 2rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+}
+
+.students-page-driven-section .left-content .icons-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+.students-page-driven-section .left-content .icons-container img {
+    width: 160px;
+}
+
+.students-page-driven-section .left-content p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #fff;
+}
+
+.students-page-driven-section .right-content {
+    display: grid;
+}
+.page-driven-content-overlay-mobile {
+    color: #fff;
+    position: absolute;
+    background-color: #193e47;
+    background: linear-gradient(
+        to bottom,
+        #274d56e5 100%,
+        #23444c 100%,
+        #23444c 100%,
+        #274d56e5 100%
+    );
+    z-index: 2;
+    top: 50%;
+    transform: translate(0%, 0%);
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 50px 20px;
+    font-size: 17px;
+}
+.page-driven-content-overlay-mobile .trans-image {
+    z-index: -2;
+}
+
+.students-page-driven-section .right-content .card-item {
+    background-color: #fae3b9;
+    border-radius: 12px;
+    padding: 1.5rem;
+
+    overflow: hidden;
+    position: relative;
+}
+
+.students-page-driven-section .right-content .swiper.slider-one {
+    height: 800px;
+}
+.students-page-driven-section .right-content .swiper.slider-two {
+    height: 800px;
+}
+
+.students-page-driven-section .right-content .swiper-wrapper {
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+}
+
+.students-page-driven-section .right-content .card-item .card-title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    max-width: 200px;
+    color: #0d4036;
+    margin-bottom: 3rem;
+}
+
+.students-page-driven-section .right-content .card-item .card-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.students-page-driven-section .right-content .card-item .card-image img {
+    width: 100%;
+    max-width: 200px;
+}
+
+.students-page-driven-section .right-content .card-item.blue {
+    background-color: #02d8f1;
+}
+
+.students-page-driven-section .right-content .card-item.orange {
+    background-color: #f7931e;
+}
+
+.students-page-driven-section .right-content .card-item.light-yellow {
+    background-color: #fae3b9;
+}
+
+.students-page-driven-section .right-content .card-item.dark-blue {
+    background-color: #02d8f1;
+}
+
+@media (min-width: 768px) {
+    .students-page-driven-section {
+        flex-direction: row;
+    }
+    .students-page-driven-section .left-content {
+        flex: 1;
+        padding-right: 2rem;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    .students-page-driven-section .right-content {
+        flex: 2;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 992px) {
+    .students-page-driven-section {
+        min-height: 100vh;
+    }
+    .page-driven-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .students-page-driven-section .left-content {
+        flex: 1;
+        padding-right: 2rem;
+        max-width: auto;
+        margin: initial;
+    }
+    .students-page-driven-section .left-content {
+        max-width: 500px;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        text-align: left;
+        color: #fff;
+    }
+
+    .students-page-driven-section .left-content .icons-container {
+        justify-content: start;
+        align-items: start;
+        margin-bottom: 0rem;
+    }
+    .students-page-driven-section .left-content h1 {
+        font-size: 3rem;
+    }
+
+    .students-page-driven-section .left-content p {
+        font-size: 1.3rem;
+        color: #fff;
+        padding-bottom: 80px;
+    }
+    .students-page-driven-section .right-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .students-page-driven-section .right-content .swiper-wrapper {
+        height: 400px;
+    }
+
+    .students-page-driven-section .right-content .swiper.slider-one {
+        height: 100vh;
+    }
+    .students-page-driven-section .right-content .swiper.slider-two {
+        height: 100vh;
+    }
+
+    .students-page-driven-section
+        .right-content
+        .slider-two
+        .swiper-wrapper
+        > div {
+        min-height: 430px;
+    }
+    .students-page-driven-section .right-content {
+        gap: 30px;
+    }
+}
+
+@media (min-width: 1200px) {
+}
+
+/* ========================================== Student PolicyAndResearch Section */
+
+.students-page-policyandresearch-section {
+    padding: 40px 0px;
+    background-color: #e7eded;
+}
+
+.students-page-policyandresearch-section .section-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #0d4036;
+    margin-bottom: 3rem;
+    padding: 0px 20px;
+}
+.students-page-policyandresearch-section .section-title span {
+    font-weight: 300;
+    color: #0d4036;
+}
+
+.students-page-policyandresearch-section .policyandresearch-grid-container {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 30px;
+}
+.students-page-policyandresearch-section .grid-item {
+    background-color: transparent;
+    padding: 0.2rem;
+    padding: 7px 40px 7px 20px;
+}
+
+.students-page-policyandresearch-section .grid-item .item-number {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #000000;
+
+    margin-bottom: 0.5rem;
+}
+
+.students-page-policyandresearch-section .grid-item .item-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #000000;
+    margin-bottom: 1rem;
+    max-width: 200px;
+}
+
+.students-page-policyandresearch-section .grid-item p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #0d4036;
+}
+
+.students-page-policyandresearch-section .grid-item.highlight {
+    background-color: #58b4a0;
+    color: #000000;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 40px 20px;
+    border-radius: 20px;
+}
+
+.students-page-policyandresearch-section .grid-item.highlight .item-title {
+    max-width: 250px;
+}
+
+.students-page-policyandresearch-section .grid-item.highlight p {
+    color: #0d4036;
+
+    margin-bottom: 1.5rem;
+}
+
+.students-page-policyandresearch-section .grid-item.highlight .btn-join {
+    background-color: #0d4036;
+    color: #ffff;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.3s ease;
+}
+
+.students-page-policyandresearch-section .grid-item.highlight .btn-join i {
+    margin-left: 20px;
+}
+
+.students-page-policyandresearch-section .grid-item.highlight .btn-join:hover {
+    background-color: #fae3b9;
+    color: #0d4036;
+}
+
+/* ============================================== STudents Future Section */
+
+.students-page-future-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffff;
+    border-radius: 12px;
+    padding: 60px 10px;
+}
+
+.students-page-future-section .image-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    min-height: 300px;
+    background-color: transparent;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.students-page-future-section .image-container img {
+    border-radius: 15px;
+    z-index: 1;
+    max-width: 340px;
+    width: 100%;
+}
+
+.students-page-future-section .content-right {
+    flex: 1;
+    padding-left: 1rem;
+    padding-top: 40px;
+}
+
+.students-page-future-section .content-right h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #0d4036;
+    margin-bottom: 1.5rem;
+}
+
+.students-page-future-section .content-right p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #0d4036;
+    margin-bottom: 2rem;
+}
+
+.students-page-future-section .content-right .checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.students-page-future-section .content-right .checklist .check-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.1rem;
+    color: #0d4036;
+}
+
+.students-page-future-section .content-right .checklist .check-item .bi {
+    color: #6beabf;
+    font-size: 1.3rem;
+}
+
+.students-page-future-section .content-right .btn-join {
+    background-color: #0d4036;
+    color: #ffff;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.3s ease;
+}
+
+.students-page-future-section .content-right .btn-join:hover {
+    background-color: #0d4036ee;
+}
+
+@media (min-width: 768px) {
+    .students-page-future-section {
+        flex-direction: row;
+        align-items: center;
+    }
+    .students-page-future-section .image-container {
+        width: 50%;
+        max-width: 500px;
+        min-height: 400px;
+    }
+    .students-page-future-section .content-right {
+        width: 50%;
+        padding-left: 3rem;
+    }
+    .students-page-future-section .content-right h2 {
+        font-size: 3rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .students-page-future-section .image-container {
+        min-height: 450px;
+    }
+    .students-page-future-section .content-right h2 {
+        font-size: 3.5rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .students-page-future-section .image-container {
+        min-height: 500px;
+    }
+    .students-page-future-section .content-right h2 {
+        font-size: 4rem;
+    }
+}
+
+/* =================================== USED */
+
+@media (min-width: 768px) {
+    .students-page-intro-section {
+        padding: 60px 0;
+    }
+    .students-page-intro-section .main-heading {
+        font-size: 3rem;
+    }
+    .students-page-intro-section .left-content {
+        padding-right: 50px;
+    }
+
+    .students-page-intro-section .right-content .student-image {
+        max-width: 600px;
+    }
+
+    /* =========================================  Students Page Insight Section */
+    .student-page-insight-section .section-title {
+        font-size: 2.5rem;
+    }
+    .student-page-insight-section .card-item {
+        margin-bottom: 0;
+    }
+
+    /* =========================================  Students PolicyResearch Section */
+
+    .students-page-policyandresearch-section .policyandresearch-grid-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 992px) {
+    .students-page-intro-section {
+        padding: 80px 0;
+    }
+    .students-page-intro-section .main-heading {
+        font-size: 3.5rem;
+    }
+    .students-page-intro-section .description {
+        font-size: 1.2rem;
+    }
+
+    .students-page-intro-section .decorative-circles {
+        position: absolute;
+        width: 100%;
+        height: 70%;
+        bottom: -20px;
+        right: 0px;
+        transform: translate(50%);
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    .students-page-intro-section .decorative-circles img {
+        max-width: 300px;
+    }
+
+    /* =========================================  Students Page Insight Section */
+
+    .student-page-insight-section {
+        padding: 60px;
+    }
+    .student-page-insight-section .section-title {
+        font-size: 3rem;
+        text-align: left;
+    }
+
+    .page-insight-cards {
+        border-radius: 20px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        padding: 0px 40px 30px;
+    }
+
+    /* =========================================  Students Page policyandresearch Section */
+
+    .students-page-policyandresearch-section .policyandresearch-grid-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .students-page-policyandresearch-section .section-title {
+        font-size: 2.3rem;
+    }
+
+    .students-page-policyandresearch-section {
+        padding: 60px 0px;
+    }
+
+    /* =========================================  Students Future Section */
+
+    .students-page-future-section .image-container img {
+        max-width: 400px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .students-page-intro-section .main-heading {
+        font-size: 4rem;
+    }
+
+    .students-page-intro-section .right-content {
+        min-height: 460px;
+    }
+
+    .students-page-intro-section .right-content .student-image {
+        max-width: 580px;
+        width: 100%;
+        height: auto;
+    }
+
+    .students-page-intro-section .decorative-circles {
+        position: absolute;
+        width: 100%;
+        height: 50%;
+        bottom: -20px;
+        transform: translate(65%);
+    }
+
+    /* =========================================  Students Page Insight Section */
+
+    .student-page-insight-section .section-title {
+        font-size: 3rem;
+        font-weight: 900;
+    }
+
+    .students-page-future-section .image-container {
+        max-width: 800px;
+    }
+    .students-page-future-section .image-container img {
+        max-width: 80%;
+    }
+}
+
+
+
+/* FOOTER */
+@media screen and (max-width: 580px) {
+    .footer {
+        background-color: #0d4036;
+        color: white;
+        padding: 60px 20px 30px;
+        font-family: "GT Walsheim Con";
+    }
+
+    .footer .logo-text {
+        font-size: 16px;
+        font-weight: 400;
+        letter-spacing: 0.5px;
+    }
+    .footer .desk {
+        display: none;
+    }
+    .footer .footer-quick-links {
+        display: block;
+    }
+    .footer .strategy {
+        display: none;
+    }
+    .footer .second-icon {
+        display: block;
+    }
+    .footer .first-icon {
+        display: none;
+    }
+    .footer .footer-links p {
+        font-weight: 400;
+        font-size: 19px;
+        font-family: "GT Walsheim Con";
+    }
+
+    .footer .footer-links a {
+        display: block;
+        text-decoration: none;
+        color: #fff;
+        margin: 4px 0;
+        font-size: 15px;
+        letter-spacing: 0.5px;
+    }
+
+    .footer .social-icons a {
+        color: #d4f437;
+        font-size: 20px;
+        margin-right: 15px;
+    }
+
+    .footer .subscribe p {
+        font-size: 18px;
+        font-weight: 400;
+        letter-spacing: 0.5px;
+    }
+    .footer .subscribe input {
+        border: 2px solid #fff;
+        background-color: #fff;
+        color: white;
+        border-radius: 6px;
+    }
+    .footer img {
+        width: 90px;
+    }
+    .footer .subscribe input::placeholder {
+        color: #ccc;
+    }
+    .footer .subscribe_desktop {
+        display: none;
+    }
+    .footer .subscribe_mobile {
+        display: block;
+        /* width: 60%; */
+        /* position: absolute;
+        margin-top: 14rem; */
+    }
+    .footer .subscribe_mobile input {
+        position: absolute;
+        width: 55%;
+        padding: 15px 20px;
+    }
+    .footer .subscribe_mobile input::placeholder {
+        /* padding: 0px 10px; */
+        color: #333333;
+    }
+    .footer .subscribe_mobile button {
+        position: relative;
+        justify-content: end;
+        float: right;
+        bottom: 15px;
+        right: 100px;
+        /* padding: 50px 0px; */
+        height: 58px;
+    }
+    .footer .subscribe button {
+        margin-top: 15px;
+        background-color: #cced60;
+        color: black;
+        font-weight: 600;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 6px;
+    }
+
+    .footer-bottom_mobile {
+        text-align: right;
+        font-size: 16px;
+        font-weight: 400;
+        padding-top: 30px;
+        color: #ccc;
+    }
+    .footer-bottom_desktop {
+        display: none;
+    }
+    .footer-bottom a {
+        color: #ccc;
+        margin: 0 5px;
+        text-decoration: underline;
+    }
+}
+@media screen and (min-width: 580px) {
+    .footer {
+        background-color: #0d4036;
+        color: white;
+        padding: 30px 80px;
+        font-family: "GT Walsheim Con";
+    }
+    .footer img {
+        width: 90px;
+    }
+    .footer .logo-text {
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+    .footer .footer-links p {
+        font-weight: 400;
+        font-size: 20px;
+    }
+    .footer .footer-quick-links {
+        display: none;
+    }
+    .footer .subscribe_mobile {
+        display: none;
+    }
+    .footer .first-icon {
+        display: none;
+    }
+    .footer .footer-bottom_mobile {
+        display: none;
+    }
+    .footer .footer-links a {
+        display: block;
+        text-decoration: none;
+        color: #fff;
+        margin: 4px 0;
+        font-size: 16px;
+        font-weight: 400 !important;
+        letter-spacing: 0.5px;
+    }
+
+    .footer .social-icons a {
+        color: #d4f437;
+        font-size: 20px;
+        margin-right: 8px;
+    }
+
+    .footer .subscribe p {
+        font-size: 24px;
+        font-weight: 300;
+        letter-spacing: 0.5px;
+    }
+    .footer .subscribe input {
+        border: 2px solid #cced6099;
+        background-color: transparent;
+        color: white;
+        border-radius: 6px;
+        height: 61px;
+    }
+
+    .footer .subscribe input::placeholder {
+        color: #ccc;
+    }
+
+    .footer .subscribe button {
+        margin-top: 15px;
+        background-color: #cced60;
+        color: black;
+        font-weight: 600;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 6px;
+        font-size: 16px;
+        color: #0d4036;
+    }
+
+    .footer-bottom {
+        text-align: right;
+        font-size: 16px;
+        font-weight: 400;
+        padding-top: 30px;
+        color: #ccc;
+        font-family: "Georgia";
+        padding-right: 20px;
+        letter-spacing: 8%;
+    }
+
+    .footer-bottom a {
+        color: #ccc;
+        margin: 0 5px;
+        text-decoration: none;
+    }
+}

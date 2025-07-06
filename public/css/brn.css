@@ -1,0 +1,1524 @@
+@font-face {
+    font-family: "GT Walsheim Pro"; /* Name your font family */
+
+    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff2")
+            format("woff2"),
+        url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff")
+            format("woff"); /* Adjust file names and paths as needed */
+}
+
+@font-face {
+    font-family: "GT Walsheim Con"; /* Name your font family */
+
+    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedRegular.woff2")
+            format("woff2"),
+        url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff")
+            format("woff"); /* Adjust file names and paths as needed */
+}
+
+@font-face {
+    font-family: "GT Walsheim Bold"; /* Name your font family */
+
+    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-Bold.woff2")
+            format("woff2"),
+        url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff")
+            format("woff"); /* Adjust file names and paths as needed */
+}
+
+body {
+    font-family: "GT Walsheim Pro";
+}
+
+/* .navbar-custom {
+  background-color: transparent;
+  position: static;
+  width: 100%;
+  top: 0px;
+  position: relative;
+  z-index: 2;
+  background-color: #0d4036;
+  color: #fff;
+} */
+
+/* .navbar-custom .navbar-overlay {
+  position: absolute;
+  right: 0;
+  width: 53.5%;
+  height: 100%;
+  z-index: -1;
+  background-color: #0d4036;
+} */
+/* .navbar-custom button.navbar-toggler {
+  border: none !important;
+  background: transparent !important;
+}
+
+.navbar-toggler:focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: none !important;
+}
+.navbar-brand {
+  color: white;
+  font-weight: bold;
+}
+
+.nav-center-links {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+}
+.navbar-nav.nav-center-links .nav-item {
+  align-items: start;
+}
+
+.navbar-nav .nav-link {
+  color: #fff;
+  transition: background-color 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #0d4036;
+  transition: 500ms ease-in;
+}
+.nav-menu-list {
+  padding: 10px 0px;
+  justify-content: center;
+  align-items: center;
+}
+.nav-menu-list .icon-list {
+  margin-left: 20px;
+  margin-bottom: 30px;
+}
+
+.nav-menu-list a i {
+  color: #fff;
+}
+
+.btn-sign {
+  background-color: #cc7a00;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  text-decoration: none;
+  border: 1px solid #cc7a00;
+}
+
+.nav-menu-list .btn-sign:hover {
+  background-color: transparent;
+  border: 1px solid #cc7a00;
+  color: #cc7a00 !important;
+} */
+
+/* Navbar Styling */
+.navbar {
+    background-color: #4d787b00;
+    padding: 1rem 2rem;
+    position: fixed;
+    width: 100%;
+    z-index: 99;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.navbar .navbar-brand img {
+    height: auto;
+    width: 62px;
+    padding-right: 2px;
+}
+
+.navbar .nav-link {
+    color: white !important;
+    margin-right: 20px;
+    font-size: 0.95rem;
+    text-decoration: none;
+}
+
+.subscribe-btn {
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    border-radius: 8px;
+    padding: 5px 15px;
+    font-size: 0.9rem;
+}
+
+.subscribe-btn:hover {
+    background-color: white;
+    color: #4d787b;
+}
+.social-icons a{
+  text-decoration: none;
+}
+.social-icons i {
+    font-size: 1rem;
+    color: white;
+    margin-left: 12px;
+}
+
+.bg-scrolling {
+    background-color: #fff !important;
+    color: #0d4036;
+    box-shadow: 0px 4px 7px #777;
+    z-index: 1000;
+    transition: 500ms;
+}
+.bg-scrolling .nav-link {
+    text-decoration: none;
+    color: #0d4036 !important;
+    font-weight: 500;
+    transition: 400ms;
+}
+.bg-scrolling .nav-link:hover {
+    color: #08201b;
+    font-weight: 700;
+}
+.bg-scrolling .navbar-brand img {
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+}
+.bg-scrolling .subscribe-btn{
+  background-color: #08201b;
+  color: #fff;
+  transition: 500ms;
+  padding: 5px 15px;
+}
+.bg-scrolling .subscribe-btn:hover{
+  background-color: transparent;
+  border: 1px solid #08201b;
+  color: #08201b;
+}
+
+.bg-scrolling .social-icons i {
+    font-size: 1rem;
+    color: #4d787b;
+    margin-left: 12px;
+}
+
+.whole-brn {
+}
+
+/* =====================================================  BRN  START - INTRO SECTION*/
+
+.brn-intro-section {
+    background-image: linear-gradient(
+            to right,
+            #2f626e 0%,
+            /* Left part */ #23444c 50%,
+            /* Middle part */ #1a3e47 100% /* Right part */
+        ),
+        url(../images/brn-intro-bg-image.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: overlay;
+    /* padding: 2rem 0; */
+    padding-bottom: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    overflow: hidden;
+    padding-top: 7rem;
+    padding-bottom: 2rem;
+}
+.brn-intro-section .intro-content {
+    padding: 1rem;
+}
+
+.brn-intro-section .intro-content h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.brn-intro-section .intro-content h1 span {
+    color: #1deaa5;
+}
+
+.brn-intro-section .intro-content p {
+    font-size: 1.1rem;
+    color: #ffffff;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.brn-intro-section .intro-content .register-button {
+    background-color: transparent;
+    border: 2px solid #1deaa5;
+    color: #1deaa5;
+    padding: 0.8rem 2rem;
+    font-size: 20px;
+    font-weight: 400;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.brn-intro-section .intro-content .register-button i {
+    font-size: 1.2rem;
+    margin-left: 20px;
+}
+
+.brn-intro-section .intro-content .register-button:hover {
+    background-color: #1deaa5;
+    color: #1a202c;
+}
+
+.brn-intro-section .image-grid {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.brn-intro-section .image-grid img {
+    max-width: 100%;
+}
+
+.image-grid .first,
+.image-grid .second {
+    height: 270px;
+    width: 350px;
+    border: 3px solid #fff;
+    border-radius: 30px;
+    position: relative;
+}
+.image-grid .second {
+    border: 3px solid #fde9a4;
+}
+.image-grid .second {
+    width: 400px;
+    right: -80px;
+    top: -70px;
+}
+
+.image-grid .second .card-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    padding: 6px 20px;
+
+    border-radius: 20px;
+    position: absolute;
+    z-index: 2;
+    transform: translateX(-100px);
+    bottom: 20px;
+    /* left: -20%; */
+    font-size: 16px;
+    gap: 20px;
+    box-shadow: 15px 13px 0px -5px #1deaa5;
+}
+
+.image-grid .second .card-image p {
+    padding-top: 20px;
+    font-size: 14px;
+}
+.image-grid .second .card-image div {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+.image-grid .second .card-image img {
+    position: absolute;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+}
+
+.image-grid .first img.firstimage,
+.image-grid .second img.secondimage {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 30px;
+}
+
+.brn-intro-section .image-grid .card-dots {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    display: flex;
+    gap: 0.25rem;
+    z-index: 2;
+}
+
+.brn-intro-section .image-grid .card-dots .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+.image-grid .first .card-dots .dot {
+    background-color: #f9cd33;
+}
+.image-grid .second .card-dots .dot {
+    background-color: #0d4036;
+}
+
+.image-grid .send-icon {
+    position: absolute;
+    top: 35px;
+    right: -35px;
+    background-color: #1deaa5;
+    padding: 6px;
+    border-radius: 10px;
+    z-index: 2;
+}
+.image-grid .send-icon img {
+    width: 60px;
+    height: 60px;
+}
+
+/* =======================================  BRN HOW WE OPERATE SECTION */
+.brn-how-we-operate-section {
+    padding: 60px 10px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    background-image: linear-gradient(
+            to right,
+            #ffffff 0%,
+            /* Left part */ #eaeaea 50%,
+            /* Middle part */ #ffffff 100% /* Right part */
+        ),
+        url(../images/stk-intro-banner.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: overlay;
+}
+
+.brn-how-we-operate-section .top-right-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 250px;
+    height: 250px;
+    transform: translate(20%, -10%);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    z-index: 0;
+    pointer-events: none; /* Ensure it doesn't block interaction */
+    opacity: 0.8;
+}
+.brn-how-we-operate-section .top-right-bg img,
+.brn-how-we-operate-section .bottom-left-bg img {
+    opacity: 0.5;
+}
+.brn-how-we-operate-section .bottom-left-bg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 250px;
+    height: 250px;
+    transform: translate(-6%, 50%);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    z-index: 0;
+    pointer-events: none; /* Ensure it doesn't block interaction */
+    opacity: 0.8;
+}
+
+.brn-how-we-operate-section .section-header {
+    margin-bottom: 3rem;
+    position: relative; /* Ensure header is above the background element */
+    z-index: 1;
+    color: #0d4036;
+    text-align: left;
+}
+
+.brn-how-we-operate-section .section-header h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    position: relative;
+    left: 40px;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
+.brn-how-we-operate-section .section-header h4::before {
+    content: "";
+    position: absolute;
+    left: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 2px;
+    background-color: #0d4036;
+}
+
+.brn-how-we-operate-section .section-header h2 {
+    font-size: 1.9rem;
+    margin-bottom: 0;
+    font-weight: bolder;
+}
+
+.brn-how-we-operate-section .card-wrapper {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 30px;
+}
+
+.brn-how-we-operate-section .operate-card {
+    background-color: #0d4036;
+    border-radius: 1.5rem;
+    padding: 2.5rem 1.5rem;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 400px;
+}
+
+.brn-how-we-operate-section .operate-card .card-content h3 {
+    font-weight: bolder;
+}
+
+.brn-how-we-operate-section .operate-card.card-1 {
+    background-color: transparent;
+    color: #fff;
+    background-color: #193e47;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: end;
+}
+
+.brn-how-we-operate-section .operate-card.card-1 .card-content {
+    position: relative;
+    z-index: 1;
+}
+
+.brn-how-we-operate-section .operate-card.card-1 .image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-position: center;
+    top: 0;
+}
+
+.brn-how-we-operate-section .operate-card.card-2 {
+    background-color: #1deaa5;
+    color: #0d4036;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: relative;
+}
+
+.brn-how-we-operate-section .operate-card.card-2 img {
+    width: 100%;
+    height: 66%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+}
+
+.brn-how-we-operate-section .operate-card.card-2 .card-content {
+    padding: 0px 20px;
+}
+
+.brn-how-we-operate-section .operate-card.card-3 {
+    background-color: #193e47;
+    color: #0d4036;
+    padding: 2.5rem 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.brn-how-we-operate-section .operate-card.card-3 .card-content {
+    margin: 20px 25px;
+    height: 100%;
+    background-color: #c7b5f3;
+    border-radius: 0.6rem;
+    padding: 20px;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+}
+
+.brn-how-we-operate-section .operate-card.card-3 .top,
+.brn-how-we-operate-section .operate-card.card-3 .bottom {
+    position: absolute;
+    width: 95px;
+}
+.brn-how-we-operate-section .operate-card.card-3 .top {
+    top: 0;
+    right: 30px;
+}
+.brn-how-we-operate-section .operate-card.card-3 .bottom {
+    bottom: -20px;
+    left: 40px;
+    z-index: -1;
+}
+
+/* =======================================  BRN TESTIMONIAL SECTION */
+
+.brn-testimonials-section {
+    background-image: linear-gradient(
+            to right,
+            #ffffff 0%,
+            /* Left part */ #eaeaea 50%,
+            /* Middle part */ #ffffff 100% /* Right part */
+        ),
+        url(../images/stk-intro-banner.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: overlay;
+    padding: 60px 0px;
+    overflow: hidden;
+}
+.brn-testimonials-section .container {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+.brn-testimonials-section .header-row {
+    margin-bottom: 3rem;
+    /* align-items: flex-end; */
+    text-align: left;
+    padding: 0px 20px;
+}
+
+.brn-testimonials-section .header-row .title-group h2 {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #0d4036;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+}
+
+.brn-testimonials-section .header-row .description p {
+    font-size: 1rem;
+    color: #0d4036;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+.brn-testimonials-section .testimonial-card {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+.brn-testimonials-section .testimonial-card > div {
+    height: 350px;
+}
+
+.testimonial-card.first-row .text-block {
+    background-color: #193e47;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #fff;
+    padding: 30px 15px;
+}
+.testimonial-card.first-row .text-block.green {
+    background-color: #1deaa5;
+    color: #193e47;
+}
+.testimonial-card.first-row .text-block.dark {
+    background-color: #193e47;
+    color: #fff;
+}
+
+.testimonial-card .text-block .company-name {
+    font-size: 18px;
+}
+.testimonial-card .text-block .ceo-name {
+    font-size: 15px;
+    font-weight: bold;
+}
+.testimonial-card .text-block .testimonial-text {
+    font-size: 13px;
+}
+
+.brn-testimonials-section .testimonial-card .card-image {
+    overflow: hidden;
+    position: relative;
+}
+
+.brn-testimonials-section .testimonial-card .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    position: absolute;
+}
+
+.brn-testimonials-section .testimonial-card .card-content {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* =======================================  BRN EVENT MEETUPS SECTION */
+
+.brn-events-meetups-section {
+    background-color: #f8f9fa;
+    padding: 60px 0px;
+}
+
+.brn-events-meetups-section .events-intro {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.brn-events-meetups-section .events-intro h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #193e47;
+    margin-bottom: 1rem;
+}
+
+.brn-events-meetups-section .events-intro p {
+    font-size: 1.2rem;
+    color: #193e47;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.brn-events-meetups-section .events-intro .see-all-events-button {
+    background-color: #193e47;
+    color: #ffffff;
+    padding: 0.8rem 2rem;
+    font-size: 1.3rem;
+    font-weight: 400;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 2px solid #193e47;
+}
+
+.brn-events-meetups-section .events-intro .see-all-events-button i {
+    margin-left: 30px;
+}
+.brn-events-meetups-section .dark-card a i,
+.brn-events-meetups-section .light-card a i {
+    margin-left: 20px;
+}
+.brn-events-meetups-section .events-intro .see-all-events-button:hover {
+    background-color: #0a3028;
+    border-color: #0a3028;
+}
+
+.brn-events-meetups-section .events-intro .see-all-events-button i {
+    font-size: 1.2rem;
+}
+
+.brn-events-meetups-section .event-card {
+    border-radius: 1rem;
+    padding: 2rem;
+    /* box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); */
+    box-shadow: 0px 31px 15px -3px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.brn-events-meetups-section .event-card .card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.brn-events-meetups-section .event-card h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.brn-events-meetups-section .event-card p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+}
+
+.brn-events-meetups-section .dark-card .card-icon h3,
+.brn-events-meetups-section .light-card .card-icon h3 {
+    margin-top: 8px;
+}
+
+.brn-events-meetups-section .event-card .book-seat-button {
+    background-color: transparent;
+    border: 2px solid; /* Border color will inherit */
+    color: inherit; /* Text color will inherit */
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    align-self: flex-start;
+}
+
+.brn-events-meetups-section .event-card .book-seat-button i {
+    font-size: 1.2rem;
+}
+
+/* Card specific styles */
+.brn-events-meetups-section .event-card.dark-card {
+    background-color: #193e47;
+    color: #ffffff;
+}
+
+.brn-events-meetups-section .event-card.dark-card .book-seat-button {
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+.brn-events-meetups-section .event-card.dark-card .book-seat-button:hover {
+    background-color: #ffffff;
+    color: #193e47;
+}
+
+.brn-events-meetups-section .event-card.light-card {
+    background-color: #ffffff;
+    color: #193e47;
+}
+
+.brn-events-meetups-section .event-card.light-card .card-icon {
+    color: #193e47; /* Dark green icon for light card */
+}
+
+.brn-events-meetups-section .event-card.light-card .book-seat-button {
+    border-color: #193e47;
+    color: #193e47;
+}
+
+.brn-events-meetups-section .event-card.light-card .book-seat-button:hover {
+    background-color: #193e47;
+    color: #ffffff;
+}
+
+/* =======================================  BRN CTA SECTION */
+.brn-cta-section {
+    background-image: linear-gradient(
+            to right,
+            #2f626e 0%,
+            /* Left part */ #23444c 50%,
+            /* Middle part */ #1a3e47 100% /* Right part */
+        ),
+        url(../images/brn-intro-bg-image.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: overlay;
+    padding: 60px 5px;
+    overflow: hidden;
+    color: #fff;
+    position: relative;
+    z-index: 2;
+}
+.brn-cta-section .left-content {
+    /* z-index: 2; */
+
+    padding: 2rem 0rem;
+}
+.brn-cta-section .left-content h2 {
+    font-weight: 900;
+    font-size: 20px;
+}
+
+.left-container > img {
+    z-index: -1;
+    width: 100px;
+}
+.left-container .top-image,
+.left-container .bottom-image {
+    position: absolute;
+}
+.left-container .top-image {
+    top: 0;
+    right: 0;
+}
+.left-container .bottom-image {
+    bottom: 0;
+    left: 50px;
+}
+
+.brn-cta-section .left-content .button {
+    background-color: #052f32;
+    border: 2px solid #052f32;
+    color: #fff;
+    padding: 0.5rem 1.4rem;
+    font-size: 18px;
+    font-weight: 400;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 40px 0px;
+}
+
+.brn-cta-section .left-content .button {
+    padding: 0.7rem 1.6rem;
+}
+
+.brn-cta-section .left-content .button:hover {
+    background-color: #193e47d4;
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+    .brn-intro-section .intro-content h1 {
+        font-size: 4rem;
+    }
+
+    .brn-intro-section .intro-content p {
+        font-size: 1.2rem;
+    }
+
+    .image-grid .first,
+    .image-grid .second {
+        height: 400px;
+        width: 550px;
+    }
+
+    .image-grid .second {
+        right: -120px;
+        top: -70px;
+        height: 400px;
+        width: 600px;
+    }
+
+    /* =======================================  BRN TESTIMONIAL SECTION */
+
+    .testimonial-card .text-block .company-name {
+        font-size: 19px;
+    }
+    .testimonial-card .text-block .ceo-name {
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .testimonial-card .text-block .testimonial-text {
+        font-size: 15px;
+    }
+
+    /* =======================================  BRN EVENT MEETUPS SECTION */
+
+    .brn-events-meetups-section .events-intro h2 {
+        font-size: 2rem;
+    }
+
+    .brn-how-we-operate-section .card-wrapper {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .brn-how-we-operate-section .operate-card .card-content h3 {
+        font-size: 19px;
+    }
+
+    .brn-how-we-operate-section .operate-card.card-3 .card-content {
+        margin: 20px 0px;
+        height: 100%;
+        background-color: #c7b5f3;
+        border-radius: 0.6rem;
+        padding: 20px;
+    }
+
+    .brn-how-we-operate-section .operate-card.card-3 {
+        padding: 2.5rem 1.7rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .brn-intro-section .intro-content h1 {
+        font-size: 3rem;
+    }
+
+    .brn-intro-section .intro-content p {
+        font-size: 1rem;
+        max-width: 450px;
+    }
+
+    .brn-intro-section .intro-content .register-button {
+        margin-top: 50px;
+    }
+
+    .brn-intro-section .image-grid {
+        min-height: 600px;
+    }
+
+    .image-grid .first,
+    .image-grid .second {
+        height: 270px;
+        width: 350px;
+    }
+
+    .image-grid .second {
+        right: -80px;
+        top: -70px;
+        width: 400px;
+    }
+
+    /* =======================================  BRN HOW WE OPERATE SECTION */
+
+    .brn-how-we-operate-section .card-wrapper {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* =======================================  BRN EVENT MEETUPS SECTION */
+
+    .brn-events-meetups-section .events-intro h2 {
+        font-size: 2rem;
+    }
+    .brn-events-meetups-section .events-intro {
+        text-align: left;
+    }
+
+    .brn-how-we-operate-section .card-wrapper {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .brn-cta-section {
+        padding: 0px;
+    }
+    .brn-cta-section .right-image {
+        position: relative;
+        left: -60%;
+        background-color: transparent;
+        background-image: linear-gradient(
+            to left,
+            transparent 0%,
+            #1a3e47 35%,
+            /* middle soft blend */ #1a3e47 0%,
+            /* darker toward the end */ #1a3e47 100% /* solid right side */
+        );
+    }
+
+    .left-container .bottom-image {
+        bottom: 0;
+        left: 70%;
+    }
+
+    .left-container > img {
+        z-index: -1;
+        width: 120px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .image-grid .second {
+        right: -50px;
+        top: -70px;
+        width: 400px;
+    }
+
+    .brn-how-we-operate-section .operate-card.card-3 .card-content {
+        justify-content: center;
+    }
+
+    .brn-how-we-operate-section .operate-card.card-2 img {
+        height: 60%;
+    }
+    .brn-cta-section .left-content h2 {
+        font-weight: 900;
+        font-size: 30px;
+    }
+    .brn-cta-section .left-content p {
+        font-size: 20px;
+        max-width: 400px;
+    }
+
+    .brn-cta-section .right-image {
+        position: relative;
+    }
+}
+@media (min-width: 1440px) {
+    .brn-intro-section {
+        padding-top: 5rem;
+    }
+
+    .brn-intro-section .intro-content {
+        margin-top: -30%;
+    }
+    .brn-intro-section .image-grid {
+        margin-left: -20px;
+    }
+
+    .image-grid .first,
+    .image-grid .second {
+        height: 350px;
+        width: 400px;
+    }
+
+    .image-grid .second {
+        right: -150px;
+        top: -80px;
+        width: 400px;
+    }
+
+    .image-grid .second .card-image {
+        transform: translateX(90%);
+    }
+    .image-grid .second .card-image p {
+        font-size: 16px;
+        font-weight: 500;
+    }
+    .brn-how-we-operate-section .bottom-left-bg {
+        width: 600px;
+        height: 900px;
+        transform: translate(-35%, 80%);
+    }
+    .brn-how-we-operate-section .section-header h4 {
+        font-size: 1.2rem;
+        font-weight: 900;
+    }
+    .brn-how-we-operate-section .section-header h2 {
+        font-size: 2.5rem;
+    }
+
+    .brn-how-we-operate-section .operate-card {
+        height: 520px;
+    }
+
+    .brn-how-we-operate-section .card-wrapper {
+        gap: 50px;
+    }
+
+    .brn-how-we-operate-section .operate-card.card-2 img {
+        height: 70%;
+    }
+
+    .brn-how-we-operate-section .operate-card.card-3 {
+        padding: 2.5rem 2rem;
+    }
+    .brn-how-we-operate-section .operate-card.card-3 .bottom {
+        left: 30px;
+    }
+
+    /* =======================================  BRN TESTIMONIAL SECTION */
+    .brn-testimonials-section .testimonial-card {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .testimonial-card .text-block .company-name {
+        font-size: 22px;
+    }
+    .testimonial-card .text-block .ceo-name {
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .testimonial-card .text-block .testimonial-text {
+        font-size: 15px;
+    }
+
+    .brn-testimonials-section .header-row .description {
+        max-width: 400px;
+        margin-left: auto;
+    }
+
+    .brn-testimonials-section .header-row .title-group h2 {
+        font-size: 2rem;
+    }
+    .brn-testimonials-section .header-row .description p {
+        font-size: 1.1rem;
+    }
+
+    .brn-cta-section .right-image {
+        position: relative;
+        left: -20%;
+    }
+}
+
+/* ============================================ BRN FORM AREA */
+.brn-container {
+    background-color: #193e47;
+    padding: 100px 0px;
+    /* max-height: 400px; */
+    /* height: 100%; */
+}
+.brn-header-container {
+    padding: 20px;
+}
+.brn-header {
+    max-width: 700px;
+    margin: 0 auto;
+    color: #fff;
+}
+.brn-header h1 {
+    color: #1deaa5;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.brn-header p {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.brn-form-container {
+    padding: 20px;
+    /* background-color: #fff; */
+    /* max-height: 400px !important; */
+}
+.brn-form-container .brn-content {
+    background-color: #ebefee;
+    border-radius: 30px;
+    display: flex;
+    width: 100%;
+    box-shadow: 0px 19px 30px 19px rgba(0, 0, 0, 0.1);
+}
+.brn-content .brn-form {
+    width: 80%;
+    padding: 60px 20px 30px;
+}
+
+.brn-content .brn-form-side-bg {
+    background-color: #3aa9a9;
+    padding: 30px;
+    width: 20%;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+.form-conainer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding-bottom: 7%;
+}
+
+.brn-form .form-control {
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0px 31px 15px -3px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    width: 125%;
+    position: relative;
+    color: #afaeae;
+}
+
+.brn-form .form-check {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.brn-form .form-check-input {
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    border: 1px solid #1deaa5;
+    background-color: #ffffff;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.brn-form .form-check-input:checked {
+    background-color: #1deaa5;
+    border-color: #1deaa5;
+}
+
+.brn-form .form-check-label {
+    font-size: 0.9rem;
+    font-weight: 900;
+    color: #193e47;
+    padding-right: 30px;
+    margin: 20px 0px;
+    max-width: 400px;
+}
+
+.brn-form .btn-submit {
+    background-color: #193e47;
+    color: #ffffff;
+    padding: 12px 75px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: none;
+}
+
+.brn-form .btn-submit:hover {
+    background-color: #1deaa5;
+    color: #193e47;
+}
+
+.brn-image {
+    display: none;
+}
+
+@media (min-width: 900px) {
+    .brn-header h1 {
+        font-size: 3rem;
+    }
+
+    /* .brn-form-container {
+        max-height: 100%;
+    } */
+    .brn-form .form-control {
+        width: 100%;
+    }
+
+    /* Display BRN IMAGE */
+    .brn-form-container {
+        position: relative;
+    }
+    .form-conainer {
+        width: 90%;
+    }
+    .brn-image {
+        display: block;
+        max-width: 100px;
+        position: absolute;
+        top: 26%;
+        right: 11%;
+    }
+}
+
+
+
+/* FOOTER */
+@media screen and (max-width: 580px) {
+    .footer {
+        background-color: #0d4036;
+        color: white;
+        padding: 60px 20px 30px;
+        font-family: "GT Walsheim Con";
+    }
+
+    .footer .logo-text {
+        font-size: 16px;
+        font-weight: 400;
+        letter-spacing: 0.5px;
+    }
+    .footer .desk {
+        display: none;
+    }
+    .footer .footer-quick-links {
+        display: block;
+    }
+    .footer .strategy {
+        display: none;
+    }
+    .footer .second-icon {
+        display: block;
+    }
+    .footer .first-icon {
+        display: none;
+    }
+    .footer .footer-links p {
+        font-weight: 400;
+        font-size: 19px;
+        font-family: "GT Walsheim Con";
+    }
+
+    .footer .footer-links a {
+        display: block;
+        text-decoration: none;
+        color: #fff;
+        margin: 4px 0;
+        font-size: 15px;
+        letter-spacing: 0.5px;
+    }
+
+    .footer .social-icons a {
+        color: #d4f437;
+        font-size: 20px;
+        margin-right: 15px;
+    }
+
+    .footer .subscribe p {
+        font-size: 18px;
+        font-weight: 400;
+        letter-spacing: 0.5px;
+    }
+    .footer .subscribe input {
+        border: 2px solid #fff;
+        background-color: #fff;
+        color: white;
+        border-radius: 6px;
+    }
+    .footer img {
+        width: 90px;
+    }
+    .footer .subscribe input::placeholder {
+        color: #ccc;
+    }
+    .footer .subscribe_desktop {
+        display: none;
+    }
+    .footer .subscribe_mobile {
+        display: block;
+        /* width: 60%; */
+        /* position: absolute;
+        margin-top: 14rem; */
+    }
+    .footer .subscribe_mobile input {
+        position: absolute;
+        width: 55%;
+        padding: 15px 20px;
+    }
+    .footer .subscribe_mobile input::placeholder {
+        /* padding: 0px 10px; */
+        color: #333333;
+    }
+    .footer .subscribe_mobile button {
+        position: relative;
+        justify-content: end;
+        float: right;
+        bottom: 15px;
+        right: 100px;
+        /* padding: 50px 0px; */
+        height: 58px;
+    }
+    .footer .subscribe button {
+        margin-top: 15px;
+        background-color: #cced60;
+        color: black;
+        font-weight: 600;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 6px;
+    }
+
+    .footer-bottom_mobile {
+        text-align: right;
+        font-size: 16px;
+        font-weight: 400;
+        padding-top: 30px;
+        color: #ccc;
+    }
+    .footer-bottom_desktop {
+        display: none;
+    }
+    .footer-bottom a {
+        color: #ccc;
+        margin: 0 5px;
+        text-decoration: underline;
+    }
+}
+@media screen and (min-width: 580px) {
+    .footer {
+        background-color: #0d4036;
+        color: white;
+        padding: 30px 80px;
+        font-family: "GT Walsheim Con";
+    }
+    .footer img {
+        width: 90px;
+    }
+    .footer .logo-text {
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+    .footer .footer-links p {
+        font-weight: 400;
+        font-size: 20px;
+    }
+    .footer .footer-quick-links {
+        display: none;
+    }
+    .footer .subscribe_mobile {
+        display: none;
+    }
+    .footer .first-icon {
+        display: none;
+    }
+    .footer .footer-bottom_mobile {
+        display: none;
+    }
+    .footer .footer-links a {
+        display: block;
+        text-decoration: none;
+        color: #fff;
+        margin: 4px 0;
+        font-size: 16px;
+        font-weight: 400 !important;
+        letter-spacing: 0.5px;
+    }
+
+    .footer .social-icons a {
+        color: #d4f437;
+        font-size: 20px;
+        margin-right: 8px;
+    }
+
+    .footer .subscribe p {
+        font-size: 24px;
+        font-weight: 300;
+        letter-spacing: 0.5px;
+    }
+    .footer .subscribe input {
+        border: 2px solid #cced6099;
+        background-color: transparent;
+        color: white;
+        border-radius: 6px;
+        height: 61px;
+    }
+
+    .footer .subscribe input::placeholder {
+        color: #ccc;
+    }
+
+    .footer .subscribe button {
+        margin-top: 15px;
+        background-color: #cced60;
+        color: black;
+        font-weight: 600;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 6px;
+        font-size: 16px;
+        color: #0d4036;
+    }
+
+    .footer-bottom {
+        text-align: right;
+        font-size: 16px;
+        font-weight: 400;
+        padding-top: 30px;
+        color: #ccc;
+        font-family: "Georgia";
+        padding-right: 20px;
+        letter-spacing: 8%;
+    }
+
+    .footer-bottom a {
+        color: #ccc;
+        margin: 0 5px;
+        text-decoration: none;
+    }
+}
