@@ -94,6 +94,7 @@ class BlogController extends Controller
             'content_1' => 'required|string',
             'content_2' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
+            'created_at' => 'nullable|date',
             'category_id' => 'nullable|exists:categories,id',
         ]);
 
@@ -115,6 +116,11 @@ class BlogController extends Controller
         // $data['content_1'] = Purifier::clean($data['content_1']);
         // $data['content_2'] = Purifier::clean($data['content_2']);
 
+        // If created_at is present, set it explicitly
+        if (!empty($data['created_at'])) {
+            $blog->created_at = $data['created_at'];
+        }
+        
         // Update blog
         $blog->update($data);
 
