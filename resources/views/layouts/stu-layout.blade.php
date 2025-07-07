@@ -103,7 +103,7 @@
 
                 <div class="d-flex align-items-right desktop">
                     <button class="subscribe-btn me-3">Subscribe</button>
-                    <div class="social-icons">
+                    <div class="social-icons my-auto    ">
                         <a href="https://linkedin.com/company/p23-africa/" target="_blank">
                             <i class="fab fa-linkedin-in"></i>
                         </a>

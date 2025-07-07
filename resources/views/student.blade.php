@@ -15,7 +15,7 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
 @section('content')
-    <section>
+    <section class="whole-student">
         <section class="students-page-intro-section">
             <div class="container">
                 <div class="row align-items-center">
@@ -23,7 +23,7 @@
                         <span class="badge">Student Network</span>
                         <h1 class="main-heading">
                             Partnering With Universities To Help Students
-                            <span class="highlight">Turn Data</span> Into Rewards.
+                             <span class="highlight"> Turn Data </span> Into Rewards.
                         </h1>
                         <p class="description">
                             Join a continent-wide network where high-performing students
@@ -33,11 +33,11 @@
                             Join The Network <i class="bi bi-arrow-right arrow"></i>
                         </a>
                     </div>
-                    <div class="col-lg-6 col-md-12 right-content d-flex">
+                    <div class="col-lg-6 col-md-12 right-content">
                         <img src="./images/stintro-bg.png" alt="Happy student" class="student-image" />
-                        <div class="decorative-circles d-none d-lg-block">
+                        {{-- <div class="decorative-circles d-none d-lg-block">
                             <img src="./images/st-frame-intro.png" alt="" />
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -45,9 +45,9 @@
 
         <section class="student-page-insight-section">
             <div class="container">
-                <h2 class="section-title">Who Uses These Insights</h2>
+                <h2 class="section-title mx-md-5">Who Uses These Insights</h2>
                 <div class="container page-insight-cards">
-                    <div class="row g-5 align-items-start">
+                    <div class="row g-3 align-items-start">
                         <div class="col-md-6 col-lg-4 d-flex">
                             <div class="card-item">
                                 <div>
@@ -307,7 +307,7 @@
                                 <img src="./images/Check circle.png" alt="" /> For University
                             </div>
                         </div>
-                        <a href="#" class="btn-join">Join The Movement <i class="bi bi-arrow-right"></i></a>
+                        <a href="#" class="btn-join">Join The Movement <i class="fa fa-arrow-right mx-3"></i></a>
                     </div>
                 </div>
             </div>

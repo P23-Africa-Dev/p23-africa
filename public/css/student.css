@@ -163,6 +163,9 @@ body {
 ===========================================
 Students-page  */
 
+.whole-student{
+        background: linear-gradient(#ffffffc4, #ffffffc4), url(../images/brn-gb.png);
+}
 .students-page-intro-section {
     display: flex;
     align-items: center;
@@ -171,13 +174,13 @@ Students-page  */
     position: relative;
     overflow: hidden;
     /* border: 1px solid red; */
-    background-image: linear-gradient(
+    /* background-image: linear-gradient(
             to right,
             #ffffff 0%,
-            /* Left part */ #eaeaead6 50%,
-            /* Middle part */ #ffffff 100% /* Right part */
+             #eaeaead6 50%,
+             #ffffff 100%
         ),
-        url(../images/stk-intro-banner.png);
+        url(../images/stk-intro-banner.png); */
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -190,7 +193,7 @@ Students-page  */
 }
 
 .students-page-intro-section .left-content {
-    padding-right: 30px;
+    padding-right: 0px;
 }
 
 .students-page-intro-section .badge {
@@ -209,21 +212,25 @@ Students-page  */
     color: #0d4036;
     line-height: 1.1;
     margin-bottom: 25px;
+    font-family: "GT Walsheim ProCB";
 }
 
 .students-page-intro-section .main-heading .highlight {
     color: #0d4036;
-    border: 4px dashed #0d4036;
+    border: 2px dashed #0d4036;
     text-underline-offset: 8px;
     background-color: #6beabf;
+    padding-right: 10px;
+    padding-left: 10px;
 }
 
 .students-page-intro-section .description {
-    font-size: 1.2rem;
+    font-size: 1.4rem !important;
     color: #0d4036;
-    line-height: 1.6;
+    line-height: 25px;
     margin-bottom: 40px;
     max-width: 550px;
+    font-family: "GT Walsheim Con";
 }
 
 .students-page-intro-section .join-button {
@@ -261,8 +268,9 @@ Students-page  */
 }
 
 .students-page-intro-section .right-content .student-image {
-    max-width: 380px;
-    height: 430px;
+    /* max-width: 380px; */
+    width: 120%;
+    height: auto;
     border-radius: 20px;
     position: relative;
     z-index: 2;
@@ -276,17 +284,28 @@ Students-page  */
 
     overflow: hidden;
     /* border: 1px solid red; */
-    background-image: linear-gradient(
+    /* background-image: linear-gradient(
             to right,
             #ffffff 0%,
-            /* Left part */ #eaeaead6 50%,
-            /* Middle part */ #ffffff 100% /* Right part */
+            #eaeaead6 50%,
+            #ffffff 100% 
         ),
-        url(../images/stk-intro-banner.png);
+        url(../images/stk-intro-banner.png); */
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     background-blend-mode: overlay;
+}
+.student-page-insight-section .page-insight-cards{
+        background-image: linear-gradient(
+            to right,
+            #ffffff 0%,
+            #eaeaead6 50%,
+            #ffffff 100% 
+        ),
+        url(../images/stk-intro-banner.png);
+
+    box-shadow: 0px 10px 10px 0px #2121214D;
 }
 
 .student-page-insight-section .section-title {
@@ -294,12 +313,14 @@ Students-page  */
     font-weight: 700;
     margin-bottom: 40px;
     text-align: left;
+    /* font-size: 40px; */
+    font-family: "GT Walsheim ProCB";
 }
 
 .student-page-insight-section .card-item {
-    background-color: #edba5a;
+    background-color: #EDBA5A;
     border-radius: 15px;
-    padding: 30px 40px;
+    padding: 50px 40px;
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
@@ -314,24 +335,25 @@ Students-page  */
 }
 
 .student-page-insight-section .card-item.policymakers {
-    background-color: #0d4036;
+    background-color: #193E47;
     color: #ffff;
 }
 
 .student-page-insight-section .card-item.researchers {
-    background-color: #97c4c7;
+    background-color: #97C4C7;
 }
 
 .student-page-insight-section .card-item .card-icon {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     line-height: 1;
 }
 
 .student-page-insight-section .card-item .card-title {
-    font-size: 1.8rem;
+    font-size: 2.3rem;
     font-weight: 600;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     color: #0d4036;
+    font-family: "GT Walsheim ProCB";
 }
 .student-page-insight-section .card-item.policymakers .card-title {
     color: #ffff;
@@ -342,8 +364,8 @@ Students-page  */
 
 .student-page-insight-section .card-item .card-description {
     font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 25px;
+    line-height: 20px;
+    margin-bottom: 15px;
     color: #333;
 }
 .student-page-insight-section .card-item.policymakers .card-description {
@@ -359,8 +381,9 @@ Students-page  */
     border: none;
     border-radius: 20px;
     padding: 15px 25px 12px 40px;
-    font-size: 0.9rem;
-    font-weight: 600;
+    font-size: 0.8rem;
+    font-weight: 400;
+    line-height: 19px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -368,7 +391,8 @@ Students-page  */
     text-decoration: none;
     transition: background-color 0.3s ease;
     position: relative;
-    margin-top: 30px;
+    margin-top: 20px;
+    font-family: "GT Walsheim Con";
 }
 .student-page-insight-section .card-item .action-button .act-icon {
     position: absolute;
@@ -381,7 +405,7 @@ Students-page  */
 }
 
 .student-page-insight-section .card-item.policymakers .action-button {
-    background-color: #6beabf;
+    background-color: #fff;
     color: #0d4036;
 }
 
@@ -782,10 +806,12 @@ Students-page  */
 }
 
 .students-page-future-section .content-right h2 {
-    font-size: 2.5rem;
+    font-size: 2.9rem !important;
     font-weight: bold;
     color: #0d4036;
     margin-bottom: 1.5rem;
+    line-height: 40px;
+    font-family: "GT Walsheim ProCB";
 }
 
 .students-page-future-section .content-right p {
@@ -793,12 +819,14 @@ Students-page  */
     line-height: 1.6;
     color: #0d4036;
     margin-bottom: 2rem;
+    max-width: 444px;
+    font-family: "GT Walsheim Con";
 }
 
 .students-page-future-section .content-right .checklist {
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    /* flex-direction: column; */
+    gap: 2rem;
     margin-bottom: 2rem;
 }
 
@@ -807,12 +835,16 @@ Students-page  */
     align-items: center;
     gap: 0.5rem;
     font-size: 1.1rem;
+    font-weight: 500;
+    font-family: "GT Walsheim Con";
     color: #0d4036;
 }
 
 .students-page-future-section .content-right .checklist .check-item .bi {
     color: #6beabf;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    font-family: "GT Walsheim Con";
 }
 
 .students-page-future-section .content-right .btn-join {
@@ -888,7 +920,7 @@ Students-page  */
 
     /* =========================================  Students Page Insight Section */
     .student-page-insight-section .section-title {
-        font-size: 2.5rem;
+        font-size: 2.0rem;
     }
     .student-page-insight-section .card-item {
         margin-bottom: 0;
@@ -933,7 +965,7 @@ Students-page  */
         padding: 60px;
     }
     .student-page-insight-section .section-title {
-        font-size: 3rem;
+        font-size: 2.5rem;
         text-align: left;
     }
 

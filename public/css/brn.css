@@ -724,6 +724,13 @@ body {
     justify-content: space-between;
 }
 
+@media screen and (max-width: 580px) {
+.brn-testimonials-section .testimonial-card {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+}
+
 /* =======================================  BRN EVENT MEETUPS SECTION */
 
 .brn-events-meetups-section {

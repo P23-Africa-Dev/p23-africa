@@ -88,11 +88,17 @@
                 </div>
                 <div class="card-wrapper">
                     <div class="operate-card card-1">
+                        <div class="pb-3">
+                            <img src="{{ asset('images/mul-icon.png') }}" loading="lazy" alt="Arrow">
+                        </div>
                         <div class="card-content">
                             <h3>Join the Exclusive Circle</h3>
                             <p>
                                 Apply and get accepted into an exclusive, vetted group of CEOs.
                             </p>
+                        </div>
+                        <div class="pt-3">
+                            <img src="{{ asset('images/mul-icon-II.png') }}" loading="lazy" alt="Arrow">
                         </div>
                     </div>
                     <div class="operate-card card-2">
