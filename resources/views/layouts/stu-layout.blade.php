@@ -13,6 +13,9 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('css/student.css') }}">
 
+        <!-- Swiper CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
         <!-- Font Awesome for icons -->
@@ -59,7 +62,7 @@
 
     <body>
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg">
+        <nav class="navbar-full navbar navbar-expand-lg">
             <div class="container">
                 <a class="navbar-brand" href="{{ route('homepage') }}">
                     <img src="{{ asset('images/logo.png') }}" loading='lazy' alt="">
@@ -215,7 +218,7 @@
         </footer>
 
         <!-- Bootstrap JS -->
-          <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 
@@ -257,6 +260,46 @@
                 sections.forEach(section => {
                     observer.observe(section);
                 });
+            });
+
+
+
+            // Navbar Toggler Icon
+            const navbarToggler = document.querySelector(".navbar-toggler");
+            const togglerIcon = navbarToggler.querySelector(".navbar-toggler-icon");
+
+            navbarToggler.addEventListener("click", () => {
+                if (navbarToggler.getAttribute("aria-expanded") === "true") {
+                    togglerIcon.classList.remove("navbar-toggler-icon");
+                    togglerIcon.innerHTML = '<i class="bi bi-x-lg fs-4"></i>'; // Using Bootstrap Icons
+                } else {
+                    togglerIcon.classList.add("navbar-toggler-icon");
+                    togglerIcon.innerHTML = "";
+                }
+            });
+
+            const sliderOne = new Swiper(".slider-one", {
+                direction: "vertical",
+                loop: true,
+                slidesPerView: 2, // shows 2 slides at once
+                spaceBetween: 40,
+                autoplay: {
+                    delay: 2000,
+                    disableOnInteraction: false,
+                },
+                speed: 500,
+            });
+
+            const sliderTwo = new Swiper(".slider-two", {
+                direction: "vertical",
+                loop: true,
+                slidesPerView: 2, // shows 2 slides at once
+                spaceBetween: 40,
+                autoplay: {
+                    delay: 1000,
+                    disableOnInteraction: false,
+                },
+                speed: 1000,
             });
         </script>
     </body>

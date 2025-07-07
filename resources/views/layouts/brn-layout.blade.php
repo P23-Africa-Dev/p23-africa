@@ -59,7 +59,7 @@
 
     <body>
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg">
+        <nav class="navbar-full navbar navbar-expand-lg">
             <div class="container">
                 <a class="navbar-brand" href="{{ route('homepage') }}">
                     <img src="{{ asset('images/logo.png') }}" loading='lazy' alt="">

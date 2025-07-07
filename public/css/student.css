@@ -54,11 +54,9 @@ body {
     font-family: "GT Walsheim Pro";
 }
 
-
-
 /* Navbar Styling */
 .navbar {
-    background-color: #0D4036;
+    background-color: #0d4036;
     padding: 1rem 2rem;
     position: fixed;
     width: 100%;
@@ -97,8 +95,8 @@ body {
     background-color: white;
     color: #4d787b;
 }
-.social-icons a{
-  text-decoration: none;
+.social-icons a {
+    text-decoration: none;
 }
 .social-icons i {
     font-size: 1rem;
@@ -127,16 +125,16 @@ body {
     -webkit-filter: invert(100%);
     filter: invert(100%);
 }
-.bg-scrolling .subscribe-btn{
-  background-color: #08201b;
-  color: #fff;
-  transition: 500ms;
-  padding: 5px 15px;
+.bg-scrolling .subscribe-btn {
+    background-color: #08201b;
+    color: #fff;
+    transition: 500ms;
+    padding: 5px 15px;
 }
-.bg-scrolling .subscribe-btn:hover{
-  background-color: transparent;
-  border: 1px solid #08201b;
-  color: #08201b;
+.bg-scrolling .subscribe-btn:hover {
+    background-color: transparent;
+    border: 1px solid #08201b;
+    color: #08201b;
 }
 
 .bg-scrolling .social-icons i {
@@ -145,9 +143,20 @@ body {
     margin-left: 12px;
 }
 
+.bg-scrolling .navbar-toggler  img {
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+}
 
+.navbar-full.navbar .navbar-toggler img {
+    margin-right: -1rem;
+}
 
-
+@media screen and (max-width: 580px) {
+    .navbar-full.navbar {
+        padding: 1rem 0.5rem !important;
+    }
+}
 
 /* ======================================================
 ===================================================
@@ -157,9 +166,9 @@ Students-page  */
 .students-page-intro-section {
     display: flex;
     align-items: center;
+    padding-top: 7rem !important;
     padding: 40px 20px;
     position: relative;
-
     overflow: hidden;
     /* border: 1px solid red; */
     background-image: linear-gradient(
@@ -449,8 +458,11 @@ Students-page  */
         #23444c 100%,
         #274d56e5 100%
     );
+    /* background: linear-gradient(to bottom, #193e47, rgba(0, 60, 50, 0));
+            background: linear-gradient(to top, #193e47, rgba(0, 60, 50, 0)); */
+
     z-index: 2;
-    top: 50%;
+    top: 47%;
     transform: translate(0%, 0%);
     left: 0;
     width: 100%;
@@ -458,6 +470,22 @@ Students-page  */
     padding: 50px 20px;
     font-size: 17px;
 }
+/* .fade-overlay {
+    content: "";
+    left: 0;
+    right: 0;
+    z-index: 2;
+    pointer-events: none;
+} */
+/* .fade-top {
+    top: 1;
+    background: linear-gradient(to bottom, #193e47, rgba(0, 60, 50, 0));
+}
+.fade-bottom {
+    bottom: -16px;
+    background: linear-gradient(to top, #193e47, rgba(0, 60, 50, 0));
+} */
+
 .page-driven-content-overlay-mobile .trans-image {
     z-index: -2;
 }
@@ -483,7 +511,16 @@ Students-page  */
     justify-content: start;
     flex-direction: column;
 }
-
+@media screen and (max-width: 580px) {
+    .students-page-driven-section .right-content .swiper.slider-one {
+        height: 800px;
+        margin-bottom: 10rem;
+    }
+    .students-page-driven-section .right-content .swiper.slider-two {
+        height: 800px;
+        margin-bottom: 10rem;
+    }
+}
 .students-page-driven-section .right-content .card-item .card-title {
     font-size: 1.5rem;
     font-weight: 500;
@@ -511,13 +548,19 @@ Students-page  */
 .students-page-driven-section .right-content .card-item.orange {
     background-color: #f7931e;
 }
+.students-page-driven-section .right-content .card-item.orange .card-title {
+    color: #fff !important;
+}
 
 .students-page-driven-section .right-content .card-item.light-yellow {
     background-color: #fae3b9;
 }
 
 .students-page-driven-section .right-content .card-item.dark-blue {
-    background-color: #02d8f1;
+    background-color: #1d4bfc;
+}
+.students-page-driven-section .right-content .card-item.dark-blue .card-title {
+    color: #fff !important;
 }
 
 @media (min-width: 768px) {
@@ -958,8 +1001,6 @@ Students-page  */
         max-width: 80%;
     }
 }
-
-
 
 /* FOOTER */
 @media screen and (max-width: 580px) {

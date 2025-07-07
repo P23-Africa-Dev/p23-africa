@@ -1,28 +1,28 @@
 @font-face {
-    font-family: "GT Walsheim Pro"; /* Name your font family */
+    font-family: "GT Walsheim Pro";
+    /* Name your font family */
 
-    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff2")
-            format("woff2"),
-        url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff")
-            format("woff"); /* Adjust file names and paths as needed */
+    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff2") format("woff2"),
+        url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff") format("woff");
+    /* Adjust file names and paths as needed */
 }
 
 @font-face {
-    font-family: "GT Walsheim Con"; /* Name your font family */
+    font-family: "GT Walsheim Con";
+    /* Name your font family */
 
-    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedRegular.woff2")
-            format("woff2"),
-        url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff")
-            format("woff"); /* Adjust file names and paths as needed */
+    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedRegular.woff2") format("woff2"),
+        url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff") format("woff");
+    /* Adjust file names and paths as needed */
 }
 
 @font-face {
-    font-family: "GT Walsheim Bold"; /* Name your font family */
+    font-family: "GT Walsheim Bold";
+    /* Name your font family */
 
-    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-Bold.woff2")
-            format("woff2"),
-        url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff")
-            format("woff"); /* Adjust file names and paths as needed */
+    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-Bold.woff2") format("woff2"),
+        url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff") format("woff");
+    /* Adjust file names and paths as needed */
 }
 
 body {
@@ -114,7 +114,7 @@ body {
 } */
 
 /* Navbar Styling */
-.navbar {
+.navbar-full.navbar {
     background-color: #4d787b00;
     padding: 1rem 2rem;
     position: fixed;
@@ -131,7 +131,7 @@ body {
 .navbar .navbar-brand img {
     height: auto;
     width: 62px;
-    padding-right: 2px;
+    /* padding-right: 2px; */
 }
 
 .navbar .nav-link {
@@ -154,9 +154,11 @@ body {
     background-color: white;
     color: #4d787b;
 }
+
 .social-icons a {
     text-decoration: none;
 }
+
 .social-icons i {
     font-size: 1rem;
     color: white;
@@ -170,26 +172,31 @@ body {
     z-index: 1000;
     transition: 500ms;
 }
+
 .bg-scrolling .nav-link {
     text-decoration: none;
     color: #0d4036 !important;
     font-weight: 500;
     transition: 400ms;
 }
+
 .bg-scrolling .nav-link:hover {
     color: #08201b;
     font-weight: 700;
 }
+
 .bg-scrolling .navbar-brand img {
     -webkit-filter: invert(100%);
     filter: invert(100%);
 }
+
 .bg-scrolling .subscribe-btn {
     background-color: #08201b;
     color: #fff;
     transition: 500ms;
     padding: 5px 15px;
 }
+
 .bg-scrolling .subscribe-btn:hover {
     background-color: transparent;
     border: 1px solid #08201b;
@@ -202,6 +209,21 @@ body {
     margin-left: 12px;
 }
 
+.bg-scrolling .navbar-toggler img {
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+}
+
+.navbar-full.navbar .navbar-toggler img {
+    margin-right: -1rem;
+}
+
+@media screen and (max-width: 580px) {
+    .navbar-full.navbar {
+        padding: 1rem 0.5rem !important;
+    }
+}
+
 .whole-brn {
     background: linear-gradient(#ffffffa9, #ffffffa9), url(../images/brn-gb.png);
 }
@@ -209,11 +231,13 @@ body {
 /* =====================================================  BRN  START - INTRO SECTION*/
 
 .brn-intro-section {
-    background-image: linear-gradient(
-            to right,
+    background-image: linear-gradient(to right,
             #2f626e 0%,
-            /* Left part */ #23444c 50%,
-            /* Middle part */ #1a3e47 100% /* Right part */
+            /* Left part */
+            #23444c 50%,
+            /* Middle part */
+            #1a3e47 100%
+            /* Right part */
         ),
         url(../images/brn-intro-bg-image.png);
     background-position: center;
@@ -230,6 +254,7 @@ body {
     padding-top: 7rem;
     padding-bottom: 2rem;
 }
+
 .brn-intro-section .intro-content {
     padding: 1rem;
 }
@@ -267,6 +292,7 @@ body {
     align-items: center;
     gap: 0.5rem;
 }
+
 .brn-intro-section .intro-content .register-button i {
     font-size: 1.2rem;
     margin-left: 20px;
@@ -296,9 +322,11 @@ body {
     border-radius: 30px;
     position: relative;
 }
+
 .image-grid .second {
     border: 3px solid #fde9a4;
 }
+
 .image-grid .second {
     width: 400px;
     right: -80px;
@@ -327,12 +355,14 @@ body {
     padding-top: 20px;
     font-size: 14px;
 }
+
 .image-grid .second .card-image div {
     position: relative;
     width: 50px;
     height: 50px;
     border-radius: 50%;
 }
+
 .image-grid .second .card-image img {
     position: absolute;
     object-fit: cover;
@@ -364,9 +394,11 @@ body {
     height: 8px;
     border-radius: 50%;
 }
+
 .image-grid .first .card-dots .dot {
     background-color: #f9cd33;
 }
+
 .image-grid .second .card-dots .dot {
     background-color: #0d4036;
 }
@@ -380,6 +412,7 @@ body {
     border-radius: 10px;
     z-index: 2;
 }
+
 .image-grid .send-icon img {
     width: 60px;
     height: 60px;
@@ -414,13 +447,16 @@ body {
     border: 2px solid rgba(255, 255, 255, 0.1);
     border-radius: 1rem;
     z-index: 0;
-    pointer-events: none; /* Ensure it doesn't block interaction */
+    pointer-events: none;
+    /* Ensure it doesn't block interaction */
     opacity: 0.8;
 }
+
 .brn-how-we-operate-section .top-right-bg img,
 .brn-how-we-operate-section .bottom-left-bg img {
     opacity: 0.5;
 }
+
 .brn-how-we-operate-section .bottom-left-bg {
     position: absolute;
     bottom: 0;
@@ -431,13 +467,15 @@ body {
     border: 2px solid rgba(255, 255, 255, 0.1);
     border-radius: 1rem;
     z-index: 0;
-    pointer-events: none; /* Ensure it doesn't block interaction */
+    pointer-events: none;
+    /* Ensure it doesn't block interaction */
     opacity: 0.8;
 }
 
 .brn-how-we-operate-section .section-header {
     margin-bottom: 3rem;
-    position: relative; /* Ensure header is above the background element */
+    position: relative;
+    /* Ensure header is above the background element */
     z-index: 1;
     color: #0d4036;
     text-align: left;
@@ -567,10 +605,12 @@ body {
     position: absolute;
     width: 95px;
 }
+
 .brn-how-we-operate-section .operate-card.card-3 .top {
     top: 0;
     right: 30px;
 }
+
 .brn-how-we-operate-section .operate-card.card-3 .bottom {
     bottom: -20px;
     left: 40px;
@@ -594,6 +634,7 @@ body {
     padding: 60px 0px;
     overflow: hidden;
 }
+
 .brn-testimonials-section .container {
     padding-left: 0px !important;
     padding-right: 0px !important;
@@ -625,7 +666,8 @@ body {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
 }
-.brn-testimonials-section .testimonial-card > div {
+
+.brn-testimonials-section .testimonial-card>div {
     height: 350px;
 }
 
@@ -637,10 +679,12 @@ body {
     color: #fff;
     padding: 30px 15px;
 }
+
 .testimonial-card.first-row .text-block.green {
     background-color: #1deaa5;
     color: #193e47;
 }
+
 .testimonial-card.first-row .text-block.dark {
     background-color: #193e47;
     color: #fff;
@@ -649,10 +693,12 @@ body {
 .testimonial-card .text-block .company-name {
     font-size: 18px;
 }
+
 .testimonial-card .text-block .ceo-name {
     font-size: 15px;
     font-weight: bold;
 }
+
 .testimonial-card .text-block .testimonial-text {
     font-size: 13px;
 }
@@ -724,10 +770,12 @@ body {
 .brn-events-meetups-section .events-intro .see-all-events-button i {
     margin-left: 30px;
 }
+
 .brn-events-meetups-section .dark-card a i,
 .brn-events-meetups-section .light-card a i {
     margin-left: 20px;
 }
+
 .brn-events-meetups-section .events-intro .see-all-events-button:hover {
     background-color: #0a3028;
     border-color: #0a3028;
@@ -775,8 +823,10 @@ body {
 
 .brn-events-meetups-section .event-card .book-seat-button {
     background-color: transparent;
-    border: 2px solid; /* Border color will inherit */
-    color: inherit; /* Text color will inherit */
+    border: 2px solid;
+    /* Border color will inherit */
+    color: inherit;
+    /* Text color will inherit */
     padding: 0.8rem 2rem;
     font-size: 1rem;
     font-weight: 600;
@@ -815,7 +865,8 @@ body {
 }
 
 .brn-events-meetups-section .event-card.light-card .card-icon {
-    color: #193e47; /* Dark green icon for light card */
+    color: #193e47;
+    /* Dark green icon for light card */
 }
 
 .brn-events-meetups-section .event-card.light-card .book-seat-button {
@@ -842,28 +893,33 @@ body {
     position: relative;
     z-index: 2;
 }
+
 .brn-cta-section .left-content {
     /* z-index: 2; */
 
     padding: 2rem 0rem;
 }
+
 .brn-cta-section .left-content h2 {
     font-weight: 900;
     font-size: 20px;
 }
 
-.left-container > img {
+.left-container>img {
     z-index: -1;
     width: 100px;
 }
+
 .left-container .top-image,
 .left-container .bottom-image {
     position: absolute;
 }
+
 .left-container .top-image {
     top: 0;
     right: 0;
 }
+
 .left-container .bottom-image {
     bottom: 0;
     left: 50px;
@@ -922,10 +978,12 @@ body {
     .testimonial-card .text-block .company-name {
         font-size: 19px;
     }
+
     .testimonial-card .text-block .ceo-name {
         font-size: 18px;
         font-weight: bold;
     }
+
     .testimonial-card .text-block .testimonial-text {
         font-size: 15px;
     }
@@ -998,6 +1056,7 @@ body {
     .brn-events-meetups-section .events-intro h2 {
         font-size: 2rem;
     }
+
     .brn-events-meetups-section .events-intro {
         text-align: left;
     }
@@ -1005,9 +1064,11 @@ body {
     .brn-how-we-operate-section .card-wrapper {
         grid-template-columns: repeat(3, 1fr);
     }
+
     .brn-cta-section {
         padding: 0px;
     }
+
     .brn-cta-section .right-image {
         position: relative;
         left: -60%;
@@ -1016,9 +1077,13 @@ body {
             to left,
             transparent 0%,
             #1a3e47 35%,
-            /* middle soft blend */ #1a3e47 0%,
-            /* darker toward the end */ #1a3e47 100% /* solid right side */
-        ); */
+            /* middle soft blend */
+        #1a3e47 0%,
+        /* darker toward the end */
+        #1a3e47 100%
+        /* solid right side */
+        );
+        */
     }
 
     .left-container .bottom-image {
@@ -1026,7 +1091,7 @@ body {
         left: 70%;
     }
 
-    .left-container > img {
+    .left-container>img {
         z-index: -1;
         width: 120px;
     }
@@ -1046,10 +1111,12 @@ body {
     .brn-how-we-operate-section .operate-card.card-2 img {
         height: 60%;
     }
+
     .brn-cta-section .left-content h2 {
         font-weight: 900;
         font-size: 30px;
     }
+
     .brn-cta-section .left-content p {
         font-size: 20px;
         max-width: 400px;
@@ -1059,6 +1126,7 @@ body {
         position: relative;
     }
 }
+
 @media (min-width: 1440px) {
     .brn-intro-section {
         padding-top: 5rem;
@@ -1067,6 +1135,7 @@ body {
     .brn-intro-section .intro-content {
         margin-top: -30%;
     }
+
     .brn-intro-section .image-grid {
         margin-left: -20px;
     }
@@ -1086,19 +1155,23 @@ body {
     .image-grid .second .card-image {
         transform: translateX(90%);
     }
+
     .image-grid .second .card-image p {
         font-size: 16px;
         font-weight: 500;
     }
+
     .brn-how-we-operate-section .bottom-left-bg {
         width: 600px;
         height: 900px;
         transform: translate(-35%, 80%);
     }
+
     .brn-how-we-operate-section .section-header h4 {
         font-size: 1.2rem;
         font-weight: 900;
     }
+
     .brn-how-we-operate-section .section-header h2 {
         font-size: 2.5rem;
     }
@@ -1118,6 +1191,7 @@ body {
     .brn-how-we-operate-section .operate-card.card-3 {
         padding: 2.5rem 2rem;
     }
+
     .brn-how-we-operate-section .operate-card.card-3 .bottom {
         left: 30px;
     }
@@ -1131,10 +1205,12 @@ body {
     .testimonial-card .text-block .company-name {
         font-size: 22px;
     }
+
     .testimonial-card .text-block .ceo-name {
         font-size: 18px;
         font-weight: bold;
     }
+
     .testimonial-card .text-block .testimonial-text {
         font-size: 15px;
     }
@@ -1147,6 +1223,7 @@ body {
     .brn-testimonials-section .header-row .title-group h2 {
         font-size: 2rem;
     }
+
     .brn-testimonials-section .header-row .description p {
         font-size: 1.1rem;
     }
@@ -1161,18 +1238,21 @@ body {
 .buss-match {
     margin: 3rem auto;
 }
+
 .buss-match img {
     width: 100%;
     height: auto;
 }
-.valuable-leads {
-}
+
+.valuable-leads {}
+
 .valuable-leads img {
     width: 100%;
     height: auto;
 }
-.networking {
-}
+
+.networking {}
+
 .networking img {
     width: 100%;
     height: auto;
@@ -1185,14 +1265,17 @@ body {
     /* max-height: 400px; */
     /* height: 100%; */
 }
+
 .brn-header-container {
     padding: 20px;
 }
+
 .brn-header {
     max-width: 700px;
     margin: 0 auto;
     color: #fff;
 }
+
 .brn-header h1 {
     color: #1deaa5;
     font-size: 2.5rem;
@@ -1209,6 +1292,7 @@ body {
     /* background-color: #fff; */
     /* max-height: 400px !important; */
 }
+
 .brn-form-container .brn-content {
     background-color: #ebefee;
     border-radius: 30px;
@@ -1216,6 +1300,7 @@ body {
     width: 100%;
     box-shadow: 0px 19px 30px 19px rgba(0, 0, 0, 0.1);
 }
+
 .brn-content .brn-form {
     width: 80%;
     padding: 60px 20px 30px;
@@ -1228,6 +1313,7 @@ body {
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
 }
+
 .form-conainer {
     max-width: 800px;
     margin: 0 auto;
@@ -1314,9 +1400,11 @@ body {
     .brn-form-container {
         position: relative;
     }
+
     .form-conainer {
         width: 90%;
     }
+
     .brn-image {
         display: block;
         max-width: 100px;
@@ -1340,21 +1428,27 @@ body {
         font-weight: 400;
         letter-spacing: 0.5px;
     }
+
     .footer .desk {
         display: none;
     }
+
     .footer .footer-quick-links {
         display: block;
     }
+
     .footer .strategy {
         display: none;
     }
+
     .footer .second-icon {
         display: block;
     }
+
     .footer .first-icon {
         display: none;
     }
+
     .footer .footer-links p {
         font-weight: 400;
         font-size: 19px;
@@ -1381,36 +1475,44 @@ body {
         font-weight: 400;
         letter-spacing: 0.5px;
     }
+
     .footer .subscribe input {
         border: 2px solid #fff;
         background-color: #fff;
         color: white;
         border-radius: 6px;
     }
+
     .footer img {
         width: 90px;
     }
+
     .footer .subscribe input::placeholder {
         color: #ccc;
     }
+
     .footer .subscribe_desktop {
         display: none;
     }
+
     .footer .subscribe_mobile {
         display: block;
         /* width: 60%; */
         /* position: absolute;
         margin-top: 14rem; */
     }
+
     .footer .subscribe_mobile input {
         position: absolute;
         width: 55%;
         padding: 15px 20px;
     }
+
     .footer .subscribe_mobile input::placeholder {
         /* padding: 0px 10px; */
         color: #333333;
     }
+
     .footer .subscribe_mobile button {
         position: relative;
         justify-content: end;
@@ -1420,6 +1522,7 @@ body {
         /* padding: 50px 0px; */
         height: 58px;
     }
+
     .footer .subscribe button {
         margin-top: 15px;
         background-color: #cced60;
@@ -1437,15 +1540,18 @@ body {
         padding-top: 30px;
         color: #ccc;
     }
+
     .footer-bottom_desktop {
         display: none;
     }
+
     .footer-bottom a {
         color: #ccc;
         margin: 0 5px;
         text-decoration: underline;
     }
 }
+
 @media screen and (min-width: 580px) {
     .footer {
         background-color: #0d4036;
@@ -1453,9 +1559,11 @@ body {
         padding: 30px 80px;
         font-family: "GT Walsheim Con";
     }
+
     .footer img {
         width: 90px;
     }
+
     .footer .logo-text {
         font-size: 16px;
         font-weight: 400;
@@ -1465,18 +1573,23 @@ body {
         font-weight: 400;
         font-size: 20px;
     }
+
     .footer .footer-quick-links {
         display: none;
     }
+
     .footer .subscribe_mobile {
         display: none;
     }
+
     .footer .first-icon {
         display: none;
     }
+
     .footer .footer-bottom_mobile {
         display: none;
     }
+
     .footer .footer-links a {
         display: block;
         text-decoration: none;
@@ -1498,6 +1611,7 @@ body {
         font-weight: 300;
         letter-spacing: 0.5px;
     }
+
     .footer .subscribe input {
         border: 2px solid #cced6099;
         background-color: transparent;

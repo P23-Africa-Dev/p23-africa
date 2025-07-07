@@ -94,7 +94,7 @@
                             <div class="card-item researchers">
                                 <div>
                                     <div class="card-icon">
-                                        <img src="./images/res-logo-st.png" alt="" />
+                                        <img src="{{ asset('images/res-logo-st.png') }}" loading="lazy" alt="" />
                                     </div>
                                     <h3 class="card-title">Researchers</h3>
                                     <p class="card-description">
@@ -104,7 +104,8 @@
                                 </div>
                                 <a href="#" class="action-button">
                                     <div class="act-icon">
-                                        <img src="./images/b-ai-chat-01-st.png" alt="" />
+                                        <img src="{{ asset('images/b-ai-chat-01-st.png') }}" loading="lazy"
+                                            alt="" />
                                     </div>
                                     Conduct relevant research using contextual field data.
                                 </a>
@@ -140,7 +141,8 @@
                                     <div class="swiper-slide card-item blue">
                                         <h3 class="card-title">Sociology & Anthropology</h3>
                                         <div class="card-image">
-                                            <img src="./images/driven-bg-1.png" alt="Student 1" />
+                                            <img src="{{ asset('images/driven-bg-1.png') }}" loading="lazy"
+                                                alt="Student 1" />
                                         </div>
                                     </div>
                                     <div class="swiper-slide card-item light-yellow">
@@ -148,13 +150,15 @@
                                             Business Administration & Management
                                         </h3>
                                         <div class="card-image circle-mask">
-                                            <img src="./images/driven-bg-1.png" alt="Student 1" />
+                                            <img src="{{ asset('images/driven-bg-4.png') }}" loading="lazy"
+                                                alt="Student 1" />
                                         </div>
                                     </div>
                                     <div class="swiper-slide card-item blue">
                                         <h3 class="card-title">Sociology & Anthropology</h3>
                                         <div class="card-image">
-                                            <img src="./images/driven-bg-1.png" alt="Student 1" />
+                                            <img src="{{ asset('images/driven-bg-1.png') }}" loading="lazy"
+                                                alt="Student 1" />
                                         </div>
                                     </div>
                                     <div class="swiper-slide card-item light-yellow">
@@ -162,21 +166,27 @@
                                             Business Administration & Management
                                         </h3>
                                         <div class="card-image circle-mask">
-                                            <img src="./images/driven-bg-1.png" alt="Student 1" />
+                                            <img src="{{ asset('images/driven-bg-4.png') }}" loading="lazy"
+                                                alt="Student 1" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="d-block d-sm-none page-driven-content-overlay-mobile">
+                            <div class="d-block d-sm-none">
+                                <div class="fade-overlay">
+                                    {{-- <div class="fade-overlay fade-top"></div>
+                                    <div class="fade-overlay fade-bottom"></div> --}}
 
-                                <p class="">
-                                    We welcome curious, high-performing students from departments
-                                    that shape business, society, and innovation. If you're
-                                    passionate about solving real-world problems with data,
-                                    insight, and collaboration—this is for you.
-                                </p>
-
+                                    <div class="page-driven-content-overlay-mobile">
+                                        <p class="">
+                                            We welcome curious, high-performing students from departments
+                                            that shape business, society, and innovation. If you're
+                                            passionate about solving real-world problems with data,
+                                            insight, and collaboration—this is for you.
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="swiper slider-two">
@@ -186,7 +196,8 @@
                                             Mass Communication & Media Studies
                                         </h3>
                                         <div class="card-image circle-mask">
-                                            <img src="./images/driven-bg-1.png" alt="Student 1" />
+                                            <img src="{{ asset('images/driven-bg-2.png') }}" loading="lazy"
+                                                alt="Student 1" />
                                         </div>
                                     </div>
                                     <div class="swiper-slide card-item dark-blue">
@@ -194,7 +205,8 @@
                                             Political Science & Public Policy
                                         </h3>
                                         <div class="card-image circle-mask">
-                                            <img src="./images/driven-bg-1.png" alt="Student 1" />
+                                            <img src="{{ asset('images/driven-bg-3.png') }}" loading="lazy"
+                                                alt="Student 1" />
                                         </div>
                                     </div>
                                     <div class="swiper-slide card-item orange">
@@ -202,7 +214,8 @@
                                             Mass Communication & Media Studies
                                         </h3>
                                         <div class="card-image circle-mask">
-                                            <img src="./images/driven-bg-1.png" alt="Student 1" />
+                                            <img src="{{ asset('images/driven-bg-2.png') }}" loading="lazy"
+                                                alt="Student 1" />
                                         </div>
                                     </div>
                                     <div class="swiper-slide card-item dark-blue">
@@ -210,7 +223,8 @@
                                             Political Science & Public Policy
                                         </h3>
                                         <div class="card-image circle-mask">
-                                            <img src="./images/driven-bg-1.png" alt="Student 1" />
+                                            <img src="{{ asset('images/driven-bg-3.png') }}" loading="lazy"
+                                                alt="Student 1" />
                                         </div>
                                     </div>
                                 </div>
