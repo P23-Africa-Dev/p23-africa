@@ -18,6 +18,8 @@
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
         <!-- Font Awesome for icons -->
         <script src="https://kit.fontawesome.com/3df60fe6e2.js" crossorigin="anonymous"></script>
         <style>
@@ -46,6 +48,21 @@
                 transform: translateY(0);
             }
 
+            .modal-content {
+                border-radius: 1rem;
+            }
+
+            #seatForm input {
+                border: 0;
+                border-bottom: 2px solid #0D4036;
+                box-shadow: 2px 2px 4px #0000008e;
+            }
+
+            #seatForm .btn {
+                background-color: #0D4036;
+                color: #fff;
+                font-family: 'GT Walsheim Con';
+            }
 
             /* .animate-on-scroll {
                 opacity: 0 !important;
@@ -278,29 +295,37 @@
                 }
             });
 
-            const sliderOne = new Swiper(".slider-one", {
-                direction: "vertical",
-                loop: true,
-                slidesPerView: 2, // shows 2 slides at once
-                spaceBetween: 40,
-                autoplay: {
-                    delay: 2000,
-                    disableOnInteraction: false,
-                },
-                speed: 500,
-            });
 
-            const sliderTwo = new Swiper(".slider-two", {
-                direction: "vertical",
-                loop: true,
-                slidesPerView: 2, // shows 2 slides at once
-                spaceBetween: 40,
-                autoplay: {
-                    delay: 1000,
-                    disableOnInteraction: false,
-                },
-                speed: 1000,
-            });
+
+            const trackOne = document.querySelector(".slider-one");
+            const trackTwo = document.querySelector(".slider-two");
+
+            // Duplicate for upward scrolling (normal duplication)
+            trackOne.innerHTML += trackOne.innerHTML;
+
+            // For downward scrolling, duplicate *twice* to prevent blank space
+            trackTwo.innerHTML += trackTwo.innerHTML + trackTwo.innerHTML;
+
+            function startScrolling(track, direction = "up", speed = 30) {
+                const distance = track.scrollHeight / 3; // since we have 3x content
+
+                const y = direction === "up" ? -distance : distance;
+                const initialY = direction === "down" ? -distance : 0; // start offset to avoid blank
+
+                gsap.set(track, {
+                    y: initialY
+                });
+
+                gsap.to(track, {
+                    y: y,
+                    ease: "none",
+                    duration: speed,
+                    repeat: -1
+                });
+            }
+
+            startScrolling(trackOne, "up", 30);
+            startScrolling(trackTwo, "down", 30);
         </script>
     </body>
 

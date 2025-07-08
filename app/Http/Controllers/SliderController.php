@@ -12,4 +12,12 @@ class SliderController extends Controller
 
         return view('/welcome', compact('images', 'images2'));
     }
+
+    public function showSliderStudent()
+    {
+        $images = ['driven-bg-1.png', 'driven-bg-4.png', 'driven-bg-1.png', 'driven-bg-4.png'];
+        $images2 = ['driven-bg-2.png', 'driven-bg-3.png', 'driven-bg-2.png', 'driven-bg-3.png'];
+
+        return view('/student', compact('images', 'images2'));
+    }
 }

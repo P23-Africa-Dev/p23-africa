@@ -85,9 +85,11 @@ Route::get('/brn-form', function () {
 })->name('brn-form');
 
 // Student
-Route::get('/student', function () {
-    return view('student');
-})->name('student');
+Route::get('/student', [SliderController::class, 'showSliderStudent'])->name('student');
+
+// Route::get('/student', function () {
+//     return view('student');
+// })->name('student');
 
 /**
  * Route to display click counts.

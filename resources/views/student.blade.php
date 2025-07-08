@@ -23,13 +23,13 @@
                         <span class="badge">Student Network</span>
                         <h1 class="main-heading">
                             Partnering With Universities To Help Students
-                             <span class="highlight"> Turn Data </span> Into Rewards.
+                            <span class="highlight"> Turn Data </span> Into Rewards.
                         </h1>
                         <p class="description">
                             Join a continent-wide network where high-performing students
                             collect real-world data that fuels business, policy, and research.
                         </p>
-                        <a href="#" class="join-button">
+                        <a data-bs-toggle="modal" data-bs-target="#seatModal" href="#" class="join-button">
                             Join The Network <i class="bi bi-arrow-right arrow"></i>
                         </a>
                     </div>
@@ -132,52 +132,54 @@
                                 We welcome curious, high-performing students from departments
                                 that shape business, society, and innovation. If you're
                                 passionate about solving real-world problems with data, insight,
-                                and collaboration—this is for you.
+                                and collaboration, this is for you.
                             </p>
                         </div>
-                        <div class="right-content">
-                            <div class="swiper slider-one">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide card-item blue">
-                                        <h3 class="card-title">Sociology & Anthropology</h3>
-                                        <div class="card-image">
-                                            <img src="{{ asset('images/driven-bg-1.png') }}" loading="lazy"
-                                                alt="Student 1" />
+                        <div class="slider-wrapper right-content">
+                            <div class="slider-column">
+                                <div class="slider-track slider-one">
+                                    @foreach ($images as $index => $image)
+                                        @php
+                                            $bgClasses = ['blue', 'light-yellow', 'blue', 'light-yellow'];
+
+                                            $title = [
+                                                'Sociology & Anthropology',
+                                                'Business Administration & Management',
+                                                'Sociology & Anthropology',
+                                                'Business Administration & Management',
+                                            ];
+                                        @endphp
+                                        <div class="card-item {{ $bgClasses[$index] }}">
+                                            <h3 class="card-title">{{ $title[$index] }}</h3>
+                                            <div class="card-image">
+                                                <img src="{{ asset('images/' . $image) }}" loading="lazy" alt="Student 1" />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="swiper-slide card-item light-yellow">
-                                        <h3 class="card-title">
-                                            Business Administration & Management
-                                        </h3>
-                                        <div class="card-image circle-mask">
-                                            <img src="{{ asset('images/driven-bg-4.png') }}" loading="lazy"
-                                                alt="Student 1" />
+                                    @endforeach
+
+                                    {{-- @foreach ($images as $index => $image)
+                                        @php
+                                            $bgClasses = ['blue', 'light-yellow', 'blue', 'light-yellow'];
+
+                                            $title = [
+                                                'Sociology & Anthropology',
+                                                'Business Administration & Management',
+                                                'Sociology & Anthropology',
+                                                'Business Administration & Management',
+                                            ];
+                                        @endphp
+                                        <div class="card-item {{ $bgClasses[$index] }}">
+                                            <h3 class="card-title">{{ $title[$index] }}</h3>
+                                            <div class="card-image">
+                                                <img src="{{ asset('images/' . $image) }}" loading="lazy" alt="Student 1" />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="swiper-slide card-item blue">
-                                        <h3 class="card-title">Sociology & Anthropology</h3>
-                                        <div class="card-image">
-                                            <img src="{{ asset('images/driven-bg-1.png') }}" loading="lazy"
-                                                alt="Student 1" />
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide card-item light-yellow">
-                                        <h3 class="card-title">
-                                            Business Administration & Management
-                                        </h3>
-                                        <div class="card-image circle-mask">
-                                            <img src="{{ asset('images/driven-bg-4.png') }}" loading="lazy"
-                                                alt="Student 1" />
-                                        </div>
-                                    </div>
+                                    @endforeach --}}
                                 </div>
                             </div>
 
                             <div class="d-block d-sm-none">
                                 <div class="fade-overlay">
-                                    {{-- <div class="fade-overlay fade-top"></div>
-                                    <div class="fade-overlay fade-bottom"></div> --}}
-
                                     <div class="page-driven-content-overlay-mobile">
                                         <p class="">
                                             We welcome curious, high-performing students from departments
@@ -189,44 +191,80 @@
                                 </div>
                             </div>
 
-                            <div class="swiper slider-two">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide card-item orange">
-                                        <h3 class="card-title">
-                                            Mass Communication & Media Studies
-                                        </h3>
-                                        <div class="card-image circle-mask">
-                                            <img src="{{ asset('images/driven-bg-2.png') }}" loading="lazy"
-                                                alt="Student 1" />
+                            <div class="slider-column">
+                                <div class="slider-track slider-two">
+                                    @foreach ($images2 as $index2 => $image2)
+                                        @php
+                                            $bgClasses2 = ['orange', 'blue', 'orange', 'dark-blue'];
+
+                                            $title2 = [
+                                                'Mass Communication & Media Studies',
+                                                'Political Science & Public Policy',
+                                                'Mass Communication & Media Studies',
+                                                'Political Science & Public Policy',
+                                            ];
+                                        @endphp
+
+                                        <div class="card-item {{ $bgClasses2[$index2] }}">
+                                            <h3 class="card-title">
+                                                {{ $title2[$index2] }}
+                                            </h3>
+                                            <div class="card-image circle-mask">
+                                                <img src="{{ asset('images/' . $image2) }}" loading="lazy"
+                                                    alt="Student 1" />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="swiper-slide card-item dark-blue">
-                                        <h3 class="card-title">
-                                            Political Science & Public Policy
-                                        </h3>
-                                        <div class="card-image circle-mask">
-                                            <img src="{{ asset('images/driven-bg-3.png') }}" loading="lazy"
-                                                alt="Student 1" />
+                                        {{-- <div class="card-item dark-blue">
+                                            <h3 class="card-title">
+                                                Political Science & Public Policy
+                                            </h3>
+                                            <div class="card-image circle-mask">
+                                                <img src="{{ asset('images/driven-bg-3.png') }}" loading="lazy"
+                                                    alt="Student 1" />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="swiper-slide card-item orange">
-                                        <h3 class="card-title">
-                                            Mass Communication & Media Studies
-                                        </h3>
-                                        <div class="card-image circle-mask">
-                                            <img src="{{ asset('images/driven-bg-2.png') }}" loading="lazy"
-                                                alt="Student 1" />
+                                        <div class="card-item orange">
+                                            <h3 class="card-title">
+                                                Mass Communication & Media Studies
+                                            </h3>
+                                            <div class="card-image circle-mask">
+                                                <img src="{{ asset('images/driven-bg-2.png') }}" loading="lazy"
+                                                    alt="Student 1" />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="swiper-slide card-item dark-blue">
-                                        <h3 class="card-title">
-                                            Political Science & Public Policy
-                                        </h3>
-                                        <div class="card-image circle-mask">
-                                            <img src="{{ asset('images/driven-bg-3.png') }}" loading="lazy"
-                                                alt="Student 1" />
+                                        <div class="card-item dark-blue">
+                                            <h3 class="card-title">
+                                                Political Science & Public Policy
+                                            </h3>
+                                            <div class="card-image circle-mask">
+                                                <img src="{{ asset('images/driven-bg-3.png') }}" loading="lazy"
+                                                    alt="Student 1" />
+                                            </div>
+                                        </div> --}}
+                                    @endforeach
+
+                                    {{-- @foreach ($images2 as $index2 => $image2)
+                                        @php
+                                            $bgClasses2 = ['orange', 'blue', 'orange', 'dark-blue'];
+
+                                            $title2 = [
+                                                'Mass Communication & Media Studies',
+                                                'Political Science & Public Policy',
+                                                'Mass Communication & Media Studies',
+                                                'Political Science & Public Policy',
+                                            ];
+                                        @endphp
+
+                                        <div class="card-item {{ $bgClasses2[$index2] }}">
+                                            <h3 class="card-title">
+                                                {{ $title2[$index2] }}
+                                            </h3>
+                                            <div class="card-image circle-mask">
+                                                <img src="{{ asset('images/' . $image2) }}" loading="lazy"
+                                                    alt="Student 1" />
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endforeach --}}
                                 </div>
                             </div>
                         </div>
@@ -265,7 +303,7 @@
                             mentorship. Receive compensation for verified contributions.
                         </p>
                     </div>
-                    <div class="grid-item">
+                    <div class="grid-item" style="margin-top: 2rem;">
                         <div class="item-number">/04</div>
                         <div class="item-title">Grow With Mentorship</div>
                         <p>
@@ -312,5 +350,81 @@
                 </div>
             </div>
         </section>
+
+
+
+
+        <!-- Seat Booking Modal -->
+        <div class="modal fade w-100" id="seatModal" tabindex="-1" aria-labelledby="seatModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content rounded-4 py-3 px-5">
+                    <div class="modal-header border-0">
+                        {{-- <h5 class="modal-title text-success" id="seatModalLabel">Book a Seat</h5> --}}
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <p class="mb-2" style="color: #0D4036; font-weight: 500; font-family: 'GT Walsheim Con';">
+                            <em>Book your seat to be a part of this exclusive event and gain valuable insights from trusted
+                                experts.</em>
+                        </p><br>
+                        <form id="seatForm">
+                            @csrf
+                            <input type="hidden" name="event_id" id="event_id">
+                            <div class="row g-20">
+                                <div class="col-md-6">
+                                    <input type="text" name="name" class="form-control mb-5"
+                                        placeholder="Full name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" name="phone" class="form-control mb-5"
+                                        placeholder="Contact Number" required>
+                                </div>
+
+                                <div class="col-12">
+                                    <input type="email" name="email" class="form-control mb-5" placeholder="Email"
+                                        required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <input type="text" name="name" class="form-control mb-5"
+                                        placeholder="University Name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" name="phone" class="form-control mb-5"
+                                        placeholder="Region" required>
+                                </div>
+                            </div>
+
+
+
+                            <button type="submit" class="btn w-50" id="submitBtn">
+                                <span class="spinner-border spinner-border-sm me-2 d-none" role="status"
+                                    id="submitSpinner"></span>
+                                Submit <i class="bi bi-arrow-right ms-2"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Success Popup Modal -->
+        <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content text-center p-4 border-0 shadow rounded-4">
+                    <h5 class="mb-3" style="color: #0D4036; font-weight: 500; font-family: 'GT Walsheim Con';">
+                        Thank you for signing up. We've sent event details to your email <br>
+                        <span class="">— please check your inbox.</span>
+                    </h5>
+                    <a href="{{ route('events.all-events') }}" class="btn mt-3"
+                        style="background-color: #0D4036; color: #fff; font-family: 'GT Walsheim Con';">
+                        View Other Events <i class="bi bi-arrow-right ms-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
     </section>
 @endsection
