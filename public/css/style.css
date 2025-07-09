@@ -104,7 +104,7 @@ h3 {
     height: 100%;
     width: 100%;
     background: rgba(0, 0, 0, 0.5);
-    z-index: 1049;
+    z-index: 1;
     display: none;
 }
 
