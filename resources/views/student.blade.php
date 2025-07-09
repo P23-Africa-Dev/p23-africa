@@ -13,6 +13,9 @@
 @endsection
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script> --}}
+
+
 
 @section('content')
     <section class="whole-student">
@@ -138,43 +141,26 @@
                         <div class="slider-wrapper right-content">
                             <div class="slider-column">
                                 <div class="slider-track slider-one">
-                                    @foreach ($images as $index => $image)
-                                        @php
-                                            $bgClasses = ['blue', 'light-yellow', 'blue', 'light-yellow'];
-
-                                            $title = [
-                                                'Sociology & Anthropology',
-                                                'Business Administration & Management',
-                                                'Sociology & Anthropology',
-                                                'Business Administration & Management',
-                                            ];
-                                        @endphp
-                                        <div class="card-item {{ $bgClasses[$index] }}">
-                                            <h3 class="card-title">{{ $title[$index] }}</h3>
-                                            <div class="card-image">
-                                                <img src="{{ asset('images/' . $image) }}" loading="lazy" alt="Student 1" />
+                                    @for ($i = 0; $i < 3; $i++)
+                                        @foreach ($images as $index => $image)
+                                            @php
+                                                $bgClasses = ['blue', 'light-yellow', 'blue', 'light-yellow'];
+                                                $title = [
+                                                    'Sociology & Anthropology',
+                                                    'Business Administration & Management',
+                                                    'Sociology & Anthropology',
+                                                    'Business Administration & Management',
+                                                ];
+                                            @endphp
+                                            <div class="card-item {{ $bgClasses[$index % count($bgClasses)] }}">
+                                                <h3 class="card-title">{{ $title[$index % count($title)] }}</h3>
+                                                <div class="card-image">
+                                                    <img src="{{ asset('images/' . $image) }}" loading="lazy"
+                                                        alt="Student" />
+                                                </div>
                                             </div>
-                                        </div>
-                                    @endforeach
-
-                                    {{-- @foreach ($images as $index => $image)
-                                        @php
-                                            $bgClasses = ['blue', 'light-yellow', 'blue', 'light-yellow'];
-
-                                            $title = [
-                                                'Sociology & Anthropology',
-                                                'Business Administration & Management',
-                                                'Sociology & Anthropology',
-                                                'Business Administration & Management',
-                                            ];
-                                        @endphp
-                                        <div class="card-item {{ $bgClasses[$index] }}">
-                                            <h3 class="card-title">{{ $title[$index] }}</h3>
-                                            <div class="card-image">
-                                                <img src="{{ asset('images/' . $image) }}" loading="lazy" alt="Student 1" />
-                                            </div>
-                                        </div>
-                                    @endforeach --}}
+                                        @endforeach
+                                    @endfor
                                 </div>
                             </div>
 
@@ -193,78 +179,26 @@
 
                             <div class="slider-column">
                                 <div class="slider-track slider-two">
-                                    @foreach ($images2 as $index2 => $image2)
-                                        @php
-                                            $bgClasses2 = ['orange', 'blue', 'orange', 'dark-blue'];
-
-                                            $title2 = [
-                                                'Mass Communication & Media Studies',
-                                                'Political Science & Public Policy',
-                                                'Mass Communication & Media Studies',
-                                                'Political Science & Public Policy',
-                                            ];
-                                        @endphp
-
-                                        <div class="card-item {{ $bgClasses2[$index2] }}">
-                                            <h3 class="card-title">
-                                                {{ $title2[$index2] }}
-                                            </h3>
-                                            <div class="card-image circle-mask">
-                                                <img src="{{ asset('images/' . $image2) }}" loading="lazy"
-                                                    alt="Student 1" />
+                                    @for ($i = 0; $i < 3; $i++)
+                                        @foreach ($images2 as $index2 => $image2)
+                                            @php
+                                                $bgClasses2 = ['orange', 'dark-blue', 'orange', 'dark-blue'];
+                                                $title2 = [
+                                                    'Mass Communication & Media Studies',
+                                                    'Political Science & Public Policy',
+                                                    'Mass Communication & Media Studies',
+                                                    'Political Science & Public Policy',
+                                                ];
+                                            @endphp
+                                            <div class="card-item {{ $bgClasses2[$index2 % count($bgClasses2)] }}">
+                                                <h3 class="card-title">{{ $title2[$index2 % count($title2)] }}</h3>
+                                                <div class="card-image circle-mask">
+                                                    <img src="{{ asset('images/' . $image2) }}" loading="lazy"
+                                                        alt="Student" />
+                                                </div>
                                             </div>
-                                        </div>
-                                        {{-- <div class="card-item dark-blue">
-                                            <h3 class="card-title">
-                                                Political Science & Public Policy
-                                            </h3>
-                                            <div class="card-image circle-mask">
-                                                <img src="{{ asset('images/driven-bg-3.png') }}" loading="lazy"
-                                                    alt="Student 1" />
-                                            </div>
-                                        </div>
-                                        <div class="card-item orange">
-                                            <h3 class="card-title">
-                                                Mass Communication & Media Studies
-                                            </h3>
-                                            <div class="card-image circle-mask">
-                                                <img src="{{ asset('images/driven-bg-2.png') }}" loading="lazy"
-                                                    alt="Student 1" />
-                                            </div>
-                                        </div>
-                                        <div class="card-item dark-blue">
-                                            <h3 class="card-title">
-                                                Political Science & Public Policy
-                                            </h3>
-                                            <div class="card-image circle-mask">
-                                                <img src="{{ asset('images/driven-bg-3.png') }}" loading="lazy"
-                                                    alt="Student 1" />
-                                            </div>
-                                        </div> --}}
-                                    @endforeach
-
-                                    {{-- @foreach ($images2 as $index2 => $image2)
-                                        @php
-                                            $bgClasses2 = ['orange', 'blue', 'orange', 'dark-blue'];
-
-                                            $title2 = [
-                                                'Mass Communication & Media Studies',
-                                                'Political Science & Public Policy',
-                                                'Mass Communication & Media Studies',
-                                                'Political Science & Public Policy',
-                                            ];
-                                        @endphp
-
-                                        <div class="card-item {{ $bgClasses2[$index2] }}">
-                                            <h3 class="card-title">
-                                                {{ $title2[$index2] }}
-                                            </h3>
-                                            <div class="card-image circle-mask">
-                                                <img src="{{ asset('images/' . $image2) }}" loading="lazy"
-                                                    alt="Student 1" />
-                                            </div>
-                                        </div>
-                                    @endforeach --}}
+                                        @endforeach
+                                    @endfor
                                 </div>
                             </div>
                         </div>
@@ -391,8 +325,8 @@
                                         placeholder="University Name" required>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" name="phone" class="form-control mb-5"
-                                        placeholder="Region" required>
+                                    <input type="text" name="phone" class="form-control mb-5" placeholder="Region"
+                                        required>
                                 </div>
                             </div>
 

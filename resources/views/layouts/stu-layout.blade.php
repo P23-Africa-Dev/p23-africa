@@ -18,10 +18,9 @@
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-
         <!-- Font Awesome for icons -->
         <script src="https://kit.fontawesome.com/3df60fe6e2.js" crossorigin="anonymous"></script>
+
         <style>
             .navbar .mobile {
                 display: none !important;
@@ -235,6 +234,8 @@
         </footer>
 
         <!-- Bootstrap JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
         <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
@@ -297,35 +298,37 @@
 
 
 
-            const trackOne = document.querySelector(".slider-one");
-            const trackTwo = document.querySelector(".slider-two");
 
-            // Duplicate for upward scrolling (normal duplication)
-            trackOne.innerHTML += trackOne.innerHTML;
 
-            // For downward scrolling, duplicate *twice* to prevent blank space
-            trackTwo.innerHTML += trackTwo.innerHTML + trackTwo.innerHTML;
+document.addEventListener('DOMContentLoaded', function() {
 
-            function startScrolling(track, direction = "up", speed = 30) {
-                const distance = track.scrollHeight / 3; // since we have 3x content
+    function createInfiniteVerticalScroll(selector, speed = 0.5, direction = 'up') {
+        const track = document.querySelector(selector);
+        if (!track) {
+            console.error(`Element ${selector} not found.`);
+            return;
+        }
 
-                const y = direction === "up" ? -distance : distance;
-                const initialY = direction === "down" ? -distance : 0; // start offset to avoid blank
+        // Duplicate slides for seamless looping
+        track.innerHTML += track.innerHTML;
 
-                gsap.set(track, {
-                    y: initialY
-                });
+        const totalHeight = track.scrollHeight / 2;
+        let y = 0;
 
-                gsap.to(track, {
-                    y: y,
-                    ease: "none",
-                    duration: speed,
-                    repeat: -1
-                });
+        gsap.ticker.add(() => {
+            y += (direction === 'up' ? -1 : 1) * speed;
+            if (y <= -totalHeight) {
+                y = 0;
+            } else if (y >= totalHeight) {
+                y = 0;
             }
+            gsap.set(track, { y: y });
+        });
+    }
 
-            startScrolling(trackOne, "up", 30);
-            startScrolling(trackTwo, "down", 30);
+    createInfiniteVerticalScroll('.slider-one', 0.5, 'up');    // adjust speed as needed
+    createInfiniteVerticalScroll('.slider-two', 0.5, 'down');  // adjust speed as needed
+});
         </script>
     </body>
 

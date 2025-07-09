@@ -152,7 +152,7 @@ body {
     margin-left: 12px;
 }
 
-.bg-scrolling .navbar-toggler  img {
+.bg-scrolling .navbar-toggler img {
     -webkit-filter: invert(100%);
     filter: invert(100%);
 }
@@ -172,8 +172,8 @@ body {
 ===========================================
 Students-page  */
 
-.whole-student{
-        background: linear-gradient(#ffffffc4, #ffffffc4), url(../images/brn-gb.png);
+.whole-student {
+    background: linear-gradient(#ffffffc4, #ffffffc4), url(../images/brn-gb.png);
 }
 .students-page-intro-section {
     display: flex;
@@ -305,16 +305,16 @@ Students-page  */
     background-size: cover;
     background-blend-mode: overlay;
 }
-.student-page-insight-section .page-insight-cards{
-        background-image: linear-gradient(
+.student-page-insight-section .page-insight-cards {
+    background-image: linear-gradient(
             to right,
             #ffffff 0%,
             #eaeaead6 50%,
-            #ffffff 100% 
+            #ffffff 100%
         ),
         url(../images/stk-intro-banner.png);
 
-    box-shadow: 0px 10px 10px 0px #2121214D;
+    box-shadow: 0px 10px 10px 0px #2121214d;
 }
 
 .student-page-insight-section .section-title {
@@ -327,7 +327,7 @@ Students-page  */
 }
 
 .student-page-insight-section .card-item {
-    background-color: #EDBA5A;
+    background-color: #edba5a;
     border-radius: 15px;
     padding: 50px 40px;
     margin-bottom: 20px;
@@ -344,12 +344,12 @@ Students-page  */
 }
 
 .student-page-insight-section .card-item.policymakers {
-    background-color: #193E47;
+    background-color: #193e47;
     color: #ffff;
 }
 
 .student-page-insight-section .card-item.researchers {
-    background-color: #97C4C7;
+    background-color: #97c4c7;
 }
 
 .student-page-insight-section .card-item .card-icon {
@@ -426,7 +426,8 @@ Students-page  */
 /* ====================================================  Sudents Driven Section */
 
 .students-page-driven-section {
-    background: linear-gradient(#193e47f3, #193e47f3), url(../images/brn-intro-bg-image.png);
+    background: linear-gradient(#193e47f3, #193e47f3),
+        url(../images/brn-intro-bg-image.png);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -480,28 +481,33 @@ Students-page  */
     font-family: "GT Walsheim Con";
 }
 
-/* .students-page-driven-section .slider-wrapper.right-content {
-    display: grid;
-} */
 .students-page-driven-section .slider-wrapper.right-content {
     display: flex;
+    height: 600px !important;
     gap: 20px;
     max-width: 100%;
+    overflow: hidden;
+    /* padding: 20px; */
 }
 
 .students-page-driven-section .right-content .slider-column {
     position: relative;
     overflow: hidden;
-    height: 600px !important; /* adjust as needed */
-    width: 50%; /* two columns side by side */
+    flex: 1;
+    height: 100% !important;
+    /* height: 600px !important;
+    width: 50%;
+    border-radius: 8px; */
 }
 
 .students-page-driven-section .right-content .slider-track {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    /* position: absolute;
-    top: 0;
-    width: 100%; */
+    will-change: transform;
 }
 .page-driven-content-overlay-mobile {
     color: #fff;
@@ -526,21 +532,6 @@ Students-page  */
     padding: 50px 20px;
     font-size: 17px;
 }
-/* .fade-overlay {
-    content: "";
-    left: 0;
-    right: 0;
-    z-index: 2;
-    pointer-events: none;
-} */
-/* .fade-top {
-    top: 1;
-    background: linear-gradient(to bottom, #193e47, rgba(0, 60, 50, 0));
-}
-.fade-bottom {
-    bottom: -16px;
-    background: linear-gradient(to top, #193e47, rgba(0, 60, 50, 0));
-} */
 
 .page-driven-content-overlay-mobile .trans-image {
     z-index: -2;
@@ -553,8 +544,8 @@ Students-page  */
     /* overflow: hidden;
     position: relative; */
 
-    flex: 0 0 auto;
-    height: 400px; 
+    /* flex: 0 0 auto; */
+    height: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -563,27 +554,27 @@ Students-page  */
     margin-bottom: 20px;
 }
 
-.students-page-driven-section .right-content .slider-track.slider-one {
+/* .students-page-driven-section .right-content .slider-track.slider-one {
     height: 800px;
 }
 .students-page-driven-section .right-content .slider-track.slider-two {
     height: 800px;
-}
+} */
 
-.students-page-driven-section .right-content .swiper-track {
+/* .students-page-driven-section .right-content .swiper-track {
     display: flex;
     justify-content: start;
     flex-direction: column;
-}
+} */
 @media screen and (max-width: 580px) {
-    .students-page-driven-section .right-content .slider-track.slider-one {
+    /* .students-page-driven-section .right-content .slider-track.slider-one {
         height: 800px;
         margin-bottom: 10rem;
     }
     .students-page-driven-section .right-content .slider-track.slider-two {
         height: 800px;
         margin-bottom: 10rem;
-    }
+    } */
 }
 .students-page-driven-section .right-content .card-item .card-title {
     font-size: 1.5rem;
@@ -637,10 +628,10 @@ Students-page  */
         max-width: 500px;
         margin: 0 auto;
     }
-    .students-page-driven-section .right-content {
+    /* .students-page-driven-section .right-content {
         flex: 2;
         grid-template-columns: repeat(2, 1fr);
-    }
+    } */
 }
 
 @media (min-width: 992px) {
@@ -680,31 +671,31 @@ Students-page  */
         color: #fff;
         padding-bottom: 80px;
     }
-    .students-page-driven-section .right-content {
+    /* .students-page-driven-section .right-content {
         grid-template-columns: repeat(2, 1fr);
-    }
+    } */
 
-    .students-page-driven-section .right-content .slider-column {
+    /* .students-page-driven-section .right-content .slider-column {
         height: 700px;
-    }
+    } */
 
-    .students-page-driven-section .right-content .slider-track.slider-one {
+    /* .students-page-driven-section .right-content .slider-track.slider-one {
         height: 100vh;
     }
     .students-page-driven-section .right-content .slider-track.slider-two {
         height: 100vh;
-    }
+    } */
 
     .students-page-driven-section
         .right-content
         .slider-two
         .swiper-wrapper
         > div {
-        min-height: 430px;
+        /* min-height: 430px; */
     }
-    .students-page-driven-section .right-content {
+    /* .students-page-driven-section .right-content {
         gap: 30px;
-    }
+    } */
 }
 
 @media (min-width: 1200px) {
@@ -840,7 +831,6 @@ Students-page  */
     width: 100%;
 }
 
-
 /* START COLUMN */
 /* END COLUMN */
 
@@ -965,7 +955,7 @@ Students-page  */
 
     /* =========================================  Students Page Insight Section */
     .student-page-insight-section .section-title {
-        font-size: 2.0rem;
+        font-size: 2rem;
     }
     .student-page-insight-section .card-item {
         margin-bottom: 0;
