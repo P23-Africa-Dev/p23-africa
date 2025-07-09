@@ -51,13 +51,13 @@
                 border-radius: 1rem;
             }
 
-            #seatForm input {
+            #studentForm input {
                 border: 0;
                 border-bottom: 2px solid #0D4036;
                 box-shadow: 2px 2px 4px #0000008e;
             }
 
-            #seatForm .btn {
+            #studentForm .btn {
                 background-color: #0D4036;
                 color: #fff;
                 font-family: 'GT Walsheim Con';
@@ -300,35 +300,65 @@
 
 
 
-document.addEventListener('DOMContentLoaded', function() {
+            const trackOne = document.querySelector(".slider-one");
+            const trackTwo = document.querySelector(".slider-two");
 
-    function createInfiniteVerticalScroll(selector, speed = 0.5, direction = 'up') {
-        const track = document.querySelector(selector);
-        if (!track) {
-            console.error(`Element ${selector} not found.`);
-            return;
-        }
+            // Duplicate for upward scrolling (normal duplication)
+            trackOne.innerHTML += trackOne.innerHTML;
 
-        // Duplicate slides for seamless looping
-        track.innerHTML += track.innerHTML;
+            // For downward scrolling, duplicate *twice* to prevent blank space
+            // trackTwo.innerHTML += trackTwo.innerHTML + trackTwo.innerHTML;
 
-        const totalHeight = track.scrollHeight / 2;
-        let y = 0;
+            function startScrolling(track, direction = "up", speed = 30) {
+                const distance = track.scrollHeight / 3; // since we have 3x content
 
-        gsap.ticker.add(() => {
-            y += (direction === 'up' ? -1 : 1) * speed;
-            if (y <= -totalHeight) {
-                y = 0;
-            } else if (y >= totalHeight) {
-                y = 0;
+                const y = direction === "up" ? -distance : distance;
+                const initialY = direction === "down" ? -distance : 0; // start offset to avoid blank
+
+                gsap.set(track, {
+                    y: initialY
+                });
+
+                const tween = gsap.to(track, {
+                    y: y,
+                    ease: "none",
+                    duration: speed,
+                    repeat: -1,
+                    modifiers: {
+                        y: gsap.utils.unitize(y => parseFloat(y) % distance)
+                    }
+                });
+
+                // Pause on hover
+                track.addEventListener("mouseenter", () => tween.pause());
+                track.addEventListener("mouseleave", () => tween.play());
             }
-            gsap.set(track, { y: y });
-        });
-    }
 
-    createInfiniteVerticalScroll('.slider-one', 0.5, 'up');    // adjust speed as needed
-    createInfiniteVerticalScroll('.slider-two', 0.5, 'down');  // adjust speed as needed
-});
+
+            startScrolling(trackOne, "up", 1200);
+            startScrolling(trackTwo, "down", 1200);
+
+            // document.addEventListener('DOMContentLoaded', () => {
+            //     function startInfiniteScroll(selector, speed = 30, direction = 'up') {
+            //         const track = document.querySelector(selector);
+            //         if (!track) return;
+
+            //         const distance = track.scrollHeight / 2; // duplicated, so use half
+
+            //         gsap.to(track, {
+            //             y: direction === 'up' ? -distance : distance,
+            //             ease: "none",
+            //             duration: speed,
+            //             repeat: -1,
+            //             modifiers: {
+            //                 y: gsap.utils.unitize(y => parseFloat(y) % distance)
+            //             }
+            //         });
+            //     }
+
+            //     startInfiniteScroll('.slider-one', 30, 'up'); // first slider scrolls up
+            //     startInfiniteScroll('.slider-two', 30, 'down'); // second slider scrolls down
+            // });
         </script>
     </body>
 

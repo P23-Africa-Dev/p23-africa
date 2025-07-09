@@ -138,67 +138,75 @@
                                 and collaboration, this is for you.
                             </p>
                         </div>
-                        <div class="slider-wrapper right-content">
-                            <div class="slider-column">
-                                <div class="slider-track slider-one">
-                                    @for ($i = 0; $i < 3; $i++)
-                                        @foreach ($images as $index => $image)
-                                            @php
-                                                $bgClasses = ['blue', 'light-yellow', 'blue', 'light-yellow'];
-                                                $title = [
-                                                    'Sociology & Anthropology',
-                                                    'Business Administration & Management',
-                                                    'Sociology & Anthropology',
-                                                    'Business Administration & Management',
-                                                ];
-                                            @endphp
-                                            <div class="card-item {{ $bgClasses[$index % count($bgClasses)] }}">
-                                                <h3 class="card-title">{{ $title[$index % count($title)] }}</h3>
-                                                <div class="card-image">
-                                                    <img src="{{ asset('images/' . $image) }}" loading="lazy"
-                                                        alt="Student" />
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    @endfor
-                                </div>
-                            </div>
+                        <div class="slider-glow-wrapper position-relative">
+                            <div class="slider-glow-top"></div>
+                            <div class="slider-glow-bottom"></div>
 
-                            <div class="d-block d-sm-none">
-                                <div class="fade-overlay">
-                                    <div class="page-driven-content-overlay-mobile">
-                                        <p class="">
-                                            We welcome curious, high-performing students from departments
-                                            that shape business, society, and innovation. If you're
-                                            passionate about solving real-world problems with data,
-                                            insight, and collaboration—this is for you.
-                                        </p>
+                            <div class="slider-wrapper right-content">
+                                <div class="slider-column">
+                                    <div class="slider-track slider-one">
+                                        @for ($i = 0; $i < 100; $i++)
+                                            @foreach ($images as $index => $image)
+                                                @php
+                                                    $bgClasses = ['blue', 'light-yellow', 'blue', 'light-yellow'];
+                                                    $title = [
+                                                        'Sociology & Anthropology',
+                                                        'Business Administration & Management',
+                                                        'Sociology & Anthropology',
+                                                        'Business Administration & Management',
+                                                    ];
+                                                @endphp
+                                                <div class="card-item {{ $bgClasses[$index % count($bgClasses)] }}">
+                                                    <h3 class="card-title">{{ $title[$index % count($title)] }}</h3>
+                                                    <div class="card-image">
+                                                        <img src="{{ asset('images/' . $image) }}" loading="lazy"
+                                                            alt="Student" />
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @endfor
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="slider-column">
-                                <div class="slider-track slider-two">
-                                    @for ($i = 0; $i < 3; $i++)
-                                        @foreach ($images2 as $index2 => $image2)
-                                            @php
-                                                $bgClasses2 = ['orange', 'dark-blue', 'orange', 'dark-blue'];
-                                                $title2 = [
-                                                    'Mass Communication & Media Studies',
-                                                    'Political Science & Public Policy',
-                                                    'Mass Communication & Media Studies',
-                                                    'Political Science & Public Policy',
-                                                ];
-                                            @endphp
-                                            <div class="card-item {{ $bgClasses2[$index2 % count($bgClasses2)] }}">
-                                                <h3 class="card-title">{{ $title2[$index2 % count($title2)] }}</h3>
-                                                <div class="card-image circle-mask">
-                                                    <img src="{{ asset('images/' . $image2) }}" loading="lazy"
-                                                        alt="Student" />
+                                <div class="d-block d-sm-none slider-glow-wrapper2">
+                                    <div class="slider-glow-bottom2"></div>
+                                    <div class="slider-glow-top2"></div>
+
+                                    <div class="fade-overlay">
+                                        <div class="page-driven-content-overlay-mobile">
+                                            <p class="">
+                                                We welcome curious, high-performing students from departments
+                                                that shape business, society, and innovation. If you're
+                                                passionate about solving real-world problems with data,
+                                                insight, and collaboration—this is for you.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="slider-column">
+                                    <div class="slider-track slider-two">
+                                        @for ($i = 0; $i < 100; $i++)
+                                            @foreach ($images2 as $index2 => $image2)
+                                                @php
+                                                    $bgClasses2 = ['orange', 'dark-blue', 'orange', 'dark-blue'];
+                                                    $title2 = [
+                                                        'Mass Communication & Media Studies',
+                                                        'Political Science & Public Policy',
+                                                        'Mass Communication & Media Studies',
+                                                        'Political Science & Public Policy',
+                                                    ];
+                                                @endphp
+                                                <div class="card-item {{ $bgClasses2[$index2 % count($bgClasses2)] }}">
+                                                    <h3 class="card-title">{{ $title2[$index2 % count($title2)] }}</h3>
+                                                    <div class="card-image circle-mask">
+                                                        <img src="{{ asset('images/' . $image2) }}" loading="lazy"
+                                                            alt="Student" />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        @endforeach
-                                    @endfor
+                                            @endforeach
+                                        @endfor
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -299,12 +307,11 @@
                     </div>
                     <div class="modal-body text-center">
                         <p class="mb-2" style="color: #0D4036; font-weight: 500; font-family: 'GT Walsheim Con';">
-                            <em>Book your seat to be a part of this exclusive event and gain valuable insights from trusted
-                                experts.</em>
+                            <em>et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                                nisi.</em>
                         </p><br>
-                        <form id="seatForm">
+                        <form id="studentForm">
                             @csrf
-                            <input type="hidden" name="event_id" id="event_id">
                             <div class="row g-20">
                                 <div class="col-md-6">
                                     <input type="text" name="name" class="form-control mb-5"
@@ -321,11 +328,11 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <input type="text" name="name" class="form-control mb-5"
+                                    <input type="text" name="uniname" class="form-control mb-5"
                                         placeholder="University Name" required>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" name="phone" class="form-control mb-5" placeholder="Region"
+                                    <input type="text" name="region" class="form-control mb-5" placeholder="Region"
                                         required>
                                 </div>
                             </div>
@@ -350,15 +357,73 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content text-center p-4 border-0 shadow rounded-4">
                     <h5 class="mb-3" style="color: #0D4036; font-weight: 500; font-family: 'GT Walsheim Con';">
-                        Thank you for signing up. We've sent event details to your email <br>
-                        <span class="">— please check your inbox.</span>
+                        Thank you, we’ll get back as soon we review <br> your request
+                        {{-- <span class="">— please check your inbox.</span> --}}
                     </h5>
-                    <a href="{{ route('events.all-events') }}" class="btn mt-3"
+                    <a href="#" class="btn mt-3"
                         style="background-color: #0D4036; color: #fff; font-family: 'GT Walsheim Con';">
-                        View Other Events <i class="bi bi-arrow-right ms-2"></i>
+                        Done <i class="bi bi-arrow-right ms-2"></i>
                     </a>
                 </div>
             </div>
         </div>
     </section>
 @endsection
+
+<script>
+    // Pop Up
+    document.addEventListener('DOMContentLoaded', function() {
+        const studentForm = document.getElementById('studentForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const spinner = document.getElementById('submitSpinner');
+
+        // Attach click listener to all "Book A Seat" buttons
+        // document.querySelectorAll('.actionBtn').forEach(button => {
+        //     button.addEventListener('click', function() {
+        //         currentEventId = this.getAttribute('data-event-id');
+        //         eventIdInput.value = currentEventId;
+        //     });
+        // });
+
+        studentForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // if (!currentEventId) {
+            //     alert("Event ID not found. Please try again.");
+            //     return;
+            // }
+
+            spinner.classList.remove('d-none');
+            submitBtn.disabled = true;
+
+            const formData = new FormData(studentForm);
+
+            fetch(`/submit-student`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    spinner.classList.add('d-none');
+                    submitBtn.disabled = false;
+
+                    if (data.success === false) {
+                        alert('Something went wrong. Please try again.');
+                    } else {
+                        studentForm.reset();
+                        bootstrap.Modal.getInstance(document.getElementById('seatModal')).hide();
+                        new bootstrap.Modal(document.getElementById('successModal')).show();
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    spinner.classList.add('d-none');
+                    submitBtn.disabled = false;
+                    alert('Error submitting the form.');
+                });
+        });
+    });
+</script>

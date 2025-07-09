@@ -7,11 +7,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\ResourceHubController;
 use App\Http\Controllers\SeatController;
+use App\Http\Controllers\submitStudent;
 use App\Http\Controllers\UserEventController;
 use App\Mail\ChallengeSubmission;
 use App\Models\Click;
@@ -86,6 +88,8 @@ Route::get('/brn-form', function () {
 
 // Student
 Route::get('/student', [SliderController::class, 'showSliderStudent'])->name('student');
+Route::post('/submit-student', [submitStudent::class, 'submitStudent']);
+
 
 // Route::get('/student', function () {
 //     return view('student');
@@ -207,6 +211,8 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/events/{event}/clicks', [EventController::class, 'viewClicks'])->name('events.clicks');
 
     Route::resource('blogs', BlogController::class);
+
+    Route::resource('students', StudentController::class);
 });
 
 
