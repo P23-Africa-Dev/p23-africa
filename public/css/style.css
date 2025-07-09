@@ -4400,8 +4400,40 @@ section.visible{
     height: 90vh;
     padding: auto;
     margin: 0 auto;
-    overflow: hidden;
+    /* overflow: hidden; */
+    cursor: pointer;
 }
+
+.video-container .overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        var(--overlay-gradient-end),
+        var(--overlay-gradient-start)
+    );
+    transition: background 0.3s ease;
+}
+.video-container .overlay:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* .sales .video-container .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to top,
+        var(--overlay-gradient-end),
+        var(--overlay-gradient-start)
+    );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+} */
 
 .sales .video-container img {
     display: block;
@@ -4455,33 +4487,18 @@ section.visible{
     background: linear-gradient(to right, #003c32, rgba(0, 60, 50, 0));
 } */
 
-.sales .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        to top,
-        var(--overlay-gradient-end),
-        var(--overlay-gradient-start)
-    );
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
-}
 
-.sales .play-button {
+
+.sales .video-container .play-button {
     background: none;
     border: none;
     cursor: pointer;
     padding: 0;
     line-height: 1;
-    transition: transform 0.2s ease-in-out;
+    transition: transform 0.3s ease;
 }
 
-.sales .play-button:hover {
+.sales .video-container .play-button:hover {
     transform: scale(1.1);
 }
 
@@ -4505,6 +4522,7 @@ section.visible{
 .sales .custom-modal {
     max-width: 70%; /* Adjust width as needed */
     width: 70%;
+    /* z-index: 50; */
 }
 .sales .custom-modal .modal-content {
     height: auto; /* Adjust height as needed */
@@ -5618,17 +5636,6 @@ section.visible{
 
     .sales .video-container img {
         box-shadow: 0px 10px 15px 29px rgba(0, 0, 0, 0.1);
-    }
-
-    .sales .overlay {
-        background: linear-gradient(
-            to right,
-            rgba(0, 0, 0, 0.224) 0%,
-            /* Dark on the far left */ rgba(0, 0, 0, 0.05) 20%,
-            /* Transparent starting at 20% from left */ rgba(0, 0, 0, 0) 80%,
-            /* Remains transparent up to 80% from left */ rgba(0, 0, 0, 0.161)
-                100% /* Dark again from 80% to the far right */
-        );
     }
 
     /* --------------------- HOW IT WORKS SECTION */

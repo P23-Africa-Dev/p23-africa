@@ -178,7 +178,7 @@ Students-page  */
 .students-page-intro-section {
     display: flex;
     align-items: center;
-    padding-top: 7rem !important;
+    padding-top: 8rem !important;
     padding: 40px 20px;
     position: relative;
     overflow: hidden;
@@ -274,15 +274,28 @@ Students-page  */
     flex-direction: column;
     align-items: center;
     min-height: 560px;
+    /* left: 20px; */
 }
 
 .students-page-intro-section .right-content .student-image {
     /* max-width: 380px; */
-    width: 120%;
+    width: 150%;
     height: auto;
     border-radius: 20px;
     position: relative;
     z-index: 2;
+}
+
+@media screen and (max-width: 600px) {
+    .students-page-intro-section .right-content .student-image {
+        /* max-width: 380px; */
+        width: 140% !important;
+        height: auto;
+        border-radius: 20px;
+        position: relative;
+        left: 40px;
+        z-index: 2;
+    }
 }
 
 /* =========================================  Students Page Insight Section */
@@ -372,13 +385,14 @@ Students-page  */
 }
 
 .student-page-insight-section .card-item .card-description {
-    font-size: 1rem;
-    line-height: 20px;
+    font-size: 24px;
+    line-height: 25px;
     margin-bottom: 15px;
     color: #333;
+    font-weight: 300 !important;
 }
 .student-page-insight-section .card-item.policymakers .card-description {
-    color: #ffff;
+    color: #ffffffc4 !important;
 }
 .student-page-insight-section .card-item.researchers .card-description {
     color: #333;
@@ -390,8 +404,9 @@ Students-page  */
     border: none;
     border-radius: 20px;
     padding: 15px 25px 12px 40px;
-    font-size: 0.8rem;
+    font-size: 1rem;
     font-weight: 400;
+    max-width: 85%;
     line-height: 19px;
     display: flex;
     align-items: center;
@@ -423,6 +438,52 @@ Students-page  */
     color: #ffff;
 }
 
+@media screen and (max-width: 600px) {
+    .student-page-insight-section .page-insight-cards {
+        background-image: none;
+
+        box-shadow: none;
+    }
+    .student-page-insight-section .card-item {
+        background-color: #edba5a;
+        border-radius: 15px;
+        padding: 20px 40px;
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+        transition: transform 0.3s ease;
+        box-shadow: inset 0 0px 0px -5px rgba(0, 0, 0, 0);
+    }
+    .student-page-insight-section .card-item .card-description {
+        font-size: 22px;
+        line-height: 23px;
+        margin-bottom: 15px;
+        color: #333;
+        font-weight: 300 !important;
+    }
+    .student-page-insight-section .card-item .action-button {
+        background-color: #0d4036;
+        color: #ffff;
+        border: none;
+        border-radius: 20px;
+        padding: 15px 25px 12px 40px;
+        font-size: 0.9rem;
+        font-weight: 400;
+        max-width: 100%;
+        line-height: 19px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        position: relative;
+        margin-top: 20px;
+        font-family: "GT Walsheim Con";
+    }
+}
 /* ====================================================  Sudents Driven Section */
 
 .students-page-driven-section {
@@ -640,7 +701,7 @@ Students-page  */
         gap: 100px;
         width: 100%;
         overflow: hidden;
-        padding: 20px;
+        padding: 50px;
     }
     /* .students-page-driven-section .right-content .slider-track.slider-one {
         height: 800px;
@@ -782,7 +843,6 @@ Students-page  */
     padding: 40px 0px;
     background-color: #e7eded;
 }
-
 .students-page-policyandresearch-section .section-title {
     font-size: 2.5rem !important;
     font-weight: bold;
@@ -873,6 +933,62 @@ Students-page  */
 .students-page-policyandresearch-section .grid-item.highlight .btn-join:hover {
     background-color: #fae3b9;
     color: #0d4036;
+}
+
+@media screen and (max-width: 600px) {
+    .students-page-policyandresearch-section .section-title {
+    font-size: 1.5rem !important;
+    font-weight: bold;
+    color: #0d4036;
+    margin-bottom: 3rem;
+    padding: 0px 0px;
+    font-family: "GT Walsheim ProCB";
+}
+.students-page-policyandresearch-section .section-title span {
+    font-weight: 300;
+    color: #0d4036;
+    font-family: "GT Walsheim Con";
+}
+
+.students-page-policyandresearch-section .policyandresearch-grid-container {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 30px;
+}
+.students-page-policyandresearch-section .grid-item {
+    background-color: transparent;
+    /* padding: 0.2rem; */
+    padding: 7px 0px 7px 0px;
+}
+
+.students-page-policyandresearch-section .grid-item .item-number {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: #000000;
+    margin-bottom: 0.5rem;
+}
+
+.students-page-policyandresearch-section .grid-item .item-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #000000;
+    margin-bottom: 1rem;
+    max-width: 200px;
+    line-height: 23px;
+    font-family: "GT Walsheim ProCB";
+}
+
+    .students-page-policyandresearch-section {
+        padding: 40px 30px !important;
+        background-color: #e7eded;
+    }
+    .students-page-policyandresearch-section .grid-item p {
+    font-size: 17.5px;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+    color: #0d4036;
+    /* padding: 0px 20px !important; */
+}
 }
 
 /* ============================================== STudents Future Section */
@@ -1058,15 +1174,15 @@ Students-page  */
         position: absolute;
         width: 100%;
         height: 70%;
-        bottom: -20px;
-        right: 0px;
+        bottom: -35px !important;
+        right: -220px;
         transform: translate(50%);
         overflow: hidden;
         z-index: 1;
     }
 
     .students-page-intro-section .decorative-circles img {
-        max-width: 300px;
+        max-width: 100%;
     }
 
     /* =========================================  Students Page Insight Section */

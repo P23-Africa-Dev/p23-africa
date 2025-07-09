@@ -13,12 +13,14 @@ class StudentMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $validated_students;
+
     /**
      * Create a new message instance.
      */
-    public function __construct(public $student)
+    public function __construct($validated_students)
     {
-        //
+        $this->validated_students = $validated_students;
     }
 
     public function build()
@@ -30,12 +32,12 @@ class StudentMail extends Mailable
     /**
      * Get the message envelope.
      */
-    public function envelope(): Envelope
-    {
-        return new Envelope(
-            subject: 'Student Mail',
-        );
-    }
+    // public function envelope(): Envelope
+    // {
+    //     return new Envelope(
+    //         subject: 'Student Mail',
+    //     );
+    // }
 
     /**
      * Get the message content definition.

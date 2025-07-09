@@ -12,9 +12,13 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<style>
+
+</style>
+
 @section('content')
     <section class="sales">
-        <section class="sales-growth-section reveal-section">
+        <section class="sales-growth-section">
             <div class="content-row">
                 <div class="container mx-auto">
                     <div class="row">
@@ -58,19 +62,27 @@
                         {{-- <div class="video-fade-overlay video-fade-right"></div>
                         <div class="video-fade-overlay video-fade-left"></div> --}}
 
-                        <div class="video-container">
-                            <img src="{{ asset('images/intro-bg.png') }}" alt="Sales Growth Video" class="desktop" />
-                            <img src="{{ asset('images/intro-bg-mobile.png') }}" alt="Sales Growth Video" class="mobile" />
+                        <div class="video-container position-relative">
+                            <img src="{{ asset('images/intro-bg.png') }}" alt="Sales Growth Video"
+                                class="img-fluid d-none d-md-block">
+                            <img src="{{ asset('images/intro-bg-mobile.png') }}" alt="Sales Growth Video"
+                                class="img-fluid d-block d-md-none">
+
                             <div class="overlay d-flex justify-content-center align-items-center">
-                                <button class="play-button" aria-label="Play video" id="play-video-btn">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="#fff"
+                                <!-- Desktop Play Button -->
+                                <button class="play-button btn bg-transparent border-0 p-0 d-none d-md-block"
+                                    aria-label="Play video" id="play-video-desktop">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="#fff"
                                         class="bi bi-play-circle-fill" viewBox="0 0 16 16">
                                         <path
                                             d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z" />
                                     </svg>
                                 </button>
-                                <button class="play-button" aria-label="Play video" id="play-video-btn2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="#fff"
+
+                                <!-- Mobile Play Button -->
+                                <button class="play-button btn bg-transparent border-0 p-0 d-block d-md-none"
+                                    aria-label="Play video" id="play-video-mobile">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="#fff"
                                         class="bi bi-play-circle-fill" viewBox="0 0 16 16">
                                         <path
                                             d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z" />
@@ -80,9 +92,10 @@
                         </div>
 
                         <!-- Bootstrap Modal for Video -->
+                        <!-- Single Bootstrap Modal -->
                         <div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered custom-modal">
-                                <div class="modal-content bg-dark">
+                                <div class="modal-content bg-dark border-0">
                                     <div class="modal-header border-0">
                                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
@@ -96,24 +109,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="modal fade" id="videoModal2" tabindex="-1" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered custom-modal">
-                                <div class="modal-content bg-dark">
-                                    <div class="modal-header border-0">
-                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body p-0">
-                                        <div class="ratio ratio-16x9">
-                                            <iframe id="videoIframe2" src="" title="YouTube video"
-                                                allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
@@ -452,35 +447,32 @@
 
 
 <script>
-    $(document).ready(function() {
-        const videoURL = "https://www.youtube.com/embed/l8JvWxEFVW0?si=wTv4YqzGjwfhf53M";
+    document.addEventListener('DOMContentLoaded', function() {
+        const desktopVideoURL = "https://www.youtube.com/embed/l8JvWxEFVW0?autoplay=1";
+        const mobileVideoURL = "https://www.youtube.com/embed/unzc3SdI4dg?autoplay=1";
 
-        $('#play-video-btn').on('click', function() {
-            $('#videoIframe').attr('src', videoURL);
-            const videoModal = new bootstrap.Modal(document.getElementById('videoModal'));
+        const videoModalEl = document.getElementById('videoModal');
+        const videoIframe = document.getElementById('videoIframe');
+        const videoModal = new bootstrap.Modal(videoModalEl);
+
+        document.getElementById('play-video-desktop').addEventListener('click', function() {
+            videoIframe.src = desktopVideoURL;
             videoModal.show();
         });
 
-        // Clear video when modal is closed
-        $('#videoModal').on('hidden.bs.modal', function() {
-            $('#videoIframe').attr('src', '');
+        document.getElementById('play-video-mobile').addEventListener('click', function() {
+            videoIframe.src = mobileVideoURL;
+            videoModal.show();
+        });
+
+        videoModalEl.addEventListener('hidden.bs.modal', function() {
+            videoIframe.src = "";
         });
     });
 
-    $(document).ready(function() {
-        const videoURL2 = "https://www.youtube.com/embed/unzc3SdI4dg?si=X4L6veRWbw7rjcgP";
 
-        $('#play-video-btn2').on('click', function() {
-            $('#videoIframe2').attr('src', videoURL2);
-            const videoModal2 = new bootstrap.Modal(document.getElementById('videoModal2'));
-            videoModal2.show();
-        });
 
-        // Clear video when modal is closed
-        $('#videoModal2').on('hidden.bs.modal', function() {
-            $('#videoIframe2').attr('src', '');
-        });
-    });
+
 
 
     $(document).ready(function() {

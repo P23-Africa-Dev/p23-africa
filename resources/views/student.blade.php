@@ -15,6 +15,31 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script> --}}
 
+<style>
+    .custom-modal {
+        max-width: 70% !important;
+        /* Adjust width as needed */
+        width: 70% !important;
+    }
+
+    .custom-modal .modal-content {
+        height: auto;
+        /* Adjust height as needed */
+    }
+
+    @media screen and (max-width: 580px) {
+        .custom-modal {
+            max-width: 100% !important;
+            width: 100% !important;
+            height: auto;
+        }
+
+        .custom-modal .modal-content {
+            height: auto;
+            /* Adjust height as needed */
+        }
+    }
+</style>
 
 
 @section('content')
@@ -38,9 +63,9 @@
                     </div>
                     <div class="col-lg-6 col-md-12 right-content">
                         <img src="./images/stintro-bg.png" alt="Happy student" class="student-image" />
-                        {{-- <div class="decorative-circles d-none d-lg-block">
+                        <div class="decorative-circles d-none d-lg-block">
                             <img src="./images/st-frame-intro.png" alt="" />
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -50,10 +75,10 @@
             <div class="container">
                 <h2 class="section-title mx-md-5">Who Uses These Insights</h2>
                 <div class="container page-insight-cards">
-                    <div class="row g-3 align-items-start">
+                    <div class="row g-4 align-items-start">
                         <div class="col-md-6 col-lg-4 d-flex">
                             <div class="card-item">
-                                <div>
+                                <div class="pb-md-3 pb-2 pt-md-4">
                                     <div class="card-icon">
                                         <img src="./images/b-logo-st.png" alt="" />
                                     </div>
@@ -74,7 +99,7 @@
 
                         <div class="col-md-6 col-lg-4 d-flex">
                             <div class="card-item policymakers">
-                                <div>
+                                <div class="pb-md-3 pb-2 pt-md-4">
                                     <div class="card-icon">
                                         <img src="./images/polisy-log-st.png" alt="" />
                                     </div>
@@ -95,7 +120,7 @@
 
                         <div class="col-md-6 col-lg-4 d-flex">
                             <div class="card-item researchers">
-                                <div>
+                                <div class="pb-md-3 pb-2 pt-md-4">
                                     <div class="card-icon">
                                         <img src="{{ asset('images/res-logo-st.png') }}" loading="lazy" alt="" />
                                     </div>
@@ -299,18 +324,18 @@
         <!-- Seat Booking Modal -->
         <div class="modal fade w-100" id="seatModal" tabindex="-1" aria-labelledby="seatModalLabel"
             aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content rounded-4 py-3 px-5">
+            <div class="modal-dialog modal-dialog-centered custom-modal">
+                <div class="modal-content rounded-5 py-3 px-5">
                     <div class="modal-header border-0">
                         {{-- <h5 class="modal-title text-success" id="seatModalLabel">Book a Seat</h5> --}}
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body text-center">
-                        <p class="mb-2" style="color: #0D4036; font-weight: 500; font-family: 'GT Walsheim Con';">
-                            <em>et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                                nisi.</em>
+                        <p class="mb-2" style="font-family: 'GT Walsheim Con';">
+                        <h4 style="color: #0D4036; font-weight: 500;">Interest Form</h4>
+                        <em>Kindly input your details to show your interest</em>
                         </p><br>
-                        <form id="studentForm">
+                        <form id="studentForm" class="ms-auto me-auto w-75">
                             @csrf
                             <div class="row g-20">
                                 <div class="col-md-6">
@@ -360,7 +385,7 @@
                         Thank you, we’ll get back as soon we review <br> your request
                         {{-- <span class="">— please check your inbox.</span> --}}
                     </h5>
-                    <a href="#" class="btn mt-3"
+                    <a href="{{ route('student') }}" id="closeModel" class="btn mt-3"
                         style="background-color: #0D4036; color: #fff; font-family: 'GT Walsheim Con';">
                         Done <i class="bi bi-arrow-right ms-2"></i>
                     </a>
