@@ -6,11 +6,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
+// use Spatie\Activitylog\Traits\LogsActivity;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +23,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'suspended_at',
+        'role',
+        'permissions'
     ];
 
     /**
@@ -42,7 +47,38 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'permissions' => 'array',
             'password' => 'hashed',
         ];
+    }
+
+    // protected static $logAttributes = ['name', 'email'];
+    // protected static $logName = 'user';
+
+
+    // protected static function booted()
+    // {
+    //     static::addGlobalScope('notSuspended', function ($query) {
+    //         $query->where('status', '!=', 'suspended');
+    //     });
+    // }
+
+
+
+    public function isSuspended()
+    {
+        return !is_null($this->suspended_at);
+    }
+
+
+    public function hasPermission($permission)
+    {
+        // Admins have all permissions
+        if ($this->role === 'admin') {
+            return true;
+        }
+
+        // For staff, check permissions (assuming a many-to-many relationship)
+        return $this->permissions()->where('name', $permission)->exists();
     }
 }

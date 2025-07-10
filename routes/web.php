@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\FeedbackController;
@@ -189,30 +190,57 @@ Route::get('/events/{slug}', [UserEventController::class, 'show'])->name('events
 
 
 
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
+Route::middleware(['auth', 'check.suspended', 'role:admin|staff'])->prefix('admin')->name('admin.')->group(function () {
+    // Route::get('/dashboard', function () {
+    //     return view('admin.dashboard');
+    // })->name('dashboard');
 
-    Route::post('/events/{id}/send-reminder', [EventController::class, 'sendReminder'])
-        ->name('events.sendReminder');
+    Route::get('/dashboard', fn() => view('admin.dashboard'))->name('dashboard');
 
-    Route::post('/events/{event}/send-feedback', [EventController::class, 'sendFeedback'])->name('events.sendFeedback');
+    Route::middleware('role:admin')->group(function () {
+        Route::resource('staff', StaffController::class);
+        Route::post('/staff/{staff}/suspend', [StaffController::class, 'suspend'])->name('staff.suspend');
+        Route::post('/staff/{staff}/reactivate', [StaffController::class, 'reactivate'])->name('staff.reactivate');
+        Route::post('/staff/{staff}/promote', [StaffController::class, 'promote'])->name('staff.promote');
+    });
 
-    Route::get('/events/{event}/feedbacks', [EventController::class, 'viewFeedbacks'])->name('events.feedbacks');
+    // Route::get('/staff/create', [StaffController::class, 'create'])->name('admin.staff.create');
+    // Route::post('/staff/store', [StaffController::class, 'store'])->name('admin.staff.store');
 
-    Route::resource('/blogs/categories', CategoryController::class);
+    // Route::middleware('permission:manage_events')->group(function () {
+        Route::post('/events/{id}/send-reminder', [EventController::class, 'sendReminder'])
+            ->name('events.sendReminder');
 
-    Route::get('/seats', [\App\Http\Controllers\Admin\SeatController::class, 'index'])->name('admin.seats.index');
+        Route::post('/events/{event}/send-feedback', [EventController::class, 'sendFeedback'])->name('events.sendFeedback');
 
-    Route::resource('/events', EventController::class);
-    Route::get('/events/{event}/bookings', [EventController::class, 'showBookings'])->name('events.bookings');
+        Route::get('/events/{event}/feedbacks', [EventController::class, 'viewFeedbacks'])->name('events.feedbacks');
 
-    Route::get('/events/{event}/clicks', [EventController::class, 'viewClicks'])->name('events.clicks');
+        Route::get('/seats', [\App\Http\Controllers\Admin\SeatController::class, 'index'])->name('admin.seats.index');
 
-    Route::resource('blogs', BlogController::class);
+        Route::resource('/events', EventController::class);
+        Route::get('/events/{event}/bookings', [EventController::class, 'showBookings'])->name('events.bookings');
 
-    Route::resource('students', StudentController::class);
+        Route::get('/events/{event}/clicks', [EventController::class, 'viewClicks'])->name('events.clicks');
+    // });
+
+    // Route::middleware('permission:resource_hub')->group(function () {
+        Route::resource('blogs', BlogController::class);
+        Route::resource('/blogs/categories', CategoryController::class);
+    // });
+
+    // Route::middleware('permission:view_students')->group(function () {
+        Route::resource('students', StudentController::class);
+    // });
+});
+
+
+Route::get('/admin/activity-logs', function () {
+    $logs = \Spatie\Activitylog\Models\Activity::latest()->paginate(30);
+    return view('admin.activity_logs', compact('logs'));
+})->middleware(['auth', 'role:admin'])->name('admin.activity.logs');
+
+Route::middleware(['auth', 'check_role:staff'])->group(function () {
+    // Staff-only routes here
 });
 
 

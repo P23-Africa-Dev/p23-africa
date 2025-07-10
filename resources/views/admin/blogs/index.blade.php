@@ -17,7 +17,7 @@
                     <div class="my-5">
                         @if (session('success'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                {{ session('success') }}    
+                                {{ session('success') }}
                                 <button type="button" class="btn-close" data-bs-dismiss="alert"
                                     aria-label="Close"></button>
                             </div>
@@ -55,12 +55,11 @@
                                                         href="{{ route('events.show', $event->slug) }}" target="_blank"
                                                         class="fa fa-eye link-dark"></a></button> --}}
 
-                                                <button class="btn"><a
-                                                        href="{{ route('admin.blogs.edit', $blog) }}"
+                                                <button class="btn"><a href="{{ route('admin.blogs.edit', $blog) }}"
                                                         class="fa fa-edit link-primary"></a></button>
 
-                                                <form action="{{ route('admin.blogs.destroy', $blog) }}"
-                                                    method="POST" class="d-inline"
+                                                <form action="{{ route('admin.blogs.destroy', $blog) }}" method="POST"
+                                                    class="d-inline"
                                                     onsubmit="return confirm('Are you sure you want to delete this event? This action cannot be undone.');">
                                                     @csrf
                                                     @method('DELETE')
@@ -75,7 +74,9 @@
                         </table>
 
                     </div>
-                    {{ $blogs->links() }}
+                    <div class="d-flex justify-content-center my-4">
+                        {{ $blogs->links('pagination::bootstrap-5') }}
+                    </div>
                 </div>
             </div>
         </div>

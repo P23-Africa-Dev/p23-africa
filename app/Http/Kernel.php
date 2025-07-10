@@ -2,9 +2,14 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CheckSuspended;
+use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Spatie\Permission\Middleware\PermissionMiddleware;
+use Spatie\Permission\Middleware\RoleMiddleware;
+use Spatie\Permission\Middleware\RoleOrPermissionMiddleware;
 
 class Kernel extends HttpKernel
 {
@@ -18,6 +23,10 @@ class Kernel extends HttpKernel
         // \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \Illuminate\Foundation\Http\Middleware\TrimStrings::class,
+
+        // 'check_role' => \App\Http\Middleware\CheckRole::class,
+        // 'role' => RoleMiddleware::class,
+
     ];
 
     protected function schedule(Schedule $schedule)
@@ -36,6 +45,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             // \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\CheckSuspended::class,
         ],
 
         'api' => [
@@ -50,10 +60,10 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         // ✅ Add your custom middleware here
-        'is_admin' => \App\Http\Middleware\IsAdmin::class,
-        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-    
-        // 'auth' => \App\Http\Middleware\Authenticate::class,
+        // 'is_admin' => \App\Http\Middleware\IsAdmin::class,
+        // 'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+
+        'auth' => Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
@@ -62,5 +72,12 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+
+        
+        'role' => RoleMiddleware::class,
+        'permission' => PermissionMiddleware::class,
+        'role_or_permission' => RoleOrPermissionMiddleware::class,
+
+        'check.suspended' => CheckSuspended::class,
     ];
 }

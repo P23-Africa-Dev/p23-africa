@@ -1,5 +1,12 @@
 <?php
 
+use App\Providers\AppServiceProvider;
+use App\Providers\TelescopeServiceProvider;
+use Illuminate\Auth\AuthServiceProvider;
+use Illuminate\Broadcasting\BroadcastServiceProvider;
+use Illuminate\Foundation\Support\Providers\EventServiceProvider;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
+
 return [
 
     /*
@@ -117,9 +124,17 @@ return [
     | Supported drivers: "file", "cache"
     |
     */
+    
 
     'maintenance' => [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+
+    // 'providers' => [
+    //     // ...
+    //     // App\Providers\SpatiePermissionMiddlewareProvider::class,
+    //     // App\Providers\AuthServiceProvider::class,
+    // ],
+
 ];
