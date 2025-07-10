@@ -1,15 +1,13 @@
 @extends('layouts.stu-layout')
-@section('title', 'Student | P23 Africa')
+@section('title', 'University Partnership | P23 Africa')
 
 @section('meta')
-    <meta name="description"
-        content="Explore Expert Articles, Market Trends, And Practical Advice To Scale Your Business Across Africa And Beyond.">
-    <meta name="keywords"
-        content="Explore Expert Articles, Market Trends, And Practical Advice To Scale Your Business Across Africa And Beyond.">
+    <meta name="description" content="Partnering With Universities To Help Students Turn Data Into Rewards.">
+    <meta name="keywords" content="Partnering With Universities To Help Students Turn Data Into Rewards.">
     <meta name="author" content="Nurudeen O. Daniju">
     <meta name="generator"
-        content="Explore Expert Articles, Market Trends, And Practical Advice To Scale Your Business Across Africa And Beyond | P23 Africa">
-    <meta property="og:image" content="{{ asset('images/resource-header.png') }}">
+        content="Join a continent-wide network where high-performing students collect real-world data that fuels business, policy, and research | P23 Africa">
+    <meta property="og:image" content="{{ asset('images/stintro-bg.png') }}">
 @endsection
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
@@ -44,21 +42,21 @@
 
 @section('content')
     <section class="whole-student">
-        <section class="students-page-intro-section">
+        <section class="students-page-intro-section reveal-section">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-6 col-md-12 left-content">
                         <span class="badge">Student Network</span>
                         <h1 class="main-heading">
                             Partnering With Universities To Help Students
-                            <span class="highlight"> Turn Data </span> Into Rewards.
+                            <span class="highlight"> Turn Data </span> <span class="into">Into Rewards.</span>
                         </h1>
                         <p class="description">
                             Join a continent-wide network where high-performing students
                             collect real-world data that fuels business, policy, and research.
                         </p>
                         <a data-bs-toggle="modal" data-bs-target="#seatModal" href="#" class="join-button">
-                            Join The Network <i class="bi bi-arrow-right arrow"></i>
+                            Join The Network <i class="fa fa-arrow-right arrow"></i>
                         </a>
                     </div>
                     <div class="col-lg-6 col-md-12 right-content">
@@ -71,9 +69,9 @@
             </div>
         </section>
 
-        <section class="student-page-insight-section">
+        <section class="student-page-insight-section reveal-section">
             <div class="container">
-                <h2 class="section-title mx-md-5">Who Uses These Insights</h2>
+                <h2 class="section-title mx-md-5 mx-3">Who Uses These Insights</h2>
                 <div class="container page-insight-cards">
                     <div class="row g-4 align-items-start">
                         <div class="col-md-6 col-lg-4 d-flex">
@@ -144,12 +142,12 @@
             </div>
         </section>
 
-        <section class="">
+        <section class="reveal-section">
             <div class="students-page-driven-section">
                 <div class="container">
                     <div class="page-driven-container">
                         <div class="left-content">
-                            <div>
+                            <div class="heading">
                                 <h1>Students from Key Disciplines Driving Africa's Growth</h1>
                                 <div class="icons-container">
                                     <img src="./images/title-bg.png" alt="" />
@@ -171,8 +169,8 @@
                                 <div class="slider-column">
                                     <div class="slider-track slider-one">
                                         @for ($i = 0; $i < 100; $i++)
-                                            @foreach ($images as $index => $image)
-                                                @php
+                                            @foreach ($images as $image)
+                                                {{-- @php
                                                     $bgClasses = ['blue', 'light-yellow', 'blue', 'light-yellow'];
                                                     $title = [
                                                         'Sociology & Anthropology',
@@ -180,13 +178,15 @@
                                                         'Sociology & Anthropology',
                                                         'Business Administration & Management',
                                                     ];
-                                                @endphp
-                                                <div class="card-item {{ $bgClasses[$index % count($bgClasses)] }}">
-                                                    <h3 class="card-title">{{ $title[$index % count($title)] }}</h3>
+                                                @endphp --}}
+                                                <div class="card-item">
+                                                    {{-- <h3 class="card-title">{{ $title[$index % count($title)] }}</h3>
                                                     <div class="card-image">
                                                         <img src="{{ asset('images/' . $image) }}" loading="lazy"
                                                             alt="Student" />
-                                                    </div>
+                                                    </div> --}}
+                                                    <img src="{{ asset('images/' . $image) }}" loading="lazy"
+                                                        alt="Student" />
                                                 </div>
                                             @endforeach
                                         @endfor
@@ -203,7 +203,7 @@
                                                 We welcome curious, high-performing students from departments
                                                 that shape business, society, and innovation. If you're
                                                 passionate about solving real-world problems with data,
-                                                insight, and collaboration—this is for you.
+                                                insight, and collaboration, this is for you.
                                             </p>
                                         </div>
                                     </div>
@@ -212,8 +212,8 @@
                                 <div class="slider-column">
                                     <div class="slider-track slider-two">
                                         @for ($i = 0; $i < 100; $i++)
-                                            @foreach ($images2 as $index2 => $image2)
-                                                @php
+                                            @foreach ($images2 as $image2)
+                                                {{-- @php
                                                     $bgClasses2 = ['orange', 'dark-blue', 'orange', 'dark-blue'];
                                                     $title2 = [
                                                         'Mass Communication & Media Studies',
@@ -221,13 +221,15 @@
                                                         'Mass Communication & Media Studies',
                                                         'Political Science & Public Policy',
                                                     ];
-                                                @endphp
-                                                <div class="card-item {{ $bgClasses2[$index2 % count($bgClasses2)] }}">
-                                                    <h3 class="card-title">{{ $title2[$index2 % count($title2)] }}</h3>
+                                                @endphp --}}
+                                                <div class="card-item">
+                                                    {{-- <h3 class="card-title">{{ $title2[$index2 % count($title2)] }}</h3>
                                                     <div class="card-image circle-mask">
                                                         <img src="{{ asset('images/' . $image2) }}" loading="lazy"
                                                             alt="Student" />
-                                                    </div>
+                                                    </div> --}}
+                                                    <img src="{{ asset('images/' . $image2) }}" loading="lazy"
+                                                        alt="Student" />
                                                 </div>
                                             @endforeach
                                         @endfor
@@ -240,7 +242,7 @@
             </div>
         </section>
 
-        <section class="students-page-policyandresearch-section">
+        <section class="students-page-policyandresearch-section reveal-section">
             <div class="container">
                 <h2 class="section-title">
                     Why it matters <span> (Serving Business, Policy, and Research)</span>
@@ -280,18 +282,20 @@
                     </div>
                     <div class="grid-item highlight">
                         <div class="item-number">/05</div>
-                        <div class="item-title" style="max-width: 300px;">Boost Research Impact</div>
+                        <div class="item-title" style="max-width: 300px;">Boost Research <span
+                                class="boost">Impact</span></div>
                         <p>
                             Drive meaningful change with data-backed discoveries that extend
                             beyond the classroom.
                         </p>
-                        <a href="#" class="btn-join">Join The Movement <i class="bi bi-arrow-right"></i></a>
+                        <a data-bs-toggle="modal" data-bs-target="#seatModal" href="#" class="btn-join">Join The
+                            Movement <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="">
+        <section class="reveal-section">
             <div class="container">
                 <div class="students-page-future-section">
                     <div class="image-container">
@@ -302,7 +306,7 @@
                         <p>
                             Whether you're a student looking to build your career, a
                             university aiming to elevate your research, or a business needing
-                            real insights—we're building this platform for you.
+                            real insights, we're building this platform for you.
                         </p>
                         <div class="checklist">
                             <div class="check-item">
@@ -312,7 +316,8 @@
                                 <img src="./images/Check circle.png" alt="" /> For University
                             </div>
                         </div>
-                        <a href="#" class="btn-join">Join The Movement <i class="fa fa-arrow-right mx-3"></i></a>
+                        <a data-bs-toggle="modal" data-bs-target="#seatModal" href="#" class="btn-join">Join The
+                            Movement <i class="fa fa-arrow-right mx-3"></i></a>
                     </div>
                 </div>
             </div>
@@ -344,12 +349,17 @@
                                 </div>
                                 <div class="col-md-6">
                                     <input type="text" name="phone" class="form-control mb-5"
-                                        placeholder="Contact Number" required>
+                                        placeholder="Contact Number (Optional)">
                                 </div>
 
-                                <div class="col-12">
+                                <div class="col-md-6">
                                     <input type="email" name="email" class="form-control mb-5" placeholder="Email"
                                         required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <input type="text" name="occupation" class="form-control mb-5"
+                                        placeholder="Occupation (Optional)">
                                 </div>
 
                                 <div class="col-md-6">

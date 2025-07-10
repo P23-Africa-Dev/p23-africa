@@ -358,7 +358,7 @@
         </div>
 
         <div id="btn">
-            <a href="#" class="btn">More on the Resource Hub</a>
+            <a href="{{ route('resource-hub') }}" class="btn">More on the Resource Hub</a>
         </div>
     </section>
     <hr id="horiz">

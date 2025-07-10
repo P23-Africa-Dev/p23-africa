@@ -14,7 +14,8 @@ class submitStudent extends Controller
         $validated_students = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'phone' => 'required|string|max:20',
+            'phone' => 'nullable|string|max:20',
+            'occupation' => 'nullable|string|max:255',
             'uniname' => 'required|string|max:255',
             'region' => 'required|string|max:255',
         ]);
@@ -23,6 +24,7 @@ class submitStudent extends Controller
             'name' => $validated_students['name'],
             'email' => $validated_students['email'],
             'phone' => $validated_students['phone'],
+            'occupation' => $validated_students['occupation'],
             'uniname' => $validated_students['uniname'],
             'region' => $validated_students['region'],
         ]);

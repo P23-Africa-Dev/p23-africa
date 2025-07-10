@@ -71,9 +71,10 @@
                                 {{ \Carbon\Carbon::parse($blog->created_at)->format('l, F jS Y') }}
                             </div>
                         </div>
-                        <div class="blog-image"
+                        <img src="{{ asset('storage/' . $blog->image_path) }}" class="blog-image" alt="">
+                        {{-- <div class="blog-image"
                             style="background-image: url('{{ asset('storage/' . $blog->image_path) }}');">
-                        </div>
+                        </div> --}}
                     </div>
                 </a>
             @endforeach

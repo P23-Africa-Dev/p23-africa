@@ -55,9 +55,9 @@
                         @if ($blog->image_path)
                             <img src="{{ asset('storage/' . $blog->image_path) }}" loading='lazy' alt="Insight Image"
                                 class="article-img" />
-                        @else
+                        {{-- @else
                             <img src="{{ asset('images/resource-detail.png') }}" loading='lazy' alt="Insight Image"
-                                class="article-img" />
+                                class="article-img" /> --}}
                         @endif
                     </div>
                     <div class="col-md-6 mt-4 mt-md-0">

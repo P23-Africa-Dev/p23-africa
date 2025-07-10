@@ -34,6 +34,7 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Phone</th>
+                                    <th>Occupation</th>
                                     <th>University</th>
                                     <th>Region</th>
                                     <th>Date</th>
@@ -46,6 +47,7 @@
                                         <td>{{ $student->name }}</td>
                                         <td>{{ $student->email }}</td>
                                         <td>{{ $student->phone }}</td>
+                                        <td>{{ $student->occupation }}</td>
                                         <td>{{ $student->uniname }}</td>
                                         <td>{{ $student->region }}</td>
                                         <td>{{ \Carbon\Carbon::parse($student->created_at)->format('l, F jS Y') }}</td>

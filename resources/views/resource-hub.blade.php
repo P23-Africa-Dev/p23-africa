@@ -79,20 +79,6 @@
             }
         </style>
 
-        <div>
-            <div class="feedback-box">
-                <h2>How would you rate this event?</h2>
-                <div class="star-rating">
-                    <span class="star" data-rating="1">&#9733;</span>
-                    <span class="star" data-rating="2">&#9733;</span>
-                    <span class="star" data-rating="3">&#9733;</span>
-                    <span class="star" data-rating="4">&#9733;</span>
-                    <span class="star" data-rating="5">&#9733;</span>
-                </div>
-            </div>
-        </div>
-
-
         <script>
             const stars = document.querySelectorAll('.star');
             let selectedRating = 0;
@@ -195,7 +181,7 @@
             </div>
         </section>
 
-        <section class="blog reveal-section">
+        <section class="blog">
             <div class="container blog-section">
                 <div class="row2">
                     <div class="column">

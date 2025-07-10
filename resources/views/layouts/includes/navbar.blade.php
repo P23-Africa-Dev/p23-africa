@@ -30,7 +30,7 @@
                                             <p>Where top CEOs meet, connect, and grow through trusted referrals.</p>
                                         </div>
                                         <div class="col-md-3 line">
-                                            <a href="#" class="d-block mb-3"><b>University Partnership</b></a>
+                                            <a href="{{ route('student') }}" class="d-block mb-3"><b>University Partnership</b></a>
                                             <p>Connecting students with real-world research opportunities</p>
                                         </div>
                                         <div class="col-md-3">
@@ -185,7 +185,7 @@
                     </li>
                     <hr>
                     <li>
-                        <a class="nav-link">
+                        <a href="{{ route('student') }}" class="nav-link">
                             <h5>University Partnership</h5>
                             <p>
                                 Connecting students with real-world research opportunities

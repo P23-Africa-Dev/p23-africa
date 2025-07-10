@@ -15,8 +15,8 @@ class SliderController extends Controller
 
     public function showSliderStudent()
     {
-        $images = ['driven-bg-1.png', 'driven-bg-4.png', 'driven-bg-1.png', 'driven-bg-4.png'];
-        $images2 = ['driven-bg-2.png', 'driven-bg-3.png', 'driven-bg-2.png', 'driven-bg-3.png'];
+        $images = ['first-slide.png', 'second-slide.png', 'third-slide.png'];
+        $images2 = ['forth-slide.png', 'fifth-slide.png', 'sixth-slide.png'];
 
         return view('/student', compact('images', 'images2'));
     }
