@@ -44,6 +44,7 @@ class BlogController extends Controller
             'content_1' => 'required|string',
             'content_2' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
+            'pdf' => 'nullable|mimes:pdf|max:10240', // allow PDF up to 10MB
             'category_id' => 'nullable|exists:categories,id',
         ]);
 
@@ -54,6 +55,10 @@ class BlogController extends Controller
         // ✅ Handle image upload
         if ($request->hasFile('image')) {
             $data['image_path'] = $request->file('image')->store('blogs', 'public');
+        }
+
+        if ($request->hasFile('pdf')) {
+            $data['pdf_path'] = $request->file('pdf')->store('blogs/pdfs', 'public');
         }
 
         // ✅ Add user ID (admin creating the blog)
@@ -94,6 +99,7 @@ class BlogController extends Controller
             'content_1' => 'required|string',
             'content_2' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
+            'pdf' => 'nullable|mimes:pdf|max:10240',
             'created_at' => 'nullable|date',
             'category_id' => 'nullable|exists:categories,id',
         ]);
@@ -110,6 +116,18 @@ class BlogController extends Controller
                 Storage::disk('public')->delete($blog->image_path);
             }
             $data['image_path'] = $request->file('image')->store('blogs', 'public');
+        }
+
+        if ($request->has('remove_pdf') && $blog->pdf_path) {
+            Storage::disk('public')->delete($blog->pdf_path);
+            $blog->pdf_path = null;
+        }
+
+        if ($request->hasFile('pdf')) {
+            if ($blog->pdf_path) {
+                Storage::disk('public')->delete($blog->pdf_path);
+            }
+            $data['pdf_path'] = $request->file('pdf')->store('blogs/pdfs', 'public');
         }
 
         // 🛠️ Purify and assign to $data

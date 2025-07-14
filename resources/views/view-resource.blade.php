@@ -55,7 +55,7 @@
                         @if ($blog->image_path)
                             <img src="{{ asset('storage/' . $blog->image_path) }}" loading='lazy' alt="Insight Image"
                                 class="article-img" />
-                        {{-- @else
+                            {{-- @else
                             <img src="{{ asset('images/resource-detail.png') }}" loading='lazy' alt="Insight Image"
                                 class="article-img" /> --}}
                         @endif
@@ -65,8 +65,20 @@
                             <p>
                                 {!! $blog->content_2 !!}
                             </p>
-                            <a href="{{ route('resource-hub') }}" class="cta-button">Get More Insights <span
-                                    class="mx-2"></span> →</a>
+                            <div class="d-flex justify-content-between" style="margin-top: 30px;">
+                                <a href="{{ route('resource-hub') }}" class="cta-button">Get More Insights <span
+                                        class="mx-2"></span> →</a>
+
+                                @if ($blog->pdf_path)
+                                    <div class="my-auto">
+                                        <a href="{{ asset('storage/' . $blog->pdf_path) }}" class="btn btn-success"
+                                            download>
+                                            📥 Download PDF
+                                        </a>
+                                    </div>
+                                @endif
+                            </div>
+
                         </div>
                     </div>
                 </div>

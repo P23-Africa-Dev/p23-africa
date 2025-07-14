@@ -23,7 +23,8 @@
                         <div class="mb-4">
                             <label for="created_at">Date</label>
                             <input type="datetime-local" name="created_at" id="created_at" class="form-control"
-                                value="{{ old('created_at', $blog->created_at ? $blog->created_at->format('Y-m-d\TH:i') : '') }}" required>
+                                value="{{ old('created_at', $blog->created_at ? $blog->created_at->format('Y-m-d\TH:i') : '') }}"
+                                required>
                         </div>
                         <input name="subtitle" value="{{ old('subtitle', $blog->subtitle ?? '') }}"
                             placeholder="Blog Subtitle" class="form-control mb-4 border border-1 border-dark">
@@ -86,8 +87,28 @@
                         <textarea name="content_2" id="description2" class="form-control mb-4 border border-1 border-dark"
                             placeholder="Second Content">{{ old('content_2', $blog->content_2 ?? '') }}</textarea>
 
+
+                        <div class="mt-5 mb-2">
+                            <label>Attach PDF</label>
+                            <input type="file" name="pdf" class="form-control p-2 border border-1 border-dark">
+                        </div>
+
+                        @if (isset($blog) && $blog->pdf_path)
+                            <div class="mb-3">
+                                <label>Current PDF:</label>
+                                <a href="{{ asset('storage/' . $blog->pdf_path) }}" target="_blank">View PDF</a>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="remove_pdf" id="remove_pdf">
+                                    <label class="form-check-label" for="remove_pdf">
+                                        Remove PDF
+                                    </label>
+                                </div>
+                            </div>
+                        @endif
+
+
                         <button type="submit"
-                            class="btn btn-dark w-25">{{ isset($blog) ? 'Update' : 'Publish' }}</button>
+                            class="btn btn-dark w-25 mt-4">{{ isset($blog) ? 'Update' : 'Publish' }}</button>
                     </form>
                 </div>
             </div>

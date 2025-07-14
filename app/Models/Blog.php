@@ -13,6 +13,7 @@ class Blog extends Model
         'content_1',
         'content_2',
         'image_path',
+        'pdf_path',
         'category_id',
         'user_id'
     ];

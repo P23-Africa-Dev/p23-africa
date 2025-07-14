@@ -68,6 +68,25 @@
                         <textarea name="content_2" class="form-control mb-3 border border-1 border-dark" rows="8"
                             placeholder="Second Content" id="description2">{{ old('content_2', $blog->content_2 ?? '') }}</textarea>
 
+
+                        <div class="mb-3">
+                            <label>Attach PDF</label>
+                            <input type="file" name="pdf" class="form-control">
+                        </div>
+
+                        @if (isset($blog) && $blog->pdf_path)
+                            <div class="mb-3">
+                                <label>Current PDF:</label>
+                                <a href="{{ asset('storage/' . $blog->pdf_path) }}" target="_blank">View PDF</a>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="remove_pdf" id="remove_pdf">
+                                    <label class="form-check-label" for="remove_pdf">
+                                        Remove PDF
+                                    </label>
+                                </div>
+                            </div>
+                        @endif
+
                         <button type="submit"
                             class="btn btn-dark w-25">{{ isset($blog) ? 'Update' : 'Publish' }}</button>
                     </form>
