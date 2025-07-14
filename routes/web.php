@@ -1,7 +1,9 @@
 <?php
 
+use App\Helpers\ClickTracker;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ClickReportController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
@@ -63,27 +65,34 @@ Route::get('/our-sales', function () {
 Route::get('/', [SliderController::class, 'showSlider'])->name('homepage');
 
 Route::get('/contact', function () {
+    ClickTracker::track('Contact_Page');
     return view('contact');
 });
 Route::get('/about', function () {
+    ClickTracker::track('About_Page');
     return view('about');
 });
 Route::get('/services', function () {
+    ClickTracker::track('Service_Page');
     return view('services');
 });
 Route::get('/sales', function () {
+    ClickTracker::track('Sales_Page');
     return view('sales');
 })->name('sales');
 
 Route::get('/quiz', function () {
+    ClickTracker::track('Quiz_Page');
     return view('sales-quiz');
 })->name('quiz');
 
 // BRN
 Route::get('/brn', function () {
+    ClickTracker::track('BRN_Page');
     return view('brn');
 })->name('brn');
 Route::get('/brn-form', function () {
+    ClickTracker::track('BRN_Form_Page');
     return view('brn-form');
 })->name('brn-form');
 
@@ -99,21 +108,7 @@ Route::post('/submit-student', [submitStudent::class, 'submitStudent']);
 /**
  * Route to display click counts.
  */
-Route::get('/clicks-report', function () {
-    $filter = Request::get('filter', 'all');
 
-    $clicks = Click::query();
-
-    if ($filter === 'today') {
-        $clicks->whereDate('updated_at', today());
-    } elseif ($filter === '7days') {
-        $clicks->where('updated_at', '>=', now()->subDays(7));
-    }
-
-    $clicks = $clicks->get();
-
-    return view('clicks.clicks-report', compact('clicks', 'filter'));
-})->name('clicks.report');
 
 Route::get('/resource-hub', [ResourceHubController::class, 'resourceHub'])->name('resource-hub');
 Route::get('/resource/{slug}', [ResourceHubController::class, 'resourceDetails'])->name('resource-show');
@@ -131,6 +126,7 @@ Route::get('/quiz/result/cloudy-climber', fn() => view('quiz-answers.result-c'))
 
 
 Route::get('/quiz/start', function () {
+    ClickTracker::track('Quiz_Start_Page');
     return view('start-quiz');
 })->name('start-quiz');
 
@@ -231,6 +227,24 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|staff'])->prefix('admi
     // Route::middleware('permission:view_students')->group(function () {
         Route::resource('students', StudentController::class);
     // });
+
+    Route::get('/clicks/report', [ClickReportController::class, 'index'])->name('clicks.report');
+
+    // Route::get('/clicks-report', function () {
+    //     $filter = Request::get('filter', 'all');
+
+    //     $clicks = Click::query();
+
+    //     if ($filter === 'today') {
+    //         $clicks->whereDate('updated_at', today());
+    //     } elseif ($filter === '7days') {
+    //         $clicks->where('updated_at', '>=', now()->subDays(7));
+    //     }
+
+    //     $clicks = $clicks->get();
+
+    //     return view('admin.reports.clicks-report', compact('clicks', 'filter'));
+    // })->name('clicks.report');
 });
 
 

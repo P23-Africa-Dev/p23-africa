@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ClickTracker;
 use App\Models\Event;
 use App\Models\EventClick;
 use App\Models\EventClickLog;
@@ -26,6 +27,8 @@ class UserEventController extends Controller
             ->orderBy('event_time', 'asc')
             ->take(5) // or ->limit(5)
             ->get();
+
+        ClickTracker::track('Event_Page');
 
         return view('event',  compact('events', 'past_events'));
     }
@@ -107,6 +110,8 @@ class UserEventController extends Controller
             ->orderBy('event_date', 'asc')
             ->orderBy('event_time', 'asc')
             ->paginate(6); // Or however many per page
+
+        ClickTracker::track('All_Events_Page');
 
         return view('all-events', compact('events', 'next_month_events'));
     }

@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('clicks', function (Blueprint $table) {
             $table->id();
-            $table->string('route_name')->unique();
-            $table->unsignedBigInteger('click_count')->default(0);
+            $table->string('route_name');
+            $table->string('device_type')->nullable(); // optional for mobile/desktop breakdown
+            $table->integer('click_count')->default(0);
             $table->timestamps();
         });
     }

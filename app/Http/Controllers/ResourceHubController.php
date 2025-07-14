@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ClickTracker;
 use App\Models\Blog;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -15,18 +16,23 @@ class ResourceHubController extends Controller
         $recentBlogs = Blog::latest()->take(6)->get(); // Get 6 most recent blogs
         $olderBlogs = Blog::latest()->skip(6)->paginate(10); // Get the rest for archive
 
+        ClickTracker::track('Resource_Hub_Page');
+
         return view('resource-hub', compact('recentBlogs', 'olderBlogs'));
     }
 
     public function resourceDetails($slug)
     {
         $blog = Blog::where('slug', $slug)->firstOrFail();
+
         return view('view-resource', compact('blog'));
     }
 
     public function archivePage()
     {
         $categories = Category::orderBy('id')->get(); // or any preferred ordering
+        ClickTracker::track('Archive_Page');
+
         return view('archive', compact('categories'));
     }
 
@@ -76,6 +82,8 @@ class ResourceHubController extends Controller
         );
 
         $otherCategories = \App\Models\Category::all();
+
+        ClickTracker::track('Archive_List_Page');
 
         return view('archive-list', [
             'blogs' => $paginated,
