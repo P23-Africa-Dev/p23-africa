@@ -166,7 +166,7 @@
                     </div>
 
                     <!-- Next Month -->
-                    <div id="next" class="">
+                    <div id="next" class="next-side">
                         <div id="" class="">
                             <div id="">
                                 @foreach ($next_month_events as $event)

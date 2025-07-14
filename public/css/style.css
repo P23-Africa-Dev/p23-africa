@@ -4265,6 +4265,9 @@ section.visible{
 .track_events .tab-panel.active {
     display: block;
 }
+.track_events .next-side{
+    display: none;
+}
 
 @media (max-width: 700px) {
     .track_events .event-card-footer {
