@@ -14,7 +14,7 @@
                     <ul class="navbar-nav me-auto ms-auto mb-2 mb-lg-0" id="nav">
                         <li class="nav-item dropdown position-static">
                             <a class="nav-link active" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-                                data-target="submenu1" aria-current="page" href="#">Who We Are <i
+                                data-target="submenu1" aria-current="page" href="#">Who we are <i
                                     class="fa-solid fa-chevron-down mx-2"></i></a>
 
                             <div class="dropdown-menu dropdown-mega">
@@ -43,7 +43,7 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('services') }}">What We Do </a>
+                            <a class="nav-link" href="{{ url('services') }}">What we do </a>
 
 
                             {{-- <div class="dropdown-menu dropdown-mega">
@@ -87,15 +87,15 @@
                             <a class="nav-link" href="{{ route('event') }}">Events</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('resource-hub') }}">Resource Hub</a>
+                            <a class="nav-link" href="{{ route('resource-hub') }}">Resource hub</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('contact') }}">Let’s Collaborate</a>
+                            <a class="nav-link" href="{{ url('contact') }}">Let’s collaborate</a>
                         </li>
                     </ul>
 
                     <div class="contact">
-                        <a href="{{ url('contact') }}" class="btn" id="btn">Contact Us</a>
+                        <a href="{{ url('contact') }}" class="btn" id="btn">Contact us</a>
                     </div>
 
 
