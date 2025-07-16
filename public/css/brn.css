@@ -31,6 +31,29 @@
     /* Adjust file names and paths as needed */
 }
 
+@font-face {
+    font-family: "IvyOraText BoldItalic"; /* Name your font family */
+
+    src: url("../fonts/ivyora-text/IvyOraText-BoldItalic.woff2")
+            format("woff2"),    
+        url("../fonts/ivyora-text/IvyOraText-BoldItalic.woff") format("woff"); /* Adjust file names and paths as needed */
+}
+@font-face {
+    font-family: "IvyOra Text"; /* Name your font family */
+
+    src: url("../fonts/ivyora-text/IvyOraText-RegularItalic.woff2")
+            format("woff2"),
+        url("../fonts/ivyora-text/IvyOraText-RegularItalic.woff") format("woff"); /* Adjust file names and paths as needed */
+}
+@font-face {
+    font-family: "IvyOra Text Bold"; /* Name your font family */
+
+    src: url("../fonts/ivyora-text/IvyOraText-Bold.woff2")
+            format("woff2"),
+        url("../fonts/ivyora-text/IvyOraText-Bold.woff") format("woff"); /* Adjust file names and paths as needed */
+}
+
+
 body {
     font-family: "GT Walsheim Pro";
 }
@@ -298,7 +321,7 @@ body {
 }
 
 .brn-intro-section .intro-content {
-    padding: 1rem;
+    padding: 1rem;  
 }
 
 .brn-intro-section .intro-content h1 {
@@ -307,7 +330,8 @@ body {
     color: #ffffff;
     margin-bottom: 1.5rem;
     line-height: 1.2;
-    font-family: "IvyOraText";
+    letter-spacing: 0.4px;
+    font-family: "IvyOra Text Bold";
 }
 
 .brn-intro-section .intro-content h1 span {
@@ -351,7 +375,7 @@ body {
 
 .brn-intro-section .image-grid {
     display: flex;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
     margin-left: 20px;
 }
@@ -362,8 +386,8 @@ body {
 
 .image-grid .first,
 .image-grid .second {
-    height: 270px;
-    width: 350px;
+    height: 336px;
+    width: 439px;
     border: 3px solid #fff;
     border-radius: 30px;
     position: relative;
@@ -385,8 +409,8 @@ body {
     align-items: center;
     background-color: #fff;
     padding: 6px 20px;
-    left: 477px;
-    width: 256px;
+    left: 137px;
+    /* width: 276px; */
     border-radius: 20px;
     position: absolute;
     z-index: 2;
@@ -1075,8 +1099,8 @@ body {
     }
 
     .brn-intro-section .intro-content p {
-        font-size: 20px;
-        max-width: 450px;
+        font-size: 21px;
+        max-width: 500px;
     }
 
     .brn-intro-section .intro-content {
@@ -1093,14 +1117,14 @@ body {
 
     .image-grid .first,
     .image-grid .second {
-    height: 336px;
-    width: 439px;
+        height: 336px;
+        width: 469px;
     }
 
     .image-grid .second {
-        right: -80px !important;
+        right: -80px;
         top: -70px;
-        width: 439px !important;
+        width: 469px;
     }
 
     /* =======================================  BRN HOW WE OPERATE SECTION */
@@ -1144,10 +1168,55 @@ body {
 }
 
 @media (min-width: 1024px) {
-    .image-grid .second {
+    /* .image-grid .second {
         right: -50px;
         top: -70px;
         width: 400px;
+    } */
+    .brn-intro-section .image-grid {
+        margin-left: -120px;
+    }
+    /* .brn-intro-section .image-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20px;
+} */
+
+
+    .image-grid .first,
+    .image-grid .second {
+        height: 330px;
+        width: 400px;
+    }
+
+    .image-grid .second {
+        right: -150px;
+        top: -80px;
+        width: 400px;
+    }
+
+    .brn-intro-section .intro-content p {
+        font-size: 22px;
+    }
+
+    .image-grid .second .card-image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+        padding: 6px 20px;
+        left: 447px;
+        width: 276px;
+        border-radius: 20px;
+        position: absolute;
+        z-index: 2;
+        transform: translateX(-100px);
+        bottom: 40px;
+        /* left: -20%; */
+        font-size: 16px;
+        gap: 20px;
+        box-shadow: 15px 13px 0px -5px #1deaa5;
     }
 
     .brn-how-we-operate-section .operate-card.card-3 .card-content {
@@ -1182,24 +1251,30 @@ body {
         margin-top: -30%;
     }
 
+    .brn-intro-section .intro-content p {
+        font-size: 22px;
+    }
+
     .brn-intro-section .image-grid {
-        margin-left: -20px;
+        margin-left: -120px;
     }
 
     .image-grid .first,
     .image-grid .second {
         height: 350px;
-        width: 400px;
+        width: 450px;
     }
 
     .image-grid .second {
         right: -150px;
         top: -80px;
-        width: 400px;
+        width: 450px;
     }
 
     .image-grid .second .card-image {
         transform: translateX(90%);
+        left: 147px;
+        width: 276px;
     }
 
     .image-grid .second .card-image p {
@@ -1726,10 +1801,10 @@ body {
 
     .brn-image {
         display: block;
-        max-width: 100px;
+        max-width: 110px;
         position: absolute;
-        top: 26%;
-        right: 11%;
+        top: 51%;
+        right: 3%;
         z-index: 1;
     }
     .brn-group {

@@ -3,13 +3,13 @@
 
 @section('meta')
     <meta name="description"
-        content="Explore Expert Articles, Market Trends, And Practical Advice To Scale Your Business Across Africa And Beyond.">
+        content="Join an exclusive referral network designed for industry leaders who value trusted relationships and measurable growth.">
     <meta name="keywords"
-        content="Explore Expert Articles, Market Trends, And Practical Advice To Scale Your Business Across Africa And Beyond.">
+        content="Join an exclusive referral network designed for industry leaders who value trusted relationships and measurable growth.">
     <meta name="author" content="Nurudeen O. Daniju">
     <meta name="generator"
-        content="Explore Expert Articles, Market Trends, And Practical Advice To Scale Your Business Across Africa And Beyond | P23 Africa">
-    <meta property="og:image" content="{{ asset('images/resource-header.png') }}">
+        content="Join an exclusive referral network designed for industry leaders who value trusted relationships and measurable growth | P23 Africa">
+    <meta property="og:image" content="{{ asset('images/brn-meta.png') }}">
 @endsection
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
@@ -20,7 +20,7 @@
             <div class="container">
                 <div class="row align-items-center gx-5">
                     <div class="col-12 col-lg-6 order-lg-2">
-                        <div class="intro-content text-left">
+                        <div class="intro-content text-left mx-md-5">
                             <h1>
                                 Where Top CEOs <br />
                                 <span class="d-block">Connect and Grow</span>
