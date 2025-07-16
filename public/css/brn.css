@@ -1265,161 +1265,490 @@ body {
     height: auto;
 }
 
+
+
+
 /* ============================================ BRN FORM AREA */
+.brn-body {
+  background-color: #193e47;
+}
+
+.brn-main-container {
+  background-color: #193e47;
+  /* min-height: 100vh; */
+  padding: 0px;
+}
 .brn-container {
-    background-color: #193e47;
-    padding: 100px 0px;
-    /* max-height: 400px; */
-    /* height: 100%; */
+  /* background-color: #193e47; */
+  padding: 70px 0px;
 }
-
 .brn-header-container {
-    padding: 20px;
+  padding: 20px 10px;
 }
-
 .brn-header {
-    max-width: 700px;
-    margin: 0 auto;
-    color: #fff;
+  max-width: 900px;
+  margin: 0 auto;
+  color: #fff;
 }
-
 .brn-header h1 {
-    color: #1deaa5;
-    font-size: 2.5rem;
-    margin-bottom: 20px;
+  color: #1deaa5;
+  font-size: 2.3rem;
+  font-weight: bolder;
 }
 
-.brn-header p {
-    font-size: 1rem;
-    line-height: 1.6;
+.brn-header-desc {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  width: 100%;
+  gap: 20px;
+  max-width: 400px;
+}
+.brn-header-desc span {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background-color: #fff;
+  margin-top: -4px;
+}
+.brn-header-desc span {
+  display: block;
+  width: 60%;
+}
+
+.brn-header-desc p {
+  font-size: 1.3rem;
+  line-height: 1.6;
+  width: 100%;
 }
 
 .brn-form-container {
-    padding: 20px;
-    /* background-color: #fff; */
-    /* max-height: 400px !important; */
+  padding: 20px;
+  /* max-height: 400px; */
 }
-
 .brn-form-container .brn-content {
-    background-color: #ebefee;
-    border-radius: 30px;
-    display: flex;
-    width: 100%;
-    box-shadow: 0px 19px 30px 19px rgba(0, 0, 0, 0.1);
+  background-color: #ebefee;
+  border-radius: 30px;
+  display: flex;
+  width: 100%;
+  box-shadow: 0px 19px 30px 19px rgba(0, 0, 0, 0.1);
 }
-
 .brn-content .brn-form {
-    width: 80%;
-    padding: 60px 20px 30px;
+  width: 80%;
+  padding: 60px 20px 30px;
 }
 
 .brn-content .brn-form-side-bg {
-    background-color: #3aa9a9;
-    padding: 30px;
-    width: 20%;
-    border-top-right-radius: 30px;
-    border-bottom-right-radius: 30px;
+  background-color: #3aa9a9;
+  width: 20%;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  /* display: none; */
+  position: relative;
 }
 
+.brn-content .brn-form-side-bg img {
+  position: absolute;
+  object-position: center;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
 .form-conainer {
-    max-width: 800px;
-    margin: 0 auto;
-    padding-bottom: 7%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding-bottom: 7%;
 }
 
 .brn-form .form-control {
-    border: 1px solid #ced4da;
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 15px;
-    box-shadow: 0px 31px 15px -3px rgba(0, 0, 0, 0.1);
-    font-size: 14px;
-    width: 125%;
-    position: relative;
-    color: #afaeae;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0px 31px 15px -3px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+  color: #afaeae;
 }
 
 .brn-form .form-check {
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
 }
 
 .brn-form .form-check-input {
-    width: 20px;
-    height: 20px;
-    border-radius: 5px;
-    border: 1px solid #1deaa5;
-    background-color: #ffffff;
-    margin-right: 10px;
-    flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  border: 1px solid #1deaa5;
+  background-color: #ffffff;
+  margin-right: 10px;
+  flex-shrink: 0;
 }
 
 .brn-form .form-check-input:checked {
-    background-color: #1deaa5;
-    border-color: #1deaa5;
+  background-color: #1deaa5;
+  border-color: #1deaa5;
 }
 
 .brn-form .form-check-label {
-    font-size: 0.9rem;
-    font-weight: 900;
-    color: #193e47;
-    padding-right: 30px;
-    margin: 20px 0px;
-    max-width: 400px;
+  font-size: 0.9rem;
+  font-weight: 900;
+  color: #193e47;
+  padding-right: 30px;
+  margin: 20px 0px;
+  max-width: 400px;
 }
 
 .brn-form .btn-submit {
-    background-color: #193e47;
-    color: #ffffff;
-    padding: 12px 75px;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    border: none;
+  background-color: #193e47;
+  color: #ffffff;
+  padding: 12px 60px;
+  width: 265px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: none;
+  margin-top: 50px;
 }
 
 .brn-form .btn-submit:hover {
-    background-color: #1deaa5;
-    color: #193e47;
+  background-color: #1deaa5;
+  color: #193e47;
 }
 
-.brn-image {
-    display: none;
+.brn-image,
+.brn-group {
+  display: none;
 }
+
+/* =================================== BRN CHECKED */
+
+.brn-input-checked {
+  background-color: transparent;
+  border-radius: 15px;
+  color: #0d4036;
+  padding: 1rem;
+}
+
+.brn-input-checked .brn-input-checked-group {
+  margin-bottom: 2rem;
+}
+
+.brn-input-checked .brn-input-checked-group:last-child {
+  margin-bottom: 0;
+}
+
+.brn-input-checked .brn-input-checked-label {
+  font-size: 1.15rem;
+  font-weight: bolder;
+  margin-bottom: 1.2rem;
+  color: #0d4036;
+  display: block;
+}
+
+.brn-input-checked .brn-input-checked-option {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.brn-input-checked .brn-input-checked-option:last-child {
+  margin-bottom: 0;
+}
+
+.brn-input-checked .brn-input-checked-checkbox {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #5a7e76;
+  border-radius: 4px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  outline: none;
+  margin-right: 0.75rem;
+  position: relative;
+  background-color: #f8f9fa;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.brn-input-checked .brn-input-checked-checkbox:checked {
+  background-color: #6beabf;
+  border-color: #6beabf;
+}
+
+.brn-input-checked .brn-input-checked-checkbox:checked::before {
+  content: "\2713";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  color: #0d4036;
+}
+
+.brn-input-checked .brn-input-checked-text {
+  font-size: 1rem;
+  color: #0d4036;
+  user-select: none;
+  font-weight: bold;
+}
+
+/* ====================== BRN ICONS CONTENT */
+
+.brn-form-icons {
+  background-color: transparent;
+  padding: 1.5rem 0rem;
+  width: 100%;
+  color: #0d4036;
+}
+
+.brn-form-icons .brn-form-icons-header {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #0d4036;
+  text-align: left;
+  margin-left: 30px;
+}
+
+.brn-form-icons .brn-form-icons-options {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem; /* Space between the cards */
+}
+
+.brn-first-icons {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 20px;
+}
+.brn-second-icons {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 20px;
+}
+
+.brn-form-icons .brn-form-icons-card {
+  background-color: #ffff;
+  border-radius: 12px;
+  padding: 0.5rem 1.5rem;
+  display: flex;
+  align-items: center;
+  border-radius: 50px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  border: 1px solid transparent;
+  flex-grow: 1; /* Allows cards to grow and fill space */
+  max-width: 100%; /* Default for small screens */
+  text-align: center; /* Center content for small screens */
+  position: relative; /* For absolute positioning of the icon */
+}
+
+.brn-form-icons .brn-form-icons-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.brn-form-icons .brn-form-icons-card.selected {
+  border-color: #6beabf;
+  box-shadow: 0 4px 15px rgba(107, 234, 191, 0.4);
+}
+
+.brn-form-icons .brn-form-icons-card .brn-form-icons-text {
+  color: #0d4036;
+  font-size: 1rem;
+  font-weight: 500;
+  flex-grow: 1;
+  padding-left: 1.5rem; /* Space for the icon */
+  text-align: left;
+}
+
+@media (min-width: 576px) {
+  .brn-form-icons .brn-form-icons-options {
+    justify-content: space-between; /* Distribute items horizontally */
+  }
+}
+
+@media (min-width: 768px) {
+  .brn-form-icons .brn-form-icons-header {
+    font-size: 1.8rem;
+  }
+
+  .brn-form-icons .brn-form-icons-card .brn-form-icons-text {
+    font-size: 0.9rem;
+  }
+}
+
+/* ====================== BRN ICONS CONTENT END */
+
+@media (min-width: 576px) {
+  .brn-input-checked-options-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem 2.5rem; /* Row gap and column gap */
+  }
+
+  .brn-input-checked .brn-input-checked-option {
+    margin-bottom: 0; /* Remove vertical margin in row layout */
+  }
+}
+
+@media (min-width: 768px) {
+  .brn-first-icons {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+
+  }
+  .brn-second-icons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .brn-input-checked {
+    padding: 2rem 0.5rem;
+  }
+
+  .brn-input-checked .brn-input-checked-label {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .brn-input-checked .brn-input-checked-checkbox {
+    width: 26px;
+    height: 26px;
+  }
+
+  .brn-input-checked .brn-input-checked-checkbox:checked::before {
+    font-size: 18px;
+  }
+
+  .brn-input-checked .brn-input-checked-text {
+    font-size: 1.1rem;
+  }
+}
+
+/* ==================================  BRN CHECKED END */
 
 @media (min-width: 900px) {
-    .brn-header h1 {
-        font-size: 3rem;
-    }
+  .brn-header h1 {
+    font-size: 3rem;
+  }
 
-    /* .brn-form-container {
-        max-height: 100%;
-    } */
-    .brn-form .form-control {
-        width: 100%;
-    }
+  .brn-header-desc {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-width: 600px;
+  }
+  .brn-header-desc span {
+    width: 20%;
+    margin-top: 8px;
+  }
 
-    /* Display BRN IMAGE */
-    .brn-form-container {
-        position: relative;
-    }
+  .brn-header-desc p {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    width: 80%;
+  }
 
-    .form-conainer {
-        width: 90%;
-    }
+  .brn-form .form-control {
+    width: 100%;
+  }
 
-    .brn-image {
-        display: block;
-        max-width: 100px;
-        position: absolute;
-        top: 26%;
-        right: 11%;
-    }
+  .brn-content .brn-form {
+    padding: 60px 45px 30px;
+  }
+
+  /* Display BRN IMAGE */
+  .brn-main-container {
+    position: relative;
+  }
+
+  .form-conainer {
+    width: 90%;
+  }
+  .form-conainer {
+    z-index: 3;
+    position: relative;
+  }
+
+  .brn-image {
+    display: block;
+    max-width: 100px;
+    position: absolute;
+    top: 26%;
+    right: 11%;
+    z-index: 1;
+  }
+  .brn-group {
+    display: block;
+    max-width: 300px;
+    position: absolute;
+    top: 10%;
+    right: 0%;
+    z-index: 1;
+  }
 }
+
+@media (min-width: 992px) {
+  .brn-input-checked {
+    max-width: 750px;
+  }
+}
+@media (min-width: 1400px) {
+  .brn-header h1 {
+    font-size: 3.6rem;
+  }
+  .brn-header-desc span {
+    width: 40%;
+    margin-top: 8px;
+  }
+
+  .brn-header-desc p {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    width: 60%;
+  }
+  .brn-content {
+    /* height: 650px; */
+  }
+  .brn-image {
+    display: block;
+    max-width: 100px;
+    position: absolute;
+    top: 56%;
+    right: 11%;
+    z-index: 1;
+  }
+  .brn-group {
+    display: block;
+    max-width: 450px;
+    height: 700px;
+    position: absolute;
+    top: 10%;
+    right: 0%;
+    width: 100%;
+    z-index: 1;
+  }
+}
+
+
+
+
 
 /* FOOTER */
 @media screen and (max-width: 580px) {

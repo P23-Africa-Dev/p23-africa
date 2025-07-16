@@ -30,7 +30,7 @@
                                 Join an exclusive referral network designed for industry leaders
                                 who value trusted relationships and measurable growth.
                             </p>
-                            <a href="#" class="register-button">
+                            <a href="{{ route('brn-form') }}" class="register-button">
                                 Register Your Interest
                                 <i class="bi bi-arrow-right"></i>
                             </a>
