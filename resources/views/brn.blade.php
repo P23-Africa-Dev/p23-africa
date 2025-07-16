@@ -32,7 +32,7 @@
                             </p>
                             <a href="{{ route('brn-form') }}" class="register-button">
                                 Register Your Interest
-                                <i class="bi bi-arrow-right"></i>
+                                <i class="fa fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>

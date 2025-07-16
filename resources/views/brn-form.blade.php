@@ -268,3 +268,31 @@
             <script src="./js/bootstrap.min.js"></script>
     </section>
 @endsection
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        let formOne = document.getElementById('form1');
+        let formTwo = document.getElementById('form2');
+        let formThree = document.getElementById('form3');
+
+        formTwo.style.display = 'none';
+        formThree.style.display = 'none';
+
+        buttonOne.addEventListener('click', () => {
+            formOne.style.display = 'none'
+            formTwo.style.display = 'block'
+            formThree.style.display = 'none'
+        })
+        buttonTwo.addEventListener('click', () => {
+            formOne.style.display = 'none'
+            formTwo.style.display = 'none'
+            formThree.style.display = 'block'
+        })
+        buttonThree.addEventListener('click', () => {
+            formOne.style.display = 'none'
+            formTwo.style.display = 'none'
+            formThree.style.display = 'block'
+            window.alert('No Back-end Integration Yet!')
+        })
+    })
+</script>
