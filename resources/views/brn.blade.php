@@ -89,7 +89,7 @@
                 <div class="card-wrapper">
                     <div class="operate-card card-1">
                         <div class="pb-3">
-                            <img src="{{ asset('images/mul-icon.png') }}" loading="lazy" alt="Arrow">
+                            <img src="{{ asset('images/arrow-group.png') }}" loading="lazy" alt="Arrow">
                         </div>
                         <div class="card-content">
                             <h3>Join the Exclusive Circle</h3>
@@ -98,7 +98,7 @@
                             </p>
                         </div>
                         <div class="pt-3">
-                            <img src="{{ asset('images/mul-icon-II.png') }}" loading="lazy" alt="Arrow">
+                            <img src="{{ asset('images/arrows.png') }}" loading="lazy" alt="Arrow">
                         </div>
                     </div>
                     <div class="operate-card card-2">
@@ -129,7 +129,8 @@
             </div>
         </section>
 
-        <section class="buss-match">
+
+        <section class="buss-match d-md-block d-none">
             <div class="container">
                 <div class="row">
                     <div class="col-md-4 my-auto">
@@ -141,18 +142,37 @@
                 </div>
             </div>
         </section>
+        <section class="buss-match d-md-none d-block">
+            <div class="container">
+                <img src="{{ asset('images/brn-mobile-one.png') }}" loading="lazy" alt="Valuable Leads">
+            </div>
+        </section>
 
-        <section class="valuable-leads">
+
+        <section class="valuable-leads d-md-block d-none">
             <div class="container">
                 <img src="{{ asset('images/valuable_leads.png') }}" loading="lazy" alt="Valuable Leads">
             </div>
         </section>
+        <section class="valuable-leads d-md-none d-block mb-5">
+            <div class="container">
+                <img src="{{ asset('images/brn-mobile-two.png') }}" loading="lazy" alt="Valuable Leads">
+            </div>
+        </section>
 
-        <section class="networking">
+
+        <section class="networking d-md-block d-none">
             <div class="container">
                 <img src="{{ asset('images/networking.png') }}" loading="lazy" alt="Networking">
             </div>
         </section>
+        <section class="networking d-md-none d-block">
+            <div class="container">
+                <img src="{{ asset('images/brn-mobile-three.png') }}" loading="lazy" alt="Networking">
+            </div>
+        </section>
+
+
 
         <section class="brn-testimonials-section">
             <div class="">
