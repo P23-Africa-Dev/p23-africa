@@ -18,7 +18,7 @@
     <section class="whole-brn">
         <section class="brn-intro-section">
             <div class="container">
-                <div class="row align-items-center gx-5">
+                <div class="row align-items-center gx-5 justify-content-center">
                     <div class="col-12 col-lg-6 order-lg-2">
                         <div class="intro-content text-left mx-md-5">
                             <h1>
@@ -27,11 +27,10 @@
                             </h1>
 
                             <p>
-                                Join an exclusive referral network designed for industry leaders
-                                who value trusted relationships and measurable growth.
+                                A private, trusted platform for vetted CEOs across Africa to exchange referrals, strategic deals, and build partnerships through direct 1:1 connections.
                             </p>
                             <a href="{{ route('brn-form') }}" class="register-button">
-                                Register Your Interest
+                                Register Now!
                                 <i class="fa fa-arrow-right"></i>
                             </a>
                         </div>
@@ -65,8 +64,8 @@
                                                 alt="" />
                                         </div>
                                         <p>
-                                            "Trusted referrals. <br />
-                                            Real business growth."
+                                            "Trusted referrals. Real <br />
+                                             business growth."
                                         </p>
                                     </div>
                                     <img src="{{ asset('images/brn-intro-card1.png') }}" loading="lazy" class="secondimage"
@@ -89,35 +88,34 @@
                 <div class="card-wrapper">
                     <div class="operate-card card-1">
                         <div class="pb-3">
-                            <img src="{{ asset('images/arrow-group.png') }}" loading="lazy" alt="Arrow">
+                            <img src="{{ asset('images/arrow-group.png') }}" class="image" loading="lazy" alt="Arrow">
                         </div>
-                        <div class="card-content">
+                        <div class="card-content px-5">
                             <h3>Join the Exclusive Circle</h3>
                             <p>
-                                Apply and get accepted into an exclusive, vetted group of CEOs.
+                                Apply, get approved, and start your 14-day free trial.
                             </p>
                         </div>
                         <div class="pt-3">
-                            <img src="{{ asset('images/arrows.png') }}" loading="lazy" alt="Arrow">
+                            <img src="{{ asset('images/arrows.png') }}" class="image2" loading="lazy" alt="Arrow">
                         </div>
                     </div>
                     <div class="operate-card card-2">
                         <img class="w-full" class="operate-card-image1" loading="lazy"
                             src="{{ asset('images/brn-intro3.png') }}" alt="CEO Image" />
-                        <div class="card-content">
-                            <h3>Build Meaningful Relationships</h3>
+                        <div class="card-content my-3 px-4">
+                            <h3>Connect & Match</h3>
                             <p>
-                                Attend curated sessions, mastermind events, and peer
-                                introductions.
+                                Browse the vetted directory, get matched with the right professionals, and share referrals.
                             </p>
                         </div>
                     </div>
                     <div class="operate-card card-3">
                         <img class="top" src="{{ asset('images/Vector (3).png') }}" loading="lazy" alt="" />
                         <div class="card-content">
-                            <h3>Receive and Share Referrals</h3>
+                            <h3>Collaborate Privately</h3>
                             <p>
-                                Grow your business through trusted, strategic recommendations.
+                                Message members directly and grow your network inside an exclusive community.
                             </p>
                         </div>
                         <img class="bottom" src="{{ asset('images/Vector (3).png') }}" loading="lazy" alt="" />
