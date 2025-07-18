@@ -104,16 +104,19 @@
                 <!-- Sidebar (Desktop Only) -->
                 <div class="sidebar1">
                     <div class="event-box filter-btn" data-filter="this_month">
-                        <h4><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""> {{ getMonthRange($thisMonth) }}</h4>
+                        <h4><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt="">
+                            {{ getMonthRange($thisMonth) }}</h4>
                         <p>Happening This Month</p>
                     </div>
                     <div class="event-box filter-btn" data-filter="next_month">
-                        <h4><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""> {{ getMonthRange($nextMonth) }}
+                        <h4><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt="">
+                            {{ getMonthRange($nextMonth) }}
                         </h4>
                         <p>Happening Next Month</p>
                     </div>
                     <div class="event-box filter-btn" data-filter="two_months">
-                        <h4><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""> {{ getMonthRange($twoMonths) }}</h4>
+                        <h4><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt="">
+                            {{ getMonthRange($twoMonths) }}</h4>
                         <p>Happening In Two Month</p>
                     </div>
                 </div>
@@ -123,6 +126,10 @@
                     <!-- This Month -->
                     <div id="month" class="tab-panel active">
                         <div id="event-list">
+                            @if ($filter === 'brn')
+                                <h2 class="mb-4 brn-events">All BRN Events</h2>
+                            @endif
+
                             @foreach ($events as $event)
                                 <div class="event-card">
                                     {{-- <div style="font-size: 24px;">📅</div> --}}

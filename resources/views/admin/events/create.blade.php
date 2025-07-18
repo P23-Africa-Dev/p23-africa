@@ -14,6 +14,15 @@
                     <form action="{{ route('admin.events.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
+                        <div class="mb-5 bg-dark text-light p-4 rounded-4">
+                            <label>Event Display Page</label>
+                            <select name="display" class="form-control border border-1 border-dark" required>
+                                <option value="open_to_all">Open to All (Event + BRN)</option>
+                                <option value="event_only">Event Page Only</option>
+                                <option value="brn_only">BRN Page Only</option>
+                            </select>
+                        </div>
+
                         <input name="title" class="form-control mb-2 border border-1 border-dark"
                             placeholder="Event Title" required><br>
                         <input name="subtitle" class="form-control mb-2 border border-1 border-dark"

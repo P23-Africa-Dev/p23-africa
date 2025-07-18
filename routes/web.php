@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BrnController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\ResourceHubController;
@@ -87,14 +88,16 @@ Route::get('/quiz', function () {
 })->name('quiz');
 
 // BRN
-Route::get('/brn', function () {
-    ClickTracker::track('BRN_Page');
-    return view('brn');
-})->name('brn');
+// Route::get('/brn', function () {
+//     ClickTracker::track('BRN_Page');
+//     return view('brn');
+// })->name('brn');
 Route::get('/brn-form', function () {
     ClickTracker::track('BRN_Form_Page');
     return view('brn-form');
 })->name('brn-form');
+
+Route::get('brn', [BrnController::class, 'brnIndex'])->name('brn');
 
 // Student
 Route::get('/student', [SliderController::class, 'showSliderStudent'])->name('student');

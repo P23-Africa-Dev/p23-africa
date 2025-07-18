@@ -27,7 +27,8 @@
                             </h1>
 
                             <p>
-                                A private, trusted platform for vetted CEOs across Africa to exchange referrals, strategic deals, and build partnerships through direct 1:1 connections.
+                                A private, trusted platform for vetted CEOs across Africa to exchange referrals, strategic
+                                deals, and build partnerships through direct 1:1 connections.
                             </p>
                             <a href="{{ route('brn-form') }}" class="register-button">
                                 Register Now!
@@ -65,7 +66,7 @@
                                         </div>
                                         <p>
                                             "Trusted referrals. Real <br />
-                                             business growth."
+                                            business growth."
                                         </p>
                                     </div>
                                     <img src="{{ asset('images/brn-intro-card1.png') }}" loading="lazy" class="secondimage"
@@ -182,11 +183,11 @@
                                 <h2>Member Spotlight.</h2>
                             </div>
                         </div>
-                        <div class="col-12 col-lg-6 mt-3 mt-lg-0">
-                            <div class="description text-left text-lg-end">
+                        <div class="col-12 col-lg-6 mt-3 mt-lg-5">
+                            <div class="description text-left">
                                 <p>
-                                    Real success stories from CEOs who've grown through the power
-                                    of referral-based networking.
+                                    Real success stories from CEOs who’ve grown through the power of referral-based
+                                    networking.
                                 </p>
                             </div>
                         </div>
@@ -196,15 +197,14 @@
                 <div class="row g-0">
                     <div class="col-12">
                         <div class="testimonial-card first-row">
-                            <div class="text-block order-1 order-lg-1">
-                                <p class="company-name">Company Name</p>
+                            <div class="text-block order-1 order-lg-1 dark">
+                                <p class="company-name">Kenya</p>
 
                                 <div>
-                                    <h4 class="ceo-name">CEO's Name</h4>
+                                    <h4 class="ceo-name">Linda Mwangi, Managing Partner.</h4>
                                     <p class="testimonial-text">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                                        do eiusmod tempor incididunt ut labore et dolore magna
-                                        aliqua.
+                                        This community has opened doors I’d struggled to unlock for years. The calibre of
+                                        professionals here means every referral actually converts into real business.
                                     </p>
                                 </div>
                             </div>
@@ -214,55 +214,54 @@
                             </div>
 
                             <div class="text-block order-4 order-lg-3 dark">
-                                <p class="company-name">Company Name</p>
+                                <p class="company-name">Ghana</p>
 
                                 <div>
-                                    <h4 class="ceo-name">CEO's Name</h4>
+                                    <h4 class="ceo-name">Kofi Mensah, CEO.</h4>
                                     <p class="testimonial-text">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                                        do eiusmod tempor incididunt ut labore et dolore magna
-                                        aliqua.
+                                        I love that I don’t waste time here. The matching tool introduced me to founders in
+                                        Ghana and beyond who genuinely want to collaborate and grow together.
                                     </p>
                                 </div>
                             </div>
 
                             <div class="card-image order-3 order-lg-4">
-                                <img src="{{ asset('images/testimonial-4.png') }}" loading="lazy" alt="CEO Image 2" />
+                                <img src="{{ asset('images/testimonial-brn.jpg') }}" loading="lazy" alt="CEO Image 2" />
                             </div>
                         </div>
                         <div class="testimonial-card first-row">
-                            <div class="text-block order-1 order-lg-2">
-                                <p class="company-name">Company Name</p>
+                            <div class="text-block order-1 order-lg-2 green">
+                                <p class="company-name">Nigeria</p>
 
                                 <div>
-                                    <h4 class="ceo-name">CEO's Name</h4>
+                                    <h4 class="ceo-name">Chijioke Okeke, Founder.</h4>
                                     <p class="testimonial-text">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                                        do eiusmod tempor incididunt ut labore et dolore magna
-                                        aliqua.
+                                        What sets this apart is the community. Everyone is qualified, serious, and open to
+                                        real opportunities, not just networking for the sake of it.
                                     </p>
                                 </div>
                             </div>
 
                             <div class="card-image order-2 order-lg-1">
-                                <img src="{{ asset('images/testimonial-2.png') }}" loading="lazy" alt="CEO Image 2" />
+                                <img src="{{ asset('images/testimonial-brn2.jpg') }}" loading="lazy"
+                                    alt="CEO Image 2" />
                             </div>
 
-                            <div class="text-block order-4 order-lg-4 dark">
-                                <p class="company-name">Company Name</p>
+                            <div class="text-block order-4 order-lg-4 green">
+                                <p class="company-name">South Africa</p>
 
                                 <div>
-                                    <h4 class="ceo-name">CEO's Name</h4>
+                                    <h4 class="ceo-name">Zanele Khumalo, Director.</h4>
                                     <p class="testimonial-text">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                                        do eiusmod tempor incididunt ut labore et dolore magna
-                                        aliqua.
+                                        Finally, a trusted network that filters for quality. Every introduction feels
+                                        intentional, and I’ve already seen a clear ROI through new partnerships.
                                     </p>
                                 </div>
                             </div>
 
                             <div class="card-image order-3 order-lg-3">
-                                <img src="{{ asset('images/testimonial-3.png') }}" loading="lazy" alt="CEO Image 2" />
+                                <img src="{{ asset('images/testimonial-brn3.jpg') }}" loading="lazy"
+                                    alt="CEO Image 2" />
                             </div>
                         </div>
                     </div>
@@ -280,45 +279,60 @@
                                 From closed-door roundtables to business retreats, every event
                                 is designed to foster genuine collaboration and opportunity.
                             </p>
-                            <a href="#" class="see-all-events-button">
+                            <a href="{{ route('events.all-events', ['filter' => 'brn']) }}" class="see-all-events-button">
                                 See All Events
-                                <i class="bi bi-arrow-right"></i>
+                                <i class="fa fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
-                    <div class="col-12 col-md-6 col-lg-4">
-                        <div class="event-card dark-card">
-                            <div class="card-icon">
-                                <img src="{{ asset('images/card-icon-2.png') }}" loading="lazy" alt="" />
-                                <h3>Vision & Execution</h3>
-                            </div>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            </p>
-                            <a href="#" class="book-seat-button">
-                                Book A Seat
-                                <i class="bi bi-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-4">
-                        <div class="event-card light-card">
-                            <div class="card-icon">
-                                <img src="{{ asset('images/card-icon-1.png') }}" loading="lazy" alt="" />
 
-                                <h3>Event Name</h3>
+                    @foreach ($events as $event)
+                        @if ($loop->first)
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="event-card dark-card">
+                                    <div class="card-icon">
+                                        <img src="{{ asset('images/calendar-white2.png') }}" loading="lazy"
+                                            alt="" />
+                                        <h3><a href="{{ route('events.show', $event->slug) }}">{{ Str::limit($event->title, 20) }}</a></h3>
+                                    </div>
+                                    <p>
+                                        {!! Str::limit($event->description, 233) !!}
+                                    </p>
+                                    <a href="{{ route('events.show', $event->slug) }}" class="book-seat-button actionBtn" id="actionBtn"
+                                            data-event-id="{{ $event->id }}"
+                                            data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
+                                            data-event-link="{{ $event->link }}" data-bs-toggle="modal"
+                                            data-bs-target="#seatModal">
+                                        Book A Seat
+                                        <i class="fa fa-arrow-right"></i>
+                                    </a>
+                                </div>
                             </div>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            </p>
-                            <a href="#" class="book-seat-button">
-                                Book A Seat
-                                <i class="bi bi-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
+                        @else
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="event-card light-card">
+                                    <div class="card-icon">
+                                        <img src="{{ asset('images/calendar.png') }}" loading="lazy" alt="" />
+
+                                        <h3>
+                                            <a href="{{ route('events.show', $event->slug) }}">{{ Str::limit($event->title, 20) }}</a>
+                                        </h3>
+                                    </div>
+                                    <p>
+                                        {!! Str::limit($event->description, 233) !!}
+                                    </p>
+                                    <a href="{{ route('events.show', $event->slug) }}" class="book-seat-button actionBtn" id="actionBtn"
+                                            data-event-id="{{ $event->id }}"
+                                            data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
+                                            data-event-link="{{ $event->link }}" data-bs-toggle="modal"
+                                            data-bs-target="#seatModal">
+                                        Book A Seat
+                                        <i class="fa fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
                 </div>
             </div>
         </section>
@@ -343,7 +357,7 @@
                             </p>
                             <a href="#" class="button">
                                 Register Your Interest
-                                <i class="bi bi-arrow-right"></i>
+                                <i class="fa fa-arrow-right"></i>
                             </a>
                         </div>
                         <img class="bottom-image" src="{{ asset('images/Vector.png') }}" loading="lazy" loading="lazy"
@@ -352,5 +366,9 @@
                 </div>
             </div>
         </section>
+
+         @include('include.book-seat')
     </section>
 @endsection
+
+@include('include.bookjs')

@@ -3720,6 +3720,13 @@ section.visible{
     }
 }
 
+
+.brn-events{
+    font-family: "GT Walsheim ConB";
+    color: #0d4036;
+}
+
+
 /* EVENT PAGE */
 .upcoming_events {
     background: url("../images/bg_event.jpg");

@@ -65,6 +65,7 @@ class EventController extends Controller
             'venue' => 'required|string|max:255',
             'image' => 'nullable',
             'visibility' => 'required|in:public,private',
+            'display' => 'required|in:open_to_all,event_only,brn_only',
         ]);
 
         if ($request->hasFile('image')) {
@@ -119,6 +120,7 @@ class EventController extends Controller
             'event_time' => 'required',
             'venue' => 'required|string|max:255',
             'image' => 'nullable|image|max:2048', // optional image validation
+            'display' => 'required|in:open_to_all,event_only,brn_only',
         ]);
 
         // Remove current image if requested

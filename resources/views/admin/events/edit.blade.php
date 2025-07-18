@@ -15,6 +15,16 @@
                         @csrf
                         @method('PUT')
 
+                        <div class="mb-5 bg-dark text-light p-4 rounded-4">
+                            <label>Event Display Page</label>
+                            <select name="display" class="form-control border border-1 border-dark" required>
+                                <option value="{{ old('display', $event->display) }}">{{ str_replace('_', ' ', $event->display) }}</option>
+                                <option value="open_to_all">Open to All (Event + BRN)</option>
+                                <option value="event_only">Event Page Only</option>
+                                <option value="brn_only">BRN Page Only</option>
+                            </select>
+                        </div>
+
                         <div class="mb-3">
                             <label>Title</label>
                             <input type="text" name="title" class="form-control"
@@ -99,11 +109,11 @@
                                 </button> --}}
                             </div>
 
-                                <div class="form-check mt-1 mb-5">
-                                    <input type="checkbox" name="remove_image" value="1" class="form-check-input"
-                                        id="removeImageCheck">
-                                    <label class="form-check-label" for="removeImageCheck">Remove current image</label>
-                                </div>
+                            <div class="form-check mt-1 mb-5">
+                                <input type="checkbox" name="remove_image" value="1" class="form-check-input"
+                                    id="removeImageCheck">
+                                <label class="form-check-label" for="removeImageCheck">Remove current image</label>
+                            </div>
                         @else
                             <div class="mb-5 position-relative" id="previewContainer"
                                 style="max-width: 300px; display: none;">

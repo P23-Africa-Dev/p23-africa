@@ -34,6 +34,7 @@
                                 <div class="brn-form">
                                     <form action="">
                                         <input type="text" class="form-control" placeholder="Enter full name" />
+                                        
                                         <input type="email" class="form-control"
                                             placeholder="Enter your official email address" />
                                         <input type="text" class="form-control"

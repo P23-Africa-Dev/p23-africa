@@ -16,13 +16,15 @@ use Illuminate\Support\Str;
 class UserEventController extends Controller
 {
     public function eventPage(){
-        $events = Event::whereDate('event_date', '>=', now())
+        $events = Event::whereIn('display', ['open_to_all', 'event_only'])
+        ->whereDate('event_date', '>=', now())
             ->orderBy('event_date', 'asc')
             ->orderBy('event_time', 'asc')
             ->take(5) // or ->limit(5)
             ->get();
 
-        $past_events = Event::whereDate('event_date', '<', now())
+        $past_events = Event::whereIn('display', ['open_to_all', 'event_only'])
+            ->whereDate('event_date', '<', now())
             ->orderBy('event_date', 'asc')
             ->orderBy('event_time', 'asc')
             ->take(5) // or ->limit(5)
@@ -95,25 +97,45 @@ class UserEventController extends Controller
     //     return view('show-event', compact('event'));
     // }
 
-    public function allEvents(){
-        $events = Event::whereDate('event_date', '>=', now())
-            // ->orderByRaw("CONCAT(event_date, ' ', event_time) ASC")
+    public function allEvents(Request $request){
+        $filter = $request->get('filter');
+
+        $query = Event::query();
+
+        if ($filter === 'brn') {
+            // BRN page: show open_to_all and brn_only
+            $query->whereIn('display', ['open_to_all', 'brn_only']);
+        } else {
+            // General page: show open_to_all and event_only
+            $query->whereIn('display', ['open_to_all', 'event_only']);
+        }
+
+        $events = $query->whereDate('event_date', '>=', now())
             ->orderBy('event_date', 'asc')
             ->orderBy('event_time', 'asc')
-            ->paginate(6); // You can change 6 to however many events you want per page
+            ->paginate(6);
 
         $startOfNextMonth = Carbon::now()->startOfMonth()->addMonth();
         $endOfNextMonth = Carbon::now()->endOfMonth()->addMonth();
 
-        $next_month_events = Event::whereDate('event_date', '>=', $startOfNextMonth)
+        $nextMonthQuery = Event::query();
+
+        if ($filter === 'brn') {
+            $nextMonthQuery->whereIn('display', ['open_to_all', 'brn_only']);
+        } else {
+            $nextMonthQuery->whereIn('display', ['open_to_all', 'event_only']);
+        }
+
+        $next_month_events = $nextMonthQuery
+            ->whereDate('event_date', '>=', $startOfNextMonth)
             ->whereDate('event_date', '<=', $endOfNextMonth)
             ->orderBy('event_date', 'asc')
             ->orderBy('event_time', 'asc')
-            ->paginate(6); // Or however many per page
+            ->paginate(6);
 
         ClickTracker::track('All_Events_Page');
 
-        return view('all-events', compact('events', 'next_month_events'));
+        return view('all-events', compact('events', 'next_month_events', 'filter'));
     }
 
 

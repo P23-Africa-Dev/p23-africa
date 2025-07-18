@@ -34,10 +34,10 @@
                             <thead>
                                 <tr>
                                     <th>Title</th>
-                                    <th>Subtitle</th>
                                     <th>Date</th>
                                     <th>Time</th>
                                     <th>Type</th>
+                                    <th>Display</th>
                                     <th>Action</th>
                                     {{-- <th>Action</th> --}}
                                 </tr>
@@ -46,10 +46,10 @@
                                 @foreach ($events as $event)
                                     <tr>
                                         <td>{{ Str::limit($event->title, 23) }}</td>
-                                        <td>{{ Str::limit($event->subtitle, 20) }}</td>
                                         <td>{{ $event->event_date }}</td>
                                         <td>{{ $event->event_time }}</td>
                                         <td>{{ $event->visibility }}</td>
+                                        <td class="text-capitalize">{{ str_replace('_', ' ', $event->display) }}</td>
                                         <td>
                                             <span class="d-flex justify-content-center">
                                                 <button class="btn"><a
