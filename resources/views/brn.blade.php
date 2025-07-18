@@ -19,7 +19,7 @@
         <section class="brn-intro-section">
             <div class="container">
                 <div class="row align-items-center gx-5 justify-content-center">
-                    <div class="col-12 col-lg-6 order-lg-2">
+                    <div class="col-12 col-lg-6 order-lg-2 mb-md-0 mb-5">
                         <div class="intro-content text-left mx-md-5">
                             <h1>
                                 Where Top CEOs <br />
@@ -60,14 +60,14 @@
                                         <div class="dot"></div>
                                     </div>
                                     <div class="card-image">
-                                        <div>
-                                            <img src="{{ asset('images/brn-intro-card1.png') }}" loading="lazy"
+                                    
+                                            <img src="{{ asset('images/banner-side.png') }}" loading="lazy"
                                                 alt="" />
-                                        </div>
-                                        <p>
+                                       
+                                        {{-- <p>
                                             "Trusted referrals. Real <br />
                                             business growth."
-                                        </p>
+                                        </p> --}}
                                     </div>
                                     <img src="{{ asset('images/brn-intro-card1.png') }}" loading="lazy" class="secondimage"
                                         alt="" />
@@ -88,10 +88,10 @@
                 </div>
                 <div class="card-wrapper">
                     <div class="operate-card card-1">
-                        <div class="pb-3">
+                        <div class="pb-md-3 pb-0">
                             <img src="{{ asset('images/arrow-group.png') }}" class="image" loading="lazy" alt="Arrow">
                         </div>
-                        <div class="card-content px-5">
+                        <div class="card-content px-4">
                             <h3>Join the Exclusive Circle</h3>
                             <p>
                                 Apply, get approved, and start your 14-day free trial.
@@ -102,11 +102,18 @@
                         </div>
                     </div>
                     <div class="operate-card card-2">
-                        <img class="w-full" class="operate-card-image1" loading="lazy"
+                        <div class="d-md-block d-none">
+                            <img class="w-full" class="operate-card-image1" loading="lazy"
                             src="{{ asset('images/brn-intro3.png') }}" alt="CEO Image" />
-                        <div class="card-content my-3 px-4">
+                        </div>
+
+                        <div class="d-md-none d-block">
+                             <img class="w-full" class="operate-card-image1" loading="lazy"
+                            src="{{ asset('images/brn-intro-mobile.png') }}" alt="CEO Image" />
+                        </div>
+                        <div class="card-content my-3 px-5 px-md-4">
                             <h3>Connect & Match</h3>
-                            <p>
+                            <p class="">
                                 Browse the vetted directory, get matched with the right professionals, and share referrals.
                             </p>
                         </div>
@@ -161,7 +168,7 @@
 
 
         <section class="networking d-md-block d-none">
-            <div class="container">
+            <div class="container mt-5">
                 <img src="{{ asset('images/networking.png') }}" loading="lazy" alt="Networking">
             </div>
         </section>
@@ -295,9 +302,9 @@
                                             alt="" />
                                         <h3><a href="{{ route('events.show', $event->slug) }}">{{ Str::limit($event->title, 20) }}</a></h3>
                                     </div>
-                                    <p>
+                                    <div>
                                         {!! Str::limit($event->description, 233) !!}
-                                    </p>
+                                    </div>
                                     <a href="{{ route('events.show', $event->slug) }}" class="book-seat-button actionBtn" id="actionBtn"
                                             data-event-id="{{ $event->id }}"
                                             data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
@@ -318,9 +325,9 @@
                                             <a href="{{ route('events.show', $event->slug) }}">{{ Str::limit($event->title, 20) }}</a>
                                         </h3>
                                     </div>
-                                    <p>
+                                    <div>
                                         {!! Str::limit($event->description, 233) !!}
-                                    </p>
+                                    </div>
                                     <a href="{{ route('events.show', $event->slug) }}" class="book-seat-button actionBtn" id="actionBtn"
                                             data-event-id="{{ $event->id }}"
                                             data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
