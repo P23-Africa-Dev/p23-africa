@@ -26,7 +26,7 @@
                                                 Africa promise.</p>
                                         </div>
                                         <div class="col-md-3 line">
-                                            <a href="#" class="d-block mb-3"><b>Business Referral Network</b></a>
+                                            <a href="{{ url('brn') }}" class="d-block mb-3"><b>Business Referral Network</b></a>
                                             <p>Where top CEOs meet, connect, and grow through trusted referrals.</p>
                                         </div>
                                         <div class="col-md-3 line">
@@ -90,7 +90,7 @@
                             <a class="nav-link" href="{{ route('resource-hub') }}">Resource hub</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('contact') }}">Let’s collaborate</a>
+                            <a class="nav-link" href="{{ url('brn') }}">Business network</a>
                         </li>
                     </ul>
 
@@ -140,7 +140,7 @@
                         <a class="nav-link" href="{{ route('resource-hub') }}">Resource Hub</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('contact') }}">Let’s Collaborate</a>
+                        <a class="nav-link" href="{{ url('brn') }}">Business network</a>
                     </li>
                 </ul>
 

@@ -94,7 +94,7 @@
                         <div class="card-content px-4">
                             <h3>Join the Exclusive Circle</h3>
                             <p>
-                                Apply, get approved, and start your 14-day free trial.
+                                Apply, get approved, and start <span class="d-md-inline d-block">your 14-day free trial.</span>
                             </p>
                         </div>
                         <div class="pt-3">
@@ -183,15 +183,15 @@
         <section class="brn-testimonials-section">
             <div class="">
                 <div class="container">
-                    <div class="row header-row">
+                    <div class="row header-row px-md-0 px-5">
                         <div class="col-12 col-lg-6">
                             <div class="title-group text-left text-lg-start">
                                 <h2>Testimonials.</h2>
                                 <h2>Member Spotlight.</h2>
                             </div>
                         </div>
-                        <div class="col-12 col-lg-6 mt-3 mt-lg-5">
-                            <div class="description text-left">
+                        <div class="col-12 col-lg-6 mt-3 mt-lg-4">
+                            <div class="description text-left d-flex justify-content-end">
                                 <p>
                                     Real success stories from CEOs who’ve grown through the power of referral-based
                                     networking.

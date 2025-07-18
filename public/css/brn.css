@@ -217,7 +217,6 @@ body {
     margin-right: -1rem;
 }
 
-
 @media screen and (max-width: 580px) {
     .navbar-full.navbar {
         padding: 1rem 0.5rem !important;
@@ -420,18 +419,23 @@ body {
         align-items: center;
         width: 100% !important;
         /* margin-left: 20px; */
+        padding: 20px;
     }
     .image-grid .first,
     .image-grid .second {
-        height: 336px;
-        width: 409px;
+        height: 300px;
+        width: 320px;
         border: 3px solid #fff;
         border-radius: 30px;
         position: relative;
     }
     .image-grid .second .card-image {
-        left: -80px;
+        left: -70px;
         bottom: 40px;
+    }
+    .image-grid .second .card-image img{
+        width: 200px;
+        height: 68px;
     }
 }
 @media (max-width: 500px) {
@@ -444,8 +448,8 @@ body {
     }
     .image-grid .first,
     .image-grid .second {
-        height: 306px;
-        width: 355px;
+        /* height: 306px;
+        width: 355px; */
         border: 3px solid #fff;
         border-radius: 30px;
         position: relative;
@@ -457,7 +461,7 @@ body {
     .image-grid .send-icon {
         position: absolute;
         top: 50px;
-        right: -50px;
+        right: -60px;
         background-color: #1deaa5;
         padding: 10px;
         border-radius: 10px;
@@ -467,7 +471,7 @@ body {
 
 /* =======================================  BRN HOW WE OPERATE SECTION */
 .brn-how-we-operate-section {
-    padding: 60px 10px;
+    padding: 60px 10px 10px 10px;
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -494,13 +498,13 @@ body {
 
 .brn-how-we-operate-section .top-right-bg img,
 .brn-how-we-operate-section .bottom-left-bg img {
-    opacity: 0.5;
+    opacity: 0.3;
 }
 
 .brn-how-we-operate-section .bottom-left-bg {
     position: absolute;
-    bottom: 0;
-    left: 0;
+    bottom: 0px;
+    left: 0px;
     width: 250px;
     height: 250px;
     transform: translate(-6%, 50%);
@@ -609,7 +613,7 @@ body {
     width: 105%;
     height: auto;
     object-position: top;
-    top: -65;
+    top: -75;
     left: 10px;
 }
 .brn-how-we-operate-section .operate-card.card-1 .image2 {
@@ -632,8 +636,11 @@ body {
 }
 
 @media (max-width: 600px) {
+    .brn-how-we-operate-section .card-wrapper{
+        padding: 0 15px;
+    }
     .brn-how-we-operate-section .operate-card {
-        height: 300px !important;
+        height: 280px !important;
     }
     .brn-how-we-operate-section .operate-card.card-1 {
         background-color: transparent;
@@ -746,7 +753,7 @@ body {
         z-index: 1;
     }
     .brn-how-we-operate-section .operate-card.card-3 .card-content {
-        margin: 20px 30px;
+        margin: 20px 10px;
         height: 100%;
         background-color: #c7b5f3;
         border-radius: 0.6rem;
@@ -756,12 +763,12 @@ body {
         flex-direction: column;
     }
     .brn-how-we-operate-section .operate-card.card-3 .top {
-        top: -30;
+        top: -50;
         right: 30px;
     }
 
     .brn-how-we-operate-section .operate-card.card-3 .bottom {
-        bottom: -70px;
+        bottom: -90px;
         left: 40px;
         z-index: 1;
         -webkit-transform: scaleY(-1);
@@ -808,6 +815,7 @@ body {
     letter-spacing: 0.5px;
     margin-bottom: 0;
     font-family: "GT Walsheim Con";
+    max-width: 400px;
 }
 
 .brn-testimonials-section .testimonial-card {
@@ -882,6 +890,23 @@ body {
     .brn-testimonials-section .testimonial-card {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
+    }
+    .brn-testimonials-section .header-row .title-group h2 {
+        font-size: 31px;
+        font-weight: 900;
+        color: #0d4036;
+        line-height: 120%;
+        margin-bottom: 0.5rem;
+        font-family: "GT Walsheim ConB";
+    }
+
+    .brn-testimonials-section .header-row .description p {
+        font-size: 20px;
+        color: #0d4036;
+        line-height: 24px;
+        letter-spacing: 0.5px;
+        margin-bottom: 0;
+        font-family: "GT Walsheim Con";
     }
     .testimonial-card.first-row .text-block {
         background-color: #193e47;
@@ -1105,7 +1130,7 @@ body {
 
 .brn-cta-section .left-content h2 {
     font-weight: 400;
-    font-size: 20px;
+    font-size: 24px;
     font-family: "GT Walsheim ConB";
     letter-spacing: 0.9px;
 }
@@ -1400,18 +1425,19 @@ body {
     }
 
     .brn-how-we-operate-section .bottom-left-bg {
-        width: 600px;
-        height: 900px;
+        width: 300px;
+        height: 500px;
         transform: translate(-35%, 80%);
+        transform: scaleY(-1);
     }
 
     .brn-how-we-operate-section .section-header h4 {
-        font-size: 1.2rem;
+        font-size: 20px;
         font-weight: 900;
     }
 
     .brn-how-we-operate-section .section-header h2 {
-        font-size: 48px;
+        font-size: 60px;
     }
 
     .brn-how-we-operate-section .operate-card {
@@ -1447,10 +1473,11 @@ body {
     .testimonial-card .text-block .ceo-name {
         font-size: 16px;
         font-weight: bold;
+        margin-bottom: 12px;
     }
 
     .testimonial-card .text-block .testimonial-text {
-        font-size: 16px;
+        font-size: 14px;
     }
 
     .brn-testimonials-section .header-row .description {

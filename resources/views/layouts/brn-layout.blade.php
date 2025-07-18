@@ -79,12 +79,12 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                     <ul class="navbar-nav pt-md-0 pt-3">
-                        <li class="nav-item"><a class="nav-link" href="{{ url('about') }}">Who We Are</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url('services') }}">What We Do</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('event') }}">Our Events</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('resource-hub') }}">Resource Hub</a>
+                        <li class="nav-item"><a class="nav-link" href="{{ url('about') }}">Who we are</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url('services') }}">What we do</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('event') }}">Events</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('resource-hub') }}">Resource hub</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url('contact') }}">Let’s Collaborate</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url('brn') }}">Business network</a></li>
                     </ul>
 
                     <div class="d-flex align-items-right mt-5 mobile">
@@ -128,11 +128,11 @@
 
                     <div class="col-md-2 col-lg-2 col-4 footer-links footer-quick-links">
                         <p>Quick Links</p>
-                        <a href="{{ url('about') }}">Who We Are</a>
-                        <a href="{{ url('services') }}">What We Do</a>
+                        <a href="{{ url('about') }}">Who we are</a>
+                        <a href="{{ url('services') }}">What we do</a>
                         <a href="{{ route('event') }}">Events</a>
-                        <a href="{{ route('resource-hub') }}">Resource Hub</a>
-                        <a href="{{ url('contact') }}">Let’s Collaborate</a>
+                        <a href="{{ route('resource-hub') }}">Resource hub</a>
+                        <a href="{{ url('brn') }}">Business network</a>
                     </div>
 
                     <div class="col-md-2 footer-links strategy">
