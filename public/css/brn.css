@@ -217,6 +217,7 @@ body {
     margin-right: -1rem;
 }
 
+
 @media screen and (max-width: 580px) {
     .navbar-full.navbar {
         padding: 1rem 0.5rem !important;
@@ -745,22 +746,22 @@ body {
         z-index: 1;
     }
     .brn-how-we-operate-section .operate-card.card-3 .card-content {
-        margin: 20px 25px;
+        margin: 20px 30px;
         height: 100%;
         background-color: #c7b5f3;
         border-radius: 0.6rem;
-        padding: 20px;
+        padding: 30px;
         display: flex;
         justify-content: flex-end;
         flex-direction: column;
     }
     .brn-how-we-operate-section .operate-card.card-3 .top {
-        top: -40;
+        top: -30;
         right: 30px;
     }
 
     .brn-how-we-operate-section .operate-card.card-3 .bottom {
-        bottom: -90px;
+        bottom: -70px;
         left: 40px;
         z-index: 1;
         -webkit-transform: scaleY(-1);
@@ -881,6 +882,33 @@ body {
     .brn-testimonials-section .testimonial-card {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
+    }
+    .testimonial-card.first-row .text-block {
+        background-color: #193e47;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        /* color: #fff; */
+        padding: 30px 20px;
+    }
+    .testimonial-card .text-block .company-name {
+        font-size: 13px;
+        font-family: "GT Walsheim ConL";
+    }
+
+    .testimonial-card .text-block .ceo-name {
+        font-size: 16px !important;
+        font-weight: bold;
+        letter-spacing: 1px;
+        font-family: "GT Walsheim Con";
+    }
+
+    .testimonial-card .text-block .testimonial-text {
+        font-size: 12px;
+        font-weight: lighter !important;
+        font-family: "GT Walsheim ConL";
+        line-height: 14px;
+        /* color: #ffffffde; */
     }
 }
 
@@ -1129,6 +1157,9 @@ body {
 .brn-cta-section .left-content .button:hover {
     background-color: #ffffffd4;
     color: #0b1727;
+}
+
+@media (max-width: 600px) {
 }
 
 /* Responsive adjustments */
