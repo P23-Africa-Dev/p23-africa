@@ -11,7 +11,18 @@
         <link rel="shortcut icon" href="{{ asset('images/logo.png') }}" type="image/x-icon">
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="{{ asset('css/brn.css') }}">
+        {{-- <link rel="stylesheet" href="{{ asset('css/brn.css') }}"> --}}
+
+        <!-- Scripts -->
+        @env('local')
+        @vite(['resources/css/brn.css', 'resources/js/brn.js'])
+        @endenv
+
+        <!--{{-- Use built assets on production --}}-->
+        @env('production')
+        <link rel="stylesheet" href="{{ asset('build/assets/brn-CXxZSdsT.css') }}">
+        <script src="{{ asset('build/assets/brn-DT6Zyp-t.js') }}" defer></script>
+        @endenv
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -262,6 +273,8 @@
                 });
             });
         </script>
+
+        @include('include.version-update')
     </body>
 
 </html>

@@ -129,6 +129,18 @@
                         <img class="bottom" src="{{ asset('images/Vector (3).png') }}" loading="lazy" alt="" />
                     </div>
                 </div>
+
+                <div class="how-we-operate-mobile">
+                    <div class="img-card">
+                        <img src="{{ asset('images/first_card.png') }}" alt="">    
+                    </div>
+                    <div class="img-card">
+                        <img src="{{ asset('images/second_card.png') }}" alt="">
+                    </div>
+                    <div class="img-card">
+                        <img src="{{ asset('images/third_card.png') }}" alt="">
+                    </div>
+                </div>
             </div>
             <div class="bottom-left-bg">
                 <img src="{{ asset('images/work-top.png') }}" loading="lazy" alt="" />

@@ -1,70 +1,70 @@
 @font-face {
     font-family: "GT Walsheim Pro";
 
-    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff2")
+    src: url("/public/fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff2")
             format("woff2"),
-        url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff")
+        url("/public/fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff")
             format("woff");
 }
 
 @font-face {
     font-family: "GT Walsheim Con";
 
-    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedRegular.woff2")
+    src: url("/public/fonts/gt-walsheim-pro/GTWalsheimPro-CondensedRegular.woff2")
             format("woff2"),
-        url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff")
+        url("/public/fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff")
             format("woff");
 }
 
 @font-face {
     font-family: "GT Walsheim Bold";
 
-    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-Bold.woff2")
+    src: url("/public/fonts/gt-walsheim-pro/GTWalsheimPro-Bold.woff2")
             format("woff2"),
-        url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff")
+        url("/public/fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff")
             format("woff");
 }
 @font-face {
     font-family: "GT Walsheim ConB";
 
-    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedBold.woff2")
+    src: url("/public/fonts/gt-walsheim-pro/GTWalsheimPro-CondensedBold.woff2")
             format("woff2"),
-        url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedBold.woff")
+        url("/public/fonts/gt-walsheim-pro/GTWalsheimPro-CondensedBold.woff")
             format("woff");
 }
 @font-face {
     font-family: "GT Walsheim ConL";
 
-    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedLight.woff2")
+    src: url("/public/fonts/gt-walsheim-pro/GTWalsheimPro-CondensedLight.woff2")
             format("woff2"),
-        url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedLight.woff")
+        url("/public/fonts/gt-walsheim-pro/GTWalsheimPro-CondensedLight.woff")
             format("woff");
 }
 
 @font-face {
     font-family: "IvyOraText BoldItalic";
 
-    src: url("../fonts/ivyora-text/IvyOraText-BoldItalic.woff2") format("woff2"),
-        url("../fonts/ivyora-text/IvyOraText-BoldItalic.woff") format("woff"); /* Adjust file names and paths as needed */
+    src: url("/public/fonts/ivyora-text/IvyOraText-BoldItalic.woff2") format("woff2"),
+        url("/public/fonts/ivyora-text/IvyOraText-BoldItalic.woff") format("woff"); /* Adjust file names and paths as needed */
 }
 @font-face {
     font-family: "IvyOra Text";
 
-    src: url("../fonts/ivyora-text/IvyOraText-RegularItalic.woff2")
+    src: url("/public/fonts/ivyora-text/IvyOraText-RegularItalic.woff2")
             format("woff2"),
-        url("../fonts/ivyora-text/IvyOraText-RegularItalic.woff") format("woff"); /* Adjust file names and paths as needed */
+        url("/public/fonts/ivyora-text/IvyOraText-RegularItalic.woff") format("woff"); /* Adjust file names and paths as needed */
 }
 @font-face {
     font-family: "IvyOra Text Bold";
 
-    src: url("../fonts/ivyora-text/IvyOraText-Bold.woff2") format("woff2"),
-        url("../fonts/ivyora-text/IvyOraText-Bold.woff") format("woff"); /* Adjust file names and paths as needed */
+    src: url("/public/fonts/ivyora-text/IvyOraText-Bold.woff2") format("woff2"),
+        url("/public/fonts/ivyora-text/IvyOraText-Bold.woff") format("woff"); /* Adjust file names and paths as needed */
 }
 @font-face {
     font-family: "IvyOra Text Medium";
 
-    src: url("../fonts/ivyora-text/IvyOraText-Medium.woff2") format("woff2"),
-        url("../fonts/ivyora-text/IvyOraText-Medium.woff") format("woff"); /* Adjust file names and paths as needed */
+    src: url("/public/fonts/ivyora-text/IvyOraText-Medium.woff2") format("woff2"),
+        url("/public/fonts/ivyora-text/IvyOraText-Medium.woff") format("woff"); /* Adjust file names and paths as needed */
 }
 
 html,
@@ -224,13 +224,13 @@ body {
 }
 
 .whole-brn {
-    background: linear-gradient(#ffffffa9, #ffffffa9), url(../images/brn-gb.png);
+    background: linear-gradient(#ffffffa9, #ffffffa9), url(/public/images/brn-gb.png);
 }
 
 /* =====================================================  BRN  START - INTRO SECTION*/
 
 .brn-intro-section {
-    background: url("../images/brn-bg.jpg");
+    background: url("/public/images/brn-bg.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -1127,7 +1127,7 @@ body {
             #1b2c44 38.4%,
             #1b2f4b 60.06%
         ),
-        url(../images/brn-intro-bg-image.png);
+        url(/public/images/brn-intro-bg-image.png);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

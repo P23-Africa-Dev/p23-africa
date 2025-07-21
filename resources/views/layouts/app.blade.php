@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,21 +21,22 @@
 
 
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    
+
 
         <!-- Scripts -->
         @env('local')
-            @vite(['resources/css/app.css', 'resources/js/app.js'])
-        @endenv
-        
-        <!--{{-- Use built assets on production --}}-->
-        @env('production')
-            <link rel="stylesheet" href="{{ asset('build/assets/app-DTNRFIno.css') }}">
-            <script src="{{ asset('build/assets/app-Bf4POITK.js') }}" defer></script>
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
         @endenv
 
-        <x-head.tinymce-config/>
+        <!--{{-- Use built assets on production --}}-->
+        @env('production')
+        <link rel="stylesheet" href="{{ asset('build/assets/app-2r1gdpuA.css') }}">
+        <script src="{{ asset('build/assets/app-Bf4POITK.js') }}" defer></script>
+        @endenv
+
+        <x-head.tinymce-config />
     </head>
+
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
             @include('layouts.navigation')
@@ -52,7 +54,8 @@
             <main>
                 {{ $slot }}
             </main>
-            
+
         </div>
     </body>
+
 </html>
