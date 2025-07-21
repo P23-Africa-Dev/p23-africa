@@ -87,6 +87,10 @@ Route::get('/quiz', function () {
     return view('sales-quiz');
 })->name('quiz');
 
+Route::get('/device-display', function () {
+    return view('device');
+})->name('device');
+
 // BRN
 // Route::get('/brn', function () {
 //     ClickTracker::track('BRN_Page');
