@@ -29,12 +29,12 @@
                                     <td>{{ ucfirst($submission->status) }}</td>
                                     <td>
                                         @if ($submission->status === 'pending')
-                                            <form action="{{ route('brn.approve', $submission->id) }}" method="POST"
+                                            <form action="{{ route('admin.brn.approve', $submission->id) }}" method="POST"
                                                 style="display:inline">
                                                 @csrf
                                                 <button class="btn btn-success btn-sm">Approve</button>
                                             </form>
-                                            <form action="{{ route('brn.decline', $submission->id) }}" method="POST"
+                                            <form action="{{ route('admin.brn.decline', $submission->id) }}" method="POST"
                                                 style="display:inline">
                                                 @csrf
                                                 <button class="btn btn-danger btn-sm">Decline</button>

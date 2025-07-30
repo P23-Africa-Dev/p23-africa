@@ -12,7 +12,7 @@
     <meta property="og:image" content="{{ asset('images/brn-form-meta.png') }}">
 @endsection
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+{{-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> --}}
 
 <style>
     .form-step {
@@ -134,7 +134,7 @@
                                         {{-- <form action=""> --}}
                                         <input type="text" name="company_name" class="form-control"
                                             placeholder="Enter your Company name" />
-                                        <input type="email" name="country" class="form-control"
+                                        <input type="text" name="country" class="form-control"
                                             placeholder="Enter the country of your business headquarter" />
                                         <input type="text" name="position" class="form-control"
                                             placeholder="Enter your position in the business" />
@@ -145,17 +145,17 @@
                                                     operation</span>
                                                 <div class="brn-input-checked-options-row">
                                                     <div class="brn-input-checked-option">
-                                                        <input type="radio" name="years_of_operation" id="years0-5"
+                                                        <input type="radio" value="0-5" name="years_of_operation" id="years0-5"
                                                             class="brn-input-checked-checkbox" />
                                                         <label for="years0-5" class="brn-input-checked-text">0-5</label>
                                                     </div>
                                                     <div class="brn-input-checked-option">
-                                                        <input type="radio" name="years_of_operation" id="years6-10"
+                                                        <input type="radio" value="6-10" name="years_of_operation" id="years6-10"
                                                             class="brn-input-checked-checkbox" />
                                                         <label for="years6-10" class="brn-input-checked-text">6-10</label>
                                                     </div>
                                                     <div class="brn-input-checked-option">
-                                                        <input type="radio" name="years_of_operation" id="years11-above"
+                                                        <input type="radio" value="11-Above" name="years_of_operation" id="years11-above"
                                                             class="brn-input-checked-checkbox" />
                                                         <label for="years11-above"
                                                             class="brn-input-checked-text">11-Above</label>
@@ -168,25 +168,25 @@
                                                     employees</span>
                                                 <div class="brn-input-checked-options-row">
                                                     <div class="brn-input-checked-option">
-                                                        <input type="radio" name="number_of_employees"
+                                                        <input type="radio" value="1-10" name="number_of_employees"
                                                             id="employees1-10" class="brn-input-checked-checkbox" />
                                                         <label for="employees1-10"
                                                             class="brn-input-checked-text">1-10</label>
                                                     </div>
                                                     <div class="brn-input-checked-option">
-                                                        <input type="radio" name="number_of_employees"
+                                                        <input type="radio" value="11-50" name="number_of_employees"
                                                             id="employees11-50" class="brn-input-checked-checkbox" />
                                                         <label for="employees11-50"
                                                             class="brn-input-checked-text">11-50</label>
                                                     </div>
                                                     <div class="brn-input-checked-option">
-                                                        <input type="radio" name="number_of_employees"
+                                                        <input type="radio" value="50-200" name="number_of_employees"
                                                             id="employees50-200" class="brn-input-checked-checkbox" />
                                                         <label for="employees50-200"
                                                             class="brn-input-checked-text">50-200</label>
                                                     </div>
                                                     <div class="brn-input-checked-option">
-                                                        <input type="radio" name="number_of_employees"
+                                                        <input type="radio" value="200+" name="number_of_employees"
                                                             id="employees200-plus" class="brn-input-checked-checkbox" />
                                                         <label for="employees200-plus"
                                                             class="brn-input-checked-text">200+</label>
@@ -350,7 +350,8 @@
         <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
         </script> -->
-        <script src="./js/bootstrap.min.js"></script>
+        {{-- <script src="./js/bootstrap.min.js"></script> --}}
+         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </section>
 @endsection
 

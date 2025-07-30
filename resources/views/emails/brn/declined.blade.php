@@ -1,7 +1,7 @@
 @component('mail::message')
 # BRN Application Declined
 
-Hi {{ $submission->full_name }},
+Hello {{ $submission->full_name }},
 
 Thank you for applying to join the BRN platform. Unfortunately, based on the provided information, we cannot approve your application at this time.
 

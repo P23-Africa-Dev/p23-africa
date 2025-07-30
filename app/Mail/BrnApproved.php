@@ -16,14 +16,16 @@ class BrnApproved extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public $submission;
+
+    public function __construct($submission)
     {
-        //
+        $this->submission = $submission;
     }
 
     public function build()
     {
-        return $this->subject('Your Application has been Approved!')
+        return $this->subject('BRN Membership Approved')
             ->markdown('emails.brn.approved');
     }
 

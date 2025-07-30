@@ -16,14 +16,16 @@ class BrnDeclined extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public $submission;
+
+    public function __construct($submission)
     {
-        //
+        $this->submission = $submission;
     }
 
     public function build()
     {
-        return $this->subject('Your Application has been Declined!')
+        return $this->subject('BRN Membership Declined')
             ->markdown('emails.brn.declined');
     }
 

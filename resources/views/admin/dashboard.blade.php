@@ -49,6 +49,11 @@
                         @if (auth()->user() && auth()->user()->hasRole('admin'))
                             <br><br><br>
                             <div class="my-3">
+                                <a href="{{ route('admin.brn.index') }}" class="link-dark">BRN Interest Applications <i
+                                        class="fa fa-arrow-right"></i></a>
+                            </div>
+                            <hr>
+                            <div class="my-3">
                                 <a href="{{ route('admin.clicks.report') }}" class="link-dark">Pages Report (Clicks) <i
                                         class="fa fa-arrow-right"></i></a>
                             </div>
