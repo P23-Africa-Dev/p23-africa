@@ -240,9 +240,9 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|staff'])->prefix('admi
 
     Route::get('/clicks/report', [ClickReportController::class, 'index'])->name('clicks.report');
 
-    Route::get('/brn', [BrnController::class, 'adminView']);
-    Route::post('/brn/{id}/approve', [BrnController::class, 'approve'])->name('brn.approve');
-    Route::post('/brn/{id}/decline', [BrnController::class, 'decline'])->name('brn.decline');
+    Route::get('/brn', [\App\Http\Controllers\Admin\BrnController::class, 'adminView']);
+    Route::post('/brn/{id}/approve', [\App\Http\Controllers\Admin\BrnController::class, 'approve'])->name('brn.approve');
+    Route::post('/brn/{id}/decline', [\App\Http\Controllers\Admin\BrnController::class, 'decline'])->name('brn.decline');
 });
 
 

@@ -21,25 +21,31 @@ class BrnDeclined extends Mailable
         //
     }
 
+    public function build()
+    {
+        return $this->subject('Your Application has been Declined!')
+            ->markdown('emails.brn.declined');
+    }
+
     /**
      * Get the message envelope.
      */
-    public function envelope(): Envelope
-    {
-        return new Envelope(
-            subject: 'Brn Declined',
-        );
-    }
+    // public function envelope(): Envelope
+    // {
+    //     return new Envelope(
+    //         subject: 'Brn Declined',
+    //     );
+    // }
 
     /**
      * Get the message content definition.
      */
-    public function content(): Content
-    {
-        return new Content(
-            markdown: 'emails.brn.declined',
-        );
-    }
+    // public function content(): Content
+    // {
+    //     return new Content(
+    //         markdown: 'emails.brn.declined',
+    //     );
+    // }
 
     /**
      * Get the attachments for the message.

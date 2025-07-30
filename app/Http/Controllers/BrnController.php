@@ -51,6 +51,8 @@ class BrnController extends Controller
             Mail::to($submission->email)->send(new BrnDeclined($submission));
         }
 
-        return back()->with('success', 'Your application was submitted. You’ll be contacted soon.');
+        return response()->json(['message' => 'Your application was submitted. You’ll be contacted soon.']);
+
+        // return back()->with('success', 'Your application was submitted. You’ll be contacted soon.');
     }
 }

@@ -21,25 +21,31 @@ class BrnApproved extends Mailable
         //
     }
 
+    public function build()
+    {
+        return $this->subject('Your Application has been Approved!')
+            ->markdown('emails.brn.approved');
+    }
+
     /**
      * Get the message envelope.
      */
-    public function envelope(): Envelope
-    {
-        return new Envelope(
-            subject: 'Brn Approved',
-        );
-    }
+    // public function envelope(): Envelope
+    // {
+    //     return new Envelope(
+    //         subject: 'Brn Approved',
+    //     );
+    // }
 
     /**
      * Get the message content definition.
      */
-    public function content(): Content
-    {
-        return new Content(
-            markdown: 'emails.brn.approved',
-        );
-    }
+    // public function content(): Content
+    // {
+    //     return new Content(
+    //         markdown: 'emails.brn.approved',
+    //     );
+    // }
 
     /**
      * Get the attachments for the message.

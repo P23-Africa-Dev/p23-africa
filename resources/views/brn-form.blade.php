@@ -67,7 +67,8 @@
     <section class="brn-body">
         <div class="brn-main-container">
             <div class="container">
-                <form id="brnForm">
+                <form id="brnForm" action="{{ route('brn.submit') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
                     <div class="brn-container form-step active" id="form1">
                         <div class="brn-header-container">
                             <div class="brn-header">
@@ -83,7 +84,8 @@
                                 <div class="brn-content">
                                     <div class="brn-form">
                                         {{-- <form action=""> --}}
-                                        <input type="text" name="full_name" class="form-control" placeholder="Enter full name" />
+                                        <input type="text" name="full_name" class="form-control"
+                                            placeholder="Enter full name" />
 
                                         <input type="email" name="email" class="form-control"
                                             placeholder="Enter your official email address" />
@@ -130,7 +132,8 @@
                                 <div class="brn-content">
                                     <div class="brn-form">
                                         {{-- <form action=""> --}}
-                                        <input type="text" name="company_name" class="form-control" placeholder="Enter your Company name" />
+                                        <input type="text" name="company_name" class="form-control"
+                                            placeholder="Enter your Company name" />
                                         <input type="email" name="country" class="form-control"
                                             placeholder="Enter the country of your business headquarter" />
                                         <input type="text" name="position" class="form-control"
@@ -161,29 +164,30 @@
                                             </div>
 
                                             <div class="brn-input-checked-group">
-                                                <span class="brn-input-checked-label">Select your number of employees</span>
+                                                <span class="brn-input-checked-label">Select your number of
+                                                    employees</span>
                                                 <div class="brn-input-checked-options-row">
                                                     <div class="brn-input-checked-option">
-                                                        <input type="radio" name="number_of_employees" id="employees1-10"
-                                                            class="brn-input-checked-checkbox" />
+                                                        <input type="radio" name="number_of_employees"
+                                                            id="employees1-10" class="brn-input-checked-checkbox" />
                                                         <label for="employees1-10"
                                                             class="brn-input-checked-text">1-10</label>
                                                     </div>
                                                     <div class="brn-input-checked-option">
-                                                        <input type="radio" name="number_of_employees" id="employees11-50"
-                                                            class="brn-input-checked-checkbox" />
+                                                        <input type="radio" name="number_of_employees"
+                                                            id="employees11-50" class="brn-input-checked-checkbox" />
                                                         <label for="employees11-50"
                                                             class="brn-input-checked-text">11-50</label>
                                                     </div>
                                                     <div class="brn-input-checked-option">
-                                                        <input type="radio" name="number_of_employees" id="employees50-200"
-                                                            class="brn-input-checked-checkbox" />
+                                                        <input type="radio" name="number_of_employees"
+                                                            id="employees50-200" class="brn-input-checked-checkbox" />
                                                         <label for="employees50-200"
                                                             class="brn-input-checked-text">50-200</label>
                                                     </div>
                                                     <div class="brn-input-checked-option">
-                                                        <input type="radio" name="number_of_employees" id="employees200-plus"
-                                                            class="brn-input-checked-checkbox" />
+                                                        <input type="radio" name="number_of_employees"
+                                                            id="employees200-plus" class="brn-input-checked-checkbox" />
                                                         <label for="employees200-plus"
                                                             class="brn-input-checked-text">200+</label>
                                                     </div>
@@ -307,7 +311,11 @@
                                                 class="ms-2">
                                                 <i class="bi bi-arrow-left"></i></span> Back</button> --}}
 
-                                            <button type="submit" class="btn btn-submit d-inline">Submit</button>
+                                            <button type="submit" id="submitBtn" class="btn btn-submit d-inline">
+                                                <span class="btn-text">Submit</span>
+                                                <span class="spinner-border spinner-border-sm d-none" role="status"
+                                                    aria-hidden="true"></span>
+                                            </button>
                                         </div>
                                         {{-- </form> --}}
                                     </div>
@@ -328,6 +336,17 @@
         </div>
 
 
+        <!-- Modal -->
+        <div class="modal fade" id="responseModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content text-center p-4">
+                    <h5 class="modal-title" id="responseMessage"></h5>
+                    <button type="button" class="btn btn-primary mt-3" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+
+
         <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
         </script> -->
@@ -336,6 +355,53 @@
 @endsection
 
 <script>
+    // Form Submission
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('brnForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = submitBtn.querySelector('.btn-text');
+        const spinner = submitBtn.querySelector('.spinner-border');
+        const responseMessage = document.getElementById('responseMessage');
+        const modal = new bootstrap.Modal(document.getElementById('responseModal'));
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Show spinner
+            btnText.classList.add('d-none');
+            spinner.classList.remove('d-none');
+
+            // Simulate form submission
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    responseMessage.textContent = data.message || 'Form submitted successfully!';
+                    modal.show();
+                })
+                .catch(error => {
+                    responseMessage.textContent = 'Something went wrong. Please try again.';
+                    modal.show();
+                })
+                .finally(() => {
+                    // Reset button
+                    spinner.classList.add('d-none');
+                    btnText.classList.remove('d-none');
+                    form.reset();
+                });
+        });
+    });
+
+
+
+    // Form Slider
     document.addEventListener('DOMContentLoaded', function() {
         const steps = document.querySelectorAll('.form-step');
         const nextBtns = document.querySelectorAll('.next-btn');
