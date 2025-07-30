@@ -101,6 +101,9 @@ Route::get('/brn-form', function () {
     return view('brn-form');
 })->name('brn-form');
 
+Route::post('/brn-form', [BrnController::class, 'store'])->name('brn.submit');
+
+
 Route::get('brn', [BrnController::class, 'brnIndex'])->name('brn');
 
 // Student
@@ -237,21 +240,9 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|staff'])->prefix('admi
 
     Route::get('/clicks/report', [ClickReportController::class, 'index'])->name('clicks.report');
 
-    // Route::get('/clicks-report', function () {
-    //     $filter = Request::get('filter', 'all');
-
-    //     $clicks = Click::query();
-
-    //     if ($filter === 'today') {
-    //         $clicks->whereDate('updated_at', today());
-    //     } elseif ($filter === '7days') {
-    //         $clicks->where('updated_at', '>=', now()->subDays(7));
-    //     }
-
-    //     $clicks = $clicks->get();
-
-    //     return view('admin.reports.clicks-report', compact('clicks', 'filter'));
-    // })->name('clicks.report');
+    Route::get('/brn', [BrnController::class, 'adminView']);
+    Route::post('/brn/{id}/approve', [BrnController::class, 'approve'])->name('brn.approve');
+    Route::post('/brn/{id}/decline', [BrnController::class, 'decline'])->name('brn.decline');
 });
 
 

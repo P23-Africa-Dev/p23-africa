@@ -14,73 +14,126 @@
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
+<style>
+    .form-step {
+        display: none;
+    }
+
+    .form-step.active {
+        display: block;
+    }
+
+    .brn-form .next-btn {
+        background-color: #193e47;
+        color: #ffffff;
+        padding: 12px 60px;
+        /* width: 265px; */
+        border-radius: 8px;
+        font-size: 1.1rem;
+        display: inline;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        border: none;
+        margin-top: 50px;
+    }
+
+    .brn-form .next-btn:hover {
+        background-color: #1deaa5;
+        color: #193e47;
+    }
+
+    .brn-form .prev-btn {
+        background-color: #1deaa5;
+        color: #ffffff;
+        padding: 12px 60px;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        display: inline;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        border: none;
+        margin-top: 50px;
+    }
+
+    .brn-form .prev-btn:hover {
+        background-color: #193e47;
+        color: #1deaa5;
+    }
+</style>
+
 @section('content')
     <section class="brn-body">
         <div class="brn-main-container">
             <div class="container">
-                <div class="brn-container" id="form1">
-                    <div class="brn-header-container">
-                        <div class="brn-header">
-                            <h1>Personal Information</h1>
-                            <div class="brn-header-desc">
-                                <span></span>
-                                <p>Let's start with your basic details</p>
+                <form id="brnForm">
+                    <div class="brn-container form-step active" id="form1">
+                        <div class="brn-header-container">
+                            <div class="brn-header">
+                                <h1>Personal Information</h1>
+                                <div class="brn-header-desc">
+                                    <span></span>
+                                    <p>Let's start with your basic details</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="brn-form-container">
-                        <div class="form-conainer">
-                            <div class="brn-content">
-                                <div class="brn-form">
-                                    <form action="">
-                                        <input type="text" class="form-control" placeholder="Enter full name" />
-                                        
-                                        <input type="email" class="form-control"
+                        <div class="brn-form-container">
+                            <div class="form-conainer">
+                                <div class="brn-content">
+                                    <div class="brn-form">
+                                        {{-- <form action=""> --}}
+                                        <input type="text" name="full_name" class="form-control" placeholder="Enter full name" />
+
+                                        <input type="email" name="email" class="form-control"
                                             placeholder="Enter your official email address" />
-                                        <input type="text" class="form-control"
+                                        <input type="text" name="phone" class="form-control"
                                             placeholder="Enter your WhatsApp phone Number" />
-                                        <input type="text" class="form-control"
+                                        <input type="text" name="linkedin" class="form-control"
                                             placeholder="Enter your linkedin profile" />
 
-                                        <a href="#" class="btn btn-submit" id="buttonOne">
+                                        {{-- <a href="#" class="btn btn-submit" id="buttonOne">
                                             Next
                                             <span class="ms-2">
                                                 <i class="bi bi-arrow-right"></i></span>
-                                        </a>
-                                    </form>
-                                </div>
-                                <div class="brn-form-side-bg">
-                                    <img src="{{ asset('images/brn-frame.png') }}" alt="" />
+                                        </a> --}}
+                                        <button type="button" class="btn next-btn" data-next="form2">Next <span
+                                                class="ms-2">
+                                                <i class="fa fa-arrow-right"></i></span></button>
+                                        {{-- </form> --}}
+                                    </div>
+                                    <div class="brn-form-side-bg">
+                                        <img src="{{ asset('images/brn-frame.png') }}" alt="" />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="brn-grouped-conainer">
-                            <img class="brn-group" src="./images/brn-group.png" alt="">
-                            <img class="brn-image" src="./images/BRN.png" alt="" />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="brn-container" id="form2">
-                    <div class="brn-header-container">
-                        <div class="brn-header">
-                            <h1>Company Information</h1>
-                            <div class="brn-header-desc">
-                                <span></span>
-                                <p>Let's start with your basic details</p>
+                            <div class="brn-grouped-conainer">
+                                <img class="brn-group" src="./images/brn-group.png" alt="">
+                                <img class="brn-image" src="./images/BRN.png" alt="" />
                             </div>
                         </div>
                     </div>
-                    <div class="brn-form-container">
-                        <div class="form-conainer">
-                            <div class="brn-content">
-                                <div class="brn-form">
-                                    <form action="">
-                                        <input type="text" class="form-control" placeholder="Enter your Company name" />
-                                        <input type="email" class="form-control"
+
+                    <div class="brn-container form-step" id="form2">
+                        <div class="brn-header-container">
+                            <div class="brn-header">
+                                <h1>Company Information</h1>
+                                <div class="brn-header-desc">
+                                    <span></span>
+                                    <p>Let's start with your basic details</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="brn-form-container">
+                            <div class="form-conainer">
+                                <div class="brn-content">
+                                    <div class="brn-form">
+                                        {{-- <form action=""> --}}
+                                        <input type="text" name="company_name" class="form-control" placeholder="Enter your Company name" />
+                                        <input type="email" name="country" class="form-control"
                                             placeholder="Enter the country of your business headquarter" />
-                                        <input type="text" class="form-control"
+                                        <input type="text" name="position" class="form-control"
                                             placeholder="Enter your position in the business" />
 
                                         <div class="brn-input-checked">
@@ -89,17 +142,17 @@
                                                     operation</span>
                                                 <div class="brn-input-checked-options-row">
                                                     <div class="brn-input-checked-option">
-                                                        <input type="checkbox" id="years0-5"
+                                                        <input type="radio" name="years_of_operation" id="years0-5"
                                                             class="brn-input-checked-checkbox" />
                                                         <label for="years0-5" class="brn-input-checked-text">0-5</label>
                                                     </div>
                                                     <div class="brn-input-checked-option">
-                                                        <input type="checkbox" id="years6-10"
+                                                        <input type="radio" name="years_of_operation" id="years6-10"
                                                             class="brn-input-checked-checkbox" />
                                                         <label for="years6-10" class="brn-input-checked-text">6-10</label>
                                                     </div>
                                                     <div class="brn-input-checked-option">
-                                                        <input type="checkbox" id="years11-above"
+                                                        <input type="radio" name="years_of_operation" id="years11-above"
                                                             class="brn-input-checked-checkbox" />
                                                         <label for="years11-above"
                                                             class="brn-input-checked-text">11-Above</label>
@@ -111,25 +164,25 @@
                                                 <span class="brn-input-checked-label">Select your number of employees</span>
                                                 <div class="brn-input-checked-options-row">
                                                     <div class="brn-input-checked-option">
-                                                        <input type="checkbox" id="employees1-10"
+                                                        <input type="radio" name="number_of_employees" id="employees1-10"
                                                             class="brn-input-checked-checkbox" />
                                                         <label for="employees1-10"
                                                             class="brn-input-checked-text">1-10</label>
                                                     </div>
                                                     <div class="brn-input-checked-option">
-                                                        <input type="checkbox" id="employees11-50"
+                                                        <input type="radio" name="number_of_employees" id="employees11-50"
                                                             class="brn-input-checked-checkbox" />
                                                         <label for="employees11-50"
                                                             class="brn-input-checked-text">11-50</label>
                                                     </div>
                                                     <div class="brn-input-checked-option">
-                                                        <input type="checkbox" id="employees50-200"
+                                                        <input type="radio" name="number_of_employees" id="employees50-200"
                                                             class="brn-input-checked-checkbox" />
                                                         <label for="employees50-200"
                                                             class="brn-input-checked-text">50-200</label>
                                                     </div>
                                                     <div class="brn-input-checked-option">
-                                                        <input type="checkbox" id="employees200-plus"
+                                                        <input type="radio" name="number_of_employees" id="employees200-plus"
                                                             class="brn-input-checked-checkbox" />
                                                         <label for="employees200-plus"
                                                             class="brn-input-checked-text">200+</label>
@@ -138,42 +191,47 @@
                                             </div>
                                         </div>
 
-                                        <a href="#" class="btn btn-submit" id="buttonTwo">
+                                        {{-- <a href="#" class="btn btn-submit" id="buttonTwo">
                                             Next
                                             <span class="ms-2">
                                                 <i class="bi bi-arrow-right"></i></span>
-                                        </a>
-                                    </form>
-                                </div>
-                                <div class="brn-form-side-bg">
-                                    <img src="./images/brn-frame.png" alt="" />
+                                        </a> --}}
+                                        {{-- <button type="button" class="btn prev-btn" data-prev="form1"><span class="ms-2">
+                                            <i class="fa fa-arrow-left"></i></span> Back </button> --}}
+                                        <button type="button" class="btn next-btn" data-next="form3">Next <span
+                                                class="ms-2">
+                                                <i class="fa fa-arrow-right"></i></span></button>
+                                        {{-- </form> --}}
+                                    </div>
+                                    <div class="brn-form-side-bg">
+                                        <img src="./images/brn-frame.png" alt="" />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="brn-grouped-conainer">
-                            <img class="brn-group" src="./images/brn-group.png" alt="" />
-                            <img class="brn-image" src="./images/BRN.png" alt="" />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="brn-container" id="form3">
-                    <div class="brn-header-container">
-                        <div class="brn-header">
-                            <h1>What You Want To Gain</h1>
-                            <div class="brn-header-desc">
-                                <span></span>
-                                <p>What outcomes matter most for you?</p>
+                            <div class="brn-grouped-conainer">
+                                <img class="brn-group" src="./images/brn-group.png" alt="" />
+                                <img class="brn-image" src="./images/BRN.png" alt="" />
                             </div>
                         </div>
                     </div>
-                    <div class="brn-form-container">
-                        <div class="form-conainer">
-                            <div class="brn-content">
-                                <div class="brn-form">
-                                    <form action="">
-                                        <input type="text" class="form-control"
+
+                    <div class="brn-container form-step" id="form3">
+                        <div class="brn-header-container">
+                            <div class="brn-header">
+                                <h1>What You Want To Gain</h1>
+                                <div class="brn-header-desc">
+                                    <span></span>
+                                    <p>What outcomes matter most for you?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="brn-form-container">
+                            <div class="form-conainer">
+                                <div class="brn-content">
+                                    <div class="brn-form">
+                                        {{-- <form action=""> --}}
+                                        <input type="text" name="goals" class="form-control"
                                             placeholder="Enter your goals for joining the BRN" />
 
                                         <!-- ============== BRN ICONS CONTENT  -->
@@ -206,7 +264,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="brn-input-checked">
+                                        {{-- <div class="brn-input-checked">
                                             <div class="brn-input-checked-group">
                                                 <span class="brn-input-checked-label">Select your number of
                                                     employees</span>
@@ -237,63 +295,114 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
-                                        <a href="#" class="btn btn-submit" id="buttonThree">
+                                        {{-- <a href="#" class="btn btn-submit" id="buttonThree">
                                             Next
                                             <span class="ms-2">
                                                 <i class="bi bi-arrow-right"></i></span>
-                                        </a>
-                                    </form>
-                                </div>
-                                <div class="brn-form-side-bg">
-                                    <img src="./images/brn-frame.png" alt="" />
+                                        </a> --}}
+                                        <div class="d-flex justify-content-between">
+                                            {{-- <button type="button" class="btn prev-btn" data-prev="form2"><span
+                                                class="ms-2">
+                                                <i class="bi bi-arrow-left"></i></span> Back</button> --}}
+
+                                            <button type="submit" class="btn btn-submit d-inline">Submit</button>
+                                        </div>
+                                        {{-- </form> --}}
+                                    </div>
+                                    <div class="brn-form-side-bg">
+                                        <img src="./images/brn-frame.png" alt="" />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="brn-grouped-conainer">
-                            <img class="brn-group" src="./images/brn-group.png" alt="" />
-                            <img class="brn-image" src="./images/BRN.png" alt="" />
+                            <div class="brn-grouped-conainer">
+                                <img class="brn-group" src="./images/brn-group.png" alt="" />
+                                <img class="brn-image" src="./images/BRN.png" alt="" />
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
-            </nav>
-            </header>
+        </div>
 
 
-            <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-            </script> -->
-            <script src="./js/bootstrap.min.js"></script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+        </script> -->
+        <script src="./js/bootstrap.min.js"></script>
     </section>
 @endsection
 
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        let formOne = document.getElementById('form1');
-        let formTwo = document.getElementById('form2');
-        let formThree = document.getElementById('form3');
+    document.addEventListener('DOMContentLoaded', function() {
+        const steps = document.querySelectorAll('.form-step');
+        const nextBtns = document.querySelectorAll('.next-btn');
+        const prevBtns = document.querySelectorAll('.prev-btn');
 
-        formTwo.style.display = 'none';
-        formThree.style.display = 'none';
+        function showStep(stepId) {
+            steps.forEach(step => step.classList.remove('active'));
+            const nextStep = document.getElementById(stepId);
+            if (nextStep) nextStep.classList.add('active');
+        }
 
-        buttonOne.addEventListener('click', () => {
-            formOne.style.display = 'none'
-            formTwo.style.display = 'block'
-            formThree.style.display = 'none'
-        })
-        buttonTwo.addEventListener('click', () => {
-            formOne.style.display = 'none'
-            formTwo.style.display = 'none'
-            formThree.style.display = 'block'
-        })
-        buttonThree.addEventListener('click', () => {
-            formOne.style.display = 'none'
-            formTwo.style.display = 'none'
-            formThree.style.display = 'block'
-            window.alert('No Back-end Integration Yet!')
-        })
-    })
+        nextBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const currentStep = this.closest('.form-step');
+                const inputs = currentStep.querySelectorAll('input, select, textarea');
+                let valid = true;
+
+                inputs.forEach(input => {
+                    if (input.hasAttribute('required') && !input.value.trim()) {
+                        valid = false;
+                        input.style.border = '1px solid red';
+                    } else {
+                        input.style.border = '';
+                    }
+                });
+
+                if (valid) {
+                    const next = this.dataset.next;
+                    showStep(next);
+                }
+            });
+        });
+
+        prevBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const prev = this.dataset.prev;
+                showStep(prev);
+            });
+        });
+    });
+
+
+
+
+    // document.addEventListener("DOMContentLoaded", () => {
+    //     let formOne = document.getElementById('form1');
+    //     let formTwo = document.getElementById('form2');
+    //     let formThree = document.getElementById('form3');
+
+    //     formTwo.style.display = 'none';
+    //     formThree.style.display = 'none';
+
+    //     buttonOne.addEventListener('click', () => {
+    //         formOne.style.display = 'none'
+    //         formTwo.style.display = 'block'
+    //         formThree.style.display = 'none'
+    //     })
+    //     buttonTwo.addEventListener('click', () => {
+    //         formOne.style.display = 'none'
+    //         formTwo.style.display = 'none'
+    //         formThree.style.display = 'block'
+    //     })
+    //     buttonThree.addEventListener('click', () => {
+    //         formOne.style.display = 'none'
+    //         formTwo.style.display = 'none'
+    //         formThree.style.display = 'block'
+    //         window.alert('No Back-end Integration Yet!')
+    //     })
+    // })
 </script>
