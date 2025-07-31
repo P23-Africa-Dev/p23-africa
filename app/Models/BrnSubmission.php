@@ -20,7 +20,7 @@ class BrnSubmission extends Model
         'years_of_operation',
         'number_of_employees',
         'goals',
-        // 'what_you_want_to_gain',
+        'selected_outcome',
         'status' // approved, declined, pending
     ];
 }

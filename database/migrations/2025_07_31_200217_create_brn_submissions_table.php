@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('position');
             $table->string('years_of_operation'); // "0-5", "6-10", etc
             $table->string('number_of_employees'); // "1-10", "11-50", etc
+            $table->string('selected_outcome'); // outcome selected by the user
             $table->text('goals')->nullable();
             $table->string('status')->default('pending'); // approved, declined, pending
             $table->timestamps();

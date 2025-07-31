@@ -37,6 +37,7 @@ class BrnController extends Controller
             'position' => 'required|string',
             'years_of_operation' => 'required|string',
             'number_of_employees' => 'required|string',
+            'selected_outcome' => 'required|string',
             'goals' => 'nullable|string',
         ]);
 

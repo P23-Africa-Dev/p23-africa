@@ -61,6 +61,30 @@
         background-color: #193e47;
         color: #1deaa5;
     }
+
+    .brn-form-icons-card.selected {
+        border-color: #6beabf;
+        box-shadow: 0 4px 15px rgba(107, 234, 191, 0.4);
+    }
+
+    .brn-form-icons-card {
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        padding: 10px;
+        border-radius: 8px;
+    }
+
+    .brn-form-icons-card:hover {
+        border-color: #6beabf;
+        box-shadow: 0 4px 15px rgba(107, 234, 191, 0.4);
+    }
+
+    .brn-form-icons-header {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
 </style>
 
 @section('content')
@@ -145,18 +169,18 @@
                                                     operation</span>
                                                 <div class="brn-input-checked-options-row">
                                                     <div class="brn-input-checked-option">
-                                                        <input type="radio" value="0-5" name="years_of_operation" id="years0-5"
-                                                            class="brn-input-checked-checkbox" />
+                                                        <input type="radio" value="0-5" name="years_of_operation"
+                                                            id="years0-5" class="brn-input-checked-checkbox" />
                                                         <label for="years0-5" class="brn-input-checked-text">0-5</label>
                                                     </div>
                                                     <div class="brn-input-checked-option">
-                                                        <input type="radio" value="6-10" name="years_of_operation" id="years6-10"
-                                                            class="brn-input-checked-checkbox" />
+                                                        <input type="radio" value="6-10" name="years_of_operation"
+                                                            id="years6-10" class="brn-input-checked-checkbox" />
                                                         <label for="years6-10" class="brn-input-checked-text">6-10</label>
                                                     </div>
                                                     <div class="brn-input-checked-option">
-                                                        <input type="radio" value="11-Above" name="years_of_operation" id="years11-above"
-                                                            class="brn-input-checked-checkbox" />
+                                                        <input type="radio" value="11-Above" name="years_of_operation"
+                                                            id="years11-above" class="brn-input-checked-checkbox" />
                                                         <label for="years11-above"
                                                             class="brn-input-checked-text">11-Above</label>
                                                     </div>
@@ -245,27 +269,30 @@
                                             </div>
                                             <div class="brn-form-icons-options">
                                                 <div class="brn-first-icons">
-                                                    <div class="brn-form-icons-card selected">
+                                                    <div class="brn-form-icons-card" data-value="Network with like minds">
                                                         <img src="./images/checkmark-badge.png" alt="" />
                                                         <span class="brn-form-icons-text">Network with like minds</span>
                                                     </div>
-                                                    <div class="brn-form-icons-card">
+                                                    <div class="brn-form-icons-card"
+                                                        data-value="No more jump one platform for another">
                                                         <img src="./images/checkmark-badge.png" alt="" />
                                                         <span class="brn-form-icons-text">No more jump one platform for
                                                             another</span>
                                                     </div>
                                                 </div>
                                                 <div class="brn-second-icons">
-                                                    <div class="brn-form-icons-card">
+                                                    <div class="brn-form-icons-card" data-value="Grow and Scale 1000%">
                                                         <img src="./images/checkmark-badge.png" alt="" />
                                                         <span class="brn-form-icons-text">Grow and Scale 1000%</span>
                                                     </div>
-                                                    <div class="brn-form-icons-card">
+                                                    <div class="brn-form-icons-card" data-value="All you need is here">
                                                         <img src="./images/checkmark-badge.png" alt="" />
                                                         <span class="brn-form-icons-text">All you need is here</span>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <!-- Hidden input to store the selected value -->
+                                            <input type="hidden" name="selected_outcome" id="selectedOutcome" />
                                         </div>
 
                                         {{-- <div class="brn-input-checked">
@@ -351,7 +378,7 @@
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
         </script> -->
         {{-- <script src="./js/bootstrap.min.js"></script> --}}
-         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </section>
 @endsection
 
@@ -397,6 +424,27 @@
                     btnText.classList.remove('d-none');
                     form.reset();
                 });
+        });
+    });
+
+
+
+    // Handle icon selection
+    document.addEventListener('DOMContentLoaded', function() {
+        const cards = document.querySelectorAll('.brn-form-icons-card');
+        const hiddenInput = document.getElementById('selectedOutcome');
+
+        cards.forEach(card => {
+            card.addEventListener('click', function() {
+                // Remove 'selected' class from all cards
+                cards.forEach(c => c.classList.remove('selected'));
+
+                // Add 'selected' class to the clicked card
+                this.classList.add('selected');
+
+                // Update the hidden input value with the selected card's data-value
+                hiddenInput.value = this.dataset.value;
+            });
         });
     });
 
