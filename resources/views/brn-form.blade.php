@@ -108,7 +108,7 @@
                                 <div class="brn-content">
                                     <div class="brn-form">
                                         {{-- <form action=""> --}}
-                                        <input type="text" name="full_name" class="form-control"
+                                        <input type="text" name="name" class="form-control"
                                             placeholder="Enter full name" />
 
                                         <input type="email" name="email" class="form-control"
@@ -224,8 +224,8 @@
                                             <span class="ms-2">
                                                 <i class="bi bi-arrow-right"></i></span>
                                         </a> --}}
-                                        {{-- <button type="button" class="btn prev-btn" data-prev="form1"><span class="ms-2">
-                                            <i class="fa fa-arrow-left"></i></span> Back </button> --}}
+                                        <button type="button" class="btn prev-btn" data-prev="form1"><span class="ms-2">
+                                            <i class="fa fa-arrow-left"></i></span> Back </button>
                                         <button type="button" class="btn next-btn" data-next="form3">Next <span
                                                 class="ms-2">
                                                 <i class="fa fa-arrow-right"></i></span></button>
@@ -334,9 +334,9 @@
                                                 <i class="bi bi-arrow-right"></i></span>
                                         </a> --}}
                                         <div class="d-flex justify-content-between">
-                                            {{-- <button type="button" class="btn prev-btn" data-prev="form2"><span
+                                            <button type="button" class="btn prev-btn" data-prev="form2"><span
                                                 class="ms-2">
-                                                <i class="bi bi-arrow-left"></i></span> Back</button> --}}
+                                                <i class="bi bi-arrow-left"></i></span> Back</button>
 
                                             <button type="submit" id="submitBtn" class="btn btn-submit d-inline">
                                                 <span class="btn-text">Submit</span>

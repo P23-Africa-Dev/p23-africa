@@ -8,46 +8,43 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Crypt;
 
 class BrnApproved extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     */
     public $submission;
+    public $registrationUrl;
 
     public function __construct($submission)
     {
         $this->submission = $submission;
+
+        // Data to be encrypted and sent to the other Laravel app
+        $data = [
+            'name' => $submission->name,
+            'email' => $submission->email,
+        ];
+
+        // Encrypt the data and build the secure URL to the second app
+        $encrypted = Crypt::encryptString(json_encode($data));
+
+        // Replace this with the real URL of your second Laravel app
+        $this->registrationUrl = "http://127.0.0.1:8001/registration/continue?data={$encrypted}";
     }
 
     public function build()
     {
         return $this->subject('BRN Membership Approved')
-            ->markdown('emails.brn.approved');
+            ->markdown('emails.brn.approved')
+            ->with([
+                'submission' => $this->submission,
+                'registrationUrl' => $this->registrationUrl,
+            ]);
     }
 
-    /**
-     * Get the message envelope.
-     */
-    // public function envelope(): Envelope
-    // {
-    //     return new Envelope(
-    //         subject: 'Brn Approved',
-    //     );
-    // }
 
-    /**
-     * Get the message content definition.
-     */
-    // public function content(): Content
-    // {
-    //     return new Content(
-    //         markdown: 'emails.brn.approved',
-    //     );
-    // }
 
     /**
      * Get the attachments for the message.

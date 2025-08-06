@@ -10,7 +10,7 @@ class BrnSubmission extends Model
     use HasFactory;
 
     protected $fillable = [
-        'full_name',
+        'name',
         'email',
         'phone',
         'linkedin',

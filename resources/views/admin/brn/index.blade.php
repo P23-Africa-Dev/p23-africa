@@ -23,7 +23,7 @@
                         <tbody>
                             @foreach ($submissions as $submission)
                                 <tr>
-                                    <td>{{ $submission->full_name }}</td>
+                                    <td>{{ $submission->name }}</td>
                                     <td>{{ $submission->email }}</td>
                                     <td>{{ $submission->company_name }}</td>
                                     <td>{{ ucfirst($submission->status) }}</td>

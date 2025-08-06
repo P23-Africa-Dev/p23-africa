@@ -28,7 +28,7 @@ class BrnController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'full_name' => 'required|string',
+            'name' => 'required|string',
             'email' => 'required|email',
             'phone' => 'required|string',
             'linkedin' => 'nullable|string',
