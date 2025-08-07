@@ -25,6 +25,7 @@ class BrnApproved extends Mailable
         $data = [
             'name' => $submission->name,
             'email' => $submission->email,
+            'company_name' => $submission->company_name,
         ];
 
         // Encrypt the data and build the secure URL to the second app
