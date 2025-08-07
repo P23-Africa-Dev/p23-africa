@@ -25,14 +25,14 @@ class BrnApproved extends Mailable
         $data = [
             'name' => $submission->name,
             'email' => $submission->email,
-            'company_name' => $submission->company_name,
+            'company_name' => $submission->company_name
         ];
 
         // Encrypt the data and build the secure URL to the second app
         $encrypted = Crypt::encryptString(json_encode($data));
 
         // Replace this with the real URL of your second Laravel app
-        $this->registrationUrl = "http://127.0.0.1:8001/registration/continue?data={$encrypted}";
+        $this->registrationUrl = "http://127.0.0.1:8000/registration/continue?data={$encrypted}";
     }
 
     public function build()
