@@ -301,7 +301,7 @@
                                 <div class="content mb-4">
                                     {!! \Illuminate\Support\Str::limit($blog->content_1, 1200) !!}
                                 </div>
-                                 @if ($blog->pdf_path)
+                                @if ($blog->pdf_path)
                                     <div class="my-auto">
                                         <button class="btn btn-success view-pdf-btn"
                                             data-pdf="{{ asset('storage/' . $blog->pdf_path) }}">
@@ -345,8 +345,11 @@
                     const closeBtn = document.querySelector('.close-popup');
 
                     viewButtons.forEach(button => {
-                        button.addEventListener('click', function() {
-                            const pdfUrl = this.dataset.pdf;
+                        button.addEventListener('click', function(e) {
+                            e.preventDefault(); // Prevent any default behavior
+                            e.stopPropagation(); // Stop event bubbling
+
+                            const pdfUrl = this.getAttribute('data-pdf');
                             pdfViewer.src = pdfUrl;
                             downloadBtn.href = pdfUrl;
                             popup.style.display = 'block';
@@ -354,7 +357,8 @@
                         });
                     });
 
-                    closeBtn.addEventListener('click', function() {
+                    closeBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
                         popup.style.display = 'none';
                         pdfViewer.src = '';
                         document.body.style.overflow = 'auto';
