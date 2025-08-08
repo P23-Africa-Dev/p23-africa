@@ -38,36 +38,68 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'title' => 'required|string|max:255',
-            'subtitle' => 'nullable|string|max:999',
-            'content_1' => 'required|string',
-            'content_2' => 'nullable|string',
-            'image' => 'nullable|image|max:2048',
-            'pdf' => 'nullable|mimes:pdf|max:10240', // allow PDF up to 10MB
-            'category_id' => 'nullable|exists:categories,id',
-        ]);
+        try{
+            $data = $request->validate([
+                'title' => 'required|string|max:255',
+                'subtitle' => 'nullable|string|max:999',
+                'content_1' => 'required|string',
+                'content_2' => 'nullable|string',
+                'image' => 'nullable|image|max:2048',
+                'pdf' => 'nullable|mimes:pdf|max:10240', // allow PDF up to 10MB
+                'category_id' => 'nullable|exists:categories,id',
+            ]);
 
-        // ✅ Clean content if needed
-        // $data['content_1'] = Purifier::clean($data['content_1']);
-        // $data['content_2'] = Purifier::clean($data['content_2']);
+            // ✅ Handle image upload
+            if ($request->hasFile('image')) {
+                try {
+                    $data['image_path'] = $request->file('image')->store('blogs', 'public');
+                } catch (\Exception $e) {
+                    return redirect()->back()
+                        ->withInput()
+                        ->with('error', 'Failed to upload image. Please try again.');
+                }
+                // $data['image_path'] = $request->file('image')->store('blogs', 'public');
+            }
 
-        // ✅ Handle image upload
-        if ($request->hasFile('image')) {
-            $data['image_path'] = $request->file('image')->store('blogs', 'public');
+            if ($request->hasFile('pdf')) {
+                try {
+                    $data['pdf_path'] = $request->file('pdf')->store('blogs/pdfs', 'public');
+                } catch (\Exception $e) {
+                    // Clean up image if it was uploaded
+                    if (isset($data['image_path'])) {
+                        Storage::disk('public')->delete($data['image_path']);
+                    }
+                    return redirect()->back()
+                        ->withInput()
+                        ->with('error', 'Failed to upload PDF. Please try again.');
+                }
+                // $data['pdf_path'] = $request->file('pdf')->store('blogs/pdfs', 'public');
+            }
+
+            // ✅ Add user ID (admin creating the blog)
+            $data['user_id'] = Auth::id();
+
+            // ✅ Save the blog
+            Blog::create($data);
+
+            return redirect()->route('admin.blogs.index')->with('success', 'Blog created successfully.');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()
+                ->withErrors($e->validator)
+                ->withInput();
+        } catch (\Exception $e) {
+            // Clean up any uploaded files
+            if (isset($data['image_path'])) {
+                Storage::disk('public')->delete($data['image_path']);
+            }
+            if (isset($data['pdf_path'])) {
+                Storage::disk('public')->delete($data['pdf_path']);
+            }
+
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'An error occurred while creating the blog. Please try again.');
         }
-
-        if ($request->hasFile('pdf')) {
-            $data['pdf_path'] = $request->file('pdf')->store('blogs/pdfs', 'public');
-        }
-
-        // ✅ Add user ID (admin creating the blog)
-        $data['user_id'] = Auth::id();
-
-        // ✅ Save the blog
-        Blog::create($data);
-
-        return redirect()->route('admin.blogs.index')->with('success', 'Blog created successfully.');
     }
 
     /**
@@ -93,56 +125,85 @@ class BlogController extends Controller
      */
     public function update(Request $request, Blog $blog)
     {
-        $data = $request->validate([
-            'title' => 'required|string|max:255',
-            'subtitle' => 'nullable|string|max:999',
-            'content_1' => 'required|string',
-            'content_2' => 'nullable|string',
-            'image' => 'nullable|image|max:2048',
-            'pdf' => 'nullable|mimes:pdf|max:10240',
-            'created_at' => 'nullable|date',
-            'category_id' => 'nullable|exists:categories,id',
-        ]);
+        try {
+            $data = $request->validate([
+                'title' => 'required|string|max:255',
+                'subtitle' => 'nullable|string|max:999',
+                'content_1' => 'required|string',
+                'content_2' => 'nullable|string',
+                'image' => 'nullable|image|max:2048',
+                'pdf' => 'nullable|mimes:pdf|max:10240',
+                'created_at' => 'nullable|date',
+                'category_id' => 'nullable|exists:categories,id',
+            ]);
 
-        // Remove image if requested
-        if ($request->has('remove_image') && $blog->image_path) {
-            Storage::disk('public')->delete($blog->image_path);
-            $blog->image_path = null;
-        }
+            // Store original paths in case we need to rollback
+            $originalImagePath = $blog->image_path;
+            $originalPdfPath = $blog->pdf_path;
 
-        // Upload new image
-        if ($request->hasFile('image')) {
-            if ($blog->image_path) {
-                Storage::disk('public')->delete($blog->image_path);
+            try {
+                // Handle image removal and upload
+                if ($request->has('remove_image') && $blog->image_path) {
+                    Storage::disk('public')->delete($blog->image_path);
+                    $blog->image_path = null;
+                }
+
+                if ($request->hasFile('image')) {
+                    if ($blog->image_path) {
+                        Storage::disk('public')->delete($blog->image_path);
+                    }
+                    $data['image_path'] = $request->file('image')->store('blogs', 'public');
+                }
+
+                // Handle PDF removal and upload
+                if ($request->has('remove_pdf') && $blog->pdf_path) {
+                    Storage::disk('public')->delete($blog->pdf_path);
+                    $blog->pdf_path = null;
+                }
+
+                if ($request->hasFile('pdf')) {
+                    if ($blog->pdf_path) {
+                        Storage::disk('public')->delete($blog->pdf_path);
+                    }
+                    $data['pdf_path'] = $request->file('pdf')->store('blogs/pdfs', 'public');
+                }
+
+                // Set created_at if provided
+                if (!empty($data['created_at'])) {
+                    $blog->created_at = $data['created_at'];
+                }
+
+                // Update blog
+                $blog->update($data);
+
+                return redirect()->route('admin.blogs.index')
+                    ->with('success', 'Blog updated successfully.');
+            } catch (\Exception $e) {
+                // Rollback file changes if something went wrong
+                if (isset($data['image_path'])) {
+                    Storage::disk('public')->delete($data['image_path']);
+                    if ($originalImagePath) {
+                        Storage::disk('public')->put($originalImagePath, Storage::disk('public')->get($originalImagePath));
+                    }
+                }
+                if (isset($data['pdf_path'])) {
+                    Storage::disk('public')->delete($data['pdf_path']);
+                    if ($originalPdfPath) {
+                        Storage::disk('public')->put($originalPdfPath, Storage::disk('public')->get($originalPdfPath));
+                    }
+                }
+
+                throw $e;
             }
-            $data['image_path'] = $request->file('image')->store('blogs', 'public');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()
+                ->withErrors($e->validator)
+                ->withInput();
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'An error occurred while updating the blog. Please try again.');
         }
-
-        if ($request->has('remove_pdf') && $blog->pdf_path) {
-            Storage::disk('public')->delete($blog->pdf_path);
-            $blog->pdf_path = null;
-        }
-
-        if ($request->hasFile('pdf')) {
-            if ($blog->pdf_path) {
-                Storage::disk('public')->delete($blog->pdf_path);
-            }
-            $data['pdf_path'] = $request->file('pdf')->store('blogs/pdfs', 'public');
-        }
-
-        // 🛠️ Purify and assign to $data
-        // $data['content_1'] = Purifier::clean($data['content_1']);
-        // $data['content_2'] = Purifier::clean($data['content_2']);
-
-        // If created_at is present, set it explicitly
-        if (!empty($data['created_at'])) {
-            $blog->created_at = $data['created_at'];
-        }
-        
-        // Update blog
-        $blog->update($data);
-
-        return redirect()->route('admin.blogs.index')->with('success', 'Blog updated.');
     }
 
     /**

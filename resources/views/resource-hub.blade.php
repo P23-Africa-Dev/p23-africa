@@ -77,6 +77,61 @@
             .star.selected {
                 color: #ffc107;
             }
+
+
+            /* Resource Report PDF */
+            .pdf-popup {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                z-index: 1000;
+                padding: 20px;
+            }
+
+            .pdf-popup-content {
+                background: white;
+                width: 100%;
+                max-width: 1000px;
+                height: 90vh;
+                margin: 20px auto;
+                position: relative;
+                border-radius: 8px;
+                padding: 20px;
+            }
+
+            .pdf-viewer {
+                width: 100%;
+                height: calc(100% - 50px);
+                border: none;
+            }
+
+            .close-popup {
+                position: absolute;
+                right: 20px;
+                top: 10px;
+                font-size: 24px;
+                cursor: pointer;
+                color: #333;
+            }
+
+            .download-btn {
+                display: inline-block;
+                padding: 8px 16px;
+                background: #28a745;
+                color: white;
+                text-decoration: none;
+                border-radius: 4px;
+                margin-bottom: 10px;
+            }
+
+            .download-btn:hover {
+                background: #218838;
+                color: white;
+            }
         </style>
 
         <script>
@@ -211,8 +266,19 @@
                                 <div class="content mb-4">
                                     {!! \Illuminate\Support\Str::limit($blog->content_1, 600) !!}
                                 </div>
-                                <a href="{{ route('resource-show', $blog->slug) }}" class="read-more-btn">Read More
-                                    →</a>
+
+
+                                @if ($blog->pdf_path)
+                                    <div class="my-auto">
+                                        <button class="btn btn-success view-pdf-btn"
+                                            data-pdf="{{ asset('storage/' . $blog->pdf_path) }}">
+                                            📥 View Report
+                                        </button>
+                                    </div>
+                                @else
+                                    <a href="{{ route('resource-show', $blog->slug) }}" class="read-more-btn">Read More
+                                        →</a>
+                                @endif
                             </div>
                             {{-- @endif --}}
                         @endforeach
@@ -235,8 +301,17 @@
                                 <div class="content mb-4">
                                     {!! \Illuminate\Support\Str::limit($blog->content_1, 1200) !!}
                                 </div>
-                                <a href="{{ route('resource-show', $blog->slug) }}" class="read-more-btn">Read More
-                                    →</a>
+                                 @if ($blog->pdf_path)
+                                    <div class="my-auto">
+                                        <button class="btn btn-success view-pdf-btn"
+                                            data-pdf="{{ asset('storage/' . $blog->pdf_path) }}">
+                                            📥 View Report
+                                        </button>
+                                    </div>
+                                @else
+                                    <a href="{{ route('resource-show', $blog->slug) }}" class="read-more-btn">Read More
+                                        →</a>
+                                @endif
                             </div>
                             {{-- @endif --}}
                         @endforeach
@@ -249,6 +324,51 @@
                     </div>
                 </div>
             </div>
+
+            <div class="pdf-popup" id="pdfPopup">
+                <div class="pdf-popup-content">
+                    <span class="close-popup">&times;</span>
+                    <a href="" class="download-btn" id="downloadPdf" download>
+                        📥 Download PDF
+                    </a>
+                    <iframe class="pdf-viewer" id="pdfViewer" src="" frameborder="0"></iframe>
+                </div>
+            </div>
+
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const viewButtons = document.querySelectorAll('.view-pdf-btn');
+                    const popup = document.getElementById('pdfPopup');
+                    const pdfViewer = document.getElementById('pdfViewer');
+                    const downloadBtn = document.getElementById('downloadPdf');
+                    const closeBtn = document.querySelector('.close-popup');
+
+                    viewButtons.forEach(button => {
+                        button.addEventListener('click', function() {
+                            const pdfUrl = this.dataset.pdf;
+                            pdfViewer.src = pdfUrl;
+                            downloadBtn.href = pdfUrl;
+                            popup.style.display = 'block';
+                            document.body.style.overflow = 'hidden';
+                        });
+                    });
+
+                    closeBtn.addEventListener('click', function() {
+                        popup.style.display = 'none';
+                        pdfViewer.src = '';
+                        document.body.style.overflow = 'auto';
+                    });
+
+                    popup.addEventListener('click', function(e) {
+                        if (e.target === popup) {
+                            popup.style.display = 'none';
+                            pdfViewer.src = '';
+                            document.body.style.overflow = 'auto';
+                        }
+                    });
+                });
+            </script>
         </section>
     </section>
 @endsection

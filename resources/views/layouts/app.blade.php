@@ -34,7 +34,7 @@
         <script src="{{ asset('build/assets/app-Bf4POITK.js') }}" defer></script>
         @endenv
 
-        <x-head.tinymce-config />
+        {{-- <x-head.tinymce-config /> --}}
     </head>
 
     <body class="font-sans antialiased">
