@@ -85,6 +85,53 @@
         font-weight: bold;
         margin-bottom: 20px;
     }
+
+
+
+    /* Styling for the entire progress indicator section */
+    .form-progress-indicator-wrapper {
+        position: relative;
+        width: 90%;
+        max-width: 600px;
+        margin: 0 auto 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .progress-image {
+        width: 90%;
+        height: auto;
+        display: block;
+    }
+
+    .step-text-container {
+        width: 120%;
+        max-width: 720px;
+        display: flex;
+        justify-content: space-between;
+        padding-top: 15px;
+    }
+
+    .step-text {
+        flex: 1;
+        text-align: center;
+        padding: 0 5px;
+    }
+
+    .step-title {
+        font-size: 0.9rem;
+        font-weight: 1000;
+        margin: 0;
+        color: #111;
+        white-space: nowrap;
+    }
+
+    .step-desc {
+        font-size: 0.7rem;
+        color: #555;
+        margin: 0;
+    }
 </style>
 
 @section('content')
@@ -107,15 +154,36 @@
                             <div class="form-conainer">
                                 <div class="brn-content">
                                     <div class="brn-form">
+                                        <div class="form-progress-indicator-wrapper">
+                                            <img id="progress-image" src="./images/step1.svg" alt="Form Progress"
+                                                class="progress-image">
+                                            <div class="step-text-container">
+                                                <div class="step-text active" data-step="1">
+                                                    <p class="step-title">Personal Information</p>
+                                                    <p class="step-desc">Let's start with your <br> basic details</p>
+                                                </div>
+                                                <div class="step-text" data-step="2">
+                                                    <p class="step-title">Company Information</p>
+                                                    <p class="step-desc">Tell us about your <br> business</p>
+                                                </div>
+                                                <div class="step-text" data-step="3">
+                                                    <p class="step-title">Choose Interest</p>
+                                                    <p class="step-desc">What would you like to get <br> from this
+                                                        solution
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         {{-- <form action=""> --}}
-                                        <input type="text" name="name" class="form-control"
+                                        <input type="text" name="name" required class="form-control"
                                             placeholder="Enter full name" />
 
-                                        <input type="email" name="email" class="form-control"
+                                        <input type="email" name="email" required class="form-control"
                                             placeholder="Enter your official email address" />
-                                        <input type="text" name="phone" class="form-control"
+                                        <input type="text" required name="phone" class="form-control"
                                             placeholder="Enter your WhatsApp phone Number" />
-                                        <input type="text" name="linkedin" class="form-control"
+                                        <input type="text" required name="linkedin" class="form-control"
                                             placeholder="Enter your linkedin profile" />
 
                                         {{-- <a href="#" class="btn btn-submit" id="buttonOne">
@@ -155,12 +223,34 @@
                             <div class="form-conainer">
                                 <div class="brn-content">
                                     <div class="brn-form">
+
+                                        <div class="form-progress-indicator-wrapper">
+                                            <img id="progress-image" src="./images/step2.svg" alt="Form Progress"
+                                                class="progress-image">
+                                            <div class="step-text-container">
+                                                <div class="step-text active" data-step="1">
+                                                    <p class="step-title">Personal Information</p>
+                                                    <p class="step-desc">Let's start with your <br> basic details</p>
+                                                </div>
+                                                <div class="step-text" data-step="2">
+                                                    <p class="step-title">Company Information</p>
+                                                    <p class="step-desc">Tell us about your <br> business</p>
+                                                </div>
+                                                <div class="step-text" data-step="3">
+                                                    <p class="step-title">Choose Interest</p>
+                                                    <p class="step-desc">What would you like to get <br> from this
+                                                        solution
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         {{-- <form action=""> --}}
-                                        <input type="text" name="company_name" class="form-control"
+                                        <input type="text" required name="company_name" class="form-control"
                                             placeholder="Enter your Company name" />
-                                        <input type="text" name="country" class="form-control"
+                                        <input type="text" required name="country" class="form-control"
                                             placeholder="Enter the country of your business headquarter" />
-                                        <input type="text" name="position" class="form-control"
+                                        <input type="text" required name="position" class="form-control"
                                             placeholder="Enter your position in the business" />
 
                                         <div class="brn-input-checked">
@@ -170,17 +260,18 @@
                                                 <div class="brn-input-checked-options-row">
                                                     <div class="brn-input-checked-option">
                                                         <input type="radio" value="0-5" name="years_of_operation"
-                                                            id="years0-5" class="brn-input-checked-checkbox" />
+                                                            id="years0-5" required class="brn-input-checked-checkbox" />
                                                         <label for="years0-5" class="brn-input-checked-text">0-5</label>
                                                     </div>
                                                     <div class="brn-input-checked-option">
                                                         <input type="radio" value="6-10" name="years_of_operation"
-                                                            id="years6-10" class="brn-input-checked-checkbox" />
+                                                            id="years6-10" required class="brn-input-checked-checkbox" />
                                                         <label for="years6-10" class="brn-input-checked-text">6-10</label>
                                                     </div>
                                                     <div class="brn-input-checked-option">
-                                                        <input type="radio" value="11-Above" name="years_of_operation"
-                                                            id="years11-above" class="brn-input-checked-checkbox" />
+                                                        <input type="radio" required value="11-Above"
+                                                            name="years_of_operation" id="years11-above"
+                                                            class="brn-input-checked-checkbox" />
                                                         <label for="years11-above"
                                                             class="brn-input-checked-text">11-Above</label>
                                                     </div>
@@ -193,25 +284,29 @@
                                                 <div class="brn-input-checked-options-row">
                                                     <div class="brn-input-checked-option">
                                                         <input type="radio" value="1-10" name="number_of_employees"
-                                                            id="employees1-10" class="brn-input-checked-checkbox" />
+                                                            id="employees1-10" required
+                                                            class="brn-input-checked-checkbox" />
                                                         <label for="employees1-10"
                                                             class="brn-input-checked-text">1-10</label>
                                                     </div>
                                                     <div class="brn-input-checked-option">
                                                         <input type="radio" value="11-50" name="number_of_employees"
-                                                            id="employees11-50" class="brn-input-checked-checkbox" />
+                                                            id="employees11-50" required
+                                                            class="brn-input-checked-checkbox" />
                                                         <label for="employees11-50"
                                                             class="brn-input-checked-text">11-50</label>
                                                     </div>
                                                     <div class="brn-input-checked-option">
                                                         <input type="radio" value="50-200" name="number_of_employees"
-                                                            id="employees50-200" class="brn-input-checked-checkbox" />
+                                                            id="employees50-200" required
+                                                            class="brn-input-checked-checkbox" />
                                                         <label for="employees50-200"
                                                             class="brn-input-checked-text">50-200</label>
                                                     </div>
                                                     <div class="brn-input-checked-option">
                                                         <input type="radio" value="200+" name="number_of_employees"
-                                                            id="employees200-plus" class="brn-input-checked-checkbox" />
+                                                            id="employees200-plus" required
+                                                            class="brn-input-checked-checkbox" />
                                                         <label for="employees200-plus"
                                                             class="brn-input-checked-text">200+</label>
                                                     </div>
@@ -224,8 +319,9 @@
                                             <span class="ms-2">
                                                 <i class="bi bi-arrow-right"></i></span>
                                         </a> --}}
-                                        <button type="button" class="btn prev-btn" data-prev="form1"><span class="ms-2">
-                                            <i class="fa fa-arrow-left"></i></span> Back </button>
+                                        <button type="button" class="btn prev-btn" data-prev="form1"><span
+                                                class="ms-2">
+                                                <i class="fa fa-arrow-left"></i></span> Back </button>
                                         <button type="button" class="btn next-btn" data-next="form3">Next <span
                                                 class="ms-2">
                                                 <i class="fa fa-arrow-right"></i></span></button>
@@ -258,6 +354,28 @@
                             <div class="form-conainer">
                                 <div class="brn-content">
                                     <div class="brn-form">
+
+                                        <div class="form-progress-indicator-wrapper">
+                                            <img id="progress-image" src="./images/step3.svg" alt="Form Progress"
+                                                class="progress-image">
+                                            <div class="step-text-container">
+                                                <div class="step-text active" data-step="1">
+                                                    <p class="step-title">Personal Information</p>
+                                                    <p class="step-desc">Let's start with your <br> basic details</p>
+                                                </div>
+                                                <div class="step-text" data-step="2">
+                                                    <p class="step-title">Company Information</p>
+                                                    <p class="step-desc">Tell us about your <br> business</p>
+                                                </div>
+                                                <div class="step-text" data-step="3">
+                                                    <p class="step-title">Choose Interest</p>
+                                                    <p class="step-desc">What would you like to get <br> from this
+                                                        solution
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         {{-- <form action=""> --}}
                                         <input type="text" name="goals" class="form-control"
                                             placeholder="Enter your goals for joining the BRN" />
@@ -292,7 +410,8 @@
                                                 </div>
                                             </div>
                                             <!-- Hidden input to store the selected value -->
-                                            <input type="hidden" name="selected_outcome" id="selectedOutcome" />
+                                            <input type="hidden" required name="selected_outcome"
+                                                id="selectedOutcome" />
                                         </div>
 
                                         {{-- <div class="brn-input-checked">
@@ -335,8 +454,8 @@
                                         </a> --}}
                                         <div class="d-flex justify-content-between">
                                             <button type="button" class="btn prev-btn" data-prev="form2"><span
-                                                class="ms-2">
-                                                <i class="bi bi-arrow-left"></i></span> Back</button>
+                                                    class="ms-2">
+                                                    <i class="bi bi-arrow-left"></i></span> Back</button>
 
                                             <button type="submit" id="submitBtn" class="btn btn-submit d-inline">
                                                 <span class="btn-text">Submit</span>
@@ -411,8 +530,18 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    responseMessage.textContent = data.message || 'Form submitted successfully!';
-                    modal.show();
+                    if (data.success) { // Assuming backend sends success: true
+                        responseMessage.textContent = data.message ||
+                        'Form submitted successfully!';
+                        modal.show();
+
+                        // Clear form only if submission succeeded
+                        form.reset();
+                    } else {
+                        responseMessage.textContent = data.message ||
+                            'Submission failed. Please try again.';
+                        modal.show();
+                    }
                 })
                 .catch(error => {
                     responseMessage.textContent = 'Something went wrong. Please try again.';
@@ -449,8 +578,7 @@
     });
 
 
-
-    // Form Slider
+    // Form Slider with required field validation
     document.addEventListener('DOMContentLoaded', function() {
         const steps = document.querySelectorAll('.form-step');
         const nextBtns = document.querySelectorAll('.next-btn');
@@ -465,11 +593,15 @@
         nextBtns.forEach(btn => {
             btn.addEventListener('click', function() {
                 const currentStep = this.closest('.form-step');
-                const inputs = currentStep.querySelectorAll('input, select, textarea');
+
+                // Find required inputs in this step
+                const requiredInputs = currentStep.querySelectorAll(
+                    'input[required], select[required], textarea[required]');
+
                 let valid = true;
 
-                inputs.forEach(input => {
-                    if (input.hasAttribute('required') && !input.value.trim()) {
+                requiredInputs.forEach(input => {
+                    if (!input.value.trim()) {
                         valid = false;
                         input.style.border = '1px solid red';
                     } else {
@@ -477,10 +609,21 @@
                     }
                 });
 
-                if (valid) {
-                    const next = this.dataset.next;
-                    showStep(next);
+                if (!valid) {
+                    // Scroll to first invalid field
+                    const firstInvalid = currentStep.querySelector(
+                        'input[required]:invalid, select[required]:invalid, textarea[required]:invalid'
+                        ) || requiredInputs[0];
+                    if (firstInvalid) firstInvalid.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                    return; // Stop navigation
                 }
+
+                // Move to next step
+                const next = this.dataset.next;
+                showStep(next);
             });
         });
 
@@ -491,33 +634,4 @@
             });
         });
     });
-
-
-
-
-    // document.addEventListener("DOMContentLoaded", () => {
-    //     let formOne = document.getElementById('form1');
-    //     let formTwo = document.getElementById('form2');
-    //     let formThree = document.getElementById('form3');
-
-    //     formTwo.style.display = 'none';
-    //     formThree.style.display = 'none';
-
-    //     buttonOne.addEventListener('click', () => {
-    //         formOne.style.display = 'none'
-    //         formTwo.style.display = 'block'
-    //         formThree.style.display = 'none'
-    //     })
-    //     buttonTwo.addEventListener('click', () => {
-    //         formOne.style.display = 'none'
-    //         formTwo.style.display = 'none'
-    //         formThree.style.display = 'block'
-    //     })
-    //     buttonThree.addEventListener('click', () => {
-    //         formOne.style.display = 'none'
-    //         formTwo.style.display = 'none'
-    //         formThree.style.display = 'block'
-    //         window.alert('No Back-end Integration Yet!')
-    //     })
-    // })
 </script>

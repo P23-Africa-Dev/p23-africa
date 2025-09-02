@@ -20,13 +20,13 @@ class ContactController extends Controller
             'phone_no' => 'required|string'
         ]);
 
-        $data = $request->only('name', 'email', 'message');
+        $data = $request->only('name', 'email', 'message', 'job_title', 'company_name', 'phone_no');
 
         // Send to site owner
-        Mail::to('nurudeen@p23africa.com')->queue(new ContactFormMail($data));
+        Mail::to('contact@p23africa.com')->send(new ContactFormMail($data));
 
         // Send thank-you to user
-        Mail::to($data['email'])->queue(new ThankYouMail($data));
+        Mail::to($data['email'])->send(new ThankYouMail($data));
 
         return redirect()->back()->with('success', 'Your message has been sent!');
     }
