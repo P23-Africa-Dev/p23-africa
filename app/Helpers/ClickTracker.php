@@ -3,6 +3,7 @@
 
 namespace App\Helpers;
 
+use App\Events\AdminClicksEvent;
 use App\Models\Click;
 use Jenssegers\Agent\Agent;
 
@@ -13,13 +14,13 @@ class ClickTracker
         $agent = new Agent;
         $deviceType = $agent->isMobile() ? 'mobile' : 'desktop';
 
-        $click = Click::where('route_name', $routeName)
+        $clicks = Click::where('route_name', $routeName)
             ->where('device_type', $deviceType)
             ->first();
 
-        if ($click) {
-            $click->increment('click_count');
-            $click->touch();
+        if ($clicks) {
+            $clicks->increment('click_count');
+            $clicks->touch();
         } else {
             Click::create([
                 'route_name' => $routeName,
@@ -27,5 +28,7 @@ class ClickTracker
                 'click_count' => 1,
             ]);
         }
+
+        event(new AdminClicksEvent($clicks));
     }
 }

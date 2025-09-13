@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Artisan;
 // use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 
@@ -244,6 +245,8 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|staff'])->prefix('admi
     Route::post('/brn/{id}/approve', [\App\Http\Controllers\Admin\BrnController::class, 'approve'])->name('brn.approve');
     Route::post('/brn/{id}/decline', [\App\Http\Controllers\Admin\BrnController::class, 'decline'])->name('brn.decline');
 });
+
+Broadcast::routes(['middleware' => ['auth', 'check.suspended', 'role:admin|staff']]);
 
 
 Route::get('/admin/activity-logs', function () {

@@ -56,4 +56,90 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // First, make sure Echo is properly initialized with CSRF token
+            window.Echo = new Echo({
+                broadcaster: 'reverb',
+                key: import.meta.env.VITE_REVERB_APP_KEY,
+                forceTLS: true,
+                csrfToken: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            });
+
+            // Listen to the private clicks-track channel
+            window.Echo.private('clicks-track')
+                .listen('AdminClicksEvent', (event) => {
+                    console.log('Received event:', event);
+                    // Find if this click already exists in the table
+                    const clickData = event.clicks || event;
+                    const rows = document.querySelectorAll('table tbody tr');
+                    let found = false;
+
+                    rows.forEach(row => {
+                        const routeNameCell = row.querySelector('td:first-child');
+                        const deviceTypeCell = row.querySelector('td:nth-child(2)');
+
+                        if (routeNameCell && deviceTypeCell) {
+                            const routeName = routeNameCell.textContent.trim();
+                            const deviceType = deviceTypeCell.textContent.trim().toLowerCase();
+
+                            // If we found a matching row, update it
+                            if (routeName === clickData.route_name.replace(/_/g, ' ') &&
+                                deviceType === clickData.device_type) {
+                                row.querySelector('td:nth-child(3)').textContent = clickData
+                                .click_count;
+                                row.querySelector('td:nth-child(4)').textContent = formatDateTime(
+                                    clickData.updated_at || new Date());
+                                found = true;
+
+                                // Highlight the updated row
+                                row.classList.add('table-warning');
+                                setTimeout(() => row.classList.remove('table-warning'), 2000);
+                            }
+                        }
+                    });
+
+                    // If no matching row was found, add a new one
+                    if (!found) {
+                        addNewClickRow(clickData);
+                    }
+
+                    // If table was empty, remove the "No click data" row
+                    const emptyRow = document.querySelector('tbody tr td[colspan="4"]');
+                    if (emptyRow) {
+                        emptyRow.parentElement.remove();
+                    }
+                });
+
+            // Helper function to format date
+            function formatDateTime(dateTime) {
+                const date = new Date(dateTime);
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                const hours = String(date.getHours()).padStart(2, '0');
+                const minutes = String(date.getMinutes()).padStart(2, '0');
+
+                return `${year}-${month}-${day} ${hours}:${minutes}`;
+            }
+
+            // Helper function to add a new row to the table
+            function addNewClickRow(clickData) {
+                const tbody = document.querySelector('table tbody');
+                const newRow = document.createElement('tr');
+                newRow.classList.add('table-success');
+
+                newRow.innerHTML = `
+            <td>${clickData.route_name.replace(/_/g, ' ')}</td>
+            <td>${clickData.device_type.charAt(0).toUpperCase() + clickData.device_type.slice(1)}</td>
+            <td>${clickData.click_count}</td>
+            <td>${formatDateTime(clickData.updated_at || new Date())}</td>
+        `;
+
+                tbody.prepend(newRow);
+                setTimeout(() => newRow.classList.remove('table-success'), 2000);
+            }
+        });
+    </script>
 </x-app-layout>

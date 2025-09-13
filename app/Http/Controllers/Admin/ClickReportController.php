@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\AdminClicksEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Click;
 use Illuminate\Http\Request;
@@ -21,6 +22,8 @@ class ClickReportController extends Controller
         }
 
         $clicks = $query->orderByDesc('updated_at')->get();
+
+        // event(new AdminClicksEvent($clicks));
 
         return view('admin.clicks.index', compact('clicks', 'filter'));
     }
