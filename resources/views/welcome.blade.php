@@ -1,14 +1,70 @@
 @extends('layouts.master')
 @section('title', 'Business Consulting & Growth Solutions for Africa | P23 Africa')
 @section('meta')
-        <meta name="description"
-            content="Expand and grow your business in Africa with expert business consulting. P23 Africa helps entrepreneurs, SMEs, and international businesses with strategy, expansion, marketing, operational efficiency and tailored solutions to thrive in African markets. Get started today!">
-        <meta name="keywords"
-            content="Expand and grow your business in Africa with expert business consulting. P23 Africa helps entrepreneurs, SMEs, and international businesses with strategy, expansion, marketing, operational efficiency and tailored solutions to thrive in African markets. Get started today!">
-        <meta name="author" content="Nurudeen O. Daniju">
-        <meta name="generator" content="Business Consulting & Growth Solutions for Africa | P23 Africa">
-        <meta property="og:image" content="{{ asset('images/Banner.png') }}">
+    <meta name="description"
+        content="Expand and grow your business in Africa with expert business consulting. P23 Africa helps entrepreneurs, SMEs, and international businesses with strategy, expansion, marketing, operational efficiency and tailored solutions to thrive in African markets. Get started today!">
+    <meta name="keywords"
+        content="Expand and grow your business in Africa with expert business consulting. P23 Africa helps entrepreneurs, SMEs, and international businesses with strategy, expansion, marketing, operational efficiency and tailored solutions to thrive in African markets. Get started today!">
+    <meta name="author" content="Nurudeen O. Daniju">
+    <meta name="generator" content="Business Consulting & Growth Solutions for Africa | P23 Africa">
+    <meta property="og:image" content="{{ asset('images/Banner.png') }}">
 @endsection
+
+<style>
+    /* Resource Report PDF */
+    .pdf-popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+        padding: 20px;
+    }
+
+    .pdf-popup-content {
+        background: white;
+        width: 100%;
+        max-width: 1000px;
+        height: 90vh;
+        margin: 20px auto;
+        position: relative;
+        border-radius: 8px;
+        padding: 20px;
+    }
+
+    .pdf-viewer {
+        width: 100%;
+        height: calc(100% - 50px);
+        border: none;
+    }
+
+    .close-popup {
+        position: absolute;
+        right: 20px;
+        top: 10px;
+        font-size: 24px;
+        cursor: pointer;
+        color: #333;
+    }
+
+    .download-btn {
+        display: inline-block;
+        padding: 8px 16px;
+        background: #28a745;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        margin-bottom: 10px;
+    }
+
+    .download-btn:hover {
+        background: #218838;
+        color: white;
+    }
+</style>
 
 @section('content')
     <header id="body">
@@ -17,8 +73,8 @@
                 <div class="row">
                     <div class="col-md-7 hero-text my-auto">
                         <h1>Driving <span id="font">Successful</span><br><span id="buss">Businesses
-                                Across</span><br><img src="{{ asset('images/dot.png') }}" loading='lazy' id="dot" alt=""><span
-                                id="fonts"> Global Markets</span></h1>
+                                Across</span><br><img src="{{ asset('images/dot.png') }}" loading='lazy' id="dot"
+                                alt=""><span id="fonts"> Global Markets</span></h1>
                         <br>
                         <p>
                             We help businesses in Africa, Europe and America grow by providing clear,<span
@@ -34,20 +90,24 @@
 
                         <div class="column">
                             @foreach ($images as $image)
-                                <img src="{{ asset('images/' . $image) }}" loading='lazy' class="" alt="header-slider">
+                                <img src="{{ asset('images/' . $image) }}" loading='lazy' class=""
+                                    alt="header-slider">
                             @endforeach
 
                             @foreach ($images as $image)
-                                <img src="{{ asset('images/' . $image) }}" loading='lazy' class="" alt="header-slider">
+                                <img src="{{ asset('images/' . $image) }}" loading='lazy' class=""
+                                    alt="header-slider">
                             @endforeach
                         </div>
                         <div class="column2">
                             @foreach ($images2 as $image2)
-                                <img src="{{ asset('images/' . $image2) }}" loading='lazy' class="" alt="header-slider">
+                                <img src="{{ asset('images/' . $image2) }}" loading='lazy' class=""
+                                    alt="header-slider">
                             @endforeach
 
                             @foreach ($images2 as $image2)
-                                <img src="{{ asset('images/' . $image2) }}" loading='lazy' class="" alt="header-slider">
+                                <img src="{{ asset('images/' . $image2) }}" loading='lazy' class=""
+                                    alt="header-slider">
                             @endforeach
                         </div>
                     </div>
@@ -95,7 +155,8 @@
                     globally to thrive in competitive markets.
                 </p>
                 <div>
-                    <a href="{{ url('about') }}" class="text-decoration-none learn-more" title="Learn more about P23 Africa">
+                    <a href="{{ url('about') }}" class="text-decoration-none learn-more"
+                        title="Learn more about P23 Africa">
                         Learn more about P23 Africa
                         <img src="{{ asset('images/arrow.png') }}" loading='lazy' alt="">
                     </a>
@@ -165,7 +226,7 @@
                         </div>
                         <div id="read">
                             <a href="{{ url('services') }}" class="read-more-btn mt-0">
-                                Read More <i class="bi bi-arrow-right mx-2"></i>
+                                Find out more <i class="bi bi-arrow-right mx-2"></i>
                             </a>
                         </div>
                     </div>
@@ -173,7 +234,7 @@
             </div>
             <div class="mt-2">
                 <a href="{{ url('services') }}" class="read-more-btn-2 mt-3">
-                    Read More <i class="bi bi-arrow-right"></i>
+                    Find out more <i class="bi bi-arrow-right"></i>
                 </a>
             </div>
         </div>
@@ -250,8 +311,10 @@
             </div>
 
             <div class="slider-controls">
-                <span class="arrow left"><i><img src="{{ asset('images/left.png') }}" loading='lazy' alt=""></i></span>
-                <span class="arrow right"><i><img src="{{ asset('images/right.png') }}" loading='lazy' alt=""></i></span>
+                <span class="arrow left"><i><img src="{{ asset('images/left.png') }}" loading='lazy'
+                            alt=""></i></span>
+                <span class="arrow right"><i><img src="{{ asset('images/right.png') }}" loading='lazy'
+                            alt=""></i></span>
             </div>
         </div>
     </div>
@@ -262,7 +325,8 @@
             <h2>P23 Insights</h2>
             <div class="row insight-content">
                 <div class="col-md-6 insight-image-wrapper">
-                    <img src="{{ asset('images/insight-side.jpg') }}" loading='lazy' alt="Scolding Donald" class="insight-image" />
+                    <img src="{{ asset('images/insight-side.jpg') }}" loading='lazy' alt="Scolding Donald"
+                        class="insight-image" />
                     <div class="bottom-bar"></div>
                 </div>
                 <div class="col-md-6 insight-text">
@@ -272,7 +336,7 @@
                         Our essential guide helps foreign investors navigate Africa’s diverse markets, build local
                         partnerships, and understand regulations, offering practical strategies for sustainable success.
                     </p>
-                    <a href="#" class="read-more">Read More <span>→</span></a>
+                    <a href="{{ route('resource-hub') }}" class="read-more">Read More <span>→</span></a>
                 </div>
             </div>
         </div>
@@ -281,16 +345,34 @@
     <section class="carousel-container content-section animate-on-scroll">
         <div class="slider">
             <!-- Main Set -->
-            <div class="insight-card">
-                <img src="{{ asset('images/funding.jpg') }}" loading='lazy' alt="Card image">
-                <div class="card-body">
-                    <div class="date">30th April 2025</div>
-                    <h5>State of Funding 2025</h5>
-                    <p>Africa’s funding landscape in 2025 shows steady growth, but challenges like tighter global capital and cautious investor sentiment remain.</p>
+            @foreach ($blogs as $blog)
+                <div class="insight-card text-left card">
+                    @if ($blog->pdf_path)
+                        <button class="view-pdf-btn cursor-pointer bg-white border border-0 text-left"
+                            data-pdf="{{ asset('storage/' . $blog->pdf_path) }}">
+                        @else
+                            <a href="{{ route('resource-show', $blog->slug) }}" class="text-decoration-none">
+                    @endif
+                    @if ($blog->image_path)
+                        <img src="{{ asset('storage/' . $blog->image_path) }}" loading='lazy' alt="Card image">
+                    @else
+                        <img src="{{ asset('images/no-image.jpg') }}" loading='lazy' alt="No image available">
+                    @endif
+                    <div class="card-body">
+                        <div class="date text-start w-100">
+                            {{ \Carbon\Carbon::parse($blog->created_at)->format('l, F jS Y') }}</div>
+                        <h5 class="text-start w-100">{{ $blog->title }}</h5>
+                        <p class="text-start w-100"> {{ \Illuminate\Support\Str::limit($blog->subtitle, 138) }}</p>
+                    </div>
+                    @if (!$blog->pdf_path)
+                        </a>
+                    @else
+                        </button>
+                    @endif
                 </div>
-            </div>
+            @endforeach
 
-            <div class="insight-card">
+            {{-- <div class="insight-card">
                 <img src="{{ asset('images/girl.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
                     <div class="date">1st May 2025</div>
@@ -316,10 +398,36 @@
                     <p>Business trends in Africa are evolving rapidly, with growth in digital transformation, green energy,
                         and emerging markets driving new opportunities across the continent.</p>
                 </div>
-            </div>
+            </div> --}}
 
             <!-- Duplicate Set for Seamless Loop -->
-            <div class="insight-card">
+            @foreach ($blogs as $blog)
+                <div class="insight-card text-left card">
+                    @if ($blog->pdf_path)
+                        <button class="view-pdf-btn cursor-pointer bg-white border border-0 text-left"
+                            data-pdf="{{ asset('storage/' . $blog->pdf_path) }}">
+                        @else
+                            <a href="{{ route('resource-show', $blog->slug) }}" class="text-decoration-none">
+                    @endif
+                    @if ($blog->image_path)
+                        <img src="{{ asset('storage/' . $blog->image_path) }}" loading='lazy' alt="Card image">
+                    @else
+                        <img src="{{ asset('images/no-image.jpg') }}" loading='lazy' alt="No image available">
+                    @endif
+                    <div class="card-body">
+                        <div class="date text-start w-100">
+                            {{ \Carbon\Carbon::parse($blog->created_at)->format('l, F jS Y') }}</div>
+                        <h5 class="text-start w-100">{{ $blog->title }}</h5>
+                        <p class="text-start w-100"> {{ \Illuminate\Support\Str::limit($blog->subtitle, 138) }}</p>
+                    </div>
+                    @if (!$blog->pdf_path)
+                        </a>
+                    @else
+                        </button>
+                    @endif
+                </div>
+            @endforeach
+            {{-- <div class="insight-card">
                 <img src="{{ asset('images/funding.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
                     <div class="date">30th April 2025</div>
@@ -354,11 +462,21 @@
                     <p>Business trends in Africa are evolving rapidly, with growth in digital transformation, green energy,
                         and emerging markets driving new opportunities across the continent.</p>
                 </div>
-            </div>
+            </div> --}}
         </div>
 
         <div id="btn">
             <a href="{{ route('resource-hub') }}" class="btn">More on the Resource Hub</a>
+        </div>
+
+        <div class="pdf-popup" id="pdfPopup">
+            <div class="pdf-popup-content">
+                <span class="close-popup">&times;</span>
+                <a href="" class="download-btn" id="downloadPdf" download>
+                    📥 Download PDF
+                </a>
+                <iframe class="pdf-viewer" id="pdfViewer" src="" frameborder="0"></iframe>
+            </div>
         </div>
     </section>
     <hr id="horiz">
@@ -421,6 +539,45 @@
             // Recalculate on window resize
             $(window).resize(function() {
                 updateWidths();
+            });
+        });
+
+
+
+        // Report Pop Up
+        document.addEventListener('DOMContentLoaded', function() {
+            const viewButtons = document.querySelectorAll('.view-pdf-btn');
+            const popup = document.getElementById('pdfPopup');
+            const pdfViewer = document.getElementById('pdfViewer');
+            const downloadBtn = document.getElementById('downloadPdf');
+            const closeBtn = document.querySelector('.close-popup');
+
+            viewButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault(); // Prevent any default behavior
+                    e.stopPropagation(); // Stop event bubbling
+
+                    const pdfUrl = this.getAttribute('data-pdf');
+                    pdfViewer.src = pdfUrl;
+                    downloadBtn.href = pdfUrl;
+                    popup.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+
+            closeBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                popup.style.display = 'none';
+                pdfViewer.src = '';
+                document.body.style.overflow = 'auto';
+            });
+
+            popup.addEventListener('click', function(e) {
+                if (e.target === popup) {
+                    popup.style.display = 'none';
+                    pdfViewer.src = '';
+                    document.body.style.overflow = 'auto';
+                }
             });
         });
     </script>
