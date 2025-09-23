@@ -187,7 +187,7 @@ Route::get('/feedback/thank-you', function () {
 //     return view('all-events', compact('events'));
 // })->name('events.all-events');
 
-Route::post('/contact', [ContactController::class, 'submitForm'])->name('contact.submit');
+Route::post('/contact', [ContactController::class, 'submitForm'])->middleware('throttle:5,1')->name('contact.submit');
 
 Route::get('/events/{slug}', [UserEventController::class, 'show'])->name('events.show');
 

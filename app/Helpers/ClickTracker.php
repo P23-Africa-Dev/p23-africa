@@ -22,7 +22,7 @@ class ClickTracker
             $clicks->increment('click_count');
             $clicks->touch();
         } else {
-            Click::create([
+            $clicks = Click::create([
                 'route_name' => $routeName,
                 'device_type' => $deviceType,
                 'click_count' => 1,

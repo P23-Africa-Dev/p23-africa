@@ -11,22 +11,34 @@ class ContactController extends Controller
 {
     public function submitForm(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email',
             'message' => 'required|string',
             'job_title' => 'nullable|string',
             'company_name' => 'nullable|string',
-            'phone_no' => 'required|string'
+            'phone_no' => 'required|string',
+            // 'g-recaptcha-response'  => 'required|captcha',
+            // Temporarily remove honeypot validation until service is fixed
+            // 'my_name' => 'honeypot',
+            // 'my_time' => 'required|honeytime:5',
         ]);
 
-        $data = $request->only('name', 'email', 'message', 'job_title', 'company_name', 'phone_no');
+        // Sanitize all inputs
+        $sanitizedData = [
+            'name' => strip_tags($validated['name']),
+            'email' => filter_var($validated['email'], FILTER_SANITIZE_EMAIL),
+            'message' => strip_tags($validated['message']),
+            'job_title' => $validated['job_title'] ? strip_tags($validated['job_title']) : null,
+            'company_name' => $validated['company_name'] ? strip_tags($validated['company_name']) : null,
+            'phone_no' => strip_tags($validated['phone_no']),
+        ];
 
-        // Send to site owner
-        Mail::to('contact@p23africa.com')->send(new ContactFormMail($data));
+        // Send to site owner with all sanitized data
+        Mail::to('contact@p23africa.com')->send(new ContactFormMail($sanitizedData));
 
         // Send thank-you to user
-        Mail::to($data['email'])->send(new ThankYouMail($data));
+        Mail::to($sanitizedData['email'])->send(new ThankYouMail($sanitizedData));
 
         return redirect()->back()->with('success', 'Your message has been sent!');
     }

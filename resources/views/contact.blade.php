@@ -11,6 +11,13 @@
     <meta property="og:image" content="{{ asset('images/contact_header.jpg') }}">
 @endsection
 
+             <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+     <script>
+       function onSubmit(token) {
+         document.getElementById("contact-form").submit();
+       }
+     </script>
+
 
 @section('content')
     <section id="whole_contact">
@@ -42,7 +49,8 @@
             <div class="container text-left text-md-start">
                 <h5 class="text-center text-md-start">Contact Information</h5>
                 <div style="gap: 10px"
-                    class="d-flex flex-lg-row col-lg-6 justify-content-center justify-content-md-start text-left text-md-start" id="con">
+                    class="d-flex flex-lg-row col-lg-6 justify-content-center justify-content-md-start text-left text-md-start"
+                    id="con">
                     <div class="col-md-4 info-box mb-4 mb-md-0">
                         <i class="fas fa-phone"></i>
                         <p><a href="tel:+442080921281" class="text-dark text-decoration-none fw-bold">+44 208 0921 281</a>
@@ -78,35 +86,46 @@
                                     </script>
                                 @endif
                                 <div>
-                                    <form action="{{ route('contact.submit') }}" method="POST">
+                                    <form action="{{ route('contact.submit') }}" id="contact-form" method="POST">
                                         @csrf
                                         <div class="form-group">
-                                            <input type="text" class="form-control" required placeholder="Name" name="name"
-                                                id="">
+                                            <input type="text" class="form-control" required placeholder="Name"
+                                                name="name" id="">
                                         </div>
                                         <div class="form-group">
                                             <input type="email" class="form-control" required placeholder="Email Address"
                                                 name="email" id="">
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Job Title (Optional)" name="job_title"
-                                                id="">
+                                            <input type="text" class="form-control" placeholder="Job Title (Optional)"
+                                                name="job_title" id="">
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Company Name (Optional)" name="company_name"
-                                                id="">
+                                            <input type="text" class="form-control" placeholder="Company Name (Optional)"
+                                                name="company_name" id="">
                                         </div>
                                         <div class="form-group">
-                                            <input type="tel" class="form-control" required placeholder="Phone No." name="phone_no"
-                                                id="">
+                                            <input type="tel" class="form-control" required placeholder="Phone No."
+                                                name="phone_no" id="">
                                         </div>
                                         <div class="form-group">
-                                            <textarea name="message" class="form-control" required placeholder="Your Message" id="" cols="30" rows="7"></textarea>
+                                            <textarea name="message" class="form-control" required placeholder="Your Message" id="" cols="30"
+                                                rows="7"></textarea>
                                         </div>
-                                        <div class="form-group">
-                                            <button type="submit" class="btn send_messages">Send</button>
+
+                                        <div class="form-group container">
+                                            <button type="submit" class="btn send_messages g-recaptcha" data-sitekey="6LfyhNIrAAAAACp04nzt8_3Ytg6Iy-N1yAgFxR_Z" data-callback="onSubmit">Send</button>
                                         </div>
                                     </form>
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger">
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
