@@ -44,13 +44,13 @@ class BrnController extends Controller
         $submission = BrnSubmission::create($validated);
 
         // Auto-decline if 0-5 years or 1-10 employees
-        if (
-            $submission->years_of_operation === '0-5' ||
-            $submission->number_of_employees === '1-10'
-        ) {
-            $submission->update(['status' => 'declined']);
-            Mail::to($submission->email)->send(new BrnDeclined($submission));
-        }
+        // if (
+        //     $submission->years_of_operation === '0-5' ||
+        //     $submission->number_of_employees === '1-10'
+        // ) {
+        //     $submission->update(['status' => 'declined']);
+        //     Mail::to($submission->email)->send(new BrnDeclined($submission));
+        // }
 
         return response()->json(['message' => 'Your application was submitted. You’ll be contacted soon.']);
 

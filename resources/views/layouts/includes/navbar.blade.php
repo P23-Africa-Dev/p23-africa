@@ -26,15 +26,18 @@
                                                 Africa promise.</p>
                                         </div>
                                         <div class="col-md-3 line">
-                                            <a href="{{ url('brn') }}" class="d-block mb-3"><b>Business Referral Network</b></a>
+                                            <a href="{{ route('brn') }}" class="d-block mb-3"><b>Business Referral
+                                                    Network</b></a>
                                             <p>Where top CEOs meet, connect, and grow through trusted referrals.</p>
                                         </div>
                                         <div class="col-md-3 line">
-                                            <a href="{{ route('student') }}" class="d-block mb-3"><b>University Partnership</b></a>
+                                            <a href="{{ route('student') }}" class="d-block mb-3"><b>University
+                                                    Partnership</b></a>
                                             <p>Connecting students with real-world research opportunities</p>
                                         </div>
                                         <div class="col-md-3">
-                                            <a href="https://the54thpitch.co.uk" class="d-block mb-3"><b>The 54th Pitch</b></a>
+                                            <a href="https://the54thpitch.co.uk" class="d-block mb-3"><b>The 54th
+                                                    Pitch</b></a>
                                             <p>Helping established businesses secure grant funding through expert pitch
                                                 programs</p>
                                         </div>
@@ -90,7 +93,7 @@
                             <a class="nav-link" href="{{ route('resource-hub') }}">Resource hub</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('brn') }}">Business network</a>
+                            <a class="nav-link" href="{{ route('brn') }}">Business network</a>
                         </li>
                     </ul>
 
@@ -110,7 +113,8 @@
                                 class="fab fa-facebook mx-1"></i></a>
                         <a href="https://www.instagram.com/p23africa/" target="_blank"><i
                                 class="bi bi-instagram mx-1"></i></a>
-                        <a href="https://www.youtube.com/channel/UCmhdbCCyjpINgZ0Fgu20ZBQ" target="_blank"><i class="fab fa-youtube mx-1"></i></a>
+                        <a href="https://www.youtube.com/channel/UCmhdbCCyjpINgZ0Fgu20ZBQ" target="_blank"><i
+                                class="fab fa-youtube mx-1"></i></a>
                     </div>
                 </div>
         </nav>
@@ -128,7 +132,8 @@
             <div id="mainMenu" class="main-menu">
                 <ul class="navbar-nav me-auto ms-auto mb-2 mb-lg-0" id="nav">
                     <li class="nav-item">
-                        <a class="nav-link active" data-target="submenu1" aria-current="page" href="#">Who We Are <i class="fa-solid fa-chevron-right mx-1"></i></a>
+                        <a class="nav-link active" data-target="submenu1" aria-current="page" href="#">Who We Are
+                            <i class="fa-solid fa-chevron-right mx-1"></i></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('services') }}">What We Do</a>
@@ -140,7 +145,7 @@
                         <a class="nav-link" href="{{ route('resource-hub') }}">Resource Hub</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('brn') }}">Business network</a>
+                        <a class="nav-link" href="{{ route('brn') }}">Business network</a>
                     </li>
                 </ul>
 
@@ -158,7 +163,8 @@
                     <a href="https://facebook.com/p23africa" target="_blank"><i class="fab fa-facebook mx-1"></i></a>
                     <a href="https://www.instagram.com/p23africa/" target="_blank"><i
                             class="fab fa-instagram mx-1"></i></a>
-                    <a href="https://www.youtube.com/channel/UCmhdbCCyjpINgZ0Fgu20ZBQ" target="_blank"><i class="fab fa-youtube mx-1"></i></a>
+                    <a href="https://www.youtube.com/channel/UCmhdbCCyjpINgZ0Fgu20ZBQ" target="_blank"><i
+                            class="fab fa-youtube mx-1"></i></a>
                 </div>
             </div>
 
