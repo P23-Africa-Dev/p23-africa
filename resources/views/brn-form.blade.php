@@ -88,6 +88,7 @@
 
 
 
+
     /* Styling for the entire progress indicator section */
     .form-progress-indicator-wrapper {
         position: relative;
@@ -132,6 +133,39 @@
         color: #555;
         margin: 0;
     }
+
+
+    
+
+    /* UPDATED CHANGES */
+    @media (max-width: 768px) {
+           .step-text{
+        display: none;
+    }
+
+ .step-text.active {
+        display: block;
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        margin-left: 16px;
+    }
+
+    .brn-input-checked-options-row{
+        margin-top: -7px;
+    }
+
+  #brnForm  .brn-form-icons-text{
+        font-size: 0.9rem;
+    }
+   
+    }
+
+
+
+
+
+
 </style>
 
 @section('content')
@@ -141,6 +175,8 @@
                 <form id="brnForm" action="{{ route('brn.submit') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="brn-container form-step active" id="form1">
+
+
                         <div class="brn-header-container">
                             <div class="brn-header">
                                 <h1>Personal Information</h1>
@@ -162,7 +198,7 @@
                                                     <p class="step-title">Personal Information</p>
                                                     <p class="step-desc">Let's start with your <br> basic details</p>
                                                 </div>
-                                                <div class="step-text" data-step="2">
+                                                <div class="step-text " data-step="2">
                                                     <p class="step-title">Company Information</p>
                                                     <p class="step-desc">Tell us about your <br> business</p>
                                                 </div>
@@ -177,14 +213,14 @@
 
                                         {{-- <form action=""> --}}
                                         <input type="text" name="name" required class="form-control"
-                                            placeholder="Enter full name" />
+                                            placeholder="Full Name" />
 
                                         <input type="email" name="email" required class="form-control"
-                                            placeholder="Enter your official email address" />
+                                            placeholder="Email Address" />
                                         <input type="text" required name="phone" class="form-control"
-                                            placeholder="Enter your WhatsApp phone Number" />
+                                            placeholder="Phone Number (Whatsapp)" />
                                         <input type="text" required name="linkedin" class="form-control"
-                                            placeholder="Enter your linkedin profile" />
+                                            placeholder="Linkedin Url" />
 
                                         {{-- <a href="#" class="btn btn-submit" id="buttonOne">
                                             Next
@@ -209,7 +245,7 @@
                         </div>
                     </div>
 
-                    <div class="brn-container form-step" id="form2">
+                    <div class="brn-container form-step  " id="form2">
                         <div class="brn-header-container">
                             <div class="brn-header">
                                 <h1>Company Information</h1>
@@ -247,11 +283,11 @@
 
                                         {{-- <form action=""> --}}
                                         <input type="text" required name="company_name" class="form-control"
-                                            placeholder="Enter your Company name" />
+                                            placeholder="Company name" />
                                         <input type="text" required name="country" class="form-control"
-                                            placeholder="Enter the country of your business headquarter" />
+                                            placeholder="Country" />
                                         <input type="text" required name="position" class="form-control"
-                                            placeholder="Enter your position in the business" />
+                                            placeholder="Position in the business" />
 
                                         <div class="brn-input-checked">
                                             <div class="brn-input-checked-group">
@@ -340,7 +376,7 @@
                         </div>
                     </div>
 
-                    <div class="brn-container form-step" id="form3">
+                    <div class="brn-container form-step " id="form3">
                         <div class="brn-header-container">
                             <div class="brn-header">
                                 <h1>What You Want To Gain</h1>
@@ -378,12 +414,12 @@
 
                                         {{-- <form action=""> --}}
                                         <input type="text" name="goals" class="form-control"
-                                            placeholder="Enter your goals for joining the BRN" />
+                                            placeholder="Input reason for joining" />
 
                                         <!-- ============== BRN ICONS CONTENT  -->
                                         <div class="brn-form-icons">
                                             <div class="brn-form-icons-header">
-                                                What outcomes matter most to you?
+                                                What outcome matter most to you?
                                             </div>
                                             <div class="brn-form-icons-options">
                                                 <div class="brn-first-icons">
@@ -401,7 +437,7 @@
                                                 <div class="brn-second-icons">
                                                     <div class="brn-form-icons-card" data-value="Grow and Scale 1000%">
                                                         <img src="./images/checkmark-badge.png" alt="" />
-                                                        <span class="brn-form-icons-text">Grow and Scale 1000%</span>
+                                                        <span class="brn-form-icons-text">Grow and Scale 100%</span>
                                                     </div>
                                                     <div class="brn-form-icons-card" data-value="All you need is here">
                                                         <img src="./images/checkmark-badge.png" alt="" />
@@ -452,7 +488,7 @@
                                             <span class="ms-2">
                                                 <i class="bi bi-arrow-right"></i></span>
                                         </a> --}}
-                                        <div class="d-flex justify-content-between">
+                                        <div class="d-flex justify-content-between flex-column">
                                             <button type="button" class="btn prev-btn" data-prev="form2"><span
                                                     class="ms-2">
                                                     <i class="bi bi-arrow-left"></i></span> Back</button>
@@ -584,11 +620,26 @@
         const nextBtns = document.querySelectorAll('.next-btn');
         const prevBtns = document.querySelectorAll('.prev-btn');
 
+
+
         function showStep(stepId) {
+            const steps = document.querySelectorAll('.form-step');
+
             steps.forEach(step => step.classList.remove('active'));
+
             const nextStep = document.getElementById(stepId);
             if (nextStep) nextStep.classList.add('active');
-        }
+
+            const stepTexts = nextStep.querySelectorAll('.step-text');
+            stepTexts.forEach(text => text.classList.remove('active'));
+
+            const activeStepIndex = Array.from(steps).findIndex(step => step.id === stepId);
+            const activeStepText = nextStep.querySelector(`.step-text[data-step="${activeStepIndex + 1}"]`);
+            if (activeStepText) activeStepText.classList.add('active');
+      }     
+
+
+
 
         nextBtns.forEach(btn => {
             btn.addEventListener('click', function() {
