@@ -97,15 +97,18 @@ Route::get('/device-display', function () {
 //     ClickTracker::track('BRN_Page');
 //     return view('brn');
 // })->name('brn');
-Route::get('/brn-form', function () {
+Route::get('/noel54/interest-form', function () {
     ClickTracker::track('BRN_Form_Page');
     return view('brn-form');
 })->name('brn-form');
 
-Route::post('/brn-form', [BrnController::class, 'store'])->name('brn.submit');
+Route::post('/noel54/interest-form', [BrnController::class, 'store'])->name('brn.submit');
 
+Route::get('/brn-form', function (){
+    return redirect('/noel54/interest-form');
+});
 
-Route::get('brn', [BrnController::class, 'brnIndex'])->name('brn');
+Route::get('/noel54', [BrnController::class, 'brnIndex'])->name('brn');
 
 // Student
 Route::get('/student', [SliderController::class, 'showSliderStudent'])->name('student');

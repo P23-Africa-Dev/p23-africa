@@ -18,10 +18,7 @@ class ContactController extends Controller
             'job_title' => 'nullable|string',
             'company_name' => 'nullable|string',
             'phone_no' => 'required|string',
-            // 'g-recaptcha-response'  => 'required|captcha',
-            // Temporarily remove honeypot validation until service is fixed
-            // 'my_name' => 'honeypot',
-            // 'my_time' => 'required|honeytime:5',
+            'g-recaptcha-response' => 'required|captcha', // 👈 this enforces captcha
         ]);
 
         // Sanitize all inputs
@@ -35,7 +32,7 @@ class ContactController extends Controller
         ];
 
         // Send to site owner with all sanitized data
-        Mail::to('contact@p23africa.com')->send(new ContactFormMail($sanitizedData));
+        Mail::to('nurudeen@p23africa.com')->send(new ContactFormMail($sanitizedData));
 
         // Send thank-you to user
         Mail::to($sanitizedData['email'])->send(new ThankYouMail($sanitizedData));

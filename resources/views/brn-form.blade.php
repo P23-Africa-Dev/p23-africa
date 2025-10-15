@@ -1,5 +1,5 @@
 @extends('layouts.brn-layout')
-@section('title', 'BRN Form | P23 Africa')
+@section('title', 'NOELHQ Interest Form | P23 Africa')
 
 @section('meta')
     <meta name="description"
@@ -134,6 +134,16 @@
         margin: 0;
     }
 
+        #brnForm  .btn  i{
+        display: none;
+
+    }
+
+        .brn-input-checked-options-row{
+        margin-top: -7px;
+    }
+   
+
 
     
 
@@ -151,14 +161,18 @@
         margin-left: 16px;
     }
 
-    .brn-input-checked-options-row{
-        margin-top: -7px;
-    }
+
 
   #brnForm  .brn-form-icons-text{
         font-size: 0.9rem;
     }
-   
+
+    #brnForm  .btn.next-btn , #brnForm  .btn.prev-btn,  #brnForm  .btn.btn-submit {
+        padding: 9px 40px;
+        font-size: 1rem; 
+        margin-top: 20px;
+    }
+
     }
 
 
@@ -174,7 +188,7 @@
             <div class="container">
                 <form id="brnForm" action="{{ route('brn.submit') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <div class="brn-container form-step active" id="form1">
+                    <div class="brn-container form-step " id="form1">
 
 
                         <div class="brn-header-container">
@@ -191,8 +205,8 @@
                                 <div class="brn-content">
                                     <div class="brn-form">
                                         <div class="form-progress-indicator-wrapper">
-                                            <img id="progress-image" src="./images/step1.svg" alt="Form Progress"
-                                                class="progress-image">
+                                            <img id="progress-image" src="{{ asset('images/step1.svg') }}"
+                                                alt="Form Progress" class="progress-image">
                                             <div class="step-text-container">
                                                 <div class="step-text active" data-step="1">
                                                     <p class="step-title">Personal Information</p>
@@ -239,8 +253,8 @@
                             </div>
 
                             <div class="brn-grouped-conainer">
-                                <img class="brn-group" src="./images/brn-group.png" alt="">
-                                <img class="brn-image" src="./images/BRN.png" alt="" />
+                                <img class="brn-group" src="{{ asset('images/brn-group.png') }}" alt="">
+                                <img class="brn-image" src="{{ asset('images/NOEL.svg') }}" alt="" />
                             </div>
                         </div>
                     </div>
@@ -261,8 +275,8 @@
                                     <div class="brn-form">
 
                                         <div class="form-progress-indicator-wrapper">
-                                            <img id="progress-image" src="./images/step2.svg" alt="Form Progress"
-                                                class="progress-image">
+                                            <img id="progress-image" src="{{ asset('images/step2.svg') }}"
+                                                alt="Form Progress" class="progress-image">
                                             <div class="step-text-container">
                                                 <div class="step-text active" data-step="1">
                                                     <p class="step-title">Personal Information</p>
@@ -355,28 +369,33 @@
                                             <span class="ms-2">
                                                 <i class="bi bi-arrow-right"></i></span>
                                         </a> --}}
-                                        <button type="button" class="btn prev-btn" data-prev="form1"><span
-                                                class="ms-2">
+                                          <div class="d-flex justify-content-between gap-2 ">
+
+     <button type="button" class="btn prev-btn" data-prev="form1"><span
+                                                class="">
                                                 <i class="fa fa-arrow-left"></i></span> Back </button>
                                         <button type="button" class="btn next-btn" data-next="form3">Next <span
-                                                class="ms-2">
+                                                class="">
                                                 <i class="fa fa-arrow-right"></i></span></button>
+
+                                          </div>
+                                   
                                         {{-- </form> --}}
                                     </div>
                                     <div class="brn-form-side-bg">
-                                        <img src="./images/brn-frame.png" alt="" />
+                                        <img src="{{ asset('images/brn-frame.png') }}" alt="" />
                                     </div>
                                 </div>
                             </div>
 
                             <div class="brn-grouped-conainer">
-                                <img class="brn-group" src="./images/brn-group.png" alt="" />
-                                <img class="brn-image" src="./images/BRN.png" alt="" />
+                                <img class="brn-group" src="{{ asset('images/brn-group.png') }}" alt="" />
+                                <img class="brn-image" src="{{ asset('images/NOEL.svg') }}" alt="" />
                             </div>
                         </div>
                     </div>
 
-                    <div class="brn-container form-step " id="form3">
+                    <div class="brn-container form-step active" id="form3">
                         <div class="brn-header-container">
                             <div class="brn-header">
                                 <h1>What You Want To Gain</h1>
@@ -392,8 +411,8 @@
                                     <div class="brn-form">
 
                                         <div class="form-progress-indicator-wrapper">
-                                            <img id="progress-image" src="./images/step3.svg" alt="Form Progress"
-                                                class="progress-image">
+                                            <img id="progress-image" src="{{ asset('images/step3.svg') }}"
+                                                alt="Form Progress" class="progress-image">
                                             <div class="step-text-container">
                                                 <div class="step-text active" data-step="1">
                                                     <p class="step-title">Personal Information</p>
@@ -424,23 +443,23 @@
                                             <div class="brn-form-icons-options">
                                                 <div class="brn-first-icons">
                                                     <div class="brn-form-icons-card" data-value="Network with like minds">
-                                                        <img src="./images/checkmark-badge.png" alt="" />
+                                                        <img src="{{ asset('images/checkmark-badge.png') }}" alt="" />
                                                         <span class="brn-form-icons-text">Network with like minds</span>
                                                     </div>
                                                     <div class="brn-form-icons-card"
                                                         data-value="No more jump one platform for another">
-                                                        <img src="./images/checkmark-badge.png" alt="" />
+                                                        <img src="{{ asset('images/checkmark-badge.png') }}" alt="" />
                                                         <span class="brn-form-icons-text">No more jump one platform for
                                                             another</span>
                                                     </div>
                                                 </div>
                                                 <div class="brn-second-icons">
-                                                    <div class="brn-form-icons-card" data-value="Grow and Scale 1000%">
-                                                        <img src="./images/checkmark-badge.png" alt="" />
+                                                    <div class="brn-form-icons-card" data-value="Grow and Scale 100%">
+                                                        <img src="{{ asset('images/checkmark-badge.png') }}" alt="" />
                                                         <span class="brn-form-icons-text">Grow and Scale 100%</span>
                                                     </div>
                                                     <div class="brn-form-icons-card" data-value="All you need is here">
-                                                        <img src="./images/checkmark-badge.png" alt="" />
+                                                        <img src="{{ asset('images/checkmark-badge.png') }}" alt="" />
                                                         <span class="brn-form-icons-text">All you need is here</span>
                                                     </div>
                                                 </div>
@@ -488,9 +507,9 @@
                                             <span class="ms-2">
                                                 <i class="bi bi-arrow-right"></i></span>
                                         </a> --}}
-                                        <div class="d-flex justify-content-between flex-column">
+                                        <div class="d-flex justify-content-between gap-2 ">
                                             <button type="button" class="btn prev-btn" data-prev="form2"><span
-                                                    class="ms-2">
+                                                    class="">
                                                     <i class="bi bi-arrow-left"></i></span> Back</button>
 
                                             <button type="submit" id="submitBtn" class="btn btn-submit d-inline">
@@ -502,14 +521,14 @@
                                         {{-- </form> --}}
                                     </div>
                                     <div class="brn-form-side-bg">
-                                        <img src="./images/brn-frame.png" alt="" />
+                                        <img src="{{ asset('images/brn-frame.png') }}" alt="" />
                                     </div>
                                 </div>
                             </div>
 
                             <div class="brn-grouped-conainer">
-                                <img class="brn-group" src="./images/brn-group.png" alt="" />
-                                <img class="brn-image" src="./images/BRN.png" alt="" />
+                                <img class="brn-group" src="{{ asset('images/brn-group.png') }}" alt="" />
+                                <img class="brn-image" src="{{ asset('images/NOEL.svg') }}" alt="" />
                             </div>
                         </div>
                     </div>
@@ -568,7 +587,7 @@
                 .then(data => {
                     if (data.success) { // Assuming backend sends success: true
                         responseMessage.textContent = data.message ||
-                        'Form submitted successfully!';
+                            'Form submitted successfully!';
                         modal.show();
 
                         // Clear form only if submission succeeded
@@ -664,7 +683,7 @@
                     // Scroll to first invalid field
                     const firstInvalid = currentStep.querySelector(
                         'input[required]:invalid, select[required]:invalid, textarea[required]:invalid'
-                        ) || requiredInputs[0];
+                    ) || requiredInputs[0];
                     if (firstInvalid) firstInvalid.scrollIntoView({
                         behavior: 'smooth',
                         block: 'center'

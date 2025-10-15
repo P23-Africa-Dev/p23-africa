@@ -11,13 +11,6 @@
     <meta property="og:image" content="{{ asset('images/contact_header.jpg') }}">
 @endsection
 
-             <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-     <script>
-       function onSubmit(token) {
-         document.getElementById("contact-form").submit();
-       }
-     </script>
-
 
 @section('content')
     <section id="whole_contact">
@@ -84,9 +77,17 @@
                                             text: "{{ session('success') }}"
                                         });
                                     </script>
+                                @elseif (session('error'))
+                                    <script>
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Error',
+                                            text: "{{ session('error') }}"
+                                        });
+                                    </script>
                                 @endif
                                 <div>
-                                    <form action="{{ route('contact.submit') }}" id="contact-form" method="POST">
+                                    <form action="{{ route('contact.submit') }}" method="POST">
                                         @csrf
                                         <div class="form-group">
                                             <input type="text" class="form-control" required placeholder="Name"
@@ -113,19 +114,22 @@
                                                 rows="7"></textarea>
                                         </div>
 
+                                        <div class="g-recaptcha" data-sitekey="6LeFmtMrAAAAAKQ4SHr9Z9NdNPyjwmljCV-iMUo6"></div>
+
+                                        @if ($errors->any())
+                                            <div class="alert alert-danger">
+                                                <ul>
+                                                    @foreach ($errors->all() as $error)
+                                                        <li style="font-size: 11px;">{{ $error }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        @endif
+
                                         <div class="form-group container">
-                                            <button type="submit" class="btn send_messages g-recaptcha" data-sitekey="6LfyhNIrAAAAACp04nzt8_3Ytg6Iy-N1yAgFxR_Z" data-callback="onSubmit">Send</button>
+                                            <button type="submit" class="btn send_messages">Send</button>
                                         </div>
                                     </form>
-                                    @if ($errors->any())
-                                        <div class="alert alert-danger">
-                                            <ul>
-                                                @foreach ($errors->all() as $error)
-                                                    <li>{{ $error }}</li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -180,4 +184,6 @@
             </div>
         </section>
     </section>
+
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
 @endsection

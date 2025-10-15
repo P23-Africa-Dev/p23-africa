@@ -1,5 +1,5 @@
 @extends('layouts.brn-layout')
-@section('title', 'BRN | P23 Africa')
+@section('title', 'NOELHQ | P23 Africa')
 
 @section('meta')
     <meta name="description"
@@ -60,10 +60,9 @@
                                         <div class="dot"></div>
                                     </div>
                                     <div class="card-image">
-                                    
-                                            <img src="{{ asset('images/banner-side.png') }}" loading="lazy"
-                                                alt="" />
-                                       
+
+                                        <img src="{{ asset('images/banner-side.png') }}" loading="lazy" alt="" />
+
                                         {{-- <p>
                                             "Trusted referrals. Real <br />
                                             business growth."
@@ -94,7 +93,8 @@
                         <div class="card-content px-4">
                             <h3>Join the Exclusive Circle</h3>
                             <p>
-                                Apply, get approved, and start <span class="d-md-inline d-block">your 14-day free trial.</span>
+                                Apply, get approved, and start <span class="d-md-inline d-block">your 14-day free
+                                    trial.</span>
                             </p>
                         </div>
                         <div class="pt-3">
@@ -104,12 +104,12 @@
                     <div class="operate-card card-2">
                         <div class="d-md-block d-none">
                             <img class="w-full" class="operate-card-image1" loading="lazy"
-                            src="{{ asset('images/brn-intro3.png') }}" alt="CEO Image" />
+                                src="{{ asset('images/brn-intro3.png') }}" alt="CEO Image" />
                         </div>
 
                         <div class="d-md-none d-block">
-                             <img class="w-full" class="operate-card-image1" loading="lazy"
-                            src="{{ asset('images/brn-intro-mobile.png') }}" alt="CEO Image" />
+                            <img class="w-full" class="operate-card-image1" loading="lazy"
+                                src="{{ asset('images/brn-intro-mobile.png') }}" alt="CEO Image" />
                         </div>
                         <div class="card-content my-3 px-5 px-md-4">
                             <h3>Connect & Match</h3>
@@ -132,7 +132,7 @@
 
                 <div class="how-we-operate-mobile">
                     <div class="img-card">
-                        <img src="{{ asset('images/first_card.png') }}" alt="">    
+                        <img src="{{ asset('images/first_card.png') }}" alt="">
                     </div>
                     <div class="img-card">
                         <img src="{{ asset('images/second_card.png') }}" alt="">
@@ -298,7 +298,8 @@
                                 From closed-door roundtables to business retreats, every event
                                 is designed to foster genuine collaboration and opportunity.
                             </p>
-                            <a href="{{ route('events.all-events', ['filter' => 'brn']) }}" class="see-all-events-button">
+                            <a href="{{ route('events.all-events', ['filter' => 'brn']) }}"
+                                class="see-all-events-button">
                                 See All Events
                                 <i class="fa fa-arrow-right"></i>
                             </a>
@@ -312,16 +313,18 @@
                                     <div class="card-icon">
                                         <img src="{{ asset('images/calendar-white2.png') }}" loading="lazy"
                                             alt="" />
-                                        <h3><a href="{{ route('events.show', $event->slug) }}">{{ Str::limit($event->title, 20) }}</a></h3>
+                                        <h3><a
+                                                href="{{ route('events.show', $event->slug) }}">{{ Str::limit($event->title, 20) }}</a>
+                                        </h3>
                                     </div>
                                     <div>
                                         {!! Str::limit($event->description, 233) !!}
                                     </div>
-                                    <a href="{{ route('events.show', $event->slug) }}" class="book-seat-button actionBtn" id="actionBtn"
-                                            data-event-id="{{ $event->id }}"
-                                            data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
-                                            data-event-link="{{ $event->link }}" data-bs-toggle="modal"
-                                            data-bs-target="#seatModal">
+                                    <a href="{{ route('events.show', $event->slug) }}" class="book-seat-button actionBtn"
+                                        id="actionBtn" data-event-id="{{ $event->id }}"
+                                        data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
+                                        data-event-link="{{ $event->link }}" data-bs-toggle="modal"
+                                        data-bs-target="#seatModal">
                                         Book A Seat
                                         <i class="fa fa-arrow-right"></i>
                                     </a>
@@ -334,17 +337,18 @@
                                         <img src="{{ asset('images/calendar.png') }}" loading="lazy" alt="" />
 
                                         <h3>
-                                            <a href="{{ route('events.show', $event->slug) }}">{{ Str::limit($event->title, 20) }}</a>
+                                            <a
+                                                href="{{ route('events.show', $event->slug) }}">{{ Str::limit($event->title, 20) }}</a>
                                         </h3>
                                     </div>
                                     <div>
                                         {!! Str::limit($event->description, 233) !!}
                                     </div>
-                                    <a href="{{ route('events.show', $event->slug) }}" class="book-seat-button actionBtn" id="actionBtn"
-                                            data-event-id="{{ $event->id }}"
-                                            data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
-                                            data-event-link="{{ $event->link }}" data-bs-toggle="modal"
-                                            data-bs-target="#seatModal">
+                                    <a href="{{ route('events.show', $event->slug) }}" class="book-seat-button actionBtn"
+                                        id="actionBtn" data-event-id="{{ $event->id }}"
+                                        data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
+                                        data-event-link="{{ $event->link }}" data-bs-toggle="modal"
+                                        data-bs-target="#seatModal">
                                         Book A Seat
                                         <i class="fa fa-arrow-right"></i>
                                     </a>
@@ -386,7 +390,7 @@
             </div>
         </section>
 
-         @include('include.book-seat')
+        @include('include.book-seat')
     </section>
 @endsection
 
