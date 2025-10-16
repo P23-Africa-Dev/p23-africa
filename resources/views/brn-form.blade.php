@@ -99,6 +99,7 @@
 
 
 
+
     /* Styling for the entire progress indicator section */
     .form-progress-indicator-wrapper {
         position: relative;
@@ -178,6 +179,49 @@
         padding: 8px;
         margin-top: 8px;
     }
+
+    #brnForm .btn i {
+        display: none;
+
+    }
+
+    .brn-input-checked-options-row {
+        margin-top: -7px;
+    }
+
+
+
+
+
+    /* UPDATED CHANGES */
+    @media (max-width: 768px) {
+        .step-text {
+            display: none;
+        }
+
+        .step-text.active {
+            display: block;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            margin-left: 16px;
+        }
+
+
+
+        #brnForm .brn-form-icons-text {
+            font-size: 0.9rem;
+        }
+
+        #brnForm .btn.next-btn,
+        #brnForm .btn.prev-btn,
+        #brnForm .btn.btn-submit {
+            padding: 9px 40px;
+            font-size: 1rem;
+            margin-top: 20px;
+        }
+
+    }
 </style>
 
 @section('content')
@@ -187,6 +231,8 @@
                 <form id="brnForm" action="{{ route('brn.submit') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="brn-container form-step active" id="form1">
+
+
                         <div class="brn-header-container">
                             <div class="brn-header">
                                 <h1>Personal Information</h1>
@@ -208,7 +254,7 @@
                                                     <p class="step-title">Personal Information</p>
                                                     <p class="step-desc">Let's start with your <br> basic details</p>
                                                 </div>
-                                                <div class="step-text" data-step="2">
+                                                <div class="step-text " data-step="2">
                                                     <p class="step-title">Company Information</p>
                                                     <p class="step-desc">Tell us about your <br> business</p>
                                                 </div>
@@ -223,7 +269,7 @@
 
                                         {{-- <form action=""> --}}
                                         <input type="text" name="name" required class="form-control"
-                                            placeholder="Enter full name" />
+                                            placeholder="Full Name" />
 
                                         <div style="position: relative;">
                                             <input type="email" name="email" required class="form-control"
@@ -276,7 +322,7 @@
                         </div>
                     </div>
 
-                    <div class="brn-container form-step" id="form2">
+                    <div class="brn-container form-step  " id="form2">
                         <div class="brn-header-container">
                             <div class="brn-header">
                                 <h1>Company Information</h1>
@@ -314,11 +360,11 @@
 
                                         {{-- <form action=""> --}}
                                         <input type="text" required name="company_name" class="form-control"
-                                            placeholder="Enter your Company name" />
+                                            placeholder="Company name" />
                                         <input type="text" required name="country" class="form-control"
-                                            placeholder="Enter the country of your business headquarter" />
+                                            placeholder="Country" />
                                         <input type="text" required name="position" class="form-control"
-                                            placeholder="Enter your position in the business" />
+                                            placeholder="Position in the business" />
 
                                         <div class="brn-input-checked">
                                             <div class="brn-input-checked-group">
@@ -386,12 +432,17 @@
                                             <span class="ms-2">
                                                 <i class="bi bi-arrow-right"></i></span>
                                         </a> --}}
-                                        <button type="button" class="btn prev-btn" data-prev="form1"><span
-                                                class="ms-2">
-                                                <i class="fa fa-arrow-left"></i></span> Back </button>
-                                        <button type="button" class="btn next-btn" data-next="form3">Next <span
-                                                class="ms-2">
-                                                <i class="fa fa-arrow-right"></i></span></button>
+                                        <div class="d-flex justify-content-between gap-2 ">
+
+                                            <button type="button" class="btn prev-btn" data-prev="form1"><span
+                                                    class="">
+                                                    <i class="fa fa-arrow-left"></i></span> Back </button>
+                                            <button type="button" class="btn next-btn" data-next="form3">Next <span
+                                                    class="">
+                                                    <i class="fa fa-arrow-right"></i></span></button>
+
+                                        </div>
+
                                         {{-- </form> --}}
                                     </div>
                                     <div class="brn-form-side-bg">
@@ -445,12 +496,12 @@
 
                                         {{-- <form action=""> --}}
                                         <input type="text" name="goals" class="form-control"
-                                            placeholder="Enter your goals for joining the BRN" />
+                                            placeholder="Input reason for joining" />
 
                                         <!-- ============== BRN ICONS CONTENT  -->
                                         <div class="brn-form-icons">
                                             <div class="brn-form-icons-header">
-                                                What outcomes matter most to you?
+                                                What outcome matter most to you?
                                             </div>
                                             <div class="brn-form-icons-options">
                                                 <div class="brn-first-icons">
@@ -468,10 +519,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="brn-second-icons">
-                                                    <div class="brn-form-icons-card" data-value="Grow and Scale 1000%">
+                                                    <div class="brn-form-icons-card" data-value="Grow and Scale 100%">
                                                         <img src="{{ asset('images/checkmark-badge.png') }}"
                                                             alt="" />
-                                                        <span class="brn-form-icons-text">Grow and Scale 1000%</span>
+                                                        <span class="brn-form-icons-text">Grow and Scale 100%</span>
                                                     </div>
                                                     <div class="brn-form-icons-card" data-value="All you need is here">
                                                         <img src="{{ asset('images/checkmark-badge.png') }}"
@@ -523,9 +574,9 @@
                                             <span class="ms-2">
                                                 <i class="bi bi-arrow-right"></i></span>
                                         </a> --}}
-                                        <div class="d-flex justify-content-between">
+                                        <div class="d-flex justify-content-between gap-2 ">
                                             <button type="button" class="btn prev-btn" data-prev="form2"><span
-                                                    class="ms-2">
+                                                    class="">
                                                     <i class="bi bi-arrow-left"></i></span> Back</button>
 
                                             <button type="submit" id="submitBtn" class="btn btn-submit d-inline">
@@ -568,12 +619,11 @@
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
         </script> -->
         {{-- <script src="./js/bootstrap.min.js"></script> --}}
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </section>
 @endsection
 
 <script>
-    // Form Submission with comprehensive error handling
+    // Comprehensive form handling - single DOMContentLoaded event
     document.addEventListener('DOMContentLoaded', function() {
         const form = document.getElementById('brnForm');
         const submitBtn = document.getElementById('submitBtn');
@@ -884,12 +934,8 @@
                 }
             });
         });
-    });
 
-
-
-    // Handle icon selection with error clearing
-    document.addEventListener('DOMContentLoaded', function() {
+        // Handle icon selection with error clearing
         const cards = document.querySelectorAll('.brn-form-icons-card');
         const hiddenInput = document.getElementById('selectedOutcome');
 
@@ -912,17 +958,26 @@
                 }
             });
         });
-    });
-    // Form Slider with comprehensive validation
-    document.addEventListener('DOMContentLoaded', function() {
+
+        // Form Slider with comprehensive validation
         const steps = document.querySelectorAll('.form-step');
         const nextBtns = document.querySelectorAll('.next-btn');
         const prevBtns = document.querySelectorAll('.prev-btn');
 
         function showStep(stepId) {
+            const steps = document.querySelectorAll('.form-step');
+
             steps.forEach(step => step.classList.remove('active'));
+
             const nextStep = document.getElementById(stepId);
             if (nextStep) nextStep.classList.add('active');
+
+            const stepTexts = nextStep.querySelectorAll('.step-text');
+            stepTexts.forEach(text => text.classList.remove('active'));
+
+            const activeStepIndex = Array.from(steps).findIndex(step => step.id === stepId);
+            const activeStepText = nextStep.querySelector(`.step-text[data-step="${activeStepIndex + 1}"]`);
+            if (activeStepText) activeStepText.classList.add('active');
         }
 
         function showError(input, message) {
