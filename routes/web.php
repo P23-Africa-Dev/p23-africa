@@ -103,8 +103,9 @@ Route::get('/noel54/interest-form', function () {
 })->name('brn-form');
 
 Route::post('/noel54/interest-form', [BrnController::class, 'store'])->name('brn.submit');
+Route::post('/noel54/check-email', [BrnController::class, 'checkEmail'])->name('brn.check-email');
 
-Route::get('/brn-form', function (){
+Route::get('/brn-form', function () {
     return redirect('/noel54/interest-form');
 });
 
@@ -218,28 +219,28 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|staff'])->prefix('admi
     // Route::post('/staff/store', [StaffController::class, 'store'])->name('admin.staff.store');
 
     // Route::middleware('permission:manage_events')->group(function () {
-        Route::post('/events/{id}/send-reminder', [EventController::class, 'sendReminder'])
-            ->name('events.sendReminder');
+    Route::post('/events/{id}/send-reminder', [EventController::class, 'sendReminder'])
+        ->name('events.sendReminder');
 
-        Route::post('/events/{event}/send-feedback', [EventController::class, 'sendFeedback'])->name('events.sendFeedback');
+    Route::post('/events/{event}/send-feedback', [EventController::class, 'sendFeedback'])->name('events.sendFeedback');
 
-        Route::get('/events/{event}/feedbacks', [EventController::class, 'viewFeedbacks'])->name('events.feedbacks');
+    Route::get('/events/{event}/feedbacks', [EventController::class, 'viewFeedbacks'])->name('events.feedbacks');
 
-        Route::get('/seats', [\App\Http\Controllers\Admin\SeatController::class, 'index'])->name('admin.seats.index');
+    Route::get('/seats', [\App\Http\Controllers\Admin\SeatController::class, 'index'])->name('admin.seats.index');
 
-        Route::resource('/events', EventController::class);
-        Route::get('/events/{event}/bookings', [EventController::class, 'showBookings'])->name('events.bookings');
+    Route::resource('/events', EventController::class);
+    Route::get('/events/{event}/bookings', [EventController::class, 'showBookings'])->name('events.bookings');
 
-        Route::get('/events/{event}/clicks', [EventController::class, 'viewClicks'])->name('events.clicks');
+    Route::get('/events/{event}/clicks', [EventController::class, 'viewClicks'])->name('events.clicks');
     // });
 
     // Route::middleware('permission:resource_hub')->group(function () {
-        Route::resource('blogs', BlogController::class);
-        Route::resource('/blogs/categories', CategoryController::class);
+    Route::resource('blogs', BlogController::class);
+    Route::resource('/blogs/categories', CategoryController::class);
     // });
 
     // Route::middleware('permission:view_students')->group(function () {
-        Route::resource('students', StudentController::class);
+    Route::resource('students', StudentController::class);
     // });
 
     Route::get('/clicks/report', [ClickReportController::class, 'index'])->name('clicks.report');
@@ -273,4 +274,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

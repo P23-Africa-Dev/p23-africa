@@ -10,6 +10,7 @@
     <meta name="generator"
         content="Join an exclusive referral network designed for industry leaders who value trusted relationships and measurable growth | P23 Africa">
     <meta property="og:image" content="{{ asset('images/brn-form-meta.png') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
 {{-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> --}}
@@ -21,6 +22,16 @@
 
     .form-step.active {
         display: block;
+    }
+
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
     }
 
     .brn-form .next-btn {
@@ -132,6 +143,41 @@
         color: #555;
         margin: 0;
     }
+
+    /* Error styling */
+    .error-message {
+        animation: slideDown 0.3s ease-out;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .form-control.error {
+        border: 2px solid #ef4444 !important;
+        background-color: #fef2f2 !important;
+    }
+
+    .form-control:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(25, 62, 71, 0.1);
+    }
+
+    .brn-input-checked-group .error-message {
+        background-color: #fef2f2;
+        border: 1px solid #ef4444;
+        border-radius: 4px;
+        padding: 8px;
+        margin-top: 8px;
+    }
 </style>
 
 @section('content')
@@ -179,12 +225,33 @@
                                         <input type="text" name="name" required class="form-control"
                                             placeholder="Enter full name" />
 
-                                        <input type="email" name="email" required class="form-control"
-                                            placeholder="Enter your official email address" />
+                                        <div style="position: relative;">
+                                            <input type="email" name="email" required class="form-control"
+                                                placeholder="Enter your official email address" />
+                                            <div id="email-status"
+                                                style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); display: none;">
+                                                <svg id="email-checkmark"
+                                                    style="width: 20px; height: 20px; color: #10b981; display: none;"
+                                                    fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd"
+                                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                        clip-rule="evenodd"></path>
+                                                </svg>
+                                                <svg id="email-spinner"
+                                                    style="width: 20px; height: 20px; color: #6b7280; display: none; animation: spin 1s linear infinite;"
+                                                    fill="none" viewBox="0 0 24 24">
+                                                    <circle style="opacity: 0.25;" cx="12" cy="12" r="10"
+                                                        stroke="currentColor" stroke-width="4"></circle>
+                                                    <path style="opacity: 0.75;" fill="currentColor"
+                                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                                    </path>
+                                                </svg>
+                                            </div>
+                                        </div>
                                         <input type="text" required name="phone" class="form-control"
                                             placeholder="Enter your WhatsApp phone Number" />
-                                        <input type="text" required name="linkedin" class="form-control"
-                                            placeholder="Enter your linkedin profile" />
+                                        <input type="url" required name="linkedin" class="form-control"
+                                            placeholder="Enter your linkedin profile (e.g., https://linkedin.com/in/yourname)" />
 
                                         {{-- <a href="#" class="btn btn-submit" id="buttonOne">
                                             Next
@@ -388,23 +455,27 @@
                                             <div class="brn-form-icons-options">
                                                 <div class="brn-first-icons">
                                                     <div class="brn-form-icons-card" data-value="Network with like minds">
-                                                        <img src="{{ asset('images/checkmark-badge.png') }}" alt="" />
+                                                        <img src="{{ asset('images/checkmark-badge.png') }}"
+                                                            alt="" />
                                                         <span class="brn-form-icons-text">Network with like minds</span>
                                                     </div>
                                                     <div class="brn-form-icons-card"
                                                         data-value="No more jump one platform for another">
-                                                        <img src="{{ asset('images/checkmark-badge.png') }}" alt="" />
+                                                        <img src="{{ asset('images/checkmark-badge.png') }}"
+                                                            alt="" />
                                                         <span class="brn-form-icons-text">No more jump one platform for
                                                             another</span>
                                                     </div>
                                                 </div>
                                                 <div class="brn-second-icons">
                                                     <div class="brn-form-icons-card" data-value="Grow and Scale 1000%">
-                                                        <img src="{{ asset('images/checkmark-badge.png') }}" alt="" />
+                                                        <img src="{{ asset('images/checkmark-badge.png') }}"
+                                                            alt="" />
                                                         <span class="brn-form-icons-text">Grow and Scale 1000%</span>
                                                     </div>
                                                     <div class="brn-form-icons-card" data-value="All you need is here">
-                                                        <img src="{{ asset('images/checkmark-badge.png') }}" alt="" />
+                                                        <img src="{{ asset('images/checkmark-badge.png') }}"
+                                                            alt="" />
                                                         <span class="brn-form-icons-text">All you need is here</span>
                                                     </div>
                                                 </div>
@@ -502,7 +573,7 @@
 @endsection
 
 <script>
-    // Form Submission
+    // Form Submission with comprehensive error handling
     document.addEventListener('DOMContentLoaded', function() {
         const form = document.getElementById('brnForm');
         const submitBtn = document.getElementById('submitBtn');
@@ -511,54 +582,313 @@
         const responseMessage = document.getElementById('responseMessage');
         const modal = new bootstrap.Modal(document.getElementById('responseModal'));
 
+        function showServerErrors(errors) {
+            // Clear previous errors
+            document.querySelectorAll('.error-message').forEach(msg => msg.remove());
+            document.querySelectorAll('input, select, textarea').forEach(input => {
+                input.style.border = '';
+                input.style.backgroundColor = '';
+            });
+
+            // Show field-specific errors
+            Object.keys(errors).forEach(field => {
+                const input = form.querySelector(`[name="${field}"]`);
+                if (input) {
+                    const errorMessage = errors[field][0]; // Get first error message
+
+                    input.style.border = '2px solid #ef4444';
+                    input.style.backgroundColor = '#fef2f2';
+
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'error-message server-error';
+                    errorDiv.style.color = '#ef4444';
+                    errorDiv.style.fontSize = '0.875rem';
+                    errorDiv.style.marginTop = '4px';
+                    errorDiv.textContent = errorMessage;
+
+                    input.parentNode.insertBefore(errorDiv, input.nextSibling);
+                }
+            });
+
+            // Scroll to first error
+            const firstError = document.querySelector('.server-error');
+            if (firstError) {
+                firstError.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }
+        }
+
+        // Define validateStep function in this scope
+        function validateStep(stepElement) {
+            const stepId = stepElement.id;
+            let isValid = true;
+
+            // Clear all previous errors in this step
+            stepElement.querySelectorAll('.error-message').forEach(msg => msg.remove());
+            stepElement.querySelectorAll('input, select, textarea').forEach(input => {
+                input.style.border = '';
+                input.style.backgroundColor = '';
+            });
+
+            if (stepId === 'form1') {
+                // Step 1: Personal Information validation
+                const name = stepElement.querySelector('input[name="name"]');
+                const email = stepElement.querySelector('input[name="email"]');
+                const phone = stepElement.querySelector('input[name="phone"]');
+                const linkedin = stepElement.querySelector('input[name="linkedin"]');
+
+                if (!name.value.trim()) {
+                    showError(name, 'Full name is required');
+                    isValid = false;
+                }
+
+                if (!email.value.trim()) {
+                    showError(email, 'Email address is required');
+                    isValid = false;
+                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+                    showError(email, 'Please enter a valid email address');
+                    isValid = false;
+                } else {
+                    // Check if email has red border (indicating it already exists)
+                    const emailStyle = window.getComputedStyle(email);
+                    if (emailStyle.borderColor === 'rgb(239, 68, 68)' || email.style.borderColor.includes(
+                            '#ef4444')) {
+                        showError(email, 'This email address is already registered');
+                        isValid = false;
+                    }
+                    // Check if email validation is complete (has green checkmark)
+                    const emailCheckmark = document.getElementById('email-checkmark');
+                    if (emailCheckmark && emailCheckmark.style.display !== 'block') {
+                        showError(email, 'Please wait for email validation to complete');
+                        isValid = false;
+                    }
+                }
+
+                if (!phone.value.trim()) {
+                    showError(phone, 'Phone number is required');
+                    isValid = false;
+                }
+
+                if (!linkedin.value.trim()) {
+                    showError(linkedin, 'LinkedIn profile is required');
+                    isValid = false;
+                } else if (!linkedin.value.includes('linkedin.com')) {
+                    showError(linkedin, 'Please enter a valid LinkedIn profile URL');
+                    isValid = false;
+                }
+
+            } else if (stepId === 'form2') {
+                // Step 2: Company Information validation
+                const companyName = stepElement.querySelector('input[name="company_name"]');
+                const country = stepElement.querySelector('input[name="country"]');
+                const position = stepElement.querySelector('input[name="position"]');
+                const yearsOfOperation = stepElement.querySelector('input[name="years_of_operation"]:checked');
+                const numberOfEmployees = stepElement.querySelector(
+                    'input[name="number_of_employees"]:checked');
+
+                if (!companyName.value.trim()) {
+                    showError(companyName, 'Company name is required');
+                    isValid = false;
+                }
+
+                if (!country.value.trim()) {
+                    showError(country, 'Business headquarters country is required');
+                    isValid = false;
+                }
+
+                if (!position.value.trim()) {
+                    showError(position, 'Your position in the business is required');
+                    isValid = false;
+                }
+
+                if (!yearsOfOperation) {
+                    const yearsGroup = stepElement.querySelector('.brn-input-checked-group');
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'error-message';
+                    errorDiv.style.color = '#ef4444';
+                    errorDiv.style.fontSize = '0.875rem';
+                    errorDiv.style.marginTop = '8px';
+                    errorDiv.textContent = 'Please select your business years of operation';
+                    yearsGroup.appendChild(errorDiv);
+                    isValid = false;
+                }
+
+                if (!numberOfEmployees) {
+                    const employeesGroup = stepElement.querySelectorAll('.brn-input-checked-group')[1];
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'error-message';
+                    errorDiv.style.color = '#ef4444';
+                    errorDiv.style.fontSize = '0.875rem';
+                    errorDiv.style.marginTop = '8px';
+                    errorDiv.textContent = 'Please select your number of employees';
+                    employeesGroup.appendChild(errorDiv);
+                    isValid = false;
+                }
+
+            } else if (stepId === 'form3') {
+                // Step 3: Outcomes validation
+                const selectedOutcome = stepElement.querySelector('input[name="selected_outcome"]');
+
+                if (!selectedOutcome || !selectedOutcome.value) {
+                    const iconsContainer = stepElement.querySelector('.brn-form-icons');
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'error-message';
+                    errorDiv.style.color = '#ef4444';
+                    errorDiv.style.fontSize = '0.875rem';
+                    errorDiv.style.marginTop = '12px';
+                    errorDiv.style.textAlign = 'center';
+                    errorDiv.textContent = 'Please select what outcomes matter most to you';
+                    iconsContainer.appendChild(errorDiv);
+                    isValid = false;
+                }
+            }
+
+            return isValid;
+        }
+
+        function showError(input, message) {
+            // Add error styling
+            input.style.border = '2px solid #ef4444';
+            input.style.backgroundColor = '#fef2f2';
+
+            // Create error message
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.style.color = '#ef4444';
+            errorDiv.style.fontSize = '0.875rem';
+            errorDiv.style.marginTop = '4px';
+            errorDiv.textContent = message;
+
+            // Insert error message after input
+            input.parentNode.insertBefore(errorDiv, input.nextSibling);
+        }
+
         form.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            // Show spinner
+            // Validate all steps before submission
+            let allValid = true;
+            const allSteps = document.querySelectorAll('.form-step');
+
+            allSteps.forEach(step => {
+                if (!validateStep(step)) {
+                    allValid = false;
+                }
+            });
+
+            if (!allValid) {
+                // Show first error and switch to that step
+                const firstErrorStep = document.querySelector('.form-step .error-message').closest(
+                    '.form-step');
+                if (firstErrorStep) {
+                    // Switch to the step with error
+                    document.querySelectorAll('.form-step').forEach(step => step.classList.remove(
+                        'active'));
+                    firstErrorStep.classList.add('active');
+
+                    // Scroll to first error
+                    const firstError = firstErrorStep.querySelector('.error-message');
+                    if (firstError) {
+                        firstError.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                    }
+                }
+                return;
+            }
+
+            // Disable submit button to prevent double submission
+            submitBtn.disabled = true;
             btnText.classList.add('d-none');
             spinner.classList.remove('d-none');
 
-            // Simulate form submission
             const formData = new FormData(form);
 
             fetch(form.action, {
                     method: 'POST',
                     headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json'
                     },
                     body: formData
                 })
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => {
+                            throw {
+                                status: response.status,
+                                data: err
+                            };
+                        });
+                    }
+                    return response.json();
+                })
                 .then(data => {
-                    if (data.success) { // Assuming backend sends success: true
-                        responseMessage.textContent = data.message ||
-                            'Form submitted successfully!';
-                        modal.show();
+                    // Success response
+                    responseMessage.textContent = data.message ||
+                        'Your application was submitted successfully!';
+                    responseMessage.style.color = '#059669';
+                    modal.show();
 
-                        // Clear form only if submission succeeded
-                        form.reset();
+                    // Reset form and go back to first step
+                    form.reset();
+                    document.querySelectorAll('.form-step').forEach(step => step.classList.remove(
+                        'active'));
+                    document.getElementById('form1').classList.add('active');
+
+                    // Clear any selected outcome cards
+                    document.querySelectorAll('.brn-form-icons-card').forEach(card => {
+                        card.classList.remove('selected');
+                    });
+                })
+                .catch(error => {
+                    if (error.status === 422 && error.data.errors) {
+                        // Validation errors from server
+                        showServerErrors(error.data.errors);
+                        responseMessage.textContent =
+                            'Please correct the errors below and try again.';
+                        responseMessage.style.color = '#ef4444';
+                        modal.show();
+                    } else if (error.status === 422 && error.data.message) {
+                        // Custom validation message (like duplicate email)
+                        responseMessage.textContent = error.data.message;
+                        responseMessage.style.color = '#ef4444';
+                        modal.show();
                     } else {
-                        responseMessage.textContent = data.message ||
-                            'Submission failed. Please try again.';
+                        // Network or other errors
+                        responseMessage.textContent =
+                            'Something went wrong. Please check your internet connection and try again.';
+                        responseMessage.style.color = '#ef4444';
                         modal.show();
                     }
                 })
-                .catch(error => {
-                    responseMessage.textContent = 'Something went wrong. Please try again.';
-                    modal.show();
-                })
                 .finally(() => {
-                    // Reset button
+                    // Reset button state
+                    submitBtn.disabled = false;
                     spinner.classList.add('d-none');
                     btnText.classList.remove('d-none');
-                    form.reset();
                 });
+        });
+
+        // Clear server errors when user starts typing
+        document.querySelectorAll('input, select, textarea').forEach(input => {
+            input.addEventListener('input', function() {
+                const serverError = this.parentNode.querySelector('.server-error');
+                if (serverError) {
+                    serverError.remove();
+                    this.style.border = '';
+                    this.style.backgroundColor = '';
+                }
+            });
         });
     });
 
 
 
-    // Handle icon selection
+    // Handle icon selection with error clearing
     document.addEventListener('DOMContentLoaded', function() {
         const cards = document.querySelectorAll('.brn-form-icons-card');
         const hiddenInput = document.getElementById('selectedOutcome');
@@ -573,12 +903,17 @@
 
                 // Update the hidden input value with the selected card's data-value
                 hiddenInput.value = this.dataset.value;
+
+                // Clear any error message for outcome selection
+                const iconsContainer = document.querySelector('.brn-form-icons');
+                const errorMsg = iconsContainer.querySelector('.error-message');
+                if (errorMsg) {
+                    errorMsg.remove();
+                }
             });
         });
     });
-
-
-    // Form Slider with required field validation
+    // Form Slider with comprehensive validation
     document.addEventListener('DOMContentLoaded', function() {
         const steps = document.querySelectorAll('.form-step');
         const nextBtns = document.querySelectorAll('.next-btn');
@@ -590,40 +925,187 @@
             if (nextStep) nextStep.classList.add('active');
         }
 
+        function showError(input, message) {
+            // Remove existing error
+            clearError(input);
+
+            // Add error styling
+            input.style.border = '2px solid #ef4444';
+            input.style.backgroundColor = '#fef2f2';
+
+            // Create error message
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.style.color = '#ef4444';
+            errorDiv.style.fontSize = '0.875rem';
+            errorDiv.style.marginTop = '4px';
+            errorDiv.textContent = message;
+
+            // Insert error message after input
+            input.parentNode.insertBefore(errorDiv, input.nextSibling);
+        }
+
+        function clearError(input) {
+            input.style.border = '';
+            input.style.backgroundColor = '';
+
+            // Remove error message
+            const errorMsg = input.parentNode.querySelector('.error-message');
+            if (errorMsg) {
+                errorMsg.remove();
+            }
+        }
+
+        function validateStepNavigation(stepElement) {
+            const stepId = stepElement.id;
+            let isValid = true;
+
+            // Clear all previous errors in this step
+            stepElement.querySelectorAll('.error-message').forEach(msg => msg.remove());
+            stepElement.querySelectorAll('input, select, textarea').forEach(input => {
+                clearError(input);
+            });
+
+            if (stepId === 'form1') {
+                // Step 1: Personal Information validation
+                const name = stepElement.querySelector('input[name="name"]');
+                const email = stepElement.querySelector('input[name="email"]');
+                const phone = stepElement.querySelector('input[name="phone"]');
+                const linkedin = stepElement.querySelector('input[name="linkedin"]');
+
+                if (!name.value.trim()) {
+                    showError(name, 'Full name is required');
+                    isValid = false;
+                }
+
+                if (!email.value.trim()) {
+                    showError(email, 'Email address is required');
+                    isValid = false;
+                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+                    showError(email, 'Please enter a valid email address');
+                    isValid = false;
+                } else {
+                    // Check if email has red border (indicating it already exists)
+                    const emailStyle = window.getComputedStyle(email);
+                    if (emailStyle.borderColor === 'rgb(239, 68, 68)' || email.style.borderColor.includes(
+                            '#ef4444')) {
+                        showError(email, 'This email address is already registered');
+                        isValid = false;
+                    }
+                    // Check if email validation is complete (has green checkmark)
+                    const emailCheckmark = document.getElementById('email-checkmark');
+                    if (emailCheckmark && emailCheckmark.style.display !== 'block') {
+                        showError(email, 'Please wait for email validation to complete');
+                        isValid = false;
+                    }
+                }
+
+                if (!phone.value.trim()) {
+                    showError(phone, 'WhatsApp phone number is required');
+                    isValid = false;
+                }
+
+                if (!linkedin.value.trim()) {
+                    showError(linkedin, 'LinkedIn profile is required');
+                    isValid = false;
+                } else if (!linkedin.value.toLowerCase().includes('linkedin.com')) {
+                    showError(linkedin, 'Please enter a valid LinkedIn profile URL');
+                    isValid = false;
+                }
+
+            } else if (stepId === 'form2') {
+                // Step 2: Company Information validation
+                const companyName = stepElement.querySelector('input[name="company_name"]');
+                const country = stepElement.querySelector('input[name="country"]');
+                const position = stepElement.querySelector('input[name="position"]');
+                const yearsOfOperation = stepElement.querySelector('input[name="years_of_operation"]:checked');
+                const numberOfEmployees = stepElement.querySelector(
+                    'input[name="number_of_employees"]:checked');
+
+                if (!companyName.value.trim()) {
+                    showError(companyName, 'Company name is required');
+                    isValid = false;
+                }
+
+                if (!country.value.trim()) {
+                    showError(country, 'Business headquarters country is required');
+                    isValid = false;
+                }
+
+                if (!position.value.trim()) {
+                    showError(position, 'Your position in the business is required');
+                    isValid = false;
+                }
+
+                if (!yearsOfOperation) {
+                    const yearsGroup = stepElement.querySelector('.brn-input-checked-group');
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'error-message';
+                    errorDiv.style.color = '#ef4444';
+                    errorDiv.style.fontSize = '0.875rem';
+                    errorDiv.style.marginTop = '8px';
+                    errorDiv.textContent = 'Please select your business years of operation';
+                    yearsGroup.appendChild(errorDiv);
+                    isValid = false;
+                }
+
+                if (!numberOfEmployees) {
+                    const employeesGroup = stepElement.querySelectorAll('.brn-input-checked-group')[1];
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'error-message';
+                    errorDiv.style.color = '#ef4444';
+                    errorDiv.style.fontSize = '0.875rem';
+                    errorDiv.style.marginTop = '8px';
+                    errorDiv.textContent = 'Please select your number of employees';
+                    employeesGroup.appendChild(errorDiv);
+                    isValid = false;
+                }
+
+            } else if (stepId === 'form3') {
+                // Step 3: Outcomes validation
+                const selectedOutcome = stepElement.querySelector('input[name="selected_outcome"]');
+
+                if (!selectedOutcome || !selectedOutcome.value) {
+                    const iconsContainer = stepElement.querySelector('.brn-form-icons');
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'error-message';
+                    errorDiv.style.color = '#ef4444';
+                    errorDiv.style.fontSize = '0.875rem';
+                    errorDiv.style.marginTop = '12px';
+                    errorDiv.style.textAlign = 'center';
+                    errorDiv.textContent = 'Please select what outcomes matter most to you';
+                    iconsContainer.appendChild(errorDiv);
+                    isValid = false;
+                }
+            }
+
+            return isValid;
+        }
+
         nextBtns.forEach(btn => {
             btn.addEventListener('click', function() {
                 const currentStep = this.closest('.form-step');
 
-                // Find required inputs in this step
-                const requiredInputs = currentStep.querySelectorAll(
-                    'input[required], select[required], textarea[required]');
-
-                let valid = true;
-
-                requiredInputs.forEach(input => {
-                    if (!input.value.trim()) {
-                        valid = false;
-                        input.style.border = '1px solid red';
-                    } else {
-                        input.style.border = '';
+                if (validateStepNavigation(currentStep)) {
+                    // Move to next step only if validation passes
+                    const next = this.dataset.next;
+                    showStep(next);
+                } else {
+                    // Scroll to first error
+                    const firstError = currentStep.querySelector('.error-message');
+                    if (firstError) {
+                        firstError.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
                     }
-                });
 
-                if (!valid) {
-                    // Scroll to first invalid field
-                    const firstInvalid = currentStep.querySelector(
-                        'input[required]:invalid, select[required]:invalid, textarea[required]:invalid'
-                    ) || requiredInputs[0];
-                    if (firstInvalid) firstInvalid.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center'
-                    });
-                    return; // Stop navigation
+                    // Show validation feedback
+                    btn.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        btn.style.transform = '';
+                    }, 150);
                 }
-
-                // Move to next step
-                const next = this.dataset.next;
-                showStep(next);
             });
         });
 
@@ -633,5 +1115,114 @@
                 showStep(prev);
             });
         });
+
+        // Real-time validation feedback
+        document.querySelectorAll('input, select, textarea').forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.style.border && this.style.border.includes('red')) {
+                    clearError(this);
+                }
+            });
+        });
+
+        // Clear radio button errors when selected
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const group = this.closest('.brn-input-checked-group');
+                const errorMsg = group.querySelector('.error-message');
+                if (errorMsg) {
+                    errorMsg.remove();
+                }
+            });
+        });
+
+        // Real-time email validation
+        const emailInput = document.querySelector('input[name="email"]');
+        const emailStatus = document.getElementById('email-status');
+        const emailCheckmark = document.getElementById('email-checkmark');
+        const emailSpinner = document.getElementById('email-spinner');
+        let emailTimeout;
+
+        function showEmailStatus(type) {
+            emailStatus.style.display = 'block';
+            emailCheckmark.style.display = type === 'success' ? 'block' : 'none';
+            emailSpinner.style.display = type === 'loading' ? 'block' : 'none';
+
+            if (type === 'hide') {
+                emailStatus.style.display = 'none';
+            }
+        }
+
+        function validateEmailInDatabase(email) {
+            if (!email || !isValidEmail(email)) {
+                showEmailStatus('hide');
+                return;
+            }
+
+            showEmailStatus('loading');
+
+            fetch('{{ route('brn.check-email') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
+                            'content')
+                    },
+                    body: JSON.stringify({
+                        email: email
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.exists) {
+                        showEmailStatus('hide');
+                        showError(emailInput, data.message);
+                        emailInput.style.border = '2px solid #ef4444';
+                        emailInput.style.backgroundColor = '#fef2f2';
+                    } else {
+                        showEmailStatus('success');
+                        clearError(emailInput);
+                        emailInput.style.border = '2px solid #10b981';
+                        emailInput.style.backgroundColor = '#f0fdf4';
+                    }
+                })
+                .catch(error => {
+                    console.error('Email validation error:', error);
+                    showEmailStatus('hide');
+                });
+        }
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        if (emailInput) {
+            emailInput.addEventListener('input', function() {
+                clearTimeout(emailTimeout);
+                const email = this.value.trim();
+
+                // Clear previous styling
+                this.style.border = '';
+                this.style.backgroundColor = '';
+
+                if (email === '') {
+                    showEmailStatus('hide');
+                    return;
+                }
+
+                // Debounce the API call
+                emailTimeout = setTimeout(() => {
+                    validateEmailInDatabase(email);
+                }, 500);
+            });
+
+            emailInput.addEventListener('blur', function() {
+                const email = this.value.trim();
+                if (email && isValidEmail(email)) {
+                    validateEmailInDatabase(email);
+                }
+            });
+        }
     });
 </script>
