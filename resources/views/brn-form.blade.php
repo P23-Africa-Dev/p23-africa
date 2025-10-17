@@ -1,5 +1,5 @@
 @extends('layouts.brn-layout')
-@section('title', 'NOELHQ Interest Form | P23 Africa')
+@section('title', 'NOEL54 Interest Form | P23 Africa')
 
 @section('meta')
     <meta name="description"
@@ -16,6 +16,14 @@
 {{-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> --}}
 
 <style>
+    .brn-form .form-control {
+        margin-bottom: 2px !important;
+    }
+
+    .brn-form .form-group {
+        margin-bottom: 15px;
+    }
+
     .form-step {
         display: none;
     }
@@ -268,12 +276,14 @@
                                         </div>
 
                                         {{-- <form action=""> --}}
-                                        <input type="text" name="name" required class="form-control"
-                                            placeholder="Full Name" />
+                                        <div class="form-group">
+                                            <input type="text" name="name" required class="form-control"
+                                                placeholder="Full Name" />
+                                        </div>
 
-                                        <div style="position: relative;">
+                                        <div class="form-group" style="position: relative;">
                                             <input type="email" name="email" required class="form-control"
-                                                placeholder="Enter your official email address" />
+                                                placeholder="Enter your valid email address" />
                                             <div id="email-status"
                                                 style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); display: none;">
                                                 <svg id="email-checkmark"
@@ -294,10 +304,14 @@
                                                 </svg>
                                             </div>
                                         </div>
-                                        <input type="text" required name="phone" class="form-control"
-                                            placeholder="Enter your WhatsApp phone Number" />
-                                        <input type="url" required name="linkedin" class="form-control"
-                                            placeholder="Enter your linkedin profile (e.g., https://linkedin.com/in/yourname)" />
+                                        <div class="form-group">
+                                            <input type="text" required name="phone" class="form-control"
+                                                placeholder="Enter your phone number" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="url" required name="linkedin" class="form-control"
+                                                placeholder="Enter your linkedin profile (e.g., https://linkedin.com/in/yourname)" />
+                                        </div>
 
                                         {{-- <a href="#" class="btn btn-submit" id="buttonOne">
                                             Next
@@ -359,12 +373,19 @@
                                         </div>
 
                                         {{-- <form action=""> --}}
-                                        <input type="text" required name="company_name" class="form-control"
-                                            placeholder="Company name" />
-                                        <input type="text" required name="country" class="form-control"
-                                            placeholder="Country" />
-                                        <input type="text" required name="position" class="form-control"
-                                            placeholder="Position in the business" />
+                                        <div class="form-group">
+                                            <input type="text" name="company_name" required class="form-control"
+                                                placeholder="Company Name" />
+
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" required name="country" class="form-control"
+                                                placeholder="Country" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" required name="position" class="form-control"
+                                                placeholder="Position in the business" />
+                                        </div>
 
                                         <div class="brn-input-checked">
                                             <div class="brn-input-checked-group">
@@ -1056,7 +1077,7 @@
                 }
 
                 if (!phone.value.trim()) {
-                    showError(phone, 'WhatsApp phone number is required');
+                    showError(phone, 'Phone number is required');
                     isValid = false;
                 }
 

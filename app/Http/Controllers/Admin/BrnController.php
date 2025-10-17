@@ -13,7 +13,7 @@ class BrnController extends Controller
 {
     public function adminView()
     {
-        $submissions = BrnSubmission::latest()->get();
+        $submissions = BrnSubmission::latest()->paginate(20);
         return view('admin.brn.index', compact('submissions'));
     }
 
@@ -35,5 +35,19 @@ class BrnController extends Controller
         Mail::to($submission->email)->send(new BrnDeclined($submission));
 
         return back()->with('error', 'Declined and email sent.');
+    }
+
+    public function show($id)
+    {
+        $submission = BrnSubmission::findOrFail($id);
+        return view('admin.brn.show', compact('submission'));
+    }
+
+    public function destroy($id)
+    {
+        $submission = BrnSubmission::findOrFail($id);
+        $submission->delete();
+
+        return back()->with('success', 'BRN application deleted successfully.');
     }
 }

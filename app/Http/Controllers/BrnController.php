@@ -72,7 +72,7 @@ class BrnController extends Controller
             'email.required' => 'Email address is required.',
             'email.email' => 'Please enter a valid email address.',
             'email.unique' => 'This email address is already registered.',
-            'phone.required' => 'WhatsApp phone number is required.',
+            'phone.required' => 'Phone number is required.',
             'linkedin.required' => 'LinkedIn profile URL is required.',
             'linkedin.url' => 'Please enter a valid LinkedIn profile URL.',
             'company_name.required' => 'Company name is required.',
@@ -85,7 +85,9 @@ class BrnController extends Controller
             'selected_outcome.required' => 'Please select what outcomes matter most to you.',
         ]);
 
-        $submission = BrnSubmission::create($validated);
+        // $submission = BrnSubmission::create($validated);
+
+        BrnSubmission::create($validated);
 
         // Auto-decline if 0-5 years or 1-10 employees
         // if (

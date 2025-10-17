@@ -2,7 +2,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('BRN Interested Applicants') }}
+            {{ __('NOEL Interested Applicants') }}
         </h2>
     </x-slot>
 
@@ -28,25 +28,50 @@
                                     <td>{{ $submission->company_name }}</td>
                                     <td>{{ ucfirst($submission->status) }}</td>
                                     <td>
+                                        <!-- View Button -->
+                                        <a href="{{ route('admin.brn.show', $submission->id) }}"
+                                            class="btn btn-info btn-sm" title="View Details">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+
+                                        <!-- Delete Button -->
+                                        <form action="{{ route('admin.brn.destroy', $submission->id) }}" method="POST"
+                                            style="display:inline"
+                                            onsubmit="return confirm('Are you sure you want to delete this application?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm"
+                                                title="Delete Application">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+
                                         @if ($submission->status === 'pending')
-                                            <form action="{{ route('admin.brn.approve', $submission->id) }}" method="POST"
-                                                style="display:inline">
+                                            <!-- Approve Button -->
+                                            <form action="{{ route('admin.brn.approve', $submission->id) }}"
+                                                method="POST" style="display:inline">
                                                 @csrf
-                                                <button class="btn btn-success btn-sm">Approve</button>
+                                                <button class="btn btn-success btn-sm"
+                                                    title="Approve Application">Approve</button>
                                             </form>
-                                            <form action="{{ route('admin.brn.decline', $submission->id) }}" method="POST"
-                                                style="display:inline">
+                                            <!-- Decline Button -->
+                                            <form action="{{ route('admin.brn.decline', $submission->id) }}"
+                                                method="POST" style="display:inline">
                                                 @csrf
-                                                <button class="btn btn-danger btn-sm">Decline</button>
+                                                <button class="btn btn-warning btn-sm"
+                                                    title="Decline Application">Decline</button>
                                             </form>
-                                        @else
-                                            <span>—</span>
                                         @endif
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
+
+                    <!-- Pagination Links -->
+                    <div class="mt-6">
+                        {{ $submissions->links() }}
+                    </div>
 
                 </div>
             </div>
