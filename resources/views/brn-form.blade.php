@@ -236,7 +236,8 @@
     <section class="brn-body">
         <div class="brn-main-container">
             <div class="container">
-                <form id="brnForm" action="{{ route('brn.submit') }}" method="POST" enctype="multipart/form-data">
+                <form id="brnForm" action="{{ route('brn.submit') }}" method="POST" enctype="multipart/form-data"
+                    novalidate>
                     @csrf
                     <div class="brn-container form-step active" id="form1">
 
@@ -277,12 +278,12 @@
 
                                         {{-- <form action=""> --}}
                                         <div class="form-group">
-                                            <input type="text" name="name" required class="form-control"
+                                            <input type="text" name="name" class="form-control"
                                                 placeholder="Full Name" />
                                         </div>
 
                                         <div class="form-group" style="position: relative;">
-                                            <input type="email" name="email" required class="form-control"
+                                            <input type="email" name="email" class="form-control"
                                                 placeholder="Enter your valid email address" />
                                             <div id="email-status"
                                                 style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); display: none;">
@@ -305,11 +306,11 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" required name="phone" class="form-control"
+                                            <input type="text" name="phone" class="form-control"
                                                 placeholder="Enter your phone number" />
                                         </div>
                                         <div class="form-group">
-                                            <input type="url" required name="linkedin" class="form-control"
+                                            <input type="url" name="linkedin" class="form-control"
                                                 placeholder="Enter your linkedin profile (e.g., https://linkedin.com/in/yourname)" />
                                         </div>
 
@@ -374,16 +375,16 @@
 
                                         {{-- <form action=""> --}}
                                         <div class="form-group">
-                                            <input type="text" name="company_name" required class="form-control"
+                                            <input type="text" name="company_name" class="form-control"
                                                 placeholder="Company Name" />
 
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" required name="country" class="form-control"
+                                            <input type="text" name="country" class="form-control"
                                                 placeholder="Country" />
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" required name="position" class="form-control"
+                                            <input type="text" name="position" class="form-control"
                                                 placeholder="Position in the business" />
                                         </div>
 
@@ -394,18 +395,17 @@
                                                 <div class="brn-input-checked-options-row">
                                                     <div class="brn-input-checked-option">
                                                         <input type="radio" value="0-5" name="years_of_operation"
-                                                            id="years0-5" required class="brn-input-checked-checkbox" />
+                                                            id="years0-5" class="brn-input-checked-checkbox" />
                                                         <label for="years0-5" class="brn-input-checked-text">0-5</label>
                                                     </div>
                                                     <div class="brn-input-checked-option">
                                                         <input type="radio" value="6-10" name="years_of_operation"
-                                                            id="years6-10" required class="brn-input-checked-checkbox" />
+                                                            id="years6-10" class="brn-input-checked-checkbox" />
                                                         <label for="years6-10" class="brn-input-checked-text">6-10</label>
                                                     </div>
                                                     <div class="brn-input-checked-option">
-                                                        <input type="radio" required value="11-Above"
-                                                            name="years_of_operation" id="years11-above"
-                                                            class="brn-input-checked-checkbox" />
+                                                        <input type="radio" value="11-Above" name="years_of_operation"
+                                                            id="years11-above" class="brn-input-checked-checkbox" />
                                                         <label for="years11-above"
                                                             class="brn-input-checked-text">11-Above</label>
                                                     </div>
@@ -418,29 +418,25 @@
                                                 <div class="brn-input-checked-options-row">
                                                     <div class="brn-input-checked-option">
                                                         <input type="radio" value="1-10" name="number_of_employees"
-                                                            id="employees1-10" required
-                                                            class="brn-input-checked-checkbox" />
+                                                            id="employees1-10" class="brn-input-checked-checkbox" />
                                                         <label for="employees1-10"
                                                             class="brn-input-checked-text">1-10</label>
                                                     </div>
                                                     <div class="brn-input-checked-option">
                                                         <input type="radio" value="11-50" name="number_of_employees"
-                                                            id="employees11-50" required
-                                                            class="brn-input-checked-checkbox" />
+                                                            id="employees11-50" class="brn-input-checked-checkbox" />
                                                         <label for="employees11-50"
                                                             class="brn-input-checked-text">11-50</label>
                                                     </div>
                                                     <div class="brn-input-checked-option">
                                                         <input type="radio" value="50-200" name="number_of_employees"
-                                                            id="employees50-200" required
-                                                            class="brn-input-checked-checkbox" />
+                                                            id="employees50-200" class="brn-input-checked-checkbox" />
                                                         <label for="employees50-200"
                                                             class="brn-input-checked-text">50-200</label>
                                                     </div>
                                                     <div class="brn-input-checked-option">
                                                         <input type="radio" value="200+" name="number_of_employees"
-                                                            id="employees200-plus" required
-                                                            class="brn-input-checked-checkbox" />
+                                                            id="employees200-plus" class="brn-input-checked-checkbox" />
                                                         <label for="employees200-plus"
                                                             class="brn-input-checked-text">200+</label>
                                                     </div>
@@ -553,8 +549,7 @@
                                                 </div>
                                             </div>
                                             <!-- Hidden input to store the selected value -->
-                                            <input type="hidden" required name="selected_outcome"
-                                                id="selectedOutcome" />
+                                            <input type="hidden" name="selected_outcome" id="selectedOutcome" />
                                         </div>
 
                                         {{-- <div class="brn-input-checked">
@@ -653,12 +648,193 @@
         const responseMessage = document.getElementById('responseMessage');
         const modal = new bootstrap.Modal(document.getElementById('responseModal'));
 
+        // Form persistence constants
+        const FORM_STORAGE_KEY = 'brn_form_data';
+        const STEP_STORAGE_KEY = 'brn_current_step';
+
+        // Save form data to localStorage
+        function saveFormData() {
+            const formData = {};
+            const formElements = form.querySelectorAll('input, select, textarea');
+
+            formElements.forEach(element => {
+                if (element.type === 'radio' || element.type === 'checkbox') {
+                    if (element.checked) {
+                        formData[element.name] = element.value;
+                    }
+                } else {
+                    formData[element.name] = element.value;
+                }
+            });
+
+            // Save current step
+            const activeStep = document.querySelector('.form-step.active');
+            if (activeStep) {
+                localStorage.setItem(STEP_STORAGE_KEY, activeStep.id);
+            }
+
+            localStorage.setItem(FORM_STORAGE_KEY, JSON.stringify(formData));
+        }
+
+        // Restore form data from localStorage
+        function restoreFormData() {
+            try {
+                const savedData = localStorage.getItem(FORM_STORAGE_KEY);
+                const savedStep = localStorage.getItem(STEP_STORAGE_KEY);
+
+                if (savedData) {
+                    const formData = JSON.parse(savedData);
+
+                    // Restore input values
+                    Object.keys(formData).forEach(fieldName => {
+                        const elements = form.querySelectorAll(`[name="${fieldName}"]`);
+
+                        elements.forEach(element => {
+                            if (element.type === 'radio' || element.type === 'checkbox') {
+                                if (element.value === formData[fieldName]) {
+                                    element.checked = true;
+                                }
+                            } else {
+                                element.value = formData[fieldName];
+                            }
+                        });
+                    });
+
+                    // Restore selected outcome cards
+                    if (formData.selected_outcome) {
+                        const cards = document.querySelectorAll('.brn-form-icons-card');
+                        cards.forEach(card => {
+                            card.classList.remove('selected');
+                            if (card.dataset.value === formData.selected_outcome) {
+                                card.classList.add('selected');
+                            }
+                        });
+                    }
+
+                    // Auto-revalidate email if it exists and is valid format
+                    if (formData.email && isValidEmail(formData.email)) {
+                        // Small delay to ensure DOM is ready
+                        setTimeout(() => {
+                            validateEmailInDatabase(formData.email);
+                        }, 100);
+                    }
+
+                    // Restore current step
+                    if (savedStep && savedStep !== 'form1') {
+                        document.querySelectorAll('.form-step').forEach(step => step.classList.remove(
+                            'active'));
+                        const stepToShow = document.getElementById(savedStep);
+                        if (stepToShow) {
+                            stepToShow.classList.add('active');
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error restoring form data:', error);
+            }
+        }
+
+        // Clear form data from localStorage
+        function clearFormData() {
+            localStorage.removeItem(FORM_STORAGE_KEY);
+            localStorage.removeItem(STEP_STORAGE_KEY);
+        }
+
+        // Email validation utility functions (moved here to be available during restore)
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function showEmailStatus(type) {
+            const emailStatus = document.getElementById('email-status');
+            const emailCheckmark = document.getElementById('email-checkmark');
+            const emailSpinner = document.getElementById('email-spinner');
+
+            emailStatus.style.display = 'block';
+            emailCheckmark.style.display = type === 'success' ? 'block' : 'none';
+            emailSpinner.style.display = type === 'loading' ? 'block' : 'none';
+
+            if (type === 'hide') {
+                emailStatus.style.display = 'none';
+            }
+        }
+
+        function validateEmailInDatabase(email) {
+            const emailInput = document.querySelector('input[name="email"]');
+
+            if (!email || !isValidEmail(email)) {
+                showEmailStatus('hide');
+                return;
+            }
+
+            showEmailStatus('loading');
+
+            fetch('{{ route('brn.check-email') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
+                            'content')
+                    },
+                    body: JSON.stringify({
+                        email: email
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.exists) {
+                        showEmailStatus('hide');
+                        // Clear any existing errors first, then show the new one
+                        clearError(emailInput);
+                        showError(emailInput, data.message);
+                    } else {
+                        showEmailStatus('success');
+                        clearError(emailInput);
+                        emailInput.style.border = '2px solid #10b981';
+                        emailInput.style.backgroundColor = '#f0fdf4';
+                    }
+                })
+                .catch(error => {
+                    console.error('Email validation error:', error);
+                    showEmailStatus('hide');
+                });
+        }
+
+        // Auto-save form data on input changes
+        function setupAutoSave() {
+            const formElements = form.querySelectorAll('input, select, textarea');
+
+            formElements.forEach(element => {
+                element.addEventListener('input', saveFormData);
+                element.addEventListener('change', saveFormData);
+            });
+
+            // Save when outcome cards are selected
+            const cards = document.querySelectorAll('.brn-form-icons-card');
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    setTimeout(saveFormData, 100); // Small delay to ensure DOM is updated
+                });
+            });
+        }
+
+        // Initialize form persistence
+        restoreFormData();
+        setupAutoSave();
+
+        // Optional: Add a way to clear saved data (for development/testing)
+        // You can call this in console: window.clearBrnFormData()
+        window.clearBrnFormData = function() {
+            clearFormData();
+            location.reload();
+        };
+
         function showServerErrors(errors) {
-            // Clear previous errors
+            // Clear ALL previous errors thoroughly
             document.querySelectorAll('.error-message').forEach(msg => msg.remove());
             document.querySelectorAll('input, select, textarea').forEach(input => {
-                input.style.border = '';
-                input.style.backgroundColor = '';
+                clearError(input);
             });
 
             // Show field-specific errors
@@ -666,6 +842,9 @@
                 const input = form.querySelector(`[name="${field}"]`);
                 if (input) {
                     const errorMessage = errors[field][0]; // Get first error message
+
+                    // Ensure the input is clean before adding server error
+                    clearError(input);
 
                     input.style.border = '2px solid #ef4444';
                     input.style.backgroundColor = '#fef2f2';
@@ -691,135 +870,15 @@
             }
         }
 
-        // Define validateStep function in this scope
+        // Define validateStep function to avoid duplication with validateStepNavigation
         function validateStep(stepElement) {
-            const stepId = stepElement.id;
-            let isValid = true;
-
-            // Clear all previous errors in this step
-            stepElement.querySelectorAll('.error-message').forEach(msg => msg.remove());
-            stepElement.querySelectorAll('input, select, textarea').forEach(input => {
-                input.style.border = '';
-                input.style.backgroundColor = '';
-            });
-
-            if (stepId === 'form1') {
-                // Step 1: Personal Information validation
-                const name = stepElement.querySelector('input[name="name"]');
-                const email = stepElement.querySelector('input[name="email"]');
-                const phone = stepElement.querySelector('input[name="phone"]');
-                const linkedin = stepElement.querySelector('input[name="linkedin"]');
-
-                if (!name.value.trim()) {
-                    showError(name, 'Full name is required');
-                    isValid = false;
-                }
-
-                if (!email.value.trim()) {
-                    showError(email, 'Email address is required');
-                    isValid = false;
-                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
-                    showError(email, 'Please enter a valid email address');
-                    isValid = false;
-                } else {
-                    // Check if email has red border (indicating it already exists)
-                    const emailStyle = window.getComputedStyle(email);
-                    if (emailStyle.borderColor === 'rgb(239, 68, 68)' || email.style.borderColor.includes(
-                            '#ef4444')) {
-                        showError(email, 'This email address is already registered');
-                        isValid = false;
-                    }
-                    // Check if email validation is complete (has green checkmark)
-                    const emailCheckmark = document.getElementById('email-checkmark');
-                    if (emailCheckmark && emailCheckmark.style.display !== 'block') {
-                        showError(email, 'Please wait for email validation to complete');
-                        isValid = false;
-                    }
-                }
-
-                if (!phone.value.trim()) {
-                    showError(phone, 'Phone number is required');
-                    isValid = false;
-                }
-
-                if (!linkedin.value.trim()) {
-                    showError(linkedin, 'LinkedIn profile is required');
-                    isValid = false;
-                } else if (!linkedin.value.includes('linkedin.com')) {
-                    showError(linkedin, 'Please enter a valid LinkedIn profile URL');
-                    isValid = false;
-                }
-
-            } else if (stepId === 'form2') {
-                // Step 2: Company Information validation
-                const companyName = stepElement.querySelector('input[name="company_name"]');
-                const country = stepElement.querySelector('input[name="country"]');
-                const position = stepElement.querySelector('input[name="position"]');
-                const yearsOfOperation = stepElement.querySelector('input[name="years_of_operation"]:checked');
-                const numberOfEmployees = stepElement.querySelector(
-                    'input[name="number_of_employees"]:checked');
-
-                if (!companyName.value.trim()) {
-                    showError(companyName, 'Company name is required');
-                    isValid = false;
-                }
-
-                if (!country.value.trim()) {
-                    showError(country, 'Business headquarters country is required');
-                    isValid = false;
-                }
-
-                if (!position.value.trim()) {
-                    showError(position, 'Your position in the business is required');
-                    isValid = false;
-                }
-
-                if (!yearsOfOperation) {
-                    const yearsGroup = stepElement.querySelector('.brn-input-checked-group');
-                    const errorDiv = document.createElement('div');
-                    errorDiv.className = 'error-message';
-                    errorDiv.style.color = '#ef4444';
-                    errorDiv.style.fontSize = '0.875rem';
-                    errorDiv.style.marginTop = '8px';
-                    errorDiv.textContent = 'Please select your business years of operation';
-                    yearsGroup.appendChild(errorDiv);
-                    isValid = false;
-                }
-
-                if (!numberOfEmployees) {
-                    const employeesGroup = stepElement.querySelectorAll('.brn-input-checked-group')[1];
-                    const errorDiv = document.createElement('div');
-                    errorDiv.className = 'error-message';
-                    errorDiv.style.color = '#ef4444';
-                    errorDiv.style.fontSize = '0.875rem';
-                    errorDiv.style.marginTop = '8px';
-                    errorDiv.textContent = 'Please select your number of employees';
-                    employeesGroup.appendChild(errorDiv);
-                    isValid = false;
-                }
-
-            } else if (stepId === 'form3') {
-                // Step 3: Outcomes validation
-                const selectedOutcome = stepElement.querySelector('input[name="selected_outcome"]');
-
-                if (!selectedOutcome || !selectedOutcome.value) {
-                    const iconsContainer = stepElement.querySelector('.brn-form-icons');
-                    const errorDiv = document.createElement('div');
-                    errorDiv.className = 'error-message';
-                    errorDiv.style.color = '#ef4444';
-                    errorDiv.style.fontSize = '0.875rem';
-                    errorDiv.style.marginTop = '12px';
-                    errorDiv.style.textAlign = 'center';
-                    errorDiv.textContent = 'Please select what outcomes matter most to you';
-                    iconsContainer.appendChild(errorDiv);
-                    isValid = false;
-                }
-            }
-
-            return isValid;
+            return validateStepNavigation(stepElement);
         }
 
         function showError(input, message) {
+            // Clear any existing errors for this input first
+            clearError(input);
+
             // Add error styling
             input.style.border = '2px solid #ef4444';
             input.style.backgroundColor = '#fef2f2';
@@ -904,6 +963,9 @@
                     responseMessage.style.color = '#059669';
                     modal.show();
 
+                    // Clear saved form data from localStorage
+                    clearFormData();
+
                     // Reset form and go back to first step
                     form.reset();
                     document.querySelectorAll('.form-step').forEach(step => step.classList.remove(
@@ -977,6 +1039,9 @@
                 if (errorMsg) {
                     errorMsg.remove();
                 }
+
+                // Save form data after selection
+                saveFormData();
             });
         });
 
@@ -999,27 +1064,12 @@
             const activeStepIndex = Array.from(steps).findIndex(step => step.id === stepId);
             const activeStepText = nextStep.querySelector(`.step-text[data-step="${activeStepIndex + 1}"]`);
             if (activeStepText) activeStepText.classList.add('active');
+
+            // Save current step to localStorage
+            localStorage.setItem(STEP_STORAGE_KEY, stepId);
         }
 
-        function showError(input, message) {
-            // Remove existing error
-            clearError(input);
 
-            // Add error styling
-            input.style.border = '2px solid #ef4444';
-            input.style.backgroundColor = '#fef2f2';
-
-            // Create error message
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'error-message';
-            errorDiv.style.color = '#ef4444';
-            errorDiv.style.fontSize = '0.875rem';
-            errorDiv.style.marginTop = '4px';
-            errorDiv.textContent = message;
-
-            // Insert error message after input
-            input.parentNode.insertBefore(errorDiv, input.nextSibling);
-        }
 
         function clearError(input) {
             input.style.border = '';
@@ -1212,65 +1262,48 @@
             });
         });
 
-        // Real-time email validation
+        // Real-time email validation setup
         const emailInput = document.querySelector('input[name="email"]');
-        const emailStatus = document.getElementById('email-status');
-        const emailCheckmark = document.getElementById('email-checkmark');
-        const emailSpinner = document.getElementById('email-spinner');
         let emailTimeout;
 
-        function showEmailStatus(type) {
-            emailStatus.style.display = 'block';
-            emailCheckmark.style.display = type === 'success' ? 'block' : 'none';
-            emailSpinner.style.display = type === 'loading' ? 'block' : 'none';
+        // LinkedIn URL normalization function
+        function normalizeLinkedInURL(url) {
+            if (!url || url.trim() === '') return '';
 
-            if (type === 'hide') {
-                emailStatus.style.display = 'none';
+            let normalizedUrl = url.trim();
+
+            // Remove common prefixes and normalize
+            normalizedUrl = normalizedUrl.replace(/^(https?:\/\/)?(www\.)?/i, '');
+
+            // Handle different LinkedIn domain variations
+            normalizedUrl = normalizedUrl.replace(/^(linkedin\.com|linkedin\.in|in\.linkedin\.com)/i,
+                'linkedin.com');
+
+            // Ensure it starts with linkedin.com
+            if (!normalizedUrl.toLowerCase().startsWith('linkedin.com')) {
+                // If it looks like a LinkedIn profile path, prepend linkedin.com
+                if (normalizedUrl.startsWith('/in/') || normalizedUrl.match(/^[a-zA-Z0-9\-_.]+$/)) {
+                    normalizedUrl = 'linkedin.com/in/' + normalizedUrl.replace(/^\/in\//, '');
+                } else {
+                    // If it doesn't look like LinkedIn, return original
+                    return url;
+                }
             }
-        }
 
-        function validateEmailInDatabase(email) {
-            if (!email || !isValidEmail(email)) {
-                showEmailStatus('hide');
-                return;
+            // Ensure /in/ path is present for profiles
+            if (normalizedUrl.toLowerCase().startsWith('linkedin.com') &&
+                !normalizedUrl.toLowerCase().includes('/company/') &&
+                !normalizedUrl.toLowerCase().includes('/in/')) {
+                const path = normalizedUrl.substring('linkedin.com'.length).replace(/^\/+/, '');
+                if (path) {
+                    normalizedUrl = 'linkedin.com/in/' + path;
+                } else {
+                    normalizedUrl = 'linkedin.com';
+                }
             }
 
-            showEmailStatus('loading');
-
-            fetch('{{ route('brn.check-email') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
-                            'content')
-                    },
-                    body: JSON.stringify({
-                        email: email
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.exists) {
-                        showEmailStatus('hide');
-                        showError(emailInput, data.message);
-                        emailInput.style.border = '2px solid #ef4444';
-                        emailInput.style.backgroundColor = '#fef2f2';
-                    } else {
-                        showEmailStatus('success');
-                        clearError(emailInput);
-                        emailInput.style.border = '2px solid #10b981';
-                        emailInput.style.backgroundColor = '#f0fdf4';
-                    }
-                })
-                .catch(error => {
-                    console.error('Email validation error:', error);
-                    showEmailStatus('hide');
-                });
-        }
-
-        function isValidEmail(email) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailRegex.test(email);
+            // Add https prefix
+            return 'https://' + normalizedUrl;
         }
 
         if (emailInput) {
@@ -1298,6 +1331,55 @@
                 if (email && isValidEmail(email)) {
                     validateEmailInDatabase(email);
                 }
+            });
+        }
+
+        // LinkedIn URL auto-formatting
+        const linkedinInput = document.querySelector('input[name="linkedin"]');
+        if (linkedinInput) {
+            linkedinInput.addEventListener('blur', function() {
+                const currentValue = this.value.trim();
+                if (currentValue && currentValue.toLowerCase().includes('linkedin')) {
+                    const normalizedUrl = normalizeLinkedInURL(currentValue);
+                    if (normalizedUrl !== currentValue) {
+                        this.value = normalizedUrl;
+
+                        // Clear any existing errors since we've formatted the URL
+                        const errorMsg = this.parentNode.querySelector('.error-message');
+                        if (errorMsg) {
+                            errorMsg.remove();
+                        }
+                        this.style.border = '';
+                        this.style.backgroundColor = '';
+
+                        // Save the normalized URL
+                        saveFormData();
+                    }
+                }
+            });
+
+            // Also format on paste
+            linkedinInput.addEventListener('paste', function() {
+                setTimeout(() => {
+                    const currentValue = this.value.trim();
+                    if (currentValue && currentValue.toLowerCase().includes('linkedin')) {
+                        const normalizedUrl = normalizeLinkedInURL(currentValue);
+                        if (normalizedUrl !== currentValue) {
+                            this.value = normalizedUrl;
+
+                            // Clear any existing errors since we've formatted the URL
+                            const errorMsg = this.parentNode.querySelector('.error-message');
+                            if (errorMsg) {
+                                errorMsg.remove();
+                            }
+                            this.style.border = '';
+                            this.style.backgroundColor = '';
+
+                            // Save the normalized URL
+                            saveFormData();
+                        }
+                    }
+                }, 100);
             });
         }
     });

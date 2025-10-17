@@ -24,7 +24,8 @@ class BrnController extends Controller
 
         Mail::to($submission->email)->send(new BrnApproved($submission));
 
-        return back()->with('success', 'Approved and email sent.');
+        // return back()->with('success', 'Approved and email sent.');
+        return redirect()->route('admin.brn.index')->with('success', 'Approved and email sent.');
     }
 
     public function decline($id)
@@ -34,7 +35,8 @@ class BrnController extends Controller
 
         Mail::to($submission->email)->send(new BrnDeclined($submission));
 
-        return back()->with('error', 'Declined and email sent.');
+        // return back()->with('error', 'Declined and email sent.');
+        return redirect()->route('admin.brn.index')->with('error', 'Declined and email sent.');
     }
 
     public function show($id)
@@ -48,6 +50,7 @@ class BrnController extends Controller
         $submission = BrnSubmission::findOrFail($id);
         $submission->delete();
 
-        return back()->with('success', 'BRN application deleted successfully.');
+        // return back()->with('success', 'BRN application deleted successfully.');
+        return redirect()->route('admin.brn.index')->with('success', 'BRN application deleted successfully.');
     }
 }
