@@ -26,8 +26,6 @@
         <script src="{{ asset('build/assets/app-Bf4POITK.js') }}" defer></script>
     @endenv
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <!-- Font Awesome for icons -->
     <script src="https://kit.fontawesome.com/3df60fe6e2.js" crossorigin="anonymous"></script>
     <style>
@@ -75,6 +73,11 @@
             box-shadow: none !important;
             border: none !important;
         }
+
+        /* Let Bootstrap handle navbar collapse transitions naturally */
+        .navbar-collapse {
+            /* Remove custom transitions that conflict with Bootstrap */
+        }
     </style>
 </head>
 
@@ -86,7 +89,8 @@
                 <img src="{{ asset('images/logo.png') }}" loading='lazy' alt="">
             </a>
             <button class="navbar-toggler text-white border-0" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarNav">
+                data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                aria-label="Toggle navigation">
                 {{-- <span class="navbar-toggler-icon"></span> --}}
                 <img src="{{ asset('images/hamburger.png') }}" loading='lazy' alt="">
             </button>
@@ -210,68 +214,50 @@
     </footer>
 
     <!-- Bootstrap JS -->
-    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> --}}
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery loaded after Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-        let isScrolled = false;
+        // Wait for DOM to be fully loaded
+        document.addEventListener("DOMContentLoaded", function() {
+            let isScrolled = false;
 
-        // Scroll detection
-        $(window).scroll(function() {
-            const scroll = $(window).scrollTop();
+            // Scroll detection (using vanilla JS to avoid conflicts)
+            window.addEventListener('scroll', function() {
+                const scroll = window.pageYOffset || document.documentElement.scrollTop;
 
-            if (scroll > 100) {
-                $('.navbar').addClass('bg-scrolling');
-                isScrolled = true;
-            } else {
-                $('.navbar').removeClass('bg-scrolling');
-                isScrolled = false;
-                $('.nav .nav-link').removeClass('active-custom');
-            }
-        });
+                if (scroll > 100) {
+                    document.querySelector('.navbar').classList.add('bg-scrolling');
+                    isScrolled = true;
+                } else {
+                    document.querySelector('.navbar').classList.remove('bg-scrolling');
+                    isScrolled = false;
+                    document.querySelectorAll('.nav .nav-link').forEach(link => {
+                        link.classList.remove('active-custom');
+                    });
+                }
+            });
 
-
-
-        // ANIMATE ON SCROLL
-        document.addEventListener("DOMContentLoaded", () => {
+            // ANIMATE ON SCROLL
             const sections = document.querySelectorAll(".reveal-section");
 
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add("visible");
-                        observer.unobserve(entry
-                            .target); // Remove this line if you want the animation again on scroll
+                        observer.unobserve(entry.target);
                     }
                 });
             }, {
                 threshold: 0.2
             });
 
-
-
-            // ANIMATE ON SCROLL
-            document.addEventListener("DOMContentLoaded", () => {
-                const sections = document.querySelectorAll(".reveal-section");
-
-                const observer = new IntersectionObserver((entries, observer) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add("visible");
-                            observer.unobserve(entry
-                                .target
-                            ); // Remove this line if you want the animation again on scroll
-                        }
-                    });
-                }, {
-                    threshold: 0.2
-                });
-
-                sections.forEach(section => {
-                    observer.observe(section);
-                });
-
+            sections.forEach(section => {
+                observer.observe(section);
             });
+
+            // Let Bootstrap handle hamburger menu functionality completely
         });
     </script>
 
