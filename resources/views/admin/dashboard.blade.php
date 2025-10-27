@@ -35,6 +35,11 @@
                                     class="fa fa-arrow-right"></i></a>
                         </div>
                         <hr>
+                        <div class="my-3">
+                            <a href="{{ route('admin.playbooks.index') }}" class="link-dark">Playbook Downloads <i
+                                    class="fa fa-arrow-right"></i></a>
+                        </div>
+                        <hr>
                         {{-- @endcan --}}
 
 

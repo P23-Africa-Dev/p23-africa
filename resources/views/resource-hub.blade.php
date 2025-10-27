@@ -10,6 +10,7 @@
     <meta name="generator"
         content="Explore Expert Articles, Market Trends, And Practical Advice To Scale Your Business Across Africa And Beyond | P23 Africa">
     <meta property="og:image" content="{{ asset('images/resource-header.png') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
@@ -131,6 +132,290 @@
             .download-btn:hover {
                 background: #218838;
                 color: white;
+            }
+
+            /* Playbook Download Styles */
+            .playbook-download-section {
+                text-align: center;
+                margin-top: 40px;
+            }
+
+            .btn-playbook {
+                background: linear-gradient(135deg, #193e47 0%, #1deaa5 100%);
+                color: white;
+                border: none;
+                padding: 15px 30px;
+                font-size: 18px;
+                font-weight: 600;
+                border-radius: 50px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 15px rgba(25, 62, 71, 0.3);
+                min-width: 350px;
+            }
+
+            .btn-playbook:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(25, 62, 71, 0.4);
+            }
+
+            .btn-playbook:disabled {
+                opacity: 0.7;
+                cursor: not-allowed;
+                transform: none;
+            }
+
+            /* Playbook Popup Styles */
+            .playbook-popup {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                z-index: 1001;
+                padding: 20px;
+                animation: fadeIn 0.3s ease;
+            }
+
+            .playbook-popup.show {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .playbook-popup-content {
+                background: white;
+                width: 100%;
+                max-width: 500px;
+                border-radius: 15px;
+                padding: 40px 30px;
+                position: relative;
+                animation: slideIn 0.3s ease;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            }
+
+            .close-playbook-popup {
+                position: absolute;
+                right: 20px;
+                top: 15px;
+                font-size: 28px;
+                cursor: pointer;
+                color: #666;
+                transition: color 0.2s ease;
+            }
+
+            .close-playbook-popup:hover {
+                color: #193e47;
+            }
+
+            .playbook-title {
+                font-size: 24px;
+                font-weight: 700;
+                color: #193e47;
+                margin-bottom: 10px;
+                text-align: center;
+            }
+
+            .playbook-subtitle {
+                color: #666;
+                text-align: center;
+                margin-bottom: 30px;
+                line-height: 1.5;
+            }
+
+            .form-group-playbook {
+                margin-bottom: 20px;
+            }
+
+            .form-group-playbook label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: 600;
+                color: #333;
+            }
+
+            .form-group-playbook input {
+                width: 100%;
+                padding: 12px 15px;
+                border: 2px solid #e1e5e9;
+                border-radius: 8px;
+                font-size: 16px;
+                transition: border-color 0.3s ease;
+            }
+
+            .form-group-playbook input:focus {
+                outline: none;
+                border-color: #1deaa5;
+                box-shadow: 0 0 0 3px rgba(29, 234, 165, 0.1);
+            }
+
+            .form-group-playbook input.error {
+                border-color: #e74c3c;
+            }
+
+            .error-message {
+                color: #e74c3c;
+                font-size: 14px;
+                margin-top: 5px;
+                display: none;
+            }
+
+            .error-message.show {
+                display: block;
+            }
+
+            .submit-playbook-btn {
+                width: 100%;
+                background: linear-gradient(135deg, #193e47 0%, #1deaa5 100%);
+                color: white;
+                border: none;
+                padding: 15px;
+                font-size: 16px;
+                font-weight: 600;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                margin-top: 10px;
+            }
+
+            .submit-playbook-btn:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 4px 15px rgba(25, 62, 71, 0.3);
+            }
+
+            .submit-playbook-btn:disabled {
+                opacity: 0.7;
+                cursor: not-allowed;
+                transform: none;
+            }
+
+            .spinner {
+                display: inline-block;
+                width: 16px;
+                height: 16px;
+                border: 2px solid transparent;
+                border-top: 2px solid white;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+
+                to {
+                    opacity: 1;
+                }
+            }
+
+            @keyframes slideIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(-30px) scale(0.9);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                }
+            }
+
+            @keyframes spin {
+                from {
+                    transform: rotate(0deg);
+                }
+
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+            @media (max-width: 768px) {
+                .btn-playbook {
+                    min-width: 280px;
+                    font-size: 16px;
+                    padding: 12px 25px;
+                }
+
+                .playbook-popup-content {
+                    padding: 30px 20px;
+                    margin: 10px;
+                }
+
+                .playbook-title {
+                    font-size: 20px;
+                }
+            }
+
+            /* Toast Notification Styles */
+            .toast-notification {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #193e47 0%, #1deaa5 100%);
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+                z-index: 1002;
+                transform: translateX(400px);
+                transition: transform 0.3s ease;
+                max-width: 350px;
+                min-width: 300px;
+            }
+
+            .toast-notification.show {
+                transform: translateX(0);
+            }
+
+            .toast-notification .toast-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 5px;
+            }
+
+            .toast-notification .toast-title {
+                font-weight: 600;
+                font-size: 16px;
+                margin: 0;
+            }
+
+            .toast-notification .toast-close {
+                background: none;
+                border: none;
+                color: white;
+                font-size: 18px;
+                cursor: pointer;
+                padding: 0;
+                margin-left: 10px;
+            }
+
+            .toast-notification .toast-message {
+                font-size: 14px;
+                margin: 0;
+                line-height: 1.4;
+            }
+
+            .toast-notification.success {
+                background: #0d4036;
+            }
+
+            .toast-notification.error {
+                background: #dc3545;
+            }
+
+            @media (max-width: 768px) {
+                .toast-notification {
+                    bottom: 10px;
+                    right: 10px;
+                    left: 10px;
+                    max-width: none;
+                    min-width: auto;
+                }
             }
         </style>
 
@@ -323,6 +608,14 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="playbook-download-section">
+                    <button id="playbookBtn" class="btn-playbook">
+                        <span id="playbookBtnText">Download the P23 Africa's Founders Playbook</span>
+                        <span id="playbookCountdown" style="display: none;">Sending... (<span
+                                id="countdownTimer">10</span>s)</span>
+                    </button>
+                </div>
             </div>
 
             <div class="pdf-popup" id="pdfPopup">
@@ -332,6 +625,46 @@
                         📥 Download PDF
                     </a>
                     <iframe class="pdf-viewer" id="pdfViewer" src="" frameborder="0"></iframe>
+                </div>
+            </div>
+
+            <!-- Playbook Download Popup -->
+            <div class="playbook-popup" id="playbookPopup">
+                <div class="playbook-popup-content">
+                    <span class="close-playbook-popup">&times;</span>
+                    <div class="playbook-form-container">
+                        <h3 class="playbook-title">Get Your Free Founders Playbook</h3>
+                        <p class="playbook-subtitle">Enter your details to receive the P23 Africa's Founders Playbook
+                            directly in your inbox.</p>
+
+                        <form id="playbookForm" class="playbook-form">
+                            @csrf
+                            <div class="form-group-playbook">
+                                <label for="playbook_name">Full Name *</label>
+                                <input type="text" id="playbook_name" name="name" required>
+                                <div class="error-message" id="nameError"></div>
+                            </div>
+
+                            <div class="form-group-playbook">
+                                <label for="playbook_email">Email Address *</label>
+                                <input type="email" id="playbook_email" name="email" required>
+                                <div class="error-message" id="emailError"></div>
+                            </div>
+
+                            <div class="form-group-playbook">
+                                <label for="playbook_company">Company Name *</label>
+                                <input type="text" id="playbook_company" name="company" required>
+                                <div class="error-message" id="companyError"></div>
+                            </div>
+
+                            <button type="submit" class="submit-playbook-btn" id="submitPlaybookBtn">
+                                <span class="submit-text">Get My Playbook</span>
+                                <span class="submit-loading" style="display: none;">
+                                    <span class="spinner"></span> Submitting...
+                                </span>
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
 
@@ -372,6 +705,468 @@
                         }
                     });
                 });
+
+                // Playbook Download Functionality
+                const playbookBtn = document.getElementById('playbookBtn');
+                const playbookPopup = document.getElementById('playbookPopup');
+                const playbookForm = document.getElementById('playbookForm');
+                const closePlaybookPopup = document.querySelector('.close-playbook-popup');
+                const submitBtn = document.getElementById('submitPlaybookBtn');
+
+                // Initialize global variable for submission result
+                window.playbookSubmissionResult = null;
+
+                // Show popup when playbook button is clicked
+                playbookBtn.addEventListener('click', function() {
+                    playbookPopup.classList.add('show');
+                    document.body.style.overflow = 'hidden';
+
+                    // Restore any previously saved form data
+                    restoreFormData();
+                });
+
+                // Close popup functionality
+                function closePlaybookModal() {
+                    playbookPopup.classList.remove('show');
+                    document.body.style.overflow = 'auto';
+                    // Don't reset form immediately - let user reopen with data intact
+                }
+
+                closePlaybookPopup.addEventListener('click', closePlaybookModal);
+
+                playbookPopup.addEventListener('click', function(e) {
+                    if (e.target === playbookPopup) {
+                        closePlaybookModal();
+                    }
+                });
+
+                // Form validation
+                function validateForm() {
+                    let isValid = true;
+                    const name = document.getElementById('playbook_name');
+                    const email = document.getElementById('playbook_email');
+                    const company = document.getElementById('playbook_company');
+
+                    // Clear previous errors
+                    clearErrors();
+
+                    // Validate name
+                    if (!name.value.trim()) {
+                        showError('nameError', 'Full name is required');
+                        name.classList.add('error');
+                        isValid = false;
+                    }
+
+                    // Validate email
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!email.value.trim()) {
+                        showError('emailError', 'Email address is required');
+                        email.classList.add('error');
+                        isValid = false;
+                    } else if (!emailRegex.test(email.value.trim())) {
+                        showError('emailError', 'Please enter a valid email address');
+                        email.classList.add('error');
+                        isValid = false;
+                    }
+
+                    // Validate company
+                    if (!company.value.trim()) {
+                        showError('companyError', 'Company name is required');
+                        company.classList.add('error');
+                        isValid = false;
+                    }
+
+                    return isValid;
+                }
+
+                function showError(elementId, message) {
+                    const errorElement = document.getElementById(elementId);
+                    errorElement.textContent = message;
+                    errorElement.classList.add('show');
+                }
+
+                function clearErrors() {
+                    const inputs = playbookForm.querySelectorAll('input');
+                    const errors = playbookForm.querySelectorAll('.error-message');
+
+                    inputs.forEach(input => input.classList.remove('error'));
+                    errors.forEach(error => {
+                        error.classList.remove('show');
+                        error.textContent = '';
+                    });
+                }
+
+                function resetForm() {
+                    playbookForm.reset();
+                    clearErrors();
+                    clearStoredFormData(); // Clear localStorage when form is reset
+
+                    // Reset submit button
+                    submitBtn.disabled = false;
+                    submitBtn.querySelector('.submit-text').style.display = 'inline';
+                    submitBtn.querySelector('.submit-loading').style.display = 'none';
+                }
+
+                // Function to restore form data from localStorage
+                function restoreFormData() {
+                    const savedData = localStorage.getItem('playbookFormData');
+                    if (savedData) {
+                        try {
+                            const formData = JSON.parse(savedData);
+                            document.getElementById('playbook_name').value = formData.name || '';
+                            document.getElementById('playbook_email').value = formData.email || '';
+                            document.getElementById('playbook_company').value = formData.company || '';
+                        } catch (e) {
+                            console.error('Error restoring form data:', e);
+                        }
+                    }
+                }
+
+                // Function to clear stored form data
+                function clearStoredFormData() {
+                    localStorage.removeItem('playbookFormData');
+                }
+
+                // Countdown functionality
+                function startCountdown() {
+                    const btnText = document.getElementById('playbookBtnText');
+                    const countdown = document.getElementById('playbookCountdown');
+                    const timer = document.getElementById('countdownTimer');
+
+                    btnText.style.display = 'none';
+                    countdown.style.display = 'inline';
+                    playbookBtn.disabled = true;
+
+                    let timeLeft = 10;
+                    timer.textContent = timeLeft;
+
+                    const countdownInterval = setInterval(() => {
+                        timeLeft--;
+                        timer.textContent = timeLeft;
+
+                        if (timeLeft <= 0) {
+                            clearInterval(countdownInterval);
+                            btnText.style.display = 'inline';
+                            countdown.style.display = 'none';
+                            playbookBtn.disabled = false;
+                            btnText.textContent = 'Playbook Sent! Check Your Email';
+
+                            // Show toast notification immediately when countdown completes
+                            if (window.playbookSubmissionResult) {
+                                const data = window.playbookSubmissionResult;
+                                if (data.success) {
+                                    // Clear stored form data on success
+                                    clearStoredFormData();
+
+                                    showToast(
+                                        'Playbook Sent Successfully!',
+                                        'The P23 Africa\'s Founders Playbook has been sent to your email. Please check your inbox.',
+                                        'success'
+                                    );
+                                } else {
+                                    showToast(
+                                        'Submission Failed',
+                                        data.message || 'An unexpected error occurred. Please try again.',
+                                        'error',
+                                        true
+                                    );
+                                    resetMainButton();
+                                }
+                                // Clear the stored result
+                                window.playbookSubmissionResult = null;
+                            } else {
+                                // If submission result is not ready yet, show processing message
+                                showToast(
+                                    'Processing Your Request',
+                                    'Your playbook request is being processed. You should receive it shortly in your email.',
+                                    'success'
+                                );
+
+                                // Keep checking for the result for up to 30 seconds
+                                let checkCount = 0;
+                                const resultChecker = setInterval(() => {
+                                    checkCount++;
+                                    if (window.playbookSubmissionResult) {
+                                        clearInterval(resultChecker);
+                                        const data = window.playbookSubmissionResult;
+
+                                        // Hide the processing toast
+                                        const existingToast = document.querySelector('.toast-notification');
+                                        if (existingToast) {
+                                            hideToast(existingToast);
+                                        }
+
+                                        // Show final result after a brief delay
+                                        setTimeout(() => {
+                                            if (data.success) {
+                                                clearStoredFormData();
+                                                showToast(
+                                                    'Playbook Sent Successfully!',
+                                                    'The P23 Africa\'s Founders Playbook has been sent to your email. Please check your inbox.',
+                                                    'success'
+                                                );
+                                            } else {
+                                                showToast(
+                                                    'Submission Failed',
+                                                    data.message ||
+                                                    'An unexpected error occurred. Please try again.',
+                                                    'error',
+                                                    true
+                                                );
+                                                resetMainButton();
+                                            }
+                                            window.playbookSubmissionResult = null;
+                                        }, 500);
+                                    } else if (checkCount >= 30) {
+                                        // Stop checking after 30 seconds
+                                        clearInterval(resultChecker);
+
+                                        // Hide processing toast and show timeout message
+                                        const existingToast = document.querySelector('.toast-notification');
+                                        if (existingToast) {
+                                            hideToast(existingToast);
+                                        }
+
+                                        setTimeout(() => {
+                                            showToast(
+                                                'Request Taking Longer Than Expected',
+                                                'Your playbook request is still being processed. Please check your email in a few minutes.',
+                                                'success'
+                                            );
+                                        }, 500);
+                                    }
+                                }, 1000);
+                            }
+
+                            // Reset button text after 6 seconds (only if success)
+                            setTimeout(() => {
+                                if (btnText.textContent === 'Playbook Sent! Check Your Email') {
+                                    btnText.textContent = 'Download the P23 Africa\'s Founders Playbook';
+                                }
+                            }, 6000);
+                        }
+                    }, 1000);
+
+                    return countdownInterval;
+                }
+
+                // Toast notification functionality
+                function showToast(title, message, type = 'success', showRetry = false) {
+                    // Remove existing toast if any
+                    const existingToast = document.querySelector('.toast-notification');
+                    if (existingToast) {
+                        existingToast.remove();
+                    }
+
+                    // Create toast element
+                    const toast = document.createElement('div');
+                    toast.className = `toast-notification ${type}`;
+
+                    const retryButton = showRetry ? `
+                        <button class="toast-retry-btn" style="
+                            background: rgba(255,255,255,0.2);
+                            border: 1px solid rgba(255,255,255,0.3);
+                            color: white;
+                            padding: 5px 10px;
+                            border-radius: 4px;
+                            font-size: 12px;
+                            cursor: pointer;
+                            margin-top: 8px;
+                            transition: background 0.2s ease;
+                        " onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">
+                            Try Again
+                        </button>
+                    ` : '';
+
+                    toast.innerHTML = `
+                        <div class="toast-header">
+                            <h4 class="toast-title">${title}</h4>
+                            <button class="toast-close">&times;</button>
+                        </div>
+                        <p class="toast-message">${message}</p>
+                        ${retryButton}
+                    `;
+
+                    // Add to body
+                    document.body.appendChild(toast);
+
+                    // Show toast
+                    setTimeout(() => toast.classList.add('show'), 100);
+
+                    // Close functionality
+                    const closeBtn = toast.querySelector('.toast-close');
+                    closeBtn.addEventListener('click', () => hideToast(toast));
+
+                    // Retry functionality
+                    if (showRetry) {
+                        const retryBtn = toast.querySelector('.toast-retry-btn');
+                        if (retryBtn) {
+                            retryBtn.addEventListener('click', () => {
+                                hideToast(toast);
+                                // Reopen the popup with saved data
+                                playbookPopup.classList.add('show');
+                                document.body.style.overflow = 'hidden';
+                                restoreFormData();
+                            });
+                        }
+                    }
+
+                    // Auto hide after 15 seconds for success, 10 seconds for retry toasts
+                    const autoHideDelay = showRetry ? 10000 : (type === 'success' ? 15000 : 7000);
+                    setTimeout(() => hideToast(toast), autoHideDelay);
+
+                    return toast;
+                }
+
+                function hideToast(toast) {
+                    toast.classList.remove('show');
+                    setTimeout(() => {
+                        if (toast.parentNode) {
+                            toast.parentNode.removeChild(toast);
+                        }
+                    }, 300);
+                }
+
+                // Form submission
+                playbookForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    if (!validateForm()) {
+                        return;
+                    }
+
+                    // Capture form data BEFORE hiding the popup
+                    const formDataObject = {
+                        name: document.getElementById('playbook_name').value.trim(),
+                        email: document.getElementById('playbook_email').value.trim(),
+                        company: document.getElementById('playbook_company').value.trim(),
+                        _token: document.querySelector('meta[name="csrf-token"]').content || document.querySelector(
+                            'input[name="_token"]').value
+                    };
+
+                    // Store in localStorage as backup
+                    localStorage.setItem('playbookFormData', JSON.stringify(formDataObject));
+
+                    // Debug: Log form data
+                    console.log('Form data being sent:', formDataObject);
+
+                    // Show loading state
+                    submitBtn.disabled = true;
+                    submitBtn.querySelector('.submit-text').style.display = 'none';
+                    submitBtn.querySelector('.submit-loading').style.display = 'inline';
+
+                    // Hide popup immediately after capturing data
+                    closePlaybookModal();
+
+                    // Start countdown on main button
+                    const countdownInterval = startCountdown();
+
+                    // Create FormData object from captured data
+                    const formData = new FormData();
+                    Object.keys(formDataObject).forEach(key => {
+                        formData.append(key, formDataObject[key]);
+                    });
+
+                    // Submit to server
+                    fetch('{{ route('playbook.download') }}', {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': formDataObject._token,
+                                'Accept': 'application/json'
+                            },
+                            body: formData
+                        })
+                        .then(async response => {
+                            const data = await response.json();
+
+                            if (!response.ok) {
+                                // Handle different HTTP status codes
+                                if (response.status === 422) {
+                                    // Validation errors
+                                    let errorMessages = [];
+                                    if (data.errors) {
+                                        Object.values(data.errors).forEach(fieldErrors => {
+                                            if (Array.isArray(fieldErrors)) {
+                                                errorMessages = errorMessages.concat(fieldErrors);
+                                            } else {
+                                                errorMessages.push(fieldErrors);
+                                            }
+                                        });
+                                    }
+
+                                    const errorMessage = errorMessages.length > 0 ?
+                                        errorMessages.join(' ') :
+                                        'Please check your form inputs and try again.';
+
+                                    throw new Error(`Validation Error: ${errorMessage}`);
+                                } else if (response.status === 500) {
+                                    throw new Error('Server Error: ' + (data.message ||
+                                        'Internal server error occurred.'));
+                                } else {
+                                    throw new Error('HTTP Error: ' + (data.message ||
+                                        `Request failed with status ${response.status}`));
+                                }
+                            }
+
+                            return data;
+                        })
+                        .then(data => {
+                            // Store the result for when countdown completes
+                            window.playbookSubmissionResult = data;
+                        })
+                        .catch(error => {
+                            console.error('Playbook download error:', error);
+
+                            // Clear countdown and reset button immediately on error
+                            clearInterval(countdownInterval);
+                            resetMainButton();
+
+                            // Clear any stored result
+                            window.playbookSubmissionResult = null;
+
+                            // Show error toast immediately
+                            let errorTitle = 'Submission Failed';
+                            let errorMessage = 'An error occurred. Please try again.';
+
+                            if (error.message.includes('Validation Error:')) {
+                                errorTitle = 'Form Validation Error';
+                                errorMessage = error.message.replace('Validation Error: ', '');
+                                showToast(errorTitle, errorMessage + ' Click "Try Again" to fix your form.',
+                                    'error', true);
+                            } else if (error.message.includes('Server Error:')) {
+                                errorTitle = 'Server Error';
+                                errorMessage = error.message.replace('Server Error: ', '');
+                                showToast(errorTitle, errorMessage, 'error', true);
+                            } else if (error.message.includes('HTTP Error:')) {
+                                errorTitle = 'Request Error';
+                                errorMessage = error.message.replace('HTTP Error: ', '');
+                                showToast(errorTitle, errorMessage, 'error', true);
+                            } else if (error.message.includes('Failed to fetch') || error.message.includes(
+                                    'NetworkError')) {
+                                errorTitle = 'Network Error';
+                                errorMessage = 'Please check your internet connection and try again.';
+                                showToast(errorTitle, errorMessage, 'error', true);
+                            } else {
+                                showToast(errorTitle, errorMessage, 'error', true);
+                            }
+                        })
+                        .finally(() => {
+                            // Reset submit button (this will run immediately but popup is already closed)
+                            submitBtn.disabled = false;
+                            submitBtn.querySelector('.submit-text').style.display = 'inline';
+                            submitBtn.querySelector('.submit-loading').style.display = 'none';
+                        });
+                });
+
+                // Helper function to reset the main button
+                function resetMainButton() {
+                    const btnText = document.getElementById('playbookBtnText');
+                    const countdown = document.getElementById('playbookCountdown');
+                    btnText.style.display = 'inline';
+                    countdown.style.display = 'none';
+                    playbookBtn.disabled = false;
+                    btnText.textContent = 'Download the P23 Africa\'s Founders Playbook';
+                }
             </script>
         </section>
     </section>

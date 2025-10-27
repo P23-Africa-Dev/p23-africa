@@ -18,6 +18,7 @@ class ContactController extends Controller
             'job_title' => 'nullable|string',
             'company_name' => 'nullable|string',
             'phone_no' => 'required|string',
+            'country_code' => 'required|string',
             'g-recaptcha-response' => 'required|captcha', // 👈 this enforces captcha
         ]);
 
@@ -29,6 +30,7 @@ class ContactController extends Controller
             'job_title' => $validated['job_title'] ? strip_tags($validated['job_title']) : null,
             'company_name' => $validated['company_name'] ? strip_tags($validated['company_name']) : null,
             'phone_no' => strip_tags($validated['phone_no']),
+            'country_code' => strip_tags($validated['country_code']),
         ];
 
         // Send to site owner with all sanitized data
