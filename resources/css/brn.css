@@ -1,3 +1,7 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 @font-face {
     font-family: "GT Walsheim Pro";
 
@@ -5,6 +9,14 @@
             format("woff2"),
         url("/public/fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff")
             format("woff");
+}
+@font-face {
+  font-family: "GT Walsheim Trial Md";
+  font-style: normal;
+  font-weight: normal;
+  src: local("GT Walsheim Trial Md"),
+    url("/public/fonts/gt-trials/GT-Walsheim-Medium-Trial-BF651b7fc728fb3.woff")
+      format("woff");
 }
 
 @font-face {
@@ -67,6 +79,7 @@
         url("/public/fonts/ivyora-text/IvyOraText-Medium.woff") format("woff"); /* Adjust file names and paths as needed */
 }
 
+
 html,
 body {
     overflow-x: hidden;
@@ -75,6 +88,8 @@ body {
 body {
     font-family: "GT Walsheim Pro";
 }
+
+
 
 /* Navbar Styling */
 .navbar-full.navbar {
