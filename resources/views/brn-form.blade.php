@@ -1301,7 +1301,7 @@
                                             <option value="+220">🇬🇲 +220</option>
                                             <option value="+995">🇬🇪 +995</option>
                                             <option value="+49">🇩🇪 +49</option>
-                                            <option value="+233" selected>🇬🇭 +233</option>
+                                            <option value="+233">🇬🇭 +233</option>
                                             <option value="+30">🇬🇷 +30</option>
                                             <option value="+502">🇬🇹 +502</option>
                                             <option value="+224">🇬🇳 +224</option>
@@ -1364,7 +1364,7 @@
                                             <option value="+64">🇳🇿 +64</option>
                                             <option value="+505">🇳🇮 +505</option>
                                             <option value="+227">🇳🇪 +227</option>
-                                            <option value="+234">🇳🇬 +234</option>
+                                            <option value="+234" selected>🇳🇬 +234</option>
                                             <option value="+683">🇳🇺 +683</option>
                                             <option value="+672">🇳🇫 +672</option>
                                             <option value="+47">🇳🇴 +47</option>
@@ -2535,11 +2535,14 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]')?.value ||
+                            document.querySelector('meta[name="csrf-token"]')?.content,
+                        'X-Requested-With': 'XMLHttpRequest'
                     },
                     body: JSON.stringify({
                         email: email
-                    })
+                    }),
+                    credentials: 'same-origin'
                 })
                 .then(response => response.json())
                 .then(data => {
@@ -2803,7 +2806,8 @@
             "Leadership",
         ];
 
-        const selectedCategories = {}; // store selections by industry
+        let selectedCategories = {}; // store selections by industry
+
         const categoryContainer = document.getElementById("categoryContainer");
         const industrySelect = document.querySelector('select[name="industry"]');
         const hiddenCategoryInput = document.getElementById("selectedCategories");
@@ -3036,8 +3040,16 @@
 
             } else if (currentStep === 1) {
                 // Step 2: Company Information validation
+                const regNumber = currentStage.querySelector('input[name="reg_number"]');
                 const country = currentStage.querySelector('select[name="country"]');
+                const website = currentStage.querySelector('input[name="website"]');
                 const linkedin = currentStage.querySelector('input[name="linkedin"]');
+                const yearEstablished = currentStage.querySelector('input[name="year_established"]');
+
+                if (!regNumber.value.trim()) {
+                    showError(regNumber, 'Company registration number is required');
+                    isValid = false;
+                }
 
                 if (!country.value.trim()) {
                     const customSelect = currentStage.querySelector('[data-select="country"]');
@@ -3045,8 +3057,25 @@
                     isValid = false;
                 }
 
-                if (linkedin.value.trim() && !linkedin.value.toLowerCase().includes('linkedin')) {
+                if (!website.value.trim()) {
+                    showError(website, 'Company website or social handle is required');
+                    isValid = false;
+                }
+
+                if (!linkedin.value.trim()) {
+                    showError(linkedin, 'LinkedIn profile is required');
+                    isValid = false;
+                } else if (!linkedin.value.toLowerCase().includes('linkedin')) {
                     showError(linkedin, 'Please enter a valid LinkedIn profile URL');
+                    isValid = false;
+                }
+
+                if (!yearEstablished.value.trim()) {
+                    showError(yearEstablished, 'Year established is required');
+                    isValid = false;
+                } else if (isNaN(yearEstablished.value) || yearEstablished.value < 1800 || yearEstablished
+                    .value > new Date().getFullYear()) {
+                    showError(yearEstablished, 'Please enter a valid year');
                     isValid = false;
                 }
 
@@ -3147,7 +3176,7 @@
                 currentStep = step;
                 if (!validateCurrentStep()) {
                     allValid = false;
-                    showStep(step); // Show the step with errors
+                    showStep(step);
                     break;
                 }
                 currentStep = prevStep;
@@ -3157,20 +3186,55 @@
                 return;
             }
 
-            // Disable submit button to prevent double submission
+            // Disable submit button
             submitBtn.disabled = true;
             btnText.classList.add('d-none');
             spinner.classList.remove('d-none');
 
             const formData = new FormData(form);
 
+            // IMPROVED: Get CSRF token with proper fallback order
+            let csrfToken = null;
+
+            // 1. Try to get from form's hidden input (most reliable)
+            const formTokenInput = form.querySelector('input[name="_token"]');
+            if (formTokenInput) {
+                csrfToken = formTokenInput.value;
+            }
+
+            // 2. Fallback to meta tag
+            if (!csrfToken) {
+                const metaToken = document.querySelector('meta[name="csrf-token"]');
+                if (metaToken) {
+                    csrfToken = metaToken.content;
+                }
+            }
+
+            // 3. Verify token exists
+            if (!csrfToken) {
+                console.error('❌ CSRF token not found in form or meta tag');
+                submitBtn.disabled = false;
+                btnText.classList.remove('d-none');
+                spinner.classList.add('d-none');
+
+                responseMessage.textContent = 'Security error: Please refresh the page and try again.';
+                responseMessage.style.color = '#dc2626';
+                modal.show();
+                return;
+            }
+
+            console.log('✅ CSRF Token retrieved successfully');
+
+            // Make the request
             fetch(form.action, {
                     method: 'POST',
                     headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                        'Accept': 'application/json'
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest' // Added for Laravel
                     },
-                    body: formData
+                    body: formData,
+                    credentials: 'same-origin' // Added for session consistency
                 })
                 .then(response => {
                     if (!response.ok) {
@@ -3184,21 +3248,20 @@
                     return response.json();
                 })
                 .then(data => {
-                    // Success response
                     responseMessage.textContent = data.message ||
                         'Your application was submitted successfully!';
                     responseMessage.style.color = '#059669';
                     modal.show();
 
-                    // Clear saved form data from localStorage
+                    // Clear saved form data
                     clearFormData();
 
-                    // Reset form and go back to first step
+                    // Reset form
                     form.reset();
                     currentStep = 0;
                     showStep(currentStep);
 
-                    // Clear all custom selects
+                    // Clear custom selects
                     document.querySelectorAll('.custom-select-text').forEach(text => {
                         const defaultText = text.closest('.custom-select').querySelector(
                             '.custom-option')?.textContent || 'Select option';
@@ -3207,35 +3270,41 @@
                     document.querySelectorAll('.custom-option').forEach(option => option.classList
                         .remove('active'));
 
-                    // Clear category selections
+                    // Clear categories
                     categoryContainer.innerHTML = '';
                     renderTags(defaultTags, true);
-                    selectedCategories = {};
+
+                    // ✅ FIXED: Clear the object properties instead of reassigning
+                    // ❌ OLD: selectedCategories = {};
+                    // ✅ NEW:
+                    Object.keys(selectedCategories).forEach(key => delete selectedCategories[key]);
+
                     hiddenCategoryInput.value = '';
                 })
                 .catch(error => {
-                    if (error.status === 422 && error.data.errors) {
-                        // Validation errors from server
-                        showServerErrors(error.data.errors);
-                        responseMessage.textContent =
-                            'Please correct the errors below and try again.';
-                        responseMessage.style.color = '#ef4444';
-                        modal.show();
-                    } else if (error.status === 422 && error.data.message) {
-                        // Custom validation message (like duplicate email)
-                        responseMessage.textContent = error.data.message;
-                        responseMessage.style.color = '#ef4444';
-                        modal.show();
-                    } else {
-                        // Network or other errors
-                        responseMessage.textContent =
-                            'Something went wrong. Please check your internet connection and try again.';
-                        responseMessage.style.color = '#ef4444';
-                        modal.show();
+                    console.error('❌ Submission error:', error);
+
+                    let errorMessage = 'Something went wrong. Please try again.';
+
+                    if (error.status === 419) {
+                        errorMessage =
+                            'Your session has expired. Please refresh the page and try again.';
+                    } else if (error.status === 422) {
+                        if (error.data?.errors) {
+                            showServerErrors(error.data.errors);
+                            errorMessage = 'Please correct the errors below and try again.';
+                        } else if (error.data?.message) {
+                            errorMessage = error.data.message;
+                        }
+                    } else if (error.status === 403) {
+                        errorMessage = 'Access denied. Please refresh the page and try again.';
                     }
+
+                    responseMessage.textContent = errorMessage;
+                    responseMessage.style.color = '#ef4444';
+                    modal.show();
                 })
                 .finally(() => {
-                    // Reset button state
                     submitBtn.disabled = false;
                     spinner.classList.add('d-none');
                     btnText.classList.remove('d-none');
@@ -3281,6 +3350,185 @@
                     block: 'center'
                 });
             }
+        }
+
+        // LinkedIn URL normalization function
+        function normalizeLinkedInURL(url) {
+            if (!url || url.trim() === '') return '';
+
+            let normalizedUrl = url.trim();
+
+            // Remove common prefixes and normalize
+            normalizedUrl = normalizedUrl.replace(/^(https?:\/\/)?(www\.)?/i, '');
+
+            // Handle different LinkedIn domain variations
+            normalizedUrl = normalizedUrl.replace(/^(linkedin\.com|linkedin\.in|in\.linkedin\.com)/i,
+                'linkedin.com');
+
+            // Ensure it starts with linkedin.com
+            if (!normalizedUrl.toLowerCase().startsWith('linkedin.com')) {
+                // If it looks like a LinkedIn profile path, prepend linkedin.com
+                if (normalizedUrl.startsWith('/in/') || normalizedUrl.match(/^[a-zA-Z0-9\-_.]+$/)) {
+                    normalizedUrl = 'linkedin.com/in/' + normalizedUrl.replace(/^\/in\//, '');
+                } else {
+                    // If it doesn't look like a valid LinkedIn URL, return as-is
+                    return 'https://' + normalizedUrl;
+                }
+            }
+
+            // Ensure /in/ path is present for profiles
+            if (normalizedUrl.toLowerCase().startsWith('linkedin.com') &&
+                !normalizedUrl.toLowerCase().includes('/company/') &&
+                !normalizedUrl.toLowerCase().includes('/in/')) {
+                const path = normalizedUrl.substring('linkedin.com'.length).replace(/^\/+/, '');
+                if (path) {
+                    normalizedUrl = 'linkedin.com/in/' + path;
+                } else {
+                    normalizedUrl = 'linkedin.com/in/';
+                }
+            }
+
+            // Add https prefix
+            return 'https://' + normalizedUrl;
+        }
+
+        // Website URL normalization function
+        function normalizeWebsiteURL(url) {
+            if (!url || url.trim() === '') return '';
+
+            let normalizedUrl = url.trim();
+
+            // If it already has a protocol, return as-is
+            if (/^https?:\/\//i.test(normalizedUrl)) {
+                return normalizedUrl;
+            }
+
+            // Remove www. if present at the beginning
+            normalizedUrl = normalizedUrl.replace(/^www\./i, '');
+
+            // Check if it looks like a social media handle (starts with @)
+            if (normalizedUrl.startsWith('@')) {
+                // Keep social handles as-is
+                return normalizedUrl;
+            }
+
+            // Check if it's a social media URL pattern
+            const socialPatterns = [
+                /^(twitter\.com|x\.com)\//i,
+                /^instagram\.com\//i,
+                /^facebook\.com\//i,
+                /^tiktok\.com\//i,
+                /^youtube\.com\//i,
+                /^linkedin\.com\//i
+            ];
+
+            let isSocialUrl = socialPatterns.some(pattern => pattern.test(normalizedUrl));
+
+            // If it's not a social URL and doesn't have a domain extension, 
+            // assume it's a domain and add .com
+            if (!isSocialUrl && !normalizedUrl.includes('.') && !normalizedUrl.startsWith('@')) {
+                normalizedUrl += '.com';
+            }
+
+            // Add https prefix for URLs
+            if (!normalizedUrl.startsWith('@')) {
+                return 'https://' + normalizedUrl;
+            }
+
+            return normalizedUrl;
+        }
+
+        // LinkedIn URL auto-formatting
+        const linkedinInput = document.querySelector('input[name="linkedin"]');
+        if (linkedinInput) {
+            linkedinInput.addEventListener('blur', function() {
+                const currentValue = this.value.trim();
+                if (currentValue && currentValue.toLowerCase().includes('linkedin')) {
+                    const normalizedValue = normalizeLinkedInURL(currentValue);
+                    if (normalizedValue !== currentValue) {
+                        this.value = normalizedValue;
+                        // Trigger change event to save the updated value
+                        this.dispatchEvent(new Event('change', {
+                            bubbles: true
+                        }));
+                        // Also trigger input event for any other listeners
+                        this.dispatchEvent(new Event('input', {
+                            bubbles: true
+                        }));
+                    }
+                } else if (currentValue) {
+                    // If user entered something that doesn't include 'linkedin', 
+                    // assume it's a username and format it
+                    const normalizedValue = normalizeLinkedInURL(currentValue);
+                    this.value = normalizedValue;
+                    this.dispatchEvent(new Event('change', {
+                        bubbles: true
+                    }));
+                    this.dispatchEvent(new Event('input', {
+                        bubbles: true
+                    }));
+                }
+            });
+
+            // Also format on paste
+            linkedinInput.addEventListener('paste', function() {
+                setTimeout(() => {
+                    const currentValue = this.value.trim();
+                    if (currentValue) {
+                        const normalizedValue = normalizeLinkedInURL(currentValue);
+                        if (normalizedValue !== currentValue) {
+                            this.value = normalizedValue;
+                            this.dispatchEvent(new Event('change', {
+                                bubbles: true
+                            }));
+                            this.dispatchEvent(new Event('input', {
+                                bubbles: true
+                            }));
+                        }
+                    }
+                }, 100);
+            });
+        }
+
+        // Website URL auto-formatting
+        const websiteInput = document.querySelector('input[name="website"]');
+        if (websiteInput) {
+            websiteInput.addEventListener('blur', function() {
+                const currentValue = this.value.trim();
+                if (currentValue) {
+                    const normalizedValue = normalizeWebsiteURL(currentValue);
+                    if (normalizedValue !== currentValue) {
+                        this.value = normalizedValue;
+                        // Trigger change event to save the updated value
+                        this.dispatchEvent(new Event('change', {
+                            bubbles: true
+                        }));
+                        // Also trigger input event for any other listeners
+                        this.dispatchEvent(new Event('input', {
+                            bubbles: true
+                        }));
+                    }
+                }
+            });
+
+            // Also format on paste
+            websiteInput.addEventListener('paste', function() {
+                setTimeout(() => {
+                    const currentValue = this.value.trim();
+                    if (currentValue) {
+                        const normalizedValue = normalizeWebsiteURL(currentValue);
+                        if (normalizedValue !== currentValue) {
+                            this.value = normalizedValue;
+                            this.dispatchEvent(new Event('change', {
+                                bubbles: true
+                            }));
+                            this.dispatchEvent(new Event('input', {
+                                bubbles: true
+                            }));
+                        }
+                    }
+                }, 100);
+            });
         }
 
     });

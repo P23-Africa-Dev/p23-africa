@@ -9,6 +9,7 @@ use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\RateLimiter;
 
 class BrnController extends Controller
 {
@@ -35,6 +36,16 @@ class BrnController extends Controller
 
     public function checkEmail(Request $request)
     {
+        // Add rate limiting
+        if (RateLimiter::tooManyAttempts('check-email:' . $request->ip(), 10)) {
+            return response()->json([
+                'exists' => false,
+                'message' => 'Too many requests. Please try again later.'
+            ], 429);
+        }
+
+        RateLimiter::hit('check-email:' . $request->ip(), 60);
+
         try {
             $request->validate([
                 'email' => 'required|email'
@@ -107,6 +118,9 @@ class BrnController extends Controller
             'offer_value.max' => 'Offer value description is too long.',
             'categories.max' => 'Selected categories text is too long.',
         ]);
+
+        // $validated['name'] = Str::of($validated['name'])->trim()->title();
+        // $validated['email'] = Str::lower(trim($validated['email']));
 
         try {
             // Combine country code and phone if provided
