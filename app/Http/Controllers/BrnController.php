@@ -66,7 +66,7 @@ class BrnController extends Controller
             'years_of_operation' => 'required|string|in:0-5,6-10,11-Above',
             'number_of_employees' => 'required|string|in:1-10,11-50,50-200,200+',
             'selected_outcome' => 'required|string|max:500',
-            'goals' => 'nullable|string|max:1000',
+            'goals' => 'required|string|max:1000',
         ], [
             'name.required' => 'Full name is required.',
             'email.required' => 'Email address is required.',

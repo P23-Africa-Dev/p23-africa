@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\BrnRegistrationToken;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -9,6 +10,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Str;
 
 class BrnApproved extends Mailable
 {
@@ -17,11 +19,14 @@ class BrnApproved extends Mailable
     public $submission;
     public $registrationUrl;
 
+    /**
+     * Create a new message instance.
+     */
     public function __construct($submission)
     {
         $this->submission = $submission;
 
-        // Data to be encrypted and sent to the other Laravel app
+        // Data to be encrypted and stored
         $data = [
             'name' => $submission->name,
             'email' => $submission->email,
@@ -36,11 +41,21 @@ class BrnApproved extends Mailable
             'goals' => $submission->goals,
         ];
 
-        // Encrypt the data and build the secure URL to the second app
+        // Encrypt the data
         $encrypted = Crypt::encryptString(json_encode($data));
 
-        // Replace this with the real URL of your second Laravel app
-        $this->registrationUrl = "http://127.0.0.1:8000/registration/continue?data={$encrypted}";
+        // Generate a unique short token
+        $token = Str::random(32);
+
+        // Store in database with expiration (7 days)
+        BrnRegistrationToken::create([
+            'token' => $token,
+            'encrypted_data' => $encrypted,
+            'expires_at' => now()->addDays(7),
+        ]);
+
+        // Build short URL with just the token
+        $this->registrationUrl = "http://104.131.166.92/registration/continue?token={$token}";
     }
 
     public function build()
@@ -52,8 +67,6 @@ class BrnApproved extends Mailable
                 'registrationUrl' => $this->registrationUrl,
             ]);
     }
-
-
 
     /**
      * Get the attachments for the message.

@@ -10,6 +10,7 @@
     <meta name="generator"
         content="Explore Expert Articles, Market Trends, And Practical Advice To Scale Your Business Across Africa And Beyond | P23 Africa">
     <meta property="og:image" content="{{ asset('images/resource-header.png') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
@@ -131,6 +132,79 @@
             .download-btn:hover {
                 background: #218838;
                 color: white;
+            }
+
+            /* Playbook Download Styles */
+            .playbook-download-section {
+                text-align: center;
+                margin-top: 40px;
+            }
+
+            .btn-playbook {
+                background: linear-gradient(135deg, #193e47 0%, #1deaa5 100%);
+                color: white;
+                border: none;
+                padding: 15px 30px;
+                font-size: 18px;
+                font-weight: 600;
+                border-radius: 50px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 15px rgba(25, 62, 71, 0.3);
+                min-width: 350px;
+            }
+
+            .btn-playbook:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(25, 62, 71, 0.4);
+                color: white;
+                text-decoration: none;
+            }
+
+            .btn-playbook:disabled {
+                opacity: 0.7;
+                cursor: not-allowed;
+                transform: none;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+
+                to {
+                    opacity: 1;
+                }
+            }
+
+            @keyframes slideIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(-30px) scale(0.9);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                }
+            }
+
+            @keyframes spin {
+                from {
+                    transform: rotate(0deg);
+                }
+
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+            @media (max-width: 768px) {
+                .btn-playbook {
+                    min-width: 280px;
+                    font-size: 16px;
+                    padding: 12px 25px;
+                }
             }
         </style>
 
@@ -323,6 +397,13 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="playbook-download-section">
+                    <a href="{{ route('playbook.landing') }}" class="btn-playbook"
+                        style="text-decoration: none; display: inline-block;">
+                        📥 Download the P23 Africa's Founders Playbook
+                    </a>
+                </div>
             </div>
 
             <div class="pdf-popup" id="pdfPopup">
@@ -372,6 +453,8 @@
                         }
                     });
                 });
+
+                // Playbook Download Functionality - Now handled by direct routing to landing page
             </script>
         </section>
     </section>

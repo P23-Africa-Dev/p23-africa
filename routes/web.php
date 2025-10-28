@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\Admin\PlaybookController;
 use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Auth\LoginController;
@@ -104,6 +105,12 @@ Route::get('/noel54/interest-form', function () {
 
 Route::post('/noel54/interest-form', [BrnController::class, 'store'])->name('brn.submit');
 Route::post('/noel54/check-email', [BrnController::class, 'checkEmail'])->name('brn.check-email');
+
+// Playbook Download Route
+Route::post('/playbook/download', [\App\Http\Controllers\PlaybookController::class, 'download'])->name('playbook.download');
+
+// Playbook Landing Page
+Route::get('/founders-playbook', [\App\Http\Controllers\PlaybookController::class, 'landing'])->name('playbook.landing');
 
 Route::get('/brn-form', function () {
     return redirect('/noel54/interest-form');
@@ -238,6 +245,8 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|staff'])->prefix('admi
     Route::resource('blogs', BlogController::class);
     Route::resource('/blogs/categories', CategoryController::class);
     // });
+
+    Route::resource('/playbooks', PlaybookController::class);
 
     // Route::middleware('permission:view_students')->group(function () {
     Route::resource('students', StudentController::class);
