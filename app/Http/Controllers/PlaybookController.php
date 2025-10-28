@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Validator;
 
 class PlaybookController extends Controller
 {
+    public function landing()
+    {
+        return view('playbook-landing');
+    }
+
     public function download(Request $request)
     {
         try {

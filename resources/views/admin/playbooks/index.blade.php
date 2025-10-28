@@ -11,7 +11,21 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 table-responsive">
                     <div class="my-5">
+                        @if (session('success'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ session('success') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                        @endif
 
+                        @if (session('error'))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                {{ session('error') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                        @endif
                         <table class="table table-hover">
                             <thead>
                                 <tr>
@@ -20,6 +34,7 @@
                                     <th>Email</th>
                                     <th>Company</th>
                                     <th>Date</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -29,7 +44,20 @@
                                         <td>{{ $playbook->name }}</td>
                                         <td>{{ $playbook->email }}</td>
                                         <td>{{ $playbook->company }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($playbook->email_sent_at)->format('l, F jS Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($playbook->email_sent_at)->format('l, F jS Y') }}
+                                        </td>
+                                        <td>
+                                            <span class="d-flex justify-content-center">
+                                                <form action="{{ route('admin.playbooks.destroy', $playbook) }}"
+                                                    method="POST" class="d-inline"
+                                                    onsubmit="return confirm('Are you sure you want to delete this download? This action cannot be undone.');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn"><i
+                                                            class="fa fa-trash link-danger"></i></button>
+                                                </form>
+                                            </span>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
