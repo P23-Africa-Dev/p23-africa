@@ -1,5 +1,5 @@
 @extends('layouts.brn-layout')
-@section('title', 'NOEL54 Interest Form | P23 Africa')
+@section('title', 'NOELHQ Interest Form | P23 Africa')
 
 @section('meta')
     <meta name="description"
@@ -16,141 +16,801 @@
 {{-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> --}}
 
 <style>
-    .brn-form .form-control {
-        margin-bottom: 2px !important;
+    body .interest-form-layout-container {
+        font-family: "Montserrat", sans-serif;
+
     }
 
-    .brn-form .form-group {
-        margin-bottom: 15px;
-    }
-
-    .form-step {
+    body .hidden {
         display: none;
+
     }
 
-    .form-step.active {
-        display: block;
+    /* .interest-form-layout-container */
+    .interest-form-layout-container {
+        max-width: 1264px;
+        margin: 0 auto;
+        margin-top: 100px;
+        margin-bottom: 60px;
     }
 
-    @keyframes spin {
-        from {
-            transform: rotate(0deg);
-        }
-
-        to {
-            transform: rotate(360deg);
-        }
+    .form-layout-container {
+        padding: 20px 22px;
+        /* padding: 20px 12px 20px 23px; */
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
     }
 
-    .brn-form .next-btn {
-        background-color: #193e47;
-        color: #ffffff;
-        padding: 12px 60px;
-        /* width: 265px; */
-        border-radius: 8px;
-        font-size: 1.1rem;
-        display: inline;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        border: none;
-        margin-top: 50px;
-    }
-
-    .brn-form .next-btn:hover {
-        background-color: #1deaa5;
-        color: #193e47;
-    }
-
-    .brn-form .prev-btn {
-        background-color: #1deaa5;
-        color: #ffffff;
-        padding: 12px 60px;
-        border-radius: 8px;
-        font-size: 1.1rem;
-        display: inline;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        border: none;
-        margin-top: 50px;
-    }
-
-    .brn-form .prev-btn:hover {
-        background-color: #193e47;
-        color: #1deaa5;
-    }
-
-    .brn-form-icons-card.selected {
-        border-color: #6beabf;
-        box-shadow: 0 4px 15px rgba(107, 234, 191, 0.4);
-    }
-
-    .brn-form-icons-card {
-        cursor: pointer;
-        transition: all 0.3s ease;
-        border: 2px solid transparent;
-        padding: 10px;
-        border-radius: 8px;
-    }
-
-    .brn-form-icons-card:hover {
-        border-color: #6beabf;
-        box-shadow: 0 4px 15px rgba(107, 234, 191, 0.4);
-    }
-
-    .brn-form-icons-header {
-        font-size: 1.2rem;
-        font-weight: bold;
-        margin-bottom: 20px;
-    }
-
-
-
-
-    /* Styling for the entire progress indicator section */
-    .form-progress-indicator-wrapper {
-        position: relative;
-        width: 90%;
+    /*====================================================================
+            ========================== Interest Heading Heading Container ========================= */
+    .interest-form-heading {
         max-width: 600px;
-        margin: 0 auto 20px;
+        margin: 0 auto;
+    }
+
+    .interest-form-heading .header h1 {
+        font-size: 37px;
+        font-weight: 500;
+        color: #0d4036;
+        margin: 0 0 10px 0;
+    }
+
+
+    .interest-form-layout-container .interest-form-heading>div.third-form-heading .header h1 {
+        font-size: 30px;
+
+    }
+
+
+    .interest-form-heading .subtitle {
+        display: flex;
+        align-items: center;
+    }
+
+    .interest-form-heading .subtitle .line {
+        width: 20vw;
+        max-width: 120px;
+        height: 3px;
+        background-color: #137077;
+        border-radius: 2px;
+        margin-right: 6px;
+    }
+
+    .interest-form-heading .subtitle p {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 600;
+        color: #137077;
+    }
+
+
+
+
+    /* 2. Description Section */
+    .interest-form-heading .description {
+        margin: 30px 0;
+    }
+
+    .interest-form-heading .description p {
+        font-size: 13px;
+        color: #0d4036;
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    /* 3. Progress Stepper */
+    .progress-step-container {
+        width: 100%;
+    }
+
+    .interest-form-heading .progress-stepper {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        position: relative;
+        margin-top: 10px;
+    }
+
+    /* This ::before pseudo-element creates the gray line */
+    .interest-form-heading .progress-stepper::before {
+        content: "";
+        position: absolute;
+        top: 21px;
+        left: 12%;
+        right: 12%;
+        height: 4px;
+        background-color: #ebefee;
+        z-index: 1;
+        transform: translateY(-50%);
+    }
+
+    .interest-form-heading .progress-stepper::after {
+        content: "";
+        position: absolute;
+        top: 21px;
+        left: 12%;
+        right: 12%;
+        height: 4px;
+        background-color: #137077;
+        z-index: 1;
+        transform: translateY(-50%);
+        width: var(--progress-width, 0%);
+    }
+
+    .interest-form-heading .step {
         display: flex;
         flex-direction: column;
         align-items: center;
+        text-align: center;
+        width: 80px;
+        position: relative;
+        z-index: 2;
     }
 
-    .progress-image {
-        width: 90%;
-        height: auto;
+    .interest-form-heading .step .circle {
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        font-weight: 700;
+        transition: all 0.3s ease;
+
+        /* Inactive State Styles */
+        background-color: #ebefee;
+        border: 3px solid #cfd0d0;
+        color: #cfd0d0;
+    }
+
+    .interest-form-heading .step .label {
+        margin-top: 8px;
+        font-size: 10px;
+        font-weight: 800;
+        transition: all 0.3s ease;
+
+        color: #137077;
+        font-weight: 700;
+    }
+
+    /* Active State Styles */
+
+    .interest-form-heading .step.active .circle {
+        background-color: #3daab2;
+        border-color: #137077;
+        color: #ffffff;
+    }
+
+    /*
+            .interest-form-heading .step.active .label {
+            color: #137077;
+            font-weight: 700;
+            } */
+    .step.completed .circle {
+        background-color: #3daab2;
+
+        border-color: #137077;
+        color: #fff;
+    }
+
+
+    /*====================================================================
+            ========================== Interest Form Container ========================= */
+    .interest-form-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .interest-form-container .form-container {
+        background-color: #137077;
+        padding: 65px 30px;
+        border-radius: 35px;
+        width: 100%;
+        max-width: 650px;
+
+        margin-top: 40px;
+
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .interest-form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Form Group (Label + Input/Select) */
+    .interest-form-group {
+        margin-bottom: 25px;
+    }
+
+    .interest-form-group:last-of-type {
+        margin-bottom: 40px;
+    }
+
+    label {
         display: block;
+        font-size: 13px;
+        font-weight: 400;
+        color: #f0f0f0;
+        margin-bottom: 8px;
+        margin-left: 25px;
+        font-family: "GT Walsheim Trial Md";
+
+
+
     }
 
-    .step-text-container {
-        width: 120%;
-        max-width: 720px;
+
+
+    /* Input Field Styling */
+    input {
+        width: 100%;
+        padding: 18px 20px;
+        border: 1px solid #fff;
+        border-radius: 30px;
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #ffffff;
+        font-size: 16px;
+        font-family: "Montserrat", sans-serif;
+        outline: none;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        box-sizing: border-box;
+        padding-left: 30px;
+    }
+
+    input::placeholder {
+        color: #ececec80;
+        font-size: 12px;
+        font-family: "GT Walsheim Trial Md";
+
+    }
+
+
+    /* Custom Select Styling */
+    .interest-form-custom-select-wrapper {
+        position: relative;
+        width: 100%;
+    }
+
+    /* Select Input */
+    /* Base wrapper */
+    .custom-select {
+        position: relative;
+        width: 100%;
+        font-family: "Montserrat", sans-serif;
+        color: #ffffff;
+    }
+
+    /* Trigger (main visible input) */
+    .custom-select-trigger {
+        background-color: rgba(255, 255, 255, 0.2);
+        border: 1px solid #a8bdbf;
+        border-radius: 30px;
+        padding: 18px 20px;
+        font-size: 12px;
+        cursor: pointer;
         display: flex;
         justify-content: space-between;
-        padding-top: 15px;
+        align-items: center;
+        transition: all 0.3s ease;
     }
 
-    .step-text {
-        flex: 1;
+    .custom-select-trigger:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Text inside the trigger */
+    .custom-select-text {
+        color: rgba(255, 255, 255, 0.9);
+        font-family: "GT Walsheim Trial Md";
+    }
+
+    /* Arrow styling */
+    .custom-select-arrow {
+        transition: transform 0.3s ease;
+    }
+
+    /* Dropdown list */
+    .custom-options {
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        right: 0;
+        background: #137077;
+        border-radius: 14px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+        overflow: hidden;
+        z-index: 10;
+        font-family: "GT Walsheim Trial Md";
+        font-weight: 400;
+        max-height: 200px;
+    }
+
+    /* Scrollable options container */
+    .custom-options-scrollable {
+        max-height: 200px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    /* Custom scrollbar for options */
+    .custom-options-scrollable::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .custom-options-scrollable::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+    }
+
+    .custom-options-scrollable::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 3px;
+    }
+
+    .custom-options-scrollable::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.5);
+    }
+
+    /* Search input for country dropdown */
+    .country-search {
+        position: sticky;
+        top: 0;
+        background: #137077;
+        border: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 12px 18px;
+        color: #ffffff;
+        font-size: 13px;
+        outline: none;
+        font-family: "GT Walsheim Trial Md";
+        border-radius: 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .country-search::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .country-search:focus {
+        border-bottom-color: #ffffff;
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Option item */
+    .custom-option {
+        display: block;
+        padding: 12px 18px;
+        font-size: 13px;
+        color: #ffffff;
+        cursor: pointer;
+        transition: background 0.2s ease;
+    }
+
+    .custom-option:hover {
+        background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    /* When dropdown is active */
+    .custom-select.open .custom-options {
+        opacity: 1;
+        pointer-events: all;
+        transform: translateY(0);
+    }
+
+    .custom-select.open .custom-select-arrow {
+        transform: rotate(180deg);
+    }
+
+    /* Active option (highlighted) */
+    .custom-option.active {
+        background-color: rgba(255, 255, 255, 0.25);
+    }
+
+
+
+    /* ===================================================== FOR FORM THREE  */
+    /* Container for all tags */
+    .interest-form-tags {
+        display: flex;
+        grid-template-columns: repeat(3, 1fr);
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 10px;
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Individual tag wrapper */
+    .interest-form-tag {
+        background-color: #ffffff;
+        border-radius: 40px;
+        display: flex;
+        align-items: center;
+        padding: 8px 25px;
+        gap: 10px;
+        cursor: pointer;
+    }
+
+    .interest-form-tag span {
+        display: block;
+        font-size: 11px;
+        color: #193E47;
+        font-weight: 300px;
+        font-family: "GT Walsheim Trial Md";
+
+
+    }
+
+    .interest-form-tag span:first-of-type {
+        width: 25px;
+        height: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50px;
+        border: 2px solid #0d4036;
+        padding: 2px;
+    }
+
+    .interest-form-tag span svg {
+        color: #fff;
+
+        width: 20px;
+        height: 20px;
+        font-weight: 900;
+    }
+
+    .interest-form-tag span.active svg {
+        color: #0d4036;
+    }
+
+    .interest-form-group label[for="revenue"] {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+
+
+
+
+
+    }
+
+    /* Sublabel for revenue field */
+    .interest-form-sublabel {
+        font-size: 13px;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.7);
+        display: block;
+        white-space: nowrap;
+        margin-top: 3px;
+    }
+
+    /* Textarea Styling */
+    textarea {
+        width: 100%;
+        padding: 15px 20px;
+        border: none;
+        border-radius: 30px;
+        /* Highly rounded corners for the single-line input/textarea */
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #ffffff;
+        font-size: 16px;
+        font-family: "Montserrat", sans-serif;
+        outline: none;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        box-sizing: border-box;
+        resize: none;
+        /* Prevent manual resizing */
+        border: 1px solid #fff;
+    }
+
+    /* Specific styling for the larger description textarea */
+    #companyDescription {
+        border-radius: 20px;
+        /* Slightly less rounded for the multi-line field */
+        min-height: 120px;
+        padding-top: 20px;
+    }
+
+    textarea:focus {
+        background-color: rgba(255, 255, 255, 0.3);
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+    }
+
+    textarea::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+        font-weight: 500;
+
+        font-family: "GT Walsheim Trial Md";
+        font-size: 12px;
+    }
+
+    /* Question and List Styling */
+    .interest-form-question {
+        font-size: 12px;
+        font-weight: 600;
+        color: #f0f0f0;
+        margin-left: 40px;
+        line-height: 1.5;
+    }
+
+    .interest-form-list {
+        color: #f0f0f0;
+        font-size: 12px;
+        font-weight: 500;
+        padding-left: 20px;
+        margin-left: 40px;
+        margin-top: 5px;
+    }
+
+    .interest-form-list li {
+        margin-bottom: 5px;
+    }
+
+    /* Custom Radio Button Group Styling (Three Buttons) */
+    .interest-form-option-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 10px;
+        justify-content: center;
+        /* margin-bottom: 30px; */
+    }
+
+    .interest-form-option input[type="radio"] {
+        /* Hide the actual radio button */
+        display: none;
+    }
+
+    .interest-form-option label {
+        display: block;
+        padding: 12px 18px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 10px;
+        font-weight: 600;
         text-align: center;
-        padding: 0 5px;
-    }
+        transition: background-color 0.3s ease, color 0.3s ease;
 
-    .step-title {
-        font-size: 0.9rem;
-        font-weight: 1000;
+        background-color: white;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        color: #0d4036;
         margin: 0;
-        color: #111;
+        /* Override default label margin */
         white-space: nowrap;
     }
 
-    .step-desc {
-        font-size: 0.7rem;
-        color: #555;
-        margin: 0;
+    /* Checked (Active) State for the Option Button */
+    .interest-form-option input[type="radio"]:checked+label {
+        background-color: transparent;
+        border-color: #ffffff;
+        color: #0d4036;
+        /* Dark teal text when active */
+    }
+
+    .interest-form-option label:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Submit Button Override */
+    .interest-form-submit-button {
+        padding: 13px 45px;
+        background-color: #e2f091;
+        color: #4a6a00;
+        border: none;
+        border-radius: 30px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        font-weight: 500;
+
+        font-family: "GT Walsheim Trial Md";
+    }
+
+    .interest-form-submit-button:hover {
+        background-color: #d6e885;
+        transform: translateY(-2px);
+    }
+
+    .interest-form-submit-button:active {
+        background-color: #cedb7e;
+        transform: translateY(0);
+    }
+
+    /* Proceed Button Styling */
+    .interest-form-actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 50px;
+    }
+
+    .interest-form .first-stage-form-container .interest-form-actions {
+        justify-content: end;
+    }
+
+    /* Return Button Styling (New) */
+    .interest-form-return-button {
+        padding: 13px 45px;
+        background-color: transparent;
+        color: #ffffff;
+        /* White text */
+        border: 1px solid white;
+        border-radius: 30px;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        font-weight: 500;
+
+        font-family: "GT Walsheim Trial Md";
+    }
+
+    .interest-form-return-button:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Adjust the proceed button alignment from the previous form to work with the button group */
+    .interest-form-proceed-button {
+        /* align-self: flex-end; */
+        padding: 13px 45px;
+
+        background-color: #cced60;
+        color: #0d4036;
+        border: none;
+        border-radius: 30px;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        font-weight: 500;
+
+        font-family: "GT Walsheim Trial Md";
+    }
+
+    .interest-form-proceed-button:hover {
+        background-color: #d6e885;
+        transform: translateY(-2px);
+    }
+
+    .interest-form-proceed-button:active {
+        background-color: #cedb7e;
+        transform: translateY(0);
+    }
+
+    .interest-form .second-stage-form-container .interest-form-actions {
+        /* width: 50%; */
+    }
+
+    .interest-form-layout-container .desktop-heading {
+        display: none;
+    }
+
+    .interest-form-layout-container .mobile-heading {
+        display: block;
+    }
+
+    /*====================================================================
+            ========================== Interest Footer Container ========================= */
+    .interest-form-footer {
+        width: 100%;
+        margin: 60px auto;
+        padding-left: 5px;
+        max-width: 650px;
+    }
+
+    .interest-form-footer h2 {
+        font-size: 25px;
+        font-weight: 700;
+        color: #2c3e50;
+        margin: 0 0 15px 0;
+    }
+
+    .interest-form-footer-contact-row {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .interest-form-footer-contact-row>div:first-of-type {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .interest-form-footer-contact-row>div:last-of-type {
+        display: flex;
+        justify-content: start;
+        align-items: end;
+    }
+
+    .interest-form-footer-contact-row>div:last-of-type span:last-of-type {
+        margin-bottom: 9px;
+    }
+
+    .interest-form-footer-contact-item {
+        display: flex;
+        align-items: center;
+    }
+
+    .interest-form-footer-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        background-color: #0d4036;
+        color: #ffffff;
+        font-size: 20px;
+        margin-right: 6px;
+        flex-shrink: 0;
+    }
+
+    .interest-form-footer-contact-item a,
+    .interest-form-footer-contact-item span {
+        font-size: 13px;
+        font-weight: 500;
+        color: #555555;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .interest-form-footer-contact-item span i {
+        color: #fff;
+    }
+
+    .interest-form-footer-contact-item a:hover {
+        color: #0d4036;
+    }
+
+    .interest-form-footer-contact-item .phone {
+        text-decoration: underline;
+    }
+
+    /* Specific styling for the location text which is not a link */
+    .interest-form-footer-contact-item span:not(.interest-form-footer-icon) {
+        color: #555555;
+    }
+
+    /* Spinner styling */
+    .spinner-border {
+        display: inline-block;
+        width: 1rem;
+        height: 1rem;
+        vertical-align: text-bottom;
+        border: 0.125em solid currentColor;
+        border-right-color: transparent;
+        border-radius: 50%;
+        animation: spinner-border 0.75s linear infinite;
+    }
+
+    .spinner-border-sm {
+        width: 0.875rem;
+        height: 0.875rem;
+        border-width: 0.1em;
+    }
+
+    .d-none {
+        display: none !important;
+    }
+
+    @keyframes spinner-border {
+        to {
+            transform: rotate(360deg);
+        }
     }
 
     /* Error styling */
@@ -180,866 +840,1534 @@
         box-shadow: 0 0 0 3px rgba(25, 62, 71, 0.1);
     }
 
-    .brn-input-checked-group .error-message {
-        background-color: #fef2f2;
-        border: 1px solid #ef4444;
-        border-radius: 4px;
-        padding: 8px;
-        margin-top: 8px;
-    }
-
-    #brnForm .btn i {
-        display: none;
-
-    }
-
-    .brn-input-checked-options-row {
-        margin-top: -7px;
-    }
-
     /* Phone input styling */
     .phone-input-container {
         position: relative;
     }
 
     .country-code-select {
-        font-size: 14px;
+        font-size: 12px;
         text-align: center;
-        background-color: #f8f9fa;
-        border-color: #ced4da;
+        background-color: rgba(255, 255, 255, 0.2);
+        border-color: #fff;
+        color: #ffffff;
     }
 
     .country-code-select:focus {
-        background-color: #fff;
-        box-shadow: 0 0 0 3px rgba(25, 62, 71, 0.1);
+        background-color: rgba(255, 255, 255, 0.3);
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+    }
+
+    .country-code-select option {
+        background-color: #137077;
+        color: #ffffff;
+        padding: 5px;
     }
 
     .phone-input-container input[name="phone"]:focus {
-        box-shadow: 0 0 0 3px rgba(25, 62, 71, 0.1);
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
     }
 
+    /* Desktop specific styles */
+    @media (min-width: 992px) {
+        .form-layout-container {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            padding-right: 20px;
+        }
+
+        .row-two-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        .row-two-container .interest-form-heading.desktop-heading {
+            width: 100%;
+            margin: 0;
+        }
+
+        .form-heading-card {
+            max-width: 500px;
+        }
+
+        .interest-form-heading .header h1 {
+            font-size: 39px;
+        }
+
+        .interest-form-heading.desktop-heading .description p {
+            font-size: 15px;
+        }
+
+        .interest-form-footer {
+            margin: 0px;
+            padding-left: 0px;
+            max-width: auto;
+        }
+
+        .interest-form-container .form-container {
+            margin-top: 0px;
+            max-width: 500px;
+            padding: 65px 40px;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 400;
+
+            margin-left: 40px;
 
 
 
 
-    /* UPDATED CHANGES */
-    @media (max-width: 768px) {
-        .step-text {
+        }
+
+
+        .interest-form-group label[for="revenue"] {
+            flex-direction: row;
+            white-space: nowrap;
+            align-items: center;
+
+
+
+
+        }
+
+
+        .interest-form-return-button,
+        .interest-form-proceed-button {
+            /* Uses the slightly transparent input background for its base color */
+            padding: 15px 60px;
+        }
+
+        .interest-form-layout-container .desktop-heading {
+            display: block;
+        }
+
+        .interest-form-layout-container .mobile-heading {
             display: none;
         }
 
-        .step-text.active {
-            display: block;
+        .interest-form-footer-contact-row {
             display: flex;
-            flex-direction: column;
-            text-align: left;
-            margin-left: 16px;
+            flex-wrap: wrap;
+            align-items: start;
+            gap: 20px;
         }
 
-
-
-        #brnForm .brn-form-icons-text {
-            font-size: 0.9rem;
+        .interest-form-footer-contact-row>div:first-of-type {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
         }
 
-        #brnForm .btn.next-btn,
-        #brnForm .btn.prev-btn,
-        #brnForm .btn.btn-submit {
-            padding: 9px 40px;
-            font-size: 1rem;
-            margin-top: 20px;
+        .interest-form-footer-contact-row>div:last-of-type {
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
+        .interest-form-footer-contact-row>div span {
+            white-space: nowrap;
+        }
+
+        .interest-form-footer-contact-row>div:last-of-type span:last-of-type {
+            margin-bottom: 0px;
+        }
+    }
+
+    @media (min-width: 1440px) {
+        .form-layout-container {
+            padding: 0px;
+        }
     }
 </style>
 
 @section('content')
-    <section class="brn-body">
-        <div class="brn-main-container">
-            <div class="container">
-                <form id="brnForm" action="{{ route('brn.submit') }}" method="POST" enctype="multipart/form-data"
-                    novalidate>
-                    @csrf
-                    <div class="brn-container form-step active" id="form1">
-
-
-                        <div class="brn-header-container">
-                            <div class="brn-header">
-                                <h1>Personal Information</h1>
-                                <div class="brn-header-desc">
-                                    <span></span>
+    <section class="interest-form-layout-container">
+        <div class="form-layout-container">
+            <div class="row-one-container">
+                <!-- Mobile Heading -->
+                <section class="interest-form-heading mobile-heading">
+                    <!-- First Form Heading -->
+                    <div class="first-form-heading hidden">
+                        <div class="form-heading-card">
+                            <div class="header">
+                                <h1>Basic Information</h1>
+                                <div class="subtitle">
+                                    <span class="line"></span>
                                     <p>Let's start with your basic details</p>
                                 </div>
                             </div>
+
+                            <div class="description">
+                                <p>
+                                    NOEL transforms executive networking from casual connections
+                                    to strategic growth. Our platform facilitates verified,
+                                    high-value introductions between senior leaders and
+                                    investors. Focus on building relationships that drive real
+                                    business outcomes.
+                                </p>
+                            </div>
+                            <div class="progress-step-container">
+                                <div class="progress-stepper">
+                                    <div class="step active">
+                                        <div class="circle">1</div>
+                                        <div class="label">Basic Information</div>
+                                    </div>
+
+                                    <div class="step">
+                                        <div class="circle">2</div>
+                                        <div class="label">Credibility Check</div>
+                                    </div>
+
+                                    <div class="step">
+                                        <div class="circle">3</div>
+                                        <div class="label">Industry Preference</div>
+                                    </div>
+
+                                    <div class="step">
+                                        <div class="circle">4</div>
+                                        <div class="label">Industry Insight</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="brn-form-container">
-                            <div class="form-conainer">
-                                <div class="brn-content">
-                                    <div class="brn-form">
-                                        <div class="form-progress-indicator-wrapper">
-                                            <img id="progress-image" src="{{ asset('images/step1.svg') }}"
-                                                alt="Form Progress" class="progress-image">
-                                            <div class="step-text-container">
-                                                <div class="step-text active" data-step="1">
-                                                    <p class="step-title">Personal Information</p>
-                                                    <p class="step-desc">Let's start with your <br> basic details</p>
-                                                </div>
-                                                <div class="step-text " data-step="2">
-                                                    <p class="step-title">Company Information</p>
-                                                    <p class="step-desc">Tell us about your <br> business</p>
-                                                </div>
-                                                <div class="step-text" data-step="3">
-                                                    <p class="step-title">Choose Interest</p>
-                                                    <p class="step-desc">What would you like to get <br> from this
-                                                        solution
-                                                    </p>
-                                                </div>
+                    </div>
+
+                    <!-- Second Form Heading -->
+                    <div class="second-form-heading hidden">
+                        <div class="form-heading-card">
+                            <div class="header">
+                                <h1>Credibility Check</h1>
+                                <div class="subtitle">
+                                    <span class="line"></span>
+                                    <p>Stand out among other businesses</p>
+                                </div>
+                            </div>
+
+                            <div class="description">
+                                <p>
+                                    NOEL transforms executive networking from casual connections
+                                    to strategic growth. Our platform facilitates verified,
+                                    high-value introductions between senior leaders and
+                                    investors. Focus on building relationships that drive real
+                                    business outcomes.
+                                </p>
+                            </div>
+                            <div class="progress-step-container">
+                                <div class="progress-stepper">
+                                    <div class="step active">
+                                        <div class="circle">1</div>
+                                        <div class="label">Basic Information</div>
+                                    </div>
+
+                                    <div class="step">
+                                        <div class="circle">2</div>
+                                        <div class="label">Credibility Check</div>
+                                    </div>
+
+                                    <div class="step">
+                                        <div class="circle">3</div>
+                                        <div class="label">Industry Preference</div>
+                                    </div>
+
+                                    <div class="step">
+                                        <div class="circle">4</div>
+                                        <div class="label">Industry Insight</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Third Form Heading -->
+                    <div class="third-form-heading hidden">
+                        <div class="form-heading-card">
+                            <div class="header">
+                                <h1>Industry Preference</h1>
+                                <div class="subtitle">
+                                    <span class="line"></span>
+                                    <p>Boost visibility for your matches</p>
+                                </div>
+                            </div>
+
+                            <div class="description">
+                                <p>
+                                    NOEL transforms executive networking from casual connections
+                                    to strategic growth. Our platform facilitates verified,
+                                    high-value introductions between senior leaders and
+                                    investors. Focus on building relationships that drive real
+                                    business outcomes.
+                                </p>
+                            </div>
+                            <div class="progress-step-container">
+                                <div class="progress-stepper">
+                                    <div class="step active">
+                                        <div class="circle">1</div>
+                                        <div class="label">Basic Information</div>
+                                    </div>
+
+                                    <div class="step">
+                                        <div class="circle">2</div>
+                                        <div class="label">Credibility Check</div>
+                                    </div>
+
+                                    <div class="step">
+                                        <div class="circle">3</div>
+                                        <div class="label">Industry Preference</div>
+                                    </div>
+
+                                    <div class="step">
+                                        <div class="circle">4</div>
+                                        <div class="label">Industry Insight</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fourth Form Heading -->
+                    <div class="fourth-form-heading">
+                        <div class="form-heading-card">
+                            <div class="header">
+                                <h1>Industry Insight</h1>
+                                <div class="subtitle">
+                                    <span class="line"></span>
+                                    <p>Stand out among other businesses</p>
+                                </div>
+                            </div>
+
+                            <div class="description">
+                                <p>
+                                    NOEL transforms executive networking from casual connections
+                                    to strategic growth. Our platform facilitates verified,
+                                    high-value introductions between senior leaders and
+                                    investors. Focus on building relationships that drive real
+                                    business outcomes.
+                                </p>
+                            </div>
+                            <div class="progress-step-container">
+                                <div class="progress-stepper">
+                                    <div class="step active">
+                                        <div class="circle">1</div>
+                                        <div class="label">Basic Information</div>
+                                    </div>
+
+                                    <div class="step">
+                                        <div class="circle">2</div>
+                                        <div class="label">Credibility Check</div>
+                                    </div>
+
+                                    <div class="step">
+                                        <div class="circle">3</div>
+                                        <div class="label">Industry Preference</div>
+                                    </div>
+
+                                    <div class="step">
+                                        <div class="circle">4</div>
+                                        <div class="label">Industry Insight</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Form Section -->
+                <section class="interest-form-container">
+                    <div class="form-container">
+                        <form class="interest-form" id="brnForm" action="{{ route('brn.submit') }}" method="POST">
+                            @csrf
+                            <!-- First Stage Form -->
+                            <div class="first-stage-form-container hidden">
+                                <div class="interest-form-group">
+                                    <label for="fullName">Full Name</label>
+                                    <input type="text" id="fullName" name="name" placeholder="Input Full name" />
+                                </div>
+
+                                <div class="interest-form-group">
+                                    <label for="title">Title</label>
+                                    <div class="custom-select" id="customSelect" data-select="title">
+                                        <div class="custom-select-trigger">
+                                            <span class="custom-select-text">Input your title, e.g CEO</span>
+                                            <svg class="custom-select-arrow" xmlns="http://www.w3.org/2000/svg"
+                                                width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                                stroke="#ffffff" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                                <polyline points="6 9 12 15 18 9"></polyline>
+                                            </svg>
+                                        </div>
+                                        <div class="custom-options">
+                                            <span class="custom-option" data-value="CEO">CEO</span>
+                                            <span class="custom-option" data-value="CTO">CTO</span>
+                                            <span class="custom-option" data-value="CFO">CFO</span>
+                                            <span class="custom-option" data-value="Manager">Manager</span>
+                                            <span class="custom-option" data-value="Director">Director</span>
+                                            <span class="custom-option" data-value="Other">Other</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Hidden native select for form submission -->
+                                    <select id="title" name="position" style="display: none">
+                                        <option value="">Input your title, e.g CEO</option>
+                                        <option value="CEO">CEO</option>
+                                        <option value="CTO">CTO</option>
+                                        <option value="CFO">CFO</option>
+                                        <option value="Manager">Manager</option>
+                                        <option value="Director">Director</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+
+                                <div class="interest-form-group">
+                                    <label for="businessName">Official Business Name</label>
+                                    <input type="text" id="businessName" name="company_name"
+                                        placeholder="Input your business Name" />
+                                </div>
+
+                                <div class="interest-form-group">
+                                    <label for="emailAddress">Email Address</label>
+                                    <input type="email" id="emailAddress" name="email"
+                                        placeholder="Input Email Address" />
+                                    <!-- Email validation status -->
+                                    <div id="email-status" style="display: none; margin-top: 8px; font-size: 0.875rem;">
+                                        <span id="email-checkmark" style="color: #10b981; display: none;">✓ Email
+                                            available</span>
+                                        <span id="email-spinner" style="color: #6b7280; display: none;">⏳
+                                            Validating...</span>
+                                    </div>
+                                </div>
+
+                                <div class="interest-form-group">
+                                    <label for="phoneNumber">Phone Number</label>
+                                    <div class="phone-input-container" style="display: flex; gap: 8px;">
+                                        <!-- Country code select -->
+                                        <select name="country_code" class="country-code-select"
+                                            style="flex: 0 0 130px; border-radius: 30px; padding: 18px 12px; border: 1px solid #fff; background-color: rgba(255, 255, 255, 0.2); color: #ffffff; font-size: 12px; outline: none;">
+                                            <option value="+93">🇦🇫 +93</option>
+                                            <option value="+355">🇦🇱 +355</option>
+                                            <option value="+213">🇩🇿 +213</option>
+                                            <option value="+376">🇦🇩 +376</option>
+                                            <option value="+244">🇦🇴 +244</option>
+                                            <option value="+54">🇦🇷 +54</option>
+                                            <option value="+374">🇦🇲 +374</option>
+                                            <option value="+61">🇦🇺 +61</option>
+                                            <option value="+43">🇦🇹 +43</option>
+                                            <option value="+994">🇦🇿 +994</option>
+                                            <option value="+973">🇧🇭 +973</option>
+                                            <option value="+880">🇧🇩 +880</option>
+                                            <option value="+375">🇧🇾 +375</option>
+                                            <option value="+32">🇧🇪 +32</option>
+                                            <option value="+229">🇧🇯 +229</option>
+                                            <option value="+975">🇧🇹 +975</option>
+                                            <option value="+591">🇧🇴 +591</option>
+                                            <option value="+55">🇧🇷 +55</option>
+                                            <option value="+673">🇧🇳 +673</option>
+                                            <option value="+359">🇧🇬 +359</option>
+                                            <option value="+226">🇧🇫 +226</option>
+                                            <option value="+257">🇧🇮 +257</option>
+                                            <option value="+855">🇰🇭 +855</option>
+                                            <option value="+237">🇨🇲 +237</option>
+                                            <option value="+1">🇨🇦 +1</option>
+                                            <option value="+238">🇨🇻 +238</option>
+                                            <option value="+236">🇨🇫 +236</option>
+                                            <option value="+235">🇹🇩 +235</option>
+                                            <option value="+56">🇨🇱 +56</option>
+                                            <option value="+86">🇨🇳 +86</option>
+                                            <option value="+57">🇨🇴 +57</option>
+                                            <option value="+269">🇰🇲 +269</option>
+                                            <option value="+242">🇨🇬 +242</option>
+                                            <option value="+243">🇨🇩 +243</option>
+                                            <option value="+506">🇨🇷 +506</option>
+                                            <option value="+225">🇨🇮 +225</option>
+                                            <option value="+385">🇭🇷 +385</option>
+                                            <option value="+53">🇨🇺 +53</option>
+                                            <option value="+357">🇨🇾 +357</option>
+                                            <option value="+420">🇨🇿 +420</option>
+                                            <option value="+45">🇩🇰 +45</option>
+                                            <option value="+253">🇩🇯 +253</option>
+                                            <option value="+593">🇪🇨 +593</option>
+                                            <option value="+20">🇪🇬 +20</option>
+                                            <option value="+503">🇸🇻 +503</option>
+                                            <option value="+240">🇬🇶 +240</option>
+                                            <option value="+291">🇪🇷 +291</option>
+                                            <option value="+372">🇪🇪 +372</option>
+                                            <option value="+251">🇪🇹 +251</option>
+                                            <option value="+679">🇫🇯 +679</option>
+                                            <option value="+358">🇫🇮 +358</option>
+                                            <option value="+33">🇫🇷 +33</option>
+                                            <option value="+241">🇬🇦 +241</option>
+                                            <option value="+220">🇬🇲 +220</option>
+                                            <option value="+995">🇬🇪 +995</option>
+                                            <option value="+49">🇩🇪 +49</option>
+                                            <option value="+233" selected>🇬🇭 +233</option>
+                                            <option value="+30">🇬🇷 +30</option>
+                                            <option value="+502">🇬🇹 +502</option>
+                                            <option value="+224">🇬🇳 +224</option>
+                                            <option value="+245">🇬🇼 +245</option>
+                                            <option value="+592">🇬🇾 +592</option>
+                                            <option value="+509">🇭🇹 +509</option>
+                                            <option value="+504">🇭🇳 +504</option>
+                                            <option value="+852">🇭🇰 +852</option>
+                                            <option value="+36">🇭🇺 +36</option>
+                                            <option value="+354">🇮🇸 +354</option>
+                                            <option value="+91">🇮🇳 +91</option>
+                                            <option value="+62">🇮🇩 +62</option>
+                                            <option value="+98">🇮🇷 +98</option>
+                                            <option value="+964">🇮🇶 +964</option>
+                                            <option value="+353">🇮🇪 +353</option>
+                                            <option value="+972">🇮🇱 +972</option>
+                                            <option value="+39">🇮🇹 +39</option>
+                                            <option value="+81">🇯🇵 +81</option>
+                                            <option value="+962">🇯🇴 +962</option>
+                                            <option value="+7">🇰🇿 +7</option>
+                                            <option value="+254">🇰🇪 +254</option>
+                                            <option value="+686">🇰🇮 +686</option>
+                                            <option value="+850">🇰🇵 +850</option>
+                                            <option value="+82">🇰🇷 +82</option>
+                                            <option value="+965">🇰🇼 +965</option>
+                                            <option value="+996">🇰🇬 +996</option>
+                                            <option value="+856">🇱🇦 +856</option>
+                                            <option value="+371">🇱🇻 +371</option>
+                                            <option value="+961">🇱🇧 +961</option>
+                                            <option value="+266">🇱🇸 +266</option>
+                                            <option value="+231">🇱🇷 +231</option>
+                                            <option value="+218">🇱🇾 +218</option>
+                                            <option value="+423">🇱🇮 +423</option>
+                                            <option value="+370">🇱🇹 +370</option>
+                                            <option value="+352">🇱🇺 +352</option>
+                                            <option value="+853">🇲🇴 +853</option>
+                                            <option value="+389">🇲🇰 +389</option>
+                                            <option value="+261">🇲🇬 +261</option>
+                                            <option value="+265">🇲🇼 +265</option>
+                                            <option value="+60">🇲🇾 +60</option>
+                                            <option value="+960">🇲🇻 +960</option>
+                                            <option value="+223">🇲🇱 +223</option>
+                                            <option value="+356">🇲🇹 +356</option>
+                                            <option value="+692">🇲🇭 +692</option>
+                                            <option value="+222">🇲🇷 +222</option>
+                                            <option value="+230">🇲🇺 +230</option>
+                                            <option value="+52">🇲🇽 +52</option>
+                                            <option value="+691">🇫🇲 +691</option>
+                                            <option value="+373">🇲🇩 +373</option>
+                                            <option value="+377">🇲🇨 +377</option>
+                                            <option value="+976">🇲🇳 +976</option>
+                                            <option value="+382">🇲🇪 +382</option>
+                                            <option value="+212">🇲🇦 +212</option>
+                                            <option value="+258">🇲🇿 +258</option>
+                                            <option value="+95">🇲🇲 +95</option>
+                                            <option value="+264">🇳🇦 +264</option>
+                                            <option value="+674">🇳🇷 +674</option>
+                                            <option value="+977">🇳🇵 +977</option>
+                                            <option value="+31">🇳🇱 +31</option>
+                                            <option value="+64">🇳🇿 +64</option>
+                                            <option value="+505">🇳🇮 +505</option>
+                                            <option value="+227">🇳🇪 +227</option>
+                                            <option value="+234">🇳🇬 +234</option>
+                                            <option value="+683">🇳🇺 +683</option>
+                                            <option value="+672">🇳🇫 +672</option>
+                                            <option value="+47">🇳🇴 +47</option>
+                                            <option value="+968">🇴🇲 +968</option>
+                                            <option value="+92">🇵🇰 +92</option>
+                                            <option value="+680">🇵🇼 +680</option>
+                                            <option value="+507">🇵🇦 +507</option>
+                                            <option value="+675">🇵🇬 +675</option>
+                                            <option value="+595">🇵🇾 +595</option>
+                                            <option value="+51">🇵🇪 +51</option>
+                                            <option value="+63">🇵🇭 +63</option>
+                                            <option value="+48">🇵🇱 +48</option>
+                                            <option value="+351">🇵🇹 +351</option>
+                                            <option value="+974">🇶🇦 +974</option>
+                                            <option value="+40">🇷🇴 +40</option>
+                                            <option value="+7">🇷🇺 +7</option>
+                                            <option value="+250">🇷🇼 +250</option>
+                                            <option value="+685">🇼🇸 +685</option>
+                                            <option value="+378">🇸🇲 +378</option>
+                                            <option value="+239">🇸🇹 +239</option>
+                                            <option value="+966">🇸🇦 +966</option>
+                                            <option value="+221">🇸🇳 +221</option>
+                                            <option value="+381">🇷🇸 +381</option>
+                                            <option value="+248">🇸🇨 +248</option>
+                                            <option value="+232">🇸🇱 +232</option>
+                                            <option value="+65">🇸🇬 +65</option>
+                                            <option value="+421">🇸🇰 +421</option>
+                                            <option value="+386">🇸🇮 +386</option>
+                                            <option value="+677">🇸🇧 +677</option>
+                                            <option value="+252">🇸🇴 +252</option>
+                                            <option value="+27">🇿🇦 +27</option>
+                                            <option value="+211">🇸🇸 +211</option>
+                                            <option value="+34">🇪🇸 +34</option>
+                                            <option value="+94">🇱🇰 +94</option>
+                                            <option value="+249">🇸🇩 +249</option>
+                                            <option value="+597">🇸🇷 +597</option>
+                                            <option value="+268">🇸🇿 +268</option>
+                                            <option value="+46">🇸🇪 +46</option>
+                                            <option value="+41">🇨🇭 +41</option>
+                                            <option value="+963">🇸🇾 +963</option>
+                                            <option value="+886">🇹🇼 +886</option>
+                                            <option value="+992">🇹🇯 +992</option>
+                                            <option value="+255">🇹🇿 +255</option>
+                                            <option value="+66">🇹🇭 +66</option>
+                                            <option value="+670">🇹🇱 +670</option>
+                                            <option value="+228">🇹🇬 +228</option>
+                                            <option value="+676">🇹🇴 +676</option>
+                                            <option value="+216">🇹🇳 +216</option>
+                                            <option value="+90">🇹🇷 +90</option>
+                                            <option value="+993">🇹🇲 +993</option>
+                                            <option value="+688">🇹🇻 +688</option>
+                                            <option value="+256">🇺🇬 +256</option>
+                                            <option value="+380">🇺🇦 +380</option>
+                                            <option value="+971">🇦🇪 +971</option>
+                                            <option value="+44">🇬🇧 +44</option>
+                                            <option value="+1">🇺🇸 +1</option>
+                                            <option value="+598">🇺🇾 +598</option>
+                                            <option value="+998">🇺🇿 +998</option>
+                                            <option value="+678">🇻🇺 +678</option>
+                                            <option value="+39">🇻🇦 +39</option>
+                                            <option value="+58">🇻🇪 +58</option>
+                                            <option value="+84">🇻🇳 +84</option>
+                                            <option value="+967">🇾🇪 +967</option>
+                                            <option value="+260">🇿🇲 +260</option>
+                                            <option value="+263">🇿🇼 +263</option>
+                                        </select>
+                                        <!-- Phone number input -->
+                                        <input type="tel" id="phoneNumber" name="phone"
+                                            placeholder="Input phone number" style="flex: 1;" />
+                                    </div>
+                                </div>
+
+                                <div class="interest-form-actions">
+                                    <button type="button" class="interest-form-proceed-button" data-next="form2">
+                                        Proceed
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Second Form -->
+                            <div class="second-stage-form-container hidden">
+                                <div class="interest-form-group">
+                                    <label for="regNumber">Company Registration Number</label>
+                                    <input type="text" id="regNumber" name="reg_number"
+                                        placeholder="Input you company Reg. Number" />
+                                </div>
+
+                                <div class="interest-form-group">
+                                    <label for="countryReg">Country Of Registration</label>
+                                    <div class="custom-select" data-select="country">
+                                        <div class="custom-select-trigger">
+                                            <span class="custom-select-text">Select your country</span>
+                                            <svg class="custom-select-arrow" xmlns="http://www.w3.org/2000/svg"
+                                                width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                                stroke="#ffffff" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                                <polyline points="6 9 12 15 18 9"></polyline>
+                                            </svg>
+                                        </div>
+                                        <div class="custom-options">
+                                            <input type="text" class="country-search"
+                                                placeholder="Search countries..." autocomplete="off">
+                                            <div class="custom-options-scrollable">
+                                                <span class="custom-option" data-value="Afghanistan">Afghanistan</span>
+                                                <span class="custom-option" data-value="Albania">Albania</span>
+                                                <span class="custom-option" data-value="Algeria">Algeria</span>
+                                                <span class="custom-option" data-value="Andorra">Andorra</span>
+                                                <span class="custom-option" data-value="Angola">Angola</span>
+                                                <span class="custom-option" data-value="Argentina">Argentina</span>
+                                                <span class="custom-option" data-value="Armenia">Armenia</span>
+                                                <span class="custom-option" data-value="Australia">Australia</span>
+                                                <span class="custom-option" data-value="Austria">Austria</span>
+                                                <span class="custom-option" data-value="Azerbaijan">Azerbaijan</span>
+                                                <span class="custom-option" data-value="Bahamas">Bahamas</span>
+                                                <span class="custom-option" data-value="Bahrain">Bahrain</span>
+                                                <span class="custom-option" data-value="Bangladesh">Bangladesh</span>
+                                                <span class="custom-option" data-value="Barbados">Barbados</span>
+                                                <span class="custom-option" data-value="Belarus">Belarus</span>
+                                                <span class="custom-option" data-value="Belgium">Belgium</span>
+                                                <span class="custom-option" data-value="Belize">Belize</span>
+                                                <span class="custom-option" data-value="Benin">Benin</span>
+                                                <span class="custom-option" data-value="Bhutan">Bhutan</span>
+                                                <span class="custom-option" data-value="Bolivia">Bolivia</span>
+                                                <span class="custom-option" data-value="Bosnia and Herzegovina">Bosnia and
+                                                    Herzegovina</span>
+                                                <span class="custom-option" data-value="Botswana">Botswana</span>
+                                                <span class="custom-option" data-value="Brazil">Brazil</span>
+                                                <span class="custom-option" data-value="Brunei">Brunei</span>
+                                                <span class="custom-option" data-value="Bulgaria">Bulgaria</span>
+                                                <span class="custom-option" data-value="Burkina Faso">Burkina Faso</span>
+                                                <span class="custom-option" data-value="Burundi">Burundi</span>
+                                                <span class="custom-option" data-value="Cambodia">Cambodia</span>
+                                                <span class="custom-option" data-value="Cameroon">Cameroon</span>
+                                                <span class="custom-option" data-value="Canada">Canada</span>
+                                                <span class="custom-option" data-value="Cape Verde">Cape Verde</span>
+                                                <span class="custom-option" data-value="Central African Republic">Central
+                                                    African Republic</span>
+                                                <span class="custom-option" data-value="Chad">Chad</span>
+                                                <span class="custom-option" data-value="Chile">Chile</span>
+                                                <span class="custom-option" data-value="China">China</span>
+                                                <span class="custom-option" data-value="Colombia">Colombia</span>
+                                                <span class="custom-option" data-value="Comoros">Comoros</span>
+                                                <span class="custom-option" data-value="Congo">Congo</span>
+                                                <span class="custom-option" data-value="Costa Rica">Costa Rica</span>
+                                                <span class="custom-option" data-value="Croatia">Croatia</span>
+                                                <span class="custom-option" data-value="Cuba">Cuba</span>
+                                                <span class="custom-option" data-value="Cyprus">Cyprus</span>
+                                                <span class="custom-option" data-value="Czech Republic">Czech
+                                                    Republic</span>
+                                                <span class="custom-option" data-value="Denmark">Denmark</span>
+                                                <span class="custom-option" data-value="Djibouti">Djibouti</span>
+                                                <span class="custom-option" data-value="Dominica">Dominica</span>
+                                                <span class="custom-option" data-value="Dominican Republic">Dominican
+                                                    Republic</span>
+                                                <span class="custom-option" data-value="East Timor">East Timor</span>
+                                                <span class="custom-option" data-value="Ecuador">Ecuador</span>
+                                                <span class="custom-option" data-value="Egypt">Egypt</span>
+                                                <span class="custom-option" data-value="El Salvador">El Salvador</span>
+                                                <span class="custom-option" data-value="Equatorial Guinea">Equatorial
+                                                    Guinea</span>
+                                                <span class="custom-option" data-value="Eritrea">Eritrea</span>
+                                                <span class="custom-option" data-value="Estonia">Estonia</span>
+                                                <span class="custom-option" data-value="Ethiopia">Ethiopia</span>
+                                                <span class="custom-option" data-value="Fiji">Fiji</span>
+                                                <span class="custom-option" data-value="Finland">Finland</span>
+                                                <span class="custom-option" data-value="France">France</span>
+                                                <span class="custom-option" data-value="Gabon">Gabon</span>
+                                                <span class="custom-option" data-value="Gambia">Gambia</span>
+                                                <span class="custom-option" data-value="Georgia">Georgia</span>
+                                                <span class="custom-option" data-value="Germany">Germany</span>
+                                                <span class="custom-option" data-value="Ghana">Ghana</span>
+                                                <span class="custom-option" data-value="Greece">Greece</span>
+                                                <span class="custom-option" data-value="Grenada">Grenada</span>
+                                                <span class="custom-option" data-value="Guatemala">Guatemala</span>
+                                                <span class="custom-option" data-value="Guinea">Guinea</span>
+                                                <span class="custom-option"
+                                                    data-value="Guinea-Bissau">Guinea-Bissau</span>
+                                                <span class="custom-option" data-value="Guyana">Guyana</span>
+                                                <span class="custom-option" data-value="Haiti">Haiti</span>
+                                                <span class="custom-option" data-value="Honduras">Honduras</span>
+                                                <span class="custom-option" data-value="Hungary">Hungary</span>
+                                                <span class="custom-option" data-value="Iceland">Iceland</span>
+                                                <span class="custom-option" data-value="India">India</span>
+                                                <span class="custom-option" data-value="Indonesia">Indonesia</span>
+                                                <span class="custom-option" data-value="Iran">Iran</span>
+                                                <span class="custom-option" data-value="Iraq">Iraq</span>
+                                                <span class="custom-option" data-value="Ireland">Ireland</span>
+                                                <span class="custom-option" data-value="Israel">Israel</span>
+                                                <span class="custom-option" data-value="Italy">Italy</span>
+                                                <span class="custom-option" data-value="Ivory Coast">Ivory Coast</span>
+                                                <span class="custom-option" data-value="Jamaica">Jamaica</span>
+                                                <span class="custom-option" data-value="Japan">Japan</span>
+                                                <span class="custom-option" data-value="Jordan">Jordan</span>
+                                                <span class="custom-option" data-value="Kazakhstan">Kazakhstan</span>
+                                                <span class="custom-option" data-value="Kenya">Kenya</span>
+                                                <span class="custom-option" data-value="Kiribati">Kiribati</span>
+                                                <span class="custom-option" data-value="North Korea">North Korea</span>
+                                                <span class="custom-option" data-value="South Korea">South Korea</span>
+                                                <span class="custom-option" data-value="Kuwait">Kuwait</span>
+                                                <span class="custom-option" data-value="Kyrgyzstan">Kyrgyzstan</span>
+                                                <span class="custom-option" data-value="Laos">Laos</span>
+                                                <span class="custom-option" data-value="Latvia">Latvia</span>
+                                                <span class="custom-option" data-value="Lebanon">Lebanon</span>
+                                                <span class="custom-option" data-value="Lesotho">Lesotho</span>
+                                                <span class="custom-option" data-value="Liberia">Liberia</span>
+                                                <span class="custom-option" data-value="Libya">Libya</span>
+                                                <span class="custom-option"
+                                                    data-value="Liechtenstein">Liechtenstein</span>
+                                                <span class="custom-option" data-value="Lithuania">Lithuania</span>
+                                                <span class="custom-option" data-value="Luxembourg">Luxembourg</span>
+                                                <span class="custom-option" data-value="Macedonia">Macedonia</span>
+                                                <span class="custom-option" data-value="Madagascar">Madagascar</span>
+                                                <span class="custom-option" data-value="Malawi">Malawi</span>
+                                                <span class="custom-option" data-value="Malaysia">Malaysia</span>
+                                                <span class="custom-option" data-value="Maldives">Maldives</span>
+                                                <span class="custom-option" data-value="Mali">Mali</span>
+                                                <span class="custom-option" data-value="Malta">Malta</span>
+                                                <span class="custom-option" data-value="Marshall Islands">Marshall
+                                                    Islands</span>
+                                                <span class="custom-option" data-value="Mauritania">Mauritania</span>
+                                                <span class="custom-option" data-value="Mauritius">Mauritius</span>
+                                                <span class="custom-option" data-value="Mexico">Mexico</span>
+                                                <span class="custom-option" data-value="Micronesia">Micronesia</span>
+                                                <span class="custom-option" data-value="Moldova">Moldova</span>
+                                                <span class="custom-option" data-value="Monaco">Monaco</span>
+                                                <span class="custom-option" data-value="Mongolia">Mongolia</span>
+                                                <span class="custom-option" data-value="Montenegro">Montenegro</span>
+                                                <span class="custom-option" data-value="Morocco">Morocco</span>
+                                                <span class="custom-option" data-value="Mozambique">Mozambique</span>
+                                                <span class="custom-option" data-value="Myanmar">Myanmar</span>
+                                                <span class="custom-option" data-value="Namibia">Namibia</span>
+                                                <span class="custom-option" data-value="Nauru">Nauru</span>
+                                                <span class="custom-option" data-value="Nepal">Nepal</span>
+                                                <span class="custom-option" data-value="Netherlands">Netherlands</span>
+                                                <span class="custom-option" data-value="New Zealand">New Zealand</span>
+                                                <span class="custom-option" data-value="Nicaragua">Nicaragua</span>
+                                                <span class="custom-option" data-value="Niger">Niger</span>
+                                                <span class="custom-option" data-value="Nigeria">Nigeria</span>
+                                                <span class="custom-option" data-value="Norway">Norway</span>
+                                                <span class="custom-option" data-value="Oman">Oman</span>
+                                                <span class="custom-option" data-value="Pakistan">Pakistan</span>
+                                                <span class="custom-option" data-value="Palau">Palau</span>
+                                                <span class="custom-option" data-value="Panama">Panama</span>
+                                                <span class="custom-option" data-value="Papua New Guinea">Papua New
+                                                    Guinea</span>
+                                                <span class="custom-option" data-value="Paraguay">Paraguay</span>
+                                                <span class="custom-option" data-value="Peru">Peru</span>
+                                                <span class="custom-option" data-value="Philippines">Philippines</span>
+                                                <span class="custom-option" data-value="Poland">Poland</span>
+                                                <span class="custom-option" data-value="Portugal">Portugal</span>
+                                                <span class="custom-option" data-value="Qatar">Qatar</span>
+                                                <span class="custom-option" data-value="Romania">Romania</span>
+                                                <span class="custom-option" data-value="Russia">Russia</span>
+                                                <span class="custom-option" data-value="Rwanda">Rwanda</span>
+                                                <span class="custom-option" data-value="Saint Kitts and Nevis">Saint Kitts
+                                                    and
+                                                    Nevis</span>
+                                                <span class="custom-option" data-value="Saint Lucia">Saint Lucia</span>
+                                                <span class="custom-option"
+                                                    data-value="Saint Vincent and the Grenadines">Saint Vincent and the
+                                                    Grenadines</span>
+                                                <span class="custom-option" data-value="Samoa">Samoa</span>
+                                                <span class="custom-option" data-value="San Marino">San Marino</span>
+                                                <span class="custom-option" data-value="Sao Tome and Principe">Sao Tome
+                                                    and
+                                                    Principe</span>
+                                                <span class="custom-option" data-value="Saudi Arabia">Saudi Arabia</span>
+                                                <span class="custom-option" data-value="Senegal">Senegal</span>
+                                                <span class="custom-option" data-value="Serbia">Serbia</span>
+                                                <span class="custom-option" data-value="Seychelles">Seychelles</span>
+                                                <span class="custom-option" data-value="Sierra Leone">Sierra Leone</span>
+                                                <span class="custom-option" data-value="Singapore">Singapore</span>
+                                                <span class="custom-option" data-value="Slovakia">Slovakia</span>
+                                                <span class="custom-option" data-value="Slovenia">Slovenia</span>
+                                                <span class="custom-option" data-value="Solomon Islands">Solomon
+                                                    Islands</span>
+                                                <span class="custom-option" data-value="Somalia">Somalia</span>
+                                                <span class="custom-option" data-value="South Africa">South Africa</span>
+                                                <span class="custom-option" data-value="South Sudan">South Sudan</span>
+                                                <span class="custom-option" data-value="Spain">Spain</span>
+                                                <span class="custom-option" data-value="Sri Lanka">Sri Lanka</span>
+                                                <span class="custom-option" data-value="Sudan">Sudan</span>
+                                                <span class="custom-option" data-value="Suriname">Suriname</span>
+                                                <span class="custom-option" data-value="Swaziland">Swaziland</span>
+                                                <span class="custom-option" data-value="Sweden">Sweden</span>
+                                                <span class="custom-option" data-value="Switzerland">Switzerland</span>
+                                                <span class="custom-option" data-value="Syria">Syria</span>
+                                                <span class="custom-option" data-value="Taiwan">Taiwan</span>
+                                                <span class="custom-option" data-value="Tajikistan">Tajikistan</span>
+                                                <span class="custom-option" data-value="Tanzania">Tanzania</span>
+                                                <span class="custom-option" data-value="Thailand">Thailand</span>
+                                                <span class="custom-option" data-value="Togo">Togo</span>
+                                                <span class="custom-option" data-value="Tonga">Tonga</span>
+                                                <span class="custom-option" data-value="Trinidad and Tobago">Trinidad and
+                                                    Tobago</span>
+                                                <span class="custom-option" data-value="Tunisia">Tunisia</span>
+                                                <span class="custom-option" data-value="Turkey">Turkey</span>
+                                                <span class="custom-option" data-value="Turkmenistan">Turkmenistan</span>
+                                                <span class="custom-option" data-value="Tuvalu">Tuvalu</span>
+                                                <span class="custom-option" data-value="Uganda">Uganda</span>
+                                                <span class="custom-option" data-value="Ukraine">Ukraine</span>
+                                                <span class="custom-option" data-value="United Arab Emirates">United Arab
+                                                    Emirates</span>
+                                                <span class="custom-option" data-value="United Kingdom">United
+                                                    Kingdom</span>
+                                                <span class="custom-option" data-value="United States">United
+                                                    States</span>
+                                                <span class="custom-option" data-value="Uruguay">Uruguay</span>
+                                                <span class="custom-option" data-value="Uzbekistan">Uzbekistan</span>
+                                                <span class="custom-option" data-value="Vanuatu">Vanuatu</span>
+                                                <span class="custom-option" data-value="Vatican City">Vatican City</span>
+                                                <span class="custom-option" data-value="Venezuela">Venezuela</span>
+                                                <span class="custom-option" data-value="Vietnam">Vietnam</span>
+                                                <span class="custom-option" data-value="Yemen">Yemen</span>
+                                                <span class="custom-option" data-value="Zambia">Zambia</span>
+                                                <span class="custom-option" data-value="Zimbabwe">Zimbabwe</span>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        {{-- <form action=""> --}}
-                                        <div class="form-group">
-                                            <input type="text" name="name" class="form-control"
-                                                placeholder="Full Name" />
+                                    <!-- Hidden native select for form submission -->
+                                    <select id="country" name="country" style="display: none">
+                                        <option value="">Select your country</option>
+                                        <option value="Afghanistan">Afghanistan</option>
+                                        <option value="Albania">Albania</option>
+                                        <option value="Algeria">Algeria</option>
+                                        <option value="Andorra">Andorra</option>
+                                        <option value="Angola">Angola</option>
+                                        <option value="Argentina">Argentina</option>
+                                        <option value="Armenia">Armenia</option>
+                                        <option value="Australia">Australia</option>
+                                        <option value="Austria">Austria</option>
+                                        <option value="Azerbaijan">Azerbaijan</option>
+                                        <option value="Bahamas">Bahamas</option>
+                                        <option value="Bahrain">Bahrain</option>
+                                        <option value="Bangladesh">Bangladesh</option>
+                                        <option value="Barbados">Barbados</option>
+                                        <option value="Belarus">Belarus</option>
+                                        <option value="Belgium">Belgium</option>
+                                        <option value="Belize">Belize</option>
+                                        <option value="Benin">Benin</option>
+                                        <option value="Bhutan">Bhutan</option>
+                                        <option value="Bolivia">Bolivia</option>
+                                        <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
+                                        <option value="Botswana">Botswana</option>
+                                        <option value="Brazil">Brazil</option>
+                                        <option value="Brunei">Brunei</option>
+                                        <option value="Bulgaria">Bulgaria</option>
+                                        <option value="Burkina Faso">Burkina Faso</option>
+                                        <option value="Burundi">Burundi</option>
+                                        <option value="Cambodia">Cambodia</option>
+                                        <option value="Cameroon">Cameroon</option>
+                                        <option value="Canada">Canada</option>
+                                        <option value="Cape Verde">Cape Verde</option>
+                                        <option value="Central African Republic">Central African Republic</option>
+                                        <option value="Chad">Chad</option>
+                                        <option value="Chile">Chile</option>
+                                        <option value="China">China</option>
+                                        <option value="Colombia">Colombia</option>
+                                        <option value="Comoros">Comoros</option>
+                                        <option value="Congo">Congo</option>
+                                        <option value="Costa Rica">Costa Rica</option>
+                                        <option value="Croatia">Croatia</option>
+                                        <option value="Cuba">Cuba</option>
+                                        <option value="Cyprus">Cyprus</option>
+                                        <option value="Czech Republic">Czech Republic</option>
+                                        <option value="Denmark">Denmark</option>
+                                        <option value="Djibouti">Djibouti</option>
+                                        <option value="Dominica">Dominica</option>
+                                        <option value="Dominican Republic">Dominican Republic</option>
+                                        <option value="East Timor">East Timor</option>
+                                        <option value="Ecuador">Ecuador</option>
+                                        <option value="Egypt">Egypt</option>
+                                        <option value="El Salvador">El Salvador</option>
+                                        <option value="Equatorial Guinea">Equatorial Guinea</option>
+                                        <option value="Eritrea">Eritrea</option>
+                                        <option value="Estonia">Estonia</option>
+                                        <option value="Ethiopia">Ethiopia</option>
+                                        <option value="Fiji">Fiji</option>
+                                        <option value="Finland">Finland</option>
+                                        <option value="France">France</option>
+                                        <option value="Gabon">Gabon</option>
+                                        <option value="Gambia">Gambia</option>
+                                        <option value="Georgia">Georgia</option>
+                                        <option value="Germany">Germany</option>
+                                        <option value="Ghana">Ghana</option>
+                                        <option value="Greece">Greece</option>
+                                        <option value="Grenada">Grenada</option>
+                                        <option value="Guatemala">Guatemala</option>
+                                        <option value="Guinea">Guinea</option>
+                                        <option value="Guinea-Bissau">Guinea-Bissau</option>
+                                        <option value="Guyana">Guyana</option>
+                                        <option value="Haiti">Haiti</option>
+                                        <option value="Honduras">Honduras</option>
+                                        <option value="Hungary">Hungary</option>
+                                        <option value="Iceland">Iceland</option>
+                                        <option value="India">India</option>
+                                        <option value="Indonesia">Indonesia</option>
+                                        <option value="Iran">Iran</option>
+                                        <option value="Iraq">Iraq</option>
+                                        <option value="Ireland">Ireland</option>
+                                        <option value="Israel">Israel</option>
+                                        <option value="Italy">Italy</option>
+                                        <option value="Ivory Coast">Ivory Coast</option>
+                                        <option value="Jamaica">Jamaica</option>
+                                        <option value="Japan">Japan</option>
+                                        <option value="Jordan">Jordan</option>
+                                        <option value="Kazakhstan">Kazakhstan</option>
+                                        <option value="Kenya">Kenya</option>
+                                        <option value="Kiribati">Kiribati</option>
+                                        <option value="North Korea">North Korea</option>
+                                        <option value="South Korea">South Korea</option>
+                                        <option value="Kuwait">Kuwait</option>
+                                        <option value="Kyrgyzstan">Kyrgyzstan</option>
+                                        <option value="Laos">Laos</option>
+                                        <option value="Latvia">Latvia</option>
+                                        <option value="Lebanon">Lebanon</option>
+                                        <option value="Lesotho">Lesotho</option>
+                                        <option value="Liberia">Liberia</option>
+                                        <option value="Libya">Libya</option>
+                                        <option value="Liechtenstein">Liechtenstein</option>
+                                        <option value="Lithuania">Lithuania</option>
+                                        <option value="Luxembourg">Luxembourg</option>
+                                        <option value="Macedonia">Macedonia</option>
+                                        <option value="Madagascar">Madagascar</option>
+                                        <option value="Malawi">Malawi</option>
+                                        <option value="Malaysia">Malaysia</option>
+                                        <option value="Maldives">Maldives</option>
+                                        <option value="Mali">Mali</option>
+                                        <option value="Malta">Malta</option>
+                                        <option value="Marshall Islands">Marshall Islands</option>
+                                        <option value="Mauritania">Mauritania</option>
+                                        <option value="Mauritius">Mauritius</option>
+                                        <option value="Mexico">Mexico</option>
+                                        <option value="Micronesia">Micronesia</option>
+                                        <option value="Moldova">Moldova</option>
+                                        <option value="Monaco">Monaco</option>
+                                        <option value="Mongolia">Mongolia</option>
+                                        <option value="Montenegro">Montenegro</option>
+                                        <option value="Morocco">Morocco</option>
+                                        <option value="Mozambique">Mozambique</option>
+                                        <option value="Myanmar">Myanmar</option>
+                                        <option value="Namibia">Namibia</option>
+                                        <option value="Nauru">Nauru</option>
+                                        <option value="Nepal">Nepal</option>
+                                        <option value="Netherlands">Netherlands</option>
+                                        <option value="New Zealand">New Zealand</option>
+                                        <option value="Nicaragua">Nicaragua</option>
+                                        <option value="Niger">Niger</option>
+                                        <option value="Nigeria">Nigeria</option>
+                                        <option value="Norway">Norway</option>
+                                        <option value="Oman">Oman</option>
+                                        <option value="Pakistan">Pakistan</option>
+                                        <option value="Palau">Palau</option>
+                                        <option value="Panama">Panama</option>
+                                        <option value="Papua New Guinea">Papua New Guinea</option>
+                                        <option value="Paraguay">Paraguay</option>
+                                        <option value="Peru">Peru</option>
+                                        <option value="Philippines">Philippines</option>
+                                        <option value="Poland">Poland</option>
+                                        <option value="Portugal">Portugal</option>
+                                        <option value="Qatar">Qatar</option>
+                                        <option value="Romania">Romania</option>
+                                        <option value="Russia">Russia</option>
+                                        <option value="Rwanda">Rwanda</option>
+                                        <option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
+                                        <option value="Saint Lucia">Saint Lucia</option>
+                                        <option value="Saint Vincent and the Grenadines">Saint Vincent and the Grenadines
+                                        </option>
+                                        <option value="Samoa">Samoa</option>
+                                        <option value="San Marino">San Marino</option>
+                                        <option value="Sao Tome and Principe">Sao Tome and Principe</option>
+                                        <option value="Saudi Arabia">Saudi Arabia</option>
+                                        <option value="Senegal">Senegal</option>
+                                        <option value="Serbia">Serbia</option>
+                                        <option value="Seychelles">Seychelles</option>
+                                        <option value="Sierra Leone">Sierra Leone</option>
+                                        <option value="Singapore">Singapore</option>
+                                        <option value="Slovakia">Slovakia</option>
+                                        <option value="Slovenia">Slovenia</option>
+                                        <option value="Solomon Islands">Solomon Islands</option>
+                                        <option value="Somalia">Somalia</option>
+                                        <option value="South Africa">South Africa</option>
+                                        <option value="South Sudan">South Sudan</option>
+                                        <option value="Spain">Spain</option>
+                                        <option value="Sri Lanka">Sri Lanka</option>
+                                        <option value="Sudan">Sudan</option>
+                                        <option value="Suriname">Suriname</option>
+                                        <option value="Swaziland">Swaziland</option>
+                                        <option value="Sweden">Sweden</option>
+                                        <option value="Switzerland">Switzerland</option>
+                                        <option value="Syria">Syria</option>
+                                        <option value="Taiwan">Taiwan</option>
+                                        <option value="Tajikistan">Tajikistan</option>
+                                        <option value="Tanzania">Tanzania</option>
+                                        <option value="Thailand">Thailand</option>
+                                        <option value="Togo">Togo</option>
+                                        <option value="Tonga">Tonga</option>
+                                        <option value="Trinidad and Tobago">Trinidad and Tobago</option>
+                                        <option value="Tunisia">Tunisia</option>
+                                        <option value="Turkey">Turkey</option>
+                                        <option value="Turkmenistan">Turkmenistan</option>
+                                        <option value="Tuvalu">Tuvalu</option>
+                                        <option value="Uganda">Uganda</option>
+                                        <option value="Ukraine">Ukraine</option>
+                                        <option value="United Arab Emirates">United Arab Emirates</option>
+                                        <option value="United Kingdom">United Kingdom</option>
+                                        <option value="United States">United States</option>
+                                        <option value="Uruguay">Uruguay</option>
+                                        <option value="Uzbekistan">Uzbekistan</option>
+                                        <option value="Vanuatu">Vanuatu</option>
+                                        <option value="Vatican City">Vatican City</option>
+                                        <option value="Venezuela">Venezuela</option>
+                                        <option value="Vietnam">Vietnam</option>
+                                        <option value="Yemen">Yemen</option>
+                                        <option value="Zambia">Zambia</option>
+                                        <option value="Zimbabwe">Zimbabwe</option>
+                                    </select>
+                                </div>
+
+                                <div class="interest-form-group">
+                                    <label for="website">Company Website or Social Handle</label>
+                                    <input type="text" id="website" name="website"
+                                        placeholder="Input your company website/socials" />
+                                </div>
+
+                                <div class="interest-form-group">
+                                    <label for="linkedin">LinkedIn Profile</label>
+                                    <input type="url" id="linkedin" name="linkedin"
+                                        placeholder="Add your profile Url (Optional)" />
+                                </div>
+
+                                <div class="interest-form-group">
+                                    <label for="yearEst">Year of Establishment</label>
+                                    <input type="number" id="yearEst" name="year_established"
+                                        placeholder="Input year of establishment" pattern="[0-9]{4}" min="1900"
+                                        max="2100" />
+                                </div>
+
+                                <div class="interest-form-actions">
+                                    <button type="button" class="interest-form-return-button" data-prev="form1">
+                                        Return
+                                    </button>
+                                    <button type="button" class="interest-form-proceed-button" data-next="form3">
+                                        Proceed
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- third Form -->
+                            <div class="third-stage-form-container hidden">
+                                <!-- Industries -->
+                                <div class="interest-form-group">
+                                    <label for="industry">What industry does your business operate in?</label>
+                                    <div class="custom-select" data-select="industry">
+                                        <div class="custom-select-trigger">
+                                            <span class="custom-select-text">Primary & Industrial sector</span>
+                                            <svg class="custom-select-arrow" xmlns="http://www.w3.org/2000/svg"
+                                                width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                                stroke="#ffffff" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                                <polyline points="6 9 12 15 18 9"></polyline>
+                                            </svg>
+                                        </div>
+                                        <div class="custom-options">
+                                            <span class="custom-option" data-value="agriculture">Agribusiness</span>
+                                            <span class="custom-option" data-value="manufacturing">Manufacturing</span>
+                                            <span class="custom-option" data-value="mining">Mining</span>
+                                            <span class="custom-option" data-value="logistics">Logistics</span>
+                                        </div>
+                                    </div>
+
+                                    <select name="industry" id="industry" style="display: none">
+                                        <option value="">Primary & Industrial sector</option>
+                                        <option value="agriculture">Agribusiness</option>
+                                        <option value="manufacturing">Manufacturing</option>
+                                        <option value="mining">Mining</option>
+                                        <option value="logistics">Logistics</option>
+                                    </select>
+                                </div>
+
+                                <!-- Categories -->
+                                <div class="interest-form-group">
+                                    <div class="interest-form-tags" id="categoryContainer"></div>
+                                </div>
+
+                                <!-- Hidden field to store selected categories for form submission -->
+                                <input type="hidden" name="categories" id="selectedCategories" />
+
+                                <!-- Employees Custom Select -->
+                                <div class="interest-form-group">
+                                    <label for="employees">Numbers of Employees</label>
+
+                                    <div class="custom-select" data-select="employees">
+                                        <div class="custom-select-trigger">
+                                            <span class="custom-select-text">Select Employees range</span>
+                                            <svg class="custom-select-arrow" xmlns="http://www.w3.org/2000/svg"
+                                                width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                                stroke="#ffffff" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                                <polyline points="6 9 12 15 18 9"></polyline>
+                                            </svg>
                                         </div>
 
-                                        <div class="form-group" style="position: relative;">
-                                            <input type="email" name="email" class="form-control"
-                                                placeholder="Enter your valid email address" />
-                                            <div id="email-status"
-                                                style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); display: none;">
-                                                <svg id="email-checkmark"
-                                                    style="width: 20px; height: 20px; color: #10b981; display: none;"
-                                                    fill="currentColor" viewBox="0 0 20 20">
-                                                    <path fill-rule="evenodd"
-                                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                                        clip-rule="evenodd"></path>
+                                        <div class="custom-options">
+                                            <span class="custom-option" data-value="1-10">1-10</span>
+                                            <span class="custom-option" data-value="11-50">11-50</span>
+                                            <span class="custom-option" data-value="50-200">50-200</span>
+                                            <span class="custom-option" data-value="200+">200+</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Hidden native select -->
+                                    <select id="employees" name="number_of_employees" style="display: none">
+                                        <option value="">Select Employees range</option>
+                                        <option value="1-10">1-10</option>
+                                        <option value="11-50">11-50</option>
+                                        <option value="50-200">50-200</option>
+                                        <option value="200+">200+</option>
+                                    </select>
+                                </div>
+
+                                <!-- Revenue Custom Select -->
+                                <div class="interest-form-group">
+                                    <label for="revenue">
+                                        <span>
+                                            Approximate annual revenue
+                                        </span>
+                                        <span class="interest-form-sublabel">(confidential – for internal use only)</span>
+                                    </label>
+
+                                    <div class="custom-select" data-select="revenue">
+                                        <div class="custom-select-trigger">
+                                            <span class="custom-select-text">Select revenue range</span>
+                                            <svg class="custom-select-arrow" xmlns="http://www.w3.org/2000/svg"
+                                                width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                                stroke="#ffffff" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                                <polyline points="6 9 12 15 18 9"></polyline>
+                                            </svg>
+                                        </div>
+
+                                        <div class="custom-options">
+                                            <span class="custom-option" data-value="0-5">Below $1M (0-5 years)</span>
+                                            <span class="custom-option" data-value="6-10">$1M - $5M (6-10 years)</span>
+                                            <span class="custom-option" data-value="11-Above">$5M+ (11+ years)</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Hidden native select -->
+                                    <select id="revenue" name="years_of_operation" style="display: none">
+                                        <option value="">Select revenue range</option>
+                                        <option value="0-5">Below $1M (0-5 years)</option>
+                                        <option value="6-10">$1M - $5M (6-10 years)</option>
+                                        <option value="11-Above">$5M+ (11+ years)</option>
+                                    </select>
+                                </div>
+
+                                <div class="interest-form-actions">
+                                    <button type="button" class="interest-form-return-button" data-prev="form2">
+                                        Return
+                                    </button>
+                                    <button type="button" class="interest-form-proceed-button" data-next="form4">
+                                        Proceed
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- fourth Form -->
+                            <div class="fourth-stage-form-container">
+                                <div class="interest-form-group">
+                                    <label for="offerValue">What value can your company offer to other CEOs in the
+                                        network?</label>
+                                    <textarea id="offerValue" name="offer_value" rows="1" placeholder="Enter your value"></textarea>
+                                </div>
+
+                                <div class="interest-form-group">
+                                    <label for="companyDescription">Briefly describe what your company does and who your
+                                        clients/customers are (max 150 words)</label>
+                                    <textarea id="companyDescription" name="goals" rows="5" placeholder="Enter your description"></textarea>
+                                </div>
+
+                                <div class="interest-form-group">
+                                    <label for="interest">What are you most interested in from this network?</label>
+
+                                    <div class="custom-select" data-select="interest">
+                                        <div class="custom-select-trigger">
+                                            <span class="custom-select-text">Select interest</span>
+                                            <span class="custom-select-arrow">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                                    viewBox="0 0 24 24" fill="none" stroke="#ffffff"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <polyline points="6 9 12 15 18 9"></polyline>
                                                 </svg>
-                                                <svg id="email-spinner"
-                                                    style="width: 20px; height: 20px; color: #6b7280; display: none; animation: spin 1s linear infinite;"
-                                                    fill="none" viewBox="0 0 24 24">
-                                                    <circle style="opacity: 0.25;" cx="12" cy="12" r="10"
-                                                        stroke="currentColor" stroke-width="4"></circle>
-                                                    <path style="opacity: 0.75;" fill="currentColor"
-                                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                                                    </path>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="phone-input-container" style="display: flex; gap: 0;">
-                                                <select name="country_code" class="form-control country-code-select"
-                                                    style="flex: 0 0 120px; border-right: none; border-top-right-radius: 0; border-bottom-right-radius: 0;">
-                                                    <option value="+93" data-flag="🇦🇫">🇦🇫 +93</option>
-                                                    <option value="+355" data-flag="🇦🇱">🇦🇱 +355</option>
-                                                    <option value="+213" data-flag="🇩🇿">🇩🇿 +213</option>
-                                                    <option value="+376" data-flag="🇦🇩">🇦🇩 +376</option>
-                                                    <option value="+244" data-flag="🇦🇴">🇦🇴 +244</option>
-                                                    <option value="+54" data-flag="🇦🇷">🇦🇷 +54</option>
-                                                    <option value="+374" data-flag="🇦🇲">🇦🇲 +374</option>
-                                                    <option value="+61" data-flag="🇦🇺">🇦🇺 +61</option>
-                                                    <option value="+43" data-flag="🇦🇹">🇦🇹 +43</option>
-                                                    <option value="+994" data-flag="🇦🇿">🇦🇿 +994</option>
-                                                    <option value="+973" data-flag="🇧🇭">🇧🇭 +973</option>
-                                                    <option value="+880" data-flag="🇧🇩">🇧🇩 +880</option>
-                                                    <option value="+375" data-flag="🇧🇾">🇧🇾 +375</option>
-                                                    <option value="+32" data-flag="🇧🇪">🇧🇪 +32</option>
-                                                    <option value="+229" data-flag="🇧🇯">🇧🇯 +229</option>
-                                                    <option value="+975" data-flag="🇧🇹">🇧🇹 +975</option>
-                                                    <option value="+591" data-flag="🇧🇴">🇧🇴 +591</option>
-                                                    <option value="+387" data-flag="🇧🇦">🇧🇦 +387</option>
-                                                    <option value="+267" data-flag="🇧🇼">🇧🇼 +267</option>
-                                                    <option value="+55" data-flag="🇧🇷">🇧🇷 +55</option>
-                                                    <option value="+673" data-flag="🇧🇳">🇧🇳 +673</option>
-                                                    <option value="+359" data-flag="🇧🇬">🇧🇬 +359</option>
-                                                    <option value="+226" data-flag="🇧🇫">🇧🇫 +226</option>
-                                                    <option value="+257" data-flag="🇧🇮">🇧🇮 +257</option>
-                                                    <option value="+855" data-flag="🇰🇭">🇰🇭 +855</option>
-                                                    <option value="+237" data-flag="🇨🇲">🇨🇲 +237</option>
-                                                    <option value="+1" data-flag="🇨🇦">🇨🇦 +1</option>
-                                                    <option value="+238" data-flag="🇨🇻">🇨🇻 +238</option>
-                                                    <option value="+236" data-flag="🇨🇫">🇨🇫 +236</option>
-                                                    <option value="+235" data-flag="🇹🇩">🇹🇩 +235</option>
-                                                    <option value="+56" data-flag="🇨🇱">🇨🇱 +56</option>
-                                                    <option value="+86" data-flag="🇨🇳">🇨🇳 +86</option>
-                                                    <option value="+57" data-flag="🇨🇴">🇨🇴 +57</option>
-                                                    <option value="+269" data-flag="🇰🇲">🇰🇲 +269</option>
-                                                    <option value="+242" data-flag="🇨🇬">🇨🇬 +242</option>
-                                                    <option value="+506" data-flag="🇨🇷">🇨🇷 +506</option>
-                                                    <option value="+385" data-flag="🇭🇷">🇭🇷 +385</option>
-                                                    <option value="+53" data-flag="🇨🇺">🇨🇺 +53</option>
-                                                    <option value="+357" data-flag="🇨🇾">🇨🇾 +357</option>
-                                                    <option value="+420" data-flag="🇨🇿">🇨🇿 +420</option>
-                                                    <option value="+45" data-flag="🇩🇰">🇩🇰 +45</option>
-                                                    <option value="+253" data-flag="🇩🇯">🇩🇯 +253</option>
-                                                    <option value="+593" data-flag="🇪🇨">🇪🇨 +593</option>
-                                                    <option value="+20" data-flag="🇪🇬">🇪🇬 +20</option>
-                                                    <option value="+503" data-flag="🇸🇻">🇸🇻 +503</option>
-                                                    <option value="+240" data-flag="🇬🇶">🇬🇶 +240</option>
-                                                    <option value="+291" data-flag="🇪🇷">🇪🇷 +291</option>
-                                                    <option value="+372" data-flag="🇪🇪">🇪🇪 +372</option>
-                                                    <option value="+251" data-flag="🇪🇹">🇪🇹 +251</option>
-                                                    <option value="+679" data-flag="🇫🇯">🇫🇯 +679</option>
-                                                    <option value="+358" data-flag="🇫🇮">🇫🇮 +358</option>
-                                                    <option value="+33" data-flag="🇫🇷">🇫🇷 +33</option>
-                                                    <option value="+241" data-flag="🇬🇦">🇬🇦 +241</option>
-                                                    <option value="+220" data-flag="🇬🇲">🇬🇲 +220</option>
-                                                    <option value="+995" data-flag="🇬🇪">🇬🇪 +995</option>
-                                                    <option value="+49" data-flag="🇩🇪">🇩🇪 +49</option>
-                                                    <option value="+233" data-flag="🇬🇭">🇬🇭 +233</option>
-                                                    <option value="+30" data-flag="🇬🇷">🇬🇷 +30</option>
-                                                    <option value="+502" data-flag="🇬🇹">🇬🇹 +502</option>
-                                                    <option value="+224" data-flag="🇬🇳">🇬🇳 +224</option>
-                                                    <option value="+245" data-flag="🇬🇼">🇬🇼 +245</option>
-                                                    <option value="+592" data-flag="🇬🇾">🇬🇾 +592</option>
-                                                    <option value="+509" data-flag="🇭🇹">🇭🇹 +509</option>
-                                                    <option value="+504" data-flag="🇭🇳">🇭🇳 +504</option>
-                                                    <option value="+36" data-flag="🇭🇺">🇭🇺 +36</option>
-                                                    <option value="+354" data-flag="🇮🇸">🇮🇸 +354</option>
-                                                    <option value="+91" data-flag="🇮🇳">🇮🇳 +91</option>
-                                                    <option value="+62" data-flag="🇮🇩">🇮🇩 +62</option>
-                                                    <option value="+98" data-flag="🇮🇷">🇮🇷 +98</option>
-                                                    <option value="+964" data-flag="🇮🇶">🇮🇶 +964</option>
-                                                    <option value="+353" data-flag="🇮🇪">🇮🇪 +353</option>
-                                                    <option value="+972" data-flag="🇮🇱">🇮🇱 +972</option>
-                                                    <option value="+39" data-flag="🇮🇹">🇮🇹 +39</option>
-                                                    <option value="+225" data-flag="🇨🇮">🇨🇮 +225</option>
-                                                    <option value="+81" data-flag="🇯🇵">🇯🇵 +81</option>
-                                                    <option value="+962" data-flag="🇯🇴">🇯🇴 +962</option>
-                                                    <option value="+7" data-flag="🇰🇿">🇰🇿 +7</option>
-                                                    <option value="+254" data-flag="🇰🇪">🇰🇪 +254</option>
-                                                    <option value="+686" data-flag="🇰🇮">🇰🇮 +686</option>
-                                                    <option value="+850" data-flag="🇰🇵">🇰🇵 +850</option>
-                                                    <option value="+82" data-flag="🇰🇷">🇰🇷 +82</option>
-                                                    <option value="+965" data-flag="🇰🇼">🇰🇼 +965</option>
-                                                    <option value="+996" data-flag="🇰🇬">🇰🇬 +996</option>
-                                                    <option value="+856" data-flag="🇱🇦">🇱🇦 +856</option>
-                                                    <option value="+371" data-flag="🇱🇻">🇱🇻 +371</option>
-                                                    <option value="+961" data-flag="🇱🇧">🇱🇧 +961</option>
-                                                    <option value="+266" data-flag="🇱🇸">🇱🇸 +266</option>
-                                                    <option value="+231" data-flag="🇱🇷">🇱🇷 +231</option>
-                                                    <option value="+218" data-flag="🇱🇾">🇱🇾 +218</option>
-                                                    <option value="+423" data-flag="🇱🇮">🇱🇮 +423</option>
-                                                    <option value="+370" data-flag="🇱🇹">🇱🇹 +370</option>
-                                                    <option value="+352" data-flag="🇱🇺">🇱🇺 +352</option>
-                                                    <option value="+389" data-flag="🇲🇰">🇲🇰 +389</option>
-                                                    <option value="+261" data-flag="🇲🇬">🇲🇬 +261</option>
-                                                    <option value="+265" data-flag="🇲🇼">🇲🇼 +265</option>
-                                                    <option value="+60" data-flag="🇲🇾">🇲🇾 +60</option>
-                                                    <option value="+960" data-flag="🇲🇻">🇲🇻 +960</option>
-                                                    <option value="+223" data-flag="🇲🇱">🇲🇱 +223</option>
-                                                    <option value="+356" data-flag="🇲🇹">🇲🇹 +356</option>
-                                                    <option value="+692" data-flag="🇲🇭">🇲🇭 +692</option>
-                                                    <option value="+222" data-flag="🇲🇷">🇲🇷 +222</option>
-                                                    <option value="+230" data-flag="🇲🇺">🇲🇺 +230</option>
-                                                    <option value="+52" data-flag="🇲🇽">🇲🇽 +52</option>
-                                                    <option value="+691" data-flag="🇫🇲">🇫🇲 +691</option>
-                                                    <option value="+373" data-flag="🇲🇩">🇲🇩 +373</option>
-                                                    <option value="+377" data-flag="🇲🇨">🇲🇨 +377</option>
-                                                    <option value="+976" data-flag="🇲🇳">🇲🇳 +976</option>
-                                                    <option value="+382" data-flag="🇲🇪">🇲🇪 +382</option>
-                                                    <option value="+212" data-flag="🇲🇦">🇲🇦 +212</option>
-                                                    <option value="+258" data-flag="🇲🇿">🇲🇿 +258</option>
-                                                    <option value="+95" data-flag="🇲🇲">🇲🇲 +95</option>
-                                                    <option value="+264" data-flag="🇳🇦">🇳🇦 +264</option>
-                                                    <option value="+674" data-flag="🇳🇷">🇳🇷 +674</option>
-                                                    <option value="+977" data-flag="🇳🇵">🇳🇵 +977</option>
-                                                    <option value="+31" data-flag="🇳🇱">🇳🇱 +31</option>
-                                                    <option value="+64" data-flag="🇳🇿">🇳🇿 +64</option>
-                                                    <option value="+505" data-flag="🇳🇮">🇳🇮 +505</option>
-                                                    <option value="+227" data-flag="🇳🇪">🇳🇪 +227</option>
-                                                    <option value="+234" data-flag="🇳🇬" selected>🇳🇬 +234</option>
-                                                    <option value="+47" data-flag="🇳🇴">🇳🇴 +47</option>
-                                                    <option value="+968" data-flag="🇴🇲">🇴🇲 +968</option>
-                                                    <option value="+92" data-flag="🇵🇰">🇵🇰 +92</option>
-                                                    <option value="+680" data-flag="🇵🇼">🇵🇼 +680</option>
-                                                    <option value="+507" data-flag="🇵🇦">🇵🇦 +507</option>
-                                                    <option value="+675" data-flag="🇵🇬">🇵🇬 +675</option>
-                                                    <option value="+595" data-flag="🇵🇾">🇵🇾 +595</option>
-                                                    <option value="+51" data-flag="🇵🇪">🇵🇪 +51</option>
-                                                    <option value="+63" data-flag="🇵🇭">🇵🇭 +63</option>
-                                                    <option value="+48" data-flag="🇵🇱">🇵🇱 +48</option>
-                                                    <option value="+351" data-flag="🇵🇹">🇵🇹 +351</option>
-                                                    <option value="+974" data-flag="🇶🇦">🇶🇦 +974</option>
-                                                    <option value="+40" data-flag="🇷🇴">🇷🇴 +40</option>
-                                                    <option value="+7" data-flag="🇷🇺">🇷🇺 +7</option>
-                                                    <option value="+250" data-flag="🇷🇼">🇷🇼 +250</option>
-                                                    <option value="+966" data-flag="🇸🇦">🇸🇦 +966</option>
-                                                    <option value="+221" data-flag="🇸🇳">🇸🇳 +221</option>
-                                                    <option value="+381" data-flag="🇷🇸">🇷🇸 +381</option>
-                                                    <option value="+248" data-flag="🇸🇨">🇸🇨 +248</option>
-                                                    <option value="+232" data-flag="🇸🇱">🇸🇱 +232</option>
-                                                    <option value="+65" data-flag="🇸🇬">🇸🇬 +65</option>
-                                                    <option value="+421" data-flag="🇸🇰">🇸🇰 +421</option>
-                                                    <option value="+386" data-flag="🇸🇮">🇸🇮 +386</option>
-                                                    <option value="+677" data-flag="🇸🇧">🇸🇧 +677</option>
-                                                    <option value="+252" data-flag="🇸🇴">🇸🇴 +252</option>
-                                                    <option value="+27" data-flag="🇿🇦">🇿🇦 +27</option>
-                                                    <option value="+211" data-flag="🇸🇸">🇸🇸 +211</option>
-                                                    <option value="+34" data-flag="🇪🇸">🇪🇸 +34</option>
-                                                    <option value="+94" data-flag="🇱🇰">🇱🇰 +94</option>
-                                                    <option value="+249" data-flag="🇸🇩">🇸🇩 +249</option>
-                                                    <option value="+597" data-flag="🇸🇷">🇸🇷 +597</option>
-                                                    <option value="+268" data-flag="🇸🇿">🇸🇿 +268</option>
-                                                    <option value="+46" data-flag="🇸🇪">🇸🇪 +46</option>
-                                                    <option value="+41" data-flag="🇨🇭">🇨🇭 +41</option>
-                                                    <option value="+963" data-flag="🇸🇾">🇸🇾 +963</option>
-                                                    <option value="+886" data-flag="🇹🇼">🇹🇼 +886</option>
-                                                    <option value="+992" data-flag="🇹🇯">🇹🇯 +992</option>
-                                                    <option value="+255" data-flag="🇹🇿">🇹🇿 +255</option>
-                                                    <option value="+66" data-flag="🇹🇭">🇹🇭 +66</option>
-                                                    <option value="+228" data-flag="🇹🇬">🇹🇬 +228</option>
-                                                    <option value="+676" data-flag="🇹🇴">🇹🇴 +676</option>
-                                                    <option value="+216" data-flag="🇹🇳">🇹🇳 +216</option>
-                                                    <option value="+90" data-flag="🇹🇷">🇹🇷 +90</option>
-                                                    <option value="+993" data-flag="🇹🇲">🇹🇲 +993</option>
-                                                    <option value="+688" data-flag="🇹🇻">🇹🇻 +688</option>
-                                                    <option value="+256" data-flag="🇺🇬">🇺🇬 +256</option>
-                                                    <option value="+380" data-flag="🇺🇦">🇺🇦 +380</option>
-                                                    <option value="+971" data-flag="🇦🇪">🇦🇪 +971</option>
-                                                    <option value="+44" data-flag="🇬🇧">🇬🇧 +44</option>
-                                                    <option value="+1" data-flag="🇺🇸">🇺🇸 +1</option>
-                                                    <option value="+598" data-flag="🇺🇾">🇺🇾 +598</option>
-                                                    <option value="+998" data-flag="🇺🇿">🇺🇿 +998</option>
-                                                    <option value="+678" data-flag="🇻🇺">🇻🇺 +678</option>
-                                                    <option value="+379" data-flag="🇻🇦">🇻🇦 +379</option>
-                                                    <option value="+58" data-flag="🇻🇪">🇻🇪 +58</option>
-                                                    <option value="+84" data-flag="🇻🇳">🇻🇳 +84</option>
-                                                    <option value="+967" data-flag="🇾🇪">🇾🇪 +967</option>
-                                                    <option value="+260" data-flag="🇿🇲">🇿🇲 +260</option>
-                                                    <option value="+263" data-flag="🇿🇼">🇿🇼 +263</option>
-                                                </select>
-                                                <input type="tel" name="phone" class="form-control"
-                                                    placeholder="Enter phone number"
-                                                    style="flex: 1; border-left: none; border-top-left-radius: 0; border-bottom-left-radius: 0;" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="url" name="linkedin" class="form-control"
-                                                placeholder="Enter your linkedin profile (e.g., https://linkedin.com/in/yourname)" />
+                                            </span>
                                         </div>
 
-                                        {{-- <a href="#" class="btn btn-submit" id="buttonOne">
-                                            Next
-                                            <span class="ms-2">
-                                                <i class="bi bi-arrow-right"></i></span>
-                                        </a> --}}
-                                        <button type="button" class="btn next-btn" data-next="form2">Next <span
-                                                class="ms-2">
-                                                <i class="fa fa-arrow-right"></i></span></button>
-                                        {{-- </form> --}}
+                                        <div class="custom-options">
+                                            <div class="custom-option" data-value="networking">
+                                                Networking
+                                            </div>
+                                            <div class="custom-option" data-value="leads">
+                                                Verified Business Leads
+                                            </div>
+                                            <div class="custom-option" data-value="tools">
+                                                Automated Sales Tools
+                                            </div>
+                                            <div class="custom-option" data-value="consulting">
+                                                Consulting Support
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="brn-form-side-bg">
-                                        <img src="{{ asset('images/brn-frame.png') }}" alt="" />
+
+                                    <!-- hidden select to sync value -->
+                                    <select name="selected_outcome" id="selectedOutcome" style="display: none">
+                                        <option value="">Select interest</option>
+                                        <option value="networking">Networking</option>
+                                        <option value="leads">Verified Business Leads</option>
+                                        <option value="tools">Automated Sales Tools</option>
+                                        <option value="consulting">Consulting Support</option>
+                                    </select>
+                                </div>
+
+                                <div class="interest-form-group">
+                                    <p class="interest-form-question">
+                                        If your business isn’t eligible for the CEO Referral
+                                        Network at this time, would you be interested in joining
+                                        our B2B platform to access:
+                                    </p>
+                                    <ul class="interest-form-list">
+                                        <li>Verified business leads</li>
+                                        <li>Automated sales tools</li>
+                                        <li>Growth audits and consulting support?</li>
+                                    </ul>
+
+                                    <div class="interest-form-option-buttons">
+                                        <div class="interest-form-option">
+                                            <input type="radio" id="opt-yes" name="b2b_interest" value="yes"
+                                                checked />
+                                            <label for="opt-yes">Yes, I'm interested</label>
+                                        </div>
+                                        <div class="interest-form-option">
+                                            <input type="radio" id="opt-maybe" name="b2b_interest"
+                                                value="maybe" />
+                                            <label for="opt-maybe">Maybe, send me more information</label>
+                                        </div>
+                                        <div class="interest-form-option">
+                                            <input type="radio" id="opt-no" name="b2b_interest"
+                                                value="no" />
+                                            <label for="opt-no">No, not interested</label>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="brn-grouped-conainer">
-                                <img class="brn-group" src="{{ asset('images/brn-group.png') }}" alt="">
-                                <img class="brn-image" src="{{ asset('images/NOEL.svg') }}" alt="" />
+                                <div class="interest-form-actions">
+                                    <button type="button" class="interest-form-return-button" data-prev="form3">
+                                        Return
+                                    </button>
+                                    <button type="submit" class="interest-form-submit-button" id="submitBtn">
+                                        <span class="btn-text">Submit</span>
+                                        <div class="spinner-border spinner-border-sm d-none" role="status"
+                                            aria-hidden="true"></div>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Response Modal -->
+                <div class="modal fade" id="responseModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-body text-center py-4">
+                                <p id="responseMessage" class="mb-3"></p>
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>
-
-                    <div class="brn-container form-step  " id="form2">
-                        <div class="brn-header-container">
-                            <div class="brn-header">
-                                <h1>Company Information</h1>
-                                <div class="brn-header-desc">
-                                    <span></span>
-                                    <p>Let's start with your basic details</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="brn-form-container">
-                            <div class="form-conainer">
-                                <div class="brn-content">
-                                    <div class="brn-form">
-
-                                        <div class="form-progress-indicator-wrapper">
-                                            <img id="progress-image" src="{{ asset('images/step2.svg') }}"
-                                                alt="Form Progress" class="progress-image">
-                                            <div class="step-text-container">
-                                                <div class="step-text active" data-step="1">
-                                                    <p class="step-title">Personal Information</p>
-                                                    <p class="step-desc">Let's start with your <br> basic details</p>
-                                                </div>
-                                                <div class="step-text" data-step="2">
-                                                    <p class="step-title">Company Information</p>
-                                                    <p class="step-desc">Tell us about your <br> business</p>
-                                                </div>
-                                                <div class="step-text" data-step="3">
-                                                    <p class="step-title">Choose Interest</p>
-                                                    <p class="step-desc">What would you like to get <br> from this
-                                                        solution
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {{-- <form action=""> --}}
-                                        <div class="form-group">
-                                            <input type="text" name="company_name" class="form-control"
-                                                placeholder="Company Name" />
-
-                                        </div>
-                                        <div class="form-group">
-                                            <select name="country" class="form-control">
-                                                <option value="">Select Country</option>
-                                                <option value="Afghanistan">Afghanistan</option>
-                                                <option value="Albania">Albania</option>
-                                                <option value="Algeria">Algeria</option>
-                                                <option value="Andorra">Andorra</option>
-                                                <option value="Angola">Angola</option>
-                                                <option value="Argentina">Argentina</option>
-                                                <option value="Armenia">Armenia</option>
-                                                <option value="Australia">Australia</option>
-                                                <option value="Austria">Austria</option>
-                                                <option value="Azerbaijan">Azerbaijan</option>
-                                                <option value="Bahamas">Bahamas</option>
-                                                <option value="Bahrain">Bahrain</option>
-                                                <option value="Bangladesh">Bangladesh</option>
-                                                <option value="Barbados">Barbados</option>
-                                                <option value="Belarus">Belarus</option>
-                                                <option value="Belgium">Belgium</option>
-                                                <option value="Belize">Belize</option>
-                                                <option value="Benin">Benin</option>
-                                                <option value="Bhutan">Bhutan</option>
-                                                <option value="Bolivia">Bolivia</option>
-                                                <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
-                                                <option value="Botswana">Botswana</option>
-                                                <option value="Brazil">Brazil</option>
-                                                <option value="Brunei">Brunei</option>
-                                                <option value="Bulgaria">Bulgaria</option>
-                                                <option value="Burkina Faso">Burkina Faso</option>
-                                                <option value="Burundi">Burundi</option>
-                                                <option value="Cambodia">Cambodia</option>
-                                                <option value="Cameroon">Cameroon</option>
-                                                <option value="Canada">Canada</option>
-                                                <option value="Cape Verde">Cape Verde</option>
-                                                <option value="Central African Republic">Central African Republic</option>
-                                                <option value="Chad">Chad</option>
-                                                <option value="Chile">Chile</option>
-                                                <option value="China">China</option>
-                                                <option value="Colombia">Colombia</option>
-                                                <option value="Comoros">Comoros</option>
-                                                <option value="Congo">Congo</option>
-                                                <option value="Costa Rica">Costa Rica</option>
-                                                <option value="Croatia">Croatia</option>
-                                                <option value="Cuba">Cuba</option>
-                                                <option value="Cyprus">Cyprus</option>
-                                                <option value="Czech Republic">Czech Republic</option>
-                                                <option value="Denmark">Denmark</option>
-                                                <option value="Djibouti">Djibouti</option>
-                                                <option value="Dominica">Dominica</option>
-                                                <option value="Dominican Republic">Dominican Republic</option>
-                                                <option value="East Timor">East Timor</option>
-                                                <option value="Ecuador">Ecuador</option>
-                                                <option value="Egypt">Egypt</option>
-                                                <option value="El Salvador">El Salvador</option>
-                                                <option value="Equatorial Guinea">Equatorial Guinea</option>
-                                                <option value="Eritrea">Eritrea</option>
-                                                <option value="Estonia">Estonia</option>
-                                                <option value="Ethiopia">Ethiopia</option>
-                                                <option value="Fiji">Fiji</option>
-                                                <option value="Finland">Finland</option>
-                                                <option value="France">France</option>
-                                                <option value="Gabon">Gabon</option>
-                                                <option value="Gambia">Gambia</option>
-                                                <option value="Georgia">Georgia</option>
-                                                <option value="Germany">Germany</option>
-                                                <option value="Ghana">Ghana</option>
-                                                <option value="Greece">Greece</option>
-                                                <option value="Grenada">Grenada</option>
-                                                <option value="Guatemala">Guatemala</option>
-                                                <option value="Guinea">Guinea</option>
-                                                <option value="Guinea-Bissau">Guinea-Bissau</option>
-                                                <option value="Guyana">Guyana</option>
-                                                <option value="Haiti">Haiti</option>
-                                                <option value="Honduras">Honduras</option>
-                                                <option value="Hungary">Hungary</option>
-                                                <option value="Iceland">Iceland</option>
-                                                <option value="India">India</option>
-                                                <option value="Indonesia">Indonesia</option>
-                                                <option value="Iran">Iran</option>
-                                                <option value="Iraq">Iraq</option>
-                                                <option value="Ireland">Ireland</option>
-                                                <option value="Israel">Israel</option>
-                                                <option value="Italy">Italy</option>
-                                                <option value="Ivory Coast">Ivory Coast</option>
-                                                <option value="Jamaica">Jamaica</option>
-                                                <option value="Japan">Japan</option>
-                                                <option value="Jordan">Jordan</option>
-                                                <option value="Kazakhstan">Kazakhstan</option>
-                                                <option value="Kenya">Kenya</option>
-                                                <option value="Kiribati">Kiribati</option>
-                                                <option value="North Korea">North Korea</option>
-                                                <option value="South Korea">South Korea</option>
-                                                <option value="Kuwait">Kuwait</option>
-                                                <option value="Kyrgyzstan">Kyrgyzstan</option>
-                                                <option value="Laos">Laos</option>
-                                                <option value="Latvia">Latvia</option>
-                                                <option value="Lebanon">Lebanon</option>
-                                                <option value="Lesotho">Lesotho</option>
-                                                <option value="Liberia">Liberia</option>
-                                                <option value="Libya">Libya</option>
-                                                <option value="Liechtenstein">Liechtenstein</option>
-                                                <option value="Lithuania">Lithuania</option>
-                                                <option value="Luxembourg">Luxembourg</option>
-                                                <option value="Macedonia">Macedonia</option>
-                                                <option value="Madagascar">Madagascar</option>
-                                                <option value="Malawi">Malawi</option>
-                                                <option value="Malaysia">Malaysia</option>
-                                                <option value="Maldives">Maldives</option>
-                                                <option value="Mali">Mali</option>
-                                                <option value="Malta">Malta</option>
-                                                <option value="Marshall Islands">Marshall Islands</option>
-                                                <option value="Mauritania">Mauritania</option>
-                                                <option value="Mauritius">Mauritius</option>
-                                                <option value="Mexico">Mexico</option>
-                                                <option value="Micronesia">Micronesia</option>
-                                                <option value="Moldova">Moldova</option>
-                                                <option value="Monaco">Monaco</option>
-                                                <option value="Mongolia">Mongolia</option>
-                                                <option value="Montenegro">Montenegro</option>
-                                                <option value="Morocco">Morocco</option>
-                                                <option value="Mozambique">Mozambique</option>
-                                                <option value="Myanmar">Myanmar</option>
-                                                <option value="Namibia">Namibia</option>
-                                                <option value="Nauru">Nauru</option>
-                                                <option value="Nepal">Nepal</option>
-                                                <option value="Netherlands">Netherlands</option>
-                                                <option value="New Zealand">New Zealand</option>
-                                                <option value="Nicaragua">Nicaragua</option>
-                                                <option value="Niger">Niger</option>
-                                                <option value="Nigeria">Nigeria</option>
-                                                <option value="Norway">Norway</option>
-                                                <option value="Oman">Oman</option>
-                                                <option value="Pakistan">Pakistan</option>
-                                                <option value="Palau">Palau</option>
-                                                <option value="Panama">Panama</option>
-                                                <option value="Papua New Guinea">Papua New Guinea</option>
-                                                <option value="Paraguay">Paraguay</option>
-                                                <option value="Peru">Peru</option>
-                                                <option value="Philippines">Philippines</option>
-                                                <option value="Poland">Poland</option>
-                                                <option value="Portugal">Portugal</option>
-                                                <option value="Qatar">Qatar</option>
-                                                <option value="Romania">Romania</option>
-                                                <option value="Russia">Russia</option>
-                                                <option value="Rwanda">Rwanda</option>
-                                                <option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
-                                                <option value="Saint Lucia">Saint Lucia</option>
-                                                <option value="Saint Vincent and the Grenadines">Saint Vincent and the
-                                                    Grenadines</option>
-                                                <option value="Samoa">Samoa</option>
-                                                <option value="San Marino">San Marino</option>
-                                                <option value="Sao Tome and Principe">Sao Tome and Principe</option>
-                                                <option value="Saudi Arabia">Saudi Arabia</option>
-                                                <option value="Senegal">Senegal</option>
-                                                <option value="Serbia">Serbia</option>
-                                                <option value="Seychelles">Seychelles</option>
-                                                <option value="Sierra Leone">Sierra Leone</option>
-                                                <option value="Singapore">Singapore</option>
-                                                <option value="Slovakia">Slovakia</option>
-                                                <option value="Slovenia">Slovenia</option>
-                                                <option value="Solomon Islands">Solomon Islands</option>
-                                                <option value="Somalia">Somalia</option>
-                                                <option value="South Africa">South Africa</option>
-                                                <option value="South Sudan">South Sudan</option>
-                                                <option value="Spain">Spain</option>
-                                                <option value="Sri Lanka">Sri Lanka</option>
-                                                <option value="Sudan">Sudan</option>
-                                                <option value="Suriname">Suriname</option>
-                                                <option value="Swaziland">Swaziland</option>
-                                                <option value="Sweden">Sweden</option>
-                                                <option value="Switzerland">Switzerland</option>
-                                                <option value="Syria">Syria</option>
-                                                <option value="Taiwan">Taiwan</option>
-                                                <option value="Tajikistan">Tajikistan</option>
-                                                <option value="Tanzania">Tanzania</option>
-                                                <option value="Thailand">Thailand</option>
-                                                <option value="Togo">Togo</option>
-                                                <option value="Tonga">Tonga</option>
-                                                <option value="Trinidad and Tobago">Trinidad and Tobago</option>
-                                                <option value="Tunisia">Tunisia</option>
-                                                <option value="Turkey">Turkey</option>
-                                                <option value="Turkmenistan">Turkmenistan</option>
-                                                <option value="Tuvalu">Tuvalu</option>
-                                                <option value="Uganda">Uganda</option>
-                                                <option value="Ukraine">Ukraine</option>
-                                                <option value="United Arab Emirates">United Arab Emirates</option>
-                                                <option value="United Kingdom">United Kingdom</option>
-                                                <option value="United States">United States</option>
-                                                <option value="Uruguay">Uruguay</option>
-                                                <option value="Uzbekistan">Uzbekistan</option>
-                                                <option value="Vanuatu">Vanuatu</option>
-                                                <option value="Vatican City">Vatican City</option>
-                                                <option value="Venezuela">Venezuela</option>
-                                                <option value="Vietnam">Vietnam</option>
-                                                <option value="Yemen">Yemen</option>
-                                                <option value="Zambia">Zambia</option>
-                                                <option value="Zimbabwe">Zimbabwe</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" name="position" class="form-control"
-                                                placeholder="Position in the business" />
-                                        </div>
-
-                                        <div class="brn-input-checked">
-                                            <div class="brn-input-checked-group">
-                                                <span class="brn-input-checked-label">Select your business years of
-                                                    operation</span>
-                                                <div class="brn-input-checked-options-row">
-                                                    <div class="brn-input-checked-option">
-                                                        <input type="radio" value="0-5" name="years_of_operation"
-                                                            id="years0-5" class="brn-input-checked-checkbox" />
-                                                        <label for="years0-5" class="brn-input-checked-text">0-5</label>
-                                                    </div>
-                                                    <div class="brn-input-checked-option">
-                                                        <input type="radio" value="6-10" name="years_of_operation"
-                                                            id="years6-10" class="brn-input-checked-checkbox" />
-                                                        <label for="years6-10" class="brn-input-checked-text">6-10</label>
-                                                    </div>
-                                                    <div class="brn-input-checked-option">
-                                                        <input type="radio" value="11-Above" name="years_of_operation"
-                                                            id="years11-above" class="brn-input-checked-checkbox" />
-                                                        <label for="years11-above"
-                                                            class="brn-input-checked-text">11-Above</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="brn-input-checked-group">
-                                                <span class="brn-input-checked-label">Select your number of
-                                                    employees</span>
-                                                <div class="brn-input-checked-options-row">
-                                                    <div class="brn-input-checked-option">
-                                                        <input type="radio" value="1-10" name="number_of_employees"
-                                                            id="employees1-10" class="brn-input-checked-checkbox" />
-                                                        <label for="employees1-10"
-                                                            class="brn-input-checked-text">1-10</label>
-                                                    </div>
-                                                    <div class="brn-input-checked-option">
-                                                        <input type="radio" value="11-50" name="number_of_employees"
-                                                            id="employees11-50" class="brn-input-checked-checkbox" />
-                                                        <label for="employees11-50"
-                                                            class="brn-input-checked-text">11-50</label>
-                                                    </div>
-                                                    <div class="brn-input-checked-option">
-                                                        <input type="radio" value="50-200" name="number_of_employees"
-                                                            id="employees50-200" class="brn-input-checked-checkbox" />
-                                                        <label for="employees50-200"
-                                                            class="brn-input-checked-text">50-200</label>
-                                                    </div>
-                                                    <div class="brn-input-checked-option">
-                                                        <input type="radio" value="200+" name="number_of_employees"
-                                                            id="employees200-plus" class="brn-input-checked-checkbox" />
-                                                        <label for="employees200-plus"
-                                                            class="brn-input-checked-text">200+</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {{-- <a href="#" class="btn btn-submit" id="buttonTwo">
-                                            Next
-                                            <span class="ms-2">
-                                                <i class="bi bi-arrow-right"></i></span>
-                                        </a> --}}
-                                        <div class="d-flex justify-content-between gap-2 ">
-
-                                            <button type="button" class="btn prev-btn" data-prev="form1"><span
-                                                    class="">
-                                                    <i class="fa fa-arrow-left"></i></span> Back </button>
-                                            <button type="button" class="btn next-btn" data-next="form3">Next <span
-                                                    class="">
-                                                    <i class="fa fa-arrow-right"></i></span></button>
-
-                                        </div>
-
-                                        {{-- </form> --}}
-                                    </div>
-                                    <div class="brn-form-side-bg">
-                                        <img src="{{ asset('images/brn-frame.png') }}" alt="" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="brn-grouped-conainer">
-                                <img class="brn-group" src="{{ asset('images/brn-group.png') }}" alt="" />
-                                <img class="brn-image" src="{{ asset('images/NOEL.svg') }}" alt="" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="brn-container form-step" id="form3">
-                        <div class="brn-header-container">
-                            <div class="brn-header">
-                                <h1>What You Want To Gain</h1>
-                                <div class="brn-header-desc">
-                                    <span></span>
-                                    <p>What outcomes matter most for you?</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="brn-form-container">
-                            <div class="form-conainer">
-                                <div class="brn-content">
-                                    <div class="brn-form">
-
-                                        <div class="form-progress-indicator-wrapper">
-                                            <img id="progress-image" src="{{ asset('images/step3.svg') }}"
-                                                alt="Form Progress" class="progress-image">
-                                            <div class="step-text-container">
-                                                <div class="step-text active" data-step="1">
-                                                    <p class="step-title">Personal Information</p>
-                                                    <p class="step-desc">Let's start with your <br> basic details</p>
-                                                </div>
-                                                <div class="step-text" data-step="2">
-                                                    <p class="step-title">Company Information</p>
-                                                    <p class="step-desc">Tell us about your <br> business</p>
-                                                </div>
-                                                <div class="step-text" data-step="3">
-                                                    <p class="step-title">Choose Interest</p>
-                                                    <p class="step-desc">What would you like to get <br> from this
-                                                        solution
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {{-- <form action=""> --}}
-                                        <input type="text" name="goals" class="form-control"
-                                            placeholder="Input reason for joining" />
-
-                                        <!-- ============== BRN ICONS CONTENT  -->
-                                        <div class="brn-form-icons">
-                                            <div class="brn-form-icons-header">
-                                                What outcome matter most to you?
-                                            </div>
-                                            <div class="brn-form-icons-options">
-                                                <div class="brn-first-icons">
-                                                    <div class="brn-form-icons-card" data-value="Network with like minds">
-                                                        <img src="{{ asset('images/checkmark-badge.png') }}"
-                                                            alt="" />
-                                                        <span class="brn-form-icons-text">Network with like minds</span>
-                                                    </div>
-                                                    <div class="brn-form-icons-card"
-                                                        data-value="No more jump one platform for another">
-                                                        <img src="{{ asset('images/checkmark-badge.png') }}"
-                                                            alt="" />
-                                                        <span class="brn-form-icons-text">No more jump one platform for
-                                                            another</span>
-                                                    </div>
-                                                </div>
-                                                <div class="brn-second-icons">
-                                                    <div class="brn-form-icons-card" data-value="Grow and Scale 100%">
-                                                        <img src="{{ asset('images/checkmark-badge.png') }}"
-                                                            alt="" />
-                                                        <span class="brn-form-icons-text">Grow and Scale 100%</span>
-                                                    </div>
-                                                    <div class="brn-form-icons-card" data-value="All you need is here">
-                                                        <img src="{{ asset('images/checkmark-badge.png') }}"
-                                                            alt="" />
-                                                        <span class="brn-form-icons-text">All you need is here</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- Hidden input to store the selected value -->
-                                            <input type="hidden" name="selected_outcome" id="selectedOutcome" />
-                                        </div>
-
-                                        {{-- <div class="brn-input-checked">
-                                            <div class="brn-input-checked-group">
-                                                <span class="brn-input-checked-label">Select your number of
-                                                    employees</span>
-                                                <div class="brn-input-checked-options-row">
-                                                    <div class="brn-input-checked-option">
-                                                        <input type="checkbox" id="employees1-10"
-                                                            class="brn-input-checked-checkbox" />
-                                                        <label for="employees1-10"
-                                                            class="brn-input-checked-text">1-10</label>
-                                                    </div>
-                                                    <div class="brn-input-checked-option">
-                                                        <input type="checkbox" id="employees11-50"
-                                                            class="brn-input-checked-checkbox" />
-                                                        <label for="employees11-50"
-                                                            class="brn-input-checked-text">11-50</label>
-                                                    </div>
-                                                    <div class="brn-input-checked-option">
-                                                        <input type="checkbox" id="employees50-200"
-                                                            class="brn-input-checked-checkbox" />
-                                                        <label for="employees50-200"
-                                                            class="brn-input-checked-text">50-200</label>
-                                                    </div>
-                                                    <div class="brn-input-checked-option">
-                                                        <input type="checkbox" id="employees200-plus"
-                                                            class="brn-input-checked-checkbox" />
-                                                        <label for="employees200-plus"
-                                                            class="brn-input-checked-text">200+</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> --}}
-
-                                        {{-- <a href="#" class="btn btn-submit" id="buttonThree">
-                                            Next
-                                            <span class="ms-2">
-                                                <i class="bi bi-arrow-right"></i></span>
-                                        </a> --}}
-                                        <div class="d-flex justify-content-between gap-2 ">
-                                            <button type="button" class="btn prev-btn" data-prev="form2"><span
-                                                    class="">
-                                                    <i class="bi bi-arrow-left"></i></span> Back</button>
-
-                                            <button type="submit" id="submitBtn" class="btn btn-submit d-inline">
-                                                <span class="btn-text">Submit</span>
-                                                <span class="spinner-border spinner-border-sm d-none" role="status"
-                                                    aria-hidden="true"></span>
-                                            </button>
-                                        </div>
-                                        {{-- </form> --}}
-                                    </div>
-                                    <div class="brn-form-side-bg">
-                                        <img src="{{ asset('images/brn-frame.png') }}" alt="" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="brn-grouped-conainer">
-                                <img class="brn-group" src="{{ asset('images/brn-group.png') }}" alt="" />
-                                <img class="brn-image" src="{{ asset('images/NOEL.svg') }}" alt="" />
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-
-        <!-- Modal -->
-        <div class="modal fade" id="responseModal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content text-center p-4">
-                    <h5 class="modal-title" id="responseMessage"></h5>
-                    <button type="button" class="btn btn-primary mt-3" data-bs-dismiss="modal">OK</button>
                 </div>
             </div>
+
+            <div class="row-two-container">
+                <!-- Desktop Heading -->
+                <section class="interest-form-heading desktop-heading">
+                    <!-- First Form Heading -->
+                    <div class="first-form-heading hidden">
+                        <div class="form-heading-card">
+                            <div class="header">
+                                <h1>Basic Information</h1>
+                                <div class="subtitle">
+                                    <span class="line"></span>
+                                    <p>Let's start with your basic details</p>
+                                </div>
+                            </div>
+
+                            <div class="description">
+                                <p>
+                                    NOEL transforms executive networking from casual connections
+                                    to strategic growth. Our platform facilitates verified,
+                                    high-value introductions between senior leaders and
+                                    investors. Focus on building relationships that drive real
+                                    business outcomes.
+                                </p>
+                            </div>
+                            <div class="progress-step-container">
+                                <div class="progress-stepper ">
+                                    <div class="step ">
+                                        <div class="circle">1</div>
+                                        <div class="label">Basic Information</div>
+                                    </div>
+
+                                    <div class="step">
+                                        <div class="circle">2</div>
+                                        <div class="label">Credibility Check</div>
+                                    </div>
+
+                                    <div class="step">
+                                        <div class="circle">3</div>
+                                        <div class="label">Industry Preference</div>
+                                    </div>
+
+                                    <div class="step">
+                                        <div class="circle">4</div>
+                                        <div class="label">Industry Insight</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Second Form Heading -->
+                    <div class="second-form-heading hidden">
+                        <div class="form-heading-card">
+                            <div class="header">
+                                <h1>Credibility Check</h1>
+                                <div class="subtitle">
+                                    <span class="line"></span>
+                                    <p>Stand out among other businesses</p>
+                                </div>
+                            </div>
+
+                            <div class="description">
+                                <p>
+                                    NOEL transforms executive networking from casual connections
+                                    to strategic growth. Our platform facilitates verified,
+                                    high-value introductions between senior leaders and
+                                    investors. Focus on building relationships that drive real
+                                    business outcomes.
+                                </p>
+                            </div>
+                            <div class="progress-step-container">
+                                <div class="progress-stepper">
+                                    <div class="step active">
+                                        <div class="circle">1</div>
+                                        <div class="label">Basic Information</div>
+                                    </div>
+
+                                    <div class="step">
+                                        <div class="circle">2</div>
+                                        <div class="label">Credibility Check</div>
+                                    </div>
+
+                                    <div class="step">
+                                        <div class="circle">3</div>
+                                        <div class="label">Industry Preference</div>
+                                    </div>
+
+                                    <div class="step">
+                                        <div class="circle">4</div>
+                                        <div class="label">Industry Insight</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Third Form Heading -->
+                    <div class="third-form-heading hidden">
+                        <div class="form-heading-card">
+                            <div class="header">
+                                <h1>Industry Preference</h1>
+                                <div class="subtitle">
+                                    <span class="line"></span>
+                                    <p>Boost visibility for your matches</p>
+                                </div>
+                            </div>
+
+                            <div class="description">
+                                <p>
+                                    NOEL transforms executive networking from casual connections
+                                    to strategic growth. Our platform facilitates verified,
+                                    high-value introductions between senior leaders and
+                                    investors. Focus on building relationships that drive real
+                                    business outcomes.
+                                </p>
+                            </div>
+                            <div class="progress-step-container">
+                                <div class="progress-stepper">
+                                    <div class="step active">
+                                        <div class="circle">1</div>
+                                        <div class="label">Basic Information</div>
+                                    </div>
+
+                                    <div class="step">
+                                        <div class="circle">2</div>
+                                        <div class="label">Credibility Check</div>
+                                    </div>
+
+                                    <div class="step">
+                                        <div class="circle">3</div>
+                                        <div class="label">Industry Preference</div>
+                                    </div>
+
+                                    <div class="step">
+                                        <div class="circle">4</div>
+                                        <div class="label">Industry Insight</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fourth Form Heading -->
+                    <div class="fourth-form-heading">
+                        <div class="form-heading-card">
+                            <div class="header">
+                                <h1>Industry Insight</h1>
+                                <div class="subtitle">
+                                    <span class="line"></span>
+                                    <p>Stand out among other businesses</p>
+                                </div>
+                            </div>
+
+                            <div class="description">
+                                <p>
+                                    NOEL transforms executive networking from casual connections
+                                    to strategic growth. Our platform facilitates verified,
+                                    high-value introductions between senior leaders and
+                                    investors. Focus on building relationships that drive real
+                                    business outcomes.
+                                </p>
+                            </div>
+                            <div class="progress-step-container">
+                                <div class="progress-stepper">
+                                    <div class="step active">
+                                        <div class="circle">1</div>
+                                        <div class="label">Basic Information</div>
+                                    </div>
+
+                                    <div class="step">
+                                        <div class="circle">2</div>
+                                        <div class="label">Credibility Check</div>
+                                    </div>
+
+                                    <div class="step">
+                                        <div class="circle">3</div>
+                                        <div class="label">Industry Preference</div>
+                                    </div>
+
+                                    <div class="step">
+                                        <div class="circle">4</div>
+                                        <div class="label">Industry Insight</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- footer -->
+                <section class="interest-form-footer">
+                    <div class="form-footer">
+                        <h2>Contact Information</h2>
+
+                        <div class="interest-form-footer-contact-row">
+                            <div>
+                                <div class="interest-form-footer-contact-item">
+                                    <span class="interest-form-footer-icon"><i class="fas fa-phone-alt"></i></span>
+                                    <a href="tel:+442080921281" class="phone">+44 208 0921 281</a>
+                                </div>
+
+                                <div class="interest-form-footer-contact-item">
+                                    <span class="interest-form-footer-icon"><i class="fas fa-envelope"></i></span>
+                                    <a href="mailto:hello@p23africa.com">hello@p23africa.com</a>
+                                </div>
+                            </div>
+
+                            <div class="interest-form-footer-contact-item">
+                                <span class="interest-form-footer-icon"><i class="fas fa-map-marker-alt"></i></span>
+                                <span>London UK</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
-
-
-        <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-        </script> -->
-        {{-- <script src="./js/bootstrap.min.js"></script> --}}
     </section>
 @endsection
 
 <script>
-    // Comprehensive form handling - single DOMContentLoaded event
+    // FORM MANAGEMENT AND VALIDATION
     document.addEventListener('DOMContentLoaded', function() {
         const form = document.getElementById('brnForm');
         const submitBtn = document.getElementById('submitBtn');
@@ -1062,22 +2390,17 @@
                     if (element.checked) {
                         formData[element.name] = element.value;
                     }
-                } else {
+                } else if (element.name && element.value) {
                     formData[element.name] = element.value;
                 }
             });
 
-            // Combine country code and phone number for storage
-            const countryCode = form.querySelector('select[name="country_code"]');
-            const phoneInput = form.querySelector('input[name="phone"]');
-            if (countryCode && phoneInput && phoneInput.value.trim()) {
-                formData['full_phone'] = countryCode.value + phoneInput.value.trim();
-            }
-
-            // Save current step
-            const activeStep = document.querySelector('.form-step.active');
-            if (activeStep) {
-                localStorage.setItem(STEP_STORAGE_KEY, activeStep.id);
+            // Save current step using currentStep variable
+            const stepNames = ['form1', 'form2', 'form3', 'form4'];
+            if (currentStep >= 0 && currentStep < stepNames.length) {
+                const stepName = stepNames[currentStep];
+                localStorage.setItem(STEP_STORAGE_KEY, stepName);
+                console.log('💾 Saved step to localStorage:', stepName, '(index:', currentStep, ')');
             }
 
             localStorage.setItem(FORM_STORAGE_KEY, JSON.stringify(formData));
@@ -1107,34 +2430,31 @@
                         });
                     });
 
-                    // Restore selected outcome cards
+                    // Restore custom select values
+                    if (formData.position) {
+                        updateCustomSelect('title', formData.position);
+                    }
+                    if (formData.industry) {
+                        updateCustomSelect('industry', formData.industry);
+                    }
+                    if (formData.number_of_employees) {
+                        updateCustomSelect('employees', formData.number_of_employees);
+                    }
+                    if (formData.years_of_operation) {
+                        updateCustomSelect('revenue', formData.years_of_operation);
+                    }
                     if (formData.selected_outcome) {
-                        const cards = document.querySelectorAll('.brn-form-icons-card');
-                        cards.forEach(card => {
-                            card.classList.remove('selected');
-                            if (card.dataset.value === formData.selected_outcome) {
-                                card.classList.add('selected');
-                            }
-                        });
+                        updateCustomSelect('interest', formData.selected_outcome);
                     }
 
                     // Auto-revalidate email if it exists and is valid format
                     if (formData.email && isValidEmail(formData.email)) {
-                        // Small delay to ensure DOM is ready
                         setTimeout(() => {
                             validateEmailInDatabase(formData.email);
                         }, 100);
                     }
 
-                    // Restore current step
-                    if (savedStep && savedStep !== 'form1') {
-                        document.querySelectorAll('.form-step').forEach(step => step.classList.remove(
-                            'active'));
-                        const stepToShow = document.getElementById(savedStep);
-                        if (stepToShow) {
-                            stepToShow.classList.add('active');
-                        }
-                    }
+                    // Note: Step restoration is now handled during initialization
                 }
             } catch (error) {
                 console.error('Error restoring form data:', error);
@@ -1147,7 +2467,41 @@
             localStorage.removeItem(STEP_STORAGE_KEY);
         }
 
-        // Email validation utility functions (moved here to be available during restore)
+        // Helper function to update custom select display
+        function updateCustomSelect(selectName, value) {
+            const customSelect = document.querySelector(`[data-select="${selectName}"]`);
+            if (customSelect) {
+                const trigger = customSelect.querySelector('.custom-select-text');
+                const option = customSelect.querySelector(`[data-value="${value}"]`);
+                const hiddenSelect = document.querySelector(`select[name="${getFieldName(selectName)}"]`);
+
+                if (option && trigger) {
+                    trigger.textContent = option.textContent;
+                    customSelect.querySelectorAll('.custom-option').forEach(opt => opt.classList.remove(
+                        'active'));
+                    option.classList.add('active');
+                }
+
+                if (hiddenSelect) {
+                    hiddenSelect.value = value;
+                }
+            }
+        }
+
+        // Map custom select names to form field names
+        function getFieldName(selectName) {
+            const mapping = {
+                'title': 'position',
+                'industry': 'industry',
+                'employees': 'number_of_employees',
+                'revenue': 'years_of_operation',
+                'interest': 'selected_outcome',
+                'country': 'country'
+            };
+            return mapping[selectName] || selectName;
+        }
+
+        // Email validation utility functions
         function isValidEmail(email) {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return emailRegex.test(email);
@@ -1181,8 +2535,7 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
-                            'content')
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
                     },
                     body: JSON.stringify({
                         email: email
@@ -1192,14 +2545,13 @@
                 .then(data => {
                     if (data.exists) {
                         showEmailStatus('hide');
-                        // Clear any existing errors first, then show the new one
                         clearError(emailInput);
                         showError(emailInput, data.message);
                     } else {
                         showEmailStatus('success');
                         clearError(emailInput);
                         emailInput.style.border = '2px solid #10b981';
-                        emailInput.style.backgroundColor = '#f0fdf4';
+                        emailInput.style.backgroundColor = 'rgba(16, 185, 129, 0.1)';
                     }
                 })
                 .catch(error => {
@@ -1216,81 +2568,41 @@
                 element.addEventListener('input', saveFormData);
                 element.addEventListener('change', saveFormData);
             });
-
-            // Save when outcome cards are selected
-            const cards = document.querySelectorAll('.brn-form-icons-card');
-            cards.forEach(card => {
-                card.addEventListener('click', function() {
-                    setTimeout(saveFormData, 100); // Small delay to ensure DOM is updated
-                });
-            });
         }
 
         // Initialize form persistence
         restoreFormData();
         setupAutoSave();
 
-        // Optional: Add a way to clear saved data (for development/testing)
-        // You can call this in console: window.clearBrnFormData()
+        // Clear saved data utility
         window.clearBrnFormData = function() {
             clearFormData();
             location.reload();
         };
 
-        function showServerErrors(errors) {
-            // Clear ALL previous errors thoroughly
-            document.querySelectorAll('.error-message').forEach(msg => msg.remove());
-            document.querySelectorAll('input, select, textarea').forEach(input => {
-                clearError(input);
-            });
+        // Step navigation function
+        function showStepByName(stepName) {
+            const stepMapping = {
+                'form1': 0,
+                'form2': 1,
+                'form3': 2,
+                'form4': 3
+            };
 
-            // Show field-specific errors
-            Object.keys(errors).forEach(field => {
-                const input = form.querySelector(`[name="${field}"]`);
-                if (input) {
-                    const errorMessage = errors[field][0]; // Get first error message
-
-                    // Ensure the input is clean before adding server error
-                    clearError(input);
-
-                    input.style.border = '2px solid #ef4444';
-                    input.style.backgroundColor = '#fef2f2';
-
-                    const errorDiv = document.createElement('div');
-                    errorDiv.className = 'error-message server-error';
-                    errorDiv.style.color = '#ef4444';
-                    errorDiv.style.fontSize = '0.875rem';
-                    errorDiv.style.marginTop = '4px';
-                    errorDiv.textContent = errorMessage;
-
-                    input.parentNode.insertBefore(errorDiv, input.nextSibling);
-                }
-            });
-
-            // Scroll to first error
-            const firstError = document.querySelector('.server-error');
-            if (firstError) {
-                firstError.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'center'
-                });
+            const stepIndex = stepMapping[stepName];
+            if (stepIndex !== undefined) {
+                currentStep = stepIndex;
+                showStep(currentStep);
             }
         }
 
-        // Define validateStep function to avoid duplication with validateStepNavigation
-        function validateStep(stepElement) {
-            return validateStepNavigation(stepElement);
-        }
-
+        // Error handling functions
         function showError(input, message) {
-            // Clear any existing errors for this input first
             clearError(input);
 
-            // Add error styling
             input.style.border = '2px solid #ef4444';
             input.style.backgroundColor = '#fef2f2';
 
-            // Create error message
             const errorDiv = document.createElement('div');
             errorDiv.className = 'error-message';
             errorDiv.style.color = '#ef4444';
@@ -1298,42 +2610,550 @@
             errorDiv.style.marginTop = '4px';
             errorDiv.textContent = message;
 
-            // Insert error message after input
             input.parentNode.insertBefore(errorDiv, input.nextSibling);
         }
 
+        function clearError(input) {
+            input.style.border = '';
+            input.style.backgroundColor = '';
+
+            const errorMsg = input.parentNode.querySelector('.error-message');
+            if (errorMsg) {
+                errorMsg.remove();
+            }
+        }
+
+        // Real-time email validation setup
+        const emailInput = document.querySelector('input[name="email"]');
+        let emailTimeout;
+
+        if (emailInput) {
+            emailInput.addEventListener('input', function() {
+                clearTimeout(emailTimeout);
+                const email = this.value.trim();
+
+                clearError(this);
+
+                if (email === '') {
+                    showEmailStatus('hide');
+                    return;
+                }
+
+                emailTimeout = setTimeout(() => {
+                    validateEmailInDatabase(email);
+                }, 500);
+            });
+
+            emailInput.addEventListener('blur', function() {
+                const email = this.value.trim();
+                if (email && isValidEmail(email)) {
+                    validateEmailInDatabase(email);
+                }
+            });
+        }
+
+        // CUSTOM SELECT AND CATEGORIES (existing code)
+        /*************************************
+         * GLOBAL CUSTOM SELECT HANDLER
+         *************************************/
+        const allCustomSelects = document.querySelectorAll(".custom-select");
+
+        allCustomSelects.forEach((customSelect) => {
+            const trigger = customSelect.querySelector(".custom-select-trigger");
+            const text = customSelect.querySelector(".custom-select-text");
+            const options = customSelect.querySelectorAll(".custom-option");
+            const selectName = customSelect.dataset.select;
+            const hiddenSelect = document.querySelector(`select[name="${getFieldName(selectName)}"]`);
+
+            // Toggle dropdown open/close
+            trigger.addEventListener("click", (e) => {
+                e.stopPropagation();
+                document.querySelectorAll(".custom-select.open").forEach((openSelect) => {
+                    if (openSelect !== customSelect) openSelect.classList.remove(
+                        "open");
+                });
+                customSelect.classList.toggle("open");
+            });
+
+            // Handle option click
+            options.forEach((option) => {
+                option.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    const value = option.dataset.value;
+                    const label = option.textContent;
+
+                    // Update visible text + active state
+                    text.textContent = label;
+                    options.forEach((o) => o.classList.remove("active"));
+                    option.classList.add("active");
+
+                    // Sync to hidden select
+                    if (hiddenSelect) {
+                        hiddenSelect.value = value;
+                    } else {
+                        console.warn(`Hidden select not found for ${selectName}`);
+                    }
+
+                    // Close dropdown
+                    customSelect.classList.remove("open");
+
+                    // If this is the "industry" select, trigger category update
+                    if (selectName === "industry") {
+                        updateCategories(value);
+                    }
+
+                    // Save form data after selection
+                    saveFormData();
+                });
+            });
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener("click", (e) => {
+            document.querySelectorAll(".custom-select.open").forEach((openSelect) => {
+                if (!openSelect.contains(e.target)) openSelect.classList.remove("open");
+            });
+        });
+
+        /*************************************
+         * COUNTRY SEARCH FUNCTIONALITY
+         *************************************/
+        const countryDropdown = document.querySelector('[data-select="country"]');
+        if (countryDropdown) {
+            const countrySearchInput = countryDropdown.querySelector('.country-search');
+            const countryOptionsContainer = countryDropdown.querySelector('.custom-options-scrollable');
+            const countryOptions = countryOptionsContainer.querySelectorAll('.custom-option');
+
+            // Handle search input
+            if (countrySearchInput) {
+                countrySearchInput.addEventListener('input', function(e) {
+                    const searchTerm = e.target.value.toLowerCase();
+
+                    countryOptions.forEach(option => {
+                        const countryName = option.textContent.toLowerCase();
+                        if (countryName.includes(searchTerm)) {
+                            option.style.display = 'block';
+                        } else {
+                            option.style.display = 'none';
+                        }
+                    });
+                });
+
+                // Prevent dropdown from closing when clicking on search input
+                countrySearchInput.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+
+                // Clear search when dropdown closes
+                countryDropdown.addEventListener('click', function() {
+                    if (!countryDropdown.classList.contains('open')) {
+                        countrySearchInput.value = '';
+                        countryOptions.forEach(option => {
+                            option.style.display = 'block';
+                        });
+                    }
+                });
+
+                // Focus search input when dropdown opens
+                const countryTrigger = countryDropdown.querySelector('.custom-select-trigger');
+                countryTrigger.addEventListener('click', function() {
+                    setTimeout(() => {
+                        if (countryDropdown.classList.contains('open')) {
+                            countrySearchInput.focus();
+                        }
+                    }, 100);
+                });
+            }
+        }
+
+        /*************************************
+         * INDUSTRY → CATEGORY HANDLER
+         *************************************/
+        const industryCategories = {
+            agriculture: [
+                "Crop Production",
+                "Livestock Farming",
+                "AgroTech",
+                "Food Processing",
+            ],
+            manufacturing: [
+                "Textile Production",
+                "Automobile Manufacturing",
+                "Electronics",
+                "Pharmaceuticals",
+            ],
+            mining: [
+                "Gold Mining",
+                "Oil & Gas Exploration",
+                "Quarrying",
+                "Metal Refining",
+            ],
+            logistics: [
+                "Freight Forwarding",
+                "Warehousing",
+                "Transportation",
+                "Supply Chain Solutions",
+            ],
+        };
+
+        const defaultTags = [
+            "Agrobusiness",
+            "Business Growth",
+            "Sustainability",
+            "Leadership",
+        ];
+
+        const selectedCategories = {}; // store selections by industry
+        const categoryContainer = document.getElementById("categoryContainer");
+        const industrySelect = document.querySelector('select[name="industry"]');
+        const hiddenCategoryInput = document.getElementById("selectedCategories");
+
+        // Initial render (default tags)
+        renderTags(defaultTags, true);
+
+        /** Update when user selects a new industry **/
+        function updateCategories(industry) {
+            categoryContainer.innerHTML = "";
+            hiddenCategoryInput.value = "";
+
+            if (!industry || !industryCategories[industry]) {
+                renderTags(defaultTags, true);
+                return;
+            }
+
+            const categories = industryCategories[industry];
+            const saved = selectedCategories[industry] || [];
+
+            renderTags(categories, false, saved);
+        }
+
+        /** Render tags **/
+        function renderTags(categories, isDefault = false, saved = []) {
+            categoryContainer.innerHTML = "";
+
+            categories.forEach((category) => {
+                const tag = document.createElement("div");
+                tag.className = "interest-form-tag";
+                if (saved.includes(category)) tag.classList.add("active");
+
+                tag.innerHTML = `
+      <span class="check-icon ${saved.includes(category) ? "active" : ""}">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/>
+        </svg>
+      </span>
+      <span>${category}</span>
+    `;
+
+                // Add click event
+                tag.addEventListener("click", () => {
+                    const currentIndustry = industrySelect.value;
+
+                    // Toggle visual state
+                    tag.classList.toggle("active");
+                    const icon = tag.querySelector(".check-icon");
+                    icon.classList.toggle("active");
+
+                    // Handle storage
+                    if (!isDefault && currentIndustry) {
+                        if (!selectedCategories[currentIndustry]) {
+                            selectedCategories[currentIndustry] = [];
+                        }
+
+                        if (tag.classList.contains("active")) {
+                            selectedCategories[currentIndustry].push(category);
+                        } else {
+                            selectedCategories[currentIndustry] = selectedCategories[
+                                currentIndustry
+                            ].filter((c) => c !== category);
+                        }
+                    }
+
+                    updateHiddenInput();
+                    saveFormData(); // Save after category selection
+                });
+
+                categoryContainer.appendChild(tag);
+            });
+        }
+
+        /** Sync hidden field for submission **/
+        function updateHiddenInput() {
+            const allSelected = Object.values(selectedCategories).flat();
+            hiddenCategoryInput.value = allSelected.join(",");
+        }
+
+
+        // FORM STEPS (updated with validation)
+        // Collect all forms and headings
+        const formStages = document.querySelectorAll(
+            ".first-stage-form-container, .second-stage-form-container, .third-stage-form-container, .fourth-stage-form-container"
+        );
+
+        const mobileHeadings = document.querySelectorAll(
+            ".mobile-heading .first-form-heading, .mobile-heading .second-form-heading, .mobile-heading .third-form-heading, .mobile-heading .fourth-form-heading"
+        );
+
+        const desktopHeadings = document.querySelectorAll(
+            ".desktop-heading .first-form-heading, .desktop-heading .second-form-heading, .desktop-heading .third-form-heading, .desktop-heading .fourth-form-heading"
+        );
+
+        const proceedButtons = document.querySelectorAll(
+            ".interest-form-proceed-button"
+        );
+        const returnButtons = document.querySelectorAll(
+            ".interest-form-return-button"
+        );
+
+        // Initialize currentStep from localStorage or default to 0
+        function initializeCurrentStep() {
+            const savedStep = localStorage.getItem(STEP_STORAGE_KEY);
+            console.log('🔍 Initializing step from localStorage:', savedStep);
+            if (savedStep) {
+                const stepMapping = {
+                    'form1': 0,
+                    'form2': 1,
+                    'form3': 2,
+                    'form4': 3
+                };
+                const stepIndex = stepMapping[savedStep] || 0;
+                console.log('📍 Restored step index:', stepIndex);
+                return stepIndex;
+            }
+            console.log('📍 Using default step: 0');
+            return 0;
+        }
+
+        let currentStep = initializeCurrentStep();
+        const totalSteps = formStages.length;
+
+        // Initialize form and heading display
+        function showStep(step) {
+            console.log('🎯 Showing step:', step);
+            // Hide all stages
+            formStages.forEach((form) => form.classList.add("hidden"));
+            mobileHeadings.forEach((heading) => heading.classList.add("hidden"));
+            desktopHeadings.forEach((heading) => heading.classList.add("hidden"));
+
+            // Show current stage
+            formStages[step].classList.remove("hidden");
+            mobileHeadings[step].classList.remove("hidden");
+            desktopHeadings[step].classList.remove("hidden");
+
+            updateProgress(step);
+            saveFormData(); // Save current step
+        }
+
+        // Update progress bar for all instances
+        function updateProgress(step) {
+            const progressSteppers = document.querySelectorAll(".progress-stepper");
+
+            progressSteppers.forEach((stepper) => {
+                const steps = stepper.querySelectorAll(".step");
+                const progress = (step / totalSteps) * 100;
+                stepper.style.setProperty("--progress-width", `${progress}%`);
+                steps.forEach((s, i) => {
+                    s.classList.remove("active", "completed");
+                    if (i < step) s.classList.add("completed");
+                    else if (i === step) s.classList.add("active");
+                });
+            });
+        }
+
+        // Handle navigation
+        proceedButtons.forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+                e.preventDefault();
+
+                // Validate current step before proceeding
+                if (validateCurrentStep()) {
+                    if (currentStep < totalSteps - 1) {
+                        currentStep++;
+                        showStep(currentStep);
+                    }
+                }
+            });
+        });
+
+        returnButtons.forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+                e.preventDefault();
+                if (currentStep > 0) {
+                    currentStep--;
+                    showStep(currentStep);
+                }
+            });
+        });
+
+        // Validation function for current step
+        function validateCurrentStep() {
+            const currentStage = formStages[currentStep];
+            let isValid = true;
+
+            // Clear previous errors
+            currentStage.querySelectorAll('.error-message').forEach(msg => msg.remove());
+            currentStage.querySelectorAll('input, select, textarea').forEach(input => {
+                clearError(input);
+            });
+
+            if (currentStep === 0) {
+                // Step 1: Basic Information validation
+                const name = currentStage.querySelector('input[name="name"]');
+                const email = currentStage.querySelector('input[name="email"]');
+                const phone = currentStage.querySelector('input[name="phone"]');
+                const position = currentStage.querySelector('select[name="position"]');
+                const companyName = currentStage.querySelector('input[name="company_name"]');
+
+                if (!name.value.trim()) {
+                    showError(name, 'Full name is required');
+                    isValid = false;
+                }
+
+                if (!email.value.trim()) {
+                    showError(email, 'Email address is required');
+                    isValid = false;
+                } else if (!isValidEmail(email.value.trim())) {
+                    showError(email, 'Please enter a valid email address');
+                    isValid = false;
+                }
+
+                if (!phone.value.trim()) {
+                    showError(phone, 'Phone number is required');
+                    isValid = false;
+                }
+
+                if (!position.value.trim()) {
+                    const customSelect = currentStage.querySelector('[data-select="title"]');
+                    showError(customSelect || position.parentNode, 'Please select your title');
+                    isValid = false;
+                }
+
+                if (!companyName.value.trim()) {
+                    showError(companyName, 'Company name is required');
+                    isValid = false;
+                }
+
+            } else if (currentStep === 1) {
+                // Step 2: Company Information validation
+                const country = currentStage.querySelector('select[name="country"]');
+                const linkedin = currentStage.querySelector('input[name="linkedin"]');
+
+                if (!country.value.trim()) {
+                    const customSelect = currentStage.querySelector('[data-select="country"]');
+                    showError(customSelect || country.parentNode, 'Country of registration is required');
+                    isValid = false;
+                }
+
+                if (linkedin.value.trim() && !linkedin.value.toLowerCase().includes('linkedin')) {
+                    showError(linkedin, 'Please enter a valid LinkedIn profile URL');
+                    isValid = false;
+                }
+
+            } else if (currentStep === 2) {
+                // Step 3: Industry Preference validation
+                const industry = currentStage.querySelector('select[name="industry"]');
+                const employees = currentStage.querySelector('select[name="number_of_employees"]');
+                const revenue = currentStage.querySelector('select[name="years_of_operation"]');
+
+                if (!industry.value.trim()) {
+                    const customSelect = currentStage.querySelector('[data-select="industry"]');
+                    showError(customSelect || industry.parentNode, 'Please select your industry');
+                    isValid = false;
+                }
+
+                if (!employees.value.trim()) {
+                    const customSelect = currentStage.querySelector('[data-select="employees"]');
+                    showError(customSelect || employees.parentNode, 'Please select number of employees');
+                    isValid = false;
+                }
+
+                if (!revenue.value.trim()) {
+                    const customSelect = currentStage.querySelector('[data-select="revenue"]');
+                    showError(customSelect || revenue.parentNode, 'Please select revenue range');
+                    isValid = false;
+                }
+
+            } else if (currentStep === 3) {
+                // Step 4: Industry Insight validation
+                const goals = currentStage.querySelector('textarea[name="goals"]');
+                const selectedOutcome = currentStage.querySelector('select[name="selected_outcome"]');
+                const b2bInterest = currentStage.querySelector('input[name="b2b_interest"]:checked');
+
+                if (!goals.value.trim()) {
+                    showError(goals, 'Please describe your company');
+                    isValid = false;
+                }
+
+                if (!selectedOutcome.value.trim()) {
+                    const customSelect = currentStage.querySelector('[data-select="interest"]');
+                    showError(customSelect || selectedOutcome.parentNode, 'Please select your interest');
+                    isValid = false;
+                }
+
+                if (!b2bInterest) {
+                    // Show error for the radio button group
+                    const radioGroup = currentStage.querySelector('.interest-form-option-buttons');
+                    if (radioGroup) {
+                        const errorDiv = document.createElement('div');
+                        errorDiv.className = 'error-message';
+                        errorDiv.style.color = '#ef4444';
+                        errorDiv.style.fontSize = '0.875rem';
+                        errorDiv.style.marginTop = '4px';
+                        errorDiv.style.textAlign = 'center';
+                        errorDiv.textContent = 'Please select your B2B interest level';
+                        radioGroup.parentNode.insertBefore(errorDiv, radioGroup.nextSibling);
+                    }
+                    isValid = false;
+                }
+            }
+
+            // Scroll to first error if validation failed
+            if (!isValid) {
+                const firstError = currentStage.querySelector('.error-message');
+                if (firstError) {
+                    firstError.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                }
+            }
+
+            return isValid;
+        }
+
+        // Initialize first view
+        showStep(currentStep);
+
+        // Clear server errors when user starts typing
+        document.querySelectorAll('input, select, textarea').forEach(input => {
+            input.addEventListener('input', function() {
+                const serverError = this.parentNode.querySelector('.server-error');
+                if (serverError) {
+                    serverError.remove();
+                    clearError(this);
+                }
+            });
+        });
+
+        // Form submission handling
         form.addEventListener('submit', function(e) {
             e.preventDefault();
 
             // Validate all steps before submission
             let allValid = true;
-            const allSteps = document.querySelectorAll('.form-step');
-
-            allSteps.forEach(step => {
-                if (!validateStep(step)) {
+            for (let step = 0; step < totalSteps; step++) {
+                const prevStep = currentStep;
+                currentStep = step;
+                if (!validateCurrentStep()) {
                     allValid = false;
+                    showStep(step); // Show the step with errors
+                    break;
                 }
-            });
+                currentStep = prevStep;
+            }
 
             if (!allValid) {
-                // Show first error and switch to that step
-                const firstErrorStep = document.querySelector('.form-step .error-message').closest(
-                    '.form-step');
-                if (firstErrorStep) {
-                    // Switch to the step with error
-                    document.querySelectorAll('.form-step').forEach(step => step.classList.remove(
-                        'active'));
-                    firstErrorStep.classList.add('active');
-
-                    // Scroll to first error
-                    const firstError = firstErrorStep.querySelector('.error-message');
-                    if (firstError) {
-                        firstError.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'center'
-                        });
-                    }
-                }
                 return;
             }
 
@@ -1375,14 +3195,23 @@
 
                     // Reset form and go back to first step
                     form.reset();
-                    document.querySelectorAll('.form-step').forEach(step => step.classList.remove(
-                        'active'));
-                    document.getElementById('form1').classList.add('active');
+                    currentStep = 0;
+                    showStep(currentStep);
 
-                    // Clear any selected outcome cards
-                    document.querySelectorAll('.brn-form-icons-card').forEach(card => {
-                        card.classList.remove('selected');
+                    // Clear all custom selects
+                    document.querySelectorAll('.custom-select-text').forEach(text => {
+                        const defaultText = text.closest('.custom-select').querySelector(
+                            '.custom-option')?.textContent || 'Select option';
+                        text.textContent = defaultText;
                     });
+                    document.querySelectorAll('.custom-option').forEach(option => option.classList
+                        .remove('active'));
+
+                    // Clear category selections
+                    categoryContainer.innerHTML = '';
+                    renderTags(defaultTags, true);
+                    selectedCategories = {};
+                    hiddenCategoryInput.value = '';
                 })
                 .catch(error => {
                     if (error.status === 422 && error.data.errors) {
@@ -1413,392 +3242,46 @@
                 });
         });
 
-        // Clear server errors when user starts typing
-        document.querySelectorAll('input, select, textarea').forEach(input => {
-            input.addEventListener('input', function() {
-                const serverError = this.parentNode.querySelector('.server-error');
-                if (serverError) {
-                    serverError.remove();
-                    this.style.border = '';
-                    this.style.backgroundColor = '';
-                }
-            });
-        });
-
-        // Handle icon selection with error clearing
-        const cards = document.querySelectorAll('.brn-form-icons-card');
-        const hiddenInput = document.getElementById('selectedOutcome');
-
-        cards.forEach(card => {
-            card.addEventListener('click', function() {
-                // Remove 'selected' class from all cards
-                cards.forEach(c => c.classList.remove('selected'));
-
-                // Add 'selected' class to the clicked card
-                this.classList.add('selected');
-
-                // Update the hidden input value with the selected card's data-value
-                hiddenInput.value = this.dataset.value;
-
-                // Clear any error message for outcome selection
-                const iconsContainer = document.querySelector('.brn-form-icons');
-                const errorMsg = iconsContainer.querySelector('.error-message');
-                if (errorMsg) {
-                    errorMsg.remove();
-                }
-
-                // Save form data after selection
-                saveFormData();
-            });
-        });
-
-        // Form Slider with comprehensive validation
-        const steps = document.querySelectorAll('.form-step');
-        const nextBtns = document.querySelectorAll('.next-btn');
-        const prevBtns = document.querySelectorAll('.prev-btn');
-
-        function showStep(stepId) {
-            const steps = document.querySelectorAll('.form-step');
-
-            steps.forEach(step => step.classList.remove('active'));
-
-            const nextStep = document.getElementById(stepId);
-            if (nextStep) nextStep.classList.add('active');
-
-            const stepTexts = nextStep.querySelectorAll('.step-text');
-            stepTexts.forEach(text => text.classList.remove('active'));
-
-            const activeStepIndex = Array.from(steps).findIndex(step => step.id === stepId);
-            const activeStepText = nextStep.querySelector(`.step-text[data-step="${activeStepIndex + 1}"]`);
-            if (activeStepText) activeStepText.classList.add('active');
-
-            // Save current step to localStorage
-            localStorage.setItem(STEP_STORAGE_KEY, stepId);
-        }
-
-
-
-        function clearError(input) {
-            input.style.border = '';
-            input.style.backgroundColor = '';
-
-            // Remove error message
-            const errorMsg = input.parentNode.querySelector('.error-message');
-            if (errorMsg) {
-                errorMsg.remove();
-            }
-        }
-
-        function validateStepNavigation(stepElement) {
-            const stepId = stepElement.id;
-            let isValid = true;
-
-            // Clear all previous errors in this step
-            stepElement.querySelectorAll('.error-message').forEach(msg => msg.remove());
-            stepElement.querySelectorAll('input, select, textarea').forEach(input => {
+        // Function to show server errors
+        function showServerErrors(errors) {
+            // Clear ALL previous errors thoroughly
+            document.querySelectorAll('.error-message').forEach(msg => msg.remove());
+            document.querySelectorAll('input, select, textarea').forEach(input => {
                 clearError(input);
             });
 
-            if (stepId === 'form1') {
-                // Step 1: Personal Information validation
-                const name = stepElement.querySelector('input[name="name"]');
-                const email = stepElement.querySelector('input[name="email"]');
-                const phone = stepElement.querySelector('input[name="phone"]');
-                const linkedin = stepElement.querySelector('input[name="linkedin"]');
+            // Show field-specific errors
+            Object.keys(errors).forEach(field => {
+                const input = form.querySelector(`[name="${field}"]`);
+                if (input) {
+                    const errorMessage = errors[field][0]; // Get first error message
 
-                if (!name.value.trim()) {
-                    showError(name, 'Full name is required');
-                    isValid = false;
-                }
+                    // Ensure the input is clean before adding server error
+                    clearError(input);
 
-                if (!email.value.trim()) {
-                    showError(email, 'Email address is required');
-                    isValid = false;
-                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
-                    showError(email, 'Please enter a valid email address');
-                    isValid = false;
-                } else {
-                    // Check if email has red border (indicating it already exists)
-                    const emailStyle = window.getComputedStyle(email);
-                    if (emailStyle.borderColor === 'rgb(239, 68, 68)' || email.style.borderColor.includes(
-                            '#ef4444')) {
-                        showError(email, 'This email address is already registered');
-                        isValid = false;
-                    }
-                    // Check if email validation is complete (has green checkmark)
-                    const emailCheckmark = document.getElementById('email-checkmark');
-                    if (emailCheckmark && emailCheckmark.style.display !== 'block') {
-                        showError(email, 'Please wait for email validation to complete');
-                        isValid = false;
-                    }
-                }
+                    input.style.border = '2px solid #ef4444';
+                    input.style.backgroundColor = '#fef2f2';
 
-                if (!phone.value.trim()) {
-                    showError(phone, 'Phone number is required');
-                    isValid = false;
-                } else if (!/^[0-9\s\-\+\(\)]{7,15}$/.test(phone.value.trim())) {
-                    showError(phone, 'Please enter a valid phone number (7-15 digits)');
-                    isValid = false;
-                }
-
-                if (!linkedin.value.trim()) {
-                    showError(linkedin, 'LinkedIn profile is required');
-                    isValid = false;
-                } else if (!linkedin.value.toLowerCase().includes('linkedin.com')) {
-                    showError(linkedin, 'Please enter a valid LinkedIn profile URL');
-                    isValid = false;
-                }
-
-            } else if (stepId === 'form2') {
-                // Step 2: Company Information validation
-                const companyName = stepElement.querySelector('input[name="company_name"]');
-                const country = stepElement.querySelector('select[name="country"]');
-                const position = stepElement.querySelector('input[name="position"]');
-                const yearsOfOperation = stepElement.querySelector('input[name="years_of_operation"]:checked');
-                const numberOfEmployees = stepElement.querySelector(
-                    'input[name="number_of_employees"]:checked');
-
-                if (!companyName.value.trim()) {
-                    showError(companyName, 'Company name is required');
-                    isValid = false;
-                }
-
-                if (!country.value.trim()) {
-                    showError(country, 'Business headquarters country is required');
-                    isValid = false;
-                }
-
-                if (!position.value.trim()) {
-                    showError(position, 'Your position in the business is required');
-                    isValid = false;
-                }
-
-                if (!yearsOfOperation) {
-                    const yearsGroup = stepElement.querySelector('.brn-input-checked-group');
                     const errorDiv = document.createElement('div');
-                    errorDiv.className = 'error-message';
+                    errorDiv.className = 'error-message server-error';
                     errorDiv.style.color = '#ef4444';
                     errorDiv.style.fontSize = '0.875rem';
-                    errorDiv.style.marginTop = '8px';
-                    errorDiv.textContent = 'Please select your business years of operation';
-                    yearsGroup.appendChild(errorDiv);
-                    isValid = false;
-                }
+                    errorDiv.style.marginTop = '4px';
+                    errorDiv.textContent = errorMessage;
 
-                if (!numberOfEmployees) {
-                    const employeesGroup = stepElement.querySelectorAll('.brn-input-checked-group')[1];
-                    const errorDiv = document.createElement('div');
-                    errorDiv.className = 'error-message';
-                    errorDiv.style.color = '#ef4444';
-                    errorDiv.style.fontSize = '0.875rem';
-                    errorDiv.style.marginTop = '8px';
-                    errorDiv.textContent = 'Please select your number of employees';
-                    employeesGroup.appendChild(errorDiv);
-                    isValid = false;
+                    input.parentNode.insertBefore(errorDiv, input.nextSibling);
                 }
+            });
 
-            } else if (stepId === 'form3') {
-                // Step 3: Outcomes validation
-                const goals = stepElement.querySelector('input[name="goals"]');
-                const selectedOutcome = stepElement.querySelector('input[name="selected_outcome"]');
-
-                // Validate goals input
-                if (!goals.value.trim()) {
-                    showError(goals, 'Please input your reason for joining');
-                    isValid = false;
-                }
-
-                // Validate selected outcome
-                if (!selectedOutcome || !selectedOutcome.value) {
-                    const iconsContainer = stepElement.querySelector('.brn-form-icons');
-                    const errorDiv = document.createElement('div');
-                    errorDiv.className = 'error-message';
-                    errorDiv.style.color = '#ef4444';
-                    errorDiv.style.fontSize = '0.875rem';
-                    errorDiv.style.marginTop = '12px';
-                    errorDiv.style.textAlign = 'center';
-                    errorDiv.textContent = 'Please select what outcomes matter most to you';
-                    iconsContainer.appendChild(errorDiv);
-                    isValid = false;
-                }
+            // Scroll to first error
+            const firstError = document.querySelector('.server-error');
+            if (firstError) {
+                firstError.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
             }
-
-            return isValid;
         }
 
-        nextBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                const currentStep = this.closest('.form-step');
-
-                if (validateStepNavigation(currentStep)) {
-                    // Move to next step only if validation passes
-                    const next = this.dataset.next;
-                    showStep(next);
-                } else {
-                    // Scroll to first error
-                    const firstError = currentStep.querySelector('.error-message');
-                    if (firstError) {
-                        firstError.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'center'
-                        });
-                    }
-
-                    // Show validation feedback
-                    btn.style.transform = 'scale(0.95)';
-                    setTimeout(() => {
-                        btn.style.transform = '';
-                    }, 150);
-                }
-            });
-        });
-
-        prevBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                const prev = this.dataset.prev;
-                showStep(prev);
-            });
-        });
-
-        // Real-time validation feedback
-        document.querySelectorAll('input, select, textarea').forEach(input => {
-            input.addEventListener('input', function() {
-                if (this.style.border && this.style.border.includes('red')) {
-                    clearError(this);
-                }
-            });
-        });
-
-        // Clear radio button errors when selected
-        document.querySelectorAll('input[type="radio"]').forEach(radio => {
-            radio.addEventListener('change', function() {
-                const group = this.closest('.brn-input-checked-group');
-                const errorMsg = group.querySelector('.error-message');
-                if (errorMsg) {
-                    errorMsg.remove();
-                }
-            });
-        });
-
-        // Real-time email validation setup
-        const emailInput = document.querySelector('input[name="email"]');
-        let emailTimeout;
-
-        // LinkedIn URL normalization function
-        function normalizeLinkedInURL(url) {
-            if (!url || url.trim() === '') return '';
-
-            let normalizedUrl = url.trim();
-
-            // Remove common prefixes and normalize
-            normalizedUrl = normalizedUrl.replace(/^(https?:\/\/)?(www\.)?/i, '');
-
-            // Handle different LinkedIn domain variations
-            normalizedUrl = normalizedUrl.replace(/^(linkedin\.com|linkedin\.in|in\.linkedin\.com)/i,
-                'linkedin.com');
-
-            // Ensure it starts with linkedin.com
-            if (!normalizedUrl.toLowerCase().startsWith('linkedin.com')) {
-                // If it looks like a LinkedIn profile path, prepend linkedin.com
-                if (normalizedUrl.startsWith('/in/') || normalizedUrl.match(/^[a-zA-Z0-9\-_.]+$/)) {
-                    normalizedUrl = 'linkedin.com/in/' + normalizedUrl.replace(/^\/in\//, '');
-                } else {
-                    // If it doesn't look like LinkedIn, return original
-                    return url;
-                }
-            }
-
-            // Ensure /in/ path is present for profiles
-            if (normalizedUrl.toLowerCase().startsWith('linkedin.com') &&
-                !normalizedUrl.toLowerCase().includes('/company/') &&
-                !normalizedUrl.toLowerCase().includes('/in/')) {
-                const path = normalizedUrl.substring('linkedin.com'.length).replace(/^\/+/, '');
-                if (path) {
-                    normalizedUrl = 'linkedin.com/in/' + path;
-                } else {
-                    normalizedUrl = 'linkedin.com';
-                }
-            }
-
-            // Add https prefix
-            return 'https://' + normalizedUrl;
-        }
-
-        if (emailInput) {
-            emailInput.addEventListener('input', function() {
-                clearTimeout(emailTimeout);
-                const email = this.value.trim();
-
-                // Clear previous styling
-                this.style.border = '';
-                this.style.backgroundColor = '';
-
-                if (email === '') {
-                    showEmailStatus('hide');
-                    return;
-                }
-
-                // Debounce the API call
-                emailTimeout = setTimeout(() => {
-                    validateEmailInDatabase(email);
-                }, 500);
-            });
-
-            emailInput.addEventListener('blur', function() {
-                const email = this.value.trim();
-                if (email && isValidEmail(email)) {
-                    validateEmailInDatabase(email);
-                }
-            });
-        }
-
-        // LinkedIn URL auto-formatting
-        const linkedinInput = document.querySelector('input[name="linkedin"]');
-        if (linkedinInput) {
-            linkedinInput.addEventListener('blur', function() {
-                const currentValue = this.value.trim();
-                if (currentValue && currentValue.toLowerCase().includes('linkedin')) {
-                    const normalizedUrl = normalizeLinkedInURL(currentValue);
-                    if (normalizedUrl !== currentValue) {
-                        this.value = normalizedUrl;
-
-                        // Clear any existing errors since we've formatted the URL
-                        const errorMsg = this.parentNode.querySelector('.error-message');
-                        if (errorMsg) {
-                            errorMsg.remove();
-                        }
-                        this.style.border = '';
-                        this.style.backgroundColor = '';
-
-                        // Save the normalized URL
-                        saveFormData();
-                    }
-                }
-            });
-
-            // Also format on paste
-            linkedinInput.addEventListener('paste', function() {
-                setTimeout(() => {
-                    const currentValue = this.value.trim();
-                    if (currentValue && currentValue.toLowerCase().includes('linkedin')) {
-                        const normalizedUrl = normalizeLinkedInURL(currentValue);
-                        if (normalizedUrl !== currentValue) {
-                            this.value = normalizedUrl;
-
-                            // Clear any existing errors since we've formatted the URL
-                            const errorMsg = this.parentNode.querySelector('.error-message');
-                            if (errorMsg) {
-                                errorMsg.remove();
-                            }
-                            this.style.border = '';
-                            this.style.backgroundColor = '';
-
-                            // Save the normalized URL
-                            saveFormData();
-                        }
-                    }
-                }, 100);
-            });
-        }
     });
 </script>

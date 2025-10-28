@@ -47,6 +47,11 @@
                                 <p class="text-gray-900 bg-gray-50 p-3 rounded-md">{{ $submission->phone ?? 'N/A' }}</p>
                             </div>
                             <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Position/Title</label>
+                                <p class="text-gray-900 bg-gray-50 p-3 rounded-md">{{ $submission->position ?? 'N/A' }}
+                                </p>
+                            </div>
+                            <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">LinkedIn Profile</label>
                                 <p class="text-gray-900 bg-gray-50 p-3 rounded-md">
                                     @if ($submission->linkedin)
@@ -77,9 +82,38 @@
                                     {{ $submission->company_name ?? 'N/A' }}</p>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Position/Role</label>
-                                <p class="text-gray-900 bg-gray-50 p-3 rounded-md">{{ $submission->position ?? 'N/A' }}
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Registration Number</label>
+                                <p class="text-gray-900 bg-gray-50 p-3 rounded-md">
+                                    {{ $submission->reg_number ?? 'N/A' }}
                                 </p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Company Website</label>
+                                <p class="text-gray-900 bg-gray-50 p-3 rounded-md">
+                                    @if ($submission->website)
+                                        <a href="{{ $submission->website }}" target="_blank"
+                                            class="text-blue-600 hover:text-blue-800">
+                                            {{ $submission->website }}
+                                        </a>
+                                    @else
+                                        N/A
+                                    @endif
+                                </p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Year Established</label>
+                                <p class="text-gray-900 bg-gray-50 p-3 rounded-md">
+                                    {{ $submission->year_established ?? 'N/A' }}</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Industry</label>
+                                <p class="text-gray-900 bg-gray-50 p-3 rounded-md">{{ $submission->industry ?? 'N/A' }}
+                                </p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Categories</label>
+                                <p class="text-gray-900 bg-gray-50 p-3 rounded-md">
+                                    {{ $submission->categories ?? 'N/A' }}</p>
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Years of Operation</label>
@@ -90,6 +124,21 @@
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Number of Employees</label>
                                 <p class="text-gray-900 bg-gray-50 p-3 rounded-md">
                                     {{ $submission->number_of_employees ?? 'N/A' }}</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Offer Value</label>
+                                <p class="text-gray-900 bg-gray-50 p-3 rounded-md">
+                                    {{ $submission->offer_value ?? 'N/A' }}</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">B2B Interest</label>
+                                <p class="text-gray-900 bg-gray-50 p-3 rounded-md">
+                                    @if ($submission->b2b_interest)
+                                        <span class="capitalize">{{ $submission->b2b_interest }}</span>
+                                    @else
+                                        N/A
+                                    @endif
+                                </p>
                             </div>
                         </div>
                     </div>

@@ -39,6 +39,13 @@ class BrnApproved extends Mailable
             'number_of_employees' => $submission->number_of_employees,
             'selected_outcome' => $submission->selected_outcome,
             'goals' => $submission->goals,
+            'reg_number' => $submission->reg_number,
+            'website' => $submission->website,
+            'year_established' => $submission->year_established,
+            'industry' => $submission->industry,
+            'categories' => $submission->categories,
+            'offer_value' => $submission->offer_value,
+            'b2b_interest' => $submission->b2b_interest,
         ];
 
         // Encrypt the data
