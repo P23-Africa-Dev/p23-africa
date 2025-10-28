@@ -16,6 +16,84 @@
 {{-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> --}}
 
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+    @font-face {
+        font-family: "GT Walsheim Pro";
+
+        src: url("/public/fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff2") format("woff2"),
+            url("/public/fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff") format("woff");
+    }
+
+    @font-face {
+        font-family: "GT Walsheim Trial Md";
+        font-style: normal;
+        font-weight: normal;
+        src: local("GT Walsheim Trial Md"),
+            url("/public/fonts/gt-trials/GT-Walsheim-Medium-Trial-BF651b7fc728fb3.woff") format("woff");
+    }
+
+    @font-face {
+        font-family: "GT Walsheim Con";
+
+        src: url("/public/fonts/gt-walsheim-pro/GTWalsheimPro-CondensedRegular.woff2") format("woff2"),
+            url("/public/fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff") format("woff");
+    }
+
+    @font-face {
+        font-family: "GT Walsheim Bold";
+
+        src: url("/public/fonts/gt-walsheim-pro/GTWalsheimPro-Bold.woff2") format("woff2"),
+            url("/public/fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff") format("woff");
+    }
+
+    @font-face {
+        font-family: "GT Walsheim ConB";
+
+        src: url("/public/fonts/gt-walsheim-pro/GTWalsheimPro-CondensedBold.woff2") format("woff2"),
+            url("/public/fonts/gt-walsheim-pro/GTWalsheimPro-CondensedBold.woff") format("woff");
+    }
+
+    @font-face {
+        font-family: "GT Walsheim ConL";
+
+        src: url("/public/fonts/gt-walsheim-pro/GTWalsheimPro-CondensedLight.woff2") format("woff2"),
+            url("/public/fonts/gt-walsheim-pro/GTWalsheimPro-CondensedLight.woff") format("woff");
+    }
+
+    @font-face {
+        font-family: "IvyOraText BoldItalic";
+
+        src: url("/public/fonts/ivyora-text/IvyOraText-BoldItalic.woff2") format("woff2"),
+            url("/public/fonts/ivyora-text/IvyOraText-BoldItalic.woff") format("woff");
+        /* Adjust file names and paths as needed */
+    }
+
+    @font-face {
+        font-family: "IvyOra Text";
+
+        src: url("/public/fonts/ivyora-text/IvyOraText-RegularItalic.woff2") format("woff2"),
+            url("/public/fonts/ivyora-text/IvyOraText-RegularItalic.woff") format("woff");
+        /* Adjust file names and paths as needed */
+    }
+
+    @font-face {
+        font-family: "IvyOra Text Bold";
+
+        src: url("/public/fonts/ivyora-text/IvyOraText-Bold.woff2") format("woff2"),
+            url("/public/fonts/ivyora-text/IvyOraText-Bold.woff") format("woff");
+        /* Adjust file names and paths as needed */
+    }
+
+    @font-face {
+        font-family: "IvyOra Text Medium";
+
+        src: url("/public/fonts/ivyora-text/IvyOraText-Medium.woff2") format("woff2"),
+            url("/public/fonts/ivyora-text/IvyOraText-Medium.woff") format("woff");
+        /* Adjust file names and paths as needed */
+    }
+
+
     body .interest-form-layout-container {
         font-family: "Montserrat", sans-serif;
 
