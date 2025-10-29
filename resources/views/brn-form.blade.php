@@ -329,7 +329,7 @@
         padding: 18px 20px;
         border: 1px solid #fff;
         border-radius: 30px;
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: rgba(255, 255, 255, 0.2) !important;
         color: #ffffff;
         font-size: 16px;
         font-family: "Montserrat", sans-serif;
@@ -364,7 +364,7 @@
 
     /* Trigger (main visible input) */
     .custom-select-trigger {
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: rgba(255, 255, 255, 0.2) !important;
         border: 1px solid #a8bdbf;
         border-radius: 30px;
         padding: 18px 20px;
@@ -377,12 +377,12 @@
     }
 
     .custom-select-trigger:hover {
-        background-color: rgba(255, 255, 255, 0.3);
+        background-color: rgba(255, 255, 255, 0.3) !important;
     }
 
     /* Text inside the trigger */
     .custom-select-text {
-        color: rgba(255, 255, 255, 0.9);
+        color: rgba(255, 255, 255, 0.9) !important;
         font-family: "GT Walsheim Trial Md";
     }
 
@@ -490,7 +490,7 @@
 
     /* Active option (highlighted) */
     .custom-option.active {
-        background-color: rgba(255, 255, 255, 0.25);
+        background-color: rgba(255, 255, 255, 0.25) !important;
     }
 
 
@@ -579,7 +579,7 @@
         border: none;
         border-radius: 30px;
         /* Highly rounded corners for the single-line input/textarea */
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: rgba(255, 255, 255, 0.2) !important;
         color: #ffffff;
         font-size: 16px;
         font-family: "Montserrat", sans-serif;
@@ -600,7 +600,7 @@
     }
 
     textarea:focus {
-        background-color: rgba(255, 255, 255, 0.3);
+        background-color: rgba(255, 255, 255, 0.3) !important;
         box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
     }
 
@@ -910,7 +910,7 @@
 
     .form-control.error {
         border: 2px solid #ef4444 !important;
-        background-color: #fef2f2 !important;
+        background-color: rgba(255, 255, 255, 0.2) !important;
     }
 
     .form-control:focus {
@@ -926,7 +926,7 @@
     .country-code-select {
         font-size: 12px;
         text-align: center;
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: rgba(255, 255, 255, 0.2) !important;
         border-color: #fff;
         color: #ffffff;
     }
@@ -1322,7 +1322,7 @@
                                     <div class="phone-input-container" style="display: flex; gap: 8px;">
                                         <!-- Country code select -->
                                         <select name="country_code" class="country-code-select"
-                                            style="flex: 0 0 130px; border-radius: 30px; padding: 18px 12px; border: 1px solid #fff; background-color: rgba(255, 255, 255, 0.2); color: #ffffff; font-size: 12px; outline: none;">
+                                            style="flex: 0 0 130px; border-radius: 30px; padding: 18px 12px; border: 1px solid #fff; background-color: rgba(255, 255, 255, 0.2) !important; color: #ffffff; font-size: 12px; outline: none;">
                                             <option value="+93">🇦🇫 +93</option>
                                             <option value="+355">🇦🇱 +355</option>
                                             <option value="+213">🇩🇿 +213</option>
@@ -3140,9 +3140,17 @@
                     isValid = false;
                 }
 
+                // if (!linkedin.value.trim()) {
+                //     showError(linkedin, 'LinkedIn profile is required');
+                //     isValid = false;
+                // } else if (!linkedin.value.toLowerCase().includes('linkedin')) {
+                //     showError(linkedin, 'Please enter a valid LinkedIn profile URL');
+                //     isValid = false;
+                // }
+
                 if (!linkedin.value.trim()) {
-                    showError(linkedin, 'LinkedIn profile is required');
-                    isValid = false;
+                    // showError(linkedin, 'LinkedIn profile is required');
+                    isValid = true;
                 } else if (!linkedin.value.toLowerCase().includes('linkedin')) {
                     showError(linkedin, 'Please enter a valid LinkedIn profile URL');
                     isValid = false;

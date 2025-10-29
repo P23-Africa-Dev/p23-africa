@@ -345,7 +345,7 @@
     <section class="carousel-container content-section animate-on-scroll">
         <div class="slider">
             <!-- Main Set -->
-            @foreach ($blogs as $blog)
+            {{-- @foreach ($blogs as $blog)
                 <div class="insight-card text-left card">
                     @if ($blog->pdf_path)
                         <button class="view-pdf-btn cursor-pointer bg-white border border-0 text-left"
@@ -370,9 +370,17 @@
                         </button>
                     @endif
                 </div>
-            @endforeach
-
-            {{-- <div class="insight-card">
+            @endforeach --}}
+            <div class="insight-card">
+                <img src="{{ asset('images/funding.jpg') }}" loading='lazy' alt="Card image">
+                <div class="card-body">
+                    <div class="date">30th April 2025</div>
+                    <h5>State of Funding 2025</h5>
+                    <p>Africa’s funding landscape in 2025 shows steady growth, but challenges like tighter global capital and cautious investor sentiment remain.</p>
+                </div>
+            </div>
+            
+            <div class="insight-card">
                 <img src="{{ asset('images/girl.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
                     <div class="date">1st May 2025</div>
@@ -398,10 +406,10 @@
                     <p>Business trends in Africa are evolving rapidly, with growth in digital transformation, green energy,
                         and emerging markets driving new opportunities across the continent.</p>
                 </div>
-            </div> --}}
+            </div>
 
             <!-- Duplicate Set for Seamless Loop -->
-            @foreach ($blogs as $blog)
+            {{-- @foreach ($blogs as $blog)
                 <div class="insight-card text-left card">
                     @if ($blog->pdf_path)
                         <button class="view-pdf-btn cursor-pointer bg-white border border-0 text-left"
@@ -426,8 +434,9 @@
                         </button>
                     @endif
                 </div>
-            @endforeach
-            {{-- <div class="insight-card">
+            @endforeach --}}
+
+            <div class="insight-card">
                 <img src="{{ asset('images/funding.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
                     <div class="date">30th April 2025</div>
@@ -462,10 +471,10 @@
                     <p>Business trends in Africa are evolving rapidly, with growth in digital transformation, green energy,
                         and emerging markets driving new opportunities across the continent.</p>
                 </div>
-            </div> --}}
+            </div>
         </div>
 
-        <div id="btn">
+        <div id="btn" class="mt-4">
             <a href="{{ route('resource-hub') }}" class="btn">More on the Resource Hub</a>
         </div>
 
