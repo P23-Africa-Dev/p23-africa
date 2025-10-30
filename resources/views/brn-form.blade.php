@@ -2478,7 +2478,6 @@
             if (currentStep >= 0 && currentStep < stepNames.length) {
                 const stepName = stepNames[currentStep];
                 localStorage.setItem(STEP_STORAGE_KEY, stepName);
-                console.log('💾 Saved step to localStorage:', stepName, '(index:', currentStep, ')');
             }
 
             localStorage.setItem(FORM_STORAGE_KEY, JSON.stringify(formData));
@@ -2535,7 +2534,7 @@
                     // Note: Step restoration is now handled during initialization
                 }
             } catch (error) {
-                console.error('Error restoring form data:', error);
+                // console.error('Error restoring form data:', error);
             }
         }
 
@@ -2636,7 +2635,6 @@
                     }
                 })
                 .catch(error => {
-                    console.error('Email validation error:', error);
                     showEmailStatus('hide');
                 });
         }
@@ -2772,7 +2770,7 @@
                     if (hiddenSelect) {
                         hiddenSelect.value = value;
                     } else {
-                        console.warn(`Hidden select not found for ${selectName}`);
+                        // console.warn(`Hidden select not found for ${selectName}`);
                     }
 
                     // Close dropdown
@@ -2991,7 +2989,6 @@
         // Initialize currentStep from localStorage or default to 0
         function initializeCurrentStep() {
             const savedStep = localStorage.getItem(STEP_STORAGE_KEY);
-            console.log('🔍 Initializing step from localStorage:', savedStep);
             if (savedStep) {
                 const stepMapping = {
                     'form1': 0,
@@ -3000,10 +2997,8 @@
                     'form4': 3
                 };
                 const stepIndex = stepMapping[savedStep] || 0;
-                console.log('📍 Restored step index:', stepIndex);
                 return stepIndex;
             }
-            console.log('📍 Using default step: 0');
             return 0;
         }
 
@@ -3012,7 +3007,6 @@
 
         // Initialize form and heading display
         function showStep(step) {
-            console.log('🎯 Showing step:', step);
             // Hide all stages
             formStages.forEach((form) => form.classList.add("hidden"));
             mobileHeadings.forEach((heading) => heading.classList.add("hidden"));
@@ -3298,7 +3292,6 @@
 
             // 3. Verify token exists
             if (!csrfToken) {
-                console.error('❌ CSRF token not found in form or meta tag');
                 submitBtn.disabled = false;
                 btnText.classList.remove('d-none');
                 spinner.classList.add('d-none');
@@ -3308,8 +3301,6 @@
                 modal.show();
                 return;
             }
-
-            console.log('✅ CSRF Token retrieved successfully');
 
             // Make the request
             fetch(form.action, {
@@ -3368,8 +3359,6 @@
                     hiddenCategoryInput.value = '';
                 })
                 .catch(error => {
-                    console.error('❌ Submission error:', error);
-
                     let errorMessage = 'Something went wrong. Please try again.';
 
                     if (error.status === 419) {
