@@ -3305,13 +3305,8 @@
                     'Security error: CSRF token missing. Please refresh the page and try again.';
                 responseMessage.style.color = '#dc2626';
                 modal.show();
-
-                console.error('CSRF token not found in any source');
                 return;
             }
-
-            // Log for debugging (remove in production)
-            console.log('CSRF Token found:', csrfToken.substring(0, 10) + '...');
 
             // Make the request with improved headers
             fetch(form.action, {
@@ -3373,8 +3368,6 @@
                     hiddenCategoryInput.value = '';
                 })
                 .catch(error => {
-                    console.error('Submission error:', error);
-
                     let errorMessage = 'Something went wrong. Please try again.';
 
                     if (error.status === 419) {
