@@ -74,6 +74,16 @@ class BrnController extends Controller
 
     public function store(Request $request)
     {
+        // Add rate limiting
+        if (RateLimiter::tooManyAttempts('submit-brn:' . $request->ip(), 5)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Too many submissions. Please try again in a few minutes.'
+            ], 429);
+        }
+
+        RateLimiter::hit('submit-brn:' . $request->ip(), 300); // 5 minutes
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:brn_submissions,email|max:255',
@@ -159,7 +169,11 @@ class BrnController extends Controller
                 'clear_storage' => true
             ]);
         } catch (\Exception $e) {
-            Log::error('BRN Form Submission Error: ' . $e->getMessage());
+            Log::error('BRN Form Submission Error', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'request_data' => $request->except(['_token'])
+            ]);
 
             return response()->json([
                 'success' => false,

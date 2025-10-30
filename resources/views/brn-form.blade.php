@@ -3273,47 +3273,66 @@
 
             const formData = new FormData(form);
 
-            // IMPROVED: Get CSRF token with proper fallback order
+            // IMPROVED: Get CSRF token with proper priority order
             let csrfToken = null;
 
-            // 1. Try to get from form's hidden input (most reliable)
+            // 1. First priority: Form's hidden input (most reliable)
             const formTokenInput = form.querySelector('input[name="_token"]');
-            if (formTokenInput) {
+            if (formTokenInput && formTokenInput.value) {
                 csrfToken = formTokenInput.value;
             }
 
-            // 2. Fallback to meta tag
+            // 2. Second priority: Meta tag
             if (!csrfToken) {
                 const metaToken = document.querySelector('meta[name="csrf-token"]');
-                if (metaToken) {
+                if (metaToken && metaToken.content) {
                     csrfToken = metaToken.content;
                 }
             }
 
-            // 3. Verify token exists
+            // 3. Third priority: Laravel's global object (if available)
+            if (!csrfToken && typeof window.Laravel !== 'undefined') {
+                csrfToken = window.Laravel.csrfToken;
+            }
+
+            // Verify token exists before submission
             if (!csrfToken) {
                 submitBtn.disabled = false;
                 btnText.classList.remove('d-none');
                 spinner.classList.add('d-none');
 
-                responseMessage.textContent = 'Security error: Please refresh the page and try again.';
+                responseMessage.textContent =
+                    'Security error: CSRF token missing. Please refresh the page and try again.';
                 responseMessage.style.color = '#dc2626';
                 modal.show();
+
+                console.error('CSRF token not found in any source');
                 return;
             }
 
-            // Make the request
+            // Log for debugging (remove in production)
+            console.log('CSRF Token found:', csrfToken.substring(0, 10) + '...');
+
+            // Make the request with improved headers
             fetch(form.action, {
                     method: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': csrfToken,
                         'Accept': 'application/json',
-                        'X-Requested-With': 'XMLHttpRequest' // Added for Laravel
+                        'X-Requested-With': 'XMLHttpRequest'
                     },
                     body: formData,
-                    credentials: 'same-origin' // Added for session consistency
+                    credentials: 'same-origin'
                 })
                 .then(response => {
+                    // Handle token mismatch specifically
+                    if (response.status === 419) {
+                        throw {
+                            status: 419,
+                            message: 'Your session has expired. Please refresh the page and try again.'
+                        };
+                    }
+
                     if (!response.ok) {
                         return response.json().then(err => {
                             throw {
@@ -3350,15 +3369,12 @@
                     // Clear categories
                     categoryContainer.innerHTML = '';
                     renderTags(defaultTags, true);
-
-                    // ✅ FIXED: Clear the object properties instead of reassigning
-                    // ❌ OLD: selectedCategories = {};
-                    // ✅ NEW:
                     Object.keys(selectedCategories).forEach(key => delete selectedCategories[key]);
-
                     hiddenCategoryInput.value = '';
                 })
                 .catch(error => {
+                    console.error('Submission error:', error);
+
                     let errorMessage = 'Something went wrong. Please try again.';
 
                     if (error.status === 419) {
@@ -3373,6 +3389,10 @@
                         }
                     } else if (error.status === 403) {
                         errorMessage = 'Access denied. Please refresh the page and try again.';
+                    } else if (error.status === 429) {
+                        errorMessage = 'Too many attempts. Please wait a moment and try again.';
+                    } else if (error.message) {
+                        errorMessage = error.message;
                     }
 
                     responseMessage.textContent = errorMessage;
@@ -3398,9 +3418,7 @@
             Object.keys(errors).forEach(field => {
                 const input = form.querySelector(`[name="${field}"]`);
                 if (input) {
-                    const errorMessage = errors[field][0]; // Get first error message
-
-                    // Ensure the input is clean before adding server error
+                    const errorMessage = errors[field][0];
                     clearError(input);
 
                     input.style.border = '2px solid #ef4444';
