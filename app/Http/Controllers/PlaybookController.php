@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Mail\PlaybookDownloadMail;
+use App\Mail\SalesBookDownloadMail;
 use App\Models\PlaybookDownload;
+use App\Models\SalesBookDownload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -14,6 +16,10 @@ class PlaybookController extends Controller
     public function landing()
     {
         return view('playbook-landing');
+    }
+    public function playbookTwo()
+    {
+        return view('playbook.sales-book');
     }
 
     public function download(Request $request)
@@ -110,6 +116,107 @@ class PlaybookController extends Controller
         } catch (\Exception $e) {
             // General errors
             Log::error('General error in playbook download', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'input' => $request->all()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An unexpected error occurred. Please try again later.'
+            ], 500);
+        }
+    }
+
+    public function salesBookDownload(Request $request)
+    {
+        try {
+            Log::info('Sales book download request received', $request->all());
+
+            // Validate the request
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:sales_book_downloads|max:255',
+            ], [
+                'name.required' => 'Full name is required.',
+                'name.string' => 'Full name must be a valid text.',
+                'name.max' => 'Full name cannot exceed 255 characters.',
+                'email.required' => 'Email address is required.',
+                'email.email' => 'Please enter a valid email address.',
+                'email.max' => 'Email address cannot exceed 255 characters.',
+                'email.unique' => 'This email has already been used to download the guide.',
+            ]);
+
+            if ($validator->fails()) {
+                Log::warning('Sales book download validation failed', [
+                    'errors' => $validator->errors()->toArray(),
+                    'input' => $request->all()
+                ]);
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Please check your form inputs.',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            // Check if email already exists (optional - remove if you want to allow multiple downloads)
+            $existingDownload = SalesBookDownload::where('email', $request->email)->first();
+
+            if ($existingDownload) {
+                Log::info('Updating existing sales book download record', ['email' => $request->email]);
+                // Update existing record
+                $download = $existingDownload;
+                $download->update([
+                    'name' => $request->name,
+                ]);
+            } else {
+                Log::info('Creating new sales book download record', ['email' => $request->email]);
+                // Create new record
+                $download = SalesBookDownload::create([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                ]);
+            }
+
+            // Send email with sales book attachment
+            Log::info('Sending sales book email', ['email' => $request->email]);
+            Mail::to($request->email)->send(new SalesBookDownloadMail($download));
+
+            // Update email sent timestamp
+            $download->update(['email_sent_at' => now()]);
+
+            Log::info('Sales book download completed successfully', ['email' => $request->email]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Funding Readiness Guide will be sent to your email shortly!'
+            ]);
+        } catch (\Illuminate\Database\QueryException $e) {
+            // Database related errors
+            Log::error('Database error in sales book download', [
+                'message' => $e->getMessage(),
+                'input' => $request->all()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'A database error occurred. Please try again later.'
+            ], 500);
+        } catch (\Symfony\Component\Mailer\Exception\TransportException $e) {
+            // Email sending errors
+            Log::error('Email transport error in sales book download', [
+                'message' => $e->getMessage(),
+                'input' => $request->all()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Email could not be sent. Please check your email address and try again.'
+            ], 500);
+        } catch (\Exception $e) {
+            // General errors
+            Log::error('General error in sales book download', [
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
                 'input' => $request->all()

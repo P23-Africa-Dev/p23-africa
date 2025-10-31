@@ -109,8 +109,12 @@ Route::post('/noel54/check-email', [BrnController::class, 'checkEmail'])->name('
 // Playbook Download Route
 Route::post('/playbook/download', [\App\Http\Controllers\PlaybookController::class, 'download'])->name('playbook.download');
 
+// Sales Book Download Route
+Route::post('/sales-book/download', [\App\Http\Controllers\PlaybookController::class, 'salesBookDownload'])->name('sales-book.download');
+
 // Playbook Landing Page
 Route::get('/founders-playbook', [\App\Http\Controllers\PlaybookController::class, 'landing'])->name('playbook.landing');
+Route::get('/playbook/funding-readiness', [\App\Http\Controllers\PlaybookController::class, 'playbookTwo'])->name('playbook.landing2');
 
 Route::get('/brn-form', function () {
     return redirect('/noel54/interest-form');
