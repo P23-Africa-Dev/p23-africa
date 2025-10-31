@@ -519,7 +519,7 @@
                         entrepreneurs.
                     </p>
 
-                    <a href="#closingText" class="cta-btn">Find Out More</a>
+                    <a href="#getGuide" class="cta-btn">Find Out More</a>
                 </div>
 
                 <div class="intro-image desktop">
@@ -556,14 +556,14 @@
                             <img src="{{ asset('./img/card2.png') }}" alt="" />
                         </div>
                     </div>
-                    <div class="book-card card-3">
+                    <div class="book-card card-3" id="getGuide">
                         <div class="card-image">
                             <img src="{{ asset('./img/card1.png') }}" alt="" />
                         </div>
                     </div>
                 </div>
 
-                <p class="closing-text" id="closingText">
+                <p class="closing-text">
                     Walk away with a ready-to-use pitch deck, funding plan, and clarity
                     on your next move.
                 </p>
