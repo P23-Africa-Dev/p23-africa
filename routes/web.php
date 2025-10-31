@@ -275,6 +275,8 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|staff'])->prefix('admi
 
     Route::resource('/salesbooks', \App\Http\Controllers\Admin\SalesBookController::class);
 
+    Route::resource('/ultimatefunding', \App\Http\Controllers\Admin\UltimateFundingController::class);
+
     // Route::middleware('permission:view_students')->group(function () {
     Route::resource('students', StudentController::class);
     // });

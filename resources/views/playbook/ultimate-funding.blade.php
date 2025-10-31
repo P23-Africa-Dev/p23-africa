@@ -14,6 +14,9 @@
     <meta property="og:image" content="{{ asset('images/funding-directory-meta.png') }}">
     <meta property="og:type" content="website">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <!-- Flutterwave Payment Script -->
+    <script src="https://checkout.flutterwave.com/v3.js"></script>
 @endsection
 
 {{-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> --}}
@@ -37,7 +40,8 @@
         background-size: contain;
         margin-top: 3rem;
     }
-    .intro-sales.funding-ebook h1 span{
+
+    .intro-sales.funding-ebook h1 span {
         color: #52CCB4;
     }
 
@@ -264,6 +268,64 @@
         border-color: #e74c3c;
     }
 
+    .modal-box select {
+        width: 100%;
+        padding: 12px 16px;
+        margin: 8px 0;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        background-color: #fff;
+        color: #333;
+        cursor: pointer;
+        transition: border-color 0.3s ease;
+    }
+
+    .modal-box select:focus {
+        outline: none;
+        border-color: #52CCB4;
+        box-shadow: 0 4px 10px rgba(82, 204, 180, 0.2);
+    }
+
+    .modal-box select.error {
+        border-color: #e74c3c;
+    }
+
+    .payment-info {
+        background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%);
+        border: 2px solid #52CCB4;
+        border-radius: 8px;
+        padding: 16px;
+        margin: 16px 0;
+        text-align: center;
+    }
+
+    .price-display {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+        font-weight: bold;
+    }
+
+    .price-label {
+        color: #0d4036;
+        font-size: 16px;
+    }
+
+    .price-amount {
+        color: #52CCB4;
+        font-size: 24px;
+        font-weight: 700;
+    }
+
+    .payment-description {
+        font-size: 14px;
+        color: #0d4036;
+        margin: 0;
+        line-height: 1.4;
+    }
+
     .error-message {
         color: #e74c3c;
         font-size: 12px;
@@ -381,7 +443,7 @@
     }
 
     .premium-section .info {
-     background-image: url("/img/last-bg.png");
+        background-image: url("/img/last-bg.png");
 
 
         background-repeat: no-repeat;
@@ -389,13 +451,13 @@
         padding: 20px 50px;
         margin-bottom: 20px;
         border-radius: 10px;
-    
+
         color: #fff;
-        
+
     }
 
-    .premium-section .info-container{
-         display: flex;
+    .premium-section .info-container {
+        display: flex;
         flex-direction: column;
     }
 
@@ -486,10 +548,11 @@
         .intro-content h1 {
             font-size: 5rem;
         }
-            .intro-sales.funding-ebook h1 {
-                   font-size: 4rem;
 
-    }
+        .intro-sales.funding-ebook h1 {
+            font-size: 4rem;
+
+        }
 
         .book-cards {
             grid-template-columns: repeat(3, 1fr);
@@ -502,11 +565,12 @@
 
         .premium-section .text-content {
             margin: 0px;
-           max-width: 350px;
+            max-width: 350px;
         }
+
         .premium-section .info {
             margin: 0px;
-           width: 100%;
+            width: 100%;
         }
 
         .premium-section .info-container {
@@ -541,11 +605,12 @@
             <div class="intro-container">
                 <div class="intro-content">
                     <h1>
-                        The Ultimate Funding Directory for   <span>African Entrepreneurs</span>
+                        The Ultimate Funding Directory for <span>African Entrepreneurs</span>
                     </h1>
 
                     <p>
-                      The most complete, Africa-focused funding and investor directory, curated to help entrepreneurs find the right capital faster.
+                        The most complete, Africa-focused funding and investor directory, curated to help entrepreneurs find
+                        the right capital faster.
                     </p>
 
                     <a href="#getGuide" class="cta-btn">Find Out More</a>
@@ -553,7 +618,7 @@
 
                 <div class="intro-image desktop">
                     <img src="{{ asset('/img/desktop-fund.png') }}" alt="Entrepreneur using laptop" />
-                
+
                 </div>
                 <div class="intro-image mobile">
                     <img src="{{ asset('/img/mobile-fund.png') }}" alt="Entrepreneur using mobile" />
@@ -568,7 +633,7 @@
                 <div class="book-header">
                     <h3>What you’ll Find in Our Funding Directory</h3>
                     <p>
-                     You’ve prepared your business. Now it’s time to find the right partners to fund your growth.
+                        You’ve prepared your business. Now it’s time to find the right partners to fund your growth.
                     </p>
                 </div>
 
@@ -591,7 +656,8 @@
                 </div>
 
                 <p class="closing-text">
-                   This directory gives you direct access to active investors, global grant programs, and funding opportunities designed for African entrepreneurs.
+                    This directory gives you direct access to active investors, global grant programs, and funding
+                    opportunities designed for African entrepreneurs.
                 </p>
 
                 <a href="#" class="cta-btn" id="openModal">Get Access to the Funding Directory</a>
@@ -606,19 +672,20 @@
                     <div class="text-content-upper">
                         <h2>Get Access to the Ultimate Funding & Investor Directory</p>
 
-                          <a href="#" class="learn-more">Get your Funding Directory Here!</a>
+                            <a href="#" class="learn-more">Get your Funding Directory Here!</a>
                     </div>
-               
+
                 </div>
                 <div class="info">
                     <div class="info-container">
-                        <h3>“Before this directory, finding serious investors was guesswork. Now I know exactly who to approach.”</h3>
+                        <h3>“Before this directory, finding serious investors was guesswork. Now I know exactly who to
+                            approach.”</h3>
 
                         <p>Amina K, Founder of a HealthTech Startup, Nigeria</p>
-                    
+
                     </div>
 
-                 
+
                 </div>
             </div>
         </div>
@@ -753,6 +820,9 @@
             const formData = new FormData(downloadForm);
             const name = formData.get('name').trim();
             const email = formData.get('email').trim();
+            const company = formData.get('company').trim();
+            const country = formData.get('country').trim();
+            const funding_stage = formData.get('funding_stage').trim();
 
             // Basic validation
             let hasErrors = false;
@@ -770,6 +840,21 @@
                 hasErrors = true;
             }
 
+            if (!company) {
+                showError('companyError', 'Company/Startup name is required.');
+                hasErrors = true;
+            }
+
+            if (!country) {
+                showError('countryError', 'Please select your country.');
+                hasErrors = true;
+            }
+
+            if (!funding_stage) {
+                showError('funding_stageError', 'Please select your funding stage.');
+                hasErrors = true;
+            }
+
             if (hasErrors) {
                 return;
             }
@@ -778,7 +863,8 @@
             setLoading(true);
 
             try {
-                const response = await fetch('/sales-book/download', {
+                // First, create the user account
+                const response = await fetch('/ultimate-funding/download', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -787,22 +873,19 @@
                     },
                     body: JSON.stringify({
                         name: name,
-                        email: email
+                        email: email,
+                        company: company,
+                        country: country,
+                        funding_stage: funding_stage
                     })
                 });
 
                 const data = await response.json();
 
                 if (response.ok && data.success) {
-                    showSuccess(data.message);
-                    downloadForm.reset();
-
-                    // Auto-close modal after 3 seconds
-                    setTimeout(() => {
-                        modalOverlay.classList.remove("active");
-                        clearSuccess();
-                    }, 3000);
-
+                    // Account created successfully, now initiate payment
+                    initializeFlutterwavePayment(data.download_id, data.user_email, data.user_name,
+                        data.amount);
                 } else {
                     // Handle validation errors
                     if (data.errors) {
@@ -826,6 +909,80 @@
             }
         });
 
+        // Flutterwave Payment Integration
+        function initializeFlutterwavePayment(downloadId, userEmail, userName, amount) {
+            FlutterwaveCheckout({
+                // public_key: "FLWPUBK_TEST-68f71675ffc7bcaf905e8893d405171a-X", // Replace with your actual public key
+                public_key: "FLWPUBK-366fbf9270d878c2e5e67b0a89f037e7-X",
+                tx_ref: "UF_" + downloadId + "_" + Date.now(),
+                amount: amount,
+                currency: "USD",
+                payment_options: "card,mobilemoney,ussd",
+                customer: {
+                    email: userEmail,
+                    phone_number: "",
+                    name: userName,
+                },
+                customizations: {
+                    title: "Ultimate Funding & Investor Directory",
+                    description: "Premium access to Africa's most comprehensive funding database",
+                    logo: "{{ asset('images/logo.png') }}",
+                },
+                callback: function(data) {
+                    console.log(data);
+                    // Handle successful payment
+                    handlePaymentCallback(downloadId, data);
+                },
+                onclose: function() {
+                    // User closed payment modal
+                    showError('emailError',
+                        'Payment was cancelled. Please try again to access the directory.');
+                },
+            });
+        }
+
+        // Handle payment callback
+        async function handlePaymentCallback(downloadId, paymentData) {
+            try {
+                const response = await fetch('/ultimate-funding/payment-callback', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        download_id: downloadId,
+                        payment_reference: paymentData.tx_ref,
+                        payment_status: paymentData.status,
+                        amount: paymentData.amount,
+                        transaction_id: paymentData.transaction_id
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    showSuccess(data.message);
+                    downloadForm.reset();
+
+                    // Auto-close modal after 5 seconds
+                    setTimeout(() => {
+                        modalOverlay.classList.remove("active");
+                        clearSuccess();
+                    }, 5000);
+                } else {
+                    showError('emailError', data.message ||
+                        'Payment verification failed. Please contact support.');
+                }
+            } catch (error) {
+                console.error('Payment verification error:', error);
+                showError('emailError',
+                    'Payment verification failed. Please contact support with your transaction reference.'
+                );
+            }
+        }
+
         // Helper functions
         function setLoading(loading) {
             submitBtn.disabled = loading;
@@ -844,7 +1001,7 @@
 
         function clearErrors() {
             const errorElements = document.querySelectorAll('.error-message');
-            const inputElements = document.querySelectorAll('.modal-box input');
+            const inputElements = document.querySelectorAll('.modal-box input, .modal-box select');
 
             errorElements.forEach(el => {
                 el.classList.remove('show');

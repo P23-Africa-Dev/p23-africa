@@ -280,7 +280,7 @@ class PlaybookController extends Controller
             }
 
             Log::info('Creating new ultimate funding download record', ['email' => $request->email]);
-            
+
             // Create new record
             $download = UltimateFundingDownload::create([
                 'name' => $request->name,
@@ -302,7 +302,6 @@ class PlaybookController extends Controller
                 'user_email' => $download->email,
                 'user_name' => $download->name
             ]);
-
         } catch (\Illuminate\Database\QueryException $e) {
             // Database related errors
             Log::error('Database error in ultimate funding download', [
@@ -370,7 +369,7 @@ class PlaybookController extends Controller
             if ($request->payment_status === 'successful') {
                 Log::info('Sending ultimate funding directory email', ['email' => $download->email]);
                 Mail::to($download->email)->send(new UltimateFundingDownloadMail($download));
-                
+
                 // Update email sent timestamp
                 $download->update(['email_sent_at' => now()]);
 
@@ -391,7 +390,6 @@ class PlaybookController extends Controller
                     'message' => 'Payment was not successful. Please try again.'
                 ], 422);
             }
-
         } catch (\Exception $e) {
             Log::error('Error in ultimate funding payment callback', [
                 'message' => $e->getMessage(),
@@ -420,7 +418,7 @@ class PlaybookController extends Controller
             $recentPlaybookDownloads = PlaybookDownload::latest()->take(5)->get();
             $recentSalesBookDownloads = SalesBookDownload::latest()->take(5)->get();
             $recentUltimateFundingDownloads = UltimateFundingDownload::latest()->take(5)->get();
-
+            
             $stats = [
                 'playbook_downloads' => $playbookDownloads,
                 'sales_book_downloads' => $salesBookDownloads,
@@ -436,7 +434,7 @@ class PlaybookController extends Controller
                 'ultimate_funding' => $recentUltimateFundingDownloads,
             ];
 
-            return view('admin.playbook.dashboard', compact('stats', 'recentDownloads'));
+            return view('admin.playbooks.dashboard', compact('stats', 'recentDownloads'));
         } catch (\Exception $e) {
             Log::error('Error loading playbook dashboard', [
                 'message' => $e->getMessage(),

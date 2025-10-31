@@ -107,7 +107,7 @@
                                     <small>
                                         <i class="fas fa-clock me-1"></i>
                                         Last download:
-                                        @if($recentDownloads['playbook']->count() > 0)
+                                        @if ($recentDownloads['playbook']->count() > 0)
                                             {{ $recentDownloads['playbook']->first()->created_at->diffForHumans() }}
                                         @else
                                             No downloads yet
@@ -125,7 +125,8 @@
                                         <h5 class="mb-0">
                                             <i class="fas fa-money-bill-wave me-2"></i>Funding Readiness Guide
                                         </h5>
-                                        <span class="badge bg-light text-success">{{ $stats['sales_book_downloads'] }} downloads</span>
+                                        <span class="badge bg-light text-success">{{ $stats['sales_book_downloads'] }}
+                                            downloads</span>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -151,7 +152,7 @@
                                     <small>
                                         <i class="fas fa-clock me-1"></i>
                                         Last download:
-                                        @if($recentDownloads['sales_book']->count() > 0)
+                                        @if ($recentDownloads['sales_book']->count() > 0)
                                             {{ $recentDownloads['sales_book']->first()->created_at->diffForHumans() }}
                                         @else
                                             No downloads yet
@@ -169,45 +170,49 @@
                                         <h5 class="mb-0">
                                             <i class="fas fa-crown me-2"></i>Ultimate Funding Directory
                                         </h5>
-                                        <span class="badge bg-dark">{{ $stats['ultimate_funding_downloads'] }} signups</span>
+                                        <span class="badge bg-dark">{{ $stats['ultimate_funding_downloads'] }}
+                                            signups</span>
                                     </div>
                                 </div>
                                 <div class="card-body">
                                     <p class="card-text text-muted mb-3">
-                                        Premium directory with 500+ verified investors and funding opportunities 
+                                        Premium directory with 500+ verified investors and funding opportunities
                                         across Africa. Includes direct contact information and investment criteria.
                                     </p>
 
                                     <div class="premium-stats mb-4">
                                         <div class="row text-center">
                                             <div class="col-6">
-                                                <div class="stat-value text-warning">{{ $stats['ultimate_funding_downloads'] }}</div>
+                                                <div class="stat-value text-warning">
+                                                    {{ $stats['ultimate_funding_downloads'] }}</div>
                                                 <div class="stat-label">Total Signups</div>
                                             </div>
                                             <div class="col-6">
-                                                <div class="stat-value text-success">{{ $stats['ultimate_funding_paid'] }}</div>
+                                                <div class="stat-value text-success">
+                                                    {{ $stats['ultimate_funding_paid'] }}</div>
                                                 <div class="stat-label">Paid Access</div>
                                             </div>
                                         </div>
                                         <div class="row text-center mt-2">
                                             <div class="col-12">
-                                                <div class="stat-value text-primary">${{ number_format($stats['total_revenue'], 2) }}</div>
+                                                <div class="stat-value text-primary">
+                                                    ${{ number_format($stats['total_revenue'], 2) }}</div>
                                                 <div class="stat-label">Total Revenue</div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="d-grid">
-                                        <button class="btn btn-warning" onclick="alert('Ultimate Funding admin panel coming soon!')">
-                                            <i class="fas fa-chart-line me-2"></i>View Premium Analytics
-                                        </button>
+                                        <a href="{{ route('admin.ultimatefunding.index') }}" class="btn btn-warning">
+                                            <i class="fas fa-eye me-2"></i>View Premium Records
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="card-footer text-muted">
                                     <small>
                                         <i class="fas fa-clock me-1"></i>
                                         Last signup:
-                                        @if($recentDownloads['ultimate_funding']->count() > 0)
+                                        @if ($recentDownloads['ultimate_funding']->count() > 0)
                                             {{ $recentDownloads['ultimate_funding']->first()->created_at->diffForHumans() }}
                                         @else
                                             No signups yet
@@ -219,7 +224,10 @@
                     </div>
 
                     <!-- Recent Activity -->
-                    @if ($recentDownloads['playbook']->count() > 0 || $recentDownloads['sales_book']->count() > 0 || $recentDownloads['ultimate_funding']->count() > 0)
+                    @if (
+                        $recentDownloads['playbook']->count() > 0 ||
+                            $recentDownloads['sales_book']->count() > 0 ||
+                            $recentDownloads['ultimate_funding']->count() > 0)
                         <div class="card mt-5">
                             <div class="card-header">
                                 <h5 class="mb-0">
@@ -261,9 +269,10 @@
                                                 <tr>
                                                     <td>{{ $download->name }}</td>
                                                     <td>{{ $download->email }}</td>
-                                                    <td><span class="badge bg-warning text-dark">Ultimate Funding Directory</span></td>
+                                                    <td><span class="badge bg-warning text-dark">Ultimate Funding
+                                                            Directory</span></td>
                                                     <td>
-                                                        @if($download->payment_completed)
+                                                        @if ($download->payment_completed)
                                                             <span class="badge bg-success">Paid & Downloaded</span>
                                                         @else
                                                             <span class="badge bg-secondary">Pending Payment</span>

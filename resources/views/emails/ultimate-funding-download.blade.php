@@ -223,16 +223,21 @@
 
         <h2>Hello {{ $download->name }},</h2>
 
-        @if($download->payment_completed)
+        @if ($download->payment_completed)
             <div class="payment-confirmation">
                 <h3 style="color: #155724; margin-top: 0;">✅ Payment Confirmed!</h3>
-                <p><strong>Thank you for your purchase!</strong> Your payment of ${{ number_format($download->amount_paid, 2) }} has been successfully processed.</p>
+                <p><strong>Thank you for your purchase!</strong> Your payment of
+                    ${{ number_format($download->amount_paid, 2) }} has been successfully processed.</p>
                 <p><small>Payment Reference: {{ $download->payment_reference }}</small></p>
             </div>
 
-            <p>Welcome to the <b>Ultimate Funding & Investor Directory</b>! You now have exclusive access to Africa's most comprehensive database of active investors, grant programs, and funding opportunities specifically curated for African entrepreneurs.</p>
+            <p>Welcome to the <b>Ultimate Funding & Investor Directory</b>! You now have exclusive access to Africa's
+                most comprehensive database of active investors, grant programs, and funding opportunities specifically
+                curated for African entrepreneurs.</p>
         @else
-            <p>Thank you for your interest in the <b>Ultimate Funding & Investor Directory</b>! We've received your information and you can complete your purchase at any time to gain instant access to Africa's most comprehensive funding database.</p>
+            <p>Thank you for your interest in the <b>Ultimate Funding & Investor Directory</b>! We've received your
+                information and you can complete your purchase at any time to gain instant access to Africa's most
+                comprehensive funding database.</p>
         @endif
 
         <div class="premium-features">
@@ -268,11 +273,12 @@
             </div>
         </div>
 
-        @if($download->payment_completed)
+        @if ($download->payment_completed)
             <div class="download-section">
                 <h2 class="download-title">📥 Download Your Premium Directory Now</h2>
                 <p class="download-description">
-                    Click the button below to instantly download your PDF copy of the Ultimate Funding & Investor Directory.
+                    Click the button below to instantly download your PDF copy of the Ultimate Funding & Investor
+                    Directory.
                     Start connecting with investors today!
                 </p>
 
@@ -298,14 +304,18 @@
         @else
             <div class="highlight-box">
                 <h3 style="color: #0d4036; margin-top: 0;">💳 Complete Your Purchase</h3>
-                <p>To access your Ultimate Funding & Investor Directory, please complete your payment of <strong>$50.00</strong>.</p>
-                <p>Once payment is confirmed, you'll receive immediate access to the complete directory with all premium features.</p>
+                <p>To access your Ultimate Funding & Investor Directory, please complete your payment of
+                    <strong>$50.00</strong>.</p>
+                <p>Once payment is confirmed, you'll receive immediate access to the complete directory with all premium
+                    features.</p>
             </div>
         @endif
 
         <h2>🚀 Why This Directory is Different</h2>
 
-        <p>Unlike free resources, this directory provides <strong>verified, up-to-date information</strong> with direct contact details and recent funding activity. Every investor and program has been personally researched and validated by our team.</p>
+        <p>Unlike free resources, this directory provides <strong>verified, up-to-date information</strong> with direct
+            contact details and recent funding activity. Every investor and program has been personally researched and
+            validated by our team.</p>
 
         <div style="text-align: center;">
             <a href="https://p23africa.com" class="button button-premium">
@@ -318,7 +328,7 @@
         </div>
 
         <div class="footer-info">
-            @if($download->payment_completed)
+            @if ($download->payment_completed)
                 <p>Payment Confirmed: {{ $download->payment_date->format('F j, Y \a\t g:i A') }}</p>
                 <p>Amount Paid: ${{ number_format($download->amount_paid, 2) }}</p>
             @else
@@ -331,15 +341,17 @@
 
         <p><strong>Transform Your Funding Journey</strong></p>
 
-        <p>This premium directory gives you the competitive edge you need to secure funding in Africa's growing startup ecosystem. 
-        Access the same investor networks used by successful African unicorns and high-growth companies.</p>
+        <p>This premium directory gives you the competitive edge you need to secure funding in Africa's growing startup
+            ecosystem.
+            Access the same investor networks used by successful African unicorns and high-growth companies.</p>
 
         <p>Best regards,<br>
             <strong>The P23 Africa Team</strong> 💎
         </p>
 
         <p style="font-size: 12px; color: #999;">
-            <em>This directory was requested by {{ $download->email }}. If you didn't request this download, please safely ignore
+            <em>This directory was requested by {{ $download->email }}. If you didn't request this download, please
+                safely ignore
                 this email. For support, contact us at contact@p23africa.com</em>
         </p>
     </div>
