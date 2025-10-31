@@ -16,7 +16,8 @@
 
 <style>
 
-   body {
+  
+body {
   font-family: "GT Walsheim Trial Md";
 }
 
@@ -358,11 +359,10 @@
   font-size: 15px;
   width: 100%;
   text-align: center;
+  box-shadow: 5px 2px 1px rgba(0, 0, 0, 0.5);
+
 }
 
-.premium-section .info .learn-more:hover {
-  box-shadow: 5px 2px 1px rgba(0, 0, 0, 0.5);
-}
 
 /* Desktop */
 @media (min-width: 768px) {
@@ -427,6 +427,9 @@
   .premium-section .info .info-headings {
   margin-top: 0px;
     
+  }
+  .premium-section .learn-more{
+    width: 60%;
   }
 }
 
