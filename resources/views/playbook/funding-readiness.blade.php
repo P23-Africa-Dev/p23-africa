@@ -39,6 +39,7 @@
         display: flex;
         flex-direction: column;
         gap: 1rem;
+        font-family: 'GT Walsheim Trial Cn Bl';
     }
 
     .intro-content h1 {
