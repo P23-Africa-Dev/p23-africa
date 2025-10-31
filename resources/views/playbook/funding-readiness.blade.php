@@ -11,7 +11,7 @@
     <meta property="og:title" content="Funding Readiness Guidebook | P23 Africa">
     <meta property="og:description"
         content="Master your business story, understand your numbers, and pitch with confidence. Get your free guide to attract investors or grow sustainably.">
-    <meta property="og:image" content="{{ asset('images/funding-guide-meta.png') }}">
+    <meta property="og:image" content="{{ asset('img/mobile.png') }}">
     <meta property="og:type" content="website">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
@@ -527,10 +527,10 @@
                 </div>
 
                 <div class="intro-image desktop">
-                    <img src="{{ asset('./img/desktop.png') }}" alt="Entrepreneur using laptop" />
+                    <img src="{{ asset('./img/desktop.png') }}" loading="lazy" alt="Entrepreneur using laptop" />
                 </div>
                 <div class="intro-image mobile">
-                    <img src="{{ asset('./img/mobile.png') }}" alt="Entrepreneur using laptop" />
+                    <img src="{{ asset('./img/mobile.png') }}" loading="lazy" alt="Entrepreneur using laptop" />
                 </div>
             </div>
         </div>
@@ -552,17 +552,17 @@
                 <div class="book-cards">
                     <div class="book-card card-1">
                         <div class="card-image">
-                            <img src="{{ asset('./img/card3.png') }}" alt="" />
+                            <img src="{{ asset('./img/card3.png') }}" loading="lazy" alt="" />
                         </div>
                     </div>
                     <div class="book-card card-2">
                         <div class="card-image">
-                            <img src="{{ asset('./img/card2.png') }}" alt="" />
+                            <img src="{{ asset('./img/card2.png') }}" loading="lazy" alt="" />
                         </div>
                     </div>
                     <div class="book-card card-3">
                         <div class="card-image">
-                            <img src="{{ asset('./img/card1.png') }}" alt="" />
+                            <img src="{{ asset('./img/card1.png') }}" loading="lazy" alt="" />
                         </div>
                     </div>
                 </div>

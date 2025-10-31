@@ -120,7 +120,7 @@
                                                     <th><i class="fas fa-envelope me-1"></i>Email</th>
                                                     <th><i class="fas fa-building me-1"></i>Company</th>
                                                     <th><i class="fas fa-globe me-1"></i>Country</th>
-                                                    <th><i class="fas fa-rocket me-1"></i>Funding Stage</th>
+                                                    {{-- <th><i class="fas fa-rocket me-1"></i>Funding Stage</th> --}}
                                                     <th><i class="fas fa-credit-card me-1"></i>Payment Status</th>
                                                     <th><i class="fas fa-calendar me-1"></i>Signup Date</th>
                                                     <th><i class="fas fa-cog me-1"></i>Action</th>
@@ -152,10 +152,10 @@
                                                             <span
                                                                 class="badge bg-light text-dark">{{ $funding->country }}</span>
                                                         </td>
-                                                        <td>
+                                                        {{-- <td>
                                                             <span
                                                                 class="badge bg-info">{{ $funding->funding_stage }}</span>
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
                                                             @if ($funding->payment_completed)
                                                                 <span class="badge bg-success">

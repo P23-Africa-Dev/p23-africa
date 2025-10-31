@@ -246,7 +246,7 @@ class PlaybookController extends Controller
                 'email' => 'required|email|unique:ultimate_funding_downloads|max:255',
                 'company' => 'required|string|max:255',
                 'country' => 'required|string|max:255',
-                'funding_stage' => 'required|string|max:255',
+                // 'funding_stage' => 'required|string|max:255',
             ], [
                 'name.required' => 'Full name is required.',
                 'name.string' => 'Full name must be a valid text.',
@@ -261,9 +261,9 @@ class PlaybookController extends Controller
                 'country.required' => 'Country is required.',
                 'country.string' => 'Country must be a valid text.',
                 'country.max' => 'Country cannot exceed 255 characters.',
-                'funding_stage.required' => 'Funding stage is required.',
-                'funding_stage.string' => 'Funding stage must be a valid text.',
-                'funding_stage.max' => 'Funding stage cannot exceed 255 characters.',
+                // 'funding_stage.required' => 'Funding stage is required.',
+                // 'funding_stage.string' => 'Funding stage must be a valid text.',
+                // 'funding_stage.max' => 'Funding stage cannot exceed 255 characters.',
             ]);
 
             if ($validator->fails()) {
@@ -287,7 +287,7 @@ class PlaybookController extends Controller
                 'email' => $request->email,
                 'company' => $request->company,
                 'country' => $request->country,
-                'funding_stage' => $request->funding_stage,
+                // 'funding_stage' => $request->funding_stage,
                 'payment_completed' => false, // Will be updated after payment
                 'amount_paid' => 50.00, // Set the expected amount
             ]);
@@ -418,7 +418,7 @@ class PlaybookController extends Controller
             $recentPlaybookDownloads = PlaybookDownload::latest()->take(5)->get();
             $recentSalesBookDownloads = SalesBookDownload::latest()->take(5)->get();
             $recentUltimateFundingDownloads = UltimateFundingDownload::latest()->take(5)->get();
-            
+
             $stats = [
                 'playbook_downloads' => $playbookDownloads,
                 'sales_book_downloads' => $salesBookDownloads,

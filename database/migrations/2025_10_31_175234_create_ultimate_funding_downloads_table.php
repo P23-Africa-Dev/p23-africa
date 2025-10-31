@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email');
+            $table->string('country');
+            $table->string('company');
             $table->boolean('payment_completed')->default(false);
             $table->string('payment_reference')->nullable();
             $table->decimal('amount_paid', 10, 2)->default(0.00);

@@ -9,6 +9,8 @@ class UltimateFundingDownload extends Model
     protected $fillable = [
         'name',
         'email',
+        'company',
+        'country',
         'payment_completed',
         'payment_reference',
         'amount_paid',

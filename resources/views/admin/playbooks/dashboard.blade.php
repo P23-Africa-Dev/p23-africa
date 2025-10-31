@@ -98,7 +98,7 @@
                                     </div>
 
                                     <div class="d-grid">
-                                        <a href="{{ route('admin.playbooks.index') }}" class="btn btn-primary">
+                                        <a href="{{ route('admin.playbooks.index') }}" class="btn btn-primary" style="color: #fff !important;">
                                             <i class="fas fa-eye me-2"></i>View Download Records
                                         </a>
                                     </div>
@@ -143,7 +143,7 @@
                                     </div>
 
                                     <div class="d-grid">
-                                        <a href="{{ route('admin.salesbooks.index') }}" class="btn btn-success">
+                                        <a href="{{ route('admin.salesbooks.index') }}" class="btn btn-success" style="color: #fff !important;">
                                             <i class="fas fa-eye me-2"></i>View Download Records
                                         </a>
                                     </div>
@@ -203,7 +203,7 @@
                                     </div>
 
                                     <div class="d-grid">
-                                        <a href="{{ route('admin.ultimatefunding.index') }}" class="btn btn-warning">
+                                        <a href="{{ route('admin.ultimatefunding.index') }}" class="btn btn-warning" style="color: #fff !important;">
                                             <i class="fas fa-eye me-2"></i>View Premium Records
                                         </a>
                                     </div>
@@ -320,12 +320,12 @@
         .stats-summary {
             text-align: center;
             padding: 1rem;
-            background: #f8f9fa;
+            background: #495057;
             border-radius: 0.5rem;
         }
 
         .premium-stats {
-            background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%);
+            background: linear-gradient(135deg, #798188 0%, #495057 100%);
             padding: 1rem;
             border-radius: 0.5rem;
         }

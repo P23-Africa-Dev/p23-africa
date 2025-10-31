@@ -11,7 +11,7 @@
     <meta property="og:title" content="Ultimate Funding & Investor Directory | P23 Africa">
     <meta property="og:description"
         content="Direct access to active investors, global grant programs, and funding opportunities. The ultimate directory curated for African entrepreneurs seeking the right capital.">
-    <meta property="og:image" content="{{ asset('images/funding-directory-meta.png') }}">
+    <meta property="og:image" content="{{ asset('img/desktop-fund.png') }}">
     <meta property="og:type" content="website">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -221,7 +221,7 @@
         border-radius: 18px;
         padding: 2rem;
         width: 100%;
-        max-width: 400px;
+        max-width: 500px;
         position: relative;
         text-align: center;
 
@@ -617,11 +617,11 @@
                 </div>
 
                 <div class="intro-image desktop">
-                    <img src="{{ asset('/img/desktop-fund.png') }}" alt="Entrepreneur using laptop" />
+                    <img src="{{ asset('/img/desktop-fund.png') }}" loading="lazy" alt="Entrepreneur using laptop" />
 
                 </div>
                 <div class="intro-image mobile">
-                    <img src="{{ asset('/img/mobile-fund.png') }}" alt="Entrepreneur using mobile" />
+                    <img src="{{ asset('/img/mobile-fund.png') }}" loading="lazy" alt="Entrepreneur using mobile" />
                 </div>
             </div>
         </div>
@@ -640,17 +640,17 @@
                 <div class="book-cards">
                     <div class="book-card card-1">
                         <div class="card-image">
-                            <img src="{{ asset('./img/fund-1.png') }}" alt="" />
+                            <img src="{{ asset('./img/fund-1.png') }}" loading="lazy" alt="" />
                         </div>
                     </div>
                     <div class="book-card card-2">
                         <div class="card-image">
-                            <img src="{{ asset('./img/fund-2.png') }}" alt="" />
+                            <img src="{{ asset('./img/fund-2.png') }}" loading="lazy" alt="" />
                         </div>
                     </div>
                     <div class="book-card card-3" id="getGuide">
                         <div class="card-image">
-                            <img src="{{ asset('./img/fund-3.png') }}" alt="" />
+                            <img src="{{ asset('./img/fund-3.png') }}" loading="lazy" alt="" />
                         </div>
                     </div>
                 </div>
@@ -734,7 +734,7 @@
                 </select>
                 <div class="error-message" id="countryError"></div>
 
-                <select name="funding_stage" required>
+                {{-- <select name="funding_stage" required>
                     <option value="">Select your funding stage</option>
                     <option value="Pre-seed">Pre-seed (Idea stage)</option>
                     <option value="Seed">Seed (Early stage)</option>
@@ -744,7 +744,7 @@
                     <option value="Revenue">Revenue generating</option>
                     <option value="Not applicable">Not applicable</option>
                 </select>
-                <div class="error-message" id="funding_stageError"></div>
+                <div class="error-message" id="funding_stageError"></div> --}}
 
                 <div class="payment-info">
                     <div class="price-display">
@@ -752,14 +752,14 @@
                         <span class="price-amount">$50.00</span>
                     </div>
                     <p class="payment-description">
-                        🌟 One-time payment for lifetime access to the complete directory<br>
-                        💎 500+ verified investors & funding opportunities<br>
+                        🌟 One-time payment for lifetime access to the complete e-book<br>
+                        {{-- 💎 500+ verified investors & funding opportunities<br> --}}
                         📧 Instant delivery via email after payment
                     </p>
                 </div>
 
                 <button type="submit" class="form-btn" id="submitBtn">
-                    <span class="btn-text">Create Account & Pay $50</span>
+                    <span class="btn-text">Download Now & Pay $50</span>
                     <span class="spinner" style="display: none;">
                         <div
                             style="display: inline-block; width: 16px; height: 16px; border: 2px solid transparent; border-top: 2px solid white; border-radius: 50%; animation: spin 1s linear infinite;">
@@ -822,7 +822,7 @@
             const email = formData.get('email').trim();
             const company = formData.get('company').trim();
             const country = formData.get('country').trim();
-            const funding_stage = formData.get('funding_stage').trim();
+            // const funding_stage = formData.get('funding_stage').trim();
 
             // Basic validation
             let hasErrors = false;
@@ -850,10 +850,10 @@
                 hasErrors = true;
             }
 
-            if (!funding_stage) {
-                showError('funding_stageError', 'Please select your funding stage.');
-                hasErrors = true;
-            }
+            // if (!funding_stage) {
+            //     showError('funding_stageError', 'Please select your funding stage.');
+            //     hasErrors = true;
+            // }
 
             if (hasErrors) {
                 return;
@@ -876,7 +876,7 @@
                         email: email,
                         company: company,
                         country: country,
-                        funding_stage: funding_stage
+                        // funding_stage: funding_stage
                     })
                 });
 
@@ -901,7 +901,6 @@
                     }
                 }
             } catch (error) {
-                console.error('Error:', error);
                 showError('emailError',
                     'Network error. Please check your connection and try again.');
             } finally {
@@ -929,7 +928,6 @@
                     logo: "{{ asset('images/logo.png') }}",
                 },
                 callback: function(data) {
-                    console.log(data);
                     // Handle successful payment
                     handlePaymentCallback(downloadId, data);
                 },
@@ -976,7 +974,6 @@
                         'Payment verification failed. Please contact support.');
                 }
             } catch (error) {
-                console.error('Payment verification error:', error);
                 showError('emailError',
                     'Payment verification failed. Please contact support with your transaction reference.'
                 );
