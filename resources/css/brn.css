@@ -25,6 +25,14 @@
     font-weight: normal;
     src: local('GT Walsheim Trial Cn Bl'), url('/public/fonts/gt-trials/GT-Walsheim-Condensed-Black-Trial-BF651b7fc6a5bf5.woff') format('woff');
     }
+
+        @font-face {
+    font-family: 'GT Walsheim Trial Cn U Bd';
+    font-style: normal;
+    font-weight: normal;
+    src: local('GT Walsheim Trial Cn U Bd'), url('/public/fonts/gt-trials/GT-Walsheim-Condensed-Ultra-Bold-Trial-BF651b7fc70e3d4.woff') format('woff');
+    }
+    
     
     
 @font-face {

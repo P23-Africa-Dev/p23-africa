@@ -39,7 +39,6 @@
         display: flex;
         flex-direction: column;
         gap: 1rem;
-        font-family: 'GT Walsheim Trial Cn Bl';
     }
 
     .intro-content h1 {
@@ -47,6 +46,8 @@
         font-weight: 900;
         color: #0d4036;
         line-height: 1.1;
+   font-family: 'GT Walsheim Trial Cn U Bd';
+
     }
 
     .intro-content h1 span {
