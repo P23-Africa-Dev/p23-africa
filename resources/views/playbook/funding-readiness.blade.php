@@ -548,7 +548,7 @@
                       The most complete, Africa-focused funding and investor directory, curated to help entrepreneurs find the right capital faster.
                     </p>
 
-                    <a href="#" class="cta-btn">Find Out More</a>
+                    <a href="#getGuide" class="cta-btn">Find Out More</a>
                 </div>
 
                 <div class="intro-image desktop">
@@ -583,7 +583,7 @@
                             <img src="{{ asset('./img/fund-2.png') }}" alt="" />
                         </div>
                     </div>
-                    <div class="book-card card-3">
+                    <div class="book-card card-3" id="getGuide">
                         <div class="card-image">
                             <img src="{{ asset('./img/fund-3.png') }}" alt="" />
                         </div>

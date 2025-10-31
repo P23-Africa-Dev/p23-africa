@@ -180,7 +180,7 @@
                 Save it to your device and start your funding journey today!
             </p>
 
-            <a href="{{ asset('playbook/Funding-Readiness-Guidebook.pdf') }}" class="button button-success">
+            <a href="{{ asset('playbook/P23-Africa-Funding-Readiness-Guidebook.pdf') }}" class="button button-success">
                 📄 Download Guidebook PDF
             </a>
 
