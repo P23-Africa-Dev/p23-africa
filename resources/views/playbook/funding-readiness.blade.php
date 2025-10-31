@@ -1,9 +1,9 @@
 @extends('layouts.master')
-@section('title', 'NOELHQ Sales | P23 Africa')
+@section('title', 'Funding Readiness Guidebook E-Book | P23 Africa')
 
 @section('meta')
     <meta name="description"
-        content="Download your free Funding Readiness Guidebook - A step-by-step guide to becoming investor-ready, built specifically for African entrepreneurs seeking funding or sustainable growth.">
+        content="Download your free Funding Readiness Guidebook. A step-by-step guide to becoming investor-ready, built specifically for African entrepreneurs seeking funding or sustainable growth.">
     <meta name="keywords"
         content="funding readiness, investor ready, African entrepreneurs, startup funding, pitch deck, business funding guide, investor directory, African startups, entrepreneurship guide">
     <meta name="author" content="Nurudeen O. Daniju">
@@ -37,6 +37,7 @@
 
         background-repeat: repeat;
         background-size: contain;
+        margin-top: 3rem;
     }
 
     .intro-container {
