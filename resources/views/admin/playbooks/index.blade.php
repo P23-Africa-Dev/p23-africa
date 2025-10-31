@@ -1,9 +1,14 @@
 <x-app-layout>
 
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('All Downloaded Playbooks') }}
-        </h2>
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('P23 Africa\'s Founders Playbook Downloads') }}
+            </h2>
+            <a href="{{ route('admin.playbooks.dashboard') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-2"></i>Back to Playbooks Dashboard
+            </a>
+        </div>
     </x-slot>
 
     <div class="py-12">
