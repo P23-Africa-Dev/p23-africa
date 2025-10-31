@@ -30,7 +30,7 @@
 
     .intro-sales {
         padding: 2rem 1.5rem;
-        background-image: url("./img/first-bg.png");
+        background-image: url("/img/first-bg.png");
         background-repeat: repeat;
         background-size: contain;
         margin-top: 3rem;
