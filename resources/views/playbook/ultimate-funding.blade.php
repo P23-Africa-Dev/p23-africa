@@ -1,17 +1,17 @@
 @extends('layouts.master')
-@section('title', 'Funding Readiness Guidebook E-Book | P23 Africa')
+@section('title', 'Ultimate Funding & Investor Directory for African Entrepreneurs | P23 Africa')
 
 @section('meta')
     <meta name="description"
-        content="Download your free Funding Readiness Guidebook. A step-by-step guide to becoming investor-ready, built specifically for African entrepreneurs seeking funding or sustainable growth.">
+        content="Access the most complete Africa-focused funding and investor directory. Find active investors, global grant programs, and funding opportunities designed specifically for African entrepreneurs.">
     <meta name="keywords"
-        content="funding readiness, investor ready, African entrepreneurs, startup funding, pitch deck, business funding guide, investor directory, African startups, entrepreneurship guide">
+        content="funding directory, investor directory, African investors, startup funding, venture capital Africa, grant programs, angel investors, African entrepreneurs, funding opportunities, investor database">
     <meta name="author" content="Nurudeen O. Daniju">
-    <meta name="generator" content="Funding Readiness Guidebook for African Entrepreneurs | P23 Africa">
-    <meta property="og:title" content="Funding Readiness Guidebook | P23 Africa">
+    <meta name="generator" content="Ultimate Funding & Investor Directory for African Entrepreneurs | P23 Africa">
+    <meta property="og:title" content="Ultimate Funding & Investor Directory | P23 Africa">
     <meta property="og:description"
-        content="Master your business story, understand your numbers, and pitch with confidence. Get your free guide to attract investors or grow sustainably.">
-    <meta property="og:image" content="{{ asset('images/funding-guide-meta.png') }}">
+        content="Direct access to active investors, global grant programs, and funding opportunities. The ultimate directory curated for African entrepreneurs seeking the right capital.">
+    <meta property="og:image" content="{{ asset('images/funding-directory-meta.png') }}">
     <meta property="og:type" content="website">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
@@ -36,6 +36,9 @@
         background-repeat: repeat;
         background-size: contain;
         margin-top: 3rem;
+    }
+    .intro-sales.funding-ebook h1 span{
+        color: #52CCB4;
     }
 
     .intro-container {
@@ -126,14 +129,15 @@
     }
 
     .book-header p {
-        max-width: 650px;
+        max-width: 500px;
         margin: 1rem auto 2rem;
         line-height: 1.6;
+        font-weight: 500;
     }
 
     .book-cards {
         display: grid;
-        gap: 1.5rem;
+        gap: 0rem;
         margin-top: 1.5rem;
     }
 
@@ -356,7 +360,7 @@
 
     .premium-section .text-content-upper,
     .premium-section .text-content-below {
-        max-width: 210px;
+        /* max-width: 210px; */
     }
 
     .premium-section .text-content-upper h2 {
@@ -377,8 +381,22 @@
     }
 
     .premium-section .info {
-        background-color: #2f626e;
+     background-image: url("/img/last-bg.png");
+
+
+        background-repeat: no-repeat;
+        background-size: cover;
         padding: 20px 50px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+    
+        color: #fff;
+        
+    }
+
+    .premium-section .info-container{
+         display: flex;
+        flex-direction: column;
     }
 
     .premium-section .info h3 {
@@ -468,6 +486,10 @@
         .intro-content h1 {
             font-size: 5rem;
         }
+            .intro-sales.funding-ebook h1 {
+                   font-size: 4rem;
+
+    }
 
         .book-cards {
             grid-template-columns: repeat(3, 1fr);
@@ -480,7 +502,11 @@
 
         .premium-section .text-content {
             margin: 0px;
-            flex: 35%;
+           max-width: 350px;
+        }
+        .premium-section .info {
+            margin: 0px;
+           width: 100%;
         }
 
         .premium-section .info-container {
@@ -489,10 +515,11 @@
 
         .premium-section .info {
             border-radius: 10px;
+            margin-bottom: 0px;
         }
 
         .premium-section .info-container h3 {
-            font-size: 35px;
+            font-size: 27px;
             padding-right: 30px;
             max-width: 400px;
         }
@@ -502,35 +529,34 @@
         }
 
         .premium-section .learn-more {
-            width: 60%;
+            width: 100%;
+            white-space: nowrap;
         }
     }
 </style>
 
 @section('content')
-    <section class="intro-sales">
+    <section class="intro-sales funding-ebook">
         <div class="container">
             <div class="intro-container">
                 <div class="intro-content">
                     <h1>
-                        Funding<br />
-                        Readiness<br />
-                        <span>Guidebook</span>
+                        The Ultimate Funding Directory for   <span>African Entrepreneurs</span>
                     </h1>
 
                     <p>
-                        A step-by-step guide to becoming investor-ready, built for African
-                        entrepreneurs.
+                      The most complete, Africa-focused funding and investor directory, curated to help entrepreneurs find the right capital faster.
                     </p>
 
-                    <a href="#" class="cta-btn">Find Out More</a>
+                    <a href="#getGuide" class="cta-btn">Find Out More</a>
                 </div>
 
                 <div class="intro-image desktop">
-                    <img src="{{ asset('./img/desktop.png') }}" alt="Entrepreneur using laptop" />
+                    <img src="{{ asset('/img/desktop-fund.png') }}" alt="Entrepreneur using laptop" />
+                
                 </div>
                 <div class="intro-image mobile">
-                    <img src="{{ asset('./img/mobile.png') }}" alt="Entrepreneur using laptop" />
+                    <img src="{{ asset('/img/mobile-fund.png') }}" alt="Entrepreneur using mobile" />
                 </div>
             </div>
         </div>
@@ -540,39 +566,35 @@
         <div class="container">
             <div class="book-container">
                 <div class="book-header">
-                    <h3>About the Book</h3>
+                    <h3>What you’ll Find in Our Funding Directory</h3>
                     <p>
-                        Funding is limited and competitive in Africa. This guide helps you
-                        master your business story, understand your numbers, and pitch
-                        with confidence — so you can attract the right investors or grow
-                        sustainably without them.
+                     You’ve prepared your business. Now it’s time to find the right partners to fund your growth.
                     </p>
                 </div>
 
                 <div class="book-cards">
                     <div class="book-card card-1">
                         <div class="card-image">
-                            <img src="{{ asset('./img/card3.png') }}" alt="" />
+                            <img src="{{ asset('./img/fund-1.png') }}" alt="" />
                         </div>
                     </div>
                     <div class="book-card card-2">
                         <div class="card-image">
-                            <img src="{{ asset('./img/card2.png') }}" alt="" />
+                            <img src="{{ asset('./img/fund-2.png') }}" alt="" />
                         </div>
                     </div>
-                    <div class="book-card card-3">
+                    <div class="book-card card-3" id="getGuide">
                         <div class="card-image">
-                            <img src="{{ asset('./img/card1.png') }}" alt="" />
+                            <img src="{{ asset('./img/fund-3.png') }}" alt="" />
                         </div>
                     </div>
                 </div>
 
                 <p class="closing-text">
-                    Walk away with a ready-to-use pitch deck, funding plan, and clarity
-                    on your next move.
+                   This directory gives you direct access to active investors, global grant programs, and funding opportunities designed for African entrepreneurs.
                 </p>
 
-                <a href="#" class="cta-btn" id="openModal">Get My Free Guide Now</a>
+                <a href="#" class="cta-btn" id="openModal">Get Access to the Funding Directory</a>
             </div>
         </div>
     </section>
@@ -582,39 +604,21 @@
             <div class="content">
                 <div class="text-content">
                     <div class="text-content-upper">
-                        <h2>When You’re Ready to Raise...</h2>
-                        <p>Get Access to the Ultimate Funding & Investor Directory</p>
+                        <h2>Get Access to the Ultimate Funding & Investor Directory</p>
+
+                          <a href="#" class="learn-more">Get your Funding Directory Here!</a>
                     </div>
-                    <div class="text-content-below">
-                        <p>Once you’ve completed your free guide, take the next step.</p>
-                        <span></span>
-                    </div>
+               
                 </div>
                 <div class="info">
                     <div class="info-container">
-                        <h3>Our premium Funding Directory includes:</h3>
-                        <div class="info-headings-container">
-                            <div class="info-headings">
-                                <div>
-                                    <h5>40+</h5>
-                                    <span> African countries covered </span>
-                                </div>
-                                <div>
-                                    <h5>40+</h5>
-                                    <span> African countries covered </span>
-                                </div>
-                            </div>
-                            <ul>
-                                <li>Verified investors actively funding African startups</li>
-                                <li>
-                                    Bonus: Investor-ready templates and funding strategy
-                                    planners
-                                </li>
-                            </ul>
-                        </div>
+                        <h3>“Before this directory, finding serious investors was guesswork. Now I know exactly who to approach.”</h3>
+
+                        <p>Amina K, Founder of a HealthTech Startup, Nigeria</p>
+                    
                     </div>
 
-                    <a href="#" class="learn-more">Learn More About the Investor Directory</a>
+                 
                 </div>
             </div>
         </div>
@@ -623,7 +627,7 @@
     <!-- FORM MODAL -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-box">
-            <h3>Kindly Input Your Details Below<br />And Proceed To Download</h3>
+            <h3>Get Access to the Ultimate Funding Directory<br />Premium Access - $50</h3>
 
             <div class="success-message" id="successMessage"></div>
 
@@ -635,8 +639,60 @@
                 <input type="email" name="email" placeholder="Email" required />
                 <div class="error-message" id="emailError"></div>
 
+                <input type="text" name="company" placeholder="Company/Startup name" required />
+                <div class="error-message" id="companyError"></div>
+
+                <select name="country" required>
+                    <option value="">Select your country</option>
+                    <option value="Nigeria">Nigeria</option>
+                    <option value="Kenya">Kenya</option>
+                    <option value="South Africa">South Africa</option>
+                    <option value="Ghana">Ghana</option>
+                    <option value="Uganda">Uganda</option>
+                    <option value="Tanzania">Tanzania</option>
+                    <option value="Rwanda">Rwanda</option>
+                    <option value="Ethiopia">Ethiopia</option>
+                    <option value="Egypt">Egypt</option>
+                    <option value="Morocco">Morocco</option>
+                    <option value="Algeria">Algeria</option>
+                    <option value="Tunisia">Tunisia</option>
+                    <option value="Botswana">Botswana</option>
+                    <option value="Zambia">Zambia</option>
+                    <option value="Zimbabwe">Zimbabwe</option>
+                    <option value="Senegal">Senegal</option>
+                    <option value="Ivory Coast">Ivory Coast</option>
+                    <option value="Cameroon">Cameroon</option>
+                    <option value="Other African Country">Other African Country</option>
+                    <option value="International">International</option>
+                </select>
+                <div class="error-message" id="countryError"></div>
+
+                <select name="funding_stage" required>
+                    <option value="">Select your funding stage</option>
+                    <option value="Pre-seed">Pre-seed (Idea stage)</option>
+                    <option value="Seed">Seed (Early stage)</option>
+                    <option value="Series A">Series A (Growth stage)</option>
+                    <option value="Series B+">Series B+ (Expansion stage)</option>
+                    <option value="Bootstrap">Bootstrap (Self-funded)</option>
+                    <option value="Revenue">Revenue generating</option>
+                    <option value="Not applicable">Not applicable</option>
+                </select>
+                <div class="error-message" id="funding_stageError"></div>
+
+                <div class="payment-info">
+                    <div class="price-display">
+                        <span class="price-label">Premium Directory Access:</span>
+                        <span class="price-amount">$50.00</span>
+                    </div>
+                    <p class="payment-description">
+                        🌟 One-time payment for lifetime access to the complete directory<br>
+                        💎 500+ verified investors & funding opportunities<br>
+                        📧 Instant delivery via email after payment
+                    </p>
+                </div>
+
                 <button type="submit" class="form-btn" id="submitBtn">
-                    <span class="btn-text">Download Now</span>
+                    <span class="btn-text">Create Account & Pay $50</span>
                     <span class="spinner" style="display: none;">
                         <div
                             style="display: inline-block; width: 16px; height: 16px; border: 2px solid transparent; border-top: 2px solid white; border-radius: 50%; animation: spin 1s linear infinite;">

@@ -20,13 +20,13 @@
 
                     <!-- Statistics Overview -->
                     <div class="row mb-5">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="card bg-gradient-primary text-white h-100">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
                                             <h5 class="card-title mb-0">Total Downloads</h5>
-                                            <h2 class="mt-2 mb-0">{{ $totalDownloads }}</h2>
+                                            <h2 class="mt-2 mb-0">{{ $stats['total_downloads'] }}</h2>
                                             <small class="opacity-75">Across all playbooks</small>
                                         </div>
                                         <div class="text-end">
@@ -36,17 +36,33 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="card bg-gradient-success text-white h-100">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
-                                            <h5 class="card-title mb-0">This Month</h5>
-                                            <h2 class="mt-2 mb-0">{{ $monthlyDownloads }}</h2>
-                                            <small class="opacity-75">New downloads this month</small>
+                                            <h5 class="card-title mb-0">Premium Purchases</h5>
+                                            <h2 class="mt-2 mb-0">{{ $stats['ultimate_funding_paid'] }}</h2>
+                                            <small class="opacity-75">Paid Ultimate Funding access</small>
                                         </div>
                                         <div class="text-end">
-                                            <i class="fas fa-calendar-alt fa-3x opacity-75"></i>
+                                            <i class="fas fa-crown fa-3x opacity-75"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card bg-gradient-warning text-white h-100">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h5 class="card-title mb-0">Total Revenue</h5>
+                                            <h2 class="mt-2 mb-0">${{ number_format($stats['total_revenue'], 2) }}</h2>
+                                            <small class="opacity-75">From premium downloads</small>
+                                        </div>
+                                        <div class="text-end">
+                                            <i class="fas fa-dollar-sign fa-3x opacity-75"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -57,14 +73,14 @@
                     <!-- Playbook Cards -->
                     <div class="row">
                         <!-- P23 Africa's Founders Playbook -->
-                        <div class="col-lg-6 mb-4">
+                        <div class="col-lg-4 mb-4">
                             <div class="card playbook-card h-100">
                                 <div class="card-header bg-primary text-white">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <h5 class="mb-0">
-                                            <i class="fas fa-book me-2"></i>P23 Africa's Founders Playbook
+                                            <i class="fas fa-book me-2"></i>Founders Playbook
                                         </h5>
-                                        <span class="badge bg-light text-primary">{{ $foundersPlaybookCount }}
+                                        <span class="badge bg-light text-primary">{{ $stats['playbook_downloads'] }}
                                             downloads</span>
                                     </div>
                                 </div>
@@ -74,18 +90,10 @@
                                         Includes expert insights, proven strategies, and actionable advice.
                                     </p>
 
-                                    <div class="stats-grid mb-4">
+                                    <div class="stats-summary mb-4">
                                         <div class="stat-item">
-                                            <div class="stat-value">{{ $foundersPlaybookCount }}</div>
+                                            <div class="stat-value">{{ $stats['playbook_downloads'] }}</div>
                                             <div class="stat-label">Total Downloads</div>
-                                        </div>
-                                        <div class="stat-item">
-                                            <div class="stat-value">{{ $foundersPlaybookWeek }}</div>
-                                            <div class="stat-label">This Week</div>
-                                        </div>
-                                        <div class="stat-item">
-                                            <div class="stat-value">{{ $foundersPlaybookMonth }}</div>
-                                            <div class="stat-label">This Month</div>
                                         </div>
                                     </div>
 
@@ -99,42 +107,37 @@
                                     <small>
                                         <i class="fas fa-clock me-1"></i>
                                         Last download:
-                                        {{ $foundersPlaybookLast ? $foundersPlaybookLast->created_at->diffForHumans() : 'No downloads yet' }}
+                                        @if($recentDownloads['playbook']->count() > 0)
+                                            {{ $recentDownloads['playbook']->first()->created_at->diffForHumans() }}
+                                        @else
+                                            No downloads yet
+                                        @endif
                                     </small>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Funding Readiness Guidebook -->
-                        <div class="col-lg-6 mb-4">
+                        <div class="col-lg-4 mb-4">
                             <div class="card playbook-card h-100">
                                 <div class="card-header bg-success text-white">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <h5 class="mb-0">
-                                            <i class="fas fa-money-bill-wave me-2"></i>Funding Readiness Guidebook
+                                            <i class="fas fa-money-bill-wave me-2"></i>Funding Readiness Guide
                                         </h5>
-                                        <span class="badge bg-light text-success">{{ $salesBookCount }} downloads</span>
+                                        <span class="badge bg-light text-success">{{ $stats['sales_book_downloads'] }} downloads</span>
                                     </div>
                                 </div>
                                 <div class="card-body">
                                     <p class="card-text text-muted mb-4">
                                         Step-by-step guide to becoming investor-ready, built specifically for African
-                                        entrepreneurs
-                                        seeking funding or sustainable growth.
+                                        entrepreneurs seeking funding or sustainable growth.
                                     </p>
 
-                                    <div class="stats-grid mb-4">
+                                    <div class="stats-summary mb-4">
                                         <div class="stat-item">
-                                            <div class="stat-value">{{ $salesBookCount }}</div>
+                                            <div class="stat-value">{{ $stats['sales_book_downloads'] }}</div>
                                             <div class="stat-label">Total Downloads</div>
-                                        </div>
-                                        <div class="stat-item">
-                                            <div class="stat-value">{{ $salesBookWeek }}</div>
-                                            <div class="stat-label">This Week</div>
-                                        </div>
-                                        <div class="stat-item">
-                                            <div class="stat-value">{{ $salesBookMonth }}</div>
-                                            <div class="stat-label">This Month</div>
                                         </div>
                                     </div>
 
@@ -148,7 +151,67 @@
                                     <small>
                                         <i class="fas fa-clock me-1"></i>
                                         Last download:
-                                        {{ $salesBookLast ? $salesBookLast->created_at->diffForHumans() : 'No downloads yet' }}
+                                        @if($recentDownloads['sales_book']->count() > 0)
+                                            {{ $recentDownloads['sales_book']->first()->created_at->diffForHumans() }}
+                                        @else
+                                            No downloads yet
+                                        @endif
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ultimate Funding & Investor Directory (Premium) -->
+                        <div class="col-lg-4 mb-4">
+                            <div class="card playbook-card h-100">
+                                <div class="card-header bg-warning text-dark">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0">
+                                            <i class="fas fa-crown me-2"></i>Ultimate Funding Directory
+                                        </h5>
+                                        <span class="badge bg-dark">{{ $stats['ultimate_funding_downloads'] }} signups</span>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text text-muted mb-3">
+                                        Premium directory with 500+ verified investors and funding opportunities 
+                                        across Africa. Includes direct contact information and investment criteria.
+                                    </p>
+
+                                    <div class="premium-stats mb-4">
+                                        <div class="row text-center">
+                                            <div class="col-6">
+                                                <div class="stat-value text-warning">{{ $stats['ultimate_funding_downloads'] }}</div>
+                                                <div class="stat-label">Total Signups</div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="stat-value text-success">{{ $stats['ultimate_funding_paid'] }}</div>
+                                                <div class="stat-label">Paid Access</div>
+                                            </div>
+                                        </div>
+                                        <div class="row text-center mt-2">
+                                            <div class="col-12">
+                                                <div class="stat-value text-primary">${{ number_format($stats['total_revenue'], 2) }}</div>
+                                                <div class="stat-label">Total Revenue</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid">
+                                        <button class="btn btn-warning" onclick="alert('Ultimate Funding admin panel coming soon!')">
+                                            <i class="fas fa-chart-line me-2"></i>View Premium Analytics
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    <small>
+                                        <i class="fas fa-clock me-1"></i>
+                                        Last signup:
+                                        @if($recentDownloads['ultimate_funding']->count() > 0)
+                                            {{ $recentDownloads['ultimate_funding']->first()->created_at->diffForHumans() }}
+                                        @else
+                                            No signups yet
+                                        @endif
                                     </small>
                                 </div>
                             </div>
@@ -156,7 +219,7 @@
                     </div>
 
                     <!-- Recent Activity -->
-                    @if ($recentDownloads->count() > 0)
+                    @if ($recentDownloads['playbook']->count() > 0 || $recentDownloads['sales_book']->count() > 0 || $recentDownloads['ultimate_funding']->count() > 0)
                         <div class="card mt-5">
                             <div class="card-header">
                                 <h5 class="mb-0">
@@ -171,19 +234,39 @@
                                                 <th>Name</th>
                                                 <th>Email</th>
                                                 <th>Playbook</th>
+                                                <th>Status</th>
                                                 <th>Downloaded</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($recentDownloads as $download)
+                                            @foreach ($recentDownloads['playbook'] as $download)
                                                 <tr>
                                                     <td>{{ $download->name }}</td>
                                                     <td>{{ $download->email }}</td>
+                                                    <td><span class="badge bg-primary">Founders Playbook</span></td>
+                                                    <td><span class="badge bg-success">Downloaded</span></td>
+                                                    <td>{{ $download->created_at->diffForHumans() }}</td>
+                                                </tr>
+                                            @endforeach
+                                            @foreach ($recentDownloads['sales_book'] as $download)
+                                                <tr>
+                                                    <td>{{ $download->name }}</td>
+                                                    <td>{{ $download->email }}</td>
+                                                    <td><span class="badge bg-success">Funding Guide</span></td>
+                                                    <td><span class="badge bg-success">Downloaded</span></td>
+                                                    <td>{{ $download->created_at->diffForHumans() }}</td>
+                                                </tr>
+                                            @endforeach
+                                            @foreach ($recentDownloads['ultimate_funding'] as $download)
+                                                <tr>
+                                                    <td>{{ $download->name }}</td>
+                                                    <td>{{ $download->email }}</td>
+                                                    <td><span class="badge bg-warning text-dark">Ultimate Funding Directory</span></td>
                                                     <td>
-                                                        @if ($download instanceof \App\Models\PlaybookDownload)
-                                                            <span class="badge bg-primary">Founders Playbook</span>
+                                                        @if($download->payment_completed)
+                                                            <span class="badge bg-success">Paid & Downloaded</span>
                                                         @else
-                                                            <span class="badge bg-success">Funding Guide</span>
+                                                            <span class="badge bg-secondary">Pending Payment</span>
                                                         @endif
                                                     </td>
                                                     <td>{{ $download->created_at->diffForHumans() }}</td>
@@ -210,6 +293,10 @@
             background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
         }
 
+        .bg-gradient-warning {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
         .playbook-card {
             transition: transform 0.2s ease-in-out;
             border: none;
@@ -221,16 +308,16 @@
             box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
         }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
+        .stats-summary {
             text-align: center;
-        }
-
-        .stat-item {
             padding: 1rem;
             background: #f8f9fa;
+            border-radius: 0.5rem;
+        }
+
+        .premium-stats {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%);
+            padding: 1rem;
             border-radius: 0.5rem;
         }
 

@@ -112,9 +112,15 @@ Route::post('/playbook/download', [\App\Http\Controllers\PlaybookController::cla
 // Sales Book Download Route
 Route::post('/sales-book/download', [\App\Http\Controllers\PlaybookController::class, 'salesBookDownload'])->name('sales-book.download');
 
+// Ultimate Funding Download Route (Premium)
+Route::post('/ultimate-funding/download', [\App\Http\Controllers\PlaybookController::class, 'ultimateFundingDownload'])->name('ultimate-funding.download');
+Route::post('/ultimate-funding/payment-callback', [\App\Http\Controllers\PlaybookController::class, 'ultimateFundingPaymentCallback'])->name('ultimate-funding.payment-callback');
+
 // Playbook Landing Page
 Route::get('/founders-playbook', [\App\Http\Controllers\PlaybookController::class, 'landing'])->name('playbook.landing');
-Route::get('/playbook/funding-readiness', [\App\Http\Controllers\PlaybookController::class, 'playbookTwo'])->name('playbook.landing2');
+Route::get('/playbook/funding-readiness', [\App\Http\Controllers\PlaybookController::class, 'playbookOne'])->name('playbook.landing1');
+Route::get('/playbook/ultimate-funding', [\App\Http\Controllers\PlaybookController::class, 'playbookTwo'])->name('playbook.landing2');
+
 
 Route::get('/brn-form', function () {
     return redirect('/noel54/interest-form');
