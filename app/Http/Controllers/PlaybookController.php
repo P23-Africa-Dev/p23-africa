@@ -19,7 +19,7 @@ class PlaybookController extends Controller
     }
     public function playbookTwo()
     {
-        return view('playbook.sales-book');
+        return view('playbook.funding-readiness');
     }
 
     public function download(Request $request)
