@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Personal Information</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="sales-book.css" />
+  </head>
+  <body>
+    <section class="intro-sales">
+      <div class="container">
+        <div class="intro-container">
+          <div class="intro-content">
+            <h1>
+              Funding<br />
+              Readiness<br />
+              <span>Guidebook</span>
+            </h1>
+
+            <p>
+              A step-by-step guide to becoming investor-ready, built for African
+              entrepreneurs.
+            </p>
+
+            <a href="#" class="cta-btn">Find Out More</a>
+          </div>
+
+          <div class="intro-image desktop">
+            <img src="./img/desktop.png" alt="Entrepreneur using laptop" />
+          </div>
+          <div class="intro-image mobile">
+            <img src="./img/mobile.png" alt="Entrepreneur using laptop" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="book-section">
+      <div class="container">
+        <div class="book-container">
+          <div class="book-header">
+            <h3>About the Book</h3>
+            <p>
+              Funding is limited and competitive in Africa. This guide helps you
+              master your business story, understand your numbers, and pitch
+              with confidence — so you can attract the right investors or grow
+              sustainably without them.
+            </p>
+          </div>
+
+          <div class="book-cards">
+            <div class="book-card card-1">
+              <div class="card-image">
+                <img src="./img/card3.png" alt="" />
+              </div>
+            </div>
+            <div class="book-card card-2">
+              <div class="card-image">
+                <img src="./img/card2.png" alt="" />
+              </div>
+            </div>
+            <div class="book-card card-3">
+              <div class="card-image">
+                <img src="./img/card1.png" alt="" />
+              </div>
+            </div>
+          </div>
+
+          <p class="closing-text">
+            Walk away with a ready-to-use pitch deck, funding plan, and clarity
+            on your next move.
+          </p>
+
+          <a href="#" class="cta-btn" id="openModal">Get My Free Guide Now</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="premium-section">
+      <div class="container">
+        <div class="content">
+          <div class="text-content">
+            <div class="text-content-upper">
+              <h2>When You’re Ready to Raise...</h2>
+              <p>Get Access to the Ultimate Funding & Investor Directory</p>
+            </div>
+            <div class="text-content-below">
+              <p>Once you’ve completed your free guide, take the next step. <img src="./img/arrow-right.png" alt=""> </p>
+              <!-- <span></span> -->
+            </div>
+          </div>
+          <div class="info">
+            <div class="info-container">
+              <h3>Our premium Funding Directory includes:</h3>
+              <div class="info-headings-container">
+                <div class="info-headings">
+                  <div>
+                    <h5>40+</h5>
+                    <span> African countries covered </span>
+                  </div>
+                  <div>
+                    <h5>40+</h5>
+                    <span> African countries covered </span>
+                  </div>
+                </div>
+                <ul>
+                  <li>Verified investors actively funding African startups</li>
+                  <li>
+                    Bonus: Investor-ready templates and funding strategy
+                    planners
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <a href="#" class="learn-more"
+              >Learn More About the Investor Directory</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FORM MODAL -->
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal-box">
+        <h3>Kindly Input Your Details Below<br />And Proceed To Download</h3>
+
+        <form id="downloadForm">
+          <input type="text" placeholder="Full name" required />
+          <input type="email" placeholder="Email" required />
+          <button type="submit" class="form-btn">Download Now</button>
+        </form>
+
+        <button class="close-modal" id="closeModal">&times;</button>
+      </div>
+    </div>
+
+    <script>
+      const openModal = document.getElementById("openModal");
+      const closeModal = document.getElementById("closeModal");
+      const modalOverlay = document.getElementById("modalOverlay");
+
+      openModal.addEventListener("click", (e) => {
+        e.preventDefault();
+        modalOverlay.classList.add("active");
+      });
+
+      closeModal.addEventListener("click", () => {
+        modalOverlay.classList.remove("active");
+      });
+
+      modalOverlay.addEventListener("click", (e) => {
+        if (e.target === modalOverlay) {
+          modalOverlay.classList.remove("active");
+        }
+      });
+
+      document
+        .getElementById("downloadForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          alert("Your download will start now!");
+          modalOverlay.classList.remove("active");
+        });
+    </script>
+  </body>
+</html>

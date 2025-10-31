@@ -162,10 +162,11 @@ body {
   font-size: 0.95rem;
 }
 
-.closing-text {
-  max-width: 650px;
+.book-section .closing-text {
+  max-width: 450px;
   margin: 2.5rem auto 1.5rem;
   font-size: 1rem;
+  font-weight: 700;
 }
 
 .book-section .cta-btn {
@@ -399,6 +400,7 @@ body {
   .intro-content h1 {
     font-size: 3.8rem;
   }
+
 
   .book-cards {
     grid-template-columns: repeat(3, 1fr);
