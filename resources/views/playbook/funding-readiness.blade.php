@@ -30,7 +30,11 @@
 
     .intro-sales {
         padding: 2rem 1.5rem;
-        background-image: url("./img/first-bg.png");
+        background-image: url("/img/first-bg.png");
+      /* background-image: url('{{ asset('public/img/first-bg.png') }}'); */
+
+      /* background-image: url('{{ asset('/img/first-bg.png') }}'); */
+
         background-repeat: repeat;
         background-size: contain;
     }
@@ -46,7 +50,7 @@
         font-weight: 900;
         color: #0d4036;
         line-height: 1.1;
-   font-family: 'GT Walsheim Trial Cn U Bd';
+        /* font-family: 'GT Walsheim Trial Cn Bl'; */
 
     }
 
@@ -107,7 +111,7 @@
 
     .book-section {
         padding: 3rem 1.5rem;
-        background-image: url("./img/second-bg.png");
+        background-image: url("/img/second-bg.png");
         background-repeat: repeat;
         background-size: contain;
     }
