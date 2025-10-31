@@ -116,6 +116,20 @@ Route::get('/brn-form', function () {
     return redirect('/noel54/interest-form');
 });
 
+
+
+/* ========== TEST CSRF TOKEN ========== */
+Route::get('/test-csrf', function () {
+    return view('test-csrf');
+});
+
+Route::post('/test-csrf-submit', function () {
+    return response()->json(['message' => 'CSRF protection working!']);
+})->name('test.csrf');
+/* ========== TEST CSRF TOKEN END ========== */
+
+
+
 Route::get('/noel54', [BrnController::class, 'brnIndex'])->name('brn');
 
 // Student

@@ -16,7 +16,9 @@
 
 <style>
 
-   
+   body {
+  font-family: "GT Walsheim Trial Md";
+}
 
 .container {
   max-width: 1024px;
