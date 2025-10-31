@@ -265,6 +265,9 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|staff'])->prefix('admi
     // });
 
     Route::resource('/playbooks', PlaybookController::class);
+    Route::get('/playbooks-dashboard', [PlaybookController::class, 'dashboard'])->name('playbooks.dashboard');
+
+    Route::resource('/salesbooks', \App\Http\Controllers\Admin\SalesBookController::class);
 
     // Route::middleware('permission:view_students')->group(function () {
     Route::resource('students', StudentController::class);

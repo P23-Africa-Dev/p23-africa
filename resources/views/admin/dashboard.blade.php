@@ -41,7 +41,7 @@
                         </div>
                         <hr class="border-gray-300 dark:border-gray-600">
                         <div class="my-3">
-                            <a href="{{ route('admin.playbooks.index') }}"
+                            <a href="{{ route('admin.playbooks.dashboard') }}"
                                 class="link-dark dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 dark-transition">
                                 Playbook Downloads <i class="fa fa-arrow-right"></i>
                             </a>
