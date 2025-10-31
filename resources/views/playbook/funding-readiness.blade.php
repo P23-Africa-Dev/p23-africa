@@ -519,7 +519,7 @@
                         entrepreneurs.
                     </p>
 
-                    <a href="#" class="cta-btn">Find Out More</a>
+                    <a href="#closingText" class="cta-btn">Find Out More</a>
                 </div>
 
                 <div class="intro-image desktop">
@@ -563,7 +563,7 @@
                     </div>
                 </div>
 
-                <p class="closing-text">
+                <p class="closing-text" id="closingText">
                     Walk away with a ready-to-use pitch deck, funding plan, and clarity
                     on your next move.
                 </p>

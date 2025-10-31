@@ -54,10 +54,10 @@ class SalesBookDownloadMail extends Mailable
         $attachments = [];
 
         // Add the funding guide PDF if it exists
-        $guidePath = public_path('playbook/Funding-Readiness-Guidebook.pdf');
+        $guidePath = public_path('playbook/P23-Africa-Funding-Readiness-Guidebook.pdf');
         if (file_exists($guidePath)) {
             $attachments[] = Attachment::fromPath($guidePath)
-                ->as('Funding-Readiness-Guidebook.pdf')
+                ->as('P23-Africa-Funding-Readiness-Guidebook.pdf')
                 ->withMime('application/pdf');
         }
 
