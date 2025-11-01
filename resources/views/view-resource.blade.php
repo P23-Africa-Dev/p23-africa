@@ -107,32 +107,30 @@
                             </p>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        @if ($blog->image_path)
-                            <img src="{{ asset('storage/' . $blog->image_path) }}" loading='lazy' alt="Insight Image"
-                                class="article-img" />
-                            {{-- @else
-                            <img src="{{ asset('images/resource-detail.png') }}" loading='lazy' alt="Insight Image"
-                                class="article-img" /> --}}
-                        @endif
-                    </div>
-                    <div class="{{ $blog->image ? 'col-md-6' : 'col-md-12' }} mt-4 mt-md-0">
-                        <div class="content">
-                            <p>
-                                {!! $blog->content_2 !!}
-                            </p>
-                            <div class="d-flex justify-content-between" style="margin-top: 30px;">
-                                <a href="{{ route('resource-hub') }}" class="cta-button">Get More Insights <span
-                                        class="mx-2"></span> →</a>
+                    <div class="col-12">
+                        <div class="content-wrapper" style="position: relative;">
+                            @if ($blog->image_path)
+                                <img src="{{ asset('storage/' . $blog->image_path) }}" loading='lazy' alt="Insight Image"
+                                    class="article-img float-md-end ms-md-4 mb-3" 
+                                    style="max-width: 100%; width: 100%; max-width: 450px; height: auto; border-radius: 8px;" />
+                            @endif
+                            <div class="content">
+                                <p>
+                                    {!! $blog->content_2 !!}
+                                </p>
+                                <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3" style="margin-top: 30px; clear: both;">
+                                    <a href="{{ route('resource-hub') }}" class="cta-button">Get More Insights <span
+                                            class="mx-2"></span> →</a>
 
-                                @if ($blog->pdf_path)
-                                    <div class="my-auto">
-                                        <button class="btn btn-success view-pdf-btn"
-                                            data-pdf="{{ asset('storage/' . $blog->pdf_path) }}">
-                                            📥 View Report
-                                        </button>
-                                    </div>
-                                @endif
+                                    @if ($blog->pdf_path)
+                                        <div>
+                                            <button class="btn btn-success view-pdf-btn"
+                                                data-pdf="{{ asset('storage/' . $blog->pdf_path) }}">
+                                                📥 View Report
+                                            </button>
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>

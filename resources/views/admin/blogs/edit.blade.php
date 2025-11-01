@@ -166,7 +166,7 @@
                 reader.onload = function(event) {
                     imagePreview.setAttribute('src', event.target.result);
                     previewContainer.style.display = 'block';
-                    
+
                     // Uncheck remove checkbox if user uploads new image
                     if (removeImageCheck) {
                         removeImageCheck.checked = false;
