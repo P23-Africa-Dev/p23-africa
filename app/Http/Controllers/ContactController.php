@@ -34,7 +34,7 @@ class ContactController extends Controller
         ];
 
         // Send to site owner with all sanitized data
-        Mail::to('nurudeen@p23africa.com')->send(new ContactFormMail($sanitizedData));
+        Mail::to('contact@p23africa.com')->send(new ContactFormMail($sanitizedData));
 
         // Send thank-you to user
         Mail::to($sanitizedData['email'])->send(new ThankYouMail($sanitizedData));

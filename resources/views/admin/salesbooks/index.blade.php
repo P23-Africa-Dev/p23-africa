@@ -167,7 +167,7 @@
                                                         <td>
                                                             <div class="btn-group" role="group">
                                                                 <form
-                                                                    action="{{ route('admin.salesbooks.destroy', $salesBook) }}"
+                                                                    action="{{ route('admin.salesbooks.destroy', $salesBook->id) }}"
                                                                     method="POST" class="d-inline"
                                                                     onsubmit="return confirm('Are you sure you want to delete this download record? This action cannot be undone.');">
                                                                     @csrf

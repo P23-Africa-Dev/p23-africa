@@ -15,4 +15,12 @@ class SalesBookDownload extends Model
     protected $casts = [
         'email_sent_at' => 'datetime',
     ];
+
+    /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName()
+    {
+        return 'id';
+    }
 }
