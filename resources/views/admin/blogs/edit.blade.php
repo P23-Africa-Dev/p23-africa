@@ -91,7 +91,7 @@
                             <div class="mb-5 position-relative" id="previewContainer"
                                 style="max-width: 300px; display: none;">
                                 <img id="imagePreview" src="#" class="img-thumbnail border-theme dark-transition"
-                                    alt="Current Image">
+                                    alt="Preview Image">
 
                                 <button type="button" id="removeImageBtn"
                                     style="
@@ -156,6 +156,7 @@
     const previewContainer = document.getElementById('previewContainer');
     const imagePreview = document.getElementById('imagePreview');
     const removeImageBtn = document.getElementById('removeImageBtn');
+    const removeImageCheck = document.getElementById('removeImageCheck');
 
     if (imageInput) {
         imageInput.addEventListener('change', function(e) {
@@ -165,6 +166,11 @@
                 reader.onload = function(event) {
                     imagePreview.setAttribute('src', event.target.result);
                     previewContainer.style.display = 'block';
+                    
+                    // Uncheck remove checkbox if user uploads new image
+                    if (removeImageCheck) {
+                        removeImageCheck.checked = false;
+                    }
                 }
                 reader.readAsDataURL(file);
             }
@@ -176,6 +182,19 @@
             imageInput.value = '';
             imagePreview.setAttribute('src', '#');
             previewContainer.style.display = 'none';
+        });
+    }
+
+    // Handle remove current image checkbox
+    if (removeImageCheck) {
+        removeImageCheck.addEventListener('change', function() {
+            if (this.checked) {
+                // Clear any selected file if user wants to remove current image
+                if (imageInput) {
+                    imageInput.value = '';
+                }
+                console.log('Remove image checkbox checked');
+            }
         });
     }
 </script>

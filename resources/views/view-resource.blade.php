@@ -116,7 +116,7 @@
                                 class="article-img" /> --}}
                         @endif
                     </div>
-                    <div class="col-md-6 mt-4 mt-md-0">
+                    <div class="{{ $blog->image ? 'col-md-6' : 'col-md-12' }} mt-4 mt-md-0">
                         <div class="content">
                             <p>
                                 {!! $blog->content_2 !!}
@@ -134,7 +134,6 @@
                                     </div>
                                 @endif
                             </div>
-
                         </div>
                     </div>
                 </div>

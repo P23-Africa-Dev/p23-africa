@@ -15,7 +15,8 @@ class Blog extends Model
         'image_path',
         'pdf_path',
         'category_id',
-        'user_id'
+        'user_id',
+        'created_at'
     ];
 
     protected static function booted()
