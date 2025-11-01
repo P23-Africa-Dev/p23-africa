@@ -523,7 +523,7 @@
                         entrepreneurs.
                     </p>
 
-                    <a href="#" class="cta-btn">Find Out More</a>
+                    <a href="#getGuide" class="cta-btn">Find Out More</a>
                 </div>
 
                 <div class="intro-image desktop">
@@ -560,7 +560,7 @@
                             <img src="{{ asset('./img/card2.png') }}" loading="lazy" alt="" />
                         </div>
                     </div>
-                    <div class="book-card card-3">
+                    <div class="book-card card-3" id="getGuide">
                         <div class="card-image">
                             <img src="{{ asset('./img/card1.png') }}" loading="lazy" alt="" />
                         </div>
