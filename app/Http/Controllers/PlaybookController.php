@@ -240,13 +240,12 @@ class PlaybookController extends Controller
         try {
             Log::info('Ultimate funding download request received', $request->all());
 
-            // Validate the request
+            // First, remove the unique validation for email to handle existing users
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:ultimate_funding_downloads|max:255',
+                'email' => 'required|email|max:255',
                 'company' => 'required|string|max:255',
                 'country' => 'required|string|max:255',
-                // 'funding_stage' => 'required|string|max:255',
             ], [
                 'name.required' => 'Full name is required.',
                 'name.string' => 'Full name must be a valid text.',
@@ -254,16 +253,12 @@ class PlaybookController extends Controller
                 'email.required' => 'Email address is required.',
                 'email.email' => 'Please enter a valid email address.',
                 'email.max' => 'Email address cannot exceed 255 characters.',
-                'email.unique' => 'This email has already been used to access the directory.',
                 'company.required' => 'Company name is required.',
                 'company.string' => 'Company name must be a valid text.',
                 'company.max' => 'Company name cannot exceed 255 characters.',
                 'country.required' => 'Country is required.',
                 'country.string' => 'Country must be a valid text.',
                 'country.max' => 'Country cannot exceed 255 characters.',
-                // 'funding_stage.required' => 'Funding stage is required.',
-                // 'funding_stage.string' => 'Funding stage must be a valid text.',
-                // 'funding_stage.max' => 'Funding stage cannot exceed 255 characters.',
             ]);
 
             if ($validator->fails()) {
@@ -279,6 +274,34 @@ class PlaybookController extends Controller
                 ], 422);
             }
 
+            // Check if email already exists in the database
+            $existingDownload = UltimateFundingDownload::where('email', $request->email)->first();
+
+            if ($existingDownload) {
+                // Check if user has already completed payment
+                if ($existingDownload->payment_completed) {
+                    Log::info('User already purchased using this email', ['email' => $request->email]);
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'User already purchased book using this email',
+                        'action' => 'already_purchased'
+                    ], 200);
+                } else {
+                    // User exists but hasn't completed payment - redirect to payment
+                    Log::info('Email recognized, redirecting to payment', ['email' => $request->email]);
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Email is recognised, you will be redirected to complete payment in 10s',
+                        'action' => 'redirect_to_payment',
+                        'countdown' => 10,
+                        'download_id' => $existingDownload->id,
+                        'amount' => 50.00,
+                        'user_email' => $existingDownload->email,
+                        'user_name' => $existingDownload->name
+                    ]);
+                }
+            }
+
             Log::info('Creating new ultimate funding download record', ['email' => $request->email]);
 
             // Create new record
@@ -287,7 +310,6 @@ class PlaybookController extends Controller
                 'email' => $request->email,
                 'company' => $request->company,
                 'country' => $request->country,
-                // 'funding_stage' => $request->funding_stage,
                 'payment_completed' => false, // Will be updated after payment
                 'amount_paid' => 50.00, // Set the expected amount
             ]);
@@ -297,6 +319,7 @@ class PlaybookController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Account created successfully! Please proceed with payment to access the Ultimate Funding Directory.',
+                'action' => 'proceed_to_payment',
                 'download_id' => $download->id,
                 'amount' => 50.00,
                 'user_email' => $download->email,

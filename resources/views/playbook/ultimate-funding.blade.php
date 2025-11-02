@@ -883,12 +883,25 @@
                 const data = await response.json();
 
                 if (response.ok && data.success) {
-                    // Account created successfully, now initiate payment
-                    initializeFlutterwavePayment(data.download_id, data.user_email, data.user_name,
-                        data.amount);
+                    // Check the action type from response
+                    if (data.action === 'redirect_to_payment') {
+                        // Email recognized, show countdown message and redirect to payment
+                        showCountdownMessage(data.message, data.countdown, () => {
+                            initializeFlutterwavePayment(data.download_id, data.user_email,
+                                data.user_name, data.amount);
+                        });
+                    } else if (data.action === 'proceed_to_payment') {
+                        // New user, proceed directly to payment
+                        initializeFlutterwavePayment(data.download_id, data.user_email, data
+                            .user_name, data.amount);
+                    }
                 } else {
-                    // Handle validation errors
-                    if (data.errors) {
+                    // Handle different error scenarios
+                    if (data.action === 'already_purchased') {
+                        // User already purchased
+                        showError('emailError', data.message);
+                    } else if (data.errors) {
+                        // Handle validation errors
                         Object.keys(data.errors).forEach(field => {
                             const errorElement = document.getElementById(field + 'Error');
                             if (errorElement) {
@@ -1025,6 +1038,31 @@
         function isValidEmail(email) {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return emailRegex.test(email);
+        }
+
+        function showCountdownMessage(message, seconds, callback) {
+            const successElement = document.getElementById('successMessage');
+            let countdown = seconds;
+
+            // Show initial message with countdown
+            const updateMessage = () => {
+                successElement.textContent = `${message.replace('10s', countdown + 's')}`;
+                successElement.classList.add('show');
+            };
+
+            updateMessage();
+
+            // Start countdown
+            const countdownInterval = setInterval(() => {
+                countdown--;
+                updateMessage();
+
+                if (countdown <= 0) {
+                    clearInterval(countdownInterval);
+                    clearSuccess();
+                    callback(); // Execute the callback (redirect to payment)
+                }
+            }, 1000);
         }
     });
 </script>
