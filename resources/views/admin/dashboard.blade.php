@@ -1,90 +1,217 @@
 <x-app-layout>
 
     <x-slot name="header">
-        <div class="d-flex justify-content-between">
-            <h2 class="font-semibold text-xl text-dark dark:text-gray-200 leading-tight dark-transition">
-                {{ __('Dashboard') }}
-            </h2>
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h2 class="font-semibold text-xl text-dark dark:text-gray-200 leading-tight dark-transition mb-1">
+                    {{ __('Dashboard') }}
+                </h2>
+                <p class="text-muted dark:text-gray-400 text-sm mb-0">Welcome back, {{ auth()->user()->name }}</p>
+            </div>
             @if (auth()->user() && auth()->user()->hasRole('admin'))
                 <a href="{{ route('admin.staff.index') }}"
-                    class="btn btn-dark dark:bg-gray-600 dark:border-gray-600 dark:hover:bg-gray-700 dark-transition">Staffs</a>
+                    class="btn btn-dark dark:bg-gray-600 dark:border-gray-600 dark:hover:bg-gray-700 dark-transition">
+                    <i class="fa fa-users me-2"></i>Manage Staff
+                </a>
             @endif
         </div>
-
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg dark-transition">
-                <div class="p-6 text-dark dark:text-gray-100 dark-transition">
-                    <fieldset class="border border-dark dark:border-gray-500 rounded-3 p-3 dark-transition">
-                        <legend class="float-none w-auto px-3 text-dark dark:text-gray-100">
-                            <h2 class="text-dark dark:text-gray-100 dark-transition mb-0">Admin Dashboard</h2>
-                        </legend>
 
-                        {{-- @can('manage_events') --}}
-                        <div class="my-3">
-                            <a href="{{ route('admin.events.index') }}"
-                                class="link-dark dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 dark-transition">
-                                Manage Events <i class="fa fa-arrow-right"></i>
-                            </a>
-                        </div>
-                        <hr class="border-gray-300 dark:border-gray-600">
-                        {{-- @endcan --}}
-
-                        {{-- @can('resource_hub') --}}
-                        <div class="my-3">
-                            <a href="{{ route('admin.blogs.index') }}"
-                                class="link-dark dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 dark-transition">
-                                Resource Hub <i class="fa fa-arrow-right"></i>
-                            </a>
-                        </div>
-                        <hr class="border-gray-300 dark:border-gray-600">
-                        <div class="my-3">
-                            <a href="{{ route('admin.playbooks.dashboard') }}"
-                                class="link-dark dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 dark-transition">
-                                Playbook Downloads <i class="fa fa-arrow-right"></i>
-                            </a>
-                        </div>
-                        <hr class="border-gray-300 dark:border-gray-600">
-                        {{-- @endcan --}}
-
-
-                        {{-- @can('view_students') --}}
-                        <div class="my-3">
-                            <a href="{{ route('admin.students.index') }}"
-                                class="link-dark dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 dark-transition">
-                                View Students <i class="fa fa-arrow-right"></i>
-                            </a>
-                        </div>
-                        <hr class="border-gray-300 dark:border-gray-600">
-                        {{-- @endcan --}}
-
-                        @if (auth()->user() && auth()->user()->hasRole('admin'))
-                            <br><br><br>
-                            <div class="my-3">
-                                <a href="{{ route('admin.brn.index') }}"
-                                    class="link-dark dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 dark-transition">
-                                    BRN Interest Applications <i class="fa fa-arrow-right"></i>
-                                </a>
+            <!-- Quick Stats Section -->
+            <div class="row mb-4">
+                <div class="col-md-3 mb-3">
+                    <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0 bg-primary bg-opacity-10 rounded p-3">
+                                    <i class="fa fa-calendar text-primary fa-2x"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h6 class="text-muted dark:text-gray-400 mb-1">Total Events</h6>
+                                    <h3 class="mb-0 text-dark dark:text-gray-100">{{ $stats['total_events'] ?? 0 }}</h3>
+                                </div>
                             </div>
-                            <hr class="border-gray-300 dark:border-gray-600">
-                            <div class="my-3">
-                                <a href="{{ route('admin.clicks.report') }}"
-                                    class="link-dark dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 dark-transition">
-                                    Pages Report (Clicks) <i class="fa fa-arrow-right"></i>
-                                </a>
-                            </div>
-                            <hr class="border-gray-300 dark:border-gray-600">
-                            <div class="my-3">
-                                <a href="{{ route('admin.staff.index') }}"
-                                    class="link-dark dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 dark-transition">
-                                    Manage Staff <i class="fa fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        @endif
-                    </fieldset>
+                        </div>
+                    </div>
                 </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0 bg-success bg-opacity-10 rounded p-3">
+                                    <i class="fa fa-users text-success fa-2x"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h6 class="text-muted dark:text-gray-400 mb-1">Students</h6>
+                                    <h3 class="mb-0 text-dark dark:text-gray-100">{{ $stats['total_students'] ?? 0 }}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0 bg-info bg-opacity-10 rounded p-3">
+                                    <i class="fa fa-book text-info fa-2x"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h6 class="text-muted dark:text-gray-400 mb-1">Resources</h6>
+                                    <h3 class="mb-0 text-dark dark:text-gray-100">{{ $stats['total_resources'] ?? 0 }}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0 bg-warning bg-opacity-10 rounded p-3">
+                                    <i class="fa fa-download text-warning fa-2x"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h6 class="text-muted dark:text-gray-400 mb-1">Downloads</h6>
+                                    <h3 class="mb-0 text-dark dark:text-gray-100">{{ $stats['total_downloads'] ?? 0 }}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Dashboard Cards -->
+            <div class="row">
+                <!-- Content Management Section -->
+                <div class="col-lg-6 mb-4">
+                    <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition h-100">
+                        <div class="card-header bg-transparent border-0 pt-4 pb-3">
+                            <h5 class="mb-0 text-dark dark:text-gray-100 dark-transition">
+                                <i class="fa fa-edit me-2 text-primary"></i>Content Management
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <a href="{{ route('admin.events.index') }}"
+                                class="d-flex align-items-center justify-content-between text-decoration-none p-3 mb-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark-transition">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-primary bg-opacity-10 rounded p-2 me-3">
+                                        <i class="fa fa-calendar text-primary"></i>
+                                    </div>
+                                    <span class="text-dark dark:text-gray-100 fw-medium">Manage Events</span>
+                                </div>
+                                <i class="fa fa-arrow-right text-muted dark:text-gray-400"></i>
+                            </a>
+
+                            <a href="{{ route('admin.blogs.index') }}"
+                                class="d-flex align-items-center justify-content-between text-decoration-none p-3 mb-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark-transition">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-success bg-opacity-10 rounded p-2 me-3">
+                                        <i class="fa fa-book text-success"></i>
+                                    </div>
+                                    <span class="text-dark dark:text-gray-100 fw-medium">Resource Hub</span>
+                                </div>
+                                <i class="fa fa-arrow-right text-muted dark:text-gray-400"></i>
+                            </a>
+
+                            <a href="{{ route('admin.playbooks.dashboard') }}"
+                                class="d-flex align-items-center justify-content-between text-decoration-none p-3 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark-transition">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-info bg-opacity-10 rounded p-2 me-3">
+                                        <i class="fa fa-download text-info"></i>
+                                    </div>
+                                    <span class="text-dark dark:text-gray-100 fw-medium">Playbook Downloads</span>
+                                </div>
+                                <i class="fa fa-arrow-right text-muted dark:text-gray-400"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Management Section -->
+                <div class="col-lg-6 mb-4">
+                    <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition h-100">
+                        <div class="card-header bg-transparent border-0 pt-4 pb-3">
+                            <h5 class="mb-0 text-dark dark:text-gray-100 dark-transition">
+                                <i class="fa fa-users me-2 text-success"></i>User Management
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <a href="{{ route('admin.students.index') }}"
+                                class="d-flex align-items-center justify-content-between text-decoration-none p-3 mb-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark-transition">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-success bg-opacity-10 rounded p-2 me-3">
+                                        <i class="fa fa-user-graduate text-success"></i>
+                                    </div>
+                                    <span class="text-dark dark:text-gray-100 fw-medium">View Students</span>
+                                </div>
+                                <i class="fa fa-arrow-right text-muted dark:text-gray-400"></i>
+                            </a>
+
+                            @if (auth()->user() && auth()->user()->hasRole('admin'))
+                                <a href="{{ route('admin.staff.index') }}"
+                                    class="d-flex align-items-center justify-content-between text-decoration-none p-3 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark-transition">
+                                    <div class="d-flex align-items-center">
+                                        <div class="bg-warning bg-opacity-10 rounded p-2 me-3">
+                                            <i class="fa fa-user-tie text-warning"></i>
+                                        </div>
+                                        <span class="text-dark dark:text-gray-100 fw-medium">Manage Staff</span>
+                                    </div>
+                                    <i class="fa fa-arrow-right text-muted dark:text-gray-400"></i>
+                                </a>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+
+                @if (auth()->user() && auth()->user()->hasRole('admin'))
+                    <!-- Applications & Reports Section -->
+                    <div class="col-lg-12 mb-4">
+                        <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition">
+                            <div class="card-header bg-transparent border-0 pt-4 pb-3">
+                                <h5 class="mb-0 text-dark dark:text-gray-100 dark-transition">
+                                    <i class="fa fa-chart-line me-2 text-info"></i>Applications & Reports
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3 mb-md-0">
+                                        <a href="{{ route('admin.brn.index') }}"
+                                            class="d-flex align-items-center justify-content-between text-decoration-none p-3 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark-transition">
+                                            <div class="d-flex align-items-center">
+                                                <div class="bg-danger bg-opacity-10 rounded p-2 me-3">
+                                                    <i class="fa fa-file-alt text-danger"></i>
+                                                </div>
+                                                <span class="text-dark dark:text-gray-100 fw-medium">NOEL Interest
+                                                    Applications</span>
+                                            </div>
+                                            <i class="fa fa-arrow-right text-muted dark:text-gray-400"></i>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="{{ route('admin.clicks.report') }}"
+                                            class="d-flex align-items-center justify-content-between text-decoration-none p-3 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark-transition">
+                                            <div class="d-flex align-items-center">
+                                                <div class="bg-info bg-opacity-10 rounded p-2 me-3">
+                                                    <i class="fa fa-mouse-pointer text-info"></i>
+                                                </div>
+                                                <span class="text-dark dark:text-gray-100 fw-medium">Pages Report
+                                                    (Clicks)</span>
+                                            </div>
+                                            <i class="fa fa-arrow-right text-muted dark:text-gray-400"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

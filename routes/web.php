@@ -237,7 +237,7 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|staff'])->prefix('admi
     //     return view('admin.dashboard');
     // })->name('dashboard');
 
-    Route::get('/dashboard', fn() => view('admin.dashboard'))->name('dashboard');
+    Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
 
     Route::middleware('role:admin')->group(function () {
         Route::resource('staff', StaffController::class);
