@@ -28,8 +28,17 @@ class PageVisitSeeder extends Seeder
 
         $deviceTypes = ['desktop', 'mobile', 'tablet'];
         $browsers = ['Chrome', 'Firefox', 'Safari', 'Edge'];
-        $countries = ['Nigeria', 'Ghana', 'Kenya', 'South Africa', 'Egypt', 'Morocco'];
-        $cities = ['Lagos', 'Accra', 'Nairobi', 'Cape Town', 'Cairo', 'Casablanca'];
+        
+        // Updated countries with United States, United Kingdom, and Others
+        $countries = [
+            'Nigeria', 'United States', 'United Kingdom', 'Ghana', 'Kenya', 
+            'South Africa', 'Egypt', 'Morocco', 'Others', 'Others', 'Others'
+        ]; // More "Others" entries to simulate other countries
+        
+        $cities = [
+            'Lagos', 'New York', 'London', 'Accra', 'Nairobi', 
+            'Cape Town', 'Cairo', 'Casablanca', 'Unknown', 'Unknown', 'Unknown'
+        ];
 
         // Generate data for the last 30 days
         for ($i = 0; $i < 30; $i++) {
@@ -81,10 +90,18 @@ class PageVisitSeeder extends Seeder
             'Service_Page' => 'Our Services',
             'Sales_Page' => 'Sales',
             'Quiz_Page' => 'Sales Quiz',
-            'BRN_Page' => 'BRN Program',
+            'NOEL_Page' => 'NOEL Program',
+            'NOEL_Form_Page' => 'NOEL Interest Form',
             'student' => 'Student Portal',
-            'resource-hub' => 'Resource Hub',
-            'event' => 'Events',
+            'Resource_Hub_Page' => 'Resource Hub',
+            'Archive_Page' => 'Resource Archive',
+            'Archive_List_Page' => 'Resource Archive List',
+            'Event_Page' => 'Events',
+            'All_Events_Page' => 'All Events',
+            'Feedback_Page' => 'Feedback',
+            'Founders_Playbook_Page' => 'Founders Playbook',
+            'Funding_Readiness_Playbook_Page' => 'Funding Readiness Playbook',
+            'Ultimate_Funding_Playbook_Page' => 'Ultimate Funding Playbook',
         ];
 
         return $titles[$route] ?? ucwords(str_replace('_', ' ', $route));

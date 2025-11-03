@@ -37,7 +37,8 @@ class AdvancedTrackingController extends Controller
 
         // Get location data (implement GeoIP integration here)
         $ipAddress = $request->ip();
-        $country = $this->getCountryFromIP($ipAddress);
+        $rawCountry = $this->getCountryFromIP($ipAddress);
+        $country = $this->normalizeCountry($rawCountry);
         $city = $this->getCityFromIP($ipAddress);
 
         // Check if this is a unique visitor
@@ -175,5 +176,45 @@ class AdvancedTrackingController extends Controller
         }
 
         return null;
+    }
+
+    /**
+     * Normalize country name to specific allowed countries or "Others"
+     */
+    private function normalizeCountry($country)
+    {
+        if (empty($country)) {
+            return 'Others';
+        }
+
+        // Define allowed countries
+        $allowedCountries = [
+            'Nigeria',
+            'United States',
+            'United Kingdom',
+            'Ghana',
+            'Kenya',
+            'South Africa',
+            'Egypt',
+            'Morocco',
+            'Local'
+        ];
+
+        // Normalize common variations
+        $countryMapping = [
+            'USA' => 'United States',
+            'US' => 'United States',
+            'America' => 'United States',
+            'UK' => 'United Kingdom',
+            'Britain' => 'United Kingdom',
+            'Great Britain' => 'United Kingdom',
+            'England' => 'United Kingdom',
+        ];
+
+        // Apply mapping if exists
+        $normalizedCountry = $countryMapping[$country] ?? $country;
+
+        // Check if the normalized country is in allowed list
+        return in_array($normalizedCountry, $allowedCountries) ? $normalizedCountry : 'Others';
     }
 }

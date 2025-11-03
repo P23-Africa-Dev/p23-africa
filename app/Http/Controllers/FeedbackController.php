@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ClickTracker;
 use App\Models\Feedback;
 use Illuminate\Http\Request;
 
@@ -9,6 +10,8 @@ class FeedbackController extends Controller
 {
     public function showForm(Request $request)
     {
+        ClickTracker::track('Feedback_Page');
+
         return view('feedback.form', [
             'event_id' => $request->event_id,
             'email' => $request->email,

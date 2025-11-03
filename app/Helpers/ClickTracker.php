@@ -22,7 +22,8 @@ class ClickTracker
 
         // Get location data (you may want to integrate with a GeoIP service)
         $ipAddress = $request->ip();
-        $country = self::getCountryFromIP($ipAddress);
+        $rawCountry = self::getCountryFromIP($ipAddress);
+        $country = self::normalizeCountry($rawCountry);
         $city = self::getCityFromIP($ipAddress);
 
         // Check if this is a unique visitor
@@ -119,6 +120,46 @@ class ClickTracker
         }
 
         return null;
+    }
+
+    /**
+     * Normalize country name to specific allowed countries or "Others"
+     */
+    public static function normalizeCountry($country)
+    {
+        if (empty($country)) {
+            return 'Others';
+        }
+
+        // Define allowed countries
+        $allowedCountries = [
+            'Nigeria',
+            'United States',
+            'United Kingdom',
+            'Ghana',
+            'Kenya',
+            'South Africa',
+            'Egypt',
+            'Morocco',
+            'Local'
+        ];
+
+        // Normalize common variations
+        $countryMapping = [
+            'USA' => 'United States',
+            'US' => 'United States',
+            'America' => 'United States',
+            'UK' => 'United Kingdom',
+            'Britain' => 'United Kingdom',
+            'Great Britain' => 'United Kingdom',
+            'England' => 'United Kingdom',
+        ];
+
+        // Apply mapping if exists
+        $normalizedCountry = $countryMapping[$country] ?? $country;
+
+        // Check if the normalized country is in allowed list
+        return in_array($normalizedCountry, $allowedCountries) ? $normalizedCountry : 'Others';
     }
 
     public static function trackWithScreenInfo($routeName, $pageTitle = null, $screenWidth = null, $screenHeight = null)

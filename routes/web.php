@@ -99,7 +99,7 @@ Route::get('/device-display', function () {
 //     return view('brn');
 // })->name('brn');
 Route::get('/noel54/interest-form', function () {
-    ClickTracker::track('BRN_Form_Page');
+    ClickTracker::track('NOEL_Form_Page');
     return view('brn-form');
 })->name('brn-form');
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ClickTracker;
 use App\Mail\PlaybookDownloadMail;
 use App\Mail\SalesBookDownloadMail;
 use App\Mail\UltimateFundingDownloadMail;
@@ -17,14 +18,20 @@ class PlaybookController extends Controller
 {
     public function landing()
     {
+        ClickTracker::track('Founders_Playbook_Page');
+
         return view('playbook-landing');
     }
     public function playbookOne()
     {
+        ClickTracker::track('Funding_Readiness_Playbook_Page');
+        
         return view('playbook.funding-readiness');
     }
     public function playbookTwo()
     {
+        ClickTracker::track('Ultimate_Funding_Playbook_Page');
+
         return view('playbook.ultimate-funding');
     }
 

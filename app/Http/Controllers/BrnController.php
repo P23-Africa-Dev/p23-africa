@@ -22,14 +22,14 @@ class BrnController extends Controller
             ->take(2) // or ->limit(5)
             ->get();
 
-        ClickTracker::track('BRN_Page');
+        ClickTracker::track('NOEL_Page');
 
         return view('brn', compact('events'));
     }
 
     public function showForm()
     {
-        ClickTracker::track('BRN_Form_Page');
+        ClickTracker::track('NOEL_Form_Page');
 
         return view('brn-form');
     }
