@@ -20,7 +20,8 @@ class PageVisitSeeder extends Seeder
             'Service_Page',
             'Sales_Page',
             'Quiz_Page',
-            'BRN_Page',
+            'NOEL_Form_Page',
+            'Quiz_Start_Page',
             'student',
             'resource-hub',
             'event'
@@ -28,16 +29,18 @@ class PageVisitSeeder extends Seeder
 
         $deviceTypes = ['desktop', 'mobile', 'tablet'];
         $browsers = ['Chrome', 'Firefox', 'Safari', 'Edge'];
-        
+
         // Updated countries with United States, United Kingdom, and Others
-        $countries = [
-            'Nigeria', 'United States', 'United Kingdom', 'Ghana', 'Kenya', 
-            'South Africa', 'Egypt', 'Morocco', 'Others', 'Others', 'Others'
-        ]; // More "Others" entries to simulate other countries
-        
-        $cities = [
-            'Lagos', 'New York', 'London', 'Accra', 'Nairobi', 
-            'Cape Town', 'Cairo', 'Casablanca', 'Unknown', 'Unknown', 'Unknown'
+        $countryData = [
+            'Nigeria' => ['Lagos', 'Abuja', 'Port Harcourt'],
+            'United States' => ['New York', 'Los Angeles', 'Chicago'],
+            'United Kingdom' => ['London', 'Manchester', 'Birmingham'],
+            'Ghana' => ['Accra', 'Kumasi', 'Tamale'],
+            'Kenya' => ['Nairobi', 'Mombasa', 'Kisumu'],
+            'South Africa' => ['Cape Town', 'Johannesburg', 'Durban'],
+            'Egypt' => ['Cairo', 'Alexandria', 'Giza'],
+            'Morocco' => ['Casablanca', 'Rabat', 'Marrakech'],
+            'Others' => ['Unknown', 'Various', 'International'],
         ];
 
         // Generate data for the last 30 days
@@ -51,7 +54,10 @@ class PageVisitSeeder extends Seeder
                 $route = $routes[array_rand($routes)];
                 $deviceType = $deviceTypes[array_rand($deviceTypes)];
                 $browser = $browsers[array_rand($browsers)];
-                $country = $countries[array_rand($countries)];
+
+                // Select a random country and corresponding city
+                $country = array_rand($countryData);
+                $cities = $countryData[$country];
                 $city = $cities[array_rand($cities)];
 
                 PageVisit::create([
@@ -69,7 +75,7 @@ class PageVisitSeeder extends Seeder
                     'session_id' => 'sess_' . uniqid(),
                     'country' => $country,
                     'city' => $city,
-                    'timezone' => 'Africa/Lagos',
+                    'timezone' => $this->getTimezone($country),
                     'is_unique_visitor' => rand(0, 1) === 1,
                     'screen_width' => $this->getScreenWidth($deviceType),
                     'screen_height' => $this->getScreenHeight($deviceType),
@@ -90,21 +96,14 @@ class PageVisitSeeder extends Seeder
             'Service_Page' => 'Our Services',
             'Sales_Page' => 'Sales',
             'Quiz_Page' => 'Sales Quiz',
-            'NOEL_Page' => 'NOEL Program',
             'NOEL_Form_Page' => 'NOEL Interest Form',
+            'Quiz_Start_Page' => 'Quiz Start',
             'student' => 'Student Portal',
-            'Resource_Hub_Page' => 'Resource Hub',
-            'Archive_Page' => 'Resource Archive',
-            'Archive_List_Page' => 'Resource Archive List',
-            'Event_Page' => 'Events',
-            'All_Events_Page' => 'All Events',
-            'Feedback_Page' => 'Feedback',
-            'Founders_Playbook_Page' => 'Founders Playbook',
-            'Funding_Readiness_Playbook_Page' => 'Funding Readiness Playbook',
-            'Ultimate_Funding_Playbook_Page' => 'Ultimate Funding Playbook',
+            'resource-hub' => 'Resource Hub',
+            'event' => 'Events',
         ];
 
-        return $titles[$route] ?? ucwords(str_replace('_', ' ', $route));
+        return $titles[$route] ?? ucwords(str_replace(['_', '-'], ' ', $route));
     }
 
     private function generateRandomIP()
@@ -170,5 +169,22 @@ class PageVisitSeeder extends Seeder
             'desktop' => rand(768, 1080),
             default => 768
         };
+    }
+
+    private function getTimezone($country)
+    {
+        $timezones = [
+            'Nigeria' => 'Africa/Lagos',
+            'United States' => 'America/New_York',
+            'United Kingdom' => 'Europe/London',
+            'Ghana' => 'Africa/Accra',
+            'Kenya' => 'Africa/Nairobi',
+            'South Africa' => 'Africa/Johannesburg',
+            'Egypt' => 'Africa/Cairo',
+            'Morocco' => 'Africa/Casablanca',
+            'Others' => 'UTC',
+        ];
+
+        return $timezones[$country] ?? 'UTC';
     }
 }

@@ -59,13 +59,13 @@ class NormalizeCountriesCommand extends Command
         PageVisit::chunk($batchSize, function ($visits) use ($allowedCountries, $countryMapping, &$totalUpdated) {
             foreach ($visits as $visit) {
                 $originalCountry = $visit->country;
-                
+
                 if (empty($originalCountry)) {
                     $normalizedCountry = 'Others';
                 } else {
                     // Apply mapping if exists
                     $normalizedCountry = $countryMapping[$originalCountry] ?? $originalCountry;
-                    
+
                     // Check if the normalized country is in allowed list
                     if (!in_array($normalizedCountry, $allowedCountries)) {
                         $normalizedCountry = 'Others';
@@ -82,11 +82,11 @@ class NormalizeCountriesCommand extends Command
 
         $this->info("✅ Country normalization completed!");
         $this->info("📊 Updated {$totalUpdated} records");
-        
+
         // Show country distribution
         $this->newLine();
         $this->info("📈 Current country distribution:");
-        
+
         $distribution = PageVisit::selectRaw('country, COUNT(*) as count')
             ->groupBy('country')
             ->orderByDesc('count')

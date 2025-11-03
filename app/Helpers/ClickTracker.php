@@ -86,8 +86,7 @@ class ClickTracker
             'Service_Page' => 'Our Services',
             'Sales_Page' => 'Sales',
             'Quiz_Page' => 'Sales Quiz',
-            'BRN_Page' => 'BRN Program',
-            'BRN_Form_Page' => 'BRN Interest Form',
+            'NOEL_Form_Page' => 'NOEL Interest Form',
             'Quiz_Start_Page' => 'Quiz Start',
             'student' => 'Student Portal',
             'resource-hub' => 'Resource Hub',
@@ -125,7 +124,7 @@ class ClickTracker
     /**
      * Normalize country name to specific allowed countries or "Others"
      */
-    public static function normalizeCountry($country)
+    private static function normalizeCountry($country)
     {
         if (empty($country)) {
             return 'Others';

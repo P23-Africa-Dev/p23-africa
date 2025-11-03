@@ -343,4 +343,26 @@ class ClickReportController extends Controller
             ];
         });
     }
+
+    /**
+     * Get page title from route name
+     */
+    private function getPageTitle($routeName)
+    {
+        $titles = [
+            'homepage' => 'Home Page',
+            'Contact_Page' => 'Contact Us',
+            'About_Page' => 'About Us',
+            'Service_Page' => 'Our Services',
+            'Sales_Page' => 'Sales',
+            'Quiz_Page' => 'Sales Quiz',
+            'NOEL_Form_Page' => 'NOEL Interest Form',
+            'Quiz_Start_Page' => 'Quiz Start',
+            'student' => 'Student Portal',
+            'resource-hub' => 'Resource Hub',
+            'event' => 'Events',
+        ];
+
+        return $titles[$routeName] ?? ucwords(str_replace(['_', '-'], ' ', $routeName));
+    }
 }

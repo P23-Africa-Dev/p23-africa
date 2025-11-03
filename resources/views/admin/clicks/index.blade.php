@@ -201,7 +201,22 @@
                                 @foreach ($filterOptions['page_routes'] as $route)
                                     <option value="{{ $route }}"
                                         {{ $pageRoute === $route ? 'selected' : '' }}>
-                                        {{ str_replace('_', ' ', $route) }}
+                                        @php
+                                            $pageTitles = [
+                                                'homepage' => 'Home Page',
+                                                'Contact_Page' => 'Contact Us',
+                                                'About_Page' => 'About Us',
+                                                'Service_Page' => 'Our Services',
+                                                'Sales_Page' => 'Sales',
+                                                'Quiz_Page' => 'Sales Quiz',
+                                                'NOEL_Form_Page' => 'NOEL Interest Form',
+                                                'Quiz_Start_Page' => 'Quiz Start',
+                                                'student' => 'Student Portal',
+                                                'resource-hub' => 'Resource Hub',
+                                                'event' => 'Events',
+                                            ];
+                                        @endphp
+                                        {{ $pageTitles[$route] ?? ucwords(str_replace(['_', '-'], ' ', $route)) }}
                                     </option>
                                 @endforeach
                             </select>

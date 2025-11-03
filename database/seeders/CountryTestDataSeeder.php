@@ -64,7 +64,7 @@ class CountryTestDataSeeder extends Seeder
         }
 
         $this->command->info('✅ Added 50 sample visits with new country structure');
-        
+
         // Show distribution
         $distribution = PageVisit::selectRaw('country, COUNT(*) as count')
             ->groupBy('country')
