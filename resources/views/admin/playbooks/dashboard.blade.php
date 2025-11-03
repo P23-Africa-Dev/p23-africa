@@ -58,11 +58,11 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
                                             <h5 class="card-title mb-0">Total Revenue</h5>
-                                            <h2 class="mt-2 mb-0">${{ number_format($stats['total_revenue'], 2) }}</h2>
+                                            <h2 class="mt-2 mb-0">₦{{ number_format($stats['total_revenue'], 2) }}</h2>
                                             <small class="opacity-75">From premium downloads</small>
                                         </div>
                                         <div class="text-end">
-                                            <i class="fas fa-dollar-sign fa-3x opacity-75"></i>
+                                            <i class="fas fa-naira-sign fa-3x opacity-75"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -98,7 +98,8 @@
                                     </div>
 
                                     <div class="d-grid">
-                                        <a href="{{ route('admin.playbooks.index') }}" class="btn btn-primary" style="color: #fff !important;">
+                                        <a href="{{ route('admin.playbooks.index') }}" class="btn btn-primary"
+                                            style="color: #fff !important;">
                                             <i class="fas fa-eye me-2"></i>View Download Records
                                         </a>
                                     </div>
@@ -143,7 +144,8 @@
                                     </div>
 
                                     <div class="d-grid">
-                                        <a href="{{ route('admin.salesbooks.index') }}" class="btn btn-success" style="color: #fff !important;">
+                                        <a href="{{ route('admin.salesbooks.index') }}" class="btn btn-success"
+                                            style="color: #fff !important;">
                                             <i class="fas fa-eye me-2"></i>View Download Records
                                         </a>
                                     </div>
@@ -196,14 +198,15 @@
                                         <div class="row text-center mt-2">
                                             <div class="col-12">
                                                 <div class="stat-value text-primary">
-                                                    ${{ number_format($stats['total_revenue'], 2) }}</div>
+                                                    ₦{{ number_format($stats['total_revenue'], 2) }}</div>
                                                 <div class="stat-label">Total Revenue</div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="d-grid">
-                                        <a href="{{ route('admin.ultimatefunding.index') }}" class="btn btn-warning" style="color: #fff !important;">
+                                        <a href="{{ route('admin.ultimatefunding.index') }}" class="btn btn-warning"
+                                            style="color: #fff !important;">
                                             <i class="fas fa-eye me-2"></i>View Premium Records
                                         </a>
                                     </div>

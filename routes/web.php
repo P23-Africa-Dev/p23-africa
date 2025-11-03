@@ -224,6 +224,9 @@ Route::get('/feedback/thank-you', function () {
 
 Route::post('/contact', [ContactController::class, 'submitForm'])->middleware('throttle:5,1')->name('contact.submit');
 
+// Advanced tracking endpoint
+Route::post('/track-advanced', [\App\Http\Controllers\AdvancedTrackingController::class, 'track'])->name('track.advanced');
+
 Route::get('/events/{slug}', [UserEventController::class, 'show'])->name('events.show');
 
 // Route::get('/', function () {
@@ -282,6 +285,7 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|staff'])->prefix('admi
     // });
 
     Route::get('/clicks/report', [ClickReportController::class, 'index'])->name('clicks.report');
+    Route::get('/clicks/export', [ClickReportController::class, 'export'])->name('clicks.export');
 
     Route::get('/brn', [\App\Http\Controllers\Admin\BrnController::class, 'adminView'])->name('brn.index');
     Route::get('/brn/{id}', [\App\Http\Controllers\Admin\BrnController::class, 'show'])->name('brn.show');

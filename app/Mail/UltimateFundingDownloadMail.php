@@ -54,10 +54,10 @@ class UltimateFundingDownloadMail extends Mailable
         $attachments = [];
 
         // Add the Ultimate Funding Directory PDF if it exists
-        $directoryPath = public_path('playbook/Ultimate-Funding-Investor-Directory.pdf');
+        $directoryPath = public_path('playbook/P23-Africa-Ultimate-Funding-Directory.pdf');
         if (file_exists($directoryPath)) {
             $attachments[] = Attachment::fromPath($directoryPath)
-                ->as('Ultimate-Funding-Investor-Directory.pdf')
+                ->as('P23-Africa-Ultimate-Funding-Directory.pdf')
                 ->withMime('application/pdf');
         }
 

@@ -282,7 +282,8 @@
                     Start connecting with investors today!
                 </p>
 
-                <a href="{{ asset('playbook/Ultimate-Funding-Investor-Directory.pdf') }}" class="button button-premium">
+                <a href="{{ asset('playbook/P23-Africa-Ultimate-Funding-Directory.pdf') }}"
+                    class="button button-premium">
                     💎 Download Premium Directory PDF
                 </a>
 
@@ -305,7 +306,8 @@
             <div class="highlight-box">
                 <h3 style="color: #0d4036; margin-top: 0;">💳 Complete Your Purchase</h3>
                 <p>To access your Ultimate Funding & Investor Directory, please complete your payment of
-                    <strong>$50.00</strong>.</p>
+                    <strong>₦30,000</strong>.
+                </p>
                 <p>Once payment is confirmed, you'll receive immediate access to the complete directory with all premium
                     features.</p>
             </div>

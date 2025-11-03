@@ -364,6 +364,122 @@
         }
     }
 
+    /* PROCESSING OVERLAY STYLES */
+    #processingOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+
+    #processingOverlay.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    #processingOverlay.fade-out {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .overlay-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(13, 64, 54, 0.85);
+        backdrop-filter: blur(3px);
+    }
+
+    .processing-spinner {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+        padding: 20px 25px;
+        border-radius: 15px;
+        font-weight: bold;
+        box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 250px;
+        text-align: center;
+        flex-direction: column;
+    }
+
+    .spinner-icon {
+        font-size: 24px;
+        color: white;
+    }
+
+    .processing-text {
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .success-icon {
+        font-size: 24px;
+        color: #4CAF50;
+    }
+
+    .countdown-text {
+        font-size: 16px;
+        font-weight: 600;
+        animation: pulse 1s infinite;
+    }
+
+    #successBanner {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%) translateY(-100%);
+        background: linear-gradient(135deg, #4CAF50, #45a049);
+        color: white;
+        padding: 15px 25px;
+        border-radius: 10px;
+        font-weight: bold;
+        font-size: 16px;
+        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        z-index: 10001;
+        transition: transform 0.3s ease;
+        opacity: 0;
+    }
+
+    #successBanner.show {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+
+    #successBanner.fade-out {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-100%);
+    }
+
+    .success-content {
+        display: flex;
+        align-items: center;
+    }
+
+    @keyframes pulse {
+
+        0%,
+        100% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.05);
+        }
+    }
+
     /* BUTTON DISABLED STATE */
     .form-btn:disabled {
         opacity: 0.7;
@@ -600,6 +716,20 @@
 </style>
 
 @section('content')
+    <!-- Success Alert for Payment -->
+    <div id="paymentSuccessAlert" class="alert alert-success"
+        style="display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; width: 90%; max-width: 500px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+        <div class="d-flex align-items-center">
+            <i class="fas fa-check-circle me-2" style="color: #28a745; font-size: 1.2rem;"></i>
+            <div>
+                <strong>Payment Successful!</strong><br>
+                <small>The Ultimate Funding Directory has been sent to your email.</small>
+            </div>
+            <button type="button" class="btn-close ms-auto"
+                onclick="document.getElementById('paymentSuccessAlert').style.display='none'"></button>
+        </div>
+    </div>
+
     <section class="intro-sales funding-ebook">
         <div class="container">
             <div class="intro-container">
@@ -749,7 +879,7 @@
                 <div class="payment-info">
                     <div class="price-display">
                         <span class="price-label">Premium Directory Access:</span>
-                        <span class="price-amount">$50.00</span>
+                        <span class="price-amount">$50</span>
                     </div>
                     <p class="payment-description">
                         🌟 One-time payment for lifetime access to the complete e-book<br>
@@ -776,6 +906,25 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Check for payment success parameter
+        const urlParams = new URLSearchParams(window.location.search);
+
+        if (urlParams.get('payment') === 'success') {
+            document.getElementById('paymentSuccessAlert').style.display = 'block';
+            // Auto-hide after 10 seconds
+            setTimeout(() => {
+                document.getElementById('paymentSuccessAlert').style.display = 'none';
+            }, 10000);
+            // Remove the parameter from URL without page reload
+            window.history.replaceState({}, document.title, window.location.pathname);
+        } else if (urlParams.get('payment') === 'processing') {
+            // Show processing overlay and start verification
+            showProcessingOverlay();
+            startPaymentVerification();
+            // Remove the parameter from URL without page reload
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+
         // Set up CSRF token for AJAX requests
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
@@ -924,8 +1073,8 @@
         // Flutterwave Payment Integration
         function initializeFlutterwavePayment(downloadId, userEmail, userName, amount) {
             FlutterwaveCheckout({
-                // public_key: "FLWPUBK_TEST-68f71675ffc7bcaf905e8893d405171a-X", // Replace with your actual public key
-                public_key: "FLWPUBK-366fbf9270d878c2e5e67b0a89f037e7-X",
+                //public_key: "FLWPUBK_TEST-68f71675ffc7bcaf905e8893d405171a-X", // Replace with your actual public key
+                public_key: "FLWPUBK_TEST-044e7163292b9b7d4f0d4db5022227c4-X",
                 tx_ref: "UF_" + downloadId + "_" + Date.now(),
                 amount: amount,
                 currency: "USD",
@@ -941,8 +1090,23 @@
                     logo: "{{ asset('images/logo.png') }}",
                 },
                 callback: function(data) {
-                    // Handle successful payment
-                    handlePaymentCallback(downloadId, data);
+                    // Immediately redirect back to page when Flutterwave returns success
+                    if (data.status === 'successful') {
+                        // Store payment data for verification
+                        sessionStorage.setItem('ultimateFundingPayment', JSON.stringify({
+                            transaction_id: data.transaction_id,
+                            tx_ref: data.tx_ref,
+                            downloadId: downloadId,
+                            status: data.status,
+                            amount: data.amount,
+                            currency: data.currency
+                        }));
+                        // Immediate redirect with processing parameter
+                        window.location.href = window.location.pathname + '?payment=processing';
+                    } else {
+                        // Handle failed payment
+                        showError('emailError', 'Payment was not successful. Please try again.');
+                    }
                 },
                 onclose: function() {
                     // User closed payment modal
@@ -974,19 +1138,18 @@
                 const data = await response.json();
 
                 if (response.ok && data.success) {
-                    showSuccess(data.message);
-                    downloadForm.reset();
-
-                    // Auto-close modal after 5 seconds
-                    setTimeout(() => {
-                        modalOverlay.classList.remove("active");
-                        clearSuccess();
-                    }, 5000);
+                    // Payment verified successfully - trigger countdown completion
+                    completeCountdownAndRedirect();
+                    console.log('Payment verified successfully');
                 } else {
+                    // Hide countdown and show error
+                    hideFloatingCountdown();
                     showError('emailError', data.message ||
                         'Payment verification failed. Please contact support.');
                 }
             } catch (error) {
+                // Hide countdown and show error
+                hideFloatingCountdown();
                 showError('emailError',
                     'Payment verification failed. Please contact support with your transaction reference.'
                 );
@@ -1063,6 +1226,302 @@
                     callback(); // Execute the callback (redirect to payment)
                 }
             }, 1000);
+        }
+
+        // Floating countdown functions
+        function showFloatingCountdown() {
+            // Create floating countdown element
+            const countdownDiv = document.createElement('div');
+            countdownDiv.id = 'floatingCountdown';
+            countdownDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #28a745, #20c997);
+                color: white;
+                padding: 15px 20px;
+                border-radius: 15px;
+                font-weight: bold;
+                font-size: 16px;
+                box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                animation: slideIn 0.5s ease-out;
+                min-width: 220px;
+                text-align: center;
+            `;
+
+            // Add CSS animation keyframes if not already added
+            if (!document.getElementById('countdownStyles')) {
+                const style = document.createElement('style');
+                style.id = 'countdownStyles';
+                style.textContent = `
+                    @keyframes slideIn {
+                        from {
+                            transform: translateX(100%);
+                            opacity: 0;
+                        }
+                        to {
+                            transform: translateX(0);
+                            opacity: 1;
+                        }
+                    }
+                    @keyframes pulse {
+                        0%, 100% { transform: scale(1); }
+                        50% { transform: scale(1.05); }
+                    }
+                    @keyframes spin {
+                        0% { transform: rotate(0deg); }
+                        100% { transform: rotate(360deg); }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+
+            countdownDiv.innerHTML = `
+                <i class="fas fa-check-circle" style="font-size: 20px;"></i>
+                <div>
+                    <div style="font-size: 14px;">Payment Successful!</div>
+                    <div id="countdownText" style="font-size: 16px; animation: pulse 1s infinite;">
+                        <i class="fas fa-spinner" style="animation: spin 1s linear infinite; margin-right: 8px;"></i>
+                        Verifying payment...
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(countdownDiv);
+
+            // Start verification timeout countdown (max 30 seconds)
+            let maxWaitTime = 30;
+            const timeoutInterval = setInterval(() => {
+                maxWaitTime--;
+                const countdownText = document.getElementById('countdownText');
+                if (countdownText && maxWaitTime > 0) {
+                    countdownText.innerHTML = `
+                        <i class="fas fa-spinner" style="animation: spin 1s linear infinite; margin-right: 8px;"></i>
+                        Verifying payment...
+                    `;
+                } else if (maxWaitTime <= 0) {
+                    // Timeout - redirect anyway
+                    clearInterval(timeoutInterval);
+                    window.location.href = window.location.pathname + '?payment=success';
+                }
+            }, 1000);
+
+            // Store interval ID for cleanup
+            countdownDiv.timeoutInterval = timeoutInterval;
+        }
+
+        function completeCountdownAndRedirect() {
+            const countdownDiv = document.getElementById('floatingCountdown');
+            if (countdownDiv) {
+                // Clear timeout interval
+                if (countdownDiv.timeoutInterval) {
+                    clearInterval(countdownDiv.timeoutInterval);
+                }
+
+                // Update to show 3-second countdown
+                const countdownText = document.getElementById('countdownText');
+                if (countdownText) {
+                    let timeLeft = 3;
+                    countdownText.innerHTML = `Redirecting in ${timeLeft}s`;
+                    countdownText.style.animation = 'pulse 1s infinite';
+
+                    const finalCountdown = setInterval(() => {
+                        timeLeft--;
+                        countdownText.textContent = timeLeft > 0 ? `Redirecting in ${timeLeft}s` :
+                            'Redirecting...';
+
+                        if (timeLeft <= 0) {
+                            clearInterval(finalCountdown);
+                            // Redirect to success page
+                            window.location.href = window.location.pathname + '?payment=success';
+                        }
+                    }, 1000);
+                }
+            } else {
+                // If countdown doesn't exist, redirect immediately
+                window.location.href = window.location.pathname + '?payment=success';
+            }
+        }
+
+        function hideFloatingCountdown() {
+            const countdownDiv = document.getElementById('floatingCountdown');
+            if (countdownDiv) {
+                // Clear all intervals
+                if (countdownDiv.timeoutInterval) {
+                    clearInterval(countdownDiv.timeoutInterval);
+                }
+                // Remove the element
+                countdownDiv.remove();
+            }
+        }
+
+        // Processing overlay functions
+        function showProcessingOverlay() {
+            // Create processing overlay element
+            const overlay = document.createElement('div');
+            overlay.id = 'processingOverlay';
+            overlay.innerHTML = `
+                <div class="overlay-background"></div>
+                <div class="processing-spinner">
+                    <div class="spinner-icon">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </div>
+                    <div class="processing-text">Verifying payment...</div>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+
+            // Show with fade-in animation
+            setTimeout(() => {
+                overlay.classList.add('show');
+            }, 100);
+
+            return overlay;
+        }
+
+        function showSuccessCountdown() {
+            const overlay = document.getElementById('processingOverlay');
+            if (overlay) {
+                // Update overlay to show success countdown
+                const spinner = overlay.querySelector('.processing-spinner');
+                if (spinner) {
+                    let timeLeft = 3;
+                    spinner.innerHTML = `
+                        <div class="success-icon">
+                            <i class="fas fa-check-circle" style="color: #4CAF50; font-size: 2rem;"></i>
+                        </div>
+                        <div class="countdown-text" id="countdownText">Payment Successful! Redirecting in ${timeLeft}s</div>
+                    `;
+
+                    const finalCountdown = setInterval(() => {
+                        timeLeft--;
+                        const countdownText = document.getElementById('countdownText');
+                        if (countdownText) {
+                            countdownText.textContent = timeLeft > 0 ?
+                                `Payment Successful! Redirecting in ${timeLeft}s` : 'Redirecting...';
+                        }
+
+                        if (timeLeft <= 0) {
+                            clearInterval(finalCountdown);
+                            hideProcessingOverlay();
+                            // Show success message
+                            showSuccessMessage();
+                        }
+                    }, 1000);
+                }
+            }
+        }
+
+        function hideProcessingOverlay() {
+            const overlay = document.getElementById('processingOverlay');
+            if (overlay) {
+                overlay.classList.add('fade-out');
+                setTimeout(() => {
+                    overlay.remove();
+                }, 300);
+            }
+        }
+
+        function showSuccessMessage() {
+            // Create success message banner
+            const successBanner = document.createElement('div');
+            successBanner.id = 'successBanner';
+            successBanner.innerHTML = `
+                <div class="success-content">
+                    <i class="fas fa-check-circle" style="color: #4CAF50; margin-right: 12px;"></i>
+                    <span>Payment Successful!</span>
+                </div>
+            `;
+            document.body.appendChild(successBanner);
+
+            // Show with slide-down animation
+            setTimeout(() => {
+                successBanner.classList.add('show');
+            }, 100);
+
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                successBanner.classList.add('fade-out');
+                setTimeout(() => {
+                    successBanner.remove();
+                }, 300);
+            }, 5000);
+        }
+
+        function startPaymentVerification() {
+            // Get payment data from session storage
+            const paymentData = JSON.parse(sessionStorage.getItem('ultimateFundingPayment') || '{}');
+
+            console.log('Payment data from session storage:', paymentData);
+
+            if (!paymentData.transaction_id) {
+                console.error('No payment data found - stored data:', paymentData);
+                console.log('Session storage contents:', sessionStorage.getItem('ultimateFundingPayment'));
+                hideProcessingOverlay();
+                // Fallback - still show success even if verification fails
+                setTimeout(() => {
+                    window.location.href = window.location.pathname + '?payment=success';
+                }, 2000);
+                return;
+            }
+
+            console.log('Starting verification with transaction_id:', paymentData.transaction_id, 'tx_ref:',
+                paymentData.tx_ref);
+            // Start verification process
+            verifyPayment(paymentData.transaction_id, paymentData.tx_ref);
+        }
+        async function verifyPayment(transactionId, txRef) {
+            try {
+                console.log('Starting payment verification with:', {
+                    transactionId,
+                    txRef
+                });
+
+                const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                const response = await fetch('/ultimate-funding/payment-callback', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        transaction_id: transactionId,
+                        tx_ref: txRef
+                    })
+                });
+
+                console.log('Response status:', response.status);
+                const data = await response.json();
+                console.log('Response data:', data);
+
+                if (response.ok && data.success) {
+                    // Payment verified successfully
+                    console.log('Payment verification successful');
+                    showSuccessCountdown();
+                    // Clear stored payment data
+                    sessionStorage.removeItem('ultimateFundingPayment');
+                } else {
+                    // Verification failed
+                    console.error('Payment verification failed:', data.message);
+                    hideProcessingOverlay();
+                    // Still redirect to success page with error handling
+                    setTimeout(() => {
+                        window.location.href = window.location.pathname + '?payment=success';
+                    }, 2000);
+                }
+            } catch (error) {
+                console.error('Verification error:', error);
+                hideProcessingOverlay();
+                // Still redirect to success page
+                setTimeout(() => {
+                    window.location.href = window.location.pathname + '?payment=success';
+                }, 2000);
+            }
         }
     });
 </script>
