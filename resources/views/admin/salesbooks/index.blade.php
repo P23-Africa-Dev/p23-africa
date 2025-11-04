@@ -113,7 +113,7 @@
                                 <div class="card-body p-0">
                                     <div class="table-responsive">
                                         <table class="table table-hover mb-0">
-                                            <thead class="table-dark">
+                                            <thead class="">
                                                 <tr>
                                                     <th>#</th>
                                                     <th><i class="fas fa-user me-1"></i>Name</th>

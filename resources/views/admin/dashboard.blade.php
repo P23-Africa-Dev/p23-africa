@@ -126,7 +126,7 @@
                                     <div class="bg-info bg-opacity-10 rounded p-2 me-3">
                                         <i class="fa fa-download text-info"></i>
                                     </div>
-                                    <span class="text-dark dark:text-gray-100 fw-medium">Playbook Downloads</span>
+                                    <span class="text-dark dark:text-gray-100 fw-medium">Ebook Downloads</span>
                                 </div>
                                 <i class="fa fa-arrow-right text-muted dark:text-gray-400"></i>
                             </a>

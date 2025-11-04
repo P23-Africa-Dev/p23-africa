@@ -2,7 +2,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Playbooks Dashboard') }}
+            {{ __('Ebooks Dashboard') }}
         </h2>
     </x-slot>
 
@@ -13,8 +13,8 @@
 
                     <!-- Dashboard Header -->
                     <div class="mb-6">
-                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Playbook Management Center</h3>
-                        <p class="text-gray-600">Manage and monitor all playbook downloads from the P23 Africa platform.
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Ebook Management Center</h3>
+                        <p class="text-gray-600">Manage and monitor all Ebook downloads from the P23 Africa platform.
                         </p>
                     </div>
 
@@ -27,7 +27,7 @@
                                         <div>
                                             <h5 class="card-title mb-0">Total Downloads</h5>
                                             <h2 class="mt-2 mb-0">{{ $stats['total_downloads'] }}</h2>
-                                            <small class="opacity-75">Across all playbooks</small>
+                                            <small class="opacity-75">Across all Ebooks</small>
                                         </div>
                                         <div class="text-end">
                                             <i class="fas fa-download fa-3x opacity-75"></i>
@@ -58,11 +58,11 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
                                             <h5 class="card-title mb-0">Total Revenue</h5>
-                                            <h2 class="mt-2 mb-0">₦{{ number_format($stats['total_revenue'], 2) }}</h2>
+                                            <h2 class="mt-2 mb-0">${{ number_format($stats['total_revenue'], 2) }}</h2>
                                             <small class="opacity-75">From premium downloads</small>
                                         </div>
                                         <div class="text-end">
-                                            <i class="fas fa-naira-sign fa-3x opacity-75"></i>
+                                            <i class="fas fa-dollar-sign fa-3x opacity-75"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -70,15 +70,15 @@
                         </div>
                     </div>
 
-                    <!-- Playbook Cards -->
+                    <!-- Ebook Cards -->
                     <div class="row">
-                        <!-- P23 Africa's Founders Playbook -->
+                        <!-- P23 Africa's Founders Ebook -->
                         <div class="col-lg-4 mb-4">
                             <div class="card playbook-card h-100">
                                 <div class="card-header bg-primary text-white">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <h5 class="mb-0">
-                                            <i class="fas fa-book me-2"></i>Founders Playbook
+                                            <i class="fas fa-book me-2"></i>Founders Ebook
                                         </h5>
                                         <span class="badge bg-light text-primary">{{ $stats['playbook_downloads'] }}
                                             downloads</span>
@@ -198,7 +198,7 @@
                                         <div class="row text-center mt-2">
                                             <div class="col-12">
                                                 <div class="stat-value text-primary">
-                                                    ₦{{ number_format($stats['total_revenue'], 2) }}</div>
+                                                    ${{ number_format($stats['total_revenue'], 2) }}</div>
                                                 <div class="stat-label">Total Revenue</div>
                                             </div>
                                         </div>
@@ -244,7 +244,7 @@
                                             <tr>
                                                 <th>Name</th>
                                                 <th>Email</th>
-                                                <th>Playbook</th>
+                                                <th>Ebook</th>
                                                 <th>Status</th>
                                                 <th>Downloaded</th>
                                             </tr>
@@ -254,7 +254,7 @@
                                                 <tr>
                                                     <td>{{ $download->name }}</td>
                                                     <td>{{ $download->email }}</td>
-                                                    <td><span class="badge bg-primary">Founders Playbook</span></td>
+                                                    <td><span class="badge bg-primary">Founders Ebook</span></td>
                                                     <td><span class="badge bg-success">Downloaded</span></td>
                                                     <td>{{ $download->created_at->diffForHumans() }}</td>
                                                 </tr>
@@ -323,12 +323,12 @@
         .stats-summary {
             text-align: center;
             padding: 1rem;
-            background: #495057;
+            background: #a7a6a6;
             border-radius: 0.5rem;
         }
 
         .premium-stats {
-            background: linear-gradient(135deg, #798188 0%, #495057 100%);
+            background: linear-gradient(135deg, #cfc9c9 0%, #a7a6a6 100%);
             padding: 1rem;
             border-radius: 0.5rem;
         }

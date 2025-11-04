@@ -67,8 +67,8 @@
 
     <!--{{-- Use built assets on production --}}-->
     @env('production')
-        <link rel="stylesheet" href="{{ asset('build/assets/app-2r1gdpuA.css') }}">
-        <script src="{{ asset('build/assets/app-Bf4POITK.js') }}" defer></script>
+        <link rel="stylesheet" href="{{ asset('build/assets/app-eDMIrGvm.css') }}">
+        <script src="{{ asset('build/assets/app-CzFCdd-N.js') }}" defer></script>
     @endenv
 
     <x-head.tinymce-config />
