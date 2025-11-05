@@ -19,239 +19,239 @@
 {{-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> --}}
 
 <style>
-    body {
-        font-family: "GT Walsheim Trial Md";
-    }
 
-    .container {
-        max-width: 1024px;
-        margin: 0 auto;
-    }
+  
 
-    .intro-sales {
-        padding: 2rem 1.5rem;
-        background-image: url("/img/first-bg.png");
+   
+body {
+  font-family: "GT Walsheim ProCB";
+}
 
+.sales-container{
+  max-width: 1204px;
+  margin: 0 auto;
+}
 
-        background-repeat: repeat;
-        background-size: contain;
-        margin-top: 3rem;
-    }
+.intro-sales {
+  padding: 2rem 2.5rem 2rem 1.9rem;
+  background-image: url("/img/first-bg.png");
+  background-repeat: repeat;
+  background-size: contain;
+  margin-top: 5rem;
 
-    .intro-container {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
+}
+.intro-container {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 2rem;
+}
 
-    .intro-content h1 {
-        font-size: 2.8rem;
-        font-weight: 900;
-        color: #0d4036;
-        line-height: 1.1;
-        /* font-family: 'GT Walsheim Trial Cn Bl'; */
+.intro-image.desktop {
+  display: none;
+}
+.intro-image img {
+  max-width: 100%;
+}
 
-    }
+.intro-image.mobile img {
+  margin-top: 15px;
+  margin-left: -6px;
+}
 
-    .intro-content h1 span {
-        color: #52ccb4;
-    }
+.intro-content {
+  /* border: 1px solid red; */
+}
 
-    .intro-content p {
-        color: #0d4036;
-        font-weight: 200;
-        margin: 1rem 0 1.5rem;
-        max-width: 22rem;
-    }
+.intro-content h1 {
+  font-size: 3.3rem;
+  color: #0d4036;
+  line-height: 1;
+  font-weight: 900;
+  /* font-family: "GT Walsheim ProCB";  */
+}
+.intro-content h1 span {
+  color: #52ccb4;
+}
+.intro-content p {
+  color: #0d4036;
+  margin: 0.8rem 0;
+  max-width: 19rem;
+  font-family: "GT Walsheim Con";
+  /* font-weight: 500; */
+  font-weight: lighter;
+  line-height: 1.6;
+  font-size: 15px;
+}
+.intro-sales .cta-btn {
+  display: inline-block;
+  padding: 0.9rem 4rem;
+  background: #52ccb4;
+  color: #0d4036;
+  font-family: "GT Walsheim Trial Cn Md";
 
-    .intro-sales .cta-btn {
-        display: inline-block;
-        padding: 0.9rem 4rem;
-        background: #52ccb4;
-        color: #0d4036;
-        font-weight: 200;
-        border-radius: 6px;
-        text-decoration: none;
-        margin-bottom: 2rem;
-        box-shadow: 5px 2px 1px rgba(0, 0, 0, 0.5);
-    }
+  font-weight: 500;
+  letter-spacing: 0.7px;
+  border-radius: 6px;
+  text-decoration: none;
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
+}
 
-    .stats-box {
-        background: white;
-        padding: 1.2rem 1.5rem;
-        border-radius: 8px;
-        width: fit-content;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
-    }
+/* =========================================BOOK SECTION */
 
-    .stats-box h2 {
-        font-size: 2rem;
-        font-weight: 800;
-        color: #0d4036;
-    }
+.book-section {
+  padding: 3rem 1.5rem;
+  background-image: url("/img/second-bg.png");
+  background-repeat: repeat;
+  background-size: contain;
+}
 
-    .stats-box p {
-        margin-top: 0.3rem;
-        color: #0d4036;
-        font-size: 0.9rem;
-    }
+.book-container {
+  text-align: center;
+  color: #0d4036;
+}
 
-    .intro-image.desktop {
-        display: none;
-    }
+.book-header h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  font-family: "GT Walsheim ProCB";
 
-    .intro-image img {
-        width: 100%;
-        border-radius: 40px;
-        object-fit: cover;
-    }
+}
 
-    /* =========================================BOOK SECTION */
+.book-header p {
+  max-width: 350px;
+  margin: 1rem auto 2rem;
+  padding: 0px 7px;
+  line-height: 1.15;
+  font-size: 17px;
+  vertical-align: middle;
+  font-family: "GT Walsheim Con";
+  /* font-weight: 600; */
+}
 
-    .book-section {
-        padding: 3rem 1.5rem;
-        background-image: url("/img/second-bg.png");
-        background-repeat: repeat;
-        background-size: contain;
-    }
+.book-cards {
+  display: grid;
+  gap: 0.1rem;
+  margin-top: 1.5rem;
+}
 
-    .book-container {
-        text-align: center;
-        color: #0d4036;
-    }
+.book-card {
+  overflow: hidden;
+}
 
-    .book-header h3 {
-        font-size: 1.3rem;
-        font-weight: 700;
-    }
+.book-card .card-image {
+  position: relative;
+  width: 100%;
+  height: 400px;
+}
 
-    .book-header p {
-        max-width: 650px;
-        margin: 1rem auto 2rem;
-        line-height: 1.6;
-    }
+.book-card .card-image img {
+  width: 100%;
+  height: 100%;
+}
 
-    .book-cards {
-        display: grid;
-        gap: 1.5rem;
-        margin-top: 1.5rem;
-    }
+.book-section .closing-text {
+  max-width: 350px;
+  margin: 2.5rem auto 1.5rem;
+  font-size: 1.3rem;
+  padding: 0px 20px;
 
-    .book-card {
-        /* border-radius: 12px; */
+  font-weight: 700;
+  font-family: "GT Walsheim ProCB";
 
-        overflow: hidden;
-    }
+}
 
-    .book-card .card-image {
-        position: relative;
-        width: 100%;
-        height: 400px;
+.book-section .cta-btn {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: #52ccb4;
+  color: #0d4036;
+  font-weight: 200;
+  border-radius: 6px;
+  text-decoration: none;
+  margin-top: 1.3rem;
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
 
-        /* justify-content: flex-start; */
-    }
+  font-family: "GT Walsheim Trial Cn Md";
 
-    .book-card .card-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-    }
+  /* font-weight: 500; */
+}
 
-    .book-card h4 {
-        margin: 1rem 0 0.5rem;
-        font-size: 1.1rem;
-        font-weight: 700;
-    }
+/* OVERLAY */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
 
-    .book-card p {
-        padding: 0 1rem;
-        line-height: 1.5;
-        font-size: 0.95rem;
-    }
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
 
-    .closing-text {
-        max-width: 650px;
-        margin: 2.5rem auto 1.5rem;
-        font-size: 1rem;
-    }
+/* MODAL ANIMATION */
+.modal-box {
+  background-image: url("/img/first-bg.png");
 
-    .book-section .cta-btn {
-        display: inline-block;
-        padding: 1rem 2rem;
-        background: #0d4036;
-        color: white;
-        font-weight: 600;
-        text-decoration: none;
-        border-radius: 8px;
-    }
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+  text-align: center;
 
-    /* OVERLAY */
-    .modal-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.55);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 1rem;
-        z-index: 1000;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.35s ease, visibility 0.35s ease;
-    }
+  /* Animation starting state */
+  transform: translateY(40px) scale(0.92);
+  opacity: 0;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
 
-    .modal-overlay.active {
-        opacity: 1;
-        visibility: visible;
-    }
+/* When overlay is active, animate modal in */
+.modal-overlay.active .modal-box {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
 
-    /* MODAL ANIMATION */
-    .modal-box {
-        background: #ffffff;
-        background-image: url("bg-texture.png");
-        background-size: cover;
-        border-radius: 18px;
-        padding: 2rem;
-        width: 100%;
-        max-width: 400px;
-        position: relative;
-        text-align: center;
+/* TEXT */
+.modal-box h3 {
+  color: #0d4036;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  font-family: "GT Walsheim Trial Cn Md";
+  font-weight: 500;
+  margin-bottom: 3rem;
+  padding: 0px 60px;
+}
 
-        /* Animation starting state */
-        transform: translateY(40px) scale(0.92);
-        opacity: 0;
-        transition: transform 0.35s ease, opacity 0.35s ease;
-    }
+/* INPUTS */
+.modal-box input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 2rem;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  margin-bottom: 2.3rem;
+  font-size: 0.95rem;
+  box-shadow: 2px 10px 10px rgba(0, 0, 0, 0.12);
+  border-bottom: 1.6px solid #0d4036;
+}
+.modal-box input::placeholder {
+  color: #afaeae;
+  font-family: "GT Walsheim Con";
+  letter-spacing: 0.4px;
+}
 
-    /* When overlay is active, animate modal in */
-    .modal-overlay.active .modal-box {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-    }
-
-    /* TEXT */
-    .modal-box h3 {
-        color: #0d4036;
-        font-size: 1.1rem;
-        font-weight: 700;
-        line-height: 1.4;
-        margin-bottom: 1.5rem;
-    }
-
-    /* INPUTS */
-    .modal-box input {
-        width: 100%;
-        padding: 1rem;
-        border-radius: 10px;
-        border: 2px solid #e1e5e9;
-        outline: none;
-        margin-bottom: 1rem;
-        font-size: 0.95rem;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
-        transition: border-color 0.3s ease;
-    }
-
-    .modal-box input:focus {
+   .modal-box input:focus {
         border-color: #52ccb4;
         box-shadow: 0 4px 10px rgba(82, 204, 180, 0.2);
     }
@@ -304,212 +304,379 @@
         cursor: not-allowed;
     }
 
-    /* BUTTON */
-    .form-btn {
-        width: 100%;
-        padding: 1rem;
-        background: #0d4036;
-        color: white;
-        font-weight: 600;
-        border-radius: 10px;
-        border: none;
-        cursor: pointer;
-        font-size: 1rem;
-    }
+/* BUTTON */
+.form-btn {
+  padding: 1rem;
+  background: #0d4036;
+  color: white;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 20px 50px;
+  font-family: "GT Walsheim Con";
+  letter-spacing: 0.4px;
+}
 
-    /* CLOSE BUTTON */
-    .close-modal {
-        position: absolute;
-        top: 8px;
-        right: 12px;
-        background: none;
-        border: none;
-        font-size: 1.8rem;
-        color: #0d4036;
-        cursor: pointer;
-    }
+/* CLOSE BUTTON */
+.close-modal {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: #0d4036;
+  cursor: pointer;
+}
 
-    /* ================================== Premium Section */
+/* ================================== Premium Section */
 
-    .premium-section {
-        background-color: #fff;
-    }
+.premium-section {
+  background-color: #fff;
+}
 
-    .premium-section .content {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
+.premium-section .content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
-    .premium-section .text-content {
-        text-align: center;
-        background-color: #e5ae56;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        border-radius: 10px;
-        padding: 30px;
-        text-align: left;
-        gap: 60px;
-        margin: 20px;
-    }
+.premium-section .text-content {
+  text-align: center;
+  background-color: #e5ae56;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 10px;
+  padding: 40px;
+  text-align: left;
+  gap: 80px;
+  margin: 16px;
+  font-family: "GT Walsheim ProCB";
 
-    .premium-section .text-content-upper,
-    .premium-section .text-content-below {
-        max-width: 210px;
-    }
+}
+.premium-section .text-content-upper,
+.premium-section .text-content-below {
+  max-width: 210px;
+}
 
-    .premium-section .text-content-upper h2 {
-        font-size: 20px;
-        color: #0d4036;
-        padding-bottom: 20px;
-    }
+.premium-section .text-content-upper h2 {
+  font-size: 20px;
+  color: #0d4036;
+  padding-bottom: 20px;
+  padding-right: 30px;
+}
+.premium-section .text-content-upper p {
+  font-size: 16px;
+  color: #0d4036;
+  line-height: 1;
+  margin-top: -4px;
 
-    .premium-section .text-content-upper p {
-        font-size: 16px;
-        color: #0d4036;
-    }
+  font-family: "GT Walsheim Con";
+}
+.premium-section .text-content-below p {
+  font-size: 19px;
+  color: #0d4036;
+  line-height: 1;
+  letter-spacing: 0.6px;
+  font-weight: 400;
+}
+.premium-section .text-content-below p img {
+  width: 50px;
 
-    .premium-section .text-content-below p {
-        font-size: 19px;
-        color: #0d4036;
-        font-weight: 700;
-    }
+  height: auto;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 5px;
+  left: 10px;
+}
 
-    .premium-section .info {
-        background-color: #2f626e;
-        padding: 20px 50px;
-    }
+.premium-section .info {
+  background-image: url("/img/last-bg.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-bottom: 30px;
+ 
 
-    .premium-section .info h3 {
-        font-size: 35px;
-        color: #fff;
-        margin-bottom: 10px;
-    }
+  padding: 35px 50px 20px 50px;
+}
 
-    .premium-section .info .info-headings {
-        display: flex;
-        color: #fff;
-        margin-top: 30px;
-    }
+.premium-section .info h3 {
+  font-size: 30px;
+  color: #fff;
+  margin-bottom: 10px;
+  max-width: 250px;
+  font-family: "GT Walsheim ProCB";
 
-    .premium-section .info .info-headings>div {
-        display: flex;
-        flex-direction: column;
-    }
+}
 
-    .premium-section .info .info-headings>div h5 {
-        font-size: 40px;
-    }
+.premium-section .info .info-headings {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  color: #fff;
+  margin-top: 30px;
+}
+.premium-section .info .info-headings > div {
+  display: flex;
+  flex-direction: column;
+}
 
-    .premium-section .info ul {
-        list-style: disc;
-        padding-left: 0;
-        color: #fff;
-        margin-top: 40px;
-    }
+.premium-section .info .info-headings > div h5 {
+  font-size: 40px;
+  font-family: "GT Walsheim ProCB";
 
-    .premium-section .info ul li {
-        font-size: 16px;
-        margin-bottom: 10px;
-    }
+  
+}
+.premium-section .info .info-headings > div span {
+  font-size: 13px;
+  font-family: "GT Walsheim Con";
+  letter-spacing: 0.5px;
+  line-height: 1;
+  margin-top: -5px;
+}
 
-    .premium-section .learn-more {
-        display: inline-block;
-        margin-top: 20px;
-        background-color: #cced60;
-        color: #0d4036;
-        padding: 10px 20px;
-        text-decoration: none;
-        border-radius: 5px;
-        font-size: 15px;
-        width: 100%;
-        text-align: center;
-        box-shadow: 5px 2px 1px rgba(0, 0, 0, 0.5);
+.premium-section .info ul {
+  list-style: disc;
+  padding-left: 0;
+  color: #fff;
+  margin-top: 40px;
+}
 
-    }
+.premium-section .info ul li {
+  font-size: 17px;
 
+  font-family: "GT Walsheim Con";
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  margin-bottom: 10px;
+  padding-right: 30px;
+  line-height: 1;
 
-    /* Desktop */
-    @media (min-width: 768px) {
-        .intro-container {
-            /* max-width: 600px;
-    margin: 0 auto; */
-        }
+}
 
-        .intro-image {
-            max-width: 80%;
-        }
-    }
+.premium-section .learn-more {
+  display: inline-block;
+  margin-top: 60px;
+  background-color: #cced60;
+  color: #0d4036;
+  padding: 1.1rem 1.6rem;
 
-    @media (min-width: 900px) {
-        .intro-container {
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-        }
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 15px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
 
-        .intro-content {
-            max-width: 45%;
-        }
+  font-family: "GT Walsheim Con";
+  font-weight: 500;
+  margin-bottom: 20px;
+  transition: background-color 0.3s ease-in-out;
+}
+.premium-section .learn-more:hover {
+  background-color: #fff;
+  color: #0d4036;
+}
 
-        .intro-image.mobile {
-            display: none;
-        }
+/* Tablet */
+@media (min-width: 768px) {
+  .intro-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0rem;
+  }
+  .intro-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    text-align: left;
+    padding-top: 1rem;
+  }
+  .intro-content .intro-info {
+    margin-left: 10%;
+  }
+  .intro-image.desktop {
+    display: block;
+  }
 
-        .intro-image.desktop {
-            display: block;
-        }
+  .intro-image.mobile {
+    display: none;
+  }
+  /* =========================================BOOK SECTION */
 
-        .intro-image {
-            max-width: 60%;
-        }
+  .book-cards {
+    max-width: 400px;
+    margin: 0 auto;
+  }
 
-        .intro-content h1 {
-            font-size: 5rem;
-        }
+  .book-header p {
+    max-width: 650px;
+  }
 
-        .book-cards {
-            grid-template-columns: repeat(3, 1fr);
-        }
+  .book-cards {
+    max-width: initial;
+    grid-template-columns: repeat(3, 1fr);
+  }
 
-        .premium-section .content {
-            flex-direction: row;
-            padding: 20px;
-        }
+  .book-header p {
+    padding: 0px 15px;
+  }
 
-        .premium-section .text-content {
-            margin: 0px;
-            flex: 35%;
-        }
+  .book-card .card-image {
+    width: 100%;
+    height: 270px;
+  }
 
-        .premium-section .info-container {
-            display: flex;
-        }
+  .book-section .closing-text {
+    max-width: 450px;
+    font-size: 1rem;
+    padding: 0px 20px;
+  }
 
-        .premium-section .info {
-            border-radius: 10px;
-        }
+  .book-section .cta-btn {
+    margin-top: 0.3rem;
+    box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
+  }
 
-        .premium-section .info-container h3 {
-            font-size: 35px;
-            padding-right: 30px;
-            max-width: 400px;
-        }
+  .premium-section .learn-more {
+    width: 50%;
+  }
+}
+@media (min-width: 900px) {
+  .intro-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0rem;
+  }
 
-        .premium-section .info .info-headings {
-            margin-top: 0px;
-        }
+  .intro-content {
+    justify-content: start;
+    align-items: end;
+    text-align: left;
+    padding-top: 4rem;
+    margin-right: 16%;
+    /* border: 1px solid red; */
+  }
+  .intro-content h1 {
+    font-size: 4.5rem;
+  }
 
-        .premium-section .learn-more {
-            width: 60%;
-        }
-    }
+  .intro-content .intro-info {
+    margin-right: 9%;
+  }
+
+  .intro-image.desktop {
+    padding: 1rem 1rem 0rem 0rem;
+  }
+  .intro-image.desktop {
+    max-width: 100%;
+    margin-left: -18%;
+  }
+
+  /* =========================================BOOK SECTION */
+  .book-card .card-image {
+    width: 100%;
+    height: 400px;
+  }
+
+  .book-section .closing-text {
+    font-size: 1.1rem;
+  }
+
+  /* =========================================MODAL */
+
+  .modal-box {
+    padding: 3rem 5rem;
+    border-radius: 15px;
+    max-width: 650px;
+  }
+
+  /* BUTTON */
+  .form-btn {
+    padding: 15px 60px;
+    margin-top: 10px;
+    font-size: 1rem;
+  }
+  .modal-box h3 {
+    padding: 0px 0px;
+  }
+
+  /* ==================================== PREMIUM SECTION */
+  .premium-section .content {
+    flex-direction: row;
+    padding: 20px;
+  }
+  .premium-section .text-content {
+    margin: 0px;
+    width: 440px;
+    padding: 40px 30px;
+    gap: 20px;
+  }
+  .premium-section .info-container {
+    display: flex;
+    gap: 30px;
+  }
+  .premium-section .info {
+    border-radius: 10px;
+    padding: 40px 50px;
+  margin-bottom: 0px;
+
+  }
+  .premium-section .info ul {
+    margin-top: 15px;
+  }
+
+  .premium-section .info-container h3 {
+    font-size: 30px;
+    padding-right: 30px;
+    max-width: 300px;
+  }
+  .premium-section .info .info-headings {
+    margin-top: 0px;
+  }
+  .premium-section .info ul li {
+    font-size: 19px;
+  }
+  .premium-section .learn-more {
+    width: 45%;
+    margin-top: 5px;
+  margin-bottom: 0px;
+
+  }
+}
+
+@media (min-width: 1200px) {
+    .intro-container {
+    transform: translateX(40px);
+  }
+  .intro-content h1 {
+    font-size: 5.2rem;
+  }
+
+  .intro-content p {
+    font-size: 17px;
+    line-height: 1.1;
+    max-width: 21rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .intro-content .intro-info {
+    margin-right: 0%;
+    margin-left: 0%;
+    align-self: start;
+    transform: translateX(72px);
+
+  }
+}
+
 </style>
 
 @section('content')
     <section class="intro-sales">
-        <div class="container">
+        <div class="sales-container">
             <div class="intro-container">
                 <div class="intro-content">
                     <h1>
@@ -518,12 +685,16 @@
                         <span>Guidebook</span>
                     </h1>
 
-                    <p>
-                        A step-by-step guide to becoming investor-ready, built for African
-                        entrepreneurs.
-                    </p>
+                           <div class="intro-info">
+                          <p>
+                            A step-by-step guide to becoming investor-ready, built for
+                            African entrepreneurs.
+                          </p>
 
-                    <a href="#getGuide" class="cta-btn">Find Out More</a>
+                              <a href="#getGuide" class="cta-btn">Find Out More</a>
+                        </div>
+
+                   
                 </div>
 
                 <div class="intro-image desktop">
@@ -537,7 +708,7 @@
     </section>
 
     <section class="book-section">
-        <div class="container">
+        <div class="sales-container">
             <div class="book-container">
                 <div class="book-header">
                     <h3>About the Book</h3>
@@ -577,47 +748,55 @@
         </div>
     </section>
 
-    <section class="premium-section">
-        <div class="container">
-            <div class="content">
-                <div class="text-content">
-                    <div class="text-content-upper">
-                        <h2>When You’re Ready to Raise...</h2>
-                        <p>Get Access to the Ultimate Funding & Investor Directory</p>
-                    </div>
-                    <div class="text-content-below">
-                        <p>Once you’ve completed your free guide, take the next step.</p>
-                        <span></span>
-                    </div>
-                </div>
-                <div class="info">
-                    <div class="info-container">
-                        <h3>Our premium Funding Directory includes:</h3>
-                        <div class="info-headings-container">
-                            <div class="info-headings">
-                                <div>
-                                    <h5>40+</h5>
-                                    <span> African countries covered </span>
-                                </div>
-                                <div>
-                                    <h5>40+</h5>
-                                    <span> African countries covered </span>
-                                </div>
-                            </div>
-                            <ul>
-                                <li>Verified investors actively funding African startups</li>
-                                <li>
-                                    Bonus: Investor-ready templates and funding strategy
-                                    planners
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
 
-                    <a href="#" class="learn-more">Learn More About the Investor Directory</a>
-                </div>
+
+
+        <section class="premium-section">
+      <div class="sales-container">
+        <div class="content">
+          <div class="text-content">
+            <div class="text-content-upper">
+              <h2>When You’re Ready to Raise...</h2>
+              <p>Get Access to the Ultimate Funding & Investor Directory</p>
             </div>
+            <div class="text-content-below">
+              <p>
+                Once you’ve completed your free guide, take the next step.
+                <img src="{{ asset('./img/arrow-right.png') }}" alt="" />
+              </p>
+              <!-- <span></span> -->
+            </div>
+          </div>
+          <div class="info">
+            <div class="info-container">
+              <h3>Our premium Funding Directory includes:</h3>
+              <div class="info-headings-container">
+                <div class="info-headings">
+                  <div>
+                    <h5>40+</h5>
+                    <span> African countries <br> covered </span>
+                  </div>
+                  <div>
+                    <h5>100+</h5>
+                    <span> Global grant funders/VC investors </span>
+                  </div>
+                </div>
+                <ul>
+                  <li>Verified investors actively funding African startups</li>
+                  <li>
+                    Bonus: Investor-ready templates and funding strategy
+                    planners
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <a href="#" class="learn-more"
+              >Learn More About the Investor Directory</a
+            >
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- FORM MODAL -->
@@ -645,7 +824,7 @@
                 </button>
             </form>
 
-            <button class="close-modal" id="closeModal">&times;</button>
+            <button class="close-modal" id="closeModal"></button>
         </div>
     </div>
 @endsection

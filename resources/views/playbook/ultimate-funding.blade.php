@@ -26,240 +26,238 @@
         font-family: "GT Walsheim Trial Md";
     }
 
-    .container {
-        max-width: 1024px;
+    .sales-container {
+        max-width: 1204px;
         margin: 0 auto;
     }
 
-    .intro-sales {
-        padding: 2rem 1.5rem;
-        background-image: url("/img/first-bg.png");
+        /* .sales-premimum-container {
+        max-width: 1204px;
+        margin: 0 auto;
+    } */
 
 
-        background-repeat: repeat;
-        background-size: contain;
-        margin-top: 3rem;
-    }
+.intro-sales {
+  padding: 2rem 2.5rem 2rem 1.9rem;
+  background-image: url("/img/first-bg.png");
+  background-repeat: repeat;
+  background-size: contain;
+  margin-top: 5rem;
+}
+.intro-container {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 2rem;
+}
 
-    .intro-sales.funding-ebook h1 span {
-        color: #52CCB4;
-    }
+.intro-image.desktop {
+  display: none;
+}
+.intro-image img {
+  max-width: 100%;
+}
 
-    .intro-container {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
+.intro-image.mobile img {
+  margin-top: 15px;
+  margin-left: -6px;
+}
 
-    .intro-content h1 {
-        font-size: 2.8rem;
-        font-weight: 900;
-        color: #0d4036;
-        line-height: 1.1;
-        /* font-family: 'GT Walsheim Trial Cn Bl'; */
+.intro-content h1 {
+  font-size: 3.3rem;
+  color: #0d4036;
+  line-height: 1;
+  font-weight: 900;
 
-    }
+}
+.intro-content h1 span {
+  color: #52ccb4;
+}
+.intro-content p {
+  color: #0d4036;
+  margin: 0.8rem 0;
+  max-width: 19rem;
+  font-family: "GT Walsheim Con";
+  padding-right: 30px;
 
-    .intro-content h1 span {
-        color: #52ccb4;
-    }
+  font-weight: 500;
+  line-height: 1.3;
+  font-size: 15px;
+}
+.intro-sales .cta-btn {
+  display: inline-block;
+  padding: 0.9rem 4rem;
+  background: #52ccb4;
+  font-family: "GT Walsheim Trial Cn Md";
 
-    .intro-content p {
-        color: #0d4036;
-        font-weight: 200;
-        margin: 1rem 0 1.5rem;
-        max-width: 22rem;
-    }
+  /* font-weight: 500; */
 
-    .intro-sales .cta-btn {
-        display: inline-block;
-        padding: 0.9rem 4rem;
-        background: #52ccb4;
-        color: #0d4036;
-        font-weight: 200;
-        border-radius: 6px;
-        text-decoration: none;
-        margin-bottom: 2rem;
-        box-shadow: 5px 2px 1px rgba(0, 0, 0, 0.5);
-    }
+  color: #0d4036;
+  font-weight: 500;
+  border-radius: 6px;
+  text-decoration: none;
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
+  margin-top: 15px;
+}
 
-    .stats-box {
-        background: white;
-        padding: 1.2rem 1.5rem;
-        border-radius: 8px;
-        width: fit-content;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
-    }
+/* =========================================BOOK SECTION */
 
-    .stats-box h2 {
-        font-size: 2rem;
-        font-weight: 800;
-        color: #0d4036;
-    }
+.book-section {
+  padding: 3rem 1.5rem;
+  background-image: url("/img/second-bg.png");
+  background-repeat: repeat;
+  background-size: contain;
+}
 
-    .stats-box p {
-        margin-top: 0.3rem;
-        color: #0d4036;
-        font-size: 0.9rem;
-    }
+.book-container {
+  text-align: center;
+  color: #0d4036;
+}
 
-    .intro-image.desktop {
-        display: none;
-    }
+.book-header h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding: 0px 30px;
+  font-family: "GT Walsheim ProCB";
 
-    .intro-image img {
-        width: 100%;
-        border-radius: 40px;
-        object-fit: cover;
-    }
+}
 
-    /* =========================================BOOK SECTION */
+.book-header p {
+  max-width: 500px;
+  margin: 1rem auto 2rem;
+  padding: 0px 30px;
+  line-height: 1.3;
+  font-size: 20px;
+  vertical-align: middle;
+  font-family: "GT Walsheim Con";
 
-    .book-section {
-        padding: 3rem 1.5rem;
-        background-image: url("/img/second-bg.png");
-        background-repeat: repeat;
-        background-size: contain;
-    }
+  font-weight: 400;
+}
 
-    .book-container {
-        text-align: center;
-        color: #0d4036;
-    }
+.book-cards {
+  display: grid;
+  gap: 0.1rem;
+  margin-top: 1.5rem;
+}
 
-    .book-header h3 {
-        font-size: 1.3rem;
-        font-weight: 700;
-    }
+.book-card {
+  overflow: hidden;
+}
 
-    .book-header p {
-        max-width: 500px;
-        margin: 1rem auto 2rem;
-        line-height: 1.6;
-        font-weight: 500;
-    }
+.book-card .card-image {
+  position: relative;
+  width: 100%;
+  height: 400px;
+}
 
-    .book-cards {
-        display: grid;
-        gap: 0rem;
-        margin-top: 1.5rem;
-    }
+.book-card .card-image img {
+  width: 100%;
+  height: 100%;
+}
 
-    .book-card {
-        /* border-radius: 12px; */
+.book-section .closing-text {
+  max-width: 350px;
+  margin: 2.5rem auto 1.5rem;
+  font-size: 1.3rem;
+  padding: 0px 20px;
+  line-height: 1.2;
+  font-family: "GT Walsheim ProCB";
 
-        overflow: hidden;
-    }
 
-    .book-card .card-image {
-        position: relative;
-        width: 100%;
-        height: 400px;
+  font-weight: 700;
+}
 
-        /* justify-content: flex-start; */
-    }
+.book-section .cta-btn {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: #52ccb4;
+  color: #0d4036;
+  font-family: "GT Walsheim Trial Cn Md";
 
-    .book-card .card-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-    }
+  border-radius: 6px;
+  text-decoration: none;
+  margin-top: 1.3rem;
+  box-shadow: 2px 3px 1px rgba(0, 0, 0, 0.3);
+}
 
-    .book-card h4 {
-        margin: 1rem 0 0.5rem;
-        font-size: 1.1rem;
-        font-weight: 700;
-    }
 
-    .book-card p {
-        padding: 0 1rem;
-        line-height: 1.5;
-        font-size: 0.95rem;
-    }
+/* OVERLAY */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
 
-    .closing-text {
-        max-width: 650px;
-        margin: 2.5rem auto 1.5rem;
-        font-size: 1rem;
-    }
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
 
-    .book-section .cta-btn {
-        display: inline-block;
-        padding: 1rem 2rem;
-        background: #0d4036;
-        color: white;
-        font-weight: 600;
-        text-decoration: none;
-        border-radius: 8px;
-    }
+/* MODAL ANIMATION */
+.modal-box {
+  background-image: url("/img/first-bg.png");
 
-    /* OVERLAY */
-    .modal-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.55);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 1rem;
-        z-index: 1000;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.35s ease, visibility 0.35s ease;
-    }
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+  text-align: center;
 
-    .modal-overlay.active {
-        opacity: 1;
-        visibility: visible;
-    }
+  /* Animation starting state */
+  transform: translateY(40px) scale(0.92);
+  opacity: 0;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
 
-    /* MODAL ANIMATION */
-    .modal-box {
-        background: #ffffff;
-        background-image: url("bg-texture.png");
-        background-size: cover;
-        border-radius: 18px;
-        padding: 2rem;
-        width: 100%;
-        max-width: 500px;
-        position: relative;
-        text-align: center;
+/* When overlay is active, animate modal in */
+.modal-overlay.active .modal-box {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
 
-        /* Animation starting state */
-        transform: translateY(40px) scale(0.92);
-        opacity: 0;
-        transition: transform 0.35s ease, opacity 0.35s ease;
-    }
+/* TEXT */
+.modal-box h3 {
+  color: #0d4036;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  font-family: "GT Walsheim Trial Cn Md";
+  font-weight: 500;
+  margin-bottom: 3rem;
+  padding: 0px 60px;
+}
 
-    /* When overlay is active, animate modal in */
-    .modal-overlay.active .modal-box {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-    }
+/* INPUTS */
+.modal-box input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 2rem;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  margin-bottom: 2.3rem;
+  font-size: 0.95rem;
+  box-shadow: 2px 10px 10px rgba(0, 0, 0, 0.12);
+  border-bottom: 1.6px solid #0d4036;
+}
+.modal-box input::placeholder {
+  color: #afaeae;
+  font-family: "GT Walsheim Con";
+  letter-spacing: 0.4px;
+}
 
-    /* TEXT */
-    .modal-box h3 {
-        color: #0d4036;
-        font-size: 1.1rem;
-        font-weight: 700;
-        line-height: 1.4;
-        margin-bottom: 1.5rem;
-    }
 
-    /* INPUTS */
-    .modal-box input {
-        width: 100%;
-        padding: 1rem;
-        border-radius: 10px;
-        border: 2px solid #e1e5e9;
-        outline: none;
-        margin-bottom: 1rem;
-        font-size: 0.95rem;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
-        transition: border-color 0.3s ease;
-    }
 
-    .modal-box input:focus {
+   .modal-box input:focus {
         border-color: #52ccb4;
         box-shadow: 0 4px 10px rgba(82, 204, 180, 0.2);
     }
@@ -486,7 +484,7 @@
         cursor: not-allowed;
     }
 
-    /* BUTTON */
+        /* BUTTON */
     .form-btn {
         width: 100%;
         padding: 1rem;
@@ -499,220 +497,384 @@
         font-size: 1rem;
     }
 
-    /* CLOSE BUTTON */
-    .close-modal {
-        position: absolute;
-        top: 8px;
-        right: 12px;
-        background: none;
-        border: none;
-        font-size: 1.8rem;
-        color: #0d4036;
-        cursor: pointer;
-    }
-
-    /* ================================== Premium Section */
-
-    .premium-section {
-        background-color: #fff;
-    }
-
-    .premium-section .content {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .premium-section .text-content {
-        text-align: center;
-        background-color: #e5ae56;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        border-radius: 10px;
-        padding: 30px;
-        text-align: left;
-        gap: 60px;
-        margin: 20px;
-    }
-
-    .premium-section .text-content-upper,
-    .premium-section .text-content-below {
-        /* max-width: 210px; */
-    }
-
-    .premium-section .text-content-upper h2 {
-        font-size: 20px;
-        color: #0d4036;
-        padding-bottom: 20px;
-    }
-
-    .premium-section .text-content-upper p {
-        font-size: 16px;
-        color: #0d4036;
-    }
-
-    .premium-section .text-content-below p {
-        font-size: 19px;
-        color: #0d4036;
-        font-weight: 700;
-    }
-
-    .premium-section .info {
-        background-image: url("/img/last-bg.png");
 
 
-        background-repeat: no-repeat;
-        background-size: cover;
-        padding: 20px 50px;
-        margin-bottom: 20px;
-        border-radius: 10px;
+/* ================================== Premium Section */
 
-        color: #fff;
+.premium-section {
+  background-color: #fff;
+}
 
-    }
+.premium-section .content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
-    .premium-section .info-container {
-        display: flex;
-        flex-direction: column;
-    }
+.premium-section .text-content {
+  text-align: center;
+  background-color: #e5ae56;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  padding: 25% 32px;
+  text-align: left;
+  margin: 40px 14px 13px 14px;
+}
 
-    .premium-section .info h3 {
-        font-size: 35px;
-        color: #fff;
-        margin-bottom: 10px;
-    }
+.premium-section .text-content-upper h2 {
+  font-size: 22px;
+  color: #0d4036;
+  padding-bottom: 20px;
+  padding-right: 30px;
+  font-family: "GT Walsheim ProCB";
 
-    .premium-section .info .info-headings {
-        display: flex;
-        color: #fff;
-        margin-top: 30px;
-    }
+}
 
-    .premium-section .info .info-headings>div {
-        display: flex;
-        flex-direction: column;
-    }
+.premium-section .info {
+  background-image: url("/img/last-bg.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 90px 40px;
+}
 
-    .premium-section .info .info-headings>div h5 {
-        font-size: 40px;
-    }
+.premium-section .info h3 {
+  font-size: 32px;
+  color: #fff;
+  font-family: "GT Walsheim ProCB";
 
-    .premium-section .info ul {
-        list-style: disc;
-        padding-left: 0;
-        color: #fff;
-        margin-top: 40px;
-    }
+  margin-bottom: 30px;
+  padding-right: 20px;
+}
+.premium-section .info p {
+  font-size: 19px;
+  /* margin-top: 32px; */
+  color: #fff;
+  max-width: 260px;
+  font-family: "GT Walsheim Con";
+}
 
-    .premium-section .info ul li {
-        font-size: 16px;
-        margin-bottom: 10px;
-    }
+.premium-section .learn-more {
+  display: inline-block;
+  margin-top: 0px;
+  background-color: #cced60;
+  color: #0d4036;
+  padding: 1.1rem 1.2rem;
+  text-decoration: none;
+  border-radius: 7px;
+  width: 95%;
+  border: 1px solid #cced60;
+  text-align: center;
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
+  font-family: "GT Walsheim Trial Cn Md";
+  transition: background-color 1s ease-in-out;
+  letter-spacing: 0.5px;
+}
 
-    .premium-section .learn-more {
-        display: inline-block;
-        margin-top: 20px;
-        background-color: #cced60;
-        color: #0d4036;
-        padding: 10px 20px;
-        text-decoration: none;
-        border-radius: 5px;
-        font-size: 15px;
-        width: 100%;
-        text-align: center;
-        box-shadow: 5px 2px 1px rgba(0, 0, 0, 0.5);
+.premium-section .learn-more:hover {
+  background-color: #fff;
+  color: #0d4036;
+  border: 1px solid #0d4036;
+}
 
-    }
+/* Tablet */
+@media (min-width: 768px) {
+  .intro-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0rem;
+  }
+  .intro-content {
+    display: flex;
+    flex-direction: column;
+    padding-top: 1rem;
+    margin-left: 7%;
+  }
+  .intro-content h1 {
+    font-size: 2.5rem;
+  }
+
+  .intro-image.desktop {
+    display: block;
+    margin-left: -7%;
+    overflow: hidden;
+  }
+
+  .intro-sales .cta-btn {
+    width: 70%;
+}
+
+  .intro-image.desktop img {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    object-fit: contain;
+    overflow: hidden;
+  }
+
+  .intro-image.mobile {
+    display: none;
+  }
+
+  .premium-section .text-content {
+    padding: 7% 30px;
+    text-align: left;
+  }
+  /* =========================================BOOK SECTION */
+
+  .book-cards {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .book-cards {
+    max-width: initial;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .book-header p {
+    padding: 0px 15px;
+  }
+
+  .book-card .card-image {
+    width: 100%;
+    height: 270px;
+  }
+
+  .book-section .closing-text {
+    max-width: 450px;
+    font-size: 1rem;
+    padding: 0px 20px;
+  }
+
+  .book-section .cta-btn {
+    margin-top: 0.3rem;
+    box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
+  }
+
+  .premium-section .learn-more {
+    width: 50%;
+  }
+
+  .premium-section .text-content-upper {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .premium-section .info-container {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .premium-section .info p {
+    max-width: initial;
+  }
+  .premium-section .text-content-upper h2 {
+    padding: 0px 40px;
+    padding-bottom: 20px;
+  }
+
+  .premium-section .learn-more {
+
+  width: 95%;
+
+}
+
+}
+@media (min-width: 900px) {
+  .intro-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0rem;
+  }
+
+  .intro-content h1 {
+    font-size: 3.7rem;
+    padding-right: 8px;
+  }
+
+    .intro-sales .cta-btn {
+    width: 40%;
+}
+
+  .intro-image.desktop {
+    max-width: 100%;
+    /* padding-right: 30%; */
+  }
+  .intro-image.desktop img {
+    /* margin-right: -80%; */
+    height: 100%;
+    width: 100%;
+  }
+
+  /* =========================================BOOK SECTION */
+  .book-card .card-image {
+    width: 100%;
+    height: 400px;
+  }
 
 
-    /* Desktop */
-    @media (min-width: 768px) {
-        .intro-container {
-            /* max-width: 600px;
-    margin: 0 auto; */
-        }
+  /* ==================================== PREMIUM SECTION */
+  .premium-section .content {
+    flex-direction: row;
+    padding: 20px;
+  }
+  .premium-section .text-content {
+    margin: 0px;
+    width: 480px;
+    padding: 40px 30px;
+    gap: 20px;
+  }
 
-        .intro-image {
-            max-width: 80%;
-        }
-    }
+  .premium-section .learn-more {
+    padding: 1.1rem 1.2rem;
 
-    @media (min-width: 900px) {
-        .intro-container {
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-        }
+    width: 90%;
+  }
+  .premium-section .info {
+    width: 100%;
+  }
+  .premium-section .info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+  }
+  .premium-section .info {
+    border-radius: 10px;
+    padding: 40px 50px;
+  }
+  .premium-section .info ul {
+    margin-top: 15px;
+  }
+}
 
-        .intro-content {
-            max-width: 45%;
-        }
+@media (min-width: 1024px) {
+  .intro-content {
+    padding-left: 80px;
+  }
 
-        .intro-image.mobile {
-            display: none;
-        }
+  .intro-image.desktop {
+    max-width: 100%;
+    width: 500px;
+  }
 
-        .intro-image.desktop {
-            display: block;
-        }
+  .premium-section .text-content-upper {
+    max-width: initial;
+    margin: initial;
+    text-align: left;
+  }
+  .premium-section .info-container {
+    max-width: initial;
+    margin: initial;
+    text-align: left;
+  }
+  .premium-section .info p {
+    max-width: initial;
+  }
+  .premium-section .text-content-upper h2 {
+    padding: initial;
+    padding-bottom: 20px;
+  }
 
-        .intro-image {
-            max-width: 60%;
-        }
+  .premium-section .info h3 {
+    margin-bottom: 0px;
+    padding-right: 0px;
+  }
 
-        .intro-content h1 {
-            font-size: 5rem;
-        }
+  .premium-section .learn-more {
+    width: 100%;
+    font-size: 14px;
+  }
+}
+@media (min-width: 1200px) {
+  .intro-container {
+    transform: translateX(-70px);
+  }
+  .intro-content {
+    margin-left: 0%;
+    padding-top: 0rem;
+  }
+  .intro-content h1 {
+    font-size: 5.2rem;
+    padding-right: 0px;
+  }
+  .intro-content p {
+    /* font-size: 5.2rem; */
+    /* padding-right: 0px; */
+    max-width: 19rem;
+    font-size: 17px;
+    max-width: 26rem;
+    margin-top: 24px;
+  }
 
-        .intro-sales.funding-ebook h1 {
-            font-size: 4rem;
+  .intro-sales .cta-btn {
+    margin-top: 5px;
+    letter-spacing: 0.5px;
+    font-size: 18px;
+  }
 
-        }
+  .intro-image.desktop {
+    max-width: initial;
+    margin-left: 0%;
+    width: 50rem;
+    transform: translateX(-180px);
+  }
+  .intro-image.desktop img {
+    margin-top: 10px;
+  }
 
-        .book-cards {
-            grid-template-columns: repeat(3, 1fr);
-        }
+  .book-section {
+    padding: 5rem 1.5rem;
+    background-image: url("/img/second-bg.png");
+    background-repeat: repeat;
+    background-size: contain;
+  }
 
-        .premium-section .content {
-            flex-direction: row;
-            padding: 20px;
-        }
+  .book-header h3 {
+    font-size: 1.26rem;
+  }
+  .book-header p {
+    max-width: 570px;
+    padding: 0px 40px;
+    line-height: 1;
+  }
+  .book-section .closing-text {
+    max-width: 640px;
+    font-size: 1.3rem;
+    letter-spacing: 0.2px;
+  }
+  .book-section .cta-btn {
+    padding: 1rem 3rem;
+    font-size: 20px;
+    margin-top: 20px;
+  }
 
-        .premium-section .text-content {
-            margin: 0px;
-            max-width: 350px;
-        }
+  .premium-section .info {
+    padding: 60px;
+  }
 
-        .premium-section .info {
-            margin: 0px;
-            width: 100%;
-        }
+  .premium-section .info h3 {
+    font-size: 36px;
+  }
 
-        .premium-section .info-container {
-            display: flex;
-        }
+  .premium-section .info p {
+    max-width: 300px;
+    font-weight: lighter;
+    letter-spacing: 0.3px;
+  }
 
-        .premium-section .info {
-            border-radius: 10px;
-            margin-bottom: 0px;
-        }
+  .premium-section .info-container {
+    max-width: 600px;
+  }
 
-        .premium-section .info-container h3 {
-            font-size: 27px;
-            padding-right: 30px;
-            max-width: 400px;
-        }
+  .premium-section .text-content-upper h2 {
+    font-size: 19px;
+    padding-right: 30px;
+  }
+}
 
-        .premium-section .info .info-headings {
-            margin-top: 0px;
-        }
-
-        .premium-section .learn-more {
-            width: 100%;
-            white-space: nowrap;
-        }
-    }
 </style>
 
 @section('content')
@@ -731,7 +893,7 @@
     </div>
 
     <section class="intro-sales funding-ebook">
-        <div class="container">
+        <div class="sales-container">
             <div class="intro-container">
                 <div class="intro-content">
                     <h1>
@@ -758,7 +920,7 @@
     </section>
 
     <section class="book-section">
-        <div class="container">
+        <div class="sales-container">
             <div class="book-container">
                 <div class="book-header">
                     <h3>What you’ll Find in Our Funding Directory</h3>
@@ -796,7 +958,7 @@
     </section>
 
     <section class="premium-section">
-        <div class="container">
+        <div class="sales-container ">
             <div class="content">
                 <div class="text-content">
                     <div class="text-content-upper">

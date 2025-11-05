@@ -55,6 +55,50 @@
         url("../fonts/ivyora-text/IvyOraText-RegularItalic.woff") format("woff"); /* Adjust file names and paths as needed */
 }
 
+@font-face {
+  font-family: "GT Walsheim Trial Cn Lt";
+  font-style: normal;
+  font-weight: normal;
+  src: local("GT Walsheim Trial Cn Lt"),
+    url("../fonts/gt-trials/GT-Walsheim-Condensed-Light-Trial-BF651b7fc73810c.woff")
+      format("woff");
+}
+
+@font-face {
+  font-family: "GT Walsheim Trial Cn Rg";
+  font-style: normal;
+  font-weight: normal;
+  src: local("GT Walsheim Trial Cn Rg"),
+    url("../fonts/gt-trials/GT-Walsheim-Condensed-Regular-Trial-BF651b7fc730eb2.woff")
+      format("woff");
+}
+
+@font-face {
+  font-family: "GT Walsheim ProCB"; /* Name your font family */
+
+  src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedBlack.woff2")
+      format("woff2"),
+    url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedBlack.woff")
+      format("woff"); /* Adjust file names and paths as needed */
+}
+
+@font-face {
+  font-family: "GT Walsheim Con"; /* Name your font family */
+
+  src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedRegular.woff2")
+      format("woff2"),
+    url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff") format("woff"); /* Adjust file names and paths as needed */
+}
+
+@font-face {
+  font-family: "GT Walsheim Trial Cn Md";
+  font-style: normal;
+  font-weight: normal;
+  src: local("GT Walsheim Trial Cn Md"),
+    url("../fonts/gt-trials/GT-Walsheim-Condensed-Medium-Trial-BF651b7fc70de01.woff")
+      format("woff");
+}
+
 * {
     margin: 0;
     padding: 0;
