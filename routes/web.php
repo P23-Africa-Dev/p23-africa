@@ -93,6 +93,13 @@ Route::get('/device-display', function () {
     return view('device');
 })->name('device');
 
+Route::get('/playbook/ultimate-funding/payment', function () {
+    return view('playbook.payment');
+})->name('playbook.payment');
+
+Route::get('/playbook/ultimate-funding/checkout', function () {
+    return view('playbook.checkout');
+})->name('playbook.checkout');
 // BRN
 // Route::get('/brn', function () {
 //     ClickTracker::track('BRN_Page');

@@ -16,7 +16,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
-{{-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> --}}
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>  -->
 
 <style>
 
@@ -204,7 +204,7 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   border-radius: 10px;
-  padding: 2rem;
+  padding: 1rem;
   width: 100%;
   max-width: 400px;
   position: relative;
@@ -232,6 +232,12 @@ body {
   margin-bottom: 3rem;
   padding: 0px 60px;
 }
+ .modal-form-fields .modal-input-fields {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 9px;
+      margin-bottom: 20px;
+    }
 
 /* INPUTS */
 .modal-box input {
@@ -240,7 +246,7 @@ body {
   border-radius: 10px;
   border: none;
   outline: none;
-  margin-bottom: 2.3rem;
+  margin-bottom: 1.3rem;
   font-size: 0.95rem;
   box-shadow: 2px 10px 10px rgba(0, 0, 0, 0.12);
   border-bottom: 1.6px solid #0d4036;
@@ -542,6 +548,10 @@ body {
     box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
   }
 
+   .modal-form-fields .modal-input-fields {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
   .premium-section .learn-more {
     width: 50%;
   }
@@ -591,7 +601,7 @@ body {
   .modal-box {
     padding: 3rem 5rem;
     border-radius: 15px;
-    max-width: 650px;
+    max-width: 850px;
   }
 
   /* BUTTON */
@@ -808,11 +818,26 @@ body {
 
             <form id="downloadForm">
                 @csrf
-                <input type="text" name="name" placeholder="Full name" required />
-                <div class="error-message" id="nameError"></div>
 
-                <input type="email" name="email" placeholder="Email" required />
-                <div class="error-message" id="emailError"></div>
+                  <div class="modal-form-fields">
+                    <div class="modal-input-fields">
+                      <input type="text" name="name" placeholder="Enter Full name" required />
+                      <div class="error-message" id="nameError"></div>
+
+                      <input type="email" name="email" placeholder="Enter Email" required />
+                      <div class="error-message" id="emailError"></div>
+                    </div>
+
+                    <div class="modal-input-fields">
+                      <input type="text" name="companyName" placeholder="Company name" required />
+                      <div class="error-message" id="nameError"></div>
+
+                      <input type="text" name="phoneNumber" placeholder="Phone Number" required />
+                      <div class="error-message" id="nameError"></div>
+
+                
+                    </div>
+                </div>
 
                 <button type="submit" class="form-btn" id="submitBtn">
                     <span class="btn-text">Download Now</span>
@@ -997,3 +1022,5 @@ body {
         }
     });
 </script>
+
+
