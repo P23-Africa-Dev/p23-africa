@@ -953,7 +953,7 @@
                 </p>
 
                 <a href="/playbook/ultimate-funding/checkout" class="cta-btn" >Get Access to the Funding Directory</a>
-                <!-- <a href="/playbook/ultimate-funding/checkout" class="cta-btn" id="openModal">Get Access to the Funding Directory</a> -->
+                <!-- <a href="#" class="cta-btn" id="openModal">Get Access to the Funding Directory</a> -->
             </div>
         </div>
     </section>
