@@ -707,7 +707,7 @@
                 public_key: "FLWPUBK_TEST-044e7163292b9b7d4f0d4db5022227c4-X",
                 tx_ref: "UF_" + downloadId + "_" + Date.now(),
                 amount: amount,
-                currency: "NGN",
+                currency: "USD",
                 payment_options: "card,mobilemoney,ussd",
                 customer: {
                     email: userEmail,

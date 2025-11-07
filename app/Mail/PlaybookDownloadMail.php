@@ -54,10 +54,10 @@ class PlaybookDownloadMail extends Mailable
         $attachments = [];
 
         // Add the playbook PDF if it exists
-        $playbookPath = public_path('playbook/P23 Africa\'s Founders Playbook.pdf.pdf');
+        $playbookPath = public_path('playbook/P23 Africa\'s Founders Playbook.pdf');
         if (file_exists($playbookPath)) {
             $attachments[] = Attachment::fromPath($playbookPath)
-                ->as('P23-Africa-Founders-Playbook.pdf')
+                ->as('P23 Africa\'s Founders Playbook.pdf')
                 ->withMime('application/pdf');
         }
 
