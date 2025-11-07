@@ -25,7 +25,7 @@
 
 
 .form-sales-container {
-  max-width: 1420px;
+  max-width: 1320px;
   margin: 0 auto;
 }
 
@@ -102,7 +102,8 @@
 
   outline: none;
 
-  color: #fff;
+   color: rgba(255, 255, 255, 0.9);
+
   font-weight: 400;
   border-radius: 6px;
   margin-top: 50px;
@@ -164,7 +165,13 @@
 .total-label {
   color: #0d4036;
   font-weight: 900;
+
+
+}
+.item-price{
   font-family: "GT Walsheim ProCB";
+
+  
 
 }
 
@@ -252,6 +259,8 @@
   }
 }
 @media (min-width: 1200px) {
+
+
   .form-sales{
   padding-bottom: 10rem;
 
@@ -285,20 +294,52 @@
   .form-image.desktop {
     max-width: initial;
     margin-left: 0%;
-    width: 47rem;
+    width: 35rem;
     overflow: visible;
 
   }
   .form-image.desktop img {
    
-    transform: translateX(-120px) ;
 
-    margin-top: 3.2rem;
+    margin-top: 2rem;
+
+    margin-left: -5.4rem;
+
+    
+
+  }
+
+  .form-info .payment-button {
+
+  padding: 0.7rem 3.2rem;
+  font-weight: 200;
+  
+
+}
+}
+
+
+@media (min-width: 1300px) {
+    .form-container {
+   transform: translateX(-40px);
+  }
+    .form-image.desktop {
+    width: 47rem;
+
+  }
+
+    .form-image.desktop img {
+   
+
+    margin-top: 2.5rem;
+      transform: scale(1.1); /* Doubles the visual size */
+  transform-origin: center center;
+    margin-left: -5.4rem;
+
     
 
   }
 }
-
 
 
 
