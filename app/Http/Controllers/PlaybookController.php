@@ -314,7 +314,7 @@ class PlaybookController extends Controller
                         'action' => 'redirect_to_payment',
                         'countdown' => 10,
                         'download_id' => $existingDownload->id,
-                        'amount' => 50.00,
+                        'amount' => 10.00,
                         'user_email' => $existingDownload->email,
                         'user_name' => $existingDownload->name
                     ]);
@@ -330,7 +330,7 @@ class PlaybookController extends Controller
                 'company' => $request->company,
                 'country' => $request->country,
                 'payment_completed' => false, // Will be updated after payment
-                'amount_paid' => 50.00, // Set the expected amount
+                'amount_paid' => 10.00, // Set the expected amount
             ]);
 
             Log::info('Ultimate funding download record created successfully', ['id' => $download->id, 'email' => $request->email]);
@@ -340,7 +340,7 @@ class PlaybookController extends Controller
                 'message' => 'Account created successfully! Please proceed with payment to access the Ultimate Funding Directory.',
                 'action' => 'proceed_to_payment',
                 'download_id' => $download->id,
-                'amount' => 50.00,
+                'amount' => 10.00,
                 'user_email' => $download->email,
                 'user_name' => $download->name
             ]);
