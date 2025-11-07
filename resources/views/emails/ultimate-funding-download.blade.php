@@ -288,7 +288,7 @@
                 </a>
 
                 <p style="font-size: 14px; color: rgba(255, 255, 255, 0.8); margin-top: 15px;">
-                    <em>File Size: ~5.2MB | Format: PDF | Lifetime Access</em>
+                    <em>File Size: ~11.2MB | Format: PDF | Lifetime Access</em>
                 </p>
             </div>
 

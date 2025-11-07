@@ -175,7 +175,7 @@
                 Save it to your device and start implementing these proven strategies today!
             </p>
 
-            <a href="{{ asset('playbook/P23 Africa\'s Founders Playbook.pdf.pdf') }}" class="button button-success">
+            <a href="{{ asset('playbook/P23 Africa\'s Founders Playbook.pdf') }}" class="button button-success">
                 📄 Download Playbook PDF
             </a>
 

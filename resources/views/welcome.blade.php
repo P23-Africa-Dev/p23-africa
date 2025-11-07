@@ -81,7 +81,7 @@
                                 class="mx-1"></span>practical solutions that fit their needs.
                         </p>
                         <br>
-                        <a href="{{ url('contact') }}" class="d-flex justify-content-between"><span>Contact Us</span>
+                        <a href="{{ url('contact') }}" class="d-flex justify-content-between"><span>Book a Consultation</span>
                             <span>→</span></a>
                     </div>
                     <div class="col-md-5 animated-images mt-5 mt-md-0">

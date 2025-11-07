@@ -25,7 +25,7 @@ class PlaybookController extends Controller
     public function playbookOne()
     {
         ClickTracker::track('Funding_Readiness_Playbook_Page');
-        
+
         return view('playbook.funding-readiness');
     }
     public function playbookTwo()
@@ -150,14 +150,22 @@ class PlaybookController extends Controller
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|unique:sales_book_downloads|max:255',
+                'company' => 'required|string|max:255',
+                'phone' => 'required|string|max:20',
             ], [
                 'name.required' => 'Full name is required.',
                 'name.string' => 'Full name must be a valid text.',
                 'name.max' => 'Full name cannot exceed 255 characters.',
                 'email.required' => 'Email address is required.',
                 'email.email' => 'Please enter a valid email address.',
-                'email.max' => 'Email address cannot exceed 255 characters.',
                 'email.unique' => 'This email has already been used to download the guide.',
+                'email.max' => 'Email address cannot exceed 255 characters.',
+                'company.required' => 'Company name is required.',
+                'company.string' => 'Company name must be a valid text.',
+                'company.max' => 'Company name cannot exceed 255 characters.',
+                'phone.required' => 'Phone number is required.',
+                'phone.string' => 'Phone number must be a valid text.',
+                'phone.max' => 'Phone number cannot exceed 20 characters.',
             ]);
 
             if ($validator->fails()) {
@@ -182,6 +190,8 @@ class PlaybookController extends Controller
                 $download = $existingDownload;
                 $download->update([
                     'name' => $request->name,
+                    'company' => $request->company,
+                    'phone' => $request->phone,
                 ]);
             } else {
                 Log::info('Creating new sales book download record', ['email' => $request->email]);
@@ -189,6 +199,8 @@ class PlaybookController extends Controller
                 $download = SalesBookDownload::create([
                     'name' => $request->name,
                     'email' => $request->email,
+                    'company' => $request->company,
+                    'phone' => $request->phone,
                 ]);
             }
 
