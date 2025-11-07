@@ -118,6 +118,8 @@
                                                     <th>#</th>
                                                     <th><i class="fas fa-user me-1"></i>Name</th>
                                                     <th><i class="fas fa-envelope me-1"></i>Email</th>
+                                                    <th><i class="fas fa-building me-1"></i>Company</th>
+                                                    <th><i class="fas fa-phone me-1"></i>Phone</th>
                                                     <th><i class="fas fa-calendar me-1"></i>Download Date</th>
                                                     <th><i class="fas fa-paper-plane me-1"></i>Email Status</th>
                                                     <th><i class="fas fa-cog me-1"></i>Action</th>
@@ -141,6 +143,16 @@
                                                                 class="text-decoration-none">
                                                                 {{ $salesBook->email }}
                                                             </a>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <span>{{ $salesBook->company }}</span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <span>{{ $salesBook->phone }}</span>
+                                                            </div>
                                                         </td>
                                                         <td>
                                                             <span class="text-muted">

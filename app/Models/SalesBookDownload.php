@@ -9,6 +9,8 @@ class SalesBookDownload extends Model
     protected $fillable = [
         'name',
         'email',
+        'company',
+        'phone',
         'email_sent_at',
     ];
 

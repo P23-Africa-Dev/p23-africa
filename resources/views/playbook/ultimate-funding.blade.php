@@ -952,8 +952,7 @@
                     opportunities designed for African entrepreneurs.
                 </p>
 
-                <a href="/playbook/ultimate-funding/checkout" class="cta-btn" >Get Access to the Funding Directory</a>
-                <!-- <a href="#" class="cta-btn" id="openModal">Get Access to the Funding Directory</a> -->
+                <a href="{{ route('playbook.checkout') }}" class="cta-btn">Get Access to the Funding Directory</a>
             </div>
         </div>
     </section>
@@ -965,7 +964,7 @@
                     <div class="text-content-upper">
                         <h2>Get Access to the Ultimate Funding & Investor Directory</p>
 
-                            <a href="#" class="learn-more">Get your Funding Directory Here!</a>
+                            <a href="{{ route('playbook.checkout') }}" class="learn-more">Get your Funding Directory Here!</a>
                     </div>
 
                 </div>
@@ -984,142 +983,14 @@
         </div>
     </section>
 
-    <!-- FORM MODAL -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-box">
-            <h3>Get Access to the Ultimate Funding Directory<br />Premium Access - $50</h3>
 
-            <div class="success-message" id="successMessage"></div>
-
-            <form id="downloadForm">
-                @csrf
-                <input type="text" name="name" placeholder="Full name" required />
-                <div class="error-message" id="nameError"></div>
-
-                <input type="email" name="email" placeholder="Email" required />
-                <div class="error-message" id="emailError"></div>
-
-                <input type="text" name="company" placeholder="Company/Startup name" required />
-                <div class="error-message" id="companyError"></div>
-
-                <select name="country" required>
-                    <option value="">Select your country</option>
-                    <option value="Nigeria">Nigeria</option>
-                    <option value="Kenya">Kenya</option>
-                    <option value="South Africa">South Africa</option>
-                    <option value="Ghana">Ghana</option>
-                    <option value="Uganda">Uganda</option>
-                    <option value="Tanzania">Tanzania</option>
-                    <option value="Rwanda">Rwanda</option>
-                    <option value="Ethiopia">Ethiopia</option>
-                    <option value="Egypt">Egypt</option>
-                    <option value="Morocco">Morocco</option>
-                    <option value="Algeria">Algeria</option>
-                    <option value="Tunisia">Tunisia</option>
-                    <option value="Botswana">Botswana</option>
-                    <option value="Zambia">Zambia</option>
-                    <option value="Zimbabwe">Zimbabwe</option>
-                    <option value="Senegal">Senegal</option>
-                    <option value="Ivory Coast">Ivory Coast</option>
-                    <option value="Cameroon">Cameroon</option>
-                    <option value="Other African Country">Other African Country</option>
-                    <option value="International">International</option>
-                </select>
-                <div class="error-message" id="countryError"></div>
-
-                {{-- <select name="funding_stage" required>
-                    <option value="">Select your funding stage</option>
-                    <option value="Pre-seed">Pre-seed (Idea stage)</option>
-                    <option value="Seed">Seed (Early stage)</option>
-                    <option value="Series A">Series A (Growth stage)</option>
-                    <option value="Series B+">Series B+ (Expansion stage)</option>
-                    <option value="Bootstrap">Bootstrap (Self-funded)</option>
-                    <option value="Revenue">Revenue generating</option>
-                    <option value="Not applicable">Not applicable</option>
-                </select>
-                <div class="error-message" id="funding_stageError"></div> --}}
-
-                <div class="payment-info">
-                    <div class="price-display">
-                        <span class="price-label">Premium Directory Access:</span>
-                        <span class="price-amount">$50</span>
-                    </div>
-                    <p class="payment-description">
-                        🌟 One-time payment for lifetime access to the complete e-book<br>
-                        {{-- 💎 500+ verified investors & funding opportunities<br> --}}
-                        📧 Instant delivery via email after payment
-                    </p>
-                </div>
-
-                <button type="submit" class="form-btn" id="submitBtn">
-                    <span class="btn-text">Download Now & Pay $50</span>
-                    <span class="spinner" style="display: none;">
-                        <div
-                            style="display: inline-block; width: 16px; height: 16px; border: 2px solid transparent; border-top: 2px solid white; border-radius: 50%; animation: spin 1s linear infinite;">
-                        </div>
-                    </span>
-                </button>
-            </form>
-
-            <button class="close-modal" id="closeModal">&times;</button>
-        </div>
-    </div>
 @endsection
 
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Check for payment success parameter
-        const urlParams = new URLSearchParams(window.location.search);
 
-        if (urlParams.get('payment') === 'success') {
-            document.getElementById('paymentSuccessAlert').style.display = 'block';
-            // Auto-hide after 10 seconds
-            setTimeout(() => {
-                document.getElementById('paymentSuccessAlert').style.display = 'none';
-            }, 10000);
-            // Remove the parameter from URL without page reload
-            window.history.replaceState({}, document.title, window.location.pathname);
-        } else if (urlParams.get('payment') === 'processing') {
-            // Show processing overlay and start verification
-            showProcessingOverlay();
-            startPaymentVerification();
-            // Remove the parameter from URL without page reload
-            window.history.replaceState({}, document.title, window.location.pathname);
-        }
 
-        // Set up CSRF token for AJAX requests
-        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-        const openModal = document.getElementById("openModal");
-        const closeModal = document.getElementById("closeModal");
-        const modalOverlay = document.getElementById("modalOverlay");
-        const downloadForm = document.getElementById("downloadForm");
-        const submitBtn = document.getElementById("submitBtn");
-        const btnText = submitBtn.querySelector(".btn-text");
-        const spinner = submitBtn.querySelector(".spinner");
 
-        // Modal controls
-        openModal.addEventListener("click", (e) => {
-            e.preventDefault();
-            modalOverlay.classList.add("active");
-            clearErrors();
-            clearSuccess();
-        });
-
-        closeModal.addEventListener("click", () => {
-            modalOverlay.classList.remove("active");
-            clearErrors();
-            clearSuccess();
-        });
-
-        modalOverlay.addEventListener("click", (e) => {
-            if (e.target === modalOverlay) {
-                modalOverlay.classList.remove("active");
-                clearErrors();
-                clearSuccess();
-            }
-        });
 
         // Form submission
         downloadForm.addEventListener("submit", async function(e) {
