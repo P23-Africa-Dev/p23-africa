@@ -266,6 +266,7 @@ textarea::placeholder {
 
 .contact-info-location {
   padding: 0 2rem;
+  margin-top: 52px
 }
 .contact-info-location .heading {
   color: #0d4036;
