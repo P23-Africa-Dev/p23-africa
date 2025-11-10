@@ -33,5 +33,15 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        // Handle 403 errors with custom page regardless of debug mode
+        $exceptions->render(function (\Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException $e, $request) {
+            return response()->view('errors.403', [], 403);
+        });
+
+        // Handle generic HTTP 403 errors
+        $exceptions->render(function (\Symfony\Component\HttpKernel\Exception\HttpException $e, $request) {
+            if ($e->getStatusCode() === 403) {
+                return response()->view('errors.403', [], 403);
+            }
+        });
     })->create();

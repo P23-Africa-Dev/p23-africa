@@ -28,6 +28,44 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
+            <!-- Success/Error Messages -->
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+                    <i class="fa fa-check-circle me-2"></i>
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+                    <i class="fa fa-exclamation-circle me-2"></i>
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
+
+            <!-- Toast Container for AJAX Messages -->
+            <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999;">
+                <div id="successToast" class="toast" role="alert">
+                    <div class="toast-header bg-success text-white">
+                        <i class="fa fa-check-circle me-2"></i>
+                        <strong class="me-auto">Success</strong>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+                    </div>
+                    <div class="toast-body" id="successMessage"></div>
+                </div>
+
+                <div id="errorToast" class="toast" role="alert">
+                    <div class="toast-header bg-danger text-white">
+                        <i class="fa fa-exclamation-circle me-2"></i>
+                        <strong class="me-auto">Error</strong>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+                    </div>
+                    <div class="toast-body" id="errorMessage"></div>
+                </div>
+            </div>
+
             <!-- Stats Cards -->
             <div class="row mb-4">
                 <div class="col-md-3 mb-3">
@@ -139,6 +177,7 @@
                         @endif
                     </div>
                 </div>
+
                 <div class="card-body p-0">
                     @if ($contacts->count() > 0)
                         <div class="table-responsive">
@@ -304,12 +343,6 @@
     @push('scripts')
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                // Debug: Check if Bootstrap is available
-                if (typeof bootstrap === 'undefined') {
-                    console.error('Bootstrap JavaScript not loaded! Modals will not work.');
-                } else {
-                    console.log('Bootstrap JavaScript loaded successfully.');
-                }
                 // Select all functionality
                 const selectAllCheckbox = document.getElementById('selectAll');
                 const selectAllHeaderCheckbox = document.getElementById('selectAllHeader');
@@ -374,6 +407,12 @@
                 }
 
                 function deleteContact(id) {
+                    // Show loading state
+                    const deleteBtn = document.querySelector(`[data-id="${id}"]`);
+                    const originalHtml = deleteBtn.innerHTML;
+                    deleteBtn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+                    deleteBtn.disabled = true;
+
                     fetch(`/admin/contact/${id}`, {
                             method: 'DELETE',
                             headers: {
@@ -386,18 +425,38 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                location.reload();
+                                showToast('success', data.message || 'Contact submission deleted successfully!');
+                                // Remove the row from table with animation
+                                const row = deleteBtn.closest('tr');
+                                row.style.transition = 'opacity 0.3s ease';
+                                row.style.opacity = '0';
+                                setTimeout(() => {
+                                    row.remove();
+                                    updateStats();
+                                }, 300);
                             } else {
-                                alert(data.message || 'Failed to delete contact submission.');
+                                showToast('error', data.message || 'Failed to delete contact submission.');
+                                // Restore button state
+                                deleteBtn.innerHTML = originalHtml;
+                                deleteBtn.disabled = false;
                             }
                         })
                         .catch(error => {
                             console.error('Error:', error);
-                            alert('An error occurred while deleting the contact submission.');
+                            showToast('error', 'An error occurred while deleting the contact submission.');
+                            // Restore button state
+                            deleteBtn.innerHTML = originalHtml;
+                            deleteBtn.disabled = false;
                         });
                 }
 
                 function bulkDeleteContacts(ids) {
+                    // Show loading state
+                    const bulkBtn = document.getElementById('bulkDeleteBtn');
+                    const originalHtml = bulkBtn.innerHTML;
+                    bulkBtn.innerHTML = '<i class="fa fa-spinner fa-spin me-2"></i>Deleting...';
+                    bulkBtn.disabled = true;
+
                     fetch('/admin/contact/bulk-delete', {
                             method: 'POST',
                             headers: {
@@ -413,15 +472,80 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                location.reload();
+                                showToast('success', data.message ||
+                                    `Successfully deleted ${ids.length} contact submission(s)!`);
+                                // Remove selected rows with animation
+                                const checkedBoxes = document.querySelectorAll('.contact-checkbox:checked');
+                                checkedBoxes.forEach(checkbox => {
+                                    const row = checkbox.closest('tr');
+                                    row.style.transition = 'opacity 0.3s ease';
+                                    row.style.opacity = '0';
+                                    setTimeout(() => {
+                                        row.remove();
+                                    }, 300);
+                                });
+
+                                // Reset selections and hide bulk delete button
+                                setTimeout(() => {
+                                    const selectAll = document.getElementById('selectAll');
+                                    const selectAllHeader = document.getElementById('selectAllHeader');
+                                    if (selectAll) selectAll.checked = false;
+                                    if (selectAllHeader) selectAllHeader.checked = false;
+                                    bulkBtn.style.display = 'none';
+                                    bulkBtn.innerHTML = originalHtml;
+                                    bulkBtn.disabled = false;
+                                    updateStats();
+                                }, 300);
                             } else {
-                                alert(data.message || 'Failed to delete contact submissions.');
+                                showToast('error', data.message || 'Failed to delete contact submissions.');
+                                // Restore button state
+                                bulkBtn.innerHTML = originalHtml;
+                                bulkBtn.disabled = false;
                             }
                         })
                         .catch(error => {
                             console.error('Error:', error);
-                            alert('An error occurred while deleting the contact submissions.');
+                            showToast('error', 'An error occurred while deleting the contact submissions.');
+                            // Restore button state
+                            bulkBtn.innerHTML = originalHtml;
+                            bulkBtn.disabled = false;
                         });
+                }
+
+                // Helper function to show toast notifications
+                function showToast(type, message) {
+                    const toastElement = document.getElementById(type === 'success' ? 'successToast' : 'errorToast');
+                    const messageElement = document.getElementById(type === 'success' ? 'successMessage' :
+                        'errorMessage');
+
+                    messageElement.textContent = message;
+
+                    const toast = new bootstrap.Toast(toastElement, {
+                        autohide: true,
+                        delay: type === 'success' ? 5000 : 7000
+                    });
+
+                    toast.show();
+                }
+
+                // Helper function to update stats after deletion
+                function updateStats() {
+                    // Update total contacts count
+                    const remainingRows = document.querySelectorAll('tbody tr').length;
+                    const totalContactsElement = document.querySelector('.card-body h3');
+                    if (totalContactsElement) {
+                        const currentCount = parseInt(totalContactsElement.textContent);
+                        if (currentCount > remainingRows) {
+                            totalContactsElement.textContent = remainingRows;
+                        }
+                    }
+
+                    // If no contacts remain, show empty state
+                    if (remainingRows === 0) {
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1000);
+                    }
                 }
             });
         </script>

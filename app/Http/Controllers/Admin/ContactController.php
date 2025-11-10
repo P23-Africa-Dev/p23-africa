@@ -91,7 +91,7 @@ class ContactController extends Controller
     public function destroy(ContactSubmission $contact)
     {
         // Check if user has admin role
-        if (!Gate::allows('admin')) {
+        if (!Auth::user()->hasRole('admin')) {
             return response()->json([
                 'success' => false,
                 'message' => 'Unauthorized. Only admins can delete contact submissions.'
@@ -130,7 +130,7 @@ class ContactController extends Controller
     public function bulkDestroy(Request $request)
     {
         // Check if user has admin role
-        if (!Gate::allows('admin')) {
+        if (!auth()->user()->hasRole('admin')) {
             return response()->json([
                 'success' => false,
                 'message' => 'Unauthorized. Only admins can delete contact submissions.'
