@@ -788,7 +788,7 @@
                             <div class="icon phone">
                                 <img src="{{ asset('./img/phone.png') }}" loading="lazy"src="{{ asset('./img/phone.png') }}"
                                     loading="lazy" alt="" />
-                                <p><a href=""> +44 208 0921 281</a></p>
+                                <p><a href="tel:+447535659835"> +44 7535 659835</a></p>
                             </div>
                             <div class="icon email">
                                 <img src="{{ asset('./img/email.png') }}" loading="lazy" alt="" />

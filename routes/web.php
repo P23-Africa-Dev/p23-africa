@@ -297,7 +297,7 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|staff'])->prefix('admi
 
     Route::resource('/salesbooks', \App\Http\Controllers\Admin\SalesBookController::class);
 
-    
+
 
     // Contact management routes
     Route::get('/contact', [\App\Http\Controllers\Admin\ContactController::class, 'index'])->name('contact.index');
@@ -306,6 +306,11 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|staff'])->prefix('admi
 
     // Admin-only contact management routes
     Route::middleware('role:admin')->group(function () {
+        // Contact management routes
+        Route::get('/contact', [\App\Http\Controllers\Admin\ContactController::class, 'index'])->name('contact.index');
+        Route::get('/contact/{contact}', [\App\Http\Controllers\Admin\ContactController::class, 'show'])->name('contact.show');
+        Route::get('/contact/export', [\App\Http\Controllers\Admin\ContactController::class, 'export'])->name('contact.export');
+
         Route::delete('/contact/{contact}', [\App\Http\Controllers\Admin\ContactController::class, 'destroy'])->name('contact.destroy');
         Route::post('/contact/bulk-delete', [\App\Http\Controllers\Admin\ContactController::class, 'bulkDestroy'])->name('contact.bulk-delete');
     });

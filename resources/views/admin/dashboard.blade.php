@@ -88,56 +88,61 @@
             </div>
 
             <!-- Contact Stats Row -->
-            <div class="row mb-4">
-                <div class="col-md-4 mb-3">
-                    <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0 bg-secondary bg-opacity-10 rounded p-3">
-                                    <i class="fa fa-envelope text-secondary fa-2x"></i>
+            @if (auth()->user() && auth()->user()->hasRole('admin'))
+                <div class="row mb-4">
+                    <div class="col-md-4 mb-3">
+                        <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-shrink-0 bg-secondary bg-opacity-10 rounded p-3">
+                                        <i class="fa fa-envelope text-secondary fa-2x"></i>
+                                    </div>
+                                    <div class="ms-3">
+                                        <h6 class="text-muted dark:text-gray-400 mb-1">Total Contacts</h6>
+                                        <h3 class="mb-0 text-dark dark:text-gray-100">
+                                            {{ $stats['total_contacts'] ?? 0 }}
+                                        </h3>
+                                    </div>
                                 </div>
-                                <div class="ms-3">
-                                    <h6 class="text-muted dark:text-gray-400 mb-1">Total Contacts</h6>
-                                    <h3 class="mb-0 text-dark dark:text-gray-100">{{ $stats['total_contacts'] ?? 0 }}
-                                    </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-shrink-0 bg-success bg-opacity-10 rounded p-3">
+                                        <i class="fa fa-calendar-day text-success fa-2x"></i>
+                                    </div>
+                                    <div class="ms-3">
+                                        <h6 class="text-muted dark:text-gray-400 mb-1">Today's Contacts</h6>
+                                        <h3 class="mb-0 text-dark dark:text-gray-100">
+                                            {{ $stats['today_contacts'] ?? 0 }}
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-shrink-0 bg-info bg-opacity-10 rounded p-3">
+                                        <i class="fa fa-calendar-alt text-info fa-2x"></i>
+                                    </div>
+                                    <div class="ms-3">
+                                        <h6 class="text-muted dark:text-gray-400 mb-1">Recent Contacts (30d)</h6>
+                                        <h3 class="mb-0 text-dark dark:text-gray-100">
+                                            {{ $stats['recent_contacts'] ?? 0 }}
+                                        </h3>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 mb-3">
-                    <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0 bg-success bg-opacity-10 rounded p-3">
-                                    <i class="fa fa-calendar-day text-success fa-2x"></i>
-                                </div>
-                                <div class="ms-3">
-                                    <h6 class="text-muted dark:text-gray-400 mb-1">Today's Contacts</h6>
-                                    <h3 class="mb-0 text-dark dark:text-gray-100">{{ $stats['today_contacts'] ?? 0 }}
-                                    </h3>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0 bg-info bg-opacity-10 rounded p-3">
-                                    <i class="fa fa-calendar-alt text-info fa-2x"></i>
-                                </div>
-                                <div class="ms-3">
-                                    <h6 class="text-muted dark:text-gray-400 mb-1">Recent Contacts (30d)</h6>
-                                    <h3 class="mb-0 text-dark dark:text-gray-100">{{ $stats['recent_contacts'] ?? 0 }}
-                                    </h3>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endif
 
             <!-- Main Dashboard Cards -->
             <div class="row">
@@ -183,16 +188,18 @@
                                 <i class="fa fa-arrow-right text-muted dark:text-gray-400"></i>
                             </a>
 
-                            <a href="{{ route('admin.contact.index') }}"
-                                class="d-flex align-items-center justify-content-between text-decoration-none p-3 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark-transition">
-                                <div class="d-flex align-items-center">
-                                    <div class="bg-warning bg-opacity-10 rounded p-2 me-3">
-                                        <i class="fa fa-envelope text-warning"></i>
+                            @if (auth()->user() && auth()->user()->hasRole('admin'))
+                                <a href="{{ route('admin.contact.index') }}"
+                                    class="d-flex align-items-center justify-content-between text-decoration-none p-3 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark-transition">
+                                    <div class="d-flex align-items-center">
+                                        <div class="bg-warning bg-opacity-10 rounded p-2 me-3">
+                                            <i class="fa fa-envelope text-warning"></i>
+                                        </div>
+                                        <span class="text-dark dark:text-gray-100 fw-medium">Contact Submissions</span>
                                     </div>
-                                    <span class="text-dark dark:text-gray-100 fw-medium">Contact Submissions</span>
-                                </div>
-                                <i class="fa fa-arrow-right text-muted dark:text-gray-400"></i>
-                            </a>
+                                    <i class="fa fa-arrow-right text-muted dark:text-gray-400"></i>
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>
