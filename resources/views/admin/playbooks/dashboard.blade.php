@@ -52,6 +52,7 @@
                                 </div>
                             </div>
                         </div>
+                        @if (auth()->user()->hasRole('admin'))
                         <div class="col-md-4">
                             <div class="card bg-gradient-warning text-white h-100">
                                 <div class="card-body">
@@ -68,6 +69,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                     </div>
 
                     <!-- Ebook Cards -->
@@ -165,6 +167,7 @@
                         </div>
 
                         <!-- Ultimate Funding & Investor Directory (Premium) -->
+                        @if (auth()->user()->hasRole('admin'))
                         <div class="col-lg-4 mb-4">
                             <div class="card playbook-card h-100">
                                 <div class="card-header bg-warning text-dark">
@@ -224,6 +227,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                     </div>
 
                     <!-- Recent Activity -->

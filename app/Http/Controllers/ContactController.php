@@ -4,41 +4,112 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 use App\Mail\ContactFormMail;
 use App\Mail\ThankYouMail;
+use App\Models\ContactSubmission;
 
 class ContactController extends Controller
 {
     public function submitForm(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email',
-            'message' => 'required|string',
-            'job_title' => 'nullable|string',
-            'company_name' => 'nullable|string',
-            'phone_no' => 'required|string',
-            'country_code' => 'required|string',
-            'g-recaptcha-response' => 'required|captcha', // 👈 this enforces captcha
-        ]);
+        try {
+            // Validate the request
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|max:255',
+                'services' => 'nullable|string', // Services will come as comma-separated string
+                'message' => 'required|string|max:2000',
+                'g-recaptcha-response' => 'required|captcha', // reCAPTCHA validation
+            ], [
+                'name.required' => 'Name is required.',
+                'email.required' => 'Email address is required.',
+                'email.email' => 'Please enter a valid email address.',
+                'message.required' => 'Message is required.',
+                'g-recaptcha-response.required' => 'Please complete the reCAPTCHA verification.',
+                'g-recaptcha-response.captcha' => 'reCAPTCHA verification failed. Please try again.',
+            ]);
 
-        // Sanitize all inputs
-        $sanitizedData = [
-            'name' => strip_tags($validated['name']),
-            'email' => filter_var($validated['email'], FILTER_SANITIZE_EMAIL),
-            'message' => strip_tags($validated['message']),
-            'job_title' => $validated['job_title'] ? strip_tags($validated['job_title']) : null,
-            'company_name' => $validated['company_name'] ? strip_tags($validated['company_name']) : null,
-            'phone_no' => strip_tags($validated['phone_no']),
-            'country_code' => strip_tags($validated['country_code']),
-        ];
+            // Parse services from comma-separated string to array
+            $services = [];
+            if (!empty($validated['services'])) {
+                $services = array_map('trim', explode(',', $validated['services']));
+                $services = array_filter($services); // Remove empty values
+            }
 
-        // Send to site owner with all sanitized data
-        Mail::to('contact@p23africa.com')->send(new ContactFormMail($sanitizedData));
+            // Sanitize all inputs
+            $sanitizedData = [
+                'name' => strip_tags($validated['name']),
+                'email' => filter_var($validated['email'], FILTER_SANITIZE_EMAIL),
+                'services' => $services,
+                'message' => strip_tags($validated['message']),
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+            ];
 
-        // Send thank-you to user
-        Mail::to($sanitizedData['email'])->send(new ThankYouMail($sanitizedData));
+            // Store in database
+            $contactSubmission = ContactSubmission::create($sanitizedData);
 
-        return redirect()->back()->with('success', 'Your message has been sent!');
+            // Send emails
+            try {
+                // Send to site owner
+                Mail::to('nurudeen@p23africa.com')->send(new ContactFormMail($sanitizedData));
+
+                // Send thank-you to user
+                Mail::to($sanitizedData['email'])->send(new ThankYouMail($sanitizedData));
+
+                // Update email sent timestamp
+                $contactSubmission->update(['email_sent_at' => now()]);
+
+                Log::info('Contact form emails sent successfully', ['email' => $sanitizedData['email']]);
+            } catch (\Exception $mailException) {
+                Log::error('Failed to send contact form emails', [
+                    'error' => $mailException->getMessage(),
+                    'email' => $sanitizedData['email']
+                ]);
+
+                // Don't fail the entire request if email fails
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Your message has been received, but there was an issue sending confirmation emails. We will contact you soon.'
+                ]);
+            }
+
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Your message has been sent successfully! We will get back to you soon.'
+                ]);
+            }
+
+            return redirect()->back()->with('success', 'Your message has been sent successfully! We will get back to you soon.');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Please check your input and try again.',
+                    'errors' => $e->errors()
+                ], 422);
+            }
+
+            return redirect()->back()
+                ->withErrors($e->errors())
+                ->withInput();
+        } catch (\Exception $e) {
+            Log::error('Contact form submission error', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'input' => $request->all()
+            ]);
+
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'An unexpected error occurred. Please try again later.'
+                ], 500);
+            }
+
+            return redirect()->back()->with('error', 'An unexpected error occurred. Please try again later.');
+        }
     }
 }

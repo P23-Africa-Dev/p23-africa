@@ -251,9 +251,21 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|staff'])->prefix('admi
 
     Route::middleware('role:admin')->group(function () {
         Route::resource('staff', StaffController::class);
+
+
         Route::post('/staff/{staff}/suspend', [StaffController::class, 'suspend'])->name('staff.suspend');
         Route::post('/staff/{staff}/reactivate', [StaffController::class, 'reactivate'])->name('staff.reactivate');
         Route::post('/staff/{staff}/promote', [StaffController::class, 'promote'])->name('staff.promote');
+
+        // NOEL
+        Route::get('/brn', [\App\Http\Controllers\Admin\BrnController::class, 'adminView'])->name('brn.index');
+        Route::get('/brn/{id}', [\App\Http\Controllers\Admin\BrnController::class, 'show'])->name('brn.show');
+        Route::delete('/brn/{id}', [\App\Http\Controllers\Admin\BrnController::class, 'destroy'])->name('brn.destroy');
+        Route::post('/brn/{id}/approve', [\App\Http\Controllers\Admin\BrnController::class, 'approve'])->name('brn.approve');
+        Route::post('/brn/{id}/decline', [\App\Http\Controllers\Admin\BrnController::class, 'decline'])->name('brn.decline');
+
+        // Ultimate Funding
+        Route::resource('/ultimatefunding', \App\Http\Controllers\Admin\UltimateFundingController::class);
     });
 
     // Route::get('/staff/create', [StaffController::class, 'create'])->name('admin.staff.create');
@@ -285,7 +297,18 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|staff'])->prefix('admi
 
     Route::resource('/salesbooks', \App\Http\Controllers\Admin\SalesBookController::class);
 
-    Route::resource('/ultimatefunding', \App\Http\Controllers\Admin\UltimateFundingController::class);
+    
+
+    // Contact management routes
+    Route::get('/contact', [\App\Http\Controllers\Admin\ContactController::class, 'index'])->name('contact.index');
+    Route::get('/contact/{contact}', [\App\Http\Controllers\Admin\ContactController::class, 'show'])->name('contact.show');
+    Route::get('/contact/export', [\App\Http\Controllers\Admin\ContactController::class, 'export'])->name('contact.export');
+
+    // Admin-only contact management routes
+    Route::middleware('role:admin')->group(function () {
+        Route::delete('/contact/{contact}', [\App\Http\Controllers\Admin\ContactController::class, 'destroy'])->name('contact.destroy');
+        Route::post('/contact/bulk-delete', [\App\Http\Controllers\Admin\ContactController::class, 'bulkDestroy'])->name('contact.bulk-delete');
+    });
 
     // Route::middleware('permission:view_students')->group(function () {
     Route::resource('students', StudentController::class);
@@ -293,12 +316,6 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|staff'])->prefix('admi
 
     Route::get('/clicks/report', [ClickReportController::class, 'index'])->name('clicks.report');
     Route::get('/clicks/export', [ClickReportController::class, 'export'])->name('clicks.export');
-
-    Route::get('/brn', [\App\Http\Controllers\Admin\BrnController::class, 'adminView'])->name('brn.index');
-    Route::get('/brn/{id}', [\App\Http\Controllers\Admin\BrnController::class, 'show'])->name('brn.show');
-    Route::delete('/brn/{id}', [\App\Http\Controllers\Admin\BrnController::class, 'destroy'])->name('brn.destroy');
-    Route::post('/brn/{id}/approve', [\App\Http\Controllers\Admin\BrnController::class, 'approve'])->name('brn.approve');
-    Route::post('/brn/{id}/decline', [\App\Http\Controllers\Admin\BrnController::class, 'decline'])->name('brn.decline');
 });
 
 Broadcast::routes(['middleware' => ['auth', 'check.suspended', 'role:admin|staff']]);
