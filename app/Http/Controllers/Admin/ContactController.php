@@ -133,7 +133,7 @@ class ContactController extends Controller
         if (!auth()->user()->hasRole('admin')) {
             return response()->json([
                 'success' => false,
-                'message' => 'Unauthorized. Only admins can delete contact submissions.'
+                'message' => 'Unauthorized. Only admins can delete contact submisions.'
             ], 403);
         }
 
