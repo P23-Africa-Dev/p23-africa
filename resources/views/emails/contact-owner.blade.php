@@ -1,6 +1,12 @@
 <h3>New Contact Submission</h3>
 <p><strong>Name:</strong> {{ $data['name'] }}</p>
+@if (!empty($data['company_name']))
+    <p><strong>Company:</strong> {{ $data['company_name'] }}</p>
+@endif
 <p><strong>Email:</strong> {{ $data['email'] }}</p>
+@if (!empty($data['phone']))
+    <p><strong>Phone:</strong> {{ $data['phone'] }}</p>
+@endif
 
 @if (isset($data['services']) && is_array($data['services']) && count($data['services']) > 0)
     <p><strong>Services Requested:</strong></p>

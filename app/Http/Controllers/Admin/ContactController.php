@@ -7,6 +7,8 @@ use App\Models\ContactSubmission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ContactSubmissionsExport;
 
 class ContactController extends Controller
 {
@@ -30,7 +32,9 @@ class ContactController extends Controller
             $search = $request->get('search');
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('company_name', 'like', "%{$search}%")
                     ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('phone', 'like', "%{$search}%")
                     ->orWhere('message', 'like', "%{$search}%");
             });
         }
@@ -169,7 +173,9 @@ class ContactController extends Controller
             $search = $request->get('search');
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('company_name', 'like', "%{$search}%")
                     ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('phone', 'like', "%{$search}%")
                     ->orWhere('message', 'like', "%{$search}%");
             });
         }
@@ -203,7 +209,9 @@ class ContactController extends Controller
             fputcsv($file, [
                 'ID',
                 'Name',
+                'Company Name',
                 'Email',
+                'Phone',
                 'Services',
                 'Message',
                 'IP Address',
@@ -217,7 +225,9 @@ class ContactController extends Controller
                 fputcsv($file, [
                     $contact->id,
                     $contact->name,
+                    $contact->company_name,
                     $contact->email,
+                    $contact->phone,
                     is_array($contact->services) ? implode(', ', $contact->services) : $contact->services,
                     $contact->message,
                     $contact->ip_address,
@@ -231,5 +241,42 @@ class ContactController extends Controller
         };
 
         return response()->stream($callback, 200, $headers);
+    }
+
+    /**
+     * Export contact submissions to XLSX.
+     */
+    public function exportXlsx(Request $request)
+    {
+        $query = ContactSubmission::query()->orderBy('created_at', 'desc');
+
+        // Apply same filters as index
+        if ($request->filled('search')) {
+            $search = $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('company_name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('phone', 'like', "%{$search}%")
+                    ->orWhere('message', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('date_from')) {
+            $query->whereDate('created_at', '>=', $request->get('date_from'));
+        }
+
+        if ($request->filled('date_to')) {
+            $query->whereDate('created_at', '<=', $request->get('date_to'));
+        }
+
+        if ($request->filled('service')) {
+            $service = $request->get('service');
+            $query->whereJsonContains('services', $service);
+        }
+
+        $filename = 'contact_submissions_' . now()->format('Y-m-d_H-i-s') . '.xlsx';
+
+        return Excel::download(new ContactSubmissionsExport($query), $filename);
     }
 }

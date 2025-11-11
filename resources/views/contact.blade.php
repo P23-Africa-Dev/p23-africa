@@ -827,6 +827,27 @@
                                     {{ $message }}</div>
                             @enderror
 
+                            <div class="contact-info-form__group name-field">
+                                <label class="floating-label">Company Name</label>
+                                <input type="text" name="company_name"
+                                    class="floating-input @error('company_name') error @enderror"
+                                    placeholder="Your Company Name (Optional)" value="{{ old('company_name') }}" />
+                                @error('company_name')
+                                    <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
+                                        {{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="contact-info-form__group name-field">
+                                <label class="floating-label">Phone Number</label>
+                                <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
+                                    placeholder="+1234567890" value="{{ old('phone') }}" />
+                                @error('phone')
+                                    <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
+                                        {{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <div class="contact-info-form__section-title">
                                 What service do you require
                             </div>
@@ -866,7 +887,8 @@
                                 </div>
                             </div>
 
-                            <input type="hidden" name="services" id="selected-services" value="{{ old('services') }}" />
+                            <input type="hidden" name="services" id="selected-services"
+                                value="{{ old('services') }}" />
                             @error('services')
                                 <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
                                     {{ $message }}</div>

@@ -95,9 +95,9 @@
         <section class="resourse-details-content">
             <div class="dotted-divider"></div>
             <!-- Article Section -->
-            <section class="container py-5">
+            <section class="container py-lg-5 py-md-4 py-3">
                 <div class="row align-items-center">
-                    <div class="col-12 my-5 mt-md-0">
+                    <div class="col-12 my-md-5 my-lg-5 my-0 mt-md-0">
                         {{-- <div class="article-title">Finibus Bonorum et Malorum</div> --}}
                         <div class="date-author">Written by {{ $blog->user->name }} &nbsp; | &nbsp;
                             {{ $blog->created_at->format('l, F jS Y') }}</div>
@@ -111,25 +111,37 @@
                         <div class="content-wrapper" style="position: relative;">
                             @if ($blog->image_path)
                                 <img src="{{ asset('storage/' . $blog->image_path) }}" loading='lazy' alt="Insight Image"
-                                    class="article-img float-md-end ms-md-4 mb-3" 
+                                    class="article-img float-md-end ms-md-4 mb-3"
                                     style="max-width: 100%; width: 100%; max-width: 450px; height: auto; border-radius: 8px;" />
                             @endif
                             <div class="content">
-                                <p>
-                                    {!! $blog->content_2 !!}
-                                </p>
-                                <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3" style="margin-top: 30px; clear: both;">
-                                    <a href="{{ route('resource-hub') }}" class="cta-button">Get More Insights <span
-                                            class="mx-2"></span> →</a>
-
+                                @if ($blog->pdf_path)
+                                    <div class="pdf-preview-container"
+                                        style="margin: 20px 0; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
+                                        <iframe src="{{ asset('storage/' . $blog->pdf_path) }}"
+                                            style="width: 100%; height: 600px; border: none;" title="PDF Report Preview">
+                                        </iframe>
+                                    </div>
+                                @else
+                                    <p>
+                                        {!! $blog->content_2 !!}
+                                    </p>
+                                @endif
+                                <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3"
+                                    style="margin-top: 30px; clear: both;">
                                     @if ($blog->pdf_path)
                                         <div>
-                                            <button class="btn btn-success view-pdf-btn"
-                                                data-pdf="{{ asset('storage/' . $blog->pdf_path) }}">
-                                                📥 View Report
-                                            </button>
+                                            <a href="{{ asset('storage/' . $blog->pdf_path) }}" class="btn btn-success"
+                                                download style="text-decoration: none;">
+                                                📥 Download Report
+                                            </a>
                                         </div>
                                     @endif
+
+                                    <div>
+                                        <a href="{{ route('resource-hub') }}" class="cta-button">Get More Insights <span
+                                                class="mx-2"></span> →</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

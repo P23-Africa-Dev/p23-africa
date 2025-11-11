@@ -17,14 +17,18 @@ class ContactController extends Controller
             // Validate the request
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
+                'company_name' => 'nullable|string|max:255',
                 'email' => 'required|email|max:255',
+                'phone' => 'nullable|string|max:20',
                 'services' => 'nullable|string', // Services will come as comma-separated string
                 'message' => 'required|string|max:2000',
                 'g-recaptcha-response' => 'required|captcha', // reCAPTCHA validation
             ], [
                 'name.required' => 'Name is required.',
+                'company_name.max' => 'Company name must not exceed 255 characters.',
                 'email.required' => 'Email address is required.',
                 'email.email' => 'Please enter a valid email address.',
+                'phone.max' => 'Phone number must not exceed 20 characters.',
                 'message.required' => 'Message is required.',
                 'g-recaptcha-response.required' => 'Please complete the reCAPTCHA verification.',
                 'g-recaptcha-response.captcha' => 'reCAPTCHA verification failed. Please try again.',
@@ -40,7 +44,9 @@ class ContactController extends Controller
             // Sanitize all inputs
             $sanitizedData = [
                 'name' => strip_tags($validated['name']),
+                'company_name' => !empty($validated['company_name']) ? strip_tags($validated['company_name']) : null,
                 'email' => filter_var($validated['email'], FILTER_SANITIZE_EMAIL),
+                'phone' => !empty($validated['phone']) ? strip_tags($validated['phone']) : null,
                 'services' => $services,
                 'message' => strip_tags($validated['message']),
                 'ip_address' => $request->ip(),

@@ -12,10 +12,29 @@
                     data-bs-toggle="modal" data-bs-target="#filterModal">
                     <i class="fa fa-filter me-2"></i>Filter
                 </button>
-                <a href="{{ route('admin.contact.export', request()->all()) }}"
-                    class="btn btn-outline-primary dark:border-blue-500 dark:text-blue-400">
-                    <i class="fa fa-download me-2"></i>Export CSV
-                </a>
+                <div class="btn-group" role="group">
+                    <button type="button"
+                        class="btn btn-outline-primary dark:border-blue-500 dark:text-blue-400 dropdown-toggle"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-download me-2"></i>Export
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item export-btn"
+                                href="{{ route('admin.contact.export', request()->all()) }}" data-format="CSV"
+                                title="Export to CSV format">
+                                <i class="fa fa-file-csv me-2 text-success"></i>Export as CSV
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item export-btn"
+                                href="{{ route('admin.contact.export.xlsx', request()->all()) }}" data-format="XLSX"
+                                title="Export to Excel format">
+                                <i class="fa fa-file-excel me-2 text-primary"></i>Export as XLSX
+                            </a>
+                        </li>
+                    </ul>
+                </div>
                 @if (auth()->user()->hasRole('admin'))
                     <button type="button" class="btn btn-outline-danger" id="bulkDeleteBtn" style="display: none;">
                         <i class="fa fa-trash me-2"></i>Delete Selected
@@ -182,7 +201,7 @@
                     @if ($contacts->count() > 0)
                         <div class="table-responsive">
                             <table class="table table-hover mb-0">
-                                <thead class="table-light dark:bg-gray-700">
+                                <thead class="dark:bg-gray-700">
                                     <tr>
                                         @if (auth()->user()->hasRole('admin'))
                                             <th class="dark:text-gray-100">
@@ -190,7 +209,9 @@
                                             </th>
                                         @endif
                                         <th class="dark:text-gray-100">Name</th>
+                                        <th class="dark:text-gray-100">Company</th>
                                         <th class="dark:text-gray-100">Email</th>
+                                        <th class="dark:text-gray-100">Phone</th>
                                         <th class="dark:text-gray-100">Services</th>
                                         <th class="dark:text-gray-100">Message</th>
                                         <th class="dark:text-gray-100">Submitted</th>
@@ -210,9 +231,25 @@
                                                 <div class="fw-medium">{{ $contact->name }}</div>
                                             </td>
                                             <td class="dark:text-gray-100">
+                                                @if ($contact->company_name)
+                                                    <span class="text-primary">{{ $contact->company_name }}</span>
+                                                @else
+                                                    <span class="text-muted">-</span>
+                                                @endif
+                                            </td>
+                                            <td class="dark:text-gray-100">
                                                 <a href="mailto:{{ $contact->email }}" class="text-decoration-none">
                                                     {{ $contact->email }}
                                                 </a>
+                                            </td>
+                                            <td class="dark:text-gray-100">
+                                                @if ($contact->phone)
+                                                    <a href="tel:{{ $contact->phone }}" class="text-decoration-none">
+                                                        {{ $contact->phone }}
+                                                    </a>
+                                                @else
+                                                    <span class="text-muted">-</span>
+                                                @endif
                                             </td>
                                             <td class="dark:text-gray-100">
                                                 @if ($contact->services && is_array($contact->services))
@@ -269,6 +306,15 @@
                                                             data-bs-dismiss="modal"></button>
                                                     </div>
                                                     <div class="modal-body">
+                                                        @if ($contact->company_name)
+                                                            <div class="mb-3">
+                                                                <strong
+                                                                    class="text-dark dark:text-gray-100">Company:</strong>
+                                                                <span
+                                                                    class="ms-2 text-primary">{{ $contact->company_name }}</span>
+                                                            </div>
+                                                        @endif
+
                                                         <div class="mb-3">
                                                             <strong
                                                                 class="text-dark dark:text-gray-100">Email:</strong>
@@ -277,6 +323,17 @@
                                                                 {{ $contact->email }}
                                                             </a>
                                                         </div>
+
+                                                        @if ($contact->phone)
+                                                            <div class="mb-3">
+                                                                <strong
+                                                                    class="text-dark dark:text-gray-100">Phone:</strong>
+                                                                <a href="tel:{{ $contact->phone }}"
+                                                                    class="text-decoration-none ms-2">
+                                                                    {{ $contact->phone }}
+                                                                </a>
+                                                            </div>
+                                                        @endif
                                                         <div class="mb-3">
                                                             <strong
                                                                 class="text-dark dark:text-gray-100">Services:</strong>
@@ -545,6 +602,111 @@
                         setTimeout(() => {
                             location.reload();
                         }, 1000);
+                    }
+                }
+
+                // Export functionality with progress indicator
+                const exportBtns = document.querySelectorAll('.export-btn');
+                exportBtns.forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+
+                        const format = this.dataset.format;
+                        const url = this.href;
+
+                        // Show progress modal
+                        showExportProgress(format);
+
+                        // Create a proper download using fetch with blob handling
+                        fetch(url, {
+                                method: 'GET',
+                                headers: {
+                                    'X-Requested-With': 'XMLHttpRequest'
+                                }
+                            })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(`HTTP error! status: ${response.status}`);
+                                }
+                                return response.blob();
+                            })
+                            .then(blob => {
+                                // Create download link
+                                const downloadUrl = window.URL.createObjectURL(blob);
+                                const link = document.createElement('a');
+                                link.href = downloadUrl;
+
+                                // Set filename based on format
+                                const timestamp = new Date().toISOString().slice(0, 19).replace(
+                                    /[:.]/g, '-');
+                                link.download =
+                                    `contact-submissions-${timestamp}.${format.toLowerCase()}`;
+
+                                // Trigger download
+                                document.body.appendChild(link);
+                                link.click();
+
+                                // Clean up
+                                document.body.removeChild(link);
+                                window.URL.revokeObjectURL(downloadUrl);
+
+                                // Hide progress and show success
+                                hideExportProgress();
+                                showToast('success',
+                                    `${format} export has been downloaded successfully!`);
+                            })
+                            .catch(error => {
+                                console.error('Export error:', error);
+                                hideExportProgress();
+                                showToast('error',
+                                    `Failed to export ${format} file. Please try again.`);
+                            });
+                    });
+                });
+
+                // Export progress modal functions
+                function showExportProgress(format) {
+                    // Create progress modal if it doesn't exist
+                    let progressModal = document.getElementById('exportProgressModal');
+                    if (!progressModal) {
+                        const modalHtml = `
+                            <div class="modal fade" id="exportProgressModal" tabindex="-1" data-bs-backdrop="static">
+                                <div class="modal-dialog modal-sm modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-body text-center py-4">
+                                            <div class="spinner-border text-primary mb-3" role="status">
+                                                <span class="visually-hidden">Loading...</span>
+                                            </div>
+                                            <h6 class="mb-2">Preparing Export</h6>
+                                            <p class="text-muted mb-0" id="exportFormat">Generating CSV file...</p>
+                                            <div class="progress mt-3" style="height: 6px;">
+                                                <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                                                     role="progressbar" style="width: 100%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        document.body.insertAdjacentHTML('beforeend', modalHtml);
+                        progressModal = document.getElementById('exportProgressModal');
+                    }
+
+                    // Update format text
+                    document.getElementById('exportFormat').textContent = `Generating ${format} file...`;
+
+                    // Show modal
+                    const modal = new bootstrap.Modal(progressModal);
+                    modal.show();
+                }
+
+                function hideExportProgress() {
+                    const progressModal = document.getElementById('exportProgressModal');
+                    if (progressModal) {
+                        const modal = bootstrap.Modal.getInstance(progressModal);
+                        if (modal) {
+                            modal.hide();
+                        }
                     }
                 }
             });

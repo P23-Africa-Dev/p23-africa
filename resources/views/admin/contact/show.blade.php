@@ -58,6 +58,33 @@
                                 </div>
                             </div>
                         </div>
+                        @if ($contact->company_name)
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <label class="form-label text-muted dark:text-gray-400 mb-1">
+                                        <i class="fa fa-building me-2"></i>Company Name
+                                    </label>
+                                    <div class="form-control-plaintext text-dark dark:text-gray-100 fw-medium">
+                                        {{ $contact->company_name }}
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        @if ($contact->phone)
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <label class="form-label text-muted dark:text-gray-400 mb-1">
+                                        <i class="fa fa-phone me-2"></i>Phone Number
+                                    </label>
+                                    <div class="form-control-plaintext">
+                                        <a href="tel:{{ $contact->phone }}"
+                                            class="text-success text-decoration-none fw-medium">
+                                            {{ $contact->phone }}
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
