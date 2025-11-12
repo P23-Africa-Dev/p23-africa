@@ -585,9 +585,10 @@ input[type="range"]::-moz-range-thumb:hover {
         border-radius: 12px;
         border: none;
         cursor: pointer;
-        font-size: 15px;
+        font-size: 18px;
         font-weight: 600;
         transition: 0.25s ease;
+         font-family: "GT Walsheim ProCB"; 
     }
 
     .contact-info-form__btn:hover {
