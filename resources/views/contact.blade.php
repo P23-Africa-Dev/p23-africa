@@ -209,9 +209,9 @@
         letter-spacing: 0.9px;
     }
 
-    .form_group_field{
+    .form_group_field {
         display: grid;
-        grid-template-columns:  repeat(1, 1fr);
+        grid-template-columns: repeat(1, 1fr);
         gap: 20px;
     }
 
@@ -220,300 +220,322 @@
 
 
     .country_with_phone {
-  font-family: "GT Walsheim Con";
-
-  color: #fff;
-  width: 100%;
-  margin-top: 30px;
-}
-
-/* Field label */
-.contact-info-form__group.full-width{
-    position: relative;
-}
-
-.country_with_phone .floating-label2 {
-    position: absolute;
-    top: -10px;
-    left: 10px;
-    padding: 2px 4px;
-    margin: 0px 5px;
-    font-size: 12px;
-    background: #19574b;
-    color: #fff;
-    border-radius: 50px;
-    pointer-events: none;
-    font-family: "GT Walsheim Con";
-    opacity: 0.9;
-
-}
-
-/* Row layout */
-.country_with_phone .phone-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-}
-
-/* COUNTRY DROPDOWN */
-.country_with_phone .country-select {
-  position: relative;
-  width: 70px;
-  flex-shrink: 0;
-  z-index: 50;
-}
-
-.country_with_phone .selected-country {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  border: 1px solid #fff;
-  border-radius: 8px;
-  padding: 18px 8px;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-
-
-.country_with_phone .flag-icon {
-  width: 26px;
-  height: 18px;
-  border-radius: 3px;
-  object-fit: cover;
-}
-
-.country_with_phone .arrow {
-  font-size: 11px;
-  color: #ccc;
-  transition: transform 0.3s ease;
-}
-
-/* Dropdown list */
-.country_with_phone .country-list {
-  position: absolute;
-  top: calc(100% + 6px);
-  left: 0;
-  width: 220px;
-  background: rgba(20, 20, 20, 0.98);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
-  list-style: none;
-  padding: 6px 0;
-  margin: 0;
-  opacity: 0;
-  transform: translateY(-10px);
-  pointer-events: none;
-  transition: all 0.3s ease;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(8px);
-}
-
-.country_with_phone .country-select.open .country-list {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
-.country_with_phone .country-select.open .arrow {
-  transform: rotate(180deg);
-}
-
-/* Dropdown items */
-.country_with_phone .country-list li {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  color: #fff;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background 0.2s ease, padding-left 0.2s ease;
-}
-
-.country_with_phone .country-list li img {
-  width: 22px;
-  height: 15px;
-  border-radius: 3px;
-}
-
-.country_with_phone .country-list li:hover {
-  background: rgba(0, 191, 166, 0.2);
-  padding-left: 16px;
-}
-
-/* PHONE INPUT */
-.country_with_phone .phone-input-wrapper {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  border: 1px solid #fff;
-  border-radius: 8px;
-  padding: 18px 10px;
-  transition: border-color 0.25s ease;
-  position: relative;
-}
-
-.phone-input-wrapper .floating-phone {
-    position: absolute;
-    top: -10px;
-    left: 10px;
-    padding: 2px 4px;
-    margin: 0px 5px;
-    font-size: 12px;
-    background: #19574b;
-    color: #fff;
-    border-radius: 50px;
-    pointer-events: none;
-    font-family: "GT Walsheim Con";
-    opacity: 0.9;
-
-}
-
-
-
-.country_with_phone .prefix {
-  font-size: 15px;
-  color: #fff;
-  margin-right: 8px;
-  opacity: 0.85;
-}
-
-.country_with_phone .floating-input.phone {
-  width: 100%;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: #fff;
-  font-size: 15px;
-}
-
-
-
-
-/* =============================================  PRICE RANGE */
-.form-price-container h2{
-    font-size: 18px;
-         font-family: "GT Walsheim Trial Cn Md";
-         margin-top:28px;
-         letter-spacing: 0.7px;
-
-
-}
-.form-price-container p{
-    font-size: 13px;
-        font-family: "GT Walsheim Pro";
-        margin-top: -10px;
-         letter-spacing: 0.7px;
-
-
-}
-.price-range-group {
         font-family: "GT Walsheim Con";
 
-  color: #1e6c82;
-  margin-top: 25px;
-  width: 100%;
-}
+        color: #fff;
+        width: 100%;
+        margin-top: 30px;
+    }
 
-.price-range-group .form-label {
-  display: block;
-  font-size: 15px;
-  font-weight: 500;
-  margin-bottom: 10px;
-}
+    /* Field label */
+    .contact-info-form__group.full-width {
+        position: relative;
+    }
 
-.range-wrapper {
-  position: relative;
-  width: 100%;
-  padding: 30px 0;
-  display: flex;
-  align-items: center;
-}
-.range-wrapper .range-label{
-    color: #fff;
-}
+    .country_with_phone .floating-label2 {
+        position: absolute;
+        top: -10px;
+        left: 10px;
+        padding: 2px 4px;
+        margin: 0px 5px;
+        font-size: 12px;
+        background: #19574b;
+        color: #fff;
+        border-radius: 50px;
+        pointer-events: none;
+        font-family: "GT Walsheim Con";
+        opacity: 0.9;
 
-/* Floating price label */
-.range-value {
-  position: absolute;
-  top: -10px;
-  left: 0;
-  transform: translateX(-50%);
-  background: #1e6c82;
-  color: #eff2f1;
-  font-size: 13px;
-  font-weight: 500;
-  padding: 4px 8px;
-  border-radius: 6px;
-  white-space: nowrap;
-  transition: left 0.2s ease, transform 0.2s ease;
-}
+    }
 
-/* Base range */
- input#priceRange[type="range"] {
-  width: 80%;
-  margin: 0 auto;
-  height: 6px;
-  appearance: none;
-  background: linear-gradient(
-    to right,
-    #1e6c82 0%,
-    #1e6c82 0%,
-    #eff2f1 0%,
-    #eff2f1 100%
-  );
-  border-radius: 4px;
-  outline: none;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
+    /* Row layout */
+    .country_with_phone .phone-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+    }
 
-/* WebKit Track */
-input[type="range"]::-webkit-slider-runnable-track {
-  height: 6px;
-  background: transparent;
-  border-radius: 3px;
-}
+    /* COUNTRY DROPDOWN */
+    .country_with_phone .country-select {
+        position: relative;
+        width: 70px;
+        flex-shrink: 0;
+        z-index: 50;
+    }
 
-/* Thumb (draggable circle) */
-input[type="range"]::-webkit-slider-thumb {
-  appearance: none;
-  width: 22px;
-  height: 22px;
-  background: #1e6c82;
-  border: 3px solid #0C3A31;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-  margin-top: -8px;
-}
+    .country_with_phone .selected-country {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        border: 1px solid #fff;
+        border-radius: 8px;
+        padding: 18px 8px;
+        cursor: pointer;
+        transition: all 0.25s ease;
+    }
 
-input[type="range"]::-webkit-slider-thumb:hover {
-  transform: scale(1.1);
-}
 
-/* Firefox track/thumb */
-input[type="range"]::-moz-range-track {
-  height: 6px;
-  background: transparent;
-  border-radius: 3px;
-}
+    .country_with_phone .flag-icon {
+        width: 26px;
+        height: 18px;
+        border-radius: 3px;
+        object-fit: cover;
+    }
 
-input[type="range"]::-moz-range-thumb {
-  width: 22px;
-  height: 22px;
-  background: #1e6c82;
-  border: 3px solid #0C3A31;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
+    .country_with_phone .arrow {
+        font-size: 11px;
+        color: #ccc;
+        transition: transform 0.3s ease;
+    }
 
-input[type="range"]::-moz-range-thumb:hover {
-  transform: scale(1.1);
-}
+    /* Dropdown list */
+    .country_with_phone .country-list {
+        position: absolute;
+        top: calc(100% + 6px);
+        left: 0;
+        width: 220px;
+        max-height: 280px;
+        overflow-y: auto;
+        background: rgba(20, 20, 20, 0.98);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 8px;
+        list-style: none;
+        padding: 6px 0;
+        margin: 0;
+        opacity: 0;
+        transform: translateY(-10px);
+        pointer-events: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+        backdrop-filter: blur(8px);
+    }
+
+    /* Custom scrollbar for country list */
+    .country_with_phone .country-list::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .country_with_phone .country-list::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 3px;
+    }
+
+    .country_with_phone .country-list::-webkit-scrollbar-thumb {
+        background: rgba(0, 191, 166, 0.5);
+        border-radius: 3px;
+    }
+
+    .country_with_phone .country-list::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 191, 166, 0.7);
+    }
+
+    .country_with_phone .country-select.open .country-list {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+
+    .country_with_phone .country-select.open .arrow {
+        transform: rotate(180deg);
+    }
+
+    /* Dropdown items */
+    .country_with_phone .country-list li {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        color: #fff;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background 0.2s ease, padding-left 0.2s ease;
+    }
+
+    .country_with_phone .country-list li img {
+        width: 22px;
+        height: 15px;
+        border-radius: 3px;
+    }
+
+    .country_with_phone .country-list li:hover {
+        background: rgba(0, 191, 166, 0.2);
+        padding-left: 16px;
+    }
+
+    /* PHONE INPUT */
+    .country_with_phone .phone-input-wrapper {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        border: 1px solid #fff;
+        border-radius: 8px;
+        padding: 18px 10px;
+        transition: border-color 0.25s ease;
+        position: relative;
+    }
+
+    .phone-input-wrapper .floating-phone {
+        position: absolute;
+        top: -10px;
+        left: 10px;
+        padding: 2px 4px;
+        margin: 0px 5px;
+        font-size: 12px;
+        background: #19574b;
+        color: #fff;
+        border-radius: 50px;
+        pointer-events: none;
+        font-family: "GT Walsheim Con";
+        opacity: 0.9;
+
+    }
+
+
+
+    .country_with_phone .prefix {
+        font-size: 15px;
+        color: #fff;
+        margin-right: 8px;
+        opacity: 0.85;
+    }
+
+    .country_with_phone .floating-input.phone {
+        width: 100%;
+        background: transparent;
+        border: none;
+        outline: none;
+        color: #fff;
+        font-size: 15px;
+    }
+
+
+
+
+    /* =============================================  PRICE RANGE */
+    .form-price-container h2 {
+        font-size: 18px;
+        font-family: "GT Walsheim Trial Cn Md";
+        margin-top: 28px;
+        letter-spacing: 0.7px;
+
+
+    }
+
+    .form-price-container p {
+        font-size: 13px;
+        font-family: "GT Walsheim Pro";
+        margin-top: -10px;
+        letter-spacing: 0.7px;
+
+
+    }
+
+    .price-range-group {
+        font-family: "GT Walsheim Con";
+
+        color: #1e6c82;
+        margin-top: 25px;
+        width: 100%;
+    }
+
+    .price-range-group .form-label {
+        display: block;
+        font-size: 15px;
+        font-weight: 500;
+        margin-bottom: 10px;
+    }
+
+    .range-wrapper {
+        position: relative;
+        width: 100%;
+        padding: 30px 0;
+        display: flex;
+        align-items: center;
+    }
+
+    .range-wrapper .range-label {
+        color: #fff;
+    }
+
+    /* Floating price label */
+    .range-value {
+        position: absolute;
+        top: -10px;
+        left: 0;
+        transform: translateX(-50%);
+        background: #1e6c82;
+        color: #eff2f1;
+        font-size: 13px;
+        font-weight: 500;
+        padding: 4px 8px;
+        border-radius: 6px;
+        white-space: nowrap;
+        transition: left 0.2s ease, transform 0.2s ease;
+    }
+
+    /* Base range */
+    input#priceRange[type="range"] {
+        width: 80%;
+        margin: 0 auto;
+        height: 6px;
+        appearance: none;
+        background: linear-gradient(to right,
+                #1e6c82 0%,
+                #1e6c82 0%,
+                #eff2f1 0%,
+                #eff2f1 100%);
+        border-radius: 4px;
+        outline: none;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    /* WebKit Track */
+    input[type="range"]::-webkit-slider-runnable-track {
+        height: 6px;
+        background: transparent;
+        border-radius: 3px;
+    }
+
+    /* Thumb (draggable circle) */
+    input[type="range"]::-webkit-slider-thumb {
+        appearance: none;
+        width: 22px;
+        height: 22px;
+        background: #1e6c82;
+        border: 3px solid #0C3A31;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+        margin-top: -8px;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+        transform: scale(1.1);
+    }
+
+    /* Firefox track/thumb */
+    input[type="range"]::-moz-range-track {
+        height: 6px;
+        background: transparent;
+        border-radius: 3px;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+        width: 22px;
+        height: 22px;
+        background: #1e6c82;
+        border: 3px solid #0C3A31;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+    }
+
+    input[type="range"]::-moz-range-thumb:hover {
+        transform: scale(1.1);
+    }
 
 
 
@@ -588,7 +610,7 @@ input[type="range"]::-moz-range-thumb:hover {
         font-size: 18px;
         font-weight: 600;
         transition: 0.25s ease;
-         font-family: "GT Walsheim ProCB"; 
+        font-family: "GT Walsheim ProCB";
     }
 
     .contact-info-form__btn:hover {
@@ -732,8 +754,8 @@ input[type="range"]::-moz-range-thumb:hover {
             max-width: initial;
         }
 
-     
-       
+
+
         .contact-info-location {
             padding: 2rem 2rem;
             margin-top: 18rem;
@@ -776,11 +798,11 @@ input[type="range"]::-moz-range-thumb:hover {
             padding: 0;
             /* padding-top: 2rem; */
         }
-        
-    .form_group_field{
-        grid-template-columns:  repeat(2, 1fr);
-        gap: 20px;
-    }
+
+        .form_group_field {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
 
         .tag {
             gap: 15px;
@@ -1149,108 +1171,170 @@ input[type="range"]::-moz-range-thumb:hover {
                             </div>
 
 
-                                              <div class="form-field2 country_with_phone">
-                  <div class="contact-info-form__group full-width">
-                    <label class="floating-label2">Country</label>
-                    <div class="phone-row">
-                      <!-- Country Flag Dropdown -->
-                      <div class="country-select" id="countrySelect">
-                        <div class="selected-country">
-                          <img
-                            src="https://flagcdn.com/w40/ng.png"
-                            alt="flag"
-                            class="flag-icon"
-                          />
-                          <span class="arrow">▼</span>
-                        </div>
+                            <div class="form-field2 country_with_phone">
+                                <div class="contact-info-form__group full-width">
+                                    <label class="floating-label2">Country</label>
+                                    <div class="phone-row">
+                                        <!-- Country Flag Dropdown -->
+                                        <div class="country-select" id="countrySelect">
+                                            <div class="selected-country">
+                                                <img src="https://flagcdn.com/w40/gb.png" alt="flag"
+                                                    class="flag-icon" />
+                                                <span class="arrow">▼</span>
+                                            </div>
 
-                        <ul class="country-list">
-                          <li data-code="+1" data-flag="us">
-                            <img src="https://flagcdn.com/w40/us.png" alt="" />
-                            United States (+1)
-                          </li>
-                          <li data-code="+44" data-flag="gb">
-                            <img src="https://flagcdn.com/w40/gb.png" alt="" />
-                            United Kingdom (+44)
-                          </li>
-                          <li data-code="+27" data-flag="za">
-                            <img src="https://flagcdn.com/w40/za.png" alt="" />
-                            South Africa (+27)
-                          </li>
-                          <li data-code="+234" data-flag="ng">
-                            <img src="https://flagcdn.com/w40/ng.png" alt="" />
-                            Nigeria (+234)
-                          </li>
-                          <li data-code="+91" data-flag="in">
-                            <img src="https://flagcdn.com/w40/in.png" alt="" />
-                            India (+91)
-                          </li>
-                          <li data-code="+61" data-flag="au">
-                            <img src="https://flagcdn.com/w40/au.png" alt="" />
-                            Australia (+61)
-                          </li>
-                        </ul>
-                      </div>
+                                            <ul class="country-list">
+                                                <li data-code="+1" data-flag="us">
+                                                    <img src="https://flagcdn.com/w40/us.png" alt="" />
+                                                    United States (+1)
+                                                </li>
+                                                <li data-code="+1" data-flag="ca">
+                                                    <img src="https://flagcdn.com/w40/ca.png" alt="" />
+                                                    Canada (+1)
+                                                </li>
+                                                <li data-code="+44" data-flag="gb">
+                                                    <img src="https://flagcdn.com/w40/gb.png" alt="" />
+                                                    United Kingdom (+44)
+                                                </li>
+                                                <li data-code="+27" data-flag="za">
+                                                    <img src="https://flagcdn.com/w40/za.png" alt="" />
+                                                    South Africa (+27)
+                                                </li>
+                                                <li data-code="+234" data-flag="ng">
+                                                    <img src="https://flagcdn.com/w40/ng.png" alt="" />
+                                                    Nigeria (+234)
+                                                </li>
+                                                <li data-code="+254" data-flag="ke">
+                                                    <img src="https://flagcdn.com/w40/ke.png" alt="" />
+                                                    Kenya (+254)
+                                                </li>
+                                                <li data-code="+233" data-flag="gh">
+                                                    <img src="https://flagcdn.com/w40/gh.png" alt="" />
+                                                    Ghana (+233)
+                                                </li>
+                                                <li data-code="+255" data-flag="tz">
+                                                    <img src="https://flagcdn.com/w40/tz.png" alt="" />
+                                                    Tanzania (+255)
+                                                </li>
+                                                <li data-code="+256" data-flag="ug">
+                                                    <img src="https://flagcdn.com/w40/ug.png" alt="" />
+                                                    Uganda (+256)
+                                                </li>
+                                                <li data-code="+20" data-flag="eg">
+                                                    <img src="https://flagcdn.com/w40/eg.png" alt="" />
+                                                    Egypt (+20)
+                                                </li>
+                                                <li data-code="+212" data-flag="ma">
+                                                    <img src="https://flagcdn.com/w40/ma.png" alt="" />
+                                                    Morocco (+212)
+                                                </li>
+                                                <li data-code="+216" data-flag="tn">
+                                                    <img src="https://flagcdn.com/w40/tn.png" alt="" />
+                                                    Tunisia (+216)
+                                                </li>
+                                                <li data-code="+213" data-flag="dz">
+                                                    <img src="https://flagcdn.com/w40/dz.png" alt="" />
+                                                    Algeria (+213)
+                                                </li>
+                                                <li data-code="+250" data-flag="rw">
+                                                    <img src="https://flagcdn.com/w40/rw.png" alt="" />
+                                                    Rwanda (+250)
+                                                </li>
+                                                <li data-code="+91" data-flag="in">
+                                                    <img src="https://flagcdn.com/w40/in.png" alt="" />
+                                                    India (+91)
+                                                </li>
+                                                <li data-code="+61" data-flag="au">
+                                                    <img src="https://flagcdn.com/w40/au.png" alt="" />
+                                                    Australia (+61)
+                                                </li>
+                                                <li data-code="+86" data-flag="cn">
+                                                    <img src="https://flagcdn.com/w40/cn.png" alt="" />
+                                                    China (+86)
+                                                </li>
+                                                <li data-code="+971" data-flag="ae">
+                                                    <img src="https://flagcdn.com/w40/ae.png" alt="" />
+                                                    UAE (+971)
+                                                </li>
+                                                <li data-code="+33" data-flag="fr">
+                                                    <img src="https://flagcdn.com/w40/fr.png" alt="" />
+                                                    France (+33)
+                                                </li>
+                                                <li data-code="+49" data-flag="de">
+                                                    <img src="https://flagcdn.com/w40/de.png" alt="" />
+                                                    Germany (+49)
+                                                </li>
+                                            </ul>
+                                        </div>
 
-                      <!-- Phone Input -->
-                      <div class="phone-input-wrapper">
-                                <label class="floating-phone">Phone Number</label>
-                        <span class="prefix" id="phonePrefix">+234</span>
-                        <input
-                          type="tel"
-                          id="phone"
-                          class="floating-input phone"
-                          placeholder=""
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                        
+                                        <!-- Phone Input -->
+                                        <div class="phone-input-wrapper">
+                                            <label class="floating-phone">Phone Number</label>
+                                            <span class="prefix" id="phonePrefix">+44</span>
+                                            <input type="tel" id="phoneNumber" name="phone"
+                                                class="floating-input phone @error('phone') error @enderror"
+                                                placeholder="" value="{{ old('phone') }}" />
+                                            <!-- Hidden input for country code -->
+                                            <input type="hidden" id="countryCode" name="country_code" value="+44" />
+                                        </div>
+                                    </div>
+                                    @error('phone')
+                                        <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                    @error('country_code')
+                                        <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+
 
 
 
                             <div class="form_group_field">
-                               
-                            <div class="contact-info-form__group name-field">
+
+                                <div class="contact-info-form__group name-field">
                                     <label class="floating-label">Email</label>
 
-                                <input type="email" name="email"
-                                class="floating-input @error('email') error @enderror"
-                           value="{{ old('email') }}" required />
-                            @error('email')
-                                <div class="error-message"
-                                    style="color: #e74c3c; font-size: 12px; margin-top: -10px; margin-bottom: 10px;">
-                                    {{ $message }}</div>
-                            @enderror
+                                    <input type="email" name="email"
+                                        class="floating-input @error('email') error @enderror"
+                                        value="{{ old('email') }}" required />
+                                    @error('email')
+                                        <div class="error-message"
+                                            style="color: #e74c3c; font-size: 12px; margin-top: -10px; margin-bottom: 10px;">
+                                            {{ $message }}</div>
+                                    @enderror
                                 </div>
-                               
 
-                            <div class="contact-info-form__group name-field">
-                                <label class="floating-label">Company Name</label>
-                                <input type="text" name="company_name"
-                                    class="floating-input @error('company_name') error @enderror"
-                                     value="{{ old('company_name') }}" />
-                                @error('company_name')
-                                    <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
-                                        {{ $message }}</div>
-                                @enderror
-                            </div>
+
+                                <div class="contact-info-form__group name-field">
+                                    <label class="floating-label">Company Name</label>
+                                    <input type="text" name="company_name"
+                                        class="floating-input @error('company_name') error @enderror"
+                                        value="{{ old('company_name') }}" />
+                                    @error('company_name')
+                                        <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
+                                            {{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
 
                             <!-- <div class="form-group2 field">
-    <div class="contact-info-form__group name-field">
-                                <label class="floating-label">Phone Number</label>
-                                <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
-                                    placeholder="+1234567890" value="{{ old('phone') }}" />
-                                @error('phone')
-                                    <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
-                                        {{ $message }}</div>
-                                @enderror
-                            </div>
-                            </div> -->
+            <div class="contact-info-form__group name-field">
+                                        <label class="floating-label">Phone Number</label>
+                                        <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
+                                            placeholder="+1234567890" value="{{ old('phone') }}" />
+                                        @error('phone')
+        <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
+                                                        {{ $message }}</div>
+    @enderror
+                                    </div>
+                                    </div> -->
 
-               
+
 
                             <div class="contact-info-form__section-title">
                                 What service do you require
@@ -1307,29 +1391,29 @@ input[type="range"]::-moz-range-thumb:hover {
 
 
                             <!-- PRICE RANGE  -->
-                             <div class="form-price-container">
+                            <div class="form-price-container">
                                 <h2>Indicate your budget for support</h2>
                                 <p>Move toggle to your most preferred budget.</p>
 
                                 <div class="form-group price-range-group">
 
-  <div class="range-wrapper">
-    <span class="range-label">$100</span> <div class="range-value" id="rangeValue">$100</div>
-    <input
-      type="range"
-      id="priceRange"
-      min="100"
-      max="10000"
-      value="100"
-      step="50"
-    />
-      <span class="range-label">$Max</span>
+                                    <div class="range-wrapper">
+                                        <span class="range-label">$100</span>
+                                        <div class="range-value" id="rangeValue">$100</div>
+                                        <input type="range" id="priceRange" name="budget_range" min="100"
+                                            max="5000" value="{{ old('budget_range', 100) }}" step="50" />
+                                        <span class="range-label">$Max</span>
 
 
- 
-  </div>
-</div>
-                             </div>
+
+                                    </div>
+                                </div>
+                                @error('budget_range')
+                                    <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
 
 
 
@@ -1606,81 +1690,87 @@ input[type="range"]::-moz-range-thumb:hover {
                 showPopup('error', 'Error', '{{ session('error') }}');
             @endif
 
-            
+
 
 
             // SELECT OPTION
 
-              const countrySelect = document.getElementById("countrySelect");
-      const selectedCountry = countrySelect.querySelector(".selected-country");
-      const selectedImg = selectedCountry.querySelector(".flag-icon");
-      const countryList = countrySelect.querySelector(".country-list");
-      const phonePrefix = document.getElementById("phonePrefix");
+            const countrySelect = document.getElementById("countrySelect");
+            const selectedCountry = countrySelect.querySelector(".selected-country");
+            const selectedImg = selectedCountry.querySelector(".flag-icon");
+            const countryList = countrySelect.querySelector(".country-list");
+            const phonePrefix = document.getElementById("phonePrefix");
+            const countryCodeInput = document.getElementById("countryCode");
 
-      // Toggle dropdown
-      selectedCountry.addEventListener("click", (e) => {
-        e.stopPropagation();
-        countrySelect.classList.toggle("open");
-      });
+            // Toggle dropdown
+            selectedCountry.addEventListener("click", (e) => {
+                e.stopPropagation();
+                countrySelect.classList.toggle("open");
+            });
 
-      // Handle country selection
-      countryList.querySelectorAll("li").forEach((item) => {
-        item.addEventListener("click", () => {
-          const flag = item.dataset.flag;
-          const code = item.dataset.code;
+            // Handle country selection
+            countryList.querySelectorAll("li").forEach((item) => {
+                item.addEventListener("click", () => {
+                    const flag = item.dataset.flag;
+                    const code = item.dataset.code;
 
-          selectedImg.src = `https://flagcdn.com/w40/${flag}.png`;
-          phonePrefix.textContent = code;
+                    selectedImg.src = `https://flagcdn.com/w40/${flag}.png`;
+                    phonePrefix.textContent = code;
 
-          // Animate close
-          countryList.style.opacity = "0";
-          countryList.style.transform = "translateY(-8px)";
-          setTimeout(() => {
-            countrySelect.classList.remove("open");
-            countryList.removeAttribute("style");
-          }, 200);
-        });
-      });
+                    // Update hidden country code input
+                    if (countryCodeInput) {
+                        countryCodeInput.value = code;
+                    }
 
-      // Click outside closes dropdown
-      document.addEventListener("click", (e) => {
-        if (!countrySelect.contains(e.target)) {
-          countryList.style.opacity = "0";
-          countryList.style.transform = "translateY(-8px)";
-          setTimeout(() => {
-            countrySelect.classList.remove("open");
-            countryList.removeAttribute("style");
-          }, 200);
-        }
-      });
+                    // Animate close
+                    countryList.style.opacity = "0";
+                    countryList.style.transform = "translateY(-8px)";
+                    setTimeout(() => {
+                        countrySelect.classList.remove("open");
+                        countryList.removeAttribute("style");
+                    }, 200);
+                });
+            });
 
-const rangeInput = document.getElementById("priceRange");
-const rangeValue = document.getElementById("rangeValue");
+            // Click outside closes dropdown
+            document.addEventListener("click", (e) => {
+                if (!countrySelect.contains(e.target)) {
+                    countryList.style.opacity = "0";
+                    countryList.style.transform = "translateY(-8px)";
+                    setTimeout(() => {
+                        countrySelect.classList.remove("open");
+                        countryList.removeAttribute("style");
+                    }, 200);
+                }
+            });
 
-function updateSlider() {
-  const value = +rangeInput.value;
-  const min = +rangeInput.min;
-  const max = +rangeInput.max;
-  const percent = ((value - min) / (max - min)) * 100;
+            const rangeInput = document.getElementById("priceRange");
+            const rangeValue = document.getElementById("rangeValue");
 
-  // Update the floating label text and position
-  rangeValue.textContent = `$${value.toLocaleString()}`;
-  rangeValue.style.left = `calc(${percent}% + (${8 - percent * 0.15}px))`;
+            function updateSlider() {
+                const value = +rangeInput.value;
+                const min = +rangeInput.min;
+                const max = +rangeInput.max;
+                const percent = ((value - min) / (max - min)) * 100;
 
-  // Update the filled color background
-  rangeInput.style.background = `linear-gradient(to right, 
+                // Update the floating label text and position
+                rangeValue.textContent = `$${value.toLocaleString()}`;
+                rangeValue.style.left = `calc(${percent}% + (${8 - percent * 0.15}px))`;
+
+                // Update the filled color background
+                rangeInput.style.background = `linear-gradient(to right, 
     #1E6C82 ${percent}%, 
     #EFF2F1 ${percent}%)`;
-}
+            }
 
-// Initialize
-updateSlider();
+            // Initialize
+            updateSlider();
 
-// Update on input
-rangeInput.addEventListener("input", updateSlider);
+            // Update on input
+            rangeInput.addEventListener("input", updateSlider);
 
 
-      
+
 
         });
     </script>

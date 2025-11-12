@@ -85,6 +85,31 @@
                                 </div>
                             </div>
                         @endif
+                        @if ($contact->country_code)
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <label class="form-label text-muted dark:text-gray-400 mb-1">
+                                        <i class="fa fa-flag me-2"></i>Country Code
+                                    </label>
+                                    <div class="form-control-plaintext">
+                                        <span class="badge bg-info fs-6 px-3 py-2">{{ $contact->country_code }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        @if ($contact->budget_range)
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <label class="form-label text-muted dark:text-gray-400 mb-1">
+                                        <i class="fa fa-dollar-sign me-2"></i>Budget Range
+                                    </label>
+                                    <div class="form-control-plaintext">
+                                        <span
+                                            class="text-success fw-bold fs-5">${{ number_format($contact->budget_range) }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

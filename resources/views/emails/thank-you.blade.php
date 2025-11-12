@@ -7,6 +7,10 @@
         href="https://www.tiktok.com/@p23africa?_t=ZN-8zOFQMxpTU6&_r=1">Tiktok</a> to keep up with us.
 </p>
 
+@if (!empty($data['budget_range']))
+    <p><strong>Your Budget Range:</strong> ${{ number_format($data['budget_range']) }}</p>
+@endif
+
 @if (!empty($data['services']) && is_array($data['services']) && count($data['services']) > 0)
     <p><strong>Services you inquired about:</strong></p>
     <ul>

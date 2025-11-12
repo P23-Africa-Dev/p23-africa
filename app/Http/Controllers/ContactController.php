@@ -20,8 +20,10 @@ class ContactController extends Controller
                 'company_name' => 'nullable|string|max:255',
                 'email' => 'required|email|max:255',
                 'phone' => 'nullable|string|max:20',
+                'country_code' => 'nullable|string|max:10',
                 'services' => 'nullable|string', // Services will come as comma-separated string
                 'message' => 'required|string|max:2000',
+                'budget_range' => 'nullable|integer|min:100|max:5000',
                 'g-recaptcha-response' => 'required|captcha', // reCAPTCHA validation
             ], [
                 'name.required' => 'Name is required.',
@@ -29,7 +31,11 @@ class ContactController extends Controller
                 'email.required' => 'Email address is required.',
                 'email.email' => 'Please enter a valid email address.',
                 'phone.max' => 'Phone number must not exceed 20 characters.',
+                'country_code.max' => 'Invalid country code.',
                 'message.required' => 'Message is required.',
+                'budget_range.integer' => 'Budget must be a valid number.',
+                'budget_range.min' => 'Budget must be at least $100.',
+                'budget_range.max' => 'Budget must not exceed $5000.',
                 'g-recaptcha-response.required' => 'Please complete the reCAPTCHA verification.',
                 'g-recaptcha-response.captcha' => 'reCAPTCHA verification failed. Please try again.',
             ]);
@@ -47,8 +53,10 @@ class ContactController extends Controller
                 'company_name' => !empty($validated['company_name']) ? strip_tags($validated['company_name']) : null,
                 'email' => filter_var($validated['email'], FILTER_SANITIZE_EMAIL),
                 'phone' => !empty($validated['phone']) ? strip_tags($validated['phone']) : null,
+                'country_code' => !empty($validated['country_code']) ? strip_tags($validated['country_code']) : null,
                 'services' => $services,
                 'message' => strip_tags($validated['message']),
+                'budget_range' => !empty($validated['budget_range']) ? (int)$validated['budget_range'] : null,
                 'ip_address' => $request->ip(),
                 'user_agent' => $request->userAgent(),
             ];

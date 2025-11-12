@@ -11,8 +11,10 @@ class ContactSubmission extends Model
         'company_name',
         'email',
         'phone',
+        'country_code',
         'services',
         'message',
+        'budget_range',
         'ip_address',
         'user_agent',
         'email_sent_at'

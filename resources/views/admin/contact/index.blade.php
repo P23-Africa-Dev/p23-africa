@@ -212,8 +212,10 @@
                                         <th class="dark:text-gray-100">Company</th>
                                         <th class="dark:text-gray-100">Email</th>
                                         <th class="dark:text-gray-100">Phone</th>
+                                        <th class="dark:text-gray-100">Country</th>
+                                        <th class="dark:text-gray-100">Budget Range</th>
                                         <th class="dark:text-gray-100">Services</th>
-                                        <th class="dark:text-gray-100">Message</th>
+                                        {{-- <th class="dark:text-gray-100">Message</th> --}}
                                         <th class="dark:text-gray-100">Submitted</th>
                                         <th class="dark:text-gray-100">Actions</th>
                                     </tr>
@@ -252,18 +254,33 @@
                                                 @endif
                                             </td>
                                             <td class="dark:text-gray-100">
+                                                @if ($contact->country_code)
+                                                    <span class="badge bg-info">{{ $contact->country_code }}</span>
+                                                @else
+                                                    <span class="text-muted">-</span>
+                                                @endif
+                                            </td>
+                                            <td class="dark:text-gray-100">
+                                                @if ($contact->budget_range)
+                                                    <span
+                                                        class="text-success fw-medium">${{ number_format($contact->budget_range) }}</span>
+                                                @else
+                                                    <span class="text-muted">-</span>
+                                                @endif
+                                            </td>
+                                            <td class="dark:text-gray-100">
                                                 @if ($contact->services && is_array($contact->services))
                                                     @foreach ($contact->services as $service)
                                                         <span class="badge bg-primary me-1">{{ $service }}</span>
                                                     @endforeach
                                                 @endif
                                             </td>
-                                            <td class="dark:text-gray-100">
+                                            {{-- <td class="dark:text-gray-100">
                                                 <div class="text-truncate" style="max-width: 200px;"
                                                     title="{{ $contact->message }}">
                                                     {{ $contact->message }}
                                                 </div>
-                                            </td>
+                                            </td> --}}
                                             <td class="dark:text-gray-100">
                                                 <small>{{ $contact->created_at->format('M d, Y') }}</small><br>
                                                 <small
@@ -334,6 +351,25 @@
                                                                 </a>
                                                             </div>
                                                         @endif
+
+                                                        @if ($contact->country_code)
+                                                            <div class="mb-3">
+                                                                <strong
+                                                                    class="text-dark dark:text-gray-100">Country:</strong>
+                                                                <span
+                                                                    class="badge bg-info ms-2">{{ $contact->country_code }}</span>
+                                                            </div>
+                                                        @endif
+
+                                                        @if ($contact->budget_range)
+                                                            <div class="mb-3">
+                                                                <strong class="text-dark dark:text-gray-100">Budget
+                                                                    Range:</strong>
+                                                                <span
+                                                                    class="text-success fw-medium ms-2">${{ number_format($contact->budget_range) }}</span>
+                                                            </div>
+                                                        @endif
+
                                                         <div class="mb-3">
                                                             <strong
                                                                 class="text-dark dark:text-gray-100">Services:</strong>

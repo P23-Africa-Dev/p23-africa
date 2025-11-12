@@ -7,6 +7,12 @@
 @if (!empty($data['phone']))
     <p><strong>Phone:</strong> {{ $data['phone'] }}</p>
 @endif
+@if (!empty($data['country_code']))
+    <p><strong>Country Code:</strong> {{ $data['country_code'] }}</p>
+@endif
+@if (!empty($data['budget_range']))
+    <p><strong>Budget Range:</strong> ${{ number_format($data['budget_range']) }}</p>
+@endif
 
 @if (isset($data['services']) && is_array($data['services']) && count($data['services']) > 0)
     <p><strong>Services Requested:</strong></p>

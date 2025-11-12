@@ -35,6 +35,8 @@ class ContactController extends Controller
                     ->orWhere('company_name', 'like', "%{$search}%")
                     ->orWhere('email', 'like', "%{$search}%")
                     ->orWhere('phone', 'like', "%{$search}%")
+                    ->orWhere('country_code', 'like', "%{$search}%")
+                    ->orWhere('budget_range', 'like', "%{$search}%")
                     ->orWhere('message', 'like', "%{$search}%");
             });
         }
@@ -176,6 +178,8 @@ class ContactController extends Controller
                     ->orWhere('company_name', 'like', "%{$search}%")
                     ->orWhere('email', 'like', "%{$search}%")
                     ->orWhere('phone', 'like', "%{$search}%")
+                    ->orWhere('country_code', 'like', "%{$search}%")
+                    ->orWhere('budget_range', 'like', "%{$search}%")
                     ->orWhere('message', 'like', "%{$search}%");
             });
         }
@@ -212,6 +216,8 @@ class ContactController extends Controller
                 'Company Name',
                 'Email',
                 'Phone',
+                'Country Code',
+                'Budget Range',
                 'Services',
                 'Message',
                 'IP Address',
@@ -228,6 +234,8 @@ class ContactController extends Controller
                     $contact->company_name,
                     $contact->email,
                     $contact->phone,
+                    $contact->country_code,
+                    $contact->budget_range ? '$' . number_format($contact->budget_range) : '',
                     is_array($contact->services) ? implode(', ', $contact->services) : $contact->services,
                     $contact->message,
                     $contact->ip_address,
@@ -258,6 +266,8 @@ class ContactController extends Controller
                     ->orWhere('company_name', 'like', "%{$search}%")
                     ->orWhere('email', 'like', "%{$search}%")
                     ->orWhere('phone', 'like', "%{$search}%")
+                    ->orWhere('country_code', 'like', "%{$search}%")
+                    ->orWhere('budget_range', 'like', "%{$search}%")
                     ->orWhere('message', 'like', "%{$search}%");
             });
         }
