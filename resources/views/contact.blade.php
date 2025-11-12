@@ -209,6 +209,328 @@
         letter-spacing: 0.9px;
     }
 
+    .form_group_field{
+        display: grid;
+        grid-template-columns:  repeat(1, 1fr);
+        gap: 20px;
+    }
+
+
+
+
+
+    .country_with_phone {
+  font-family: "GT Walsheim Con";
+
+  color: #fff;
+  width: 100%;
+  margin-top: 30px;
+}
+
+/* Field label */
+.contact-info-form__group.full-width{
+    position: relative;
+}
+
+.country_with_phone .floating-label2 {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    padding: 2px 4px;
+    margin: 0px 5px;
+    font-size: 12px;
+    background: #19574b;
+    color: #fff;
+    border-radius: 50px;
+    pointer-events: none;
+    font-family: "GT Walsheim Con";
+    opacity: 0.9;
+
+}
+
+/* Row layout */
+.country_with_phone .phone-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+/* COUNTRY DROPDOWN */
+.country_with_phone .country-select {
+  position: relative;
+  width: 70px;
+  flex-shrink: 0;
+  z-index: 50;
+}
+
+.country_with_phone .selected-country {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: 1px solid #fff;
+  border-radius: 8px;
+  padding: 18px 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+
+.country_with_phone .flag-icon {
+  width: 26px;
+  height: 18px;
+  border-radius: 3px;
+  object-fit: cover;
+}
+
+.country_with_phone .arrow {
+  font-size: 11px;
+  color: #ccc;
+  transition: transform 0.3s ease;
+}
+
+/* Dropdown list */
+.country_with_phone .country-list {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 220px;
+  background: rgba(20, 20, 20, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  list-style: none;
+  padding: 6px 0;
+  margin: 0;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+}
+
+.country_with_phone .country-select.open .country-list {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.country_with_phone .country-select.open .arrow {
+  transform: rotate(180deg);
+}
+
+/* Dropdown items */
+.country_with_phone .country-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease, padding-left 0.2s ease;
+}
+
+.country_with_phone .country-list li img {
+  width: 22px;
+  height: 15px;
+  border-radius: 3px;
+}
+
+.country_with_phone .country-list li:hover {
+  background: rgba(0, 191, 166, 0.2);
+  padding-left: 16px;
+}
+
+/* PHONE INPUT */
+.country_with_phone .phone-input-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border: 1px solid #fff;
+  border-radius: 8px;
+  padding: 18px 10px;
+  transition: border-color 0.25s ease;
+  position: relative;
+}
+
+.phone-input-wrapper .floating-phone {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    padding: 2px 4px;
+    margin: 0px 5px;
+    font-size: 12px;
+    background: #19574b;
+    color: #fff;
+    border-radius: 50px;
+    pointer-events: none;
+    font-family: "GT Walsheim Con";
+    opacity: 0.9;
+
+}
+
+
+
+.country_with_phone .prefix {
+  font-size: 15px;
+  color: #fff;
+  margin-right: 8px;
+  opacity: 0.85;
+}
+
+.country_with_phone .floating-input.phone {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 15px;
+}
+
+
+
+
+/* =============================================  PRICE RANGE */
+.form-price-container h2{
+    font-size: 18px;
+         font-family: "GT Walsheim Trial Cn Md";
+         margin-top:28px;
+         letter-spacing: 0.7px;
+
+
+}
+.form-price-container p{
+    font-size: 13px;
+        font-family: "GT Walsheim Pro";
+        margin-top: -10px;
+         letter-spacing: 0.7px;
+
+
+}
+.price-range-group {
+        font-family: "GT Walsheim Con";
+
+  color: #1e6c82;
+  margin-top: 25px;
+  width: 100%;
+}
+
+.price-range-group .form-label {
+  display: block;
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.range-wrapper {
+  position: relative;
+  width: 100%;
+  padding: 30px 0;
+  display: flex;
+  align-items: center;
+}
+.range-wrapper .range-label{
+    color: #fff;
+}
+
+/* Floating price label */
+.range-value {
+  position: absolute;
+  top: -10px;
+  left: 0;
+  transform: translateX(-50%);
+  background: #1e6c82;
+  color: #eff2f1;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  transition: left 0.2s ease, transform 0.2s ease;
+}
+
+/* Base range */
+ input#priceRange[type="range"] {
+  width: 80%;
+  margin: 0 auto;
+  height: 6px;
+  appearance: none;
+  background: linear-gradient(
+    to right,
+    #1e6c82 0%,
+    #1e6c82 0%,
+    #eff2f1 0%,
+    #eff2f1 100%
+  );
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+/* WebKit Track */
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 6px;
+  background: transparent;
+  border-radius: 3px;
+}
+
+/* Thumb (draggable circle) */
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  background: #1e6c82;
+  border: 3px solid #0C3A31;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  margin-top: -8px;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+}
+
+/* Firefox track/thumb */
+input[type="range"]::-moz-range-track {
+  height: 6px;
+  background: transparent;
+  border-radius: 3px;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  background: #1e6c82;
+  border: 3px solid #0C3A31;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+  transform: scale(1.1);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     .contact-info-form__tags {
         margin-top: 15px;
         display: flex;
@@ -263,9 +585,10 @@
         border-radius: 12px;
         border: none;
         cursor: pointer;
-        font-size: 15px;
+        font-size: 18px;
         font-weight: 600;
         transition: 0.25s ease;
+         font-family: "GT Walsheim ProCB"; 
     }
 
     .contact-info-form__btn:hover {
@@ -409,6 +732,8 @@
             max-width: initial;
         }
 
+     
+       
         .contact-info-location {
             padding: 2rem 2rem;
             margin-top: 18rem;
@@ -443,7 +768,7 @@
         }
 
         .contact-info-form__container {
-            padding: 60px 40px 40px 40px;
+            padding: 10px 40px;
 
         }
 
@@ -451,6 +776,11 @@
             padding: 0;
             /* padding-top: 2rem; */
         }
+        
+    .form_group_field{
+        grid-template-columns:  repeat(2, 1fr);
+        gap: 20px;
+    }
 
         .tag {
             gap: 15px;
@@ -809,36 +1139,107 @@
                             <h2 class="contact-info-form__title">Leave us a message</h2>
 
                             <div class="contact-info-form__group name-field">
-                                <label class="floating-label">Name</label>
+                                <label class="floating-label">Full Name</label>
                                 <input type="text" name="name" class="floating-input @error('name') error @enderror"
-                                    placeholder="First_Name Last_Name" value="{{ old('name') }}" required />
+                                    value="{{ old('name') }}" required />
                                 @error('name')
                                     <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
                                         {{ $message }}</div>
                                 @enderror
                             </div>
 
-                            <input type="email" name="email"
-                                class="contact-info-form__input email @error('email') error @enderror"
-                                placeholder="Email Address" value="{{ old('email') }}" required />
+
+                                              <div class="form-field2 country_with_phone">
+                  <div class="contact-info-form__group full-width">
+                    <label class="floating-label2">Country</label>
+                    <div class="phone-row">
+                      <!-- Country Flag Dropdown -->
+                      <div class="country-select" id="countrySelect">
+                        <div class="selected-country">
+                          <img
+                            src="https://flagcdn.com/w40/ng.png"
+                            alt="flag"
+                            class="flag-icon"
+                          />
+                          <span class="arrow">▼</span>
+                        </div>
+
+                        <ul class="country-list">
+                          <li data-code="+1" data-flag="us">
+                            <img src="https://flagcdn.com/w40/us.png" alt="" />
+                            United States (+1)
+                          </li>
+                          <li data-code="+44" data-flag="gb">
+                            <img src="https://flagcdn.com/w40/gb.png" alt="" />
+                            United Kingdom (+44)
+                          </li>
+                          <li data-code="+27" data-flag="za">
+                            <img src="https://flagcdn.com/w40/za.png" alt="" />
+                            South Africa (+27)
+                          </li>
+                          <li data-code="+234" data-flag="ng">
+                            <img src="https://flagcdn.com/w40/ng.png" alt="" />
+                            Nigeria (+234)
+                          </li>
+                          <li data-code="+91" data-flag="in">
+                            <img src="https://flagcdn.com/w40/in.png" alt="" />
+                            India (+91)
+                          </li>
+                          <li data-code="+61" data-flag="au">
+                            <img src="https://flagcdn.com/w40/au.png" alt="" />
+                            Australia (+61)
+                          </li>
+                        </ul>
+                      </div>
+
+                      <!-- Phone Input -->
+                      <div class="phone-input-wrapper">
+                                <label class="floating-phone">Phone Number</label>
+                        <span class="prefix" id="phonePrefix">+234</span>
+                        <input
+                          type="tel"
+                          id="phone"
+                          class="floating-input phone"
+                          placeholder=""
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                        
+
+
+
+                            <div class="form_group_field">
+                               
+                            <div class="contact-info-form__group name-field">
+                                    <label class="floating-label">Email</label>
+
+                                <input type="email" name="email"
+                                class="floating-input @error('email') error @enderror"
+                           value="{{ old('email') }}" required />
                             @error('email')
                                 <div class="error-message"
                                     style="color: #e74c3c; font-size: 12px; margin-top: -10px; margin-bottom: 10px;">
                                     {{ $message }}</div>
                             @enderror
+                                </div>
+                               
 
                             <div class="contact-info-form__group name-field">
                                 <label class="floating-label">Company Name</label>
                                 <input type="text" name="company_name"
                                     class="floating-input @error('company_name') error @enderror"
-                                    placeholder="Your Company Name (Optional)" value="{{ old('company_name') }}" />
+                                     value="{{ old('company_name') }}" />
                                 @error('company_name')
                                     <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
                                         {{ $message }}</div>
                                 @enderror
                             </div>
+                            </div>
 
-                            <div class="contact-info-form__group name-field">
+                            <!-- <div class="form-group2 field">
+    <div class="contact-info-form__group name-field">
                                 <label class="floating-label">Phone Number</label>
                                 <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
                                     placeholder="+1234567890" value="{{ old('phone') }}" />
@@ -847,6 +1248,9 @@
                                         {{ $message }}</div>
                                 @enderror
                             </div>
+                            </div> -->
+
+               
 
                             <div class="contact-info-form__section-title">
                                 What service do you require
@@ -900,6 +1304,38 @@
                                 <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
                                     {{ $message }}</div>
                             @enderror
+
+
+                            <!-- PRICE RANGE  -->
+                             <div class="form-price-container">
+                                <h2>Indicate your budget for support</h2>
+                                <p>Move toggle to your most preferred budget.</p>
+
+                                <div class="form-group price-range-group">
+
+  <div class="range-wrapper">
+    <span class="range-label">$100</span> <div class="range-value" id="rangeValue">$100</div>
+    <input
+      type="range"
+      id="priceRange"
+      min="100"
+      max="10000"
+      value="100"
+      step="50"
+    />
+      <span class="range-label">$Max</span>
+
+
+ 
+  </div>
+</div>
+                             </div>
+
+
+
+
+
+
 
                             <!-- reCAPTCHA -->
                             <div class="g-recaptcha" data-sitekey="6LeFmtMrAAAAAKQ4SHr9Z9NdNPyjwmljCV-iMUo6"
@@ -1169,6 +1605,83 @@
             @if (session('error'))
                 showPopup('error', 'Error', '{{ session('error') }}');
             @endif
+
+            
+
+
+            // SELECT OPTION
+
+              const countrySelect = document.getElementById("countrySelect");
+      const selectedCountry = countrySelect.querySelector(".selected-country");
+      const selectedImg = selectedCountry.querySelector(".flag-icon");
+      const countryList = countrySelect.querySelector(".country-list");
+      const phonePrefix = document.getElementById("phonePrefix");
+
+      // Toggle dropdown
+      selectedCountry.addEventListener("click", (e) => {
+        e.stopPropagation();
+        countrySelect.classList.toggle("open");
+      });
+
+      // Handle country selection
+      countryList.querySelectorAll("li").forEach((item) => {
+        item.addEventListener("click", () => {
+          const flag = item.dataset.flag;
+          const code = item.dataset.code;
+
+          selectedImg.src = `https://flagcdn.com/w40/${flag}.png`;
+          phonePrefix.textContent = code;
+
+          // Animate close
+          countryList.style.opacity = "0";
+          countryList.style.transform = "translateY(-8px)";
+          setTimeout(() => {
+            countrySelect.classList.remove("open");
+            countryList.removeAttribute("style");
+          }, 200);
+        });
+      });
+
+      // Click outside closes dropdown
+      document.addEventListener("click", (e) => {
+        if (!countrySelect.contains(e.target)) {
+          countryList.style.opacity = "0";
+          countryList.style.transform = "translateY(-8px)";
+          setTimeout(() => {
+            countrySelect.classList.remove("open");
+            countryList.removeAttribute("style");
+          }, 200);
+        }
+      });
+
+const rangeInput = document.getElementById("priceRange");
+const rangeValue = document.getElementById("rangeValue");
+
+function updateSlider() {
+  const value = +rangeInput.value;
+  const min = +rangeInput.min;
+  const max = +rangeInput.max;
+  const percent = ((value - min) / (max - min)) * 100;
+
+  // Update the floating label text and position
+  rangeValue.textContent = `$${value.toLocaleString()}`;
+  rangeValue.style.left = `calc(${percent}% + (${8 - percent * 0.15}px))`;
+
+  // Update the filled color background
+  rangeInput.style.background = `linear-gradient(to right, 
+    #1E6C82 ${percent}%, 
+    #EFF2F1 ${percent}%)`;
+}
+
+// Initialize
+updateSlider();
+
+// Update on input
+rangeInput.addEventListener("input", updateSlider);
+
+
+      
+
         });
     </script>
 @endsection
