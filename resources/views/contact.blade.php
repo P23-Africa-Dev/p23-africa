@@ -392,6 +392,129 @@
 
 
 
+/* =============================================  PRICE RANGE */
+.form-price-container h2{
+    font-size: 18px;
+         font-family: "GT Walsheim Trial Cn Md";
+         margin-top:28px;
+         letter-spacing: 0.7px;
+
+
+}
+.form-price-container p{
+    font-size: 13px;
+        font-family: "GT Walsheim Pro";
+        margin-top: -10px;
+         letter-spacing: 0.7px;
+
+
+}
+.price-range-group {
+        font-family: "GT Walsheim Con";
+
+  color: #1e6c82;
+  margin-top: 25px;
+  width: 100%;
+}
+
+.price-range-group .form-label {
+  display: block;
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.range-wrapper {
+  position: relative;
+  width: 100%;
+  padding: 30px 0;
+  display: flex;
+  align-items: center;
+}
+.range-wrapper .range-label{
+    color: #fff;
+}
+
+/* Floating price label */
+.range-value {
+  position: absolute;
+  top: -10px;
+  left: 0;
+  transform: translateX(-50%);
+  background: #1e6c82;
+  color: #eff2f1;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  transition: left 0.2s ease, transform 0.2s ease;
+}
+
+/* Base range */
+ input#priceRange[type="range"] {
+  width: 80%;
+  margin: 0 auto;
+  height: 6px;
+  appearance: none;
+  background: linear-gradient(
+    to right,
+    #1e6c82 0%,
+    #1e6c82 0%,
+    #eff2f1 0%,
+    #eff2f1 100%
+  );
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+/* WebKit Track */
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 6px;
+  background: transparent;
+  border-radius: 3px;
+}
+
+/* Thumb (draggable circle) */
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  background: #1e6c82;
+  border: 3px solid #0C3A31;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  margin-top: -8px;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+}
+
+/* Firefox track/thumb */
+input[type="range"]::-moz-range-track {
+  height: 6px;
+  background: transparent;
+  border-radius: 3px;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  background: #1e6c82;
+  border: 3px solid #0C3A31;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+  transform: scale(1.1);
+}
+
 
 
 
@@ -1076,7 +1199,7 @@
                           type="tel"
                           id="phone"
                           class="floating-input phone"
-                          placeholder="Enter phone number"
+                          placeholder=""
                         />
                       </div>
                     </div>
@@ -1180,6 +1303,38 @@
                                 <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
                                     {{ $message }}</div>
                             @enderror
+
+
+                            <!-- PRICE RANGE  -->
+                             <div class="form-price-container">
+                                <h2>Indicate your budget for support</h2>
+                                <p>Move toggle to your most preferred budget.</p>
+
+                                <div class="form-group price-range-group">
+
+  <div class="range-wrapper">
+    <span class="range-label">$100</span> <div class="range-value" id="rangeValue">$100</div>
+    <input
+      type="range"
+      id="priceRange"
+      min="100"
+      max="10000"
+      value="100"
+      step="50"
+    />
+      <span class="range-label">$Max</span>
+
+
+ 
+  </div>
+</div>
+                             </div>
+
+
+
+
+
+
 
                             <!-- reCAPTCHA -->
                             <div class="g-recaptcha" data-sitekey="6LeFmtMrAAAAAKQ4SHr9Z9NdNPyjwmljCV-iMUo6"
@@ -1450,25 +1605,10 @@
                 showPopup('error', 'Error', '{{ session('error') }}');
             @endif
 
+            
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            // SELECT OPTION
 
               const countrySelect = document.getElementById("countrySelect");
       const selectedCountry = countrySelect.querySelector(".selected-country");
@@ -1512,6 +1652,35 @@
           }, 200);
         }
       });
+
+const rangeInput = document.getElementById("priceRange");
+const rangeValue = document.getElementById("rangeValue");
+
+function updateSlider() {
+  const value = +rangeInput.value;
+  const min = +rangeInput.min;
+  const max = +rangeInput.max;
+  const percent = ((value - min) / (max - min)) * 100;
+
+  // Update the floating label text and position
+  rangeValue.textContent = `$${value.toLocaleString()}`;
+  rangeValue.style.left = `calc(${percent}% + (${8 - percent * 0.15}px))`;
+
+  // Update the filled color background
+  rangeInput.style.background = `linear-gradient(to right, 
+    #1E6C82 ${percent}%, 
+    #EFF2F1 ${percent}%)`;
+}
+
+// Initialize
+updateSlider();
+
+// Update on input
+rangeInput.addEventListener("input", updateSlider);
+
+
+      
+
         });
     </script>
 @endsection
