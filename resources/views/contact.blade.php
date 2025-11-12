@@ -1023,47 +1023,9 @@
                                         {{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="form_group_field">
-                               
-                            <div class="contact-info-form__group name-field">
-                                    <label class="floating-label">Email</label>
 
-                                <input type="email" name="email"
-                                class="floating-input @error('email') error @enderror"
-                           value="{{ old('email') }}" required />
-                            @error('email')
-                                <div class="error-message"
-                                    style="color: #e74c3c; font-size: 12px; margin-top: -10px; margin-bottom: 10px;">
-                                    {{ $message }}</div>
-                            @enderror
-                                </div>
-                               
 
-                            <div class="contact-info-form__group name-field">
-                                <label class="floating-label">Company Name</label>
-                                <input type="text" name="company_name"
-                                    class="floating-input @error('company_name') error @enderror"
-                                     value="{{ old('company_name') }}" />
-                                @error('company_name')
-                                    <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
-                                        {{ $message }}</div>
-                                @enderror
-                            </div>
-                            </div>
-
-                            <!-- <div class="form-group2 field">
-    <div class="contact-info-form__group name-field">
-                                <label class="floating-label">Phone Number</label>
-                                <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
-                                    placeholder="+1234567890" value="{{ old('phone') }}" />
-                                @error('phone')
-                                    <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
-                                        {{ $message }}</div>
-                                @enderror
-                            </div>
-                            </div> -->
-
-                                 <div class="form-field2 country_with_phone">
+                                              <div class="form-field2 country_with_phone">
                   <div class="contact-info-form__group full-width">
                     <label class="floating-label2">Country</label>
                     <div class="phone-row">
@@ -1121,6 +1083,50 @@
                   </div>
                 </div>
                         
+
+
+
+                            <div class="form_group_field">
+                               
+                            <div class="contact-info-form__group name-field">
+                                    <label class="floating-label">Email</label>
+
+                                <input type="email" name="email"
+                                class="floating-input @error('email') error @enderror"
+                           value="{{ old('email') }}" required />
+                            @error('email')
+                                <div class="error-message"
+                                    style="color: #e74c3c; font-size: 12px; margin-top: -10px; margin-bottom: 10px;">
+                                    {{ $message }}</div>
+                            @enderror
+                                </div>
+                               
+
+                            <div class="contact-info-form__group name-field">
+                                <label class="floating-label">Company Name</label>
+                                <input type="text" name="company_name"
+                                    class="floating-input @error('company_name') error @enderror"
+                                     value="{{ old('company_name') }}" />
+                                @error('company_name')
+                                    <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
+                                        {{ $message }}</div>
+                                @enderror
+                            </div>
+                            </div>
+
+                            <!-- <div class="form-group2 field">
+    <div class="contact-info-form__group name-field">
+                                <label class="floating-label">Phone Number</label>
+                                <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
+                                    placeholder="+1234567890" value="{{ old('phone') }}" />
+                                @error('phone')
+                                    <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
+                                        {{ $message }}</div>
+                                @enderror
+                            </div>
+                            </div> -->
+
+               
 
                             <div class="contact-info-form__section-title">
                                 What service do you require
