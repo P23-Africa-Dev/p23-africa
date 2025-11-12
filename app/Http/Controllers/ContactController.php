@@ -17,22 +17,27 @@ class ContactController extends Controller
             // Validate the request
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
-                'company_name' => 'nullable|string|max:255',
+                'company_name' => 'required|string|max:255',
                 'email' => 'required|email|max:255',
-                'phone' => 'nullable|string|max:20',
-                'country_code' => 'nullable|string|max:10',
-                'services' => 'nullable|string', // Services will come as comma-separated string
+                'phone' => 'required|string|max:20',
+                'country_code' => 'required|string|max:10',
+                'services' => 'required|string',
                 'message' => 'required|string|max:2000',
-                'budget_range' => 'nullable|integer|min:100|max:5000',
+                'budget_range' => 'required|integer|min:100|max:5000',
                 'g-recaptcha-response' => 'required|captcha', // reCAPTCHA validation
             ], [
                 'name.required' => 'Name is required.',
+                'company_name.required' => 'Company name is required.',
                 'company_name.max' => 'Company name must not exceed 255 characters.',
                 'email.required' => 'Email address is required.',
                 'email.email' => 'Please enter a valid email address.',
+                'phone.required' => 'Phone number is required.',
                 'phone.max' => 'Phone number must not exceed 20 characters.',
+                'country_code.required' => 'Country code is required.',
                 'country_code.max' => 'Invalid country code.',
+                'services.required' => 'Please select at least one service.',
                 'message.required' => 'Message is required.',
+                'budget_range.required' => 'Budget range is required.',
                 'budget_range.integer' => 'Budget must be a valid number.',
                 'budget_range.min' => 'Budget must be at least $100.',
                 'budget_range.max' => 'Budget must not exceed $5000.',
@@ -50,13 +55,13 @@ class ContactController extends Controller
             // Sanitize all inputs
             $sanitizedData = [
                 'name' => strip_tags($validated['name']),
-                'company_name' => !empty($validated['company_name']) ? strip_tags($validated['company_name']) : null,
+                'company_name' => strip_tags($validated['company_name']),
                 'email' => filter_var($validated['email'], FILTER_SANITIZE_EMAIL),
-                'phone' => !empty($validated['phone']) ? strip_tags($validated['phone']) : null,
-                'country_code' => !empty($validated['country_code']) ? strip_tags($validated['country_code']) : null,
+                'phone' => strip_tags($validated['phone']),
+                'country_code' => strip_tags($validated['country_code']),
                 'services' => $services,
                 'message' => strip_tags($validated['message']),
-                'budget_range' => !empty($validated['budget_range']) ? (int)$validated['budget_range'] : null,
+                'budget_range' => (int)$validated['budget_range'],
                 'ip_address' => $request->ip(),
                 'user_agent' => $request->userAgent(),
             ];
