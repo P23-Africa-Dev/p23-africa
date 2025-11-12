@@ -342,17 +342,17 @@
                                 </div>
 
 
-                                @if ($blog->pdf_path)
+                                {{-- @if ($blog->pdf_path)
                                     <div class="my-auto">
                                         <button class="btn btn-success view-pdf-btn"
                                             data-pdf="{{ asset('storage/' . $blog->pdf_path) }}">
                                             📥 View Report
                                         </button>
                                     </div>
-                                @else
+                                @else --}}
                                     <a href="{{ route('resource-show', $blog->slug) }}" class="read-more-btn">Read More
                                         →</a>
-                                @endif
+                                {{-- @endif --}}
                             </div>
                             {{-- @endif --}}
                         @endforeach
@@ -375,17 +375,17 @@
                                 <div class="content mb-4">
                                     {!! \Illuminate\Support\Str::limit($blog->content_1, 1200) !!}
                                 </div>
-                                @if ($blog->pdf_path)
+                                {{-- @if ($blog->pdf_path)
                                     <div class="my-auto">
                                         <button class="btn btn-success view-pdf-btn"
                                             data-pdf="{{ asset('storage/' . $blog->pdf_path) }}">
                                             📥 View Report
                                         </button>
                                     </div>
-                                @else
+                                @else --}}
                                     <a href="{{ route('resource-show', $blog->slug) }}" class="read-more-btn">Read More
                                         →</a>
-                                @endif
+                                {{-- @endif --}}
                             </div>
                             {{-- @endif --}}
                         @endforeach
