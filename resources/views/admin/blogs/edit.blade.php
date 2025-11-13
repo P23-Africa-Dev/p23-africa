@@ -69,8 +69,8 @@
                         <input type="hidden" name="post_type" id="postType"
                             value="{{ $isReport ? 'report' : 'blog' }}">
 
-                        <input name="title" value="{{ old('title', $blog->title ?? '') }}" placeholder="Blog Title"
-                            required
+                        <input name="title" value="{{ old('title', $blog->title ?? '') }}"
+                            placeholder="{{ $isReport ? 'Report Title' : 'Blog Title' }}" required id="titleInput"
                             class="form-control mb-4 border border-1 border-theme dark-transition theme-transition bg-theme-tertiary text-theme-primary">
                         <div class="mb-4">
                             <label for="created_at" class="text-theme-primary dark-transition">Date</label>
@@ -80,7 +80,7 @@
                                 required>
                         </div>
                         <input name="subtitle" value="{{ old('subtitle', $blog->subtitle ?? '') }}"
-                            placeholder="Blog Subtitle"
+                            placeholder="{{ $isReport ? 'Report Subtitle' : 'Blog Subtitle' }}" id="subtitleInput"
                             class="form-control mb-4 border border-1 border-theme dark-transition theme-transition bg-theme-tertiary text-theme-primary">
 
                         <select name="category_id"
@@ -96,7 +96,7 @@
 
                         <textarea name="content_1" id="description"
                             class="form-control mb-4 border border-1 border-theme dark-transition theme-transition bg-theme-tertiary text-theme-primary"
-                            placeholder="First Content" required>{{ old('content_1', $blog->content_1 ?? '') }}</textarea>
+                            placeholder="{{ $isReport ? 'Report Content' : 'First Content' }}" required>{{ old('content_1', $blog->content_1 ?? '') }}</textarea>
 
                         <!-- Blog-specific fields -->
                         <div id="blogFields" style="display: {{ !$isReport ? 'block' : 'none' }};">

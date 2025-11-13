@@ -61,10 +61,10 @@
                         <input type="hidden" name="post_type" id="postType" value="blog">
 
                         <input name="title" value="{{ old('title', $blog->title ?? '') }}" placeholder="Blog Title"
-                            required
+                            required id="titleInput"
                             class="form-control mb-3 border border-1 border-theme dark-transition theme-transition bg-theme-tertiary text-theme-primary">
                         <input name="subtitle" value="{{ old('subtitle', $blog->subtitle ?? '') }}"
-                            placeholder="Blog Subtitle"
+                            placeholder="Blog Subtitle" id="subtitleInput"
                             class="form-control mb-3 border border-1 border-theme dark-transition theme-transition bg-theme-tertiary text-theme-primary">
 
                         <select name="category_id"
@@ -169,11 +169,19 @@
     const imageInput = document.getElementById('image');
     const pdfInput = document.getElementById('pdfInput');
     const content2Textarea = document.getElementById('description2');
+    const titleInput = document.getElementById('titleInput');
+    const subtitleInput = document.getElementById('subtitleInput');
+    const content1Textarea = document.getElementById('description');
 
     blogTab.addEventListener('click', function() {
         postTypeInput.value = 'blog';
         blogFields.style.display = 'block';
         reportFields.style.display = 'none';
+
+        // Update placeholders for Blog
+        if (titleInput) titleInput.setAttribute('placeholder', 'Blog Title');
+        if (subtitleInput) subtitleInput.setAttribute('placeholder', 'Blog Subtitle');
+        if (content1Textarea) content1Textarea.setAttribute('placeholder', 'First Content');
 
         // Remove required from PDF, add to image and content_2
         if (pdfInput) pdfInput.removeAttribute('required');
@@ -184,6 +192,11 @@
         postTypeInput.value = 'report';
         blogFields.style.display = 'none';
         reportFields.style.display = 'block';
+
+        // Update placeholders for Report
+        if (titleInput) titleInput.setAttribute('placeholder', 'Report Title');
+        if (subtitleInput) subtitleInput.setAttribute('placeholder', 'Report Subtitle');
+        if (content1Textarea) content1Textarea.setAttribute('placeholder', 'Report Content');
 
         // Add required to PDF, remove from image and content_2
         if (pdfInput) pdfInput.setAttribute('required', 'required');
