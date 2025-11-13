@@ -61,6 +61,40 @@
         background: #218838;
         color: white;
     }
+
+
+    /* ===================================== NEW CHANGES */
+    .whole-view-resource .resourse-details-header .header h5 {
+        font-family: "GT Walsheim Con";
+        color: #0D4036;
+        font-size: 0.9rem;
+    }
+
+    .whole-view-resource .resourse-details-header .header h2.section-title {
+            font-family: 'IvyOra Text';
+
+
+    }
+    .whole-view-resource .resourse-details-header .header p.section-subtitle {
+        padding-right: 30px;
+        letter-spacing: 0.8px;
+        font-size: 0.8rem;
+        padding-top: 10px;
+
+    }
+    .whole-view-resource .resourse-details-header .header p.section-subtitle a{
+        opacity: 0.9;
+
+    }
+
+    .whole-view-resource .resourse-details-header .header {
+        max-width: 400px;
+        padding-left: 30px;
+    }
+
+    @media (min){
+
+    }
 </style>
 
 @section('content')
@@ -70,7 +104,7 @@
                 <!-- Heading Section -->
                 <section class="resourse-details-header">
                     <div class="header">
-                        {{-- <span>INTRO</span> --}}
+                        <h5>INTRO</h5>
                         <h2 class="section-title">{{ $blog->title }}</h2>
                         <p class="section-subtitle">
                             {{ $blog->subtitle }}
