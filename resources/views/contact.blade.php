@@ -615,8 +615,6 @@
 
     .tag.selected {
         color: #062c25;
-        background: #22c58b;
-        border-color: #22c58b;
     }
 
     .tag:hover {
@@ -1359,8 +1357,7 @@
                                         class="floating-input @error('email') error @enderror"
                                         value="{{ old('email') }}" required />
                                     @error('email')
-                                        <div class="error-message"
-                                            style="color: #e74c3c; font-size: 12px; margin-top: -10px; margin-bottom: 10px;">
+                                        <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
                                             {{ $message }}</div>
                                     @enderror
                                 </div>
@@ -1379,16 +1376,16 @@
                             </div>
 
                             <!-- <div class="form-group2 field">
-                            <div class="contact-info-form__group name-field">
-                                                        <label class="floating-label">Phone Number</label>
-                                                        <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
-                                                            placeholder="+1234567890" value="{{ old('phone') }}" />
-                                                        @error('phone')
+                                    <div class="contact-info-form__group name-field">
+                                                                <label class="floating-label">Phone Number</label>
+                                                                <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
+                                                                    placeholder="+1234567890" value="{{ old('phone') }}" />
+                                                                @error('phone')
         <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
-                                                                                        {{ $message }}</div>
+                                                                                                        {{ $message }}</div>
     @enderror
-                                                    </div>
-                                                    </div> -->
+                                                            </div>
+                                                            </div> -->
 
 
 

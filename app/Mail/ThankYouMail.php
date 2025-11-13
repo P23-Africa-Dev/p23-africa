@@ -24,7 +24,7 @@ class ThankYouMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Thank You for Contacting Us')
+        return $this->subject('Thank You for Contacting P23 Africa')
                     ->view('emails.thank-you');
     }
 
