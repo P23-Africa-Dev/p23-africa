@@ -1225,7 +1225,7 @@
                             <div class="contact-info-form__group name-field">
                                 <label class="floating-label">Full Name</label>
                                 <input type="text" name="name" class="floating-input @error('name') error @enderror"
-                                    value="{{ old('name') }}" required />
+                                    value="{{ old('name') }}" />
                                 @error('name')
                                     <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
                                         {{ $message }}</div>
@@ -1335,7 +1335,7 @@
                                             <span class="prefix" id="phonePrefix">+44</span>
                                             <input type="tel" id="phoneNumber" name="phone"
                                                 class="floating-input phone @error('phone') error @enderror"
-                                                placeholder="" value="{{ old('phone') }}" required />
+                                                placeholder="" value="{{ old('phone') }}" />
                                             <!-- Hidden input for country code -->
                                             <input type="hidden" id="countryCode" name="country_code" value="+44" />
                                         </div>
@@ -1363,7 +1363,7 @@
 
                                     <input type="email" name="email"
                                         class="floating-input @error('email') error @enderror"
-                                        value="{{ old('email') }}" required />
+                                        value="{{ old('email') }}" />
                                     @error('email')
                                         <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
                                             {{ $message }}</div>
@@ -1375,7 +1375,7 @@
                                     <label class="floating-label">Company Name</label>
                                     <input type="text" name="company_name"
                                         class="floating-input @error('company_name') error @enderror"
-                                        value="{{ old('company_name') }}" required />
+                                        value="{{ old('company_name') }}" />
                                     @error('company_name')
                                         <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
                                             {{ $message }}</div>
@@ -1431,15 +1431,15 @@
                                 </div>
                             </div>
 
-                            <input type="hidden" name="services" id="selected-services" value="{{ old('services') }}"
-                                required />
+                            <input type="hidden" name="services" id="selected-services"
+                                value="{{ old('services') }}" />
                             @error('services')
                                 <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
                                     {{ $message }}</div>
                             @enderror
 
                             <textarea name="message" class="contact-info-form__textarea @error('message') error @enderror"
-                                placeholder="Add additional message here" required>{{ old('message') }}</textarea>
+                                placeholder="Add additional message here">{{ old('message') }}</textarea>
                             @error('message')
                                 <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
                                     {{ $message }}</div>
@@ -1455,10 +1455,10 @@
 
                                     <div class="range-wrapper">
                                         <span class="range-label">$100</span>
-                                        <div class="range-value" id="rangeValue">$100</div>
+                                        <div class="range-value" id="rangeValue">Please select budget</div>
                                         <input type="range" id="priceRange" name="budget_range" min="100"
                                             max="5000" value="{{ old('budget_range', 2500) }}" step="50"
-                                            required />
+                                            data-touched="false" />
                                         <span class="range-label">$Max</span>
                                     </div>
                                 </div>
@@ -1566,396 +1566,550 @@
 
     <script src="https://www.google.com/recaptcha/api.js?render=6LeSUwwsAAAAALMaU35MsAv8ffsAxFRAbE6xz1Ur"></script>
     <script>
- document.addEventListener("DOMContentLoaded", function() {
-    const tags = document.querySelectorAll(".tag");
-    const hiddenInput = document.getElementById("selected-services");
-    const form = document.getElementById('contactForm');
-    const submitBtn = document.getElementById('submitBtn');
-    const btnText = submitBtn.querySelector('.btn-text');
-    const spinner = submitBtn.querySelector('.spinner');
+        document.addEventListener("DOMContentLoaded", function() {
+            const tags = document.querySelectorAll(".tag");
+            const hiddenInput = document.getElementById("selected-services");
+            const form = document.getElementById('contactForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const spinner = submitBtn.querySelector('.spinner');
 
-    // Initialize with old values if present
-    const oldServices = hiddenInput.value;
-    if (oldServices) {
-        const selectedServices = oldServices.split(',');
-        tags.forEach((tag) => {
-            const tagValue = tag.getAttribute("data-value");
-            if (selectedServices.includes(tagValue)) {
-                tag.classList.add("selected");
-                tag.querySelector(".tag-icon").src = "{{ asset('img/selected.png') }}";
-            }
-        });
-    }
-
-    tags.forEach((tag) => {
-        tag.addEventListener("click", () => {
-            const isSelected = tag.classList.contains("selected");
-
-            if (isSelected) {
-                tag.classList.remove("selected");
-                tag.querySelector(".tag-icon").src = "{{ asset('img/unselected.png') }}";
-            } else {
-                tag.classList.add("selected");
-                tag.querySelector(".tag-icon").src = "{{ asset('img/selected.png') }}";
-            }
-
-            const selectedValues = Array.from(
-                document.querySelectorAll(".tag.selected")
-            ).map((t) => t.getAttribute("data-value"));
-
-            hiddenInput.value = selectedValues.join(",");
-        });
-    });
-
-    // Popup functions
-    function showPopup(type, title, message) {
-        const overlay = document.getElementById('popupOverlay');
-        const modal = document.getElementById('popupModal');
-        const icon = document.getElementById('popupIcon');
-        const titleEl = document.getElementById('popupTitle');
-        const messageEl = document.getElementById('popupMessage');
-
-        titleEl.textContent = title;
-        messageEl.textContent = message;
-
-        if (type === 'success') {
-            modal.className = 'popup-modal success';
-            icon.className = 'popup-icon success';
-            icon.innerHTML = '✓';
-        } else {
-            modal.className = 'popup-modal error';
-            icon.className = 'popup-icon error';
-            icon.innerHTML = '✕';
-        }
-
-        overlay.style.display = 'block';
-        document.body.style.overflow = 'hidden';
-    }
-
-    function hidePopup() {
-        const overlay = document.getElementById('popupOverlay');
-        overlay.style.display = 'none';
-        document.body.style.overflow = 'auto';
-    }
-
-    document.getElementById('popupCloseBtn').addEventListener('click', hidePopup);
-    document.getElementById('popupOverlay').addEventListener('click', function(e) {
-        if (e.target === this) {
-            hidePopup();
-        }
-    });
-
-    // Form submission
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        // Clear previous errors
-        clearAllErrors();
-
-        // Show loading state
-        submitBtn.disabled = true;
-        btnText.style.display = 'none';
-        spinner.style.display = 'inline';
-
-        // Execute reCAPTCHA v3
-        grecaptcha.ready(function() {
-            grecaptcha.execute('6LeSUwwsAAAAALMaU35MsAv8ffsAxFRAbE6xz1Ur', {
-                    action: 'submit'
-                })
-                .then(function(token) {
-                    document.getElementById('recaptchaToken').value = token;
-
-                    const formData = new FormData(form);
-
-                    fetch(form.action, {
-                            method: 'POST',
-                            body: formData,
-                            headers: {
-                                'X-Requested-With': 'XMLHttpRequest',
-                                'Accept': 'application/json',
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                            }
-                        })
-                        .then(response => {
-                            // Parse JSON first, then handle status
-                            return response.json().then(data => {
-                                console.log('Response Status:', response.status);
-                                console.log('Response Data:', data);
-                                return {
-                                    status: response.status,
-                                    ok: response.ok,
-                                    data: data
-                                };
-                            });
-                        })
-                        .then(result => {
-                            resetButtonState();
-
-                            if (result.ok && result.data.success) {
-                                // Success
-                                showPopup('success', 'Message Sent!', result.data.message || 'Thank you for contacting us. We will get back to you soon!');
-                                
-                                form.reset();
-                                hiddenInput.value = '';
-                                document.getElementById('recaptchaToken').value = '';
-                                
-                                document.querySelectorAll('.tag.selected').forEach(tag => {
-                                    tag.classList.remove('selected');
-                                    tag.querySelector('.tag-icon').src = "{{ asset('img/unselected.png') }}";
-                                });
-                                
-                                // Reset slider
-                                const rangeInput = document.getElementById("priceRange");
-                                const rangeValue = document.getElementById("rangeValue");
-                                if (rangeInput && rangeValue) {
-                                    rangeInput.value = 2500;
-                                    updateSlider();
-                                }
-                            } else if (result.status === 422) {
-                                // Validation errors
-                                console.log('Validation Errors:', result.data.errors);
-                                
-                                if (result.data.errors) {
-                                    displayValidationErrors(result.data.errors);
-
-                                    // Scroll to first error
-                                    setTimeout(() => {
-                                        const firstError = document.querySelector('.error');
-                                        if (firstError) {
-                                            firstError.scrollIntoView({
-                                                behavior: 'smooth',
-                                                block: 'center'
-                                            });
-                                        }
-                                    }, 100);
-                                }
-                                
-                                showPopup('error', 'Validation Error', result.data.message || 'Please check the form and correct the errors.');
-                            } else {
-                                // Other errors
-                                const errorMessage = result.data.message || 'There was an error sending your message. Please try again.';
-                                showPopup('error', 'Error', errorMessage);
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Fetch Error:', error);
-                            resetButtonState();
-                            showPopup('error', 'Error', 'There was an error sending your message. Please try again.');
-                        });
-                })
-                .catch(function(error) {
-                    console.error('reCAPTCHA error:', error);
-                    resetButtonState();
-                    showPopup('error', 'Error', 'reCAPTCHA verification failed. Please try again.');
+            // Initialize with old values if present
+            const oldServices = hiddenInput.value;
+            if (oldServices) {
+                const selectedServices = oldServices.split(',');
+                tags.forEach((tag) => {
+                    const tagValue = tag.getAttribute("data-value");
+                    if (selectedServices.includes(tagValue)) {
+                        tag.classList.add("selected");
+                        tag.querySelector(".tag-icon").src = "{{ asset('img/selected.png') }}";
+                    }
                 });
-        });
-    });
-
-    // Clear all errors
-    function clearAllErrors() {
-        // Remove all dynamic error messages
-        document.querySelectorAll('.error-message.dynamic-error').forEach(msg => msg.remove());
-
-        // Remove error class from all elements
-        document.querySelectorAll('.error').forEach(element => {
-            element.classList.remove('error');
-        });
-    }
-
-    // Display validation errors
-    function displayValidationErrors(errors) {
-        if (!errors || typeof errors !== 'object') {
-            console.error('Invalid errors object:', errors);
-            return;
-        }
-
-        console.log('Processing errors:', errors);
-
-        // Loop through each field error
-        Object.keys(errors).forEach(fieldName => {
-            const errorMessages = errors[fieldName];
-            const firstError = Array.isArray(errorMessages) ? errorMessages[0] : errorMessages;
-            
-            console.log(`Field: ${fieldName}, Error: ${firstError}`);
-            
-            // Get the appropriate elements to highlight and show error
-            const elements = getFieldElements(fieldName);
-            
-            if (elements.highlight) {
-                console.log(`Adding error class to:`, elements.highlight);
-                elements.highlight.classList.add('error');
-            }
-            
-            if (elements.messageTarget) {
-                console.log(`Showing error message for:`, elements.messageTarget);
-                showErrorMessage(elements.messageTarget, firstError);
-            }
-        });
-    }
-
-    // Get field elements for error display
-    function getFieldElements(fieldName) {
-        const elements = {
-            highlight: null,
-            messageTarget: null
-        };
-
-        console.log(`Getting elements for field: ${fieldName}`);
-
-        switch (fieldName) {
-            case 'name':
-                elements.highlight = document.querySelector('input[name="name"]');
-                elements.messageTarget = elements.highlight;
-                break;
-
-            case 'email':
-                elements.highlight = document.querySelector('input[name="email"]');
-                elements.messageTarget = elements.highlight;
-                break;
-
-            case 'company_name':
-                elements.highlight = document.querySelector('input[name="company_name"]');
-                elements.messageTarget = elements.highlight;
-                break;
-
-            case 'phone':
-            case 'country_code':
-                elements.highlight = document.querySelector('.phone-input-wrapper');
-                elements.messageTarget = document.querySelector('.country_with_phone');
-                break;
-
-            case 'services':
-                elements.highlight = document.querySelector('.contact-info-form__tags');
-                elements.messageTarget = elements.highlight;
-                break;
-
-            case 'message':
-                elements.highlight = document.querySelector('textarea[name="message"]');
-                elements.messageTarget = elements.highlight;
-                break;
-
-            case 'budget_range':
-                elements.highlight = document.querySelector('input[name="budget_range"]');
-                elements.messageTarget = document.querySelector('.price-range-group');
-                break;
-
-            case 'g-recaptcha-response':
-                // Show in popup only, no field highlighting
-                break;
-
-            default:
-                // Try to find by name attribute
-                elements.highlight = document.querySelector(`[name="${fieldName}"]`);
-                elements.messageTarget = elements.highlight;
-                break;
-        }
-
-        console.log(`Elements found:`, elements);
-        return elements;
-    }
-
-    // Show error message
-    function showErrorMessage(targetElement, message) {
-        if (!targetElement) {
-            console.error('No target element for error message:', message);
-            return;
-        }
-
-        // Remove existing error message if any
-        const existingError = targetElement.parentElement.querySelector('.error-message.dynamic-error');
-        if (existingError) {
-            existingError.remove();
-        }
-
-        // Create new error message
-        const errorDiv = document.createElement('div');
-        errorDiv.className = 'error-message dynamic-error';
-        errorDiv.style.color = '#e74c3c';
-        errorDiv.style.fontSize = '12px';
-        errorDiv.style.marginTop = '5px';
-        errorDiv.textContent = message;
-
-        // Insert after target element
-        if (targetElement.nextSibling) {
-            targetElement.parentElement.insertBefore(errorDiv, targetElement.nextSibling);
-        } else {
-            targetElement.parentElement.appendChild(errorDiv);
-        }
-
-        console.log('Error message added:', message);
-    }
-
-    function resetButtonState() {
-        submitBtn.disabled = false;
-        btnText.style.display = 'inline';
-        spinner.style.display = 'none';
-    }
-
-    // Country selector
-    const countrySelect = document.getElementById("countrySelect");
-    const selectedCountry = countrySelect.querySelector(".selected-country");
-    const selectedImg = selectedCountry.querySelector(".flag-icon");
-    const countryList = countrySelect.querySelector(".country-list");
-    const phonePrefix = document.getElementById("phonePrefix");
-    const countryCodeInput = document.getElementById("countryCode");
-
-    selectedCountry.addEventListener("click", (e) => {
-        e.stopPropagation();
-        countrySelect.classList.toggle("open");
-    });
-
-    countryList.querySelectorAll("li").forEach((item) => {
-        item.addEventListener("click", () => {
-            const flag = item.dataset.flag;
-            const code = item.dataset.code;
-
-            selectedImg.src = `https://flagcdn.com/w40/${flag}.png`;
-            phonePrefix.textContent = code;
-
-            if (countryCodeInput) {
-                countryCodeInput.value = code;
             }
 
-            countryList.style.opacity = "0";
-            countryList.style.transform = "translateY(-8px)";
-            setTimeout(() => {
-                countrySelect.classList.remove("open");
-                countryList.removeAttribute("style");
-            }, 200);
-        });
-    });
+            tags.forEach((tag) => {
+                tag.addEventListener("click", () => {
+                    const isSelected = tag.classList.contains("selected");
 
-    document.addEventListener("click", (e) => {
-        if (!countrySelect.contains(e.target)) {
-            countryList.style.opacity = "0";
-            countryList.style.transform = "translateY(-8px)";
-            setTimeout(() => {
-                countrySelect.classList.remove("open");
-                countryList.removeAttribute("style");
-            }, 200);
-        }
-    });
+                    if (isSelected) {
+                        tag.classList.remove("selected");
+                        tag.querySelector(".tag-icon").src = "{{ asset('img/unselected.png') }}";
+                    } else {
+                        tag.classList.add("selected");
+                        tag.querySelector(".tag-icon").src = "{{ asset('img/selected.png') }}";
+                    }
 
-    // Price range slider
-    const rangeInput = document.getElementById("priceRange");
-    const rangeValue = document.getElementById("rangeValue");
+                    const selectedValues = Array.from(
+                        document.querySelectorAll(".tag.selected")
+                    ).map((t) => t.getAttribute("data-value"));
 
-    function updateSlider() {
-        const value = +rangeInput.value;
-        const min = +rangeInput.min;
-        const max = +rangeInput.max;
-        const percent = ((value - min) / (max - min)) * 100;
+                    hiddenInput.value = selectedValues.join(",");
+                });
+            });
 
-        rangeValue.textContent = `$${value.toLocaleString()}`;
-        rangeValue.style.left = `calc(${percent}% + (${8 - percent * 0.15}px))`;
+            // Popup functions
+            function showPopup(type, title, message) {
+                const overlay = document.getElementById('popupOverlay');
+                const modal = document.getElementById('popupModal');
+                const icon = document.getElementById('popupIcon');
+                const titleEl = document.getElementById('popupTitle');
+                const messageEl = document.getElementById('popupMessage');
 
-        rangeInput.style.background = `linear-gradient(to right, 
+                titleEl.textContent = title;
+                messageEl.textContent = message;
+
+                if (type === 'success') {
+                    modal.className = 'popup-modal success';
+                    icon.className = 'popup-icon success';
+                    icon.innerHTML = '✓';
+                } else {
+                    modal.className = 'popup-modal error';
+                    icon.className = 'popup-icon error';
+                    icon.innerHTML = '✕';
+                }
+
+                overlay.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+
+            function hidePopup() {
+                const overlay = document.getElementById('popupOverlay');
+                overlay.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+
+            document.getElementById('popupCloseBtn').addEventListener('click', hidePopup);
+            document.getElementById('popupOverlay').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    hidePopup();
+                }
+            });
+
+            // Form submission
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Clear previous errors
+                clearAllErrors();
+
+                // Frontend validation - check all required fields
+                const validationErrors = [];
+
+                // Name validation
+                const nameInput = document.querySelector('input[name="name"]');
+                if (!nameInput.value.trim()) {
+                    validationErrors.push({
+                        field: 'name',
+                        message: 'Name is required.',
+                        element: nameInput
+                    });
+                }
+
+                // Company name validation
+                const companyInput = document.querySelector('input[name="company_name"]');
+                if (!companyInput.value.trim()) {
+                    validationErrors.push({
+                        field: 'company_name',
+                        message: 'Company name is required.',
+                        element: companyInput
+                    });
+                }
+
+                // Email validation
+                const emailInput = document.querySelector('input[name="email"]');
+                if (!emailInput.value.trim()) {
+                    validationErrors.push({
+                        field: 'email',
+                        message: 'Email address is required.',
+                        element: emailInput
+                    });
+                } else if (!isValidEmail(emailInput.value)) {
+                    validationErrors.push({
+                        field: 'email',
+                        message: 'Please enter a valid email address.',
+                        element: emailInput
+                    });
+                }
+
+                // Phone validation
+                const phoneInput = document.querySelector('input[name="phone"]');
+                if (!phoneInput.value.trim()) {
+                    validationErrors.push({
+                        field: 'phone',
+                        message: 'Phone number is required.',
+                        element: document.querySelector('.country_with_phone')
+                    });
+                }
+
+                // Services validation
+                const servicesInput = document.getElementById('selected-services');
+                if (!servicesInput.value || servicesInput.value.trim() === '') {
+                    validationErrors.push({
+                        field: 'services',
+                        message: 'Please select at least one service.',
+                        element: document.querySelector('.contact-info-form__tags')
+                    });
+                }
+
+                // Message validation
+                const messageInput = document.querySelector('textarea[name="message"]');
+                if (!messageInput.value.trim()) {
+                    validationErrors.push({
+                        field: 'message',
+                        message: 'Message is required.',
+                        element: messageInput
+                    });
+                }
+
+                // Budget range validation
+                const budgetInput = document.getElementById('priceRange');
+                const budgetTouched = budgetInput.getAttribute('data-touched') === 'true';
+                if (!budgetTouched || !budgetInput.value) {
+                    validationErrors.push({
+                        field: 'budget_range',
+                        message: 'Please select your budget range.',
+                        element: document.querySelector('.price-range-group')
+                    });
+                }
+
+                // If there are validation errors, show them and stop submission
+                if (validationErrors.length > 0) {
+                    resetButtonState();
+
+                    // Display all errors
+                    validationErrors.forEach(error => {
+                        if (error.element) {
+                            error.element.classList.add('error');
+                            showFrontendError(error.element, error.message);
+                        }
+                    });
+
+                    // Scroll to first error
+                    if (validationErrors[0].element) {
+                        validationErrors[0].element.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                    }
+
+                    return;
+                }
+
+                // Show loading state
+                submitBtn.disabled = true;
+                btnText.style.display = 'none';
+                spinner.style.display = 'inline';
+
+                // Execute reCAPTCHA v3
+                grecaptcha.ready(function() {
+                    grecaptcha.execute('6LeSUwwsAAAAALMaU35MsAv8ffsAxFRAbE6xz1Ur', {
+                            action: 'submit'
+                        })
+                        .then(function(token) {
+                            document.getElementById('recaptchaToken').value = token;
+
+                            const formData = new FormData(form);
+
+                            fetch(form.action, {
+                                    method: 'POST',
+                                    body: formData,
+                                    headers: {
+                                        'X-Requested-With': 'XMLHttpRequest',
+                                        'Accept': 'application/json',
+                                        'X-CSRF-TOKEN': document.querySelector(
+                                            'meta[name="csrf-token"]').getAttribute(
+                                            'content')
+                                    }
+                                })
+                                .then(response => {
+                                    // Parse JSON first, then handle status
+                                    return response.json().then(data => {
+                                        console.log('Response Status:', response
+                                            .status);
+                                        console.log('Response Data:', data);
+                                        return {
+                                            status: response.status,
+                                            ok: response.ok,
+                                            data: data
+                                        };
+                                    });
+                                })
+                                .then(result => {
+                                    resetButtonState();
+
+                                    if (result.ok && result.data.success) {
+                                        // Success
+                                        showPopup('success', 'Message Sent!', result.data
+                                            .message ||
+                                            'Thank you for contacting us. We will get back to you soon!'
+                                        );
+
+                                        form.reset();
+                                        hiddenInput.value = '';
+                                        document.getElementById('recaptchaToken').value =
+                                            '';
+
+                                        document.querySelectorAll('.tag.selected').forEach(
+                                            tag => {
+                                                tag.classList.remove('selected');
+                                                tag.querySelector('.tag-icon').src =
+                                                    "{{ asset('img/unselected.png') }}";
+                                            });
+
+                                        // Reset slider
+                                        const rangeInput = document.getElementById(
+                                            "priceRange");
+                                        const rangeValue = document.getElementById(
+                                            "rangeValue");
+                                        if (rangeInput && rangeValue) {
+                                            rangeInput.value = '';
+                                            updateSlider();
+                                        }
+                                    } else if (result.status === 422) {
+                                        // Validation errors
+                                        console.log('Validation Errors:', result.data
+                                            .errors);
+
+                                        if (result.data.errors) {
+                                            displayValidationErrors(result.data.errors);
+
+                                            // Scroll to first error
+                                            setTimeout(() => {
+                                                const firstError = document
+                                                    .querySelector('.error');
+                                                if (firstError) {
+                                                    firstError.scrollIntoView({
+                                                        behavior: 'smooth',
+                                                        block: 'center'
+                                                    });
+                                                }
+                                            }, 100);
+                                        }
+
+                                        showPopup('error', 'Validation Error', result.data
+                                            .message ||
+                                            'Please check the form and correct the errors.'
+                                        );
+                                    } else {
+                                        // Other errors
+                                        const errorMessage = result.data.message ||
+                                            'There was an error sending your message. Please try again.';
+                                        showPopup('error', 'Error', errorMessage);
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Fetch Error:', error);
+                                    resetButtonState();
+                                    showPopup('error', 'Error',
+                                        'There was an error sending your message. Please try again.'
+                                    );
+                                });
+                        })
+                        .catch(function(error) {
+                            console.error('reCAPTCHA error:', error);
+                            resetButtonState();
+                            showPopup('error', 'Error',
+                                'reCAPTCHA verification failed. Please try again.');
+                        });
+                });
+            });
+
+            // Clear all errors
+            function clearAllErrors() {
+                // Remove all dynamic error messages
+                document.querySelectorAll('.error-message.dynamic-error').forEach(msg => msg.remove());
+
+                // Remove error class from all elements
+                document.querySelectorAll('.error').forEach(element => {
+                    element.classList.remove('error');
+                });
+            }
+
+            // Display validation errors
+            function displayValidationErrors(errors) {
+                if (!errors || typeof errors !== 'object') {
+                    console.error('Invalid errors object:', errors);
+                    return;
+                }
+
+                // Loop through each field error
+                Object.keys(errors).forEach(fieldName => {
+                    const errorMessages = errors[fieldName];
+                    const firstError = Array.isArray(errorMessages) ? errorMessages[0] : errorMessages;
+
+                    console.log(`Field: ${fieldName}, Error: ${firstError}`);
+
+                    // Get the appropriate elements to highlight and show error
+                    const elements = getFieldElements(fieldName);
+
+                    if (elements.highlight) {
+                        console.log(`Adding error class to:`, elements.highlight);
+                        elements.highlight.classList.add('error');
+                    }
+
+                    if (elements.messageTarget) {
+                        console.log(`Showing error message for:`, elements.messageTarget);
+                        showErrorMessage(elements.messageTarget, firstError);
+                    }
+                });
+            }
+
+            // Get field elements for error display
+            function getFieldElements(fieldName) {
+                const elements = {
+                    highlight: null,
+                    messageTarget: null
+                };
+
+                switch (fieldName) {
+                    case 'name':
+                        elements.highlight = document.querySelector('input[name="name"]');
+                        elements.messageTarget = elements.highlight;
+                        break;
+
+                    case 'email':
+                        elements.highlight = document.querySelector('input[name="email"]');
+                        elements.messageTarget = elements.highlight;
+                        break;
+
+                    case 'company_name':
+                        elements.highlight = document.querySelector('input[name="company_name"]');
+                        elements.messageTarget = elements.highlight;
+                        break;
+
+                    case 'phone':
+                    case 'country_code':
+                        elements.highlight = document.querySelector('.phone-input-wrapper');
+                        elements.messageTarget = document.querySelector('.country_with_phone');
+                        break;
+
+                    case 'services':
+                        elements.highlight = document.querySelector('.contact-info-form__tags');
+                        elements.messageTarget = elements.highlight;
+                        break;
+
+                    case 'message':
+                        elements.highlight = document.querySelector('textarea[name="message"]');
+                        elements.messageTarget = elements.highlight;
+                        break;
+
+                    case 'budget_range':
+                        elements.highlight = document.querySelector('input[name="budget_range"]');
+                        elements.messageTarget = document.querySelector('.price-range-group');
+                        break;
+
+                    case 'g-recaptcha-response':
+                        // Show in popup only, no field highlighting
+                        break;
+
+                    default:
+                        // Try to find by name attribute
+                        elements.highlight = document.querySelector(`[name="${fieldName}"]`);
+                        elements.messageTarget = elements.highlight;
+                        break;
+                }
+
+                console.log(`Elements found:`, elements);
+                return elements;
+            }
+
+            // Show error message
+            function showErrorMessage(targetElement, message) {
+                if (!targetElement) {
+                    return;
+                }
+
+                // Remove existing error message if any
+                const existingError = targetElement.parentElement.querySelector('.error-message.dynamic-error');
+                if (existingError) {
+                    existingError.remove();
+                }
+
+                // Create new error message
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'error-message dynamic-error';
+                errorDiv.style.color = '#e74c3c';
+                errorDiv.style.fontSize = '12px';
+                errorDiv.style.marginTop = '5px';
+                errorDiv.textContent = message;
+
+                // Insert after target element
+                if (targetElement.nextSibling) {
+                    targetElement.parentElement.insertBefore(errorDiv, targetElement.nextSibling);
+                } else {
+                    targetElement.parentElement.appendChild(errorDiv);
+                }
+
+                console.log('Error message added:', message);
+            }
+
+            function resetButtonState() {
+                submitBtn.disabled = false;
+                btnText.style.display = 'inline';
+                spinner.style.display = 'none';
+            }
+
+            // Country selector
+            const countrySelect = document.getElementById("countrySelect");
+            const selectedCountry = countrySelect.querySelector(".selected-country");
+            const selectedImg = selectedCountry.querySelector(".flag-icon");
+            const countryList = countrySelect.querySelector(".country-list");
+            const phonePrefix = document.getElementById("phonePrefix");
+            const countryCodeInput = document.getElementById("countryCode");
+
+            selectedCountry.addEventListener("click", (e) => {
+                e.stopPropagation();
+                countrySelect.classList.toggle("open");
+            });
+
+            countryList.querySelectorAll("li").forEach((item) => {
+                item.addEventListener("click", () => {
+                    const flag = item.dataset.flag;
+                    const code = item.dataset.code;
+
+                    selectedImg.src = `https://flagcdn.com/w40/${flag}.png`;
+                    phonePrefix.textContent = code;
+
+                    if (countryCodeInput) {
+                        countryCodeInput.value = code;
+                    }
+
+                    countryList.style.opacity = "0";
+                    countryList.style.transform = "translateY(-8px)";
+                    setTimeout(() => {
+                        countrySelect.classList.remove("open");
+                        countryList.removeAttribute("style");
+                    }, 200);
+                });
+            });
+
+            document.addEventListener("click", (e) => {
+                if (!countrySelect.contains(e.target)) {
+                    countryList.style.opacity = "0";
+                    countryList.style.transform = "translateY(-8px)";
+                    setTimeout(() => {
+                        countrySelect.classList.remove("open");
+                        countryList.removeAttribute("style");
+                    }, 200);
+                }
+            });
+
+            // Price range slider
+            const rangeInput = document.getElementById("priceRange");
+            const rangeValue = document.getElementById("rangeValue");
+
+            function updateSlider() {
+                const value = +rangeInput.value;
+                const min = +rangeInput.min;
+                const max = +rangeInput.max;
+                const percent = ((value - min) / (max - min)) * 100;
+
+                // If there's no value, show placeholder text
+                if (!value || value < min) {
+                    rangeValue.textContent = 'Please select budget';
+                    rangeInput.style.background = '#EFF2F1';
+                    return;
+                }
+
+                rangeValue.textContent = `$${value.toLocaleString()}`;
+                rangeValue.style.left = `calc(${percent}% + (${8 - percent * 0.15}px))`;
+
+                rangeInput.style.background = `linear-gradient(to right, 
             #1E6C82 ${percent}%, 
             #EFF2F1 ${percent}%)`;
-    }
+            }
 
-    updateSlider();
-    rangeInput.addEventListener("input", updateSlider);
-});
+            // Initialize slider
+            updateSlider();
+
+            // Handle slider input and mark as touched
+            rangeInput.addEventListener("input", function() {
+                // Mark as touched when user interacts
+                rangeInput.setAttribute('data-touched', 'true');
+                updateSlider();
+            });
+
+            // Helper function for email validation
+            function isValidEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+
+            // Helper function to show frontend errors
+            function showFrontendError(element, message) {
+                if (!element) return;
+
+                // Create error message div
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'error-message dynamic-error';
+                errorDiv.style.color = '#e74c3c';
+                errorDiv.style.fontSize = '12px';
+                errorDiv.style.marginTop = '5px';
+                errorDiv.textContent = message;
+
+                // Insert error message after the element
+                element.insertAdjacentElement('afterend', errorDiv);
+            }
+        });
     </script>
 @endsection

@@ -23,7 +23,7 @@ class ContactController extends Controller
                 'country_code' => 'required|string|max:10',
                 'services' => 'required|string',
                 'message' => 'required|string|max:2000',
-                'budget_range' => 'required|integer|min:100|max:5000',
+                'budget_range' => 'required|numeric|min:100|max:5000',
                 'g-recaptcha-response' => 'required|captcha', // reCAPTCHA validation
             ], [
                 'name.required' => 'Name is required.',
@@ -37,8 +37,8 @@ class ContactController extends Controller
                 'country_code.max' => 'Invalid country code.',
                 'services.required' => 'Please select at least one service.',
                 'message.required' => 'Message is required.',
-                'budget_range.required' => 'Budget range is required.',
-                'budget_range.integer' => 'Budget must be a valid number.',
+                'budget_range.required' => 'Please select your budget range.',
+                'budget_range.numeric' => 'Budget must be a valid number.',
                 'budget_range.min' => 'Budget must be at least $100.',
                 'budget_range.max' => 'Budget must not exceed $5000.',
                 'g-recaptcha-response.required' => 'Please complete the reCAPTCHA verification.',
