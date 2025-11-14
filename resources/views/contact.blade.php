@@ -363,6 +363,7 @@
         transition: all 0.3s ease;
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
         backdrop-filter: blur(8px);
+        z-index: 10;
     }
 
     /* Custom scrollbar for country list */
@@ -919,6 +920,15 @@
             height: 28px;
         }
 
+        
+    .contact-info-location .heading {
+    
+        margin-top: 150px;
+
+
+    }
+
+
         .contact-info-location .location-content p {
             /* line-height: 0.9; */
         }
@@ -1071,6 +1081,14 @@
         font-size: 12px;
         margin-top: 5px;
         display: block;
+    }
+
+    .contact-info-form__tags.error,
+    .country_with_phone.error,
+    .price-range-group.error {
+        outline: 1px solid rgba(231, 76, 60, 0.9);
+        outline-offset: 4px;
+        border-radius: 14px;
     }
 
     .alert {
@@ -1425,16 +1443,16 @@
                             </div>
 
                             <!-- <div class="form-group2 field">
-                                                                                        <div class="contact-info-form__group name-field">
-                                                                                                                    <label class="floating-label">Phone Number</label>
-                                                                                                                    <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
-                                                                                                                        placeholder="+1234567890" value="{{ old('phone') }}" />
-                                                                                                                    @error('phone')
+                                    <div class="contact-info-form__group name-field">
+                                                                <label class="floating-label">Phone Number</label>
+                                                                <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
+                                                                    placeholder="+1234567890" value="{{ old('phone') }}" />
+                                                                @error('phone')
         <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
-                                                                                                                                                                                                                {{ $message }}</div>
+                                                                                                        {{ $message }}</div>
     @enderror
-                                                                                                                </div>
-                                                                                                                </div> -->
+                                                            </div>
+                                                            </div> -->
 
 
 
@@ -1528,10 +1546,8 @@
 
 
 
-                            <!-- reCAPTCHA -->
-                            <div class="g-recaptcha" data-sitekey="6LeFmtMrAAAAAKQ4SHr9Z9NdNPyjwmljCV-iMUo6"
-                                style="margin-top: 20px;">
-                            </div>
+                            <!-- reCAPTCHA v3 - Invisible -->
+                            <input type="hidden" id="recaptchaToken" name="g-recaptcha-response" value="">
                             @error('g-recaptcha-response')
                                 <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
                                     {{ $message }}</div>
@@ -1619,266 +1635,398 @@
         </div>
     </div>
 
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LeSUwwsAAAAALMaU35MsAv8ffsAxFRAbE6xz1Ur"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const tags = document.querySelectorAll(".tag");
-            const hiddenInput = document.getElementById("selected-services");
-            const form = document.getElementById('contactForm');
-            const submitBtn = document.getElementById('submitBtn');
-            const btnText = submitBtn.querySelector('.btn-text');
-            const spinner = submitBtn.querySelector('.spinner');
+ document.addEventListener("DOMContentLoaded", function() {
+    const tags = document.querySelectorAll(".tag");
+    const hiddenInput = document.getElementById("selected-services");
+    const form = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = submitBtn.querySelector('.btn-text');
+    const spinner = submitBtn.querySelector('.spinner');
 
-            // Initialize with old values if present
-            const oldServices = hiddenInput.value;
-            if (oldServices) {
-                const selectedServices = oldServices.split(',');
-                tags.forEach((tag) => {
-                    const tagValue = tag.getAttribute("data-value");
-                    if (selectedServices.includes(tagValue)) {
-                        tag.classList.add("selected");
-                        tag.querySelector(".tag-icon").src = "{{ asset('img/selected.png') }}";
-                    }
-                });
+    // Initialize with old values if present
+    const oldServices = hiddenInput.value;
+    if (oldServices) {
+        const selectedServices = oldServices.split(',');
+        tags.forEach((tag) => {
+            const tagValue = tag.getAttribute("data-value");
+            if (selectedServices.includes(tagValue)) {
+                tag.classList.add("selected");
+                tag.querySelector(".tag-icon").src = "{{ asset('img/selected.png') }}";
             }
-
-            tags.forEach((tag) => {
-                tag.addEventListener("click", () => {
-                    const isSelected = tag.classList.contains("selected");
-
-                    // Toggle clicked tag
-                    if (isSelected) {
-                        tag.classList.remove("selected");
-                        tag.querySelector(".tag-icon").src = "{{ asset('img/unselected.png') }}";
-                    } else {
-                        tag.classList.add("selected");
-                        tag.querySelector(".tag-icon").src = "{{ asset('img/selected.png') }}";
-                    }
-
-                    // Collect all selected tag values
-                    const selectedValues = Array.from(
-                        document.querySelectorAll(".tag.selected")
-                    ).map((t) => t.getAttribute("data-value"));
-
-                    // Update hidden input value
-                    hiddenInput.value = selectedValues.join(",");
-                });
-            });
-
-            // Popup functions
-            function showPopup(type, title, message) {
-                const overlay = document.getElementById('popupOverlay');
-                const modal = document.getElementById('popupModal');
-                const icon = document.getElementById('popupIcon');
-                const titleEl = document.getElementById('popupTitle');
-                const messageEl = document.getElementById('popupMessage');
-
-                // Set content
-                titleEl.textContent = title;
-                messageEl.textContent = message;
-
-                // Set type-specific styles and icons
-                if (type === 'success') {
-                    modal.className = 'popup-modal success';
-                    icon.className = 'popup-icon success';
-                    icon.innerHTML = '✓';
-                } else {
-                    modal.className = 'popup-modal error';
-                    icon.className = 'popup-icon error';
-                    icon.innerHTML = '✕';
-                }
-
-                // Show popup
-                overlay.style.display = 'block';
-                document.body.style.overflow = 'hidden';
-            }
-
-            function hidePopup() {
-                const overlay = document.getElementById('popupOverlay');
-                overlay.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-
-            // Close popup event listeners
-            document.getElementById('popupCloseBtn').addEventListener('click', hidePopup);
-            document.getElementById('popupOverlay').addEventListener('click', function(e) {
-                if (e.target === this) {
-                    hidePopup();
-                }
-            });
-
-            // Form submission handling with AJAX
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-
-                // Show loading state
-                submitBtn.disabled = true;
-                btnText.style.display = 'none';
-                spinner.style.display = 'inline';
-
-                // Basic validation
-                const selectedValues = hiddenInput.value;
-                if (!selectedValues || selectedValues.trim() === '') {
-                    resetButtonState();
-                    showPopup('error', 'Validation Error', 'Please select at least one service.');
-                    return;
-                }
-
-                // Check reCAPTCHA
-                if (typeof grecaptcha !== 'undefined') {
-                    const recaptchaResponse = grecaptcha.getResponse();
-                    if (recaptchaResponse.length === 0) {
-                        resetButtonState();
-                        showPopup('error', 'Validation Error',
-                            'Please complete the reCAPTCHA verification.');
-                        return;
-                    }
-                }
-
-                // Prepare form data
-                const formData = new FormData(form);
-
-                // Submit form via AJAX
-                fetch(form.action, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest',
-                            'Accept': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
-                                .getAttribute('content')
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        resetButtonState();
-
-                        if (data.success) {
-                            showPopup('success', 'Message Sent!',
-                                'Thank you for contacting us. We will get back to you soon!');
-                            form.reset();
-                            hiddenInput.value = '';
-                            // Reset selected tags
-                            document.querySelectorAll('.tag.selected').forEach(tag => {
-                                tag.classList.remove('selected');
-                                tag.querySelector('.tag-icon').src =
-                                    "{{ asset('img/unselected.png') }}";
-                            });
-                            // Reset reCAPTCHA
-                            if (typeof grecaptcha !== 'undefined') {
-                                grecaptcha.reset();
-                            }
-                        } else {
-                            const errorMessage = data.message ||
-                                'There was an error sending your message. Please try again.';
-                            showPopup('error', 'Error', errorMessage);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        resetButtonState();
-                        showPopup('error', 'Error',
-                            'There was an error sending your message. Please try again.');
-                    });
-            });
-
-            function resetButtonState() {
-                submitBtn.disabled = false;
-                btnText.style.display = 'inline';
-                spinner.style.display = 'none';
-            }
-
-            // Check for server-side messages on page load
-            @if (session('success'))
-                showPopup('success', 'Message Sent!', '{{ session('success') }}');
-            @endif
-
-            @if (session('error'))
-                showPopup('error', 'Error', '{{ session('error') }}');
-            @endif
-
-
-
-
-            // SELECT OPTION
-
-            const countrySelect = document.getElementById("countrySelect");
-            const selectedCountry = countrySelect.querySelector(".selected-country");
-            const selectedImg = selectedCountry.querySelector(".flag-icon");
-            const countryList = countrySelect.querySelector(".country-list");
-            const phonePrefix = document.getElementById("phonePrefix");
-            const countryCodeInput = document.getElementById("countryCode");
-
-            // Toggle dropdown
-            selectedCountry.addEventListener("click", (e) => {
-                e.stopPropagation();
-                countrySelect.classList.toggle("open");
-            });
-
-            // Handle country selection
-            countryList.querySelectorAll("li").forEach((item) => {
-                item.addEventListener("click", () => {
-                    const flag = item.dataset.flag;
-                    const code = item.dataset.code;
-
-                    selectedImg.src = `https://flagcdn.com/w40/${flag}.png`;
-                    phonePrefix.textContent = code;
-
-                    // Update hidden country code input
-                    if (countryCodeInput) {
-                        countryCodeInput.value = code;
-                    }
-
-                    // Animate close
-                    countryList.style.opacity = "0";
-                    countryList.style.transform = "translateY(-8px)";
-                    setTimeout(() => {
-                        countrySelect.classList.remove("open");
-                        countryList.removeAttribute("style");
-                    }, 200);
-                });
-            });
-
-            // Click outside closes dropdown
-            document.addEventListener("click", (e) => {
-                if (!countrySelect.contains(e.target)) {
-                    countryList.style.opacity = "0";
-                    countryList.style.transform = "translateY(-8px)";
-                    setTimeout(() => {
-                        countrySelect.classList.remove("open");
-                        countryList.removeAttribute("style");
-                    }, 200);
-                }
-            });
-
-            const rangeInput = document.getElementById("priceRange");
-            const rangeValue = document.getElementById("rangeValue");
-
-            function updateSlider() {
-                const value = +rangeInput.value;
-                const min = +rangeInput.min;
-                const max = +rangeInput.max;
-                const percent = ((value - min) / (max - min)) * 100;
-
-                // Update the floating label text and position
-                rangeValue.textContent = `$${value.toLocaleString()}`;
-                rangeValue.style.left = `calc(${percent}% + (${8 - percent * 0.15}px))`;
-
-                // Update the filled color background
-                rangeInput.style.background = `linear-gradient(to right, 
-    #1E6C82 ${percent}%, 
-    #EFF2F1 ${percent}%)`;
-            }
-
-            // Initialize
-            updateSlider();
-
-            // Update on input
-            rangeInput.addEventListener("input", updateSlider);
-
-
-
-
         });
+    }
+
+    tags.forEach((tag) => {
+        tag.addEventListener("click", () => {
+            const isSelected = tag.classList.contains("selected");
+
+            if (isSelected) {
+                tag.classList.remove("selected");
+                tag.querySelector(".tag-icon").src = "{{ asset('img/unselected.png') }}";
+            } else {
+                tag.classList.add("selected");
+                tag.querySelector(".tag-icon").src = "{{ asset('img/selected.png') }}";
+            }
+
+            const selectedValues = Array.from(
+                document.querySelectorAll(".tag.selected")
+            ).map((t) => t.getAttribute("data-value"));
+
+            hiddenInput.value = selectedValues.join(",");
+        });
+    });
+
+    // Popup functions
+    function showPopup(type, title, message) {
+        const overlay = document.getElementById('popupOverlay');
+        const modal = document.getElementById('popupModal');
+        const icon = document.getElementById('popupIcon');
+        const titleEl = document.getElementById('popupTitle');
+        const messageEl = document.getElementById('popupMessage');
+
+        titleEl.textContent = title;
+        messageEl.textContent = message;
+
+        if (type === 'success') {
+            modal.className = 'popup-modal success';
+            icon.className = 'popup-icon success';
+            icon.innerHTML = '✓';
+        } else {
+            modal.className = 'popup-modal error';
+            icon.className = 'popup-icon error';
+            icon.innerHTML = '✕';
+        }
+
+        overlay.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function hidePopup() {
+        const overlay = document.getElementById('popupOverlay');
+        overlay.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    document.getElementById('popupCloseBtn').addEventListener('click', hidePopup);
+    document.getElementById('popupOverlay').addEventListener('click', function(e) {
+        if (e.target === this) {
+            hidePopup();
+        }
+    });
+
+    // Form submission
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Clear previous errors
+        clearAllErrors();
+
+        // Show loading state
+        submitBtn.disabled = true;
+        btnText.style.display = 'none';
+        spinner.style.display = 'inline';
+
+        // Execute reCAPTCHA v3
+        grecaptcha.ready(function() {
+            grecaptcha.execute('6LeSUwwsAAAAALMaU35MsAv8ffsAxFRAbE6xz1Ur', {
+                    action: 'submit'
+                })
+                .then(function(token) {
+                    document.getElementById('recaptchaToken').value = token;
+
+                    const formData = new FormData(form);
+
+                    fetch(form.action, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest',
+                                'Accept': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                            }
+                        })
+                        .then(response => {
+                            // Parse JSON first, then handle status
+                            return response.json().then(data => {
+                                console.log('Response Status:', response.status);
+                                console.log('Response Data:', data);
+                                return {
+                                    status: response.status,
+                                    ok: response.ok,
+                                    data: data
+                                };
+                            });
+                        })
+                        .then(result => {
+                            resetButtonState();
+
+                            if (result.ok && result.data.success) {
+                                // Success
+                                showPopup('success', 'Message Sent!', result.data.message || 'Thank you for contacting us. We will get back to you soon!');
+                                
+                                form.reset();
+                                hiddenInput.value = '';
+                                document.getElementById('recaptchaToken').value = '';
+                                
+                                document.querySelectorAll('.tag.selected').forEach(tag => {
+                                    tag.classList.remove('selected');
+                                    tag.querySelector('.tag-icon').src = "{{ asset('img/unselected.png') }}";
+                                });
+                                
+                                // Reset slider
+                                const rangeInput = document.getElementById("priceRange");
+                                const rangeValue = document.getElementById("rangeValue");
+                                if (rangeInput && rangeValue) {
+                                    rangeInput.value = 2500;
+                                    updateSlider();
+                                }
+                            } else if (result.status === 422) {
+                                // Validation errors
+                                console.log('Validation Errors:', result.data.errors);
+                                
+                                if (result.data.errors) {
+                                    displayValidationErrors(result.data.errors);
+
+                                    // Scroll to first error
+                                    setTimeout(() => {
+                                        const firstError = document.querySelector('.error');
+                                        if (firstError) {
+                                            firstError.scrollIntoView({
+                                                behavior: 'smooth',
+                                                block: 'center'
+                                            });
+                                        }
+                                    }, 100);
+                                }
+                                
+                                showPopup('error', 'Validation Error', result.data.message || 'Please check the form and correct the errors.');
+                            } else {
+                                // Other errors
+                                const errorMessage = result.data.message || 'There was an error sending your message. Please try again.';
+                                showPopup('error', 'Error', errorMessage);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Fetch Error:', error);
+                            resetButtonState();
+                            showPopup('error', 'Error', 'There was an error sending your message. Please try again.');
+                        });
+                })
+                .catch(function(error) {
+                    console.error('reCAPTCHA error:', error);
+                    resetButtonState();
+                    showPopup('error', 'Error', 'reCAPTCHA verification failed. Please try again.');
+                });
+        });
+    });
+
+    // Clear all errors
+    function clearAllErrors() {
+        // Remove all dynamic error messages
+        document.querySelectorAll('.error-message.dynamic-error').forEach(msg => msg.remove());
+
+        // Remove error class from all elements
+        document.querySelectorAll('.error').forEach(element => {
+            element.classList.remove('error');
+        });
+    }
+
+    // Display validation errors
+    function displayValidationErrors(errors) {
+        if (!errors || typeof errors !== 'object') {
+            console.error('Invalid errors object:', errors);
+            return;
+        }
+
+        console.log('Processing errors:', errors);
+
+        // Loop through each field error
+        Object.keys(errors).forEach(fieldName => {
+            const errorMessages = errors[fieldName];
+            const firstError = Array.isArray(errorMessages) ? errorMessages[0] : errorMessages;
+            
+            console.log(`Field: ${fieldName}, Error: ${firstError}`);
+            
+            // Get the appropriate elements to highlight and show error
+            const elements = getFieldElements(fieldName);
+            
+            if (elements.highlight) {
+                console.log(`Adding error class to:`, elements.highlight);
+                elements.highlight.classList.add('error');
+            }
+            
+            if (elements.messageTarget) {
+                console.log(`Showing error message for:`, elements.messageTarget);
+                showErrorMessage(elements.messageTarget, firstError);
+            }
+        });
+    }
+
+    // Get field elements for error display
+    function getFieldElements(fieldName) {
+        const elements = {
+            highlight: null,
+            messageTarget: null
+        };
+
+        console.log(`Getting elements for field: ${fieldName}`);
+
+        switch (fieldName) {
+            case 'name':
+                elements.highlight = document.querySelector('input[name="name"]');
+                elements.messageTarget = elements.highlight;
+                break;
+
+            case 'email':
+                elements.highlight = document.querySelector('input[name="email"]');
+                elements.messageTarget = elements.highlight;
+                break;
+
+            case 'company_name':
+                elements.highlight = document.querySelector('input[name="company_name"]');
+                elements.messageTarget = elements.highlight;
+                break;
+
+            case 'phone':
+            case 'country_code':
+                elements.highlight = document.querySelector('.phone-input-wrapper');
+                elements.messageTarget = document.querySelector('.country_with_phone');
+                break;
+
+            case 'services':
+                elements.highlight = document.querySelector('.contact-info-form__tags');
+                elements.messageTarget = elements.highlight;
+                break;
+
+            case 'message':
+                elements.highlight = document.querySelector('textarea[name="message"]');
+                elements.messageTarget = elements.highlight;
+                break;
+
+            case 'budget_range':
+                elements.highlight = document.querySelector('input[name="budget_range"]');
+                elements.messageTarget = document.querySelector('.price-range-group');
+                break;
+
+            case 'g-recaptcha-response':
+                // Show in popup only, no field highlighting
+                break;
+
+            default:
+                // Try to find by name attribute
+                elements.highlight = document.querySelector(`[name="${fieldName}"]`);
+                elements.messageTarget = elements.highlight;
+                break;
+        }
+
+        console.log(`Elements found:`, elements);
+        return elements;
+    }
+
+    // Show error message
+    function showErrorMessage(targetElement, message) {
+        if (!targetElement) {
+            console.error('No target element for error message:', message);
+            return;
+        }
+
+        // Remove existing error message if any
+        const existingError = targetElement.parentElement.querySelector('.error-message.dynamic-error');
+        if (existingError) {
+            existingError.remove();
+        }
+
+        // Create new error message
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message dynamic-error';
+        errorDiv.style.color = '#e74c3c';
+        errorDiv.style.fontSize = '12px';
+        errorDiv.style.marginTop = '5px';
+        errorDiv.textContent = message;
+
+        // Insert after target element
+        if (targetElement.nextSibling) {
+            targetElement.parentElement.insertBefore(errorDiv, targetElement.nextSibling);
+        } else {
+            targetElement.parentElement.appendChild(errorDiv);
+        }
+
+        console.log('Error message added:', message);
+    }
+
+    function resetButtonState() {
+        submitBtn.disabled = false;
+        btnText.style.display = 'inline';
+        spinner.style.display = 'none';
+    }
+
+    // Country selector
+    const countrySelect = document.getElementById("countrySelect");
+    const selectedCountry = countrySelect.querySelector(".selected-country");
+    const selectedImg = selectedCountry.querySelector(".flag-icon");
+    const countryList = countrySelect.querySelector(".country-list");
+    const phonePrefix = document.getElementById("phonePrefix");
+    const countryCodeInput = document.getElementById("countryCode");
+
+    selectedCountry.addEventListener("click", (e) => {
+        e.stopPropagation();
+        countrySelect.classList.toggle("open");
+    });
+
+    countryList.querySelectorAll("li").forEach((item) => {
+        item.addEventListener("click", () => {
+            const flag = item.dataset.flag;
+            const code = item.dataset.code;
+
+            selectedImg.src = `https://flagcdn.com/w40/${flag}.png`;
+            phonePrefix.textContent = code;
+
+            if (countryCodeInput) {
+                countryCodeInput.value = code;
+            }
+
+            countryList.style.opacity = "0";
+            countryList.style.transform = "translateY(-8px)";
+            setTimeout(() => {
+                countrySelect.classList.remove("open");
+                countryList.removeAttribute("style");
+            }, 200);
+        });
+    });
+
+    document.addEventListener("click", (e) => {
+        if (!countrySelect.contains(e.target)) {
+            countryList.style.opacity = "0";
+            countryList.style.transform = "translateY(-8px)";
+            setTimeout(() => {
+                countrySelect.classList.remove("open");
+                countryList.removeAttribute("style");
+            }, 200);
+        }
+    });
+
+    // Price range slider
+    const rangeInput = document.getElementById("priceRange");
+    const rangeValue = document.getElementById("rangeValue");
+
+    function updateSlider() {
+        const value = +rangeInput.value;
+        const min = +rangeInput.min;
+        const max = +rangeInput.max;
+        const percent = ((value - min) / (max - min)) * 100;
+
+        rangeValue.textContent = `$${value.toLocaleString()}`;
+        rangeValue.style.left = `calc(${percent}% + (${8 - percent * 0.15}px))`;
+
+        rangeInput.style.background = `linear-gradient(to right, 
+            #1E6C82 ${percent}%, 
+            #EFF2F1 ${percent}%)`;
+    }
+
+    updateSlider();
+    rangeInput.addEventListener("input", updateSlider);
+});
     </script>
 @endsection
