@@ -27,34 +27,37 @@
     }
 
     .intro-contact-container {
-        background: linear-gradient(#062c25, #1d6154);
+        background-color: #0D4036;
 
         color: #fff;
         padding: 6rem 3rem;
+        padding-top: 8rem;
         border-bottom-right-radius: 5rem;
         box-shadow: 6px 8px 15px -3px rgba(0, 0, 0, 0.6);
     }
 
     .intro-contact-container .intro-content h2 {
         color: #20b486;
-        font-size: 2.5rem;
+        font-size: 2.7rem;
         margin-bottom: 0.6rem;
         font-family: "GT Walsheim ProCB";
         letter-spacing: 0.8px;
     }
 
     .intro-contact-container .intro-content h4 {
-        font-size: 1rem;
+        font-size: 1.14rem;
         margin-bottom: 0.35rem;
-        font-family: "GT Walsheim Con";
+        font-family: "GT Walsheim Trial Cn Md";
+
         letter-spacing: 0.7px;
     }
 
     .intro-contact-container .intro-content p {
-        font-size: 1rem;
+        font-size: 1.15rem;
         font-family: "GT Walsheim Con";
         letter-spacing: 0.6px;
-        max-width: 250px;
+        line-height: 1.1;
+        max-width: 270px;
     }
 
     /* ======================= Contact Information */
@@ -68,9 +71,13 @@
     .contact-info h2.heading {
         color: #0d4036;
         display: none;
-        font-family: "GT Walsheim Trial Cn Md";
+        font-family: "GT Walsheim ProCB";
+        font-weight: 100;
+        font-size: 22px;
+        letter-spacing: 0.8px;
 
     }
+
 
     .contact-info .contact-info-icons {
         display: flex;
@@ -110,17 +117,15 @@
         width: 100%;
         display: flex;
         justify-content: center;
-        padding: 20px;
+        padding: 20px 16px;
         margin-top: -4rem;
-        /* margin-top: 30px;
-  padding: 2.5rem 2rem; */
     }
 
     .contact-info-form__container {
-        /* max-width: 450px; */
-        background: linear-gradient(#1d6154 50%, #062c25 100%);
-        padding: 7px 55px 7px 55px !important;
-        border-radius: 18px;
+
+        background: linear-gradient(322.83deg, #062C25 0%, #1D6154 97.19%);
+        padding: 40px 30px 25px 30px;
+        border-radius: 15px;
         color: #ffffff;
         box-sizing: border-box;
         box-shadow: 0px 17px 15px -3px rgba(0, 0, 0, 0.5);
@@ -129,39 +134,78 @@
     .contact-info-form__title {
         font-size: 24px;
         margin-bottom: 25px;
-        font-family: "GT Walsheim Trial Cn Lt";
+        font-family: "GT Walsheim Trial Cn Md";
         letter-spacing: 0.3px;
         line-height: 1.3;
         font-weight: 500;
+        margin-left: 25px;
     }
 
-    .contact-info-form__label {
-        font-size: 13px;
-        margin-top: 15px;
-        display: block;
-        font-family: "GT Walsheim Con";
+    /* WRAPPER */
+    .name-field {
+        position: relative;
+        margin-top: 20px;
     }
 
-    .contact-info-form__input,
+    /* INPUT FIELD */
     .name-field .floating-input {
         width: 100%;
         padding: 16px 14px;
         height: 50px;
         border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.25);
         background: transparent;
         color: #fff;
-        margin-top: 5px;
         outline: none;
+        font-size: 15px;
         font-family: "GT Walsheim Con";
-        font-size: 14px;
         transition: border-color 0.3s ease;
     }
 
-    .contact-info-form__input:focus,
-    .name-field .floating-input:focus {
-        border-color: rgba(255, 255, 255, 0.6);
+    /* INPUT FOCUS */
+    /* .name-field .floating-input:focus {
+        border-color: rgba(255, 255, 255, 0.65);
+    } */
+
+    /* THE TOP-LEFT BORDER CUT */
+    .name-field::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 14px;
+        width: 60px;
+        height: 2px;
+        background: #1D6154;
+        z-index: 2;
     }
+
+    .name-field.emaill::before {
+        width: 50px;
+
+    }
+
+    .name-field.company::before {
+        width: 120px;
+
+    }
+
+    /* FLOATING LABEL */
+    .name-field .floating-label {
+        position: absolute;
+        top: -12px;
+        left: 14px;
+        background: transparent;
+        /* form background for seamless blend */
+        padding: 0 6px;
+        font-size: 14px;
+        color: #ffffffc2;
+        font-family: "GT Walsheim Pro";
+        z-index: 3;
+        letter-spacing: 0.2px;
+    }
+
+
+
 
     .contact-info-form__input.email {
         margin-top: 20px;
@@ -180,28 +224,7 @@
         opacity: 0.6;
     }
 
-    /* NAME FIELD ONLY */
-    .contact-info-form__group.name-field {
-        position: relative;
-        margin-top: 18px;
-    }
 
-    .name-field .floating-label {
-        position: absolute;
-        top: -10px;
-        left: 14px;
-        padding: 3px 8px;
-        margin: 0px;
-        font-size: 16px;
-        background: #1d6154;
-        color: #ffffffab;
-        border-radius: 4px;
-        pointer-events: none;
-        font-family: "GT Walsheim Pro";
-        /* opacity: 0.8; */
-        font-weight: 400;
-        letter-spacing: 0px;
-    }
 
     .contact-info-form__section-title {
         margin-top: 30px;
@@ -209,7 +232,7 @@
         font-weight: 600;
         font-family: "GT Walsheim Pro";
         letter-spacing: 0.3px;
-        line-height: 1.3;
+        line-height: 0.4;
     }
 
     .contact-info-form__subtitle {
@@ -243,22 +266,20 @@
         position: relative;
     }
 
+
     .country_with_phone .floating-label2 {
         position: absolute;
-        top: -15px;
+        top: -12px;
         left: 14px;
-        padding: 3px 8px;
-        margin: 0px;
-        font-size: 16px;
-        background: #1d6154;
-        color: #ffffffab;
-        border-radius: 4px;
-        pointer-events: none;
+        background: transparent;
+        /* form background for seamless blend */
+        padding: 0 6px;
+        font-size: 14px;
+        color: #ffffffc2;
+
         font-family: "GT Walsheim Pro";
-        /* opacity: 0.8; */
-        font-weight: 400;
-        letter-spacing: 0px;
-        z-index: 60;
+        z-index: 3;
+        letter-spacing: 0.2px;
     }
 
     /* Row layout */
@@ -274,7 +295,17 @@
         position: relative;
         width: 105px;
         flex-shrink: 0;
-        z-index: 50;
+    }
+
+    .country_with_phone .country-select::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 14px;
+        width: 60px;
+        height: 2px;
+        background: #1D6154;
+        z-index: 2;
     }
 
     .country_with_phone .selected-country {
@@ -291,9 +322,9 @@
         background: transparent;
     }
 
-    .country_with_phone .selected-country:hover {
+    /* .country_with_phone .selected-country:hover {
         border-color: rgba(255, 255, 255, 0.5);
-    }
+    } */
 
 
     .country_with_phone .flag-icon {
@@ -400,25 +431,34 @@
         background: transparent;
     }
 
-    .country_with_phone .phone-input-wrapper:focus-within {
-        border-color: rgba(255, 255, 255, 0.6);
+    .country_with_phone .phone-input-wrapper::before {
+        content: "";
+        position: absolute;
+        top: -1px;
+        left: 14px;
+        width: 110px;
+        height: 2px;
+        background: #1D6154;
+        z-index: 2;
     }
+
+    /* .country_with_phone .phone-input-wrapper:focus-within {
+        border-color: rgba(255, 255, 255, 0.6);
+    } */
 
     .phone-input-wrapper .floating-phone {
         position: absolute;
-        top: -15px;
+        top: -12px;
         left: 14px;
-        padding: 3px 8px;
-        margin: 0px;
-        font-size: 16px;
-        background: #1d6154;
-        color: #ffffffab;
-        border-radius: 4px;
-        pointer-events: none;
+        background: transparent;
+        /* form background for seamless blend */
+        padding: 0 6px;
+        font-size: 14px;
+        color: #ffffffc2;
+
         font-family: "GT Walsheim Pro";
-        /* opacity: 0.8; */
-        font-weight: 400;
-        letter-spacing: 0px;
+        z-index: 3;
+        letter-spacing: 0.2px;
     }
 
 
@@ -447,20 +487,20 @@
 
     /* =============================================  PRICE RANGE */
     .form-price-container h2 {
-        font-size: 16px;
+        font-size: 15.2px;
         font-family: "GT Walsheim Trial Cn Md";
         margin-top: 30px;
-        letter-spacing: 0.3px;
+        letter-spacing: 1.4px;
         font-weight: 600;
-        line-height: 1.3;
+        line-height: 0.3;
     }
 
     .form-price-container p {
-        font-size: 12px;
+        font-size: 10px;
         font-family: "GT Walsheim Pro";
         margin-top: 6px;
-        letter-spacing: 0.3px;
-        opacity: 0.75;
+        letter-spacing: 0.2px;
+        opacity: 0.8;
     }
 
     .price-range-group {
@@ -484,6 +524,7 @@
         padding: 25px 0;
         display: flex;
         align-items: center;
+        gap: 10px;
         justify-content: space-between;
     }
 
@@ -491,7 +532,7 @@
         color: #fff;
         font-size: 13px;
         font-weight: 500;
-        margin-bottom: 40px;
+        /* margin-bottom: 40px; */
     }
 
     /* Floating price label */
@@ -574,22 +615,6 @@
         box-shadow: 0 3px 8px rgba(30, 108, 130, 0.4);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     .contact-info-form__tags {
         margin-top: 15px;
         display: flex;
@@ -650,7 +675,7 @@
 
     .contact-info-form__btn {
         width: 100%;
-        margin-top: 25px;
+        margin-bottom: 20px;
         background: #22c58b;
         color: #fff;
         padding: 15px;
@@ -682,7 +707,7 @@
         font-family: "GT Walsheim Trial Cn Md";
         font-weight: 800;
         letter-spacing: 0.8px;
-        margin-top: 163px;
+        /* margin-top: 163px; */
         margin-bottom: 20px;
 
 
@@ -776,6 +801,12 @@
     @media (min-width: 1200px) {
         /* ======================= Contact Information */
 
+
+        .intro-contact-container {
+            background: linear-gradient(#062c25, #1d6154);
+
+        }
+
         .box-container {
             max-width: 1070px;
             margin: 0 auto;
@@ -844,13 +875,31 @@
         }
 
         .contact-info-form__container {
-            padding: 10px 40px;
+            padding: 40px 55px 25px 55px;
+        }
 
+        .contact-info-form__title {
+            font-size: 22px;
+
+            margin-left: 0px;
         }
 
         .contact-info-form {
             padding: 0;
             /* padding-top: 2rem; */
+        }
+
+        .country_with_phone .prefix {
+
+            margin: 5px 8px 5px 5px;
+            border-right: 1px solid #b4bec82d;
+            padding-right: 10px;
+            height: 19px;
+
+        }
+
+        .contact-info-form__btn {
+            margin-top: 15px;
         }
 
         .form_group_field {
@@ -1350,7 +1399,7 @@
 
                             <div class="form_group_field mt-2">
 
-                                <div class="contact-info-form__group name-field">
+                                <div class="contact-info-form__group name-field emaill">
                                     <label class="floating-label">Email</label>
 
                                     <input type="email" name="email"
@@ -1363,7 +1412,7 @@
                                 </div>
 
 
-                                <div class="contact-info-form__group name-field">
+                                <div class="contact-info-form__group name-field company">
                                     <label class="floating-label">Company Name</label>
                                     <input type="text" name="company_name"
                                         class="floating-input @error('company_name') error @enderror"
@@ -1376,16 +1425,16 @@
                             </div>
 
                             <!-- <div class="form-group2 field">
-                                        <div class="contact-info-form__group name-field">
-                                                                    <label class="floating-label">Phone Number</label>
-                                                                    <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
-                                                                        placeholder="+1234567890" value="{{ old('phone') }}" />
-                                                                    @error('phone')
+                                                                                        <div class="contact-info-form__group name-field">
+                                                                                                                    <label class="floating-label">Phone Number</label>
+                                                                                                                    <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
+                                                                                                                        placeholder="+1234567890" value="{{ old('phone') }}" />
+                                                                                                                    @error('phone')
         <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
-                                                                                                                {{ $message }}</div>
+                                                                                                                                                                                                                {{ $message }}</div>
     @enderror
-                                                                </div>
-                                                                </div> -->
+                                                                                                                </div>
+                                                                                                                </div> -->
 
 
 

@@ -71,10 +71,11 @@
     }
 
     .whole-view-resource .resourse-details-header .header h2.section-title {
-            font-family: 'IvyOra Text';
+        font-family: 'IvyOra Text';
 
 
     }
+
     .whole-view-resource .resourse-details-header .header p.section-subtitle {
         padding-right: 30px;
         letter-spacing: 0.8px;
@@ -82,7 +83,8 @@
         padding-top: 10px;
 
     }
-    .whole-view-resource .resourse-details-header .header p.section-subtitle a{
+
+    .whole-view-resource .resourse-details-header .header p.section-subtitle a {
         opacity: 0.9;
 
     }
@@ -92,8 +94,14 @@
         padding-left: 30px;
     }
 
-    @media (min){
 
+    @media (min-width: 1024px) {
+        /* =======================   */
+
+        .whole-view-resource .resourse-details-header .header {
+            max-width: 800px;
+            padding-left: 0px;
+        }
     }
 </style>
 
