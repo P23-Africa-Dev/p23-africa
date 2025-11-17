@@ -224,6 +224,10 @@ Route::get('/feedback/thank-you', function () {
     return view('feedback.thankyou');
 })->name('feedback.thankyou');
 
+Route::get('/thank-you', function () {
+    return view('emails.thank-you');
+})->name('feedback.thankyou');
+
 // Route::get('/events/all-events', function () {
 //     $events = Event::all();
 //     return view('all-events', compact('events'));
