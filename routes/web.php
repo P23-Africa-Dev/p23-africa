@@ -162,7 +162,6 @@ Route::post('/submit-student', [submitStudent::class, 'submitStudent']);
  * Route to display click counts.
  */
 
-
 Route::get('/resource-hub', [ResourceHubController::class, 'resourceHub'])->name('resource-hub');
 Route::get('/resource/{slug}', [ResourceHubController::class, 'resourceDetails'])->name('resource-show');
 Route::get('/res/category/{slug}', [ResourceHubController::class, 'categoryView'])->name('archive.category');

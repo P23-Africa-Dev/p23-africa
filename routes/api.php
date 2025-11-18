@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\BrnTokenController;
+use App\Http\Controllers\Api\EventController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Event API routes
+Route::get('/event/{id}/booking-fields', [EventController::class, 'getBookingFields'])
+    ->name('api.event.booking-fields');
 
 // BRN Token API routes - accessible without authentication for external app
 Route::prefix('brn')->group(function () {

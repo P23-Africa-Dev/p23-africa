@@ -29,7 +29,7 @@ class EventController extends Controller
             ->orderByRaw("CASE WHEN CONCAT(event_date, ' ', event_time) >= ? THEN 0 ELSE 1 END", [$now])
             ->orderBy('event_date')
             ->orderBy('event_time')
-            ->get();
+            ->paginate(10);
         // $events = Event::latest()->get();
 
 
@@ -66,6 +66,8 @@ class EventController extends Controller
             'image' => 'nullable',
             'visibility' => 'required|in:public,private',
             'display' => 'required|in:open_to_all,event_only,brn_only',
+            'booking_fields' => 'nullable|array',
+            'booking_fields.*' => 'string',
         ]);
 
         if ($request->hasFile('image')) {
@@ -79,6 +81,9 @@ class EventController extends Controller
         } else {
             $validated['link'] = null; // clear for private
         }
+
+        // Handle booking fields
+        $validated['booking_fields'] = $request->booking_fields ?? ['name', 'email'];
 
         // $validated['slug'] = Str::slug($validated['title']);
         // $validated['link'] = url('/events/' . $validated['slug']); // Auto-generate link
@@ -121,6 +126,8 @@ class EventController extends Controller
             'venue' => 'required|string|max:255',
             'image' => 'nullable|image|max:2048', // optional image validation
             'display' => 'required|in:open_to_all,event_only,brn_only',
+            'booking_fields' => 'nullable|array',
+            'booking_fields.*' => 'string',
         ]);
 
         // Remove current image if requested
@@ -148,7 +155,10 @@ class EventController extends Controller
 
         // $validated['slug'] = Str::slug($validated['title']);
         // $validated['link'] = url('/events/' . $validated['slug']); // Auto-generate updated link
-        
+
+
+        // Handle booking fields
+        $validated['booking_fields'] = $request->booking_fields ?? ['name', 'email'];
 
         // Sanitize and slugify
         $validated['description'] = Purifier::clean($request->description);

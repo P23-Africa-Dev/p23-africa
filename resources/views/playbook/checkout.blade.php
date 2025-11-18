@@ -704,7 +704,8 @@
         // Flutterwave Payment Integration
         function initializeFlutterwavePayment(downloadId, userEmail, userName, amount) {
             FlutterwaveCheckout({
-                public_key: "FLWPUBK_TEST-044e7163292b9b7d4f0d4db5022227c4-X",
+                // public_key: "FLWPUBK_TEST-044e7163292b9b7d4f0d4db5022227c4-X",
+                public_key: "FLWPUBK-366fbf9270d878c2e5e67b0a89f037e7-X",
                 tx_ref: "UF_" + downloadId + "_" + Date.now(),
                 amount: amount,
                 currency: "USD",
@@ -717,7 +718,7 @@
                 customizations: {
                     title: "Ultimate Funding & Investor Directory",
                     description: "Premium access to Africa's most comprehensive funding database",
-                    logo: "{{ asset('images/logo.png') }}",
+                    logo: "{{ asset('images/Logo2.png') }}",
                 },
                 callback: function(data) {
                     // Handle successful payment

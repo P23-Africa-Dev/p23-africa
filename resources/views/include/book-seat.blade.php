@@ -25,13 +25,15 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
-                <p class="mb-2" style="color: #0D4036; font-weight: 500; font-family: 'GT Walsheim Con';"><em>Book your seat to be a part of this exclusive event and gain valuable insights from trusted experts.</em></p><br>
+                <p class="mb-2" style="color: #0D4036; font-weight: 500; font-family: 'GT Walsheim Con';"><em>Book
+                        your seat to be a part of this exclusive event and gain valuable insights from trusted
+                        experts.</em></p><br>
                 <form id="seatForm">
                     @csrf
                     <input type="hidden" name="event_id" id="event_id">
-                    <input type="text" name="name" class="form-control mb-5" placeholder="Full name" required>
-                    <input type="email" name="email" class="form-control mb-5" placeholder="Email" required>
-                    <input type="text" name="phone" class="form-control mb-5" placeholder="Phone no." required>
+                    <div id="dynamic-fields">
+                        <!-- Dynamic fields will be populated by JavaScript -->
+                    </div>
 
                     <button type="submit" class="btn w-50" id="submitBtn">
                         <span class="spinner-border spinner-border-sm me-2 d-none" role="status"

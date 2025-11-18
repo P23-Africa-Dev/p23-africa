@@ -22,8 +22,8 @@
 
     <!--{{-- Use built assets on production --}}-->
     @env('production')
-        <link rel="stylesheet" href="{{ asset('build/assets/brn-CXxZSdsT.css') }}">
-        <script src="{{ asset('build/assets/app-Bf4POITK.js') }}" defer></script>
+        <link rel="stylesheet" href="{{ asset('build/assets/brn-Bb4qXUBP.css') }}">
+        <script src="{{ asset('build/assets/brn-DT6Zyp-t.js') }}" defer></script>
     @endenv
 
     <!-- Font Awesome for icons -->

@@ -206,7 +206,7 @@
                                         <i class="fas fa-calendar-alt fa-2x me-3"></i>
                                         <p>
                                             <strong>{{ \Carbon\Carbon::parse($event->event_date)->format('jS F, Y') }}</strong><br />
-                                            <strong>{{ \Carbon\Carbon::parse($event->event_time)->format('g:i A') }}</strong>
+                                            <strong>{{ \Carbon\Carbon::parse($event->event_time)->format('g:i A') }} GMT+1</strong>
                                         </p>
                                     </div>
                                 </div>
@@ -242,7 +242,7 @@
                                 <i class="fas fa-calendar-alt fa-2x me-3"></i>
                                 <p>
                                     <strong>{{ \Carbon\Carbon::parse($event->event_date)->format('jS F, Y') }}</strong><br />
-                                    <strong>{{ \Carbon\Carbon::parse($event->event_time)->format('g:i A') }}</strong>
+                                    <strong>{{ \Carbon\Carbon::parse($event->event_time)->format('g:i A') }} GMT+1</strong>
                                 </p>
                             </div>
                         </div>

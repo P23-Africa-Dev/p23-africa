@@ -935,7 +935,7 @@
                         the right capital faster.
                     </p>
 
-                    <a href="#getGuide" class="cta-btn">Find Out More</a>
+                    <a href="{{ route('playbook.checkout') }}" class="cta-btn">Download Now</a>
                 </div>
 
                 <div class="intro-image desktop">

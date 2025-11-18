@@ -18,7 +18,7 @@
     🔗 <strong>Access Link:</strong> <a href="{{ $link }}">{{ $link }}</a>
 </p>
 
-<p><em>(P.S. Save this link—it’s your entry to the event!)</em></p>
+<p><em>(P.S. Save this link, it’s your entry to the event!)</em></p>
 
 <hr>
 
@@ -37,7 +37,7 @@
 <ul>
     <li>Join a few minutes early to get settled</li>
     <li>Keep your microphone muted unless speaking</li>
-    <li>Bring your questions—we love interaction!</li>
+    <li>Bring your questions, we love interaction!</li>
 </ul>
 
 <p>If you have any issues joining or questions beforehand, reach out to us at <a
