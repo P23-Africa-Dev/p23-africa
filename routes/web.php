@@ -286,6 +286,7 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|staff'])->prefix('admi
 
     Route::resource('/events', EventController::class);
     Route::get('/events/{event}/bookings', [EventController::class, 'showBookings'])->name('events.bookings');
+    Route::get('/events/booking-fields', [EventController::class, 'getBookingFields'])->name('events.booking-fields');
 
     Route::get('/events/{event}/clicks', [EventController::class, 'viewClicks'])->name('events.clicks');
     // });

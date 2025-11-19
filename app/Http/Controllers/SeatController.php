@@ -30,7 +30,7 @@ class SeatController extends Controller
 
             // Handle special validation for phone
             if ($field === 'phone') {
-                $validationRules[$field] = 'required|string|max:20';
+                $validationRules[$field] = 'required|string|max:25'; // Increased to accommodate country codes
             }
         }
 

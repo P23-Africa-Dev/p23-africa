@@ -14,6 +14,29 @@
     .modal-content {
         border-radius: 1rem;
     }
+
+    /* Phone input styling */
+    .country-code-select {
+        border: 0;
+        border-bottom: 2px solid #0D4036;
+        box-shadow: 2px 2px 4px #0000008e;
+        background: white;
+        font-size: 14px;
+        padding: 8px 12px;
+        border-radius: 4px 4px 0 0;
+    }
+
+    .phone-input {
+        border: 0;
+        border-bottom: 2px solid #0D4036;
+        box-shadow: 2px 2px 4px #0000008e;
+    }
+
+    .country-code-select:focus,
+    .phone-input:focus {
+        outline: none;
+        border-bottom-color: #0a2e26;
+    }
 </style>
 
 <!-- Seat Booking Modal -->

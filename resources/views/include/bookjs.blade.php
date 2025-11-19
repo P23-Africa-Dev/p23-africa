@@ -72,7 +72,7 @@
                         const fieldDiv = document.createElement('div');
                         fieldDiv.className = 'mb-3';
 
-                        const isRequired = ['name', 'email'].includes(field);
+                        const isRequired = ['name', 'email', 'phone'].includes(field);
                         const placeholder = fieldLabels[field] || field;
 
                         if (field === 'expectations') {
@@ -82,6 +82,39 @@
                                    placeholder="${placeholder}" 
                                    rows="3"
                                    ${isRequired ? 'required' : ''}></textarea>
+                        `;
+                        } else if (field === 'phone') {
+                            fieldDiv.innerHTML = `
+                            <div class="phone-input-group mb-4" style="display: flex; align-items: center; gap: 8px;">
+                                <select class="form-select country-code-select" id="countryCode_${field}" style="max-width: 120px; flex-shrink: 0;">
+                                    <option value="+1" data-flag="us">🇺🇸 +1</option>
+                                    <option value="+1" data-flag="ca">🇨🇦 +1</option>
+                                    <option value="+44" data-flag="gb" selected>🇬🇧 +44</option>
+                                    <option value="+27" data-flag="za">🇿🇦 +27</option>
+                                    <option value="+234" data-flag="ng">🇳🇬 +234</option>
+                                    <option value="+254" data-flag="ke">🇰🇪 +254</option>
+                                    <option value="+233" data-flag="gh">🇬🇭 +233</option>
+                                    <option value="+255" data-flag="tz">🇹🇿 +255</option>
+                                    <option value="+256" data-flag="ug">🇺🇬 +256</option>
+                                    <option value="+20" data-flag="eg">🇪🇬 +20</option>
+                                    <option value="+212" data-flag="ma">🇲🇦 +212</option>
+                                    <option value="+216" data-flag="tn">🇹🇳 +216</option>
+                                    <option value="+213" data-flag="dz">🇩🇿 +213</option>
+                                    <option value="+250" data-flag="rw">🇷🇼 +250</option>
+                                    <option value="+91" data-flag="in">🇮🇳 +91</option>
+                                    <option value="+61" data-flag="au">🇦🇺 +61</option>
+                                    <option value="+86" data-flag="cn">🇨🇳 +86</option>
+                                    <option value="+971" data-flag="ae">🇦🇪 +971</option>
+                                    <option value="+33" data-flag="fr">🇫🇷 +33</option>
+                                    <option value="+49" data-flag="de">🇩🇪 +49</option>
+                                </select>
+                                <input type="tel" 
+                                       name="${field}" 
+                                       class="form-control phone-input" 
+                                       placeholder="Enter phone number" 
+                                       style="flex: 1;"
+                                       ${isRequired ? 'required' : ''}>
+                            </div>
                         `;
                         } else {
                             let inputType = 'text';
@@ -112,7 +145,31 @@
             dynamicFieldsContainer.innerHTML = `
             <input type="text" name="name" class="form-control mb-4" placeholder="Full name" required>
             <input type="email" name="email" class="form-control mb-4" placeholder="Email" required>
-            <input type="text" name="phone" class="form-control mb-4" placeholder="Phone no." required>
+            <div class="phone-input-group mb-4" style="display: flex; align-items: center; gap: 8px;">
+                <select class="form-select country-code-select" id="countryCode_phone" style="max-width: 120px; flex-shrink: 0;">
+                    <option value="+1" data-flag="us">🇺🇸 +1</option>
+                    <option value="+1" data-flag="ca">🇨🇦 +1</option>
+                    <option value="+44" data-flag="gb" selected>🇬🇧 +44</option>
+                    <option value="+27" data-flag="za">🇿🇦 +27</option>
+                    <option value="+234" data-flag="ng">🇳🇬 +234</option>
+                    <option value="+254" data-flag="ke">🇰🇪 +254</option>
+                    <option value="+233" data-flag="gh">🇬🇭 +233</option>
+                    <option value="+255" data-flag="tz">🇹🇿 +255</option>
+                    <option value="+256" data-flag="ug">🇺🇬 +256</option>
+                    <option value="+20" data-flag="eg">🇪🇬 +20</option>
+                    <option value="+212" data-flag="ma">🇲🇦 +212</option>
+                    <option value="+216" data-flag="tn">🇹🇳 +216</option>
+                    <option value="+213" data-flag="dz">🇩🇿 +213</option>
+                    <option value="+250" data-flag="rw">🇷🇼 +250</option>
+                    <option value="+91" data-flag="in">🇮🇳 +91</option>
+                    <option value="+61" data-flag="au">🇦🇺 +61</option>
+                    <option value="+86" data-flag="cn">🇨🇳 +86</option>
+                    <option value="+971" data-flag="ae">🇦🇪 +971</option>
+                    <option value="+33" data-flag="fr">🇫🇷 +33</option>
+                    <option value="+49" data-flag="de">🇩🇪 +49</option>
+                </select>
+                <input type="tel" name="phone" class="form-control phone-input" placeholder="Enter phone number" style="flex: 1;" required>
+            </div>
         `;
         }
 
@@ -122,6 +179,29 @@
             if (!currentEventId) {
                 alert("Event ID not found. Please try again.");
                 return;
+            }
+
+            // Combine country code with phone number before submission
+            const phoneInput = seatForm.querySelector('input[name="phone"]');
+            const countryCodeSelect = seatForm.querySelector('.country-code-select');
+
+            if (phoneInput && countryCodeSelect) {
+                const countryCode = countryCodeSelect.value;
+                const phoneNumber = phoneInput.value.trim();
+
+                // Remove any existing country code from phone number to avoid duplication
+                let cleanPhoneNumber = phoneNumber;
+                if (phoneNumber.startsWith('+')) {
+                    // Extract just the number part after the country code
+                    const phoneRegex = /^\+\d{1,4}/;
+                    cleanPhoneNumber = phoneNumber.replace(phoneRegex, '');
+                }
+
+                if (cleanPhoneNumber) {
+                    // Combine country code and phone number
+                    phoneInput.value = countryCode + cleanPhoneNumber;
+                    console.log('Combined phone number:', phoneInput.value); // Debug log
+                }
             }
 
             spinner.classList.remove('d-none');

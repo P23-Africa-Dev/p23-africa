@@ -39,25 +39,34 @@
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Event
                                         Title *</label>
                                     <input type="text" name="title"
-                                        class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                                        class="w-full px-4 py-3 border {{ $errors->has('title') ? 'border-red-500' : 'border-gray-300 dark:border-gray-600' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                                         value="{{ old('title', $event->title) }}" required>
+                                    @error('title')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <div>
                                     <label
                                         class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Subtitle</label>
                                     <input type="text" name="subtitle"
-                                        class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                                        class="w-full px-4 py-3 border {{ $errors->has('subtitle') ? 'border-red-500' : 'border-gray-300 dark:border-gray-600' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                                         value="{{ old('subtitle', $event->subtitle) }}">
+                                    @error('subtitle')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <div>
                                     <label
                                         class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Description
                                         *</label>
-                                    <textarea name="description" rows="6"
-                                        class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                                    <textarea name="description" id="description" rows="6"
+                                        class="w-full px-4 py-3 border {{ $errors->has('description') ? 'border-red-500' : 'border-gray-300 dark:border-gray-600' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                                         required>{!! old('description', $event->description) !!}</textarea>
+                                    @error('description')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -73,24 +82,33 @@
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Event
                                         Date *</label>
                                     <input type="date" name="event_date"
-                                        class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                                        class="w-full px-4 py-3 border {{ $errors->has('event_date') ? 'border-red-500' : 'border-gray-300 dark:border-gray-600' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                                         value="{{ old('event_date', $event->event_date) }}" required>
+                                    @error('event_date')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Event
                                         Time *</label>
                                     <input type="time" name="event_time"
-                                        class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                                        class="w-full px-4 py-3 border {{ $errors->has('event_time') ? 'border-red-500' : 'border-gray-300 dark:border-gray-600' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                                         value="{{ old('event_time', $event->event_time) }}" required>
+                                    @error('event_time')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <div class="md:col-span-2">
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Venue
                                         *</label>
                                     <input name="venue" type="text"
-                                        class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                                        class="w-full px-4 py-3 border {{ $errors->has('venue') ? 'border-red-500' : 'border-gray-300 dark:border-gray-600' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                                         value="{{ old('venue', $event->venue) }}" required>
+                                    @error('venue')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -126,7 +144,7 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Event
                                         Link</label>
-                                    <input type="url" name="link"
+                                    <input type="url" name="link" id="link"
                                         class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                                         value="{{ old('link', $event->link) }}">
                                 </div>
@@ -143,7 +161,7 @@
                             @endif
                         </div>
 
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label>Title</label>
                             <input type="text" name="title" class="form-control"
                                 value="{{ old('title', $event->title) }}" required>
@@ -153,13 +171,13 @@
                             <label>Subtitle</label>
                             <input type="text" name="subtitle" class="form-control"
                                 value="{{ old('subtitle', $event->subtitle) }}">
-                        </div>
+                        </div> --}}
 
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label>Description</label>
                             <textarea name="description" class="form-control" id="description" rows="6" required>{!! old('description', $event->description) !!}</textarea>
-                        </div>
-
+                        </div> --}}
+                        {{-- 
                         @if ($event->visibility === 'public')
                             <div class="mb-3">
                                 <label>Event Link</label>
@@ -172,9 +190,9 @@
                                 <input type="url" name="" class="form-control"
                                     value="{{ old('link', $event->link) }}" disabled>
                             </div>
-                        @endif
+                        @endif --}}
 
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label>Date</label>
                             <input type="date" name="event_date" class="form-control"
                                 value="{{ old('event_date', $event->event_date) }}" required>
@@ -190,7 +208,7 @@
                             <label>Venue</label>
                             <input type="text" name="venue" class="form-control"
                                 value="{{ old('venue', $event->venue) }}" required>
-                        </div>
+                        </div> --}}
 
                         <!-- Booking Fields Selection -->
                         <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
@@ -211,8 +229,7 @@
                                         class="flex items-center p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-blue-300 dark:hover:border-blue-500 transition-colors duration-200">
                                         <input
                                             class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded"
-                                            type="checkbox" name="booking_fields[]" value="name"
-                                            id="field_name_edit"
+                                            type="checkbox" name="booking_fields[]" value="name" id="field_name_edit"
                                             {{ in_array('name', $selectedFields) ? 'checked' : '' }}>
                                         <label
                                             class="ml-3 text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer"
@@ -475,81 +492,29 @@
         });
     }
 
-    // Add dynamic booking fields functionality
-    document.addEventListener('DOMContentLoaded', function() {
-        loadBookingFields();
-    });
+    // Auto-format URL for meeting link
+    const linkInput = document.getElementById('link');
+    if (linkInput) {
+        linkInput.addEventListener('input', function() {
+            let url = this.value.trim();
 
-    let bookingFieldsData = [];
-
-    function loadBookingFields() {
-        fetch('/admin/events/booking-fields')
-            .then(response => response.json())
-            .then(data => {
-                bookingFieldsData = data;
-                updateBookingFieldsDisplay();
-            })
-            .catch(error => {
-                console.error('Error loading booking fields:', error);
-            });
-    }
-
-    function updateBookingFieldsDisplay() {
-        const container = document.getElementById('booking-fields-container');
-        if (!container) return;
-
-        container.innerHTML = '';
-
-        // Get currently selected fields
-        const currentFields = @json($event->booking_fields ?? []);
-
-        bookingFieldsData.forEach(field => {
-            const isChecked = currentFields.some(selected => selected.field === field.field);
-            const isRequired = currentFields.find(selected => selected.field === field.field)?.required ||
-            false;
-
-            const fieldHtml = `
-                <div class="p-4 border border-gray-200 dark:border-gray-600 rounded-lg">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center">
-                            <input type="checkbox" 
-                                   id="field_${field.field}" 
-                                   name="booking_fields[]" 
-                                   value="${field.field}"
-                                   ${isChecked ? 'checked' : ''}
-                                   onchange="toggleFieldRequired('${field.field}')"
-                                   class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded">
-                            <label for="field_${field.field}" class="ml-3 text-sm font-medium text-gray-900 dark:text-white">
-                                ${field.label}
-                            </label>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <label class="text-xs text-gray-600 dark:text-gray-400">Required:</label>
-                            <input type="checkbox" 
-                                   id="required_${field.field}" 
-                                   name="required_fields[]" 
-                                   value="${field.field}"
-                                   ${isRequired ? 'checked' : ''}
-                                   ${!isChecked ? 'disabled' : ''}
-                                   class="h-3 w-3 text-red-600 focus:ring-red-500 border-gray-300 dark:border-gray-600 rounded">
-                        </div>
-                    </div>
-                    <p class="mt-2 text-xs text-gray-600 dark:text-gray-400">${field.description}</p>
-                </div>
-            `;
-            container.innerHTML += fieldHtml;
-        });
-    }
-
-    function toggleFieldRequired(fieldName) {
-        const fieldCheckbox = document.getElementById(`field_${fieldName}`);
-        const requiredCheckbox = document.getElementById(`required_${fieldName}`);
-
-        if (fieldCheckbox && requiredCheckbox) {
-            requiredCheckbox.disabled = !fieldCheckbox.checked;
-            if (!fieldCheckbox.checked) {
-                requiredCheckbox.checked = false;
+            // Auto-prepend https:// immediately if user starts typing without protocol
+            if (url && !url.match(/^https?:\/\//i) && !url.includes('://')) {
+                // Only add https:// if the user isn't in the middle of typing a protocol
+                if (!url.startsWith('http') && !url.startsWith('ftp')) {
+                    this.value = 'https://' + url;
+                    // Move cursor to end
+                    this.setSelectionRange(this.value.length, this.value.length);
+                }
             }
-        }
+        });
+
+        // Also handle blur as backup
+        linkInput.addEventListener('blur', function() {
+            let url = this.value.trim();
+            if (url && !url.match(/^https?:\/\//i)) {
+                this.value = 'https://' + url;
+            }
+        });
     }
 </script>

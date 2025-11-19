@@ -37,22 +37,32 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Event Title *</label>
                                     <input name="title" type="text"
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
-                                        placeholder="Enter a compelling event title" required>
+                                        class="w-full px-4 py-3 border {{ $errors->has('title') ? 'border-red-500' : 'border-gray-300' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                        placeholder="Enter a compelling event title" value="{{ old('title') }}"
+                                        required>
+                                    @error('title')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Subtitle</label>
                                     <input name="subtitle" type="text"
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
-                                        placeholder="Optional subtitle or tagline">
+                                        class="w-full px-4 py-3 border {{ $errors->has('subtitle') ? 'border-red-500' : 'border-gray-300' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                        placeholder="Optional subtitle or tagline" value="{{ old('subtitle') }}">
+                                    @error('subtitle')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Description *</label>
                                     <textarea name="description" rows="5"
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
-                                        placeholder="Describe your event in detail..." required></textarea>
+                                        class="w-full px-4 py-3 border {{ $errors->has('description') ? 'border-red-500' : 'border-gray-300' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                        placeholder="Describe your event in detail..." required>{{ old('description') }}</textarea>
+                                    @error('description')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -67,23 +77,32 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Event Date *</label>
                                     <input type="date" name="event_date"
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
-                                        required>
+                                        class="w-full px-4 py-3 border {{ $errors->has('event_date') ? 'border-red-500' : 'border-gray-300' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                        value="{{ old('event_date') }}" required>
+                                    @error('event_date')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Event Time *</label>
                                     <input type="time" name="event_time"
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
-                                        required>
+                                        class="w-full px-4 py-3 border {{ $errors->has('event_time') ? 'border-red-500' : 'border-gray-300' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                        value="{{ old('event_time') }}" required>
+                                    @error('event_time')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <div class="md:col-span-2">
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Venue *</label>
                                     <input name="venue" type="text"
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                        class="w-full px-4 py-3 border {{ $errors->has('venue') ? 'border-red-500' : 'border-gray-300' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
                                         placeholder="e.g., Google Meet, Conference Room A, or Physical Address"
-                                        required>
+                                        value="{{ old('venue') }}" required>
+                                    @error('venue')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -97,12 +116,20 @@
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Event Display Page *</label>
                                 <select name="display"
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                    class="w-full px-4 py-3 border {{ $errors->has('display') ? 'border-red-500' : 'border-gray-300' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
                                     required>
-                                    <option value="open_to_all">Open to All (Event + BRN)</option>
-                                    <option value="event_only" selected>Event Page Only</option>
-                                    <option value="brn_only">BRN Page Only</option>
+                                    <option value="open_to_all"
+                                        {{ old('display') == 'open_to_all' ? 'selected' : '' }}>Open to All (Event +
+                                        BRN)</option>
+                                    <option value="event_only"
+                                        {{ old('display') == 'event_only' || old('display') == null ? 'selected' : '' }}>
+                                        Event Page Only</option>
+                                    <option value="brn_only" {{ old('display') == 'brn_only' ? 'selected' : '' }}>BRN
+                                        Page Only</option>
                                 </select>
+                                @error('display')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
 
@@ -117,21 +144,31 @@
                                     <label for="visibility" class="block text-sm font-medium text-gray-700 mb-2">Event
                                         Visibility *</label>
                                     <select name="visibility" id="visibility"
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                        class="w-full px-4 py-3 border {{ $errors->has('visibility') ? 'border-red-500' : 'border-gray-300' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
                                         required>
-                                        <option value="public">🌐 Public - Anyone can access</option>
-                                        <option value="private">🔒 Private - Invitation only</option>
+                                        <option value="public"
+                                            {{ old('visibility') == 'public' || old('visibility') == null ? 'selected' : '' }}>
+                                            🌐 Public - Anyone can access</option>
+                                        <option value="private" {{ old('visibility') == 'private' ? 'selected' : '' }}>
+                                            🔒 Private - Invitation only</option>
                                     </select>
+                                    @error('visibility')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <div id="link-input-wrapper">
                                     <label for="link" class="block text-sm font-medium text-gray-700 mb-2">Event
                                         Link</label>
                                     <input type="url" name="link" id="link"
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
-                                        placeholder="https://example.com/meeting-link">
-                                    <p class="text-sm text-gray-500 mt-1">Meeting link or registration URL for
-                                        participants</p>
+                                        class="w-full px-4 py-3 border {{ $errors->has('link') ? 'border-red-500' : 'border-gray-300' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                        placeholder="https://example.com/meeting-link" value="{{ old('link') }}">
+                                    @error('link')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @else
+                                        <p class="text-sm text-gray-500 mt-1">Meeting link or registration URL for
+                                            participants</p>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -143,14 +180,20 @@
                             </h4>
                             <p class="text-gray-600 mb-6">Select which information you'd like to collect from attendees
                                 when they book a seat</p>
+                            @error('booking_fields')
+                                <div class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-md">
+                                    {{ $message }}
+                                </div>
+                            @enderror
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div class="space-y-3">
                                     <div
                                         class="flex items-center p-3 bg-white rounded-lg border border-gray-200 hover:border-blue-300 transition-colors duration-200">
-                                        <input class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                        <input
+                                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                                             type="checkbox" name="booking_fields[]" value="name" id="field_name"
-                                            checked>
+                                            {{ in_array('name', old('booking_fields', [])) || old('booking_fields') === null ? 'checked' : '' }}>
                                         <label class="ml-3 text-sm font-medium text-gray-700 cursor-pointer"
                                             for="field_name">
                                             <i class="fas fa-user mr-2 text-blue-500"></i>Full Name
@@ -162,7 +205,7 @@
                                         <input
                                             class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                                             type="checkbox" name="booking_fields[]" value="email" id="field_email"
-                                            checked>
+                                            {{ in_array('email', old('booking_fields', [])) || old('booking_fields') === null ? 'checked' : '' }}>
                                         <label class="ml-3 text-sm font-medium text-gray-700 cursor-pointer"
                                             for="field_email">
                                             <i class="fas fa-envelope mr-2 text-green-500"></i>Email Address
@@ -173,7 +216,8 @@
                                         class="flex items-center p-3 bg-white rounded-lg border border-gray-200 hover:border-blue-300 transition-colors duration-200">
                                         <input
                                             class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                                            type="checkbox" name="booking_fields[]" value="phone" id="field_phone">
+                                            type="checkbox" name="booking_fields[]" value="phone" id="field_phone"
+                                            {{ in_array('phone', old('booking_fields', [])) ? 'checked' : '' }}>
                                         <label class="ml-3 text-sm font-medium text-gray-700 cursor-pointer"
                                             for="field_phone">
                                             <i class="fas fa-phone mr-2 text-purple-500"></i>Phone Number
@@ -185,7 +229,8 @@
                                         <input
                                             class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                                             type="checkbox" name="booking_fields[]" value="job_title"
-                                            id="field_job_title">
+                                            id="field_job_title"
+                                            {{ in_array('job_title', old('booking_fields', [])) ? 'checked' : '' }}>
                                         <label class="ml-3 text-sm font-medium text-gray-700 cursor-pointer"
                                             for="field_job_title">
                                             <i class="fas fa-briefcase mr-2 text-indigo-500"></i>Job Title
@@ -197,7 +242,8 @@
                                         <input
                                             class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                                             type="checkbox" name="booking_fields[]" value="organization"
-                                            id="field_organization">
+                                            id="field_organization"
+                                            {{ in_array('organization', old('booking_fields', [])) ? 'checked' : '' }}>
                                         <label class="ml-3 text-sm font-medium text-gray-700 cursor-pointer"
                                             for="field_organization">
                                             <i class="fas fa-building mr-2 text-teal-500"></i>Organization
@@ -211,7 +257,8 @@
                                         <input
                                             class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                                             type="checkbox" name="booking_fields[]" value="location"
-                                            id="field_location">
+                                            id="field_location"
+                                            {{ in_array('location', old('booking_fields', [])) ? 'checked' : '' }}>
                                         <label class="ml-3 text-sm font-medium text-gray-700 cursor-pointer"
                                             for="field_location">
                                             <i class="fas fa-map-marker-alt mr-2 text-red-500"></i>Location
@@ -223,7 +270,8 @@
                                         <input
                                             class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                                             type="checkbox" name="booking_fields[]" value="industry"
-                                            id="field_industry">
+                                            id="field_industry"
+                                            {{ in_array('industry', old('booking_fields', [])) ? 'checked' : '' }}>
                                         <label class="ml-3 text-sm font-medium text-gray-700 cursor-pointer"
                                             for="field_industry">
                                             <i class="fas fa-industry mr-2 text-yellow-500"></i>Industry
@@ -235,7 +283,8 @@
                                         <input
                                             class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                                             type="checkbox" name="booking_fields[]" value="expectations"
-                                            id="field_expectations">
+                                            id="field_expectations"
+                                            {{ in_array('expectations', old('booking_fields', [])) ? 'checked' : '' }}>
                                         <label class="ml-3 text-sm font-medium text-gray-700 cursor-pointer"
                                             for="field_expectations">
                                             <i class="fas fa-lightbulb mr-2 text-orange-500"></i>Expectations
@@ -247,7 +296,8 @@
                                         <input
                                             class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                                             type="checkbox" name="booking_fields[]" value="referral_source"
-                                            id="field_referral_source">
+                                            id="field_referral_source"
+                                            {{ in_array('referral_source', old('booking_fields', [])) ? 'checked' : '' }}>
                                         <label class="ml-3 text-sm font-medium text-gray-700 cursor-pointer"
                                             for="field_referral_source">
                                             <i class="fas fa-share-alt mr-2 text-pink-500"></i>How did you hear about
@@ -283,7 +333,7 @@
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Upload Event
                                         Image</label>
                                     <div
-                                        class="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-blue-400 transition-colors duration-200">
+                                        class="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 {{ $errors->has('image') ? 'border-red-500' : 'border-gray-300' }} border-dashed rounded-lg hover:border-blue-400 transition-colors duration-200">
                                         <div class="space-y-1 text-center">
                                             <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-3"></i>
                                             <div class="flex text-sm text-gray-600">
@@ -298,6 +348,9 @@
                                             <p class="text-xs text-gray-500">PNG, JPG, GIF up to 2MB</p>
                                         </div>
                                     </div>
+                                    @error('image')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <div id="previewContainer" class="hidden">
@@ -381,4 +434,30 @@
         previewContainer.classList.add('hidden');
         imagePreview.setAttribute('src', '#');
     });
+
+    // Auto-format URL for meeting link
+    const linkInput = document.getElementById('link');
+    if (linkInput) {
+        linkInput.addEventListener('input', function() {
+            let url = this.value.trim();
+
+            // Auto-prepend https:// immediately if user starts typing without protocol
+            if (url && !url.match(/^https?:\/\//i) && !url.includes('://')) {
+                // Only add https:// if the user isn't in the middle of typing a protocol
+                if (!url.startsWith('http') && !url.startsWith('ftp')) {
+                    this.value = 'https://' + url;
+                    // Move cursor to end
+                    this.setSelectionRange(this.value.length, this.value.length);
+                }
+            }
+        });
+
+        // Also handle blur as backup
+        linkInput.addEventListener('blur', function() {
+            let url = this.value.trim();
+            if (url && !url.match(/^https?:\/\//i)) {
+                this.value = 'https://' + url;
+            }
+        });
+    }
 </script>

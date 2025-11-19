@@ -353,14 +353,16 @@
             </div>
         </div>
 
-        <div class="cta-section row px-md-5">
-            <div class="col-md-8">
+        <div class="cta-section">
+            <div class="cta-content">
+            <div class="cta-text">
                 {{-- <h2 class="cta-title">Where Top CEOs <span style="color: #1DEAA5;">Connect and Grow</span></h2> --}}
                 <h2 class="cta-title">Join NOEL</h2>
-                               <p class="cta-subtitle">A private, trusted platform for vetted CEOs across Africa to exchange referrals, strategic deals, and build partnerships through direct 1:1 connections.</p>
+                <p class="cta-subtitle">A private network for vetted African CEOs who are matched for strategic deals and partnerships.</p>
             </div>
-            <div class="col-md-4">
+            <div class="cta-button-wrapper">
                 <a href="https://p23africa.com/noel54/interest-form" class="contact-button">Register Now</a>
+            </div>
             </div>
         </div>
 

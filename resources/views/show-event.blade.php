@@ -85,12 +85,27 @@
             margin: 5rem 0;
         }
 
+        .about-event h6 {
+            font-size: 14px;
+        }
+
+        .event_hero #event_hero_desktop .event-wrapper .main-img {
+            position: absolute;
+            bottom: -13px !important;
+            left: 53% !important;
+            transform: translateX(-50%);
+            width: 74% !important;
+            height: 170px !important;
+            object-fit: cover;
+        }
+
         .about-event h1 {
             font-size: 40px;
+            display: inline;
         }
 
         .about-event h3 {
-            font-size: 32px;
+            font-size: 24px;
         }
 
         .about-event #mobile {
@@ -108,6 +123,11 @@
             justify-content: center;
             align-items: center;
             margin: 0 auto;
+        }
+
+        .about-event .event-time p {
+            font-size: 16px;
+            font-family: 'GT Walsheim Con';
         }
     }
 
@@ -144,13 +164,31 @@
         color: #0D4036;
         font-weight: 800;
         font-family: "GT Walsheim Con";
-        font-size: 24px;
-        width: 100%
+        font-size: 18px;
+        width: 100%;
+    }
+
+    #paragragh li {
+        color: #0D4036;
+        font-weight: 500;
+        font-family: "GT Walsheim Con";
+        font-size: 18px;
+        width: 100%;
     }
 
     #whole-event {
         background: linear-gradient(#ffffffbe, #ffffffbe),
             url("../images/bg-grey.png");
+    }
+
+    @media (max-width: 700px) {
+        #paragragh p {
+            font-size: 15px;
+        }
+
+        #paragragh li {
+            font-size: 15px;
+        }
     }
 </style>
 
@@ -206,7 +244,8 @@
                                         <i class="fas fa-calendar-alt fa-2x me-3"></i>
                                         <p>
                                             <strong>{{ \Carbon\Carbon::parse($event->event_date)->format('jS F, Y') }}</strong><br />
-                                            <strong>{{ \Carbon\Carbon::parse($event->event_time)->format('g:i A') }} GMT+1</strong>
+                                            <strong>{{ \Carbon\Carbon::parse($event->event_time)->format('g:i A') }}
+                                                GMT+1</strong>
                                         </p>
                                     </div>
                                 </div>
@@ -225,7 +264,7 @@
                 </div>
 
                 <!-- Description -->
-                <div class="fw-semibold fs-5 mt-4" id="paragragh">
+                <div class="fw-semibold fs-5 mt-md-4 mt-lg-4 mt-2" id="paragragh">
                     {!! $event->description !!}
                 </div>
                 {{-- <p class="fw-semibold fs-5 text-dark">
