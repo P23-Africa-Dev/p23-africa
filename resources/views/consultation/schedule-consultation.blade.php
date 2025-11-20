@@ -1884,7 +1884,7 @@
                     const minHour = now.getHours() + 1;
                     flashMessage(
                         `Please select a time at least 1 hour ahead (after ${minHour}:${now.getMinutes().toString().padStart(2, '0')})`
-                        );
+                    );
                 }
             }
 
@@ -2084,10 +2084,10 @@
             document.querySelectorAll(".date").forEach((d) => {
                 d.classList.remove("selected", "today");
             });
-            
+
             // Add selected class to the clicked date
             div.classList.add("selected");
-            
+
             // If the selected date is today, also add the today class
             if (dateObj.toDateString() === today.toDateString()) {
                 div.classList.add("today");
