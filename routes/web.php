@@ -226,10 +226,22 @@ Route::get('/feedback/thank-you', function () {
 
 
 
+
 Route::get('/book-consultation', function () {
     return view('consultation.index');
 })->name('consultation.index');
-
+Route::get('/book-consultation/form', function () {
+    return view('consultation.application-forms');
+})->name('consultation.application-forms');
+Route::get('/book-consultation/summary', function () {
+    return view('consultation.consultation-summary');
+})->name('consultation.consultation-summary');
+Route::get('/book-consultation/payment-success', function () {
+    return view('consultation.payment-success');
+})->name('consultation.payment-success');
+Route::get('/book-consultation/schedule-consultation', function () {
+    return view('consultation.schedule-consultation');
+})->name('consultation.schedule-consultation');
 // Route::get('/events/all-events', function () {
 //     $events = Event::all();
 //     return view('all-events', compact('events'));

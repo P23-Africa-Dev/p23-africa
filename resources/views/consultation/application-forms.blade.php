@@ -1,0 +1,1245 @@
+@extends('layouts.consultations')
+@section('title', 'Book a Consultation | P23 Africa')
+
+@section('meta')
+    <meta name="description"
+        content="Book a personalized business consultation with P23 Africa. Get expert guidance on funding readiness, market positioning, strategy development, and investor engagement tailored to African entrepreneurs and growing businesses.">
+    <meta name="keywords"
+        content="book consultation, business consultation, P23 Africa, African entrepreneurs, business strategy, funding readiness, investor preparation, growth consulting, startup advisory, business development Africa">
+    <meta name="author" content="P23 Africa">
+    <meta name="generator" content="Book Consultation | P23 Africa">
+
+    <meta property="og:title" content="Book a Consultation | P23 Africa">
+    <meta property="og:description"
+        content="Schedule a one-on-one consultation to strengthen your business strategy, improve funding readiness, and unlock growth opportunities with expert advisors at P23 Africa.">
+    <meta property="og:image" content="{{ asset('img/mobile.png') }}">
+    <meta property="og:type" content="website">
+
+    {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
+@endsection
+
+
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>  -->
+
+<style>
+    .multistep-form-container {
+        background-image: url(../img/bg-effect.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        min-height: 100vh;
+        background-color: #ffffffe4;
+        background-blend-mode: soft-light;
+        padding: 0px 14px;
+    }
+
+    .multi-step-wrapper {
+        /* width: 90%; */
+        max-width: 1100px;
+        margin: 40px auto;
+        padding: 20px 25px 37px 25px;
+        border-radius: 25px;
+        overflow: hidden;
+        /* box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.4),
+            0px -14px 15px -3px rgba(0, 0, 0, 0.1); */
+
+        box-shadow: 0px 9px 15px -8px rgba(0, 0, 0, 0.8);
+
+
+        padding-top: 70px;
+        background-image: url(../img/form-bg1.jpg);
+        background-color: #ffffffa9;
+        background-blend-mode: soft-light;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+    }
+
+    /* ------------------ HEADER ------------------ */
+
+    .step-header {
+        background: #0a3d43;
+        padding: 30px 0;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-between;
+        border-radius: 35px;
+        position: relative;
+    }
+
+    .step-counter-container {
+        position: absolute;
+        top: -60px;
+        left: 50%;
+        transform: translateX(-50%);
+
+        border: 7px solid #1e927b;
+        width: 110px;
+        height: 110px;
+        background-color: #fff;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .step-counter {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .counter-circle {
+        width: 90px;
+        height: 90px;
+        left: 4px;
+        top: 4px;
+        border-radius: 50%;
+        background: #fff;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        position: relative;
+    }
+
+    .counter-circle::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        /* top: -4px; */
+        border-radius: 50%;
+
+        padding: 7px;
+
+        background: linear-gradient(84.75deg,
+                #e1e6e5 -0.34%,
+                #e7e4b4 51.09%,
+                #fcdd0a 102.52%);
+
+        -webkit-mask: radial-gradient(farthest-side,
+                #0000 calc(100% - 7px),
+                #000 calc(100% - 7px));
+        mask: radial-gradient(farthest-side,
+                #0000 calc(100% - 7px),
+                #000 calc(100% - 7px));
+    }
+
+    .counter-circle span {
+        font-size: 50px;
+        font-weight: 700;
+        color: #000000;
+        font-family: "GT Walsheim ProCB";
+        line-height: 1.2;
+    }
+
+    .step-progress-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        max-width: 600px;
+        margin: 0 auto;
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    .step-titles .step-title {
+        max-width: 340px;
+        margin: 0 auto;
+    }
+
+    .step-title h2 {
+        color: #ffffff;
+        font-size: 22px;
+        margin: 0;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 900;
+        line-height: 1;
+        padding: 0px 50px;
+        padding-top: 24px;
+        max-width: 300px;
+        margin: 0 auto;
+
+        /* max-width: 260px; */
+
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    .step-title p.desktop-p {
+        display: none;
+    }
+
+    .step-title p {
+        margin-top: 6px;
+        color: #fff;
+        letter-spacing: 0.8px;
+        font-size: 14px;
+        line-height: 1;
+        font-family: "GT Walsheim Con";
+        display: flex;
+        flex-direction: column;
+        padding: 0px 20px;
+        letter-spacing: 0.9px;
+    }
+
+    /* Progress Bar */
+
+    .progress-area {
+        padding-bottom: 25px;
+        padding-top: 23px;
+    }
+
+    .progress-area .box-area {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .step-divider {
+        background-color: #196770;
+        height: 1.1px;
+        width: 72%;
+    }
+
+    .progress-text {
+        color: #ffffff;
+        font-size: 13px;
+        font-family: "GT Walsheim Con";
+        letter-spacing: 0.7px;
+        text-align: center;
+    }
+
+    .progress-baar {
+        margin-top: 6px;
+        width: 160px;
+        height: 10px;
+        background: #fff;
+        opacity: 0.8;
+        border-radius: 50px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        width: 25%;
+        background: #fcdd0a;
+        border-radius: inherit;
+    }
+
+    /* ------------------ FORM BODY ------------------ */
+
+    .form-step,
+    .step-title {
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.4s ease, transform 0.4s ease;
+        display: none;
+    }
+
+    .form-step.active,
+    .step-title.active {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .fade-in {
+        animation: fadeInStep 0.4s ease forwards;
+    }
+
+    @keyframes fadeInStep {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Grid layout (Desktop) */
+
+    .form-grid,
+    .goals-grid {
+        padding-top: 33px;
+    }
+
+    .form-step {
+        padding-bottom: 30px;
+    }
+
+    .form-grid,
+    .form-grid .grid-input {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 14px;
+    }
+
+    .form-grid input,
+    .form-grid textarea {
+        padding: 18px 40px;
+        font-size: 14px;
+        border-radius: 40px;
+        border: 1px solid #ddd;
+        outline: none;
+        background: #fff;
+        font-weight: bold;
+        resize: none;
+        color: #0d4036;
+        box-shadow: 0px 14px 13px -3px rgba(0, 0, 0, 0.3);
+        font-family: "GT Walsheim Con";
+        letter-spacing: 0.8px;
+    }
+
+    .form-grid input::placeholder,
+    .form-grid textarea::placeholder {
+        font-size: 13px;
+        letter-spacing: 0.6px;
+        font-weight: 300;
+        opacity: 0.86;
+    }
+
+    .form-grid textarea::placeholder {
+        padding-right: 60px;
+    }
+
+    textarea {
+        height: 120px;
+        resize: none;
+        border-radius: 25px !important;
+    }
+
+    /* .form-grid textarea {
+   padding-right: 100px;
+} */
+
+    /* ============================ STEP 4 */
+    .outcome-grid {
+        display: grid;
+        gap: 22px;
+    }
+
+    .outcome-grid label {
+        font-family: "GT Walsheim Trial Cn Md";
+
+        font-weight: 800;
+        letter-spacing: 0.8px;
+        color: #0d4036;
+        font-size: 14px;
+        margin-left: 35px;
+    }
+
+    .outcome-grid .outcome-input textarea {
+        height: 100px;
+    }
+
+    /* ===================== CUSTOM INDUSTRY */
+
+    .custom-select-wrapper {
+        position: relative;
+        width: 100%;
+    }
+
+    .custom-select {
+        /* width: 80%; */
+        padding: 18px 20px;
+        background: #fff;
+        border-radius: 40px;
+        border: 1px solid #ddd;
+        cursor: pointer;
+        padding-left: 40px;
+        color: gray;
+        box-shadow: 3px 6px 10px rgba(0, 0, 0, 0.1);
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0px 14px 13px -3px rgba(0, 0, 0, 0.3);
+    }
+
+    .custom-select img {
+        width: auto;
+        height: 10px;
+    }
+
+    .custom-select .selected-option {
+        font-family: "GT Walsheim Con";
+
+    }
+
+    .custom-select .dropdown-arrow {
+        width: 18px;
+        pointer-events: none;
+        transition: transform 0.25s;
+    }
+
+    .custom-select.open .dropdown-arrow {
+        transform: rotate(180deg);
+    }
+
+    /* Options Box */
+
+    .custom-options {
+        position: absolute;
+        top: 58px;
+        width: 95%;
+        left: 10px;
+        background: #fff;
+        border-radius: 18px;
+        border: 1px solid #ccc;
+        list-style: none;
+        padding: 10px 0;
+        margin: 0;
+        max-height: 200px;
+        overflow-y: auto;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        display: none;
+        z-index: 99;
+        font-family: "GT Walsheim Con";
+
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .custom-options::-webkit-scrollbar {
+        display: none;
+    }
+
+    .custom-options.show {
+        display: block;
+    }
+
+    .custom-options li {
+        padding: 12px 20px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background 0.2s;
+        font-family: "GT Walsheim Con";
+    }
+
+    .custom-options li:hover {
+        background: rgba(30, 146, 123, 0.1);
+    }
+
+    /* ============================STAGE 2========================  */
+
+    /* === GOALS GRID === */
+    .goals-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        justify-content: center;
+        margin: 0 auto;
+        /* border: 1px solid red; */
+        /* align-items: start; */
+    }
+
+    /* === GOAL CARD === */
+    .goal-card {
+        position: relative;
+        background: #fff;
+        color: #0d4036;
+        height: 80px;
+        text-align: left;
+
+
+        border-radius: 14px;
+        border: 1px solid #e2e2e2;
+        box-shadow: 0px 10px 13px -3px rgba(0, 0, 0, 0.3);
+
+        padding: 15px 0px;
+        width: 34vw;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+
+        font-size: 0.6rem;
+    }
+
+    .goal-card input {
+        display: none;
+    }
+
+    .goal-text {
+        font-weight: 600;
+        font-size: 0.85rem;
+        line-height: 1.1;
+        pointer-events: none;
+        font-family: "GT Walsheim Con";
+        padding: 0px 10px;
+        letter-spacing: 0.7px;
+        max-width: 115px;
+    }
+
+    /* === CHECKMARK CIRCLE === */
+    .goal-checkmark {
+        position: absolute;
+        top: -15px;
+        right: -8px;
+        width: 28px;
+        height: 28px;
+        background-color: #1ed2aa;
+        border-radius: 50%;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transform: scale(0.5);
+        transition: all 0.3s ease;
+    }
+
+    .goal-checkmark img {
+        width: 14px;
+        height: 14px;
+        object-fit: contain;
+        border-radius: 50%;
+        filter: brightness(0) invert(1);
+    }
+
+    /* === SELECTED STATE === */
+    .goal-card.selected {
+        box-shadow: 0px 9px 13px -3px rgb(30, 210, 170, 0.3);
+
+        transform: scale(1.01);
+        color: #1ed2aa;
+    }
+
+    /* Show checkmark when selected */
+    .goal-card.selected .goal-checkmark {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    /* === BLURRED CARDS === */
+    .goal-card.blurred {
+        filter: blur(1px);
+        opacity: 0.6;
+        pointer-events: none;
+        transition: all 0.3s ease;
+    }
+
+    /* ============================STAGE 3========================  */
+
+    /* Buttons */
+    .step-buttons {
+        margin-top: 60px;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .form-btn {
+        padding: 13px 40px;
+        border-radius: 20px;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        transition: 0.2s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .step-buttons a {
+
+        text-decoration: none;
+    }
+
+    .back-btn {
+        background: transparent;
+        border: 1px solid #b0d3cc;
+        color: #0d4036;
+    }
+
+    .back-btn i {
+        color: #0d4036;
+    }
+
+    .back-btn:disabled {
+        opacity: 0.8;
+        cursor: default;
+    }
+
+    .next-btn {
+        background: #591044;
+        color: #fff;
+        box-shadow: 0px 4px 15px -3px rgba(0, 0, 0, 0.6);
+    }
+
+    .form-btn i {
+        font-size: 17px;
+    }
+
+    .submit-btn {
+        background: #591044;
+        color: #fff;
+    }
+
+    /* --------------- RESPONSIVE: MOBILE COLUMN --------------- */
+
+    /* Medium screens (small laptops) and up */
+    @media (min-width: 768px) {
+        /* .goals-grid {
+    gap: 20px;
+  } */
+
+        .goal-card {
+            width: 40vw;
+
+            padding: 22px 12px;
+        }
+
+        .goal-text {
+            font-size: 1rem;
+            max-width: 150px;
+            margin: 0 auto;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .multi-step-wrapper {
+            padding: 0px;
+            overflow: visible;
+            margin-top: 70px;
+        }
+
+        .step-header {
+            border-radius: 0px;
+        }
+
+        .step-counter-container {
+            position: absolute;
+            top: -60px;
+            left: 12%;
+            transform: translateX(-50%);
+        }
+
+        .step-divider {
+            display: none;
+        }
+
+        .step-progress-container {
+            max-width: initial;
+        }
+
+        .step-header {
+            text-align: center;
+            gap: 20px;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            padding-bottom: 22px;
+        }
+
+        .step-titles .step-title {
+            max-width: initial;
+            margin: 0 auto;
+            height: 84px;
+        }
+
+        .step-title p.desktop-p {
+            display: block;
+            line-height: 1;
+        }
+
+        .step-title p.mobile-p {
+            display: none;
+        }
+
+        .step-title.title3 p {
+            white-space: nowrap;
+        }
+
+        /* .step-title.title2,
+  .step-title.title3 {
+    padding-bottom: 16px;
+  }
+  .step-title.title4 {
+    padding-bottom: 40px;
+  } */
+
+        .step-title h2 {
+            font-size: 22px;
+            letter-spacing: 0.7px;
+            max-width: initial;
+        }
+
+        .step-title p {
+            font-size: 14px;
+            max-width: 380px;
+            margin: 0 auto;
+            margin-top: 8px;
+        }
+
+        .progress-area {
+            position: absolute;
+            top: 10px;
+            right: 10%;
+            transform: translateX(20%);
+            border-bottom: 0px;
+        }
+
+        .progress-text {
+            text-align: right;
+        }
+
+        .form-grid .grid-input .input-industry {
+            height: 50px;
+            /* display: none; */
+        }
+
+        .form-grid .grid-input textarea {
+            height: 120px;
+            margin-top: -3.5rem;
+        }
+        .form-grid .grid-input.outcome-input textarea {
+            /* height: 130px; */
+            margin-top: 0rem;
+            resize: none;
+            height: 110px;
+
+        }
+
+        .form-grid {
+            grid-template-columns: repeat(2, 1fr);
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        .form-grid input {
+            padding: 14px 40px;
+        }
+
+
+
+
+        textarea {
+            height: 120px;
+            margin-top: -2rem;
+            resize: none;
+        }
+
+        /* STEP 4 */
+        .outcome-grid {
+            grid-template-columns: repeat(1, 1fr);
+        }
+
+        .outcome-grid textarea {
+            height: 80px;
+            margin-top: 0rem;
+        }
+
+        .goals-grid {
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        .goal-card {
+            width: 170px;
+
+            padding: 22px 12px;
+        }
+
+        .goal-text {
+            font-size: 0.9rem;
+            max-width: 150px;
+            margin: 0 auto;
+            padding: 0px 15px;
+        }
+    }
+
+    @media (min-width: 1440px) {
+        .multistep-form-container {
+            margin-top: 100px;
+        }
+
+        .step-counter-container {
+            width: 98px;
+            height: 98px;
+        }
+
+        .counter-circle {
+            width: 80px;
+            height: 80px;
+            left: 3px;
+            top: 3px;
+        }
+
+        .counter-circle span {
+            font-size: 32px;
+        }
+
+        .step4 .step-buttons {
+            margin-top: 20px;
+        }
+
+        .form-grid,
+        .goals-grid {
+            padding-top: 60px;
+        }
+
+        .goals-grid {
+            max-width: 950px;
+            /* border: 1px solid red; */
+
+            margin: 0 auto;
+        }
+
+        .goal-card {
+            width: 190px;
+            padding: 0px;
+            /* height: 43px; */
+            gap: 17px;
+        }
+
+        .goal-text {
+            max-width: 100%;
+        }
+
+
+    }
+</style>
+
+@section('content')
+
+
+    <section class="multistep-form-container">
+        <div class="multi-step-wrapper">
+            <!-- Step Header -->
+            <div class="step-header">
+                <div class="step-counter-container">
+                    <div class="step-counter">
+                        <div class="counter-circle">
+                            <span>01</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-progress-container">
+                    <div class="progress-area">
+                        <div class="box-area">
+                            <span class="progress-text">01 of 04</span>
+                            <div class="progress-baar">
+                                <div class="progress-fill"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step-divider"></div>
+
+                    <!--        STEP 1 TITLE                                   -->
+
+                    <div class="step-titles">
+                        <!-- STEP 1 -->
+                        <div class="step-title active title1" data-title="BUSINESS OVERVIEW"
+                            data-subtitle="We use this info to better understand your business before the session.">
+                            <h2>BUSINESS OVERVIEW</h2>
+                            <p class="mobile-p">
+                                <span>We use this info to better understand</span>
+                                <span> your business before the session</span>
+                            </p>
+                            <p class="desktop-p">
+                                We use this info to better understand your business before the
+                                session
+                            </p>
+                        </div>
+
+                        <!-- STEP 2 -->
+                        <div class="step-title title2" data-title="BRAND IDENTITY"
+                            data-subtitle="Tell us more about your brand tone, target audience, and positioning.">
+                            <h2>Current Stage & Goals</h2>
+
+                            <p class="mobile-p">
+                                <span>What are your current top goals?</span>
+                                <span>(Select up to 2)</span>
+                            </p>
+                            <p class="desktop-p">
+                                What are your current top goals? (Select up to 2)
+                            </p>
+                        </div>
+
+                        <!-- STEP 3 -->
+                        <div class="step-title title3" data-title="challenges"
+                            data-subtitle="Share your project goals and the key outcomes you want to achieve.">
+                            <h2>Key Challenges</h2>
+
+                            <p class="mobile-p">
+                                <span>What challenges are holding your </span>
+                                <span>business back? (Select up to 3)</span>
+                            </p>
+                            <p class="desktop-p">
+                                What challenges are holding your business back? (Select up to
+                                3)
+                            </p>
+                        </div>
+
+                        <!-- STEP 4 -->
+                        <div class="step-title title4" data-title="outcome">
+                            <h2>Outcome</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step Content -->
+            <form id="multiStepForm" method="POST" action="submit.php">
+                <!-- STEP 1 -->
+                <div class="form-step active">
+                    <div class="form-grid">
+
+                        <div class="grid-input">
+                            <input type="text" name="full_name" placeholder="Full Name" required />
+
+                            <input type="text" name="company_brand_name" placeholder="Company/Brand Name" required />
+
+                            <input type="text" name="website_or_handle" placeholder="Website or social media Handle"
+                                required />
+
+                            <input type="email" name="email" placeholder="Email Address" autocomplete="cc-name"
+                                required />
+                        </div>
+                        <div class="grid-input industry-cont">
+                            <input type="text" class="input-industry" name="industry" placeholder="Industry" required />
+
+                            <textarea name="business_description" class="brief"
+                                placeholder="Briefly describe what your business does (1–2 sentences)." required></textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="step-buttons">
+                        <button type="button" class="form-btn back-btn" disabled>
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                        <button type="button" class="form-btn next-btn">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 2 -->
+                <div class="form-step">
+                    <!-- STEP 2 -->
+                    <div class="step2-wrapper">
+                        <div class="goals-grid">
+                            <label class="goal-card">
+                                <input type="checkbox" name="business_goals[]" value="Increase revenue or sales" />
+                                <span class="goal-text">Increase revenue or sales</span>
+                                <span class="goal-checkmark">
+                                    <img src="../img/marked.png" alt="" />
+                                </span>
+                            </label>
+
+                            <label class="goal-card">
+                                <input type="checkbox" name="business_goals[]" value="Generate more leads" />
+                                <span class="goal-text">Generate more leads</span>
+                                <span class="goal-checkmark">
+                                    <img src="../img/marked.png" alt="" />
+                                </span>
+                            </label>
+
+                            <label class="goal-card">
+                                <input type="checkbox" name="business_goals[]" value="Improve brand visibility" />
+                                <span class="goal-text">Improve brand visibility</span>
+                                <span class="goal-checkmark">
+                                    <img src="../img/marked.png" alt="" />
+                                </span>
+                            </label>
+
+                            <label class="goal-card">
+                                <input type="checkbox" name="business_goals[]" value="Launch a new product or service" />
+                                <span class="goal-text">Launch a new product or service</span>
+                                <span class="goal-checkmark">
+                                    <img src="../img/marked.png" alt="" />
+                                </span>
+                            </label>
+
+                            <label class="goal-card">
+                                <input type="checkbox" name="business_goals[]" value="Expand into new markets" />
+                                <span class="goal-text">Expand into new markets</span>
+                                <span class="goal-checkmark">
+                                    <img src="../img/marked.png" alt="" />
+                                </span>
+                            </label>
+
+                            <label class="goal-card">
+                                <input type="checkbox" name="business_goals[]"
+                                    value="Prepare for funding or investor conversations" />
+                                <span class="goal-text">Prepare for funding or investor conversations</span>
+                                <span class="goal-checkmark">
+                                    <img src="../img/marked.png" alt="" />
+                                </span>
+                            </label>
+
+                            <label class="goal-card">
+                                <input type="checkbox" name="business_goals[]"
+                                    value="Build internal systems or operational structure" />
+                                <span class="goal-text">Build internal systems or operational structure</span>
+                                <span class="goal-checkmark">
+                                    <img src="../img/marked.png" alt="" />
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Add real fields for step 2 here -->
+
+                    <div class="step-buttons">
+                        <button type="button" class="form-btn back-btn" disabled>
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                        <button type="button" class="form-btn next-btn">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 3 -->
+                <div class="form-step">
+                    <div class="step3-wrapper">
+                        <div class="goals-grid">
+                            <label class="goal-card">
+                                <input type="checkbox" name="key_challenges[]" value="Low or inconsistent sales" />
+                                <span class="goal-text">Low or inconsistent sales</span>
+                                <span class="goal-checkmark"><img src="../img/marked.png" alt="" /></span>
+                            </label>
+
+                            <label class="goal-card">
+                                <input type="checkbox" name="key_challenges[]" value="Weak marketing strategy" />
+                                <span class="goal-text">Weak marketing strategy</span>
+                                <span class="goal-checkmark"><img src="../img/marked.png" alt="" /></span>
+                            </label>
+
+                            <label class="goal-card">
+                                <input type="checkbox" name="key_challenges[]" value="Difficulty acquiring customers" />
+                                <span class="goal-text">Difficulty acquiring customers</span>
+                                <span class="goal-checkmark"><img src="../img/marked.png" alt="" /></span>
+                            </label>
+
+                            <label class="goal-card">
+                                <input type="checkbox" name="key_challenges[]" value="Operational inefficiencies" />
+                                <span class="goal-text">Operational inefficiencies</span>
+                                <span class="goal-checkmark"><img src="../img/marked.png" alt="" /></span>
+                            </label>
+
+                            <label class="goal-card">
+                                <input type="checkbox" name="key_challenges[]" value="Monetization not working" />
+                                <span class="goal-text">Monetization not working</span>
+                                <span class="goal-checkmark"><img src="../img/marked.png" alt="" /></span>
+                            </label>
+
+                            <label class="goal-card">
+                                <input type="checkbox" name="key_challenges[]"
+                                    value="Need clarity on product-market fit" />
+                                <span class="goal-text">Need clarity on product-market fit</span>
+                                <span class="goal-checkmark"><img src="../img/marked.png" alt="" /></span>
+                            </label>
+
+                            <label class="goal-card">
+                                <input type="checkbox" name="key_challenges[]" value="Scaling challenges" />
+                                <span class="goal-text">Scaling challenges</span>
+                                <span class="goal-checkmark"><img src="../img/marked.png" alt="" /></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="step-buttons">
+                        <button type="button" class="form-btn back-btn" disabled>
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                        <button type="button" class="form-btn next-btn">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 4 -->
+                <div class="form-step step4">
+                    <div class="form-grid outcome-grid">
+                        <div class="grid-input outcome-input">
+                            <label for="question">What made you book this consultation today?</label>
+                            <textarea name="business_description" required></textarea>
+                        </div>
+                        <div class="grid-input outcome-input">
+                            <label for="">What would make this session a success for you?</label>
+                            <textarea name="business_description" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="step-buttons">
+                        <button type="button" class="form-btn back-btn" disabled>
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                        <a href="{{ route('consultation.consultation-summary') }}">
+                            <button type="button" class="form-btn next-btn">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+@endsection
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const steps = document.querySelectorAll(".form-step");
+        const stepTitles = document.querySelectorAll(".step-title");
+        const nextBtns = document.querySelectorAll(".next-btn");
+        const backBtns = document.querySelectorAll(".back-btn");
+
+        const progressFill = document.querySelector(".progress-fill");
+        const progressText = document.querySelector(".progress-text");
+        const counterCircleText = document.querySelector(".counter-circle span");
+
+        //  Custom Select Dropdown
+        // const select = document.getElementById("industrySelect");
+        // const optionsBox = document.querySelector(".custom-options");
+        // const hiddenInput = document.getElementById("industryInput");
+        // const selectedOption = select.querySelector(".selected-option");
+
+        //  Load saved step or default to 0
+        let currentStep = parseInt(localStorage.getItem("currentStep")) || 0;
+
+        //  Update Steps
+        function updateStep() {
+            steps.forEach((step) => step.classList.remove("active"));
+            stepTitles.forEach((title) => title.classList.remove("active"));
+
+            steps[currentStep].classList.add("active");
+            stepTitles[currentStep].classList.add("active");
+
+            const percent = ((currentStep + 1) / steps.length) * 100;
+            progressFill.style.width = percent + "%";
+            progressText.textContent = `0${currentStep + 1} of 0${steps.length}`;
+            counterCircleText.textContent = `0${currentStep + 1}`;
+
+            localStorage.setItem("currentStep", currentStep);
+
+            const backButton = steps[currentStep].querySelector(".back-btn");
+            if (backButton) backButton.disabled = currentStep === 0;
+
+            document.querySelectorAll(".form-step, .step-title").forEach((el) => {
+                el.classList.remove("fade-in");
+                void el.offsetWidth;
+                el.classList.add("fade-in");
+            });
+        }
+
+        //  NEXT BUTTONS
+        nextBtns.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                if (currentStep < steps.length - 1) {
+                    currentStep++;
+                    updateStep();
+                }
+            });
+        });
+
+        //  BACK BUTTONS
+        backBtns.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                if (currentStep > 0) {
+                    currentStep--;
+                    updateStep();
+                }
+            });
+        });
+
+        //  Initialize
+        updateStep();
+
+        //  Custom Select Dropdown Logic
+        // select.addEventListener("click", () => {
+        //     select.classList.toggle("open");
+        //     optionsBox.classList.toggle("show");
+        // });
+
+        // document.querySelectorAll(".custom-options li").forEach((option) => {
+        //     option.addEventListener("click", () => {
+        //         const value = option.getAttribute("data-value");
+        //         selectedOption.textContent = value;
+        //         hiddenInput.value = value;
+        //         select.classList.remove("open");
+        //         optionsBox.classList.remove("show");
+        //     });
+        // });
+
+        // document.addEventListener("click", function(e) {
+        //     if (!select.contains(e.target)) {
+        //         select.classList.remove("open");
+        //         optionsBox.classList.remove("show");
+        //     }
+        // });
+
+        // === Handle Selectable Goal Cards ===
+        function handleSelectableCards(selector, maxSelection, storageKey) {
+            const cards = document.querySelectorAll(`${selector} .goal-card`);
+            const inputs = document.querySelectorAll(
+                `${selector} input[type="checkbox"]`
+            );
+
+            inputs.forEach((input) => {
+                input.addEventListener("change", () => {
+                    const checked = Array.from(inputs).filter((i) => i.checked);
+
+                    // Apply selected / unselected styles
+                    cards.forEach((card) => {
+                        const checkbox = card.querySelector('input[type="checkbox"]');
+                        card.classList.toggle("selected", checkbox.checked);
+                    });
+
+                    // Blur unselected if max reached
+                    if (checked.length >= maxSelection) {
+                        cards.forEach((card) => {
+                            const checkbox = card.querySelector(
+                                'input[type="checkbox"]');
+                            if (!checkbox.checked) card.classList.add("blurred");
+                        });
+                    } else {
+                        cards.forEach((card) => card.classList.remove("blurred"));
+                    }
+
+                    // Save selections to localStorage
+                    const selectedValues = checked.map((i) => i.value);
+                    localStorage.setItem(storageKey, JSON.stringify(selectedValues));
+                });
+            });
+        }
+
+        // Step 2: Business Goals (max 2)
+        handleSelectableCards(".step2-wrapper", 2, "selectedBusinessGoals");
+
+        // Step 3: Key Challenges (max 3)
+        handleSelectableCards(".step3-wrapper", 3, "selectedKeyChallenges");
+
+        // STEP 4 — Navigate to Summary Page
+        const summaryBtn = document.querySelector(".summary-btn");
+        if (summaryBtn) {
+            summaryBtn.addEventListener("click", () => {
+                // Save all form fields to localStorage
+                const form = document.getElementById("multiStepForm");
+                const formData = new FormData(form);
+
+                formData.forEach((value, key) => {
+                    localStorage.setItem(key, value);
+                });
+
+                // Redirect to summary screen
+                window.location.href = "consultation-summary.html";
+            });
+        }
+    });
+</script>

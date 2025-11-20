@@ -53,6 +53,10 @@
         gap: 80px;
     }
 
+    .book-conversation-section .left-content {
+        margin-top: 5rem
+    }
+
     .book-conversation-section .left-content h3 {
         font-size: 2.1rem;
         color: #0d4036;
@@ -206,6 +210,7 @@
 
         .book-conversation-section .left-content {
             padding-top: 10rem;
+            margin-top: 0rem
         }
 
         .book-conversation-section .left-content h3 {
@@ -235,6 +240,8 @@
             max-width: initial;
             margin-left: 60px;
             margin-bottom: 30px;
+            line-height: 0.9;
+
             width: 500px;
         }
 
@@ -272,11 +279,11 @@
             display: flex;
             align-items: center;
             justify-content: flex-end;
-            /* overflow-y: hidden; */
             background-color: transparent;
             min-height: 100vh;
             padding-bottom: 2rem;
             margin-bottom: 0px;
+            margin-top: 50px;
 
         }
 
@@ -285,7 +292,7 @@
             position: absolute;
             right: 0;
             top: 0;
-            width: 88.6%;
+            width: 88.5%;
             height: 100%;
             background-color: #06221d;
             z-index: 1;
@@ -302,19 +309,16 @@
             /* overflow: visible; */
             width: 70%;
             transform: scale(1.35);
+            /* padding-top: 5rem; */
         }
 
         .book-conversation-section .desktop-image-cont img.desktop {
             object-fit: cover;
             display: block;
-            /* margin: -70px 0px 0px -50px; */
             position: relative;
             transform: translateX(-150px);
             margin-bottom: 30px;
-            /* height: 800px;
-    width: 100%; */
 
-            /* object-position: top; */
         }
     }
 </style>
@@ -331,7 +335,7 @@
                         <img src="../img/left-conv-pattern.png" class="content-pattern" alt="" />
                         <div class="info-content">
                             <div class="btn">
-                                <a href="./form.html">Let’s get started
+                                <a href="{{ route('consultation.application-forms') }}">Let’s get started
                                     <div>
                                         <img src="../img/right.png" alt="" />
                                     </div>
