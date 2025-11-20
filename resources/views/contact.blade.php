@@ -1450,16 +1450,16 @@
                                 </div>
 
                                 <!-- <div class="form-group2 field">
-                                                <div class="contact-info-form__group name-field">
-                                                                            <label class="floating-label">Phone Number</label>
-                                                                            <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
-                                                                                placeholder="+1234567890" value="{{ old('phone') }}" />
-                                                                            @error('phone')
+                                                    <div class="contact-info-form__group name-field">
+                                                                                <label class="floating-label">Phone Number</label>
+                                                                                <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
+                                                                                    placeholder="+1234567890" value="{{ old('phone') }}" />
+                                                                                @error('phone')
         <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
-                                                                                                                                {{ $message }}</div>
+                                                                                                                                        {{ $message }}</div>
     @enderror
-                                                                        </div>
-                                                                        </div> -->
+                                                                            </div>
+                                                                            </div> -->
 
 
 
@@ -1889,30 +1889,37 @@
 
                                     if (result.ok && result.data.success) {
                                         // Check if live form capture is handling this
-                                        if (typeof window.notifyLiveFormCapture === 'function') {
+                                        if (typeof window.notifyLiveFormCapture ===
+                                            'function') {
                                             // Let live form capture handle everything
-                                            window.notifyLiveFormCapture('submissionSuccess', result.data);
+                                            window.notifyLiveFormCapture(
+                                                'submissionSuccess', result.data);
                                         } else {
                                             // No live capture, handle success normally
-                                            showPopup('success', 'Message Sent!', result.data
+                                            showPopup('success', 'Message Sent!', result
+                                                .data
                                                 .message ||
                                                 'Thank you for contacting us. We will get back to you soon!'
                                             );
 
                                             form.reset();
                                             hiddenInput.value = '';
-                                            document.getElementById('recaptchaToken').value = '';
+                                            document.getElementById('recaptchaToken')
+                                                .value = '';
 
-                                            document.querySelectorAll('.tag.selected').forEach(
-                                                tag => {
-                                                    tag.classList.remove('selected');
-                                                    tag.querySelector('.tag-icon').src =
-                                                        "{{ asset('img/unselected.png') }}";
-                                                });
+                                            document.querySelectorAll('.tag.selected')
+                                                .forEach(
+                                                    tag => {
+                                                        tag.classList.remove('selected');
+                                                        tag.querySelector('.tag-icon').src =
+                                                            "{{ asset('img/unselected.png') }}";
+                                                    });
 
                                             // Reset slider
-                                            const rangeInput = document.getElementById("priceRange");
-                                            const rangeValue = document.getElementById("rangeValue");
+                                            const rangeInput = document.getElementById(
+                                                "priceRange");
+                                            const rangeValue = document.getElementById(
+                                                "rangeValue");
                                             if (rangeInput && rangeValue) {
                                                 rangeInput.value = '';
                                                 window.updateSlider();

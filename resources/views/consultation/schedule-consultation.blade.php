@@ -263,8 +263,8 @@
         opacity: 0.6;
     }
 
-    /* .date.today {
-         background: #88C1B7;
+    .date.today {
+        background: #88C1B7;
         color: #0D4036 !important;
     } */
 
@@ -651,6 +651,133 @@
         vertical-align: middle;
     }
 
+    /* Scrollable Time Picker Styles */
+    .scroll-time-picker {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        margin: 20px 0;
+        padding: 20px;
+        background: rgba(13, 64, 54, 0.3);
+        border-radius: 12px;
+        border: 1px solid rgba(136, 193, 183, 0.2);
+    }
+
+    .time-wheel-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+    }
+
+    .time-wheel-container.ampm {
+        margin-left: 10px;
+    }
+
+    .time-wheel-header {
+        font-size: 24px;
+        font-weight: bold;
+        color: #88C1B7;
+        margin-bottom: 10px;
+        font-family: "GT Walsheim Con";
+        min-width: 40px;
+        text-align: center;
+    }
+
+    .time-wheel {
+        width: 60px;
+        height: 120px;
+        overflow: hidden;
+        position: relative;
+        background: rgba(6, 34, 29, 0.6);
+        border-radius: 8px;
+        border: 1px solid rgba(136, 193, 183, 0.3);
+    }
+
+    .time-wheel-container.ampm .time-wheel {
+        width: 50px;
+    }
+
+    .time-wheel-list {
+        position: relative;
+        transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        padding: 40px 0;
+    }
+
+    .time-wheel-item {
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        color: rgba(255, 255, 255, 0.6);
+        font-family: "GT Walsheim Con";
+        cursor: pointer;
+        transition: all 0.2s ease;
+        user-select: none;
+    }
+
+    .time-wheel-item.active {
+        color: #88C1B7;
+        font-weight: bold;
+        font-size: 18px;
+        background: rgba(136, 193, 183, 0.1);
+    }
+
+    .time-wheel-item:hover {
+        color: rgba(136, 193, 183, 0.8);
+    }
+
+    /* Selection indicators */
+    .time-wheel::before,
+    .time-wheel::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: rgba(136, 193, 183, 0.5);
+        z-index: 2;
+    }
+
+    .time-wheel::before {
+        top: 40px;
+    }
+
+    .time-wheel::after {
+        bottom: 40px;
+    }
+
+    /* Time Display */
+    .time-display {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 20px;
+        padding: 15px 20px;
+        background: rgba(6, 34, 29, 0.8);
+        border-radius: 8px;
+        border: 1px solid rgba(136, 193, 183, 0.3);
+    }
+
+    #display-time {
+        font-size: 20px;
+        font-weight: bold;
+        color: #88C1B7;
+        font-family: "GT Walsheim Con";
+        letter-spacing: 2px;
+    }
+
+    #display-period {
+        font-size: 18px;
+        color: #88C1B7;
+        font-family: "GT Walsheim Con";
+        margin-left: 5px;
+        font-weight: bold;
+    }
+
     /* ensure modal/backdrop etc remain as previous styles provided earlier */
 
     /* FLASH MESSAGE SYSTEM */
@@ -1005,7 +1132,6 @@
                             <div class="time-box-container">
                                 <div class="timezone-row">
                                     <label>Set time</label>
-
                                     <div class="custom-dropdown timeZone" id="dropdown-timezone" tabindex="0"
                                         role="listbox" aria-label="Timezone">
                                         <button class="cd-toggle" aria-haspopup="listbox" aria-expanded="false">
@@ -1013,65 +1139,50 @@
                                             <span class="cd-caret">▾</span>
                                         </button>
                                         <ul class="cd-list" role="listbox" aria-hidden="true">
-                                            <li role="option" data-value="GMT" class="cd-option">
-                                                GMT
-                                            </li>
-                                            <li role="option" data-value="UTC" class="cd-option">
-                                                UTC
-                                            </li>
-                                            <li role="option" data-value="WAT" class="cd-option">
-                                                WAT
-                                            </li>
+                                            <li role="option" data-value="GMT" class="cd-option">GMT</li>
+                                            <li role="option" data-value="UTC" class="cd-option">UTC</li>
+                                            <li role="option" data-value="WAT" class="cd-option">WAT</li>
                                         </ul>
                                     </div>
                                 </div>
 
-                                <div class="time-select-row">
-                                    <div class="custom-dropdown" id="dropdown-hour" tabindex="0" role="listbox"
-                                        aria-label="Hour">
-                                        <button class="cd-toggle" aria-haspopup="listbox" aria-expanded="false">
-                                            <span class="cd-selected">01</span>
-                                            <span class="cd-caret">▾</span>
-                                        </button>
-                                        <ul class="cd-list" role="listbox" aria-hidden="true"></ul>
+                                <!-- Scrollable Time Picker -->
+                                <div class="scroll-time-picker">
+                                    <!-- Hour Picker -->
+                                    <div class="time-wheel-container">
+                                        <div class="time-wheel" id="hour-wheel">
+                                            <div class="time-wheel-list">
+                                                <!-- Hours will be populated by JavaScript -->
+                                            </div>
+                                        </div>
                                     </div>
 
-                                    <span class="time-sep">:</span>
-
-                                    <div class="custom-dropdown" id="dropdown-minute" tabindex="0" role="listbox"
-                                        aria-label="Minute">
-                                        <button class="cd-toggle" aria-haspopup="listbox" aria-expanded="false">
-                                            <span class="cd-selected">00</span>
-                                            <span class="cd-caret">▾</span>
-                                        </button>
-                                        <ul class="cd-list" role="listbox" aria-hidden="true"></ul>
+                                    <!-- Minute Picker -->
+                                    <div class="time-wheel-container">
+                                        <div class="time-wheel" id="minute-wheel">
+                                            <div class="time-wheel-list">
+                                                <!-- Minutes will be populated by JavaScript -->
+                                            </div>
+                                        </div>
                                     </div>
 
-                                    <span class="time-sep">:</span>
-
-                                    <div class="custom-dropdown" id="dropdown-second" tabindex="0" role="listbox"
-                                        aria-label="Second">
-                                        <button class="cd-toggle" aria-haspopup="listbox" aria-expanded="false">
-                                            <span class="cd-selected">00</span>
-                                            <span class="cd-caret">▾</span>
-                                        </button>
-                                        <ul class="cd-list" role="listbox" aria-hidden="true"></ul>
+                                    <!-- Second Picker -->
+                                    <div class="time-wheel-container">
+                                        <div class="time-wheel" id="second-wheel">
+                                            <div class="time-wheel-list">
+                                                <!-- Seconds will be populated by JavaScript -->
+                                            </div>
+                                        </div>
                                     </div>
 
-                                    <div class="custom-dropdown" id="dropdown-ampm" tabindex="0" role="listbox"
-                                        aria-label="AM or PM">
-                                        <button class="cd-toggle" aria-haspopup="listbox" aria-expanded="false">
-                                            <span class="cd-selected">AM</span>
-                                            <span class="cd-caret">▾</span>
-                                        </button>
-                                        <ul class="cd-list" role="listbox" aria-hidden="true">
-                                            <li role="option" data-value="AM" class="cd-option">
-                                                AM
-                                            </li>
-                                            <li role="option" data-value="PM" class="cd-option">
-                                                PM
-                                            </li>
-                                        </ul>
+                                    <!-- AM/PM Picker -->
+                                    <div class="time-wheel-container ampm">
+                                        <div class="time-wheel" id="ampm-wheel">
+                                            <div class="time-wheel-list">
+                                                <div class="time-wheel-item" data-value="AM">AM</div>
+                                                <div class="time-wheel-item" data-value="PM">PM</div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1349,68 +1460,200 @@
             initialIndex: 0,
         });
 
-        /* hour/minute/second dropdowns (generate items) */
-        function numericOptions(start, end) {
-            const arr = [];
-            for (let i = start; i <= end; i++) arr.push({
-                label: pad(i),
-                value: pad(i)
-            });
-            return arr;
+        /* ------------------------- Scrollable Time Picker ------------------------- */
+
+        // Time wheel data
+        const timeWheels = {
+            hour: {
+                element: null,
+                items: [],
+                currentIndex: 5
+            }, // Default to 06
+            minute: {
+                element: null,
+                items: [],
+                currentIndex: 28
+            }, // Default to 28
+            second: {
+                element: null,
+                items: [],
+                currentIndex: 55
+            }, // Default to 55
+            ampm: {
+                element: null,
+                items: ['AM', 'PM'],
+                currentIndex: 1
+            } // Default to PM
+        };
+
+        // Initialize time wheels
+        function initTimeWheels() {
+            // Generate hours (01-12)
+            for (let i = 1; i <= 12; i++) {
+                timeWheels.hour.items.push(String(i).padStart(2, '0'));
+            }
+
+            // Generate minutes/seconds (00-59)
+            for (let i = 0; i <= 59; i++) {
+                timeWheels.minute.items.push(String(i).padStart(2, '0'));
+                timeWheels.second.items.push(String(i).padStart(2, '0'));
+            }
+
+            // Setup each wheel
+            setupTimeWheel('hour');
+            setupTimeWheel('minute');
+            setupTimeWheel('second');
+            setupTimeWheel('ampm');
+
+            // Update initial display
+            updateTimeDisplay();
         }
 
-        const hourDropdown = createDropdown({
-            id: "dropdown-hour",
-            options: numericOptions(1, 12),
-            initialIndex: 0,
-        });
-        const minuteDropdown = createDropdown({
-            id: "dropdown-minute",
-            options: numericOptions(0, 59),
-            initialIndex: 0,
-        });
-        const secondDropdown = createDropdown({
-            id: "dropdown-second",
-            options: numericOptions(0, 59),
-            initialIndex: 0,
-        });
-        const ampmDropdown = createDropdown({
-            id: "dropdown-ampm",
-            options: [{
-                    label: "AM",
-                    value: "AM"
-                },
-                {
-                    label: "PM",
-                    value: "PM"
-                },
-            ],
-            initialIndex: 0,
-        });
+        function setupTimeWheel(type) {
+            const wheel = document.getElementById(`${type}-wheel`);
+            const list = wheel.querySelector('.time-wheel-list');
 
-        /* ------------------------- Update time display from dropdowns ------------------------- */
+            timeWheels[type].element = wheel;
+
+            // Populate wheel items
+            list.innerHTML = '';
+            timeWheels[type].items.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'time-wheel-item';
+                div.textContent = item;
+                div.dataset.value = item;
+                div.dataset.index = index;
+                list.appendChild(div);
+            });
+
+            // Set initial position
+            const itemHeight = 40;
+            const centerOffset = -timeWheels[type].currentIndex * itemHeight;
+            list.style.transform = `translateY(${centerOffset}px)`;
+
+            // Update active item
+            updateActiveItem(type);
+
+            // Add scroll functionality
+            let isScrolling = false;
+            let startY = 0;
+            let startTransform = 0;
+
+            wheel.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                const delta = e.deltaY > 0 ? 1 : -1;
+                scrollWheel(type, delta);
+            });
+
+            // Touch/mouse drag functionality
+            wheel.addEventListener('mousedown', startDrag);
+            wheel.addEventListener('touchstart', startDrag, {
+                passive: false
+            });
+
+            function startDrag(e) {
+                isScrolling = true;
+                startY = e.type === 'mousedown' ? e.clientY : e.touches[0].clientY;
+
+                const transform = list.style.transform;
+                const match = transform.match(/translateY\((-?\d+)px\)/);
+                startTransform = match ? parseInt(match[1]) : 0;
+
+                document.addEventListener('mousemove', onDrag);
+                document.addEventListener('touchmove', onDrag, {
+                    passive: false
+                });
+                document.addEventListener('mouseup', endDrag);
+                document.addEventListener('touchend', endDrag);
+            }
+
+            function onDrag(e) {
+                if (!isScrolling) return;
+                e.preventDefault();
+
+                const currentY = e.type === 'mousemove' ? e.clientY : e.touches[0].clientY;
+                const deltaY = currentY - startY;
+                const newTransform = startTransform + deltaY;
+
+                list.style.transform = `translateY(${newTransform}px)`;
+            }
+
+            function endDrag() {
+                if (!isScrolling) return;
+                isScrolling = false;
+
+                // Snap to nearest item
+                const transform = list.style.transform;
+                const match = transform.match(/translateY\((-?\d+)px\)/);
+                const currentTransform = match ? parseInt(match[1]) : 0;
+
+                const itemHeight = 40;
+                const newIndex = Math.max(0, Math.min(
+                    timeWheels[type].items.length - 1,
+                    Math.round(-currentTransform / itemHeight)
+                ));
+
+                setWheelIndex(type, newIndex);
+
+                document.removeEventListener('mousemove', onDrag);
+                document.removeEventListener('touchmove', onDrag);
+                document.removeEventListener('mouseup', endDrag);
+                document.removeEventListener('touchend', endDrag);
+            }
+        }
+
+        function scrollWheel(type, direction) {
+            const newIndex = Math.max(0, Math.min(
+                timeWheels[type].items.length - 1,
+                timeWheels[type].currentIndex + direction
+            ));
+            setWheelIndex(type, newIndex);
+        }
+
+        function setWheelIndex(type, index) {
+            timeWheels[type].currentIndex = index;
+            const list = timeWheels[type].element.querySelector('.time-wheel-list');
+
+            const itemHeight = 40;
+            const centerOffset = -index * itemHeight;
+            list.style.transform = `translateY(${centerOffset}px)`;
+
+            updateActiveItem(type);
+            updateTimeDisplay();
+        }
+
+        function updateActiveItem(type) {
+            const items = timeWheels[type].element.querySelectorAll('.time-wheel-item');
+            items.forEach((item, index) => {
+                item.classList.toggle('active', index === timeWheels[type].currentIndex);
+            });
+        }
+
+        // Initialize the time wheels
+        initTimeWheels();
+
+        /* ------------------------- Update time display from scrollable wheels ------------------------- */
         function updateTimeDisplay() {
-            if (!selectedDate) return;
-
-            const hour = hourDropdown.getValue();
-            const minute = minuteDropdown.getValue();
-            const second = secondDropdown.getValue();
-            const ampm = ampmDropdown.getValue();
+            const hour = timeWheels.hour.items[timeWheels.hour.currentIndex];
+            const minute = timeWheels.minute.items[timeWheels.minute.currentIndex];
+            const second = timeWheels.second.items[timeWheels.second.currentIndex];
+            const ampm = timeWheels.ampm.items[timeWheels.ampm.currentIndex];
             const tz = timezoneDropdown.getValue();
 
             selectedTimeText.textContent = `${hour}:${minute}:${second} ${ampm} ${tz}`;
         }
 
-        /* Listen to cd-change events on each dropdown to update display */
-        [
-            hourDropdown,
-            minuteDropdown,
-            secondDropdown,
-            ampmDropdown,
-            timezoneDropdown,
-        ].forEach((dd) => {
-            dd.el.addEventListener("cd-change", updateTimeDisplay);
-        });
+        function getSelectedTime() {
+            const hour = timeWheels.hour.items[timeWheels.hour.currentIndex];
+            const minute = timeWheels.minute.items[timeWheels.minute.currentIndex];
+            const second = timeWheels.second.items[timeWheels.second.currentIndex];
+            const ampm = timeWheels.ampm.items[timeWheels.ampm.currentIndex];
+
+            return `${hour}:${minute}:${second} ${ampm}`;
+        }
+
+        /* Time wheel events are handled internally, only timezone dropdown needs listener */
+        timezoneDropdown.el.addEventListener("cd-change", updateTimeDisplay);
 
         /* ------------------------- Calendar render & selection logic ------------------------- */
 
@@ -1562,16 +1805,11 @@
                 return;
             }
 
-            // Validate time selected
-            const hour = hourDropdown.getValue();
-            const minute = minuteDropdown.getValue();
-            const second = secondDropdown.getValue();
-            const ampm = ampmDropdown.getValue();
-
-            if (!hour || !minute || !second || !ampm) {
-                flashMessage("Please select a date before submitting.");
-                return;
-            }
+            // Validate time selected (scroll wheels always have values, so just get them)
+            const hour = timeWheels.hour.items[timeWheels.hour.currentIndex];
+            const minute = timeWheels.minute.items[timeWheels.minute.currentIndex];
+            const second = timeWheels.second.items[timeWheels.second.currentIndex];
+            const ampm = timeWheels.ampm.items[timeWheels.ampm.currentIndex];
 
             // Populate modal text
             modalDateText.textContent = "Date: " + selectedDate.toDateString();
