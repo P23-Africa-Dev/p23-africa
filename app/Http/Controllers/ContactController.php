@@ -23,6 +23,29 @@ class ContactController extends Controller
                 return $this->saveDraft($request);
             }
 
+            // Check for duplicate submission based on unique criteria
+            $duplicateCheck = ContactSubmission::where('email', $request->input('email'))
+                ->where('phone', $request->input('phone'))
+                ->where('created_at', '>=', now()->subMinutes(5)) // Within last 5 minutes
+                ->first();
+
+            if ($duplicateCheck) {
+                Log::warning('Duplicate submission attempt detected', [
+                    'email' => $request->input('email'),
+                    'ip' => $request->ip(),
+                    'existing_id' => $duplicateCheck->id
+                ]);
+
+                if ($request->expectsJson()) {
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Your message has already been sent successfully! We will get back to you soon.'
+                    ]);
+                }
+
+                return redirect()->back()->with('success', 'Your message has already been sent successfully! We will get back to you soon.');
+            }
+
             // Validate the request for regular submission
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
@@ -80,30 +103,8 @@ class ContactController extends Controller
             // Store in database (this path only for non-live-capture submissions)
             $contactSubmission = ContactSubmission::create($sanitizedData);
 
-            // Send emails
-            try {
-                // Send to site owner
-                Mail::to('nurudeen@p23africa.com')->send(new ContactFormMail($sanitizedData));
-
-                // Send thank-you to user
-                Mail::to($sanitizedData['email'])->send(new ThankYouMail($sanitizedData));
-
-                // Update email sent timestamp
-                $contactSubmission->update(['email_sent_at' => now()]);
-
-                Log::info('Contact form emails sent successfully', ['email' => $sanitizedData['email']]);
-            } catch (\Exception $mailException) {
-                Log::error('Failed to send contact form emails', [
-                    'error' => $mailException->getMessage(),
-                    'email' => $sanitizedData['email']
-                ]);
-
-                // Don't fail the entire request if email fails
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Your message has been received, but there was an issue sending confirmation emails. We will contact you soon.'
-                ]);
-            }
+            // Send emails using centralized method
+            $this->sendSubmissionEmails($contactSubmission);
 
             if ($request->expectsJson()) {
                 return response()->json([
@@ -203,11 +204,26 @@ class ContactController extends Controller
 
             // Find existing draft or create new one
             $submission = ContactSubmission::where('session_id', $data['session_id'])
-                ->where('status', 'draft')
-                ->first();
+                ->first(); // Remove status filter to find any existing submission
 
             if ($submission) {
-                // Update existing draft
+                // If this is a submission and the record is already submitted, avoid duplicate
+                if ($isSubmission && $submission->status === 'submitted') {
+                    Log::warning('Duplicate submission attempt via live capture', [
+                        'session_id' => $data['session_id'],
+                        'submission_id' => $submission->id,
+                        'email' => $submission->email
+                    ]);
+
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Form already submitted successfully!',
+                        'submission_id' => $submission->id,
+                        'status' => $submission->status
+                    ]);
+                }
+
+                // Update existing draft/submission
                 $contactData['status'] = $isSubmission ? 'submitted' : 'draft';
                 if ($isSubmission) {
                     $contactData['submitted_at'] = now();
@@ -221,6 +237,28 @@ class ContactController extends Controller
                     'is_submission' => $isSubmission
                 ]);
             } else {
+                // Check for duplicate based on email and phone if this is a submission
+                if ($isSubmission && !empty($contactData['email']) && !empty($contactData['phone'])) {
+                    $duplicateCheck = ContactSubmission::where('email', $contactData['email'])
+                        ->where('phone', $contactData['phone'])
+                        ->where('created_at', '>=', now()->subMinutes(5))
+                        ->first();
+
+                    if ($duplicateCheck) {
+                        Log::warning('Duplicate submission attempt detected in saveDraft', [
+                            'email' => $contactData['email'],
+                            'existing_id' => $duplicateCheck->id
+                        ]);
+
+                        return response()->json([
+                            'success' => true,
+                            'message' => 'Form already submitted successfully!',
+                            'submission_id' => $duplicateCheck->id,
+                            'status' => $duplicateCheck->status
+                        ]);
+                    }
+                }
+
                 // Create new draft
                 $contactData['status'] = $isSubmission ? 'submitted' : 'draft';
                 $contactData['draft_created_at'] = now();
@@ -237,7 +275,7 @@ class ContactController extends Controller
                 ]);
             }
 
-            // If this is a final submission, send emails
+            // If this is a final submission, send emails (with built-in duplicate protection)
             if ($isSubmission && $submission->status === 'submitted') {
                 $this->sendSubmissionEmails($submission);
             }
@@ -269,6 +307,16 @@ class ContactController extends Controller
     private function sendSubmissionEmails(ContactSubmission $submission)
     {
         try {
+            // Check if emails have already been sent for this submission
+            if ($submission->email_sent_at) {
+                Log::info('Emails already sent for this submission', [
+                    'submission_id' => $submission->id,
+                    'email' => $submission->email,
+                    'email_sent_at' => $submission->email_sent_at
+                ]);
+                return;
+            }
+
             $submissionData = $submission->toArray();
 
             // Send to site owner
@@ -292,6 +340,9 @@ class ContactController extends Controller
                 'submission_id' => $submission->id,
                 'email' => $submission->email
             ]);
+
+            // Don't throw exception to avoid breaking the submission process
+            // Just log the error and continue
         }
     }
 
