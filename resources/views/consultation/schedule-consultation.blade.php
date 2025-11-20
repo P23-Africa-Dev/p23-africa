@@ -113,7 +113,7 @@
 
     .schedule-conversation-section .left-content .info-content div.para p {
         color: #0d4036;
-        font-family: "GT Walsheim Trial Cn Lt";
+    font-family: "GT Walsheim Trial Cn Lt";
 
         font-size: 1.2rem;
         line-height: 1.2;
@@ -121,10 +121,7 @@
         margin-right: 20px;
     }
 
-    .schedule-conversation-section .left-content .info-content div.para p span {
-        font-weight: bold;
-        font-family: "GT Walsheim ProCB";
-    }
+
 
     .schedule-conversation-section .info {
         position: relative;
@@ -165,10 +162,7 @@
         overflow: hidden;
     }
 
-    .calendar-wrapper-container {
-        max-width: 800px;
-        margin: 0 auto;
-    }
+
 
     .calendar-header h3 {
         margin-bottom: 10px;
@@ -269,10 +263,10 @@
         opacity: 0.6;
     }
 
-    .date.today {
+    /* .date.today {
          background: #88C1B7;
         color: #0D4036 !important;
-    }
+    } */
 
 
 
@@ -427,41 +421,84 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.55);
+        background: #565656;
         display: none;
         justify-content: center;
         align-items: center;
         z-index: 9999;
-        backdrop-filter: blur(4px);
+        backdrop-filter: blur(2px);
     }
 
     /* MODAL BOX */
     .modal-box {
-        background: #0e1c18;
-        padding: 30px;
+        background-image: url(../img/first-bg.png);
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+
+        padding: 60px 0px;
         width: 350px;
         border-radius: 14px;
-        border: 1px solid #2c443c;
-        color: #cfe8df;
+        color: #0D4036;
         text-align: center;
         animation: fadeInUp 0.35s ease-out;
+        font-family: "GT Walsheim Con";
+
+        width: 55vw;
     }
 
     .modal-box h3 {
         margin-bottom: 15px;
-        color: #ffffff;
+        color: #0D4036;
+        font-family: "GT Walsheim Con";
+        font-size: 2rem;
+        text-transform: capitalize;
+        font-weight: bold;
+
     }
 
-    .close-btn {
+    .modal-box p {
+        font-size: 1.2rem;
+        max-width: 340px;
+        margin: 30px auto;
+  font-family: "GT Walsheim Trial Cn Lt";
+
+
+        line-height: 1.2;
+        /* margin-bottom: 30px; */
+    }
+
+    .modal-box h4 {
+        display: none
+    }
+
+    .modal-box a {
+        display: block;
+        text-decoration: none;
+        width: 60%;
+        margin: 0 auto;
+        margin-bottom: 8px;
+        padding: 0.8rem 0rem;
+        font-size: 0.7rem;
+        letter-spacing: 0.8px;
+        font-family: "GT Walsheim Pro";
+        border-radius: 6px;    
+
+
+
+    }
+
+    .modal-box .submit-btn-modal {
+        background-color: #0D4036;
+        color: #fff;
+
+    }
+    .modal-box .submit-btn-modal:last-of-type {
+        background-color: transparent;
+        border: 1px solid #DCDEE0;
+        color: #000;
         margin-top: 20px;
-        padding: 10px 30px;
-        background: #1c312b;
-        border: none;
-        color: white;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 14px;
-        border: 1px solid #2d4c40;
+
     }
 
     .close-btn:hover {
@@ -734,8 +771,10 @@
         }
 
         .left-content .para p {
-            font-family: "GT Walsheim Con";
+          font-family: "GT Walsheim Trial Cn Lt";
+
             font-size: 19px;
+            line-height: 1;
 
         }
 
@@ -1069,11 +1108,18 @@
         <!-- POPUP MODAL -->
         <div id="scheduleModal" class="modal-overlay">
             <div class="modal-box">
-                <h3>Schedule Confirmed 🎉</h3>
-                <p id="modalDateText"></p>
-                <p id="modalTimeText"></p>
+                <h3>consultation confirmed!</h3>
+                <p>A confirmation email containing the date, time, and Google Meet link has been sent to your registered
+                    email address.</p>
+                <h4 id="modalDateText"></h4>
+                <h4 id="modalTimeText"></h4>
 
-                <button id="closeModal" class="close-btn">Okay</button>
+                <a href="#" class="submit-btn-modal">
+                    Open customer@example.com
+                </a>
+                <a href="#" class="submit-btn-modal">
+                    Return to Homepage
+                </a>
             </div>
         </div>
     </section>
@@ -1538,14 +1584,17 @@
         };
 
         /* close modal */
-        closeModal.onclick = () => {
-            modal.style.display = "none";
-        };
+        // closeModal.onclick = () => {
+        //     modal.style.display = "none";
+        // };
 
         /* close if clicking outside */
-        modal.onclick = (e) => {
-            if (e.target === modal) modal.style.display = "none";
-        };
+        modal.addEventListener("click", (e) => {
+            // Close only if clicking on the overlay (not inside the box)
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        });
 
         /* small inline flash function instead of alert */
         function flashMessage(msg, attachTo = submitBtn) {
