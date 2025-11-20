@@ -37,10 +37,6 @@
         overflow-x: hidden;
     }
 
-    /* .box-container {
-  max-width: initial;
-  margin: 0 auto;
-} */
 
     .schedule-conversation-section .intro-container {
         display: flex;
@@ -160,6 +156,7 @@
         flex-direction: column;
         font-family: "GT Walsheim Con";
         overflow: hidden;
+        margin-bottom: 10px;
     }
 
 
@@ -273,7 +270,7 @@
         color: #0D4036 !important;
     }
 
-    .selected-date {
+    .selected-date, .selected-time {
         margin-top: -1rem;
         font-family: "GT Walsheim Con";
         font-weight: 100;
@@ -357,6 +354,7 @@
         font-size: 0.9rem;
         width: 70%;
         margin: 0 auto;
+        margin-bottom: 2rem;
     }
 
     .calendar-wrapper-container .mobile-btn button img {
@@ -798,7 +796,7 @@
         border-radius: 8px;
         font-size: 13px;
         opacity: 0;
-        transform: translateY(-8px);
+        transform: translate(50px, -8px);
         transition: opacity 0.35s ease, transform 0.35s ease;
         pointer-events: none;
         white-space: nowrap;
@@ -915,7 +913,7 @@
         }
 
         .schedule-conversation-section .left-content {
-            padding-top: 15rem;
+            padding-top: 17rem;
             /* flex: 0.38; */
             width: 55rem;
             /* border: 1px solid red; */
@@ -981,6 +979,11 @@
             width: 100%;
             /* display: none; */
         }
+
+           #calendar-wrapper {
+    
+        margin-bottom: 0px;
+    }
 
         #calendar-grid {
             max-width: 650px;
@@ -1078,6 +1081,7 @@
         }
 
 
+ 
 
     }
 </style>
@@ -1842,13 +1846,13 @@
 
 
 
-        
-        
+
+
 
         /* ------------------------- Initial render ------------------------- */
         renderCalendar();
 
-        
+
 
 
         /* ------------------------- Submit logic + modal ------------------------- */
