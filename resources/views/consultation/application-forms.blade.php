@@ -57,7 +57,7 @@
         background-image: url(../img/form-bg1.jpg);
         background-color: #ffffffa9;
         background-blend-mode: soft-light;
-        background-repeat: no-repeat;
+        background-repeat: repeat;
         background-size: cover;
         background-position: center;
     }
