@@ -194,8 +194,21 @@
         height: 15px;
     }
 
-    #monthInput {
+    .month-year-inputs {
         flex: 1;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .month-input-container {
+        position: relative;
+        flex: 1;
+    }
+
+    #monthInput {
+        width: 100%;
         background: transparent;
         border: 1px solid #3b4a42;
         border-radius: 6px;
@@ -204,18 +217,74 @@
         font-family: "GT Walsheim Con";
         letter-spacing: 1.3px;
         text-align: center;
-        border: none;
         font-size: 22px;
     }
 
     #monthInput:focus {
-        border: none;
+        border: 1px solid #88C1B7;
         outline: none;
     }
 
     #monthInput::placeholder {
         color: #fff;
         font-size: 19px;
+    }
+
+    #yearInput {
+        width: 80px;
+        background: transparent;
+        border: 1px solid #3b4a42;
+        border-radius: 6px;
+        padding: 8px 10px;
+        color: #e7f2ec;
+        font-family: "GT Walsheim Con";
+        letter-spacing: 1.3px;
+        text-align: center;
+        font-size: 22px;
+    }
+
+    #yearInput:focus {
+        border: 1px solid #88C1B7;
+        outline: none;
+    }
+
+    #yearInput::placeholder {
+        color: #fff;
+        font-size: 19px;
+    }
+
+    .month-suggestions {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: linear-gradient(180deg, rgba(16, 34, 28, 1), rgba(10, 22, 18, 1));
+        border-radius: 6px;
+        border: 1px solid rgba(60, 95, 81, 0.3);
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 1000;
+        display: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .month-suggestion {
+        padding: 8px 12px;
+        color: #e7f2ec;
+        cursor: pointer;
+        font-family: "GT Walsheim Con";
+        font-size: 16px;
+        transition: background 0.2s ease;
+    }
+
+    .month-suggestion:hover,
+    .month-suggestion.highlighted {
+        background: rgba(136, 193, 183, 0.2);
+    }
+
+    .month-suggestion.selected {
+        background: rgba(136, 193, 183, 0.3);
+        color: #88C1B7;
     }
 
     #calendar-grid {
@@ -263,10 +332,22 @@
         opacity: 0.6;
     }
 
-    /* .date.today {
+    .date.today {
         background: #88C1B7;
         color: #0D4036 !important;
-    } */
+    }
+
+    .date.disabled {
+        color: #4a4a4a !important;
+        opacity: 0.3;
+        cursor: not-allowed;
+        background: #1a1a1a !important;
+    }
+
+    .date.disabled:hover {
+        background: #1a1a1a !important;
+        cursor: not-allowed;
+    }
 
     .date.selected {
         background: #88C1B7;
@@ -298,6 +379,22 @@
 
     .timezone-row>label {
         font-size: 18px;
+    }
+
+    .time-restriction-notice {
+        background: rgba(136, 193, 183, 0.1);
+        border: 1px solid rgba(136, 193, 183, 0.3);
+        border-radius: 6px;
+        padding: 8px 12px;
+        margin-top: 10px;
+    }
+
+    .time-restriction-notice p {
+        color: #88C1B7;
+        font-size: 14px;
+        margin: 0;
+        font-family: "GT Walsheim Con";
+        text-align: center;
     }
 
     select {
@@ -815,6 +912,30 @@
         transform: translateY(-8px);
     }
 
+    @media (max-width: 767px) {
+        .month-year-inputs {
+            gap: 8px;
+        }
+
+        #monthInput {
+            font-size: 18px;
+        }
+
+        #yearInput {
+            width: 70px;
+            font-size: 18px;
+        }
+
+        .month-suggestions {
+            font-size: 14px;
+        }
+
+        .month-suggestion {
+            padding: 6px 10px;
+            font-size: 14px;
+        }
+    }
+
     @media (min-width: 768px) {
         .schedule-conversation-section .left-content h3 {
             font-size: 2.7rem;
@@ -995,6 +1116,14 @@
 
         }
 
+        .month-year-inputs {
+            gap: 15px;
+        }
+
+        #yearInput {
+            width: 100px;
+        }
+
         .time-box {
             /* margin: 0px 40px; */
             margin-top: 50px;
@@ -1133,7 +1262,13 @@
                                     </div>
                                 </div>
 
-                                <input type="text" id="monthInput" placeholder="November 2025" />
+                                <div class="month-year-inputs">
+                                    <div class="month-input-container">
+                                        <input type="text" id="monthInput" placeholder="November" />
+                                        <div class="month-suggestions" id="monthSuggestions"></div>
+                                    </div>
+                                    <input type="number" id="yearInput" placeholder="2025" min="2025" max="2050" />
+                                </div>
 
                                 <button id="nextMonth">
                                     <img src="../img/right-arrow.png" alt="" />
@@ -1177,6 +1312,10 @@
                                             <li role="option" data-value="WAT" class="cd-option">WAT</li>
                                         </ul>
                                     </div>
+                                </div>
+
+                                <div class="time-restriction-notice" id="timeRestrictionNotice" style="display: none;">
+                                    <p>⏰ For today's date, only times at least 1 hour ahead are available</p>
                                 </div>
 
                                 <!-- Scrollable Time Picker -->
@@ -1279,6 +1418,8 @@
         /* ------------------------- Elements ------------------------- */
         const datesContainer = document.getElementById("dates");
         const monthInput = document.getElementById("monthInput");
+        const yearInput = document.getElementById("yearInput");
+        const monthSuggestions = document.getElementById("monthSuggestions");
         // const selectedDateText = document.getElementById("selectedDate");
         // const selectedTimeText = document.getElementById("selectedTime");
 
@@ -1299,6 +1440,13 @@
         let selectedDate = null;
         let current = new Date(minYear, minMonth);
 
+        /* ------------------------- Month autocomplete data ------------------------- */
+        const monthNames = [
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+        let highlightedIndex = -1;
+
 
 
         function updateAllSelectedDate(dateString) {
@@ -1311,6 +1459,73 @@
             document.querySelectorAll(".selected-time").forEach(el => {
                 el.textContent = timeString;
             });
+        }
+
+        /* ------------------------- Month autocomplete functions ------------------------- */
+        function showMonthSuggestions(input) {
+            const filteredMonths = monthNames.filter(month =>
+                month.toLowerCase().startsWith(input.toLowerCase())
+            );
+
+            if (filteredMonths.length === 0 || (filteredMonths.length === 1 && filteredMonths[0]
+                    .toLowerCase() === input.toLowerCase())) {
+                hideMonthSuggestions();
+                return;
+            }
+
+            monthSuggestions.innerHTML = '';
+            filteredMonths.forEach((month, index) => {
+                const suggestion = document.createElement('div');
+                suggestion.className = 'month-suggestion';
+                suggestion.textContent = month;
+                suggestion.onclick = () => selectMonth(month);
+                monthSuggestions.appendChild(suggestion);
+            });
+
+            monthSuggestions.style.display = 'block';
+            highlightedIndex = -1;
+        }
+
+        function hideMonthSuggestions() {
+            monthSuggestions.style.display = 'none';
+            highlightedIndex = -1;
+        }
+
+        function selectMonth(monthName) {
+            monthInput.value = monthName;
+            hideMonthSuggestions();
+            updateCalendarFromInputs();
+        }
+
+        function highlightSuggestion(direction) {
+            const suggestions = monthSuggestions.querySelectorAll('.month-suggestion');
+            if (suggestions.length === 0) return;
+
+            // Remove previous highlight
+            if (highlightedIndex >= 0) {
+                suggestions[highlightedIndex].classList.remove('highlighted');
+            }
+
+            // Update index
+            if (direction === 'down') {
+                highlightedIndex = (highlightedIndex + 1) % suggestions.length;
+            } else if (direction === 'up') {
+                highlightedIndex = highlightedIndex <= 0 ? suggestions.length - 1 : highlightedIndex - 1;
+            }
+
+            // Apply new highlight
+            if (highlightedIndex >= 0) {
+                suggestions[highlightedIndex].classList.add('highlighted');
+            }
+        }
+
+        function selectHighlightedSuggestion() {
+            const suggestions = monthSuggestions.querySelectorAll('.month-suggestion');
+            if (highlightedIndex >= 0 && highlightedIndex < suggestions.length) {
+                selectMonth(suggestions[highlightedIndex].textContent);
+                return true;
+            }
+            return false;
         }
 
 
@@ -1659,6 +1874,20 @@
         }
 
         function setWheelIndex(type, index) {
+            // Validate time selection if today is selected
+            if (selectedDate && selectedDate.toDateString() === today.toDateString()) {
+                const validatedIndex = validateTimeSelection(type, index);
+                if (validatedIndex !== index) {
+                    index = validatedIndex;
+                    // Show a brief flash message about time restriction
+                    const now = new Date();
+                    const minHour = now.getHours() + 1;
+                    flashMessage(
+                        `Please select a time at least 1 hour ahead (after ${minHour}:${now.getMinutes().toString().padStart(2, '0')})`
+                        );
+                }
+            }
+
             timeWheels[type].currentIndex = index;
             const list = timeWheels[type].element.querySelector('.time-wheel-list');
 
@@ -1670,6 +1899,59 @@
             updateTimeDisplay();
         }
 
+        function validateTimeSelection(type, newIndex) {
+            if (!selectedDate || selectedDate.toDateString() !== today.toDateString()) {
+                return newIndex; // No validation needed for future dates
+            }
+
+            const now = new Date();
+            let minHour = now.getHours() + 1;
+            const minMinute = now.getMinutes();
+
+            // Handle hour overflow
+            if (minHour >= 24) {
+                minHour = 23;
+            }
+
+            // Get current selections (with the proposed change)
+            const currentHour = type === 'hour' ? parseInt(timeWheels.hour.items[newIndex]) : parseInt(
+                timeWheels.hour.items[timeWheels.hour.currentIndex]);
+            const currentMinute = type === 'minute' ? parseInt(timeWheels.minute.items[newIndex]) : parseInt(
+                timeWheels.minute.items[timeWheels.minute.currentIndex]);
+            const currentAmPm = type === 'ampm' ? timeWheels.ampm.items[newIndex] : timeWheels.ampm.items[
+                timeWheels.ampm.currentIndex];
+
+            // Convert current selection to 24-hour format
+            let current24Hour = currentHour;
+            if (currentAmPm === 'PM' && currentHour !== 12) {
+                current24Hour += 12;
+            } else if (currentAmPm === 'AM' && currentHour === 12) {
+                current24Hour = 0;
+            }
+
+            // Check if the proposed time is valid
+            if (current24Hour < minHour) {
+                // Find the minimum valid option for this type
+                if (type === 'hour') {
+                    let targetHour = minHour > 12 ? minHour - 12 : minHour;
+                    if (targetHour === 0) targetHour = 12;
+                    const minHourIndex = timeWheels.hour.items.findIndex(h => parseInt(h) === targetHour);
+                    return minHourIndex !== -1 ? minHourIndex : newIndex;
+                } else if (type === 'ampm') {
+                    return minHour >= 12 ? 1 : 0; // PM if minHour >= 12, otherwise AM
+                }
+                return newIndex;
+            } else if (current24Hour === minHour && currentMinute < minMinute) {
+                if (type === 'minute') {
+                    const minMinuteIndex = timeWheels.minute.items.findIndex(m => parseInt(m) >= minMinute);
+                    return minMinuteIndex !== -1 ? minMinuteIndex : newIndex;
+                }
+                return newIndex;
+            }
+
+            return newIndex; // Time is valid
+        }
+
         function updateActiveItem(type) {
             const items = timeWheels[type].element.querySelectorAll('.time-wheel-item');
             items.forEach((item, index) => {
@@ -1679,6 +1961,9 @@
 
         // Initialize the time wheels
         initTimeWheels();
+
+        // Set initial time restrictions if today is already selected
+        updateTimeRestrictions();
 
         /* ------------------------- Update time display from scrollable wheels ------------------------- */
         function updateTimeDisplay() {
@@ -1710,9 +1995,10 @@
             const year = current.getFullYear();
             const month = current.getMonth();
 
-            monthInput.value = `${current.toLocaleString("default", {
-        month: "long"
-    })} ${year}`;
+            monthInput.value = current.toLocaleString("default", {
+                month: "long"
+            });
+            yearInput.value = year;
 
             const firstDay = new Date(year, month, 1);
             const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -1732,7 +2018,16 @@
 
                 // Previous month click selects correct date
                 const prevDate = new Date(year, month - 1, dayNum);
-                div.onclick = () => selectDate(prevDate, div);
+
+                // Check if this previous month date is in the past
+                const isPastDate = prevDate < today && prevDate.toDateString() !== today.toDateString();
+
+                if (isPastDate) {
+                    div.classList.add("disabled");
+                    div.onclick = null;
+                } else {
+                    div.onclick = () => selectDate(prevDate, div);
+                }
 
                 datesContainer.appendChild(div);
             }
@@ -1744,16 +2039,18 @@
                 div.className = "date";
                 div.textContent = day;
 
+                // Check if this date is in the past
+                const isPastDate = dateObj < today && dateObj.toDateString() !== today.toDateString();
+
                 // highlight today
-                if (
-                    dateObj.toDateString() === today.toDateString()
-                ) {
+                if (dateObj.toDateString() === today.toDateString()) {
                     div.classList.add("today");
                 }
 
-                // disable past days in current month
-                if (year === minYear && month === minMonth && day < today.getDate()) {
+                // disable past days
+                if (isPastDate) {
                     div.classList.add("disabled");
+                    div.onclick = null; // Remove click handler
                 } else {
                     div.onclick = () => selectDate(dateObj, div);
                 }
@@ -1771,6 +2068,7 @@
                 div.textContent = i;
 
                 const nextDate = new Date(year, month + 1, i);
+                // Next month dates are always in the future, so they're always clickable
                 div.onclick = () => selectDate(nextDate, div);
 
                 datesContainer.appendChild(div);
@@ -1782,11 +2080,121 @@
         function selectDate(dateObj, div) {
             selectedDate = dateObj;
 
-            document.querySelectorAll(".date").forEach((d) => d.classList.remove("selected"));
+            // Remove selected and today classes from all dates
+            document.querySelectorAll(".date").forEach((d) => {
+                d.classList.remove("selected", "today");
+            });
+            
+            // Add selected class to the clicked date
             div.classList.add("selected");
+            
+            // If the selected date is today, also add the today class
+            if (dateObj.toDateString() === today.toDateString()) {
+                div.classList.add("today");
+            }
 
             updateAllSelectedDate(selectedDate.toDateString());
+
+            // Update time restrictions based on selected date
+            updateTimeRestrictions();
             updateTimeDisplay();
+        }
+
+        function updateTimeRestrictions() {
+            const timeRestrictionNotice = document.getElementById('timeRestrictionNotice');
+
+            if (!selectedDate) {
+                if (timeRestrictionNotice) timeRestrictionNotice.style.display = 'none';
+                return;
+            }
+
+            const isToday = selectedDate.toDateString() === today.toDateString();
+
+            if (isToday) {
+                restrictTimeToCurrentPlusOne();
+                if (timeRestrictionNotice) timeRestrictionNotice.style.display = 'block';
+            } else {
+                resetTimeRestrictions();
+                if (timeRestrictionNotice) timeRestrictionNotice.style.display = 'none';
+            }
+        }
+
+        function restrictTimeToCurrentPlusOne() {
+            const now = new Date();
+            let minHour = now.getHours() + 1; // At least 1 hour ahead
+            const minMinute = now.getMinutes();
+
+            // Handle hour overflow (if current time + 1 hour goes to next day)
+            if (minHour >= 24) {
+                minHour = 23; // Cap at 11 PM
+            }
+
+            // Convert to 12-hour format
+            let min12Hour = minHour > 12 ? minHour - 12 : minHour;
+            if (min12Hour === 0) min12Hour = 12;
+            const minAmPm = minHour >= 12 ? 'PM' : 'AM';
+
+            // Update time wheels to reflect restrictions
+            restrictTimeWheels(min12Hour, minMinute, minAmPm, minHour);
+        }
+
+        function resetTimeRestrictions() {
+            // Reset all time wheels to allow any time
+            resetTimeWheels();
+        }
+
+        function restrictTimeWheels(minHour, minMinute, minAmPm, originalMinHour) {
+            // Find the appropriate indices for minimum allowed time
+            const minAmPmIndex = minAmPm === 'AM' ? 0 : 1;
+            const minHourIndex = timeWheels.hour.items.findIndex(h => parseInt(h) === minHour);
+
+            // If current time selection is invalid, update to minimum allowed time
+            const currentHour = parseInt(timeWheels.hour.items[timeWheels.hour.currentIndex]);
+            const currentAmPm = timeWheels.ampm.items[timeWheels.ampm.currentIndex];
+            const currentMinute = parseInt(timeWheels.minute.items[timeWheels.minute.currentIndex]);
+
+            const currentAmPmIndex = currentAmPm === 'AM' ? 0 : 1;
+
+            // Convert current selection to 24-hour format for comparison
+            let current24Hour = currentHour;
+            if (currentAmPm === 'PM' && currentHour !== 12) {
+                current24Hour += 12;
+            } else if (currentAmPm === 'AM' && currentHour === 12) {
+                current24Hour = 0;
+            }
+
+            // Check if current time is invalid
+            let needsUpdate = false;
+
+            if (current24Hour < originalMinHour) {
+                needsUpdate = true;
+            } else if (current24Hour === originalMinHour && currentMinute < minMinute) {
+                needsUpdate = true;
+            }
+
+            if (needsUpdate) {
+                // Set to minimum allowed time
+                setWheelIndex('ampm', minAmPmIndex);
+                if (minHourIndex !== -1) {
+                    setWheelIndex('hour', minHourIndex);
+                }
+
+                // If same hour, set to minimum minute
+                if (current24Hour === originalMinHour) {
+                    const minMinuteIndex = timeWheels.minute.items.findIndex(m => parseInt(m) >= minMinute);
+                    if (minMinuteIndex !== -1) {
+                        setWheelIndex('minute', minMinuteIndex);
+                    }
+                }
+
+                // Set seconds to 00 for cleaner time
+                setWheelIndex('second', 0);
+            }
+        }
+
+        function resetTimeWheels() {
+            // No restrictions needed - all times are available
+            // Keep current selections as they are
         }
 
 
@@ -1823,32 +2231,99 @@
             }
         }
 
-        /* ------------------------- Month input typing block ------------------------- */
-        monthInput.addEventListener("change", () => {
-            const parts = monthInput.value.trim().split(" ");
-            if (parts.length !== 2) return;
+        /* ------------------------- Month and Year input handlers ------------------------- */
+        function updateCalendarFromInputs() {
+            const monthName = monthInput.value.trim();
+            const year = parseInt(yearInput.value);
 
-            const [monthName, yearStr] = parts;
-            const year = parseInt(yearStr);
-            const monthIndex = new Date(`${monthName} 1, ${year}`).getMonth();
+            if (!monthName || isNaN(year)) return;
 
-            if (isNaN(monthIndex)) return;
+            const monthIndex = monthNames.findIndex(month =>
+                month.toLowerCase() === monthName.toLowerCase()
+            );
+
+            if (monthIndex === -1) return;
             if (year < minYear) return;
-            if (year === minYear && monthIndex < minMonth) return; // too early
+            if (year === minYear && monthIndex < minMonth) return;
 
             current = new Date(year, monthIndex);
             renderCalendar();
+        }
+
+        // Month input with autocomplete
+        monthInput.addEventListener('input', (e) => {
+            const input = e.target.value;
+            if (input.length > 0) {
+                showMonthSuggestions(input);
+            } else {
+                hideMonthSuggestions();
+            }
+        });
+
+        monthInput.addEventListener('keydown', (e) => {
+            if (monthSuggestions.style.display === 'block') {
+                switch (e.key) {
+                    case 'ArrowDown':
+                        e.preventDefault();
+                        highlightSuggestion('down');
+                        break;
+                    case 'ArrowUp':
+                        e.preventDefault();
+                        highlightSuggestion('up');
+                        break;
+                    case 'Enter':
+                        e.preventDefault();
+                        if (!selectHighlightedSuggestion()) {
+                            updateCalendarFromInputs();
+                        }
+                        break;
+                    case 'Escape':
+                        e.preventDefault();
+                        hideMonthSuggestions();
+                        break;
+                }
+            } else if (e.key === 'Enter') {
+                updateCalendarFromInputs();
+            }
+        });
+
+        monthInput.addEventListener('blur', () => {
+            // Delay hiding to allow click on suggestions
+            setTimeout(() => {
+                hideMonthSuggestions();
+                updateCalendarFromInputs();
+            }, 150);
+        });
+
+        // Year input handler
+        yearInput.addEventListener('input', (e) => {
+            let year = parseInt(e.target.value);
+            if (year < minYear) {
+                e.target.value = minYear;
+            } else if (year > 2050) {
+                e.target.value = 2050;
+            }
+            updateCalendarFromInputs();
+        });
+        yearInput.addEventListener('change', updateCalendarFromInputs);
+
+        // Click outside to hide suggestions
+        document.addEventListener('click', (e) => {
+            const monthContainer = document.querySelector('.month-input-container');
+            if (!monthContainer.contains(e.target)) {
+                hideMonthSuggestions();
+            }
         });
 
 
 
-        
-        
+
+
 
         /* ------------------------- Initial render ------------------------- */
         renderCalendar();
 
-        
+
 
 
         /* ------------------------- Submit logic + modal ------------------------- */
