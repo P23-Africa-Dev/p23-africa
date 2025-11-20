@@ -113,7 +113,7 @@
 
     .schedule-conversation-section .left-content .info-content div.para p {
         color: #0d4036;
-    font-family: "GT Walsheim Trial Cn Lt";
+        font-family: "GT Walsheim Trial Cn Lt";
 
         font-size: 1.2rem;
         line-height: 1.2;
@@ -263,19 +263,17 @@
         opacity: 0.6;
     }
 
-    .date.today {
+    /* .date.today {
         background: #88C1B7;
         color: #0D4036 !important;
     } */
-
-
 
     .date.selected {
         background: #88C1B7;
         color: #0D4036 !important;
     }
 
-    #selectedDate {
+    .selected-date {
         margin-top: -1rem;
         font-family: "GT Walsheim Con";
         font-weight: 100;
@@ -293,6 +291,7 @@
 
     .timezone-row {
         display: flex;
+        gap: 30px;
         justify-content: space-between;
         margin-bottom: 15px;
     }
@@ -316,7 +315,7 @@
         font-size: 20px;
     }
 
-    #submitSchedule {
+    .submit-schedule {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -415,19 +414,19 @@
     }
 
     /* MODAL OVERLAY */
-    .modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: #565656;
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-        backdrop-filter: blur(2px);
-    }
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.5); /* <-- transparent white */
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    backdrop-filter: blur(5px); 
+}
 
     /* MODAL BOX */
     .modal-box {
@@ -444,27 +443,27 @@
         animation: fadeInUp 0.35s ease-out;
         font-family: "GT Walsheim Con";
 
-        width: 55vw;
+        width: 80vw;
     }
 
     .modal-box h3 {
         margin-bottom: 15px;
         color: #0D4036;
         font-family: "GT Walsheim Con";
-        font-size: 2rem;
+        font-size: 1.45rem;
         text-transform: capitalize;
         font-weight: bold;
 
     }
 
     .modal-box p {
-        font-size: 1.2rem;
-        max-width: 340px;
+        font-size: 0.9rem;
+        max-width: 240px;
         margin: 30px auto;
-  font-family: "GT Walsheim Trial Cn Lt";
+        font-family: "GT Walsheim Trial Cn Lt";
 
 
-        line-height: 1.2;
+        line-height: 1.26;
         /* margin-bottom: 30px; */
     }
 
@@ -482,7 +481,7 @@
         font-size: 0.7rem;
         letter-spacing: 0.8px;
         font-family: "GT Walsheim Pro";
-        border-radius: 6px;    
+        border-radius: 6px;
 
 
 
@@ -493,6 +492,7 @@
         color: #fff;
 
     }
+
     .modal-box .submit-btn-modal:last-of-type {
         background-color: transparent;
         border: 1px solid #DCDEE0;
@@ -656,12 +656,10 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 20px;
+        /* gap: 20px; */
         margin: 20px 0;
-        padding: 20px;
-        background: rgba(13, 64, 54, 0.3);
         border-radius: 12px;
-        border: 1px solid rgba(136, 193, 183, 0.2);
+        /* border: 1px solid rgba(136, 193, 183, 0.2); */
     }
 
     .time-wheel-container {
@@ -672,7 +670,7 @@
     }
 
     .time-wheel-container.ampm {
-        margin-left: 10px;
+        /* margin-left: 10px; */
     }
 
     .time-wheel-header {
@@ -690,9 +688,9 @@
         height: 120px;
         overflow: hidden;
         position: relative;
-        background: rgba(6, 34, 29, 0.6);
+        /* background: rgba(6, 34, 29, 0.6); */
         border-radius: 8px;
-        border: 1px solid rgba(136, 193, 183, 0.3);
+        /* border: 1px solid rgba(136, 193, 183, 0.3); */
     }
 
     .time-wheel-container.ampm .time-wheel {
@@ -711,7 +709,7 @@
         align-items: center;
         justify-content: center;
         font-size: 16px;
-        color: rgba(255, 255, 255, 0.6);
+        color: #4F4F4F;
         font-family: "GT Walsheim Con";
         cursor: pointer;
         transition: all 0.2s ease;
@@ -719,14 +717,14 @@
     }
 
     .time-wheel-item.active {
-        color: #88C1B7;
+        color: #fff;
         font-weight: bold;
         font-size: 18px;
-        background: rgba(136, 193, 183, 0.1);
+        /* background: rgba(136, 193, 183, 0.1); */
     }
 
     .time-wheel-item:hover {
-        color: rgba(136, 193, 183, 0.8);
+        /* color: rgba(136, 193, 183, 0.8); */
     }
 
     /* Selection indicators */
@@ -737,7 +735,7 @@
         left: 0;
         right: 0;
         height: 1px;
-        background: rgba(136, 193, 183, 0.5);
+        background: rgba(136, 193, 183, 0.3);
         z-index: 2;
     }
 
@@ -898,7 +896,7 @@
         }
 
         .left-content .para p {
-          font-family: "GT Walsheim Trial Cn Lt";
+            font-family: "GT Walsheim Trial Cn Lt";
 
             font-size: 19px;
             line-height: 1;
@@ -1029,6 +1027,10 @@
             gap: 0px;
         }
 
+        .timezone-row {
+            gap: 80px;
+        }
+
         .date {
             padding: 4px;
             width: 40px;
@@ -1044,6 +1046,36 @@
             margin-bottom: 1rem;
             transform: translate(-20px);
         }
+
+        .modal-box {
+            width: 55vw;
+
+        }
+
+        .modal-box h3 {
+         
+            font-size: 2rem;
+           
+
+        }
+
+        .modal-box p {
+            font-size: 1.2rem;
+            max-width: 340px;
+         
+        }
+
+  
+   
+
+ 
+
+        .modal-box .submit-btn-modal:last-of-type {
+         
+            margin-top: 20px;
+
+        }
+
 
 
     }
@@ -1071,7 +1103,7 @@
                             <!-- SUBMIT BUTTON -->
 
                             <div class="btn">
-                                <button id="submitSchedule">
+                                <button class="submit-schedule">
                                     Submit
                                     <div><img src="../img/right.png" alt="" /></div>
                                 </button>
@@ -1124,7 +1156,7 @@
 
                         <div class="output-box mobile">
                             <p><strong>Selected Date:</strong></p>
-                            <p id="selectedDate">—</p>
+                            <p class="selected-date">—</p>
                         </div>
 
                         <!-- TIME AREA  -->
@@ -1190,22 +1222,22 @@
                             <!-- SELECTED OUTPUT -->
                             <div class="output-box desktop">
                                 <p><strong>Selected Date:</strong></p>
-                                <p id="selectedDate">—</p>
+                                <p class="selected-date">—</p>
 
                                 <p style="margin-top: 10px">
                                     <strong>Selected Time:</strong>
                                 </p>
-                                <p id="selectedTime">—</p>
+                                <p class="selected-time">—</p>
                             </div>
                         </div>
 
                         <div class="output-box mobile">
                             <p style="margin-top: 10px"><strong>Selected Time:</strong></p>
-                            <p id="selectedTime">—</p>
+                            <p class="selected-time">—</p>
                         </div>
 
                         <div class="mobile-btn">
-                            <button id="submitSchedule">
+                            <button class="submit-schedule">
                                 Submit
                                 <div><img src="../img/right-colored-r.png" alt="" /></div>
                             </button>
@@ -1246,14 +1278,14 @@
         /* ------------------------- Elements ------------------------- */
         const datesContainer = document.getElementById("dates");
         const monthInput = document.getElementById("monthInput");
-        const selectedDateText = document.getElementById("selectedDate");
-        const selectedTimeText = document.getElementById("selectedTime");
+        // const selectedDateText = document.getElementById("selectedDate");
+        // const selectedTimeText = document.getElementById("selectedTime");
 
         const prevBtn = document.getElementById("prevMonth");
         const prevTooltip = document.querySelector(".prev-tooltip");
 
         /* Modal elements */
-        const submitBtn = document.getElementById("submitSchedule");
+        // const submitBtn = document.getElementById("submitSchedule");
         const modal = document.getElementById("scheduleModal");
         const modalDateText = document.getElementById("modalDateText");
         const modalTimeText = document.getElementById("modalTimeText");
@@ -1265,6 +1297,21 @@
         const minMonth = today.getMonth(); // 0-indexed
         let selectedDate = null;
         let current = new Date(minYear, minMonth);
+
+
+
+        function updateAllSelectedDate(dateString) {
+            document.querySelectorAll(".selected-date").forEach(el => {
+                el.textContent = dateString;
+            });
+        }
+
+        function updateAllSelectedTime(timeString) {
+            document.querySelectorAll(".selected-time").forEach(el => {
+                el.textContent = timeString;
+            });
+        }
+
 
         /* ------------------------- Custom Dropdown Component ------------------------- */
         /*
@@ -1640,8 +1687,9 @@
             const ampm = timeWheels.ampm.items[timeWheels.ampm.currentIndex];
             const tz = timezoneDropdown.getValue();
 
-            selectedTimeText.textContent = `${hour}:${minute}:${second} ${ampm} ${tz}`;
+            updateAllSelectedTime(`${hour}:${minute}:${second} ${ampm} ${tz}`);
         }
+
 
         function getSelectedTime() {
             const hour = timeWheels.hour.items[timeWheels.hour.currentIndex];
@@ -1730,18 +1778,16 @@
             updatePrevButtonState();
         }
 
-
         function selectDate(dateObj, div) {
             selectedDate = dateObj;
 
-            document
-                .querySelectorAll(".date")
-                .forEach((d) => d.classList.remove("selected"));
+            document.querySelectorAll(".date").forEach((d) => d.classList.remove("selected"));
             div.classList.add("selected");
 
-            selectedDateText.textContent = selectedDate.toDateString();
+            updateAllSelectedDate(selectedDate.toDateString());
             updateTimeDisplay();
         }
+
 
         /* ------------------------- Prev / Next month logic + tooltip ------------------------- */
 
@@ -1797,29 +1843,28 @@
         renderCalendar();
 
         /* ------------------------- Submit logic + modal ------------------------- */
-        submitBtn.onclick = () => {
-            // Validate date selected
-            if (!selectedDate) {
-                // inline friendly feedback
-                flashMessage("Please select a date before submitting.");
-                return;
-            }
+        document.querySelectorAll(".submit-schedule").forEach(btn => {
+            btn.onclick = () => {
 
-            // Validate time selected (scroll wheels always have values, so just get them)
-            const hour = timeWheels.hour.items[timeWheels.hour.currentIndex];
-            const minute = timeWheels.minute.items[timeWheels.minute.currentIndex];
-            const second = timeWheels.second.items[timeWheels.second.currentIndex];
-            const ampm = timeWheels.ampm.items[timeWheels.ampm.currentIndex];
+                if (!selectedDate) {
+                    flashMessage("Please select a date before submitting.");
+                    return;
+                }
 
-            // Populate modal text
-            modalDateText.textContent = "Date: " + selectedDate.toDateString();
-            modalTimeText.textContent =
-                "Time: " +
-                `${hour}:${minute}:${second} ${ampm} ${timezoneDropdown.getValue()}`;
+                const hour = timeWheels.hour.items[timeWheels.hour.currentIndex];
+                const minute = timeWheels.minute.items[timeWheels.minute.currentIndex];
+                const second = timeWheels.second.items[timeWheels.second.currentIndex];
+                const ampm = timeWheels.ampm.items[timeWheels.ampm.currentIndex];
 
-            // Show modal
-            modal.style.display = "flex";
-        };
+                modalDateText.textContent = "Date: " + selectedDate.toDateString();
+                modalTimeText.textContent =
+                    "Time: " +
+                    `${hour}:${minute}:${second} ${ampm} ${timezoneDropdown.getValue()}`;
+
+                modal.style.display = "flex";
+            };
+        });
+
 
         /* close modal */
         // closeModal.onclick = () => {
