@@ -253,6 +253,7 @@
         gap: 6px;
     }
 
+
     .date {
         padding: 10px 0;
         text-align: center;
@@ -260,6 +261,17 @@
         background: #0d403666;
         /* border: 1px solid #28352f; */
         color: #f2f2f2 !important;
+    }
+
+
+    .date.other-month {
+        color: #808080 !important;
+        opacity: 0.6;
+    }
+
+    .date.today {
+         background: #88C1B7;
+        color: #0D4036 !important;
     }
 
 
@@ -809,7 +821,7 @@
             max-width: 650px;
             margin: 0 auto;
             margin-right: 4rem;
-           
+
         }
 
         .nav-row {
@@ -823,17 +835,17 @@
             margin-top: 50px;
             max-width: 650px;
             margin: 0 auto;
-              background-color: transparent;
+            background-color: transparent;
             display: flex;
             margin-top: 2rem;
             margin-bottom: 5rem;
-            
-            
+
+
 
         }
 
-        .time-box-container{
-            background-color: #0d403666  ;
+        .time-box-container {
+            background-color: #0d403666;
             padding: 20px;
             border-radius: 10px;
         }
@@ -867,7 +879,7 @@
             transform: translate(-20px);
         }
 
-    
+
     }
 </style>
 @section('content')
@@ -1361,28 +1373,47 @@
             const month = current.getMonth();
 
             monthInput.value = `${current.toLocaleString("default", {
-    month: "long",
-  })} ${year}`;
+        month: "long"
+    })} ${year}`;
 
             const firstDay = new Date(year, month, 1);
             const daysInMonth = new Date(year, month + 1, 0).getDate();
             const startIndex = (firstDay.getDay() + 6) % 7;
 
+            const prevMonthDays = new Date(year, month, 0).getDate();
+
             datesContainer.innerHTML = "";
 
-            // Empty blocks before the first day
+            /* --------------------- PREVIOUS MONTH VISIBLE DAYS --------------------- */
             for (let i = 0; i < startIndex; i++) {
-                datesContainer.innerHTML += `<div></div>`;
+                const dayNum = prevMonthDays - startIndex + i + 1;
+                const div = document.createElement("div");
+                div.className = "date other-month";
+                div.textContent = dayNum;
+                div.dataset.date = `${year}-${month}-${dayNum}`;
+
+                // Previous month click selects correct date
+                const prevDate = new Date(year, month - 1, dayNum);
+                div.onclick = () => selectDate(prevDate, div);
+
+                datesContainer.appendChild(div);
             }
 
-            // Actual days
+            /* --------------------------- CURRENT MONTH DAYS --------------------------- */
             for (let day = 1; day <= daysInMonth; day++) {
                 const dateObj = new Date(year, month, day);
                 const div = document.createElement("div");
                 div.className = "date";
                 div.textContent = day;
 
-                // Disable past days in current month
+                // highlight today
+                if (
+                    dateObj.toDateString() === today.toDateString()
+                ) {
+                    div.classList.add("today");
+                }
+
+                // disable past days in current month
                 if (year === minYear && month === minMonth && day < today.getDate()) {
                     div.classList.add("disabled");
                 } else {
@@ -1392,8 +1423,24 @@
                 datesContainer.appendChild(div);
             }
 
+            /* ------------------------ NEXT MONTH VISIBLE DAYS ------------------------ */
+            const totalCells = startIndex + daysInMonth;
+            const remaining = 42 - totalCells; // 6 rows calendar
+
+            for (let i = 1; i <= remaining; i++) {
+                const div = document.createElement("div");
+                div.className = "date other-month";
+                div.textContent = i;
+
+                const nextDate = new Date(year, month + 1, i);
+                div.onclick = () => selectDate(nextDate, div);
+
+                datesContainer.appendChild(div);
+            }
+
             updatePrevButtonState();
         }
+
 
         function selectDate(dateObj, div) {
             selectedDate = dateObj;
