@@ -8,13 +8,22 @@ use Illuminate\Support\Facades\Log;
 use App\Mail\ContactFormMail;
 use App\Mail\ThankYouMail;
 use App\Models\ContactSubmission;
+use Illuminate\Support\Facades\Validator;
 
 class ContactController extends Controller
 {
     public function submitForm(Request $request)
     {
         try {
-            // Validate the request
+            // Check if this is from live capture (has session_id)
+            $sessionId = $request->input('session_id');
+            if ($sessionId) {
+                // If live capture is enabled, redirect to saveDraft with submission flag
+                $request->merge(['is_submission' => true]);
+                return $this->saveDraft($request);
+            }
+
+            // Validate the request for regular submission
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
                 'company_name' => 'required|string|max:255',
@@ -64,9 +73,11 @@ class ContactController extends Controller
                 'budget_range' => (int)$validated['budget_range'],
                 'ip_address' => $request->ip(),
                 'user_agent' => $request->userAgent(),
+                'status' => 'submitted',
+                'submitted_at' => now(),
             ];
 
-            // Store in database
+            // Store in database (this path only for non-live-capture submissions)
             $contactSubmission = ContactSubmission::create($sanitizedData);
 
             // Send emails
@@ -130,5 +141,178 @@ class ContactController extends Controller
 
             return redirect()->back()->with('error', 'An unexpected error occurred. Please try again later.');
         }
+    }
+
+    /**
+     * Save or update form draft as user types
+     */
+    public function saveDraft(Request $request)
+    {
+        try {
+            // Basic validation for draft saves - more lenient than final submission
+            $validator = Validator::make($request->all(), [
+                'session_id' => 'required|string|max:255',
+                'name' => 'nullable|string|max:255',
+                'company_name' => 'nullable|string|max:255',
+                'email' => 'nullable|email|max:255',
+                'phone' => 'nullable|string|max:20',
+                'country_code' => 'nullable|string|max:10',
+                'services' => 'nullable|string',
+                'message' => 'nullable|string|max:2000',
+                'budget_range' => 'nullable|numeric|min:0|max:10000',
+                'keystroke_count' => 'nullable|integer|min:0',
+                'field_interactions' => 'nullable|array',
+                'is_submission' => 'nullable|boolean'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid data provided',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            $data = $validator->validated();
+            $isSubmission = $data['is_submission'] ?? false;
+
+            // Parse services if provided
+            $services = [];
+            if (!empty($data['services'])) {
+                $services = array_map('trim', explode(',', $data['services']));
+                $services = array_filter($services);
+            }
+
+            // Prepare data for storage
+            $contactData = [
+                'session_id' => $data['session_id'],
+                'name' => !empty($data['name']) ? strip_tags($data['name']) : null,
+                'company_name' => !empty($data['company_name']) ? strip_tags($data['company_name']) : null,
+                'email' => !empty($data['email']) ? filter_var($data['email'], FILTER_SANITIZE_EMAIL) : null,
+                'phone' => !empty($data['phone']) ? strip_tags($data['phone']) : null,
+                'country_code' => !empty($data['country_code']) ? strip_tags($data['country_code']) : null,
+                'services' => $services,
+                'message' => !empty($data['message']) ? strip_tags($data['message']) : null,
+                'budget_range' => $data['budget_range'] ?? null,
+                'keystroke_count' => $data['keystroke_count'] ?? 0,
+                'field_interactions' => $data['field_interactions'] ?? null,
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+                'last_activity_at' => now(),
+            ];
+
+            // Find existing draft or create new one
+            $submission = ContactSubmission::where('session_id', $data['session_id'])
+                ->where('status', 'draft')
+                ->first();
+
+            if ($submission) {
+                // Update existing draft
+                $contactData['status'] = $isSubmission ? 'submitted' : 'draft';
+                if ($isSubmission) {
+                    $contactData['submitted_at'] = now();
+                }
+
+                $submission->update($contactData);
+
+                Log::info('Draft updated', [
+                    'session_id' => $data['session_id'],
+                    'submission_id' => $submission->id,
+                    'is_submission' => $isSubmission
+                ]);
+            } else {
+                // Create new draft
+                $contactData['status'] = $isSubmission ? 'submitted' : 'draft';
+                $contactData['draft_created_at'] = now();
+                if ($isSubmission) {
+                    $contactData['submitted_at'] = now();
+                }
+
+                $submission = ContactSubmission::create($contactData);
+
+                Log::info('New draft created', [
+                    'session_id' => $data['session_id'],
+                    'submission_id' => $submission->id,
+                    'is_submission' => $isSubmission
+                ]);
+            }
+
+            // If this is a final submission, send emails
+            if ($isSubmission && $submission->status === 'submitted') {
+                $this->sendSubmissionEmails($submission);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => $isSubmission ? 'Form submitted successfully!' : 'Draft saved',
+                'submission_id' => $submission->id,
+                'status' => $submission->status
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Draft save error', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'session_id' => $request->input('session_id'),
+                'input' => $request->all()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to save draft'
+            ], 500);
+        }
+    }
+
+    /**
+     * Send emails for completed submissions
+     */
+    private function sendSubmissionEmails(ContactSubmission $submission)
+    {
+        try {
+            $submissionData = $submission->toArray();
+
+            // Send to site owner
+            Mail::to('nurudeen@p23africa.com')->send(new ContactFormMail($submissionData));
+
+            // Send thank-you to user if email is provided
+            if ($submission->email) {
+                Mail::to($submission->email)->send(new ThankYouMail($submissionData));
+            }
+
+            // Update email sent timestamp
+            $submission->update(['email_sent_at' => now()]);
+
+            Log::info('Submission emails sent successfully', [
+                'submission_id' => $submission->id,
+                'email' => $submission->email
+            ]);
+        } catch (\Exception $mailException) {
+            Log::error('Failed to send submission emails', [
+                'error' => $mailException->getMessage(),
+                'submission_id' => $submission->id,
+                'email' => $submission->email
+            ]);
+        }
+    }
+
+    /**
+     * Get draft statistics for admin dashboard
+     */
+    public function getDraftStats()
+    {
+        $stats = [
+            'total_drafts' => ContactSubmission::drafts()->count(),
+            'today_drafts' => ContactSubmission::drafts()->whereDate('draft_created_at', today())->count(),
+            'active_sessions' => ContactSubmission::drafts()
+                ->where('last_activity_at', '>=', now()->subHours(24))
+                ->count(),
+            'avg_completion' => ContactSubmission::drafts()
+                ->get()
+                ->avg(function ($submission) {
+                    return $submission->getCompletionPercentage();
+                })
+        ];
+
+        return response()->json($stats);
     }
 }

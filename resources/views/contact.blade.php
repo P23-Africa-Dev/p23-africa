@@ -85,8 +85,8 @@
         justify-content: space-between;
         gap: -2px;
         padding: 0rem 2rem;
-    }  
-                           
+    }
+
     .contact-info-icons .icon {
         display: flex;
         justify-content: center;
@@ -139,7 +139,7 @@
         font-weight: 500;
         margin-left: 25px;
     }
-    
+
     /* WRAPPER */
     .name-field {
         position: relative;
@@ -1275,269 +1275,280 @@
 
                     <!-- Contact Form -->
                     <div class="contact-info-form">
-                        <form class="contact-info-form__container" action="{{ route('contact.submit') }}" method="POST"
-                            id="contactForm">
-                            @csrf
-                            <h2 class="contact-info-form__title">Leave us a message</h2>
+                        <x-live-form-capture form-selector="#contactForm" save-url="{{ route('contact.save-draft') }}"
+                            :save-interval="3000">
 
-                            <div class="contact-info-form__group name-field">
-                                <label class="floating-label">Full Name</label>
-                                <input type="text" name="name" class="floating-input @error('name') error @enderror"
-                                    value="{{ old('name') }}" />
-                                @error('name')
+                            <form class="contact-info-form__container" action="{{ route('contact.submit') }}" method="POST"
+                                id="contactForm">
+                                @csrf
+                                <h2 class="contact-info-form__title">Leave us a message</h2>
+
+                                <div class="contact-info-form__group name-field">
+                                    <label class="floating-label">Full Name</label>
+                                    <input type="text" name="name"
+                                        class="floating-input @error('name') error @enderror" value="{{ old('name') }}" />
+                                    @error('name')
+                                        <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
+                                            {{ $message }}</div>
+                                    @enderror
+                                </div>
+
+
+                                <div class="form-field2 country_with_phone">
+                                    <div class="contact-info-form__group full-width">
+                                        <label class="floating-label2">Country</label>
+                                        <div class="phone-row">
+                                            <!-- Country Flag Dropdown -->
+                                            <div class="country-select" id="countrySelect">
+                                                <div class="selected-country">
+                                                    <img src="https://flagcdn.com/w40/gb.png" alt="flag"
+                                                        class="flag-icon" />
+                                                    <span class="arrow">▼</span>
+                                                </div>
+
+                                                <ul class="country-list">
+                                                    <li data-code="+1" data-flag="us">
+                                                        <img src="https://flagcdn.com/w40/us.png" alt="" />
+                                                        United States (+1)
+                                                    </li>
+                                                    <li data-code="+1" data-flag="ca">
+                                                        <img src="https://flagcdn.com/w40/ca.png" alt="" />
+                                                        Canada (+1)
+                                                    </li>
+                                                    <li data-code="+44" data-flag="gb">
+                                                        <img src="https://flagcdn.com/w40/gb.png" alt="" />
+                                                        United Kingdom (+44)
+                                                    </li>
+                                                    <li data-code="+27" data-flag="za">
+                                                        <img src="https://flagcdn.com/w40/za.png" alt="" />
+                                                        South Africa (+27)
+                                                    </li>
+                                                    <li data-code="+234" data-flag="ng">
+                                                        <img src="https://flagcdn.com/w40/ng.png" alt="" />
+                                                        Nigeria (+234)
+                                                    </li>
+                                                    <li data-code="+254" data-flag="ke">
+                                                        <img src="https://flagcdn.com/w40/ke.png" alt="" />
+                                                        Kenya (+254)
+                                                    </li>
+                                                    <li data-code="+233" data-flag="gh">
+                                                        <img src="https://flagcdn.com/w40/gh.png" alt="" />
+                                                        Ghana (+233)
+                                                    </li>
+                                                    <li data-code="+255" data-flag="tz">
+                                                        <img src="https://flagcdn.com/w40/tz.png" alt="" />
+                                                        Tanzania (+255)
+                                                    </li>
+                                                    <li data-code="+256" data-flag="ug">
+                                                        <img src="https://flagcdn.com/w40/ug.png" alt="" />
+                                                        Uganda (+256)
+                                                    </li>
+                                                    <li data-code="+20" data-flag="eg">
+                                                        <img src="https://flagcdn.com/w40/eg.png" alt="" />
+                                                        Egypt (+20)
+                                                    </li>
+                                                    <li data-code="+212" data-flag="ma">
+                                                        <img src="https://flagcdn.com/w40/ma.png" alt="" />
+                                                        Morocco (+212)
+                                                    </li>
+                                                    <li data-code="+216" data-flag="tn">
+                                                        <img src="https://flagcdn.com/w40/tn.png" alt="" />
+                                                        Tunisia (+216)
+                                                    </li>
+                                                    <li data-code="+213" data-flag="dz">
+                                                        <img src="https://flagcdn.com/w40/dz.png" alt="" />
+                                                        Algeria (+213)
+                                                    </li>
+                                                    <li data-code="+250" data-flag="rw">
+                                                        <img src="https://flagcdn.com/w40/rw.png" alt="" />
+                                                        Rwanda (+250)
+                                                    </li>
+                                                    <li data-code="+91" data-flag="in">
+                                                        <img src="https://flagcdn.com/w40/in.png" alt="" />
+                                                        India (+91)
+                                                    </li>
+                                                    <li data-code="+61" data-flag="au">
+                                                        <img src="https://flagcdn.com/w40/au.png" alt="" />
+                                                        Australia (+61)
+                                                    </li>
+                                                    <li data-code="+86" data-flag="cn">
+                                                        <img src="https://flagcdn.com/w40/cn.png" alt="" />
+                                                        China (+86)
+                                                    </li>
+                                                    <li data-code="+971" data-flag="ae">
+                                                        <img src="https://flagcdn.com/w40/ae.png" alt="" />
+                                                        UAE (+971)
+                                                    </li>
+                                                    <li data-code="+33" data-flag="fr">
+                                                        <img src="https://flagcdn.com/w40/fr.png" alt="" />
+                                                        France (+33)
+                                                    </li>
+                                                    <li data-code="+49" data-flag="de">
+                                                        <img src="https://flagcdn.com/w40/de.png" alt="" />
+                                                        Germany (+49)
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <!-- Phone Input -->
+                                            <div class="phone-input-wrapper">
+                                                <label class="floating-phone">Phone Number</label>
+                                                <span class="prefix" id="phonePrefix">+44</span>
+                                                <input type="tel" id="phoneNumber" name="phone"
+                                                    class="floating-input phone @error('phone') error @enderror"
+                                                    placeholder="" value="{{ old('phone') }}" />
+                                                <!-- Hidden input for country code -->
+                                                <input type="hidden" id="countryCode" name="country_code"
+                                                    value="+44" />
+                                            </div>
+                                        </div>
+                                        @error('phone')
+                                            <div class="error-message"
+                                                style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                        @error('country_code')
+                                            <div class="error-message"
+                                                style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="form_group_field mt-2">
+
+                                    <div class="contact-info-form__group name-field emaill">
+                                        <label class="floating-label">Email</label>
+
+                                        <input type="email" name="email"
+                                            class="floating-input @error('email') error @enderror"
+                                            value="{{ old('email') }}" />
+                                        @error('email')
+                                            <div class="error-message"
+                                                style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
+                                                {{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+
+                                    <div class="contact-info-form__group name-field company">
+                                        <label class="floating-label">Company Name</label>
+                                        <input type="text" name="company_name"
+                                            class="floating-input @error('company_name') error @enderror"
+                                            value="{{ old('company_name') }}" />
+                                        @error('company_name')
+                                            <div class="error-message"
+                                                style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
+                                                {{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <!-- <div class="form-group2 field">
+                                                <div class="contact-info-form__group name-field">
+                                                                            <label class="floating-label">Phone Number</label>
+                                                                            <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
+                                                                                placeholder="+1234567890" value="{{ old('phone') }}" />
+                                                                            @error('phone')
+        <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
+                                                                                                                                {{ $message }}</div>
+    @enderror
+                                                                        </div>
+                                                                        </div> -->
+
+
+
+                                <div class="contact-info-form__section-title">
+                                    What service(s) do you require
+                                </div>
+                                <p class="contact-info-form__subtitle">
+                                    Select from the options
+                                </p>
+
+                                <div class="contact-info-form__tags">
+                                    <div class="tag" data-value="Advise">
+                                        <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
+                                        Advise
+                                    </div>
+
+                                    <div class="tag" data-value="Marketing">
+                                        <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
+                                        Marketing
+                                    </div>
+
+                                    <div class="d-flex gap-2">
+                                        <div class="tag" data-value="Sales">
+                                            <img class="tag-icon" src="{{ asset('img/unselected.png') }}"
+                                                alt="" />
+                                            Sales
+                                        </div>
+
+                                        <div class="tag" data-value="Launch">
+                                            <img class="tag-icon" src="{{ asset('img/unselected.png') }}"
+                                                alt="" />
+                                            Launch
+                                        </div>
+
+                                        <div class="tag" data-value="Expansion">
+                                            <img class="tag-icon" src="{{ asset('img/unselected.png') }}"
+                                                alt="" />
+                                            Expansion
+                                        </div>
+                                    </div>
+
+                                    <div class="tag" data-value="Mentorship">
+                                        <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
+                                        Mentorship
+                                    </div>
+
+                                    <div class="tag" data-value="Operations">
+                                        <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
+                                        Operations
+                                    </div>
+                                </div>
+
+                                <input type="hidden" name="services" id="selected-services"
+                                    value="{{ old('services') }}" />
+                                @error('services')
                                     <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
                                         {{ $message }}</div>
                                 @enderror
-                            </div>
 
-
-                            <div class="form-field2 country_with_phone">
-                                <div class="contact-info-form__group full-width">
-                                    <label class="floating-label2">Country</label>
-                                    <div class="phone-row">
-                                        <!-- Country Flag Dropdown -->
-                                        <div class="country-select" id="countrySelect">
-                                            <div class="selected-country">
-                                                <img src="https://flagcdn.com/w40/gb.png" alt="flag"
-                                                    class="flag-icon" />
-                                                <span class="arrow">▼</span>
-                                            </div>
-
-                                            <ul class="country-list">
-                                                <li data-code="+1" data-flag="us">
-                                                    <img src="https://flagcdn.com/w40/us.png" alt="" />
-                                                    United States (+1)
-                                                </li>
-                                                <li data-code="+1" data-flag="ca">
-                                                    <img src="https://flagcdn.com/w40/ca.png" alt="" />
-                                                    Canada (+1)
-                                                </li>
-                                                <li data-code="+44" data-flag="gb">
-                                                    <img src="https://flagcdn.com/w40/gb.png" alt="" />
-                                                    United Kingdom (+44)
-                                                </li>
-                                                <li data-code="+27" data-flag="za">
-                                                    <img src="https://flagcdn.com/w40/za.png" alt="" />
-                                                    South Africa (+27)
-                                                </li>
-                                                <li data-code="+234" data-flag="ng">
-                                                    <img src="https://flagcdn.com/w40/ng.png" alt="" />
-                                                    Nigeria (+234)
-                                                </li>
-                                                <li data-code="+254" data-flag="ke">
-                                                    <img src="https://flagcdn.com/w40/ke.png" alt="" />
-                                                    Kenya (+254)
-                                                </li>
-                                                <li data-code="+233" data-flag="gh">
-                                                    <img src="https://flagcdn.com/w40/gh.png" alt="" />
-                                                    Ghana (+233)
-                                                </li>
-                                                <li data-code="+255" data-flag="tz">
-                                                    <img src="https://flagcdn.com/w40/tz.png" alt="" />
-                                                    Tanzania (+255)
-                                                </li>
-                                                <li data-code="+256" data-flag="ug">
-                                                    <img src="https://flagcdn.com/w40/ug.png" alt="" />
-                                                    Uganda (+256)
-                                                </li>
-                                                <li data-code="+20" data-flag="eg">
-                                                    <img src="https://flagcdn.com/w40/eg.png" alt="" />
-                                                    Egypt (+20)
-                                                </li>
-                                                <li data-code="+212" data-flag="ma">
-                                                    <img src="https://flagcdn.com/w40/ma.png" alt="" />
-                                                    Morocco (+212)
-                                                </li>
-                                                <li data-code="+216" data-flag="tn">
-                                                    <img src="https://flagcdn.com/w40/tn.png" alt="" />
-                                                    Tunisia (+216)
-                                                </li>
-                                                <li data-code="+213" data-flag="dz">
-                                                    <img src="https://flagcdn.com/w40/dz.png" alt="" />
-                                                    Algeria (+213)
-                                                </li>
-                                                <li data-code="+250" data-flag="rw">
-                                                    <img src="https://flagcdn.com/w40/rw.png" alt="" />
-                                                    Rwanda (+250)
-                                                </li>
-                                                <li data-code="+91" data-flag="in">
-                                                    <img src="https://flagcdn.com/w40/in.png" alt="" />
-                                                    India (+91)
-                                                </li>
-                                                <li data-code="+61" data-flag="au">
-                                                    <img src="https://flagcdn.com/w40/au.png" alt="" />
-                                                    Australia (+61)
-                                                </li>
-                                                <li data-code="+86" data-flag="cn">
-                                                    <img src="https://flagcdn.com/w40/cn.png" alt="" />
-                                                    China (+86)
-                                                </li>
-                                                <li data-code="+971" data-flag="ae">
-                                                    <img src="https://flagcdn.com/w40/ae.png" alt="" />
-                                                    UAE (+971)
-                                                </li>
-                                                <li data-code="+33" data-flag="fr">
-                                                    <img src="https://flagcdn.com/w40/fr.png" alt="" />
-                                                    France (+33)
-                                                </li>
-                                                <li data-code="+49" data-flag="de">
-                                                    <img src="https://flagcdn.com/w40/de.png" alt="" />
-                                                    Germany (+49)
-                                                </li>
-                                            </ul>
-                                        </div>
-
-                                        <!-- Phone Input -->
-                                        <div class="phone-input-wrapper">
-                                            <label class="floating-phone">Phone Number</label>
-                                            <span class="prefix" id="phonePrefix">+44</span>
-                                            <input type="tel" id="phoneNumber" name="phone"
-                                                class="floating-input phone @error('phone') error @enderror"
-                                                placeholder="" value="{{ old('phone') }}" />
-                                            <!-- Hidden input for country code -->
-                                            <input type="hidden" id="countryCode" name="country_code" value="+44" />
-                                        </div>
-                                    </div>
-                                    @error('phone')
-                                        <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                    @error('country_code')
-                                        <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                            </div>
-
-
-
-
-                            <div class="form_group_field mt-2">
-
-                                <div class="contact-info-form__group name-field emaill">
-                                    <label class="floating-label">Email</label>
-
-                                    <input type="email" name="email"
-                                        class="floating-input @error('email') error @enderror"
-                                        value="{{ old('email') }}" />
-                                    @error('email')
-                                        <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
-                                            {{ $message }}</div>
-                                    @enderror
-                                </div>
-
-
-                                <div class="contact-info-form__group name-field company">
-                                    <label class="floating-label">Company Name</label>
-                                    <input type="text" name="company_name"
-                                        class="floating-input @error('company_name') error @enderror"
-                                        value="{{ old('company_name') }}" />
-                                    @error('company_name')
-                                        <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
-                                            {{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <!-- <div class="form-group2 field">
-                                        <div class="contact-info-form__group name-field">
-                                                                    <label class="floating-label">Phone Number</label>
-                                                                    <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
-                                                                        placeholder="+1234567890" value="{{ old('phone') }}" />
-                                                                    @error('phone')
-        <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
-                                                                                                                {{ $message }}</div>
-    @enderror
-                                                                </div>
-                                                                </div> -->
-
-
-
-                            <div class="contact-info-form__section-title">
-                                What service(s) do you require
-                            </div>
-                            <p class="contact-info-form__subtitle">
-                                Select from the options
-                            </p>
-
-                            <div class="contact-info-form__tags">
-                                <div class="tag" data-value="Advise">
-                                    <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
-                                    Advise
-                                </div>
-
-                                <div class="tag" data-value="Marketing">
-                                    <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
-                                    Marketing
-                                </div>
-
-                                <div class="d-flex gap-2">
-                                    <div class="tag" data-value="Sales">
-                                        <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
-                                        Sales
-                                    </div>
-
-                                    <div class="tag" data-value="Launch">
-                                        <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
-                                        Launch
-                                    </div>
-
-                                    <div class="tag" data-value="Expansion">
-                                        <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
-                                        Expansion
-                                    </div>
-                                </div>
-
-                                <div class="tag" data-value="Mentorship">
-                                    <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
-                                    Mentorship
-                                </div>
-
-                                <div class="tag" data-value="Operations">
-                                    <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
-                                    Operations
-                                </div>
-                            </div>
-
-                            <input type="hidden" name="services" id="selected-services"
-                                value="{{ old('services') }}" />
-                            @error('services')
-                                <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
-                                    {{ $message }}</div>
-                            @enderror
-
-                            <textarea name="message" class="contact-info-form__textarea @error('message') error @enderror"
-                                placeholder="Add additional message here">{{ old('message') }}</textarea>
-                            @error('message')
-                                <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
-                                    {{ $message }}</div>
-                            @enderror
-
-
-                            <!-- PRICE RANGE  -->
-                            <div class="form-price-container">
-                                <h2>Indicate your budget for support</h2>
-                                <p>Move toggle to your most preferred budget.</p>
-
-                                <div class="form-group price-range-group">
-
-                                    <div class="range-wrapper">
-                                        <span class="range-label">$100</span>
-                                        <div class="range-value" id="rangeValue">Please select budget</div>
-                                        <input type="range" id="priceRange" name="budget_range" min="100"
-                                            max="5000" value="{{ old('budget_range', 2500) }}" step="50"
-                                            data-touched="false" />
-                                        <span class="range-label">$Max</span>
-                                    </div>
-                                </div>
-                                @error('budget_range')
+                                <textarea name="message" class="contact-info-form__textarea @error('message') error @enderror"
+                                    placeholder="Add additional message here">{{ old('message') }}</textarea>
+                                @error('message')
                                     <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
-                                        {{ $message }}
-                                    </div>
+                                        {{ $message }}</div>
                                 @enderror
-                            </div>
+
+
+                                <!-- PRICE RANGE  -->
+                                <div class="form-price-container">
+                                    <h2>Indicate your budget for support</h2>
+                                    <p>Move toggle to your most preferred budget.</p>
+
+                                    <div class="form-group price-range-group">
+
+                                        <div class="range-wrapper">
+                                            <span class="range-label">$100</span>
+                                            <div class="range-value" id="rangeValue">Please select budget</div>
+                                            <input type="range" id="priceRange" name="budget_range" min="100"
+                                                max="5000" value="{{ old('budget_range', 2500) }}" step="50"
+                                                data-touched="false" />
+                                            <span class="range-label">$Max</span>
+                                        </div>
+                                    </div>
+                                    @error('budget_range')
+                                        <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
 
 
 
@@ -1545,18 +1556,19 @@
 
 
 
-                            <!-- reCAPTCHA v3 - Invisible -->
-                            <input type="hidden" id="recaptchaToken" name="g-recaptcha-response" value="">
-                            @error('g-recaptcha-response')
-                                <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
-                                    {{ $message }}</div>
-                            @enderror
+                                <!-- reCAPTCHA v3 - Invisible -->
+                                <input type="hidden" id="recaptchaToken" name="g-recaptcha-response" value="">
+                                @error('g-recaptcha-response')
+                                    <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
+                                        {{ $message }}</div>
+                                @enderror
 
-                            <button type="submit" class="contact-info-form__btn" id="submitBtn">
-                                <span class="btn-text">Send</span>
-                                <span class="spinner" style="display: none;">Sending...</span>
-                            </button>
-                        </form>
+                                <button type="submit" class="contact-info-form__btn" id="submitBtn">
+                                    <span class="btn-text">Send</span>
+                                    <span class="spinner" style="display: none;">Sending...</span>
+                                </button>
+                            </form>
+                        </x-live-form-capture>
                     </div>
                 </div>
                 <div class="right-row animate-on-scroll">
@@ -1634,6 +1646,9 @@
         </div>
     </div>
 
+    <!-- Alpine.js for Live Form Capture -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
     <script src="https://www.google.com/recaptcha/api.js?render=6LeSUwwsAAAAALMaU35MsAv8ffsAxFRAbE6xz1Ur"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -1677,8 +1692,8 @@
                 });
             });
 
-            // Popup functions
-            function showPopup(type, title, message) {
+            // Popup functions - make global for live form capture
+            window.showPopup = function(type, title, message) {
                 const overlay = document.getElementById('popupOverlay');
                 const modal = document.getElementById('popupModal');
                 const icon = document.getElementById('popupIcon');
@@ -1830,6 +1845,11 @@
                 btnText.style.display = 'none';
                 spinner.style.display = 'inline';
 
+                // Notify live form capture that validation passed
+                if (typeof window.notifyLiveFormCapture === 'function') {
+                    window.notifyLiveFormCapture('validationPassed');
+                }
+
                 // Execute reCAPTCHA v3
                 grecaptcha.ready(function() {
                     grecaptcha.execute('6LeSUwwsAAAAALMaU35MsAv8ffsAxFRAbE6xz1Ur', {
@@ -1868,32 +1888,35 @@
                                     resetButtonState();
 
                                     if (result.ok && result.data.success) {
-                                        // Success
-                                        showPopup('success', 'Message Sent!', result.data
-                                            .message ||
-                                            'Thank you for contacting us. We will get back to you soon!'
-                                        );
+                                        // Check if live form capture is handling this
+                                        if (typeof window.notifyLiveFormCapture === 'function') {
+                                            // Let live form capture handle everything
+                                            window.notifyLiveFormCapture('submissionSuccess', result.data);
+                                        } else {
+                                            // No live capture, handle success normally
+                                            showPopup('success', 'Message Sent!', result.data
+                                                .message ||
+                                                'Thank you for contacting us. We will get back to you soon!'
+                                            );
 
-                                        form.reset();
-                                        hiddenInput.value = '';
-                                        document.getElementById('recaptchaToken').value =
-                                            '';
+                                            form.reset();
+                                            hiddenInput.value = '';
+                                            document.getElementById('recaptchaToken').value = '';
 
-                                        document.querySelectorAll('.tag.selected').forEach(
-                                            tag => {
-                                                tag.classList.remove('selected');
-                                                tag.querySelector('.tag-icon').src =
-                                                    "{{ asset('img/unselected.png') }}";
-                                            });
+                                            document.querySelectorAll('.tag.selected').forEach(
+                                                tag => {
+                                                    tag.classList.remove('selected');
+                                                    tag.querySelector('.tag-icon').src =
+                                                        "{{ asset('img/unselected.png') }}";
+                                                });
 
-                                        // Reset slider
-                                        const rangeInput = document.getElementById(
-                                            "priceRange");
-                                        const rangeValue = document.getElementById(
-                                            "rangeValue");
-                                        if (rangeInput && rangeValue) {
-                                            rangeInput.value = '';
-                                            updateSlider();
+                                            // Reset slider
+                                            const rangeInput = document.getElementById("priceRange");
+                                            const rangeValue = document.getElementById("rangeValue");
+                                            if (rangeInput && rangeValue) {
+                                                rangeInput.value = '';
+                                                window.updateSlider();
+                                            }
                                         }
                                     } else if (result.status === 422) {
                                         // Validation errors
@@ -1924,12 +1947,29 @@
                                         // Other errors
                                         const errorMessage = result.data.message ||
                                             'There was an error sending your message. Please try again.';
+
+                                        // Notify live form capture of error
+                                        if (typeof window.notifyLiveFormCapture ===
+                                            'function') {
+                                            window.notifyLiveFormCapture('submissionError',
+                                                result.data);
+                                        }
+
                                         showPopup('error', 'Error', errorMessage);
                                     }
                                 })
                                 .catch(error => {
                                     console.error('Fetch Error:', error);
                                     resetButtonState();
+
+                                    // Notify live form capture of error
+                                    if (typeof window.notifyLiveFormCapture ===
+                                        'function') {
+                                        window.notifyLiveFormCapture('submissionError', {
+                                            message: 'Network error'
+                                        });
+                                    }
+
                                     showPopup('error', 'Error',
                                         'There was an error sending your message. Please try again.'
                                     );
@@ -1938,6 +1978,14 @@
                         .catch(function(error) {
                             console.error('reCAPTCHA error:', error);
                             resetButtonState();
+
+                            // Notify live form capture of error
+                            if (typeof window.notifyLiveFormCapture === 'function') {
+                                window.notifyLiveFormCapture('submissionError', {
+                                    message: 'reCAPTCHA error'
+                                });
+                            }
+
                             showPopup('error', 'Error',
                                 'reCAPTCHA verification failed. Please try again.');
                         });
@@ -2128,7 +2176,8 @@
             const rangeInput = document.getElementById("priceRange");
             const rangeValue = document.getElementById("rangeValue");
 
-            function updateSlider() {
+            // Make updateSlider global for live form capture
+            window.updateSlider = function() {
                 const value = +rangeInput.value;
                 const min = +rangeInput.min;
                 const max = +rangeInput.max;
@@ -2150,13 +2199,13 @@
             }
 
             // Initialize slider
-            updateSlider();
+            window.updateSlider();
 
             // Handle slider input and mark as touched
             rangeInput.addEventListener("input", function() {
                 // Mark as touched when user interacts
                 rangeInput.setAttribute('data-touched', 'true');
-                updateSlider();
+                window.updateSlider();
             });
 
             // Helper function for email validation

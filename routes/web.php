@@ -233,6 +233,7 @@ Route::get('/thank-you', function () {
 // })->name('events.all-events');
 
 Route::post('/contact', [ContactController::class, 'submitForm'])->middleware('throttle:5,1')->name('contact.submit');
+Route::post('/contact/save-draft', [ContactController::class, 'saveDraft'])->middleware('throttle:30,1')->name('contact.save-draft');
 
 // Advanced tracking endpoint
 Route::post('/track-advanced', [\App\Http\Controllers\AdvancedTrackingController::class, 'track'])->name('track.advanced');
