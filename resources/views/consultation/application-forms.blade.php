@@ -47,8 +47,7 @@
         padding: 20px 25px 37px 25px;
         border-radius: 25px;
         overflow: hidden;
-        /* box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.4),
-            0px -14px 15px -3px rgba(0, 0, 0, 0.1); */
+
 
         box-shadow: 0px 9px 15px -8px rgba(0, 0, 0, 0.8);
 
