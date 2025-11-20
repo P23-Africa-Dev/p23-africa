@@ -1450,16 +1450,16 @@
                                 </div>
 
                                 <!-- <div class="form-group2 field">
-                                                    <div class="contact-info-form__group name-field">
-                                                                                <label class="floating-label">Phone Number</label>
-                                                                                <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
-                                                                                    placeholder="+1234567890" value="{{ old('phone') }}" />
-                                                                                @error('phone')
+                                                        <div class="contact-info-form__group name-field">
+                                                                                    <label class="floating-label">Phone Number</label>
+                                                                                    <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
+                                                                                        placeholder="+1234567890" value="{{ old('phone') }}" />
+                                                                                    @error('phone')
         <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
-                                                                                                                                        {{ $message }}</div>
+                                                                                                                                                {{ $message }}</div>
     @enderror
-                                                                            </div>
-                                                                            </div> -->
+                                                                                </div>
+                                                                                </div> -->
 
 
 
@@ -1659,6 +1659,10 @@
             const btnText = submitBtn.querySelector('.btn-text');
             const spinner = submitBtn.querySelector('.spinner');
 
+            // Track submission state to prevent multiple submissions
+            let isSubmitting = false;
+            let submissionComplete = false;
+
             // Initialize with old values if present
             const oldServices = hiddenInput.value;
             if (oldServices) {
@@ -1733,6 +1737,12 @@
             // Form submission
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
+
+                // Prevent multiple submissions
+                if (isSubmitting || submissionComplete) {
+                    console.log('Submission already in progress or completed');
+                    return;
+                }
 
                 // Clear previous errors
                 clearAllErrors();
@@ -1841,6 +1851,7 @@
                 }
 
                 // Show loading state
+                isSubmitting = true;
                 submitBtn.disabled = true;
                 btnText.style.display = 'none';
                 spinner.style.display = 'inline';
@@ -1888,6 +1899,7 @@
                                     resetButtonState();
 
                                     if (result.ok && result.data.success) {
+                                        submissionComplete = true;
                                         // Check if live form capture is handling this
                                         if (typeof window.notifyLiveFormCapture ===
                                             'function') {
@@ -1902,28 +1914,7 @@
                                                 'Thank you for contacting us. We will get back to you soon!'
                                             );
 
-                                            form.reset();
-                                            hiddenInput.value = '';
-                                            document.getElementById('recaptchaToken')
-                                                .value = '';
-
-                                            document.querySelectorAll('.tag.selected')
-                                                .forEach(
-                                                    tag => {
-                                                        tag.classList.remove('selected');
-                                                        tag.querySelector('.tag-icon').src =
-                                                            "{{ asset('img/unselected.png') }}";
-                                                    });
-
-                                            // Reset slider
-                                            const rangeInput = document.getElementById(
-                                                "priceRange");
-                                            const rangeValue = document.getElementById(
-                                                "rangeValue");
-                                            if (rangeInput && rangeValue) {
-                                                rangeInput.value = '';
-                                                window.updateSlider();
-                                            }
+                                            resetForm();
                                         }
                                     } else if (result.status === 422) {
                                         // Validation errors
@@ -2129,7 +2120,10 @@
             }
 
             function resetButtonState() {
-                submitBtn.disabled = false;
+                isSubmitting = false;
+                if (!submissionComplete) {
+                    submitBtn.disabled = false;
+                }
                 btnText.style.display = 'inline';
                 spinner.style.display = 'none';
             }
@@ -2235,6 +2229,33 @@
 
                 // Insert error message after the element
                 element.insertAdjacentElement('afterend', errorDiv);
+            }
+
+            // Helper function to reset form after successful submission
+            function resetForm() {
+                form.reset();
+                hiddenInput.value = '';
+                document.getElementById('recaptchaToken').value = '';
+
+                // Reset service tags
+                document.querySelectorAll('.tag.selected').forEach(tag => {
+                    tag.classList.remove('selected');
+                    tag.querySelector('.tag-icon').src = "{{ asset('img/unselected.png') }}";
+                });
+
+                // Reset slider
+                const rangeInput = document.getElementById("priceRange");
+                const rangeValue = document.getElementById("rangeValue");
+                if (rangeInput && rangeValue) {
+                    rangeInput.value = '';
+                    rangeInput.removeAttribute('data-touched');
+                    window.updateSlider();
+                }
+
+                // Reset submission states
+                submissionComplete = false;
+                isSubmitting = false;
+                submitBtn.disabled = false;
             }
         });
     </script>
