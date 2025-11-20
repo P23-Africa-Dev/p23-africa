@@ -22,6 +22,13 @@
 <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>  -->
 
 <style>
+    /* body{
+   background-image: url(../img/bg-effect.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+
+    } */
     .multistep-form-container {
         background-image: url(../img/bg-effect.png);
         background-repeat: no-repeat;
@@ -475,7 +482,7 @@
         line-height: 1.1;
         pointer-events: none;
         font-family: "GT Walsheim Con";
-        padding: 0px 10px;
+        padding: 0px 8px;
         letter-spacing: 0.7px;
         max-width: 115px;
     }
@@ -620,8 +627,9 @@
         .step-counter-container {
             position: absolute;
             top: -60px;
-            left: 12%;
+            left: 10%;
             transform: translateX(-50%);
+            /* border: 1px solid red; */
         }
 
         .step-divider {
@@ -701,6 +709,7 @@
             height: 120px;
             margin-top: -3.5rem;
         }
+
         .form-grid .grid-input.outcome-input textarea {
             /* height: 130px; */
             margin-top: 0rem;
@@ -753,13 +762,13 @@
             font-size: 0.9rem;
             max-width: 150px;
             margin: 0 auto;
-            padding: 0px 15px;
+            padding: 0px 18px;
         }
     }
 
     @media (min-width: 1440px) {
         .multistep-form-container {
-            margin-top: 100px;
+            padding-top: 20px;
         }
 
         .step-counter-container {
@@ -802,9 +811,9 @@
         }
 
         .goal-text {
-            max-width: 100%;
+            max-width: 130px;
+            padding: 0px 3px;
         }
-
 
     }
 </style>
@@ -1241,5 +1250,23 @@
                 window.location.href = "consultation-summary.html";
             });
         }
+
+
+        // === Apply max-width rule for long goal-text ===
+        function adjustGoalTextWidths() {
+            const goalTexts = document.querySelectorAll(".goal-card .goal-text");
+
+            goalTexts.forEach(text => {
+                const wordCount = text.textContent.trim().split(/\s+/).length;
+
+                if (wordCount > 4) {
+                    text.style.maxWidth = "100%";
+                }
+            });
+        }
+
+        // Run immediately after DOM loads
+        adjustGoalTextWidths();
+
     });
 </script>

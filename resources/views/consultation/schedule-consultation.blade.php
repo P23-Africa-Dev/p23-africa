@@ -414,19 +414,20 @@
     }
 
     /* MODAL OVERLAY */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.5); /* <-- transparent white */
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    backdrop-filter: blur(5px); 
-}
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.5);
+        /* <-- transparent white */
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        backdrop-filter: blur(5px);
+    }
 
     /* MODAL BOX */
     .modal-box {
@@ -1053,25 +1054,25 @@
         }
 
         .modal-box h3 {
-         
+
             font-size: 2rem;
-           
+
 
         }
 
         .modal-box p {
             font-size: 1.2rem;
             max-width: 340px;
-         
+
         }
 
-  
-   
 
- 
+
+
+
 
         .modal-box .submit-btn-modal:last-of-type {
-         
+
             margin-top: 20px;
 
         }
@@ -1839,15 +1840,28 @@
             renderCalendar();
         });
 
+        
+
         /* ------------------------- Initial render ------------------------- */
         renderCalendar();
 
+
         /* ------------------------- Submit logic + modal ------------------------- */
         document.querySelectorAll(".submit-schedule").forEach(btn => {
+
+            // Track which button was last clicked (needed for flashMessage positioning)
+            btn.addEventListener("click", () => {
+                document.querySelectorAll(".submit-schedule")
+                    .forEach(b => b.classList.remove("last-clicked"));
+
+                btn.classList.add("last-clicked");
+            });
+
+            // Main submit action
             btn.onclick = () => {
 
                 if (!selectedDate) {
-                    flashMessage("Please select a date before submitting.");
+                    flashMessage("Please select a date before submitting.", btn);
                     return;
                 }
 
@@ -1866,10 +1880,7 @@
         });
 
 
-        /* close modal */
-        // closeModal.onclick = () => {
-        //     modal.style.display = "none";
-        // };
+
 
         /* close if clicking outside */
         modal.addEventListener("click", (e) => {
@@ -1880,32 +1891,34 @@
         });
 
         /* small inline flash function instead of alert */
-        function flashMessage(msg, attachTo = submitBtn) {
+        function flashMessage(msg, attachTo = null) {
             const flashContainer = document.getElementById("flashContainer");
+
+            // If no element was passed, use the button that last triggered submission
+            if (!attachTo) {
+                attachTo = document.querySelector(".submit-schedule.last-clicked");
+            }
+
+            // Fallback: first submit button if none marked yet
+            if (!attachTo) {
+                attachTo = document.querySelector(".submit-schedule");
+            }
 
             const toast = document.createElement("div");
             toast.className = "flash-msg";
             toast.textContent = msg;
 
-            // Get button position
             const rect = attachTo.getBoundingClientRect();
-            const top = rect.top + window.scrollY - 50; // above button
-            const left = rect.left + window.scrollX;
-
-            toast.style.top = `${top}px`;
-            toast.style.left = `${left}px`;
+            toast.style.top = rect.top + window.scrollY - 50 + "px";
+            toast.style.left = rect.left + window.scrollX + "px";
 
             flashContainer.appendChild(toast);
 
-            // Fade in
             requestAnimationFrame(() => toast.classList.add("show"));
-
-            // Fade out
             setTimeout(() => toast.classList.add("hide"), 2000);
-
-            // Remove fully
             setTimeout(() => toast.remove(), 2600);
         }
+
 
         /* ------------------------- Accessibility: keyboard open/close for dropdowns ------------------------- */
         /* Provide space/enter to open focused dropdowns */
