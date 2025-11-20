@@ -27,6 +27,16 @@ class ContactController extends Controller
     {
         $query = ContactSubmission::query()->orderBy('created_at', 'desc');
 
+        // Filter by status
+        if ($request->filled('status')) {
+            $status = $request->get('status');
+            if ($status === 'draft') {
+                $query->drafts();
+            } elseif ($status === 'submitted') {
+                $query->submitted();
+            }
+        }
+
         // Search functionality
         if ($request->filled('search')) {
             $search = $request->get('search');
@@ -61,13 +71,19 @@ class ContactController extends Controller
         // Get statistics
         $stats = [
             'total_contacts' => ContactSubmission::count(),
+            'total_submitted' => ContactSubmission::submitted()->count(),
+            'total_drafts' => ContactSubmission::drafts()->count(),
             'today_contacts' => ContactSubmission::whereDate('created_at', today())->count(),
+            'today_drafts' => ContactSubmission::drafts()->whereDate('draft_created_at', today())->count(),
             'this_week_contacts' => ContactSubmission::whereBetween('created_at', [
                 now()->startOfWeek(),
                 now()->endOfWeek()
             ])->count(),
             'this_month_contacts' => ContactSubmission::whereMonth('created_at', now()->month)
                 ->whereYear('created_at', now()->year)
+                ->count(),
+            'active_drafts' => ContactSubmission::drafts()
+                ->where('last_activity_at', '>=', now()->subHours(24))
                 ->count(),
         ];
 

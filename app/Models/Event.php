@@ -20,7 +20,13 @@ class Event extends Model
         'event_time',
         'venue',
         'display',
-        'image'
+        'image',
+        'booking_fields',
+        'visibility'
+    ];
+
+    protected $casts = [
+        'booking_fields' => 'array'
     ];
 
     // public function isPublic()
@@ -37,6 +43,26 @@ class Event extends Model
     public function feedbacks()
     {
         return $this->hasMany(Feedback::class);
+    }
+
+    public function getBookingFields()
+    {
+        return $this->booking_fields ?? ['name', 'email']; // Default fields
+    }
+
+    public static function getAvailableBookingFields()
+    {
+        return [
+            'name' => 'Name',
+            'email' => 'Email',
+            'phone' => 'Phone',
+            'job_title' => 'Job Title',
+            'organization' => 'Organization',
+            'location' => 'Location',
+            'industry' => 'Industry',
+            'expectations' => 'Expectations',
+            'referral_source' => 'How did you hear about us?'
+        ];
     }
 
     public static function boot()

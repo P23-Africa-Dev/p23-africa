@@ -64,6 +64,25 @@
         background: #218838;
         color: white;
     }
+
+    .hero-text a {
+        margin-top: 5px;
+        padding: 20px 40px !important;
+        border-radius: 10px;
+        font-size: 20px;
+        font-weight: 400;
+        width: 38% !important;
+    }
+
+    @media screen and (max-width: 580px) {
+        .hero-text a {
+            margin-top: -15px;
+            padding: 20px 50px !important;
+            border-radius: 10px;
+            font-size: 20px;
+            width: 70% !important;
+        }
+    }
 </style>
 
 @section('content')
@@ -81,8 +100,10 @@
                                 class="mx-1"></span>practical solutions that fit their needs.
                         </p>
                         <br>
-                        <a href="{{ url('contact') }}" class="d-flex justify-content-between"><span>Book a Consultation</span>
+                        <div>
+                            <a href="{{ url('contact') }}" class="d-flex justify-content-between"><span>Contact Us</span>
                             <span>→</span></a>
+                        </div>
                     </div>
                     <div class="col-md-5 animated-images mt-5 mt-md-0">
                         <div class="fade-overlay fade-top"></div>
@@ -330,7 +351,7 @@
                     <div class="bottom-bar"></div>
                 </div>
                 <div class="col-md-6 insight-text">
-                    <p class="date">1st May 2025</p>
+                    <p class="date">17th November 2025</p>
                     <h3><b> Essential Guide to Doing Business in Africa</b></h3>
                     <p class="description">
                         Our essential guide helps foreign investors navigate Africa’s diverse markets, build local
@@ -371,42 +392,45 @@
                     @endif
                 </div>
             @endforeach --}}
-            <div class="insight-card">
+            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/funding.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
-                    <div class="date">30th April 2025</div>
+                    <div class="date">2nd November 2025</div>
                     <h5>State of Funding 2025</h5>
-                    <p>Africa’s funding landscape in 2025 shows steady growth, but challenges like tighter global capital and cautious investor sentiment remain.</p>
+                    <p>Africa’s funding landscape in 2025 shows steady growth, but challenges like tighter global capital
+                        and cautious investor sentiment remain.</p>
                 </div>
-            </div>
-            
-            <div class="insight-card">
+            </a>
+
+            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/girl.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
-                    <div class="date">1st May 2025</div>
+                    <div class="date">10th November 2025</div>
                     <h5>Understanding buyer habits</h5>
-                    <p>Buyer habits in Africa are evolving fast, driven by digital adoption and a growing middle class, but differences across regions and trust issues still pose challenges.</p>
+                    <p>Buyer habits in Africa are evolving fast, driven by digital adoption and a growing middle class, but
+                        differences across regions and trust issues still pose challenges.</p>
                 </div>
-            </div>
+            </a>
 
-            <div class="insight-card">
+            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/plant.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
-                    <div class="date">2nd May 2025</div>
+                    <div class="date">22nd October 2025</div>
                     <h5>Top Agri sectors to watch</h5>
-                    <p>Africa’s agriculture sector is full of opportunity, with agri-tech, food processing, and sustainable farming emerging as key areas to watch.</p>
+                    <p>Africa’s agriculture sector is full of opportunity, with agri-tech, food processing, and sustainable
+                        farming emerging as key areas to watch.</p>
                 </div>
-            </div>
+            </a>
 
-            <div class="insight-card">
+            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/carousel00.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
-                    <div class="date">5th May 2025</div>
+                    <div class="date">9th October 2025</div>
                     <h5>Business trends 2025</h5>
                     <p>Business trends in Africa are evolving rapidly, with growth in digital transformation, green energy,
                         and emerging markets driving new opportunities across the continent.</p>
                 </div>
-            </div>
+            </a>
 
             <!-- Duplicate Set for Seamless Loop -->
             {{-- @foreach ($blogs as $blog)
@@ -436,42 +460,45 @@
                 </div>
             @endforeach --}}
 
-            <div class="insight-card">
+            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/funding.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
-                    <div class="date">30th April 2025</div>
+                    <div class="date">2nd November 2025</div>
                     <h5>State of Funding 2025</h5>
-                    <p>Africa’s funding landscape in 2025 shows steady growth, but challenges like tighter global capital and cautious investor sentiment remain.</p>
+                    <p>Africa’s funding landscape in 2025 shows steady growth, but challenges like tighter global capital
+                        and cautious investor sentiment remain.</p>
                 </div>
-            </div>
+            </a>
 
-            <div class="insight-card">
+            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/girl.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
-                    <div class="date">1st May 2025</div>
+                    <div class="date">10th November 2025</div>
                     <h5>Understanding buyer habits</h5>
-                    <p>Buyer habits in Africa are evolving fast, driven by digital adoption and a growing middle class, but differences across regions and trust issues still pose challenges.</p>
+                    <p>Buyer habits in Africa are evolving fast, driven by digital adoption and a growing middle class, but
+                        differences across regions and trust issues still pose challenges.</p>
                 </div>
-            </div>
+            </a>
 
-            <div class="insight-card">
+            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/plant.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
-                    <div class="date">2nd May 2025</div>
+                    <div class="date">22nd October 2025</div>
                     <h5>Top Agri sectors to watch</h5>
-                    <p>Africa’s agriculture sector is full of opportunity, with agri-tech, food processing, and sustainable farming emerging as key areas to watch.</p>
+                    <p>Africa’s agriculture sector is full of opportunity, with agri-tech, food processing, and sustainable
+                        farming emerging as key areas to watch.</p>
                 </div>
-            </div>
+            </a>
 
-            <div class="insight-card">
+            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/carousel00.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
-                    <div class="date">5th May 2025</div>
-                    <h5>Business Trends 2025</h5>
+                    <div class="date">9th October 2025</div>
+                    <h5>Business trends 2025</h5>
                     <p>Business trends in Africa are evolving rapidly, with growth in digital transformation, green energy,
                         and emerging markets driving new opportunities across the continent.</p>
                 </div>
-            </div>
+            </a>
         </div>
 
         <div id="btn" class="mt-4">

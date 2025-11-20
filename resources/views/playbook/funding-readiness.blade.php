@@ -808,7 +808,7 @@
                             African entrepreneurs.
                         </p>
 
-                        <a href="#getGuide" class="cta-btn">Find Out More</a>
+                        <a href="" class="cta-btn open-modal-btn">Download Now</a>
                     </div>
 
 
@@ -860,7 +860,7 @@
                     on your next move.
                 </p>
 
-                <a href="#" class="cta-btn" id="openModal">Get My Free Guide Now</a>
+                <a href="" class="cta-btn open-modal-btn">Get My Free Guide Now</a>
             </div>
         </div>
     </section>
@@ -980,7 +980,7 @@
         // Set up CSRF token for AJAX requests
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-        const openModal = document.getElementById("openModal");
+        const openModalBtns = document.querySelectorAll(".open-modal-btn");
         const closeModal = document.getElementById("closeModal");
         const modalOverlay = document.getElementById("modalOverlay");
         const downloadForm = document.getElementById("downloadForm");
@@ -992,12 +992,14 @@
         const successPopupMessage = document.getElementById("successPopupMessage");
         const closeSuccessPopup = document.getElementById("closeSuccessPopup");
 
-        // Modal controls
-        openModal.addEventListener("click", (e) => {
-            e.preventDefault();
-            modalOverlay.classList.add("active");
-            clearErrors();
-            clearSuccess();
+        // Modal controls - Handle multiple buttons
+        openModalBtns.forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                e.preventDefault();
+                modalOverlay.classList.add("active");
+                clearErrors();
+                clearSuccess();
+            });
         });
 
         closeModal.addEventListener("click", () => {

@@ -162,7 +162,6 @@ Route::post('/submit-student', [submitStudent::class, 'submitStudent']);
  * Route to display click counts.
  */
 
-
 Route::get('/resource-hub', [ResourceHubController::class, 'resourceHub'])->name('resource-hub');
 Route::get('/resource/{slug}', [ResourceHubController::class, 'resourceDetails'])->name('resource-show');
 Route::get('/res/category/{slug}', [ResourceHubController::class, 'categoryView'])->name('archive.category');
@@ -242,12 +241,17 @@ Route::get('/book-consultation/payment-success', function () {
 Route::get('/book-consultation/schedule-consultation', function () {
     return view('consultation.schedule-consultation');
 })->name('consultation.schedule-consultation');
+Route::get('/thank-you', function () {
+    return view('emails.thank-you');
+})->name('feedback.thankyou');
+
 // Route::get('/events/all-events', function () {
 //     $events = Event::all();
 //     return view('all-events', compact('events'));
 // })->name('events.all-events');
 
 Route::post('/contact', [ContactController::class, 'submitForm'])->middleware('throttle:5,1')->name('contact.submit');
+Route::post('/contact/save-draft', [ContactController::class, 'saveDraft'])->middleware('throttle:30,1')->name('contact.save-draft');
 
 // Advanced tracking endpoint
 Route::post('/track-advanced', [\App\Http\Controllers\AdvancedTrackingController::class, 'track'])->name('track.advanced');
@@ -301,6 +305,7 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|staff'])->prefix('admi
 
     Route::resource('/events', EventController::class);
     Route::get('/events/{event}/bookings', [EventController::class, 'showBookings'])->name('events.bookings');
+    Route::get('/events/booking-fields', [EventController::class, 'getBookingFields'])->name('events.booking-fields');
 
     Route::get('/events/{event}/clicks', [EventController::class, 'viewClicks'])->name('events.clicks');
     // });

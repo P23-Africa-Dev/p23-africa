@@ -90,7 +90,7 @@
 
     .intro-sales .cta-btn {
         display: inline-block;
-        padding: 0.9rem 4rem;
+        padding: 0.9rem 2rem;
         background: #52ccb4;
         font-family: "GT Walsheim Trial Cn Md";
 
@@ -102,6 +102,7 @@
         text-decoration: none;
         box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
         margin-top: 15px;
+        text-align: center;
     }
 
     /* =========================================BOOK SECTION */
@@ -935,7 +936,7 @@
                         the right capital faster.
                     </p>
 
-                    <a href="#getGuide" class="cta-btn">Find Out More</a>
+                    <a href="{{ route('playbook.checkout') }}" class="cta-btn">Download Now</a>
                 </div>
 
                 <div class="intro-image desktop">

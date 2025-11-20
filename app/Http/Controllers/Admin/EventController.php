@@ -29,7 +29,7 @@ class EventController extends Controller
             ->orderByRaw("CASE WHEN CONCAT(event_date, ' ', event_time) >= ? THEN 0 ELSE 1 END", [$now])
             ->orderBy('event_date')
             ->orderBy('event_time')
-            ->get();
+            ->paginate(10);
         // $events = Event::latest()->get();
 
 
@@ -60,12 +60,29 @@ class EventController extends Controller
             'subtitle' => 'nullable|string|max:255',
             'description' => 'required|string',
             'link' => 'nullable|url',
-            'event_date' => 'required|date',
+            'event_date' => 'required|date|after_or_equal:today',
             'event_time' => 'required',
             'venue' => 'required|string|max:255',
-            'image' => 'nullable',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'visibility' => 'required|in:public,private',
             'display' => 'required|in:open_to_all,event_only,brn_only',
+            'booking_fields' => 'nullable|array',
+            'booking_fields.*' => 'string',
+        ], [
+            'title.required' => 'Event title is required.',
+            'title.max' => 'Event title cannot exceed 255 characters.',
+            'description.required' => 'Event description is required.',
+            'link.url' => 'Please enter a valid URL (e.g., https://example.com).',
+            'event_date.required' => 'Event date is required.',
+            'event_date.after_or_equal' => 'Event date cannot be in the past.',
+            'event_time.required' => 'Event time is required.',
+            'venue.required' => 'Event venue is required.',
+            'venue.max' => 'Venue name cannot exceed 255 characters.',
+            'image.image' => 'The uploaded file must be an image.',
+            'image.mimes' => 'Image must be a file of type: jpeg, png, jpg, gif.',
+            'image.max' => 'Image size cannot exceed 2MB.',
+            'visibility.required' => 'Please select event visibility.',
+            'display.required' => 'Please select where to display this event.',
         ]);
 
         if ($request->hasFile('image')) {
@@ -75,13 +92,21 @@ class EventController extends Controller
         $validated['slug'] = Str::slug($validated['title']);
 
         if ($validated['visibility'] === 'public') {
-            $validated['link'] = $request->link;
+            // Auto-prepend https:// if not present
+            $link = $request->link;
+            if ($link && !preg_match('/^https?:\/\//', $link)) {
+                $link = 'https://' . $link;
+            }
+            $validated['link'] = $link;
         } else {
             $validated['link'] = null; // clear for private
         }
 
-        // $validated['slug'] = Str::slug($validated['title']);
-        // $validated['link'] = url('/events/' . $validated['slug']); // Auto-generate link
+        // Handle booking fields
+        $bookingFields = $request->input('booking_fields', ['name', 'email']);
+        $validated['booking_fields'] = is_array($bookingFields) ? $bookingFields : ['name', 'email'];
+
+        // Sanitize description and generate slug
         $validated['description'] = Purifier::clean($request->description); // Sanitize HTML
 
         // Event::create($request->all());
@@ -119,8 +144,23 @@ class EventController extends Controller
             'event_date' => 'required|date',
             'event_time' => 'required',
             'venue' => 'required|string|max:255',
-            'image' => 'nullable|image|max:2048', // optional image validation
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'display' => 'required|in:open_to_all,event_only,brn_only',
+            'booking_fields' => 'nullable|array',
+            'booking_fields.*' => 'string',
+        ], [
+            'title.required' => 'Event title is required.',
+            'title.max' => 'Event title cannot exceed 255 characters.',
+            'description.required' => 'Event description is required.',
+            'link.url' => 'Please enter a valid URL (e.g., https://example.com).',
+            'event_date.required' => 'Event date is required.',
+            'event_time.required' => 'Event time is required.',
+            'venue.required' => 'Event venue is required.',
+            'venue.max' => 'Venue name cannot exceed 255 characters.',
+            'image.image' => 'The uploaded file must be an image.',
+            'image.mimes' => 'Image must be a file of type: jpeg, png, jpg, gif.',
+            'image.max' => 'Image size cannot exceed 2MB.',
+            'display.required' => 'Please select where to display this event.',
         ]);
 
         // Remove current image if requested
@@ -142,13 +182,19 @@ class EventController extends Controller
             unset($validated['image']);
         }
 
-        // if ($validated['visibility'] === 'public') {
-        //     $validated['link'] = $request->link;
-        // }
+        // Handle link formatting for public events
+        if ($event->visibility === 'public' && $request->link) {
+            // Auto-prepend https:// if not present
+            $link = $request->link;
+            if ($link && !preg_match('/^https?:\/\//', $link)) {
+                $link = 'https://' . $link;
+            }
+            $validated['link'] = $link;
+        }
 
-        // $validated['slug'] = Str::slug($validated['title']);
-        // $validated['link'] = url('/events/' . $validated['slug']); // Auto-generate updated link
-        
+        // Handle booking fields
+        $bookingFields = $request->input('booking_fields', ['name', 'email']);
+        $validated['booking_fields'] = is_array($bookingFields) ? $bookingFields : ['name', 'email'];
 
         // Sanitize and slugify
         $validated['description'] = Purifier::clean($request->description);
@@ -239,5 +285,79 @@ class EventController extends Controller
             'allClicksWithRevisits',
             'filter'
         ));
+    }
+
+    /**
+     * Get available booking fields for dynamic form generation
+     */
+    public function getBookingFields()
+    {
+        $fields = [
+            [
+                'field' => 'name',
+                'label' => 'Full Name',
+                'description' => 'Attendee\'s full name (required)',
+                'type' => 'text',
+                'required' => true
+            ],
+            [
+                'field' => 'email',
+                'label' => 'Email Address',
+                'description' => 'Attendee\'s email address (required)',
+                'type' => 'email',
+                'required' => true
+            ],
+            [
+                'field' => 'phone',
+                'label' => 'Phone Number',
+                'description' => 'Contact phone number with country code',
+                'type' => 'tel',
+                'required' => false
+            ],
+            [
+                'field' => 'job_title',
+                'label' => 'Job Title',
+                'description' => 'Attendee\'s current job title or position',
+                'type' => 'text',
+                'required' => false
+            ],
+            [
+                'field' => 'organization',
+                'label' => 'Organization',
+                'description' => 'Company or organization name',
+                'type' => 'text',
+                'required' => false
+            ],
+            [
+                'field' => 'location',
+                'label' => 'Location',
+                'description' => 'City, country, or region',
+                'type' => 'text',
+                'required' => false
+            ],
+            [
+                'field' => 'industry',
+                'label' => 'Industry',
+                'description' => 'Industry sector or field of work',
+                'type' => 'text',
+                'required' => false
+            ],
+            [
+                'field' => 'expectations',
+                'label' => 'Expectations',
+                'description' => 'What do you hope to gain from this event?',
+                'type' => 'textarea',
+                'required' => false
+            ],
+            [
+                'field' => 'referral_source',
+                'label' => 'How did you hear about us?',
+                'description' => 'Referral source or discovery method',
+                'type' => 'text',
+                'required' => false
+            ]
+        ];
+
+        return response()->json($fields);
     }
 }
