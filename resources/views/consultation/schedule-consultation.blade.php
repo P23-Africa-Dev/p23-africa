@@ -420,7 +420,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(255, 255, 255, 0.5);
+        background: rgba(255, 255, 255, 0.7);
         /* <-- transparent white */
         display: none;
         justify-content: center;
@@ -1840,10 +1840,15 @@
             renderCalendar();
         });
 
+
+
+        
         
 
         /* ------------------------- Initial render ------------------------- */
         renderCalendar();
+
+        
 
 
         /* ------------------------- Submit logic + modal ------------------------- */
