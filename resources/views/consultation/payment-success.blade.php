@@ -107,7 +107,7 @@
         /* background-image: url(../img/payment-bg.png); */
     }
 
-    .payment-box-content .payment-card .payment-card-cont{
+    .payment-box-content .payment-card .payment-card-cont {
         z-index: 2;
     }
 
@@ -232,16 +232,14 @@
 
     }
 
-      @media (min-width: 1400px) {
+    @media (min-width: 1400px) {
 
-    .payment-box-content .payment-card img {
-        transform: translateX(-40px);
+        .payment-box-content .payment-card img {
+            transform: translateX(-40px);
+
+        }
 
     }
-
-      }
-
-
 </style>
 @section('content')
     <section class="payment-main-container">
@@ -259,38 +257,38 @@
                     <img src="../img/payment-bg.png" alt="" />
 
                     <div class="payment-card-cont">
+
                         <div class="amount-date-time">
-                            <span class="amount">$320.1</span>
+                            <span class="amount">${{ number_format($application->payment->amount, 2) }}</span>
                             <div class="date-time">
-                                <span class="date">Mar 22, 2023</span>
-                                <span class="time">10:40AM</span>
+                                <span class="date">{{ $application->payment->created_at->format('M d, Y') }}</span>
+                                <span class="time">{{ $application->payment->created_at->format('g:iA') }}</span>
                             </div>
                         </div>
                         <div class="details-row">
                             <div class="detail-item">
                                 <span class="label">Reference Number</span>
-                                <span class="value">000865782257</span>
+                                <span class="value">{{ $application->payment->payment_reference }}</span>
                             </div>
                             <div class="divider"></div>
 
                             <div class="detail-item">
                                 <span class="label">Payment Method</span>
-                                <span class="value">Credit Card</span>
+                                <span class="value">{{ ucfirst($application->payment->payment_method) }}</span>
                             </div>
                         </div>
+
                     </div>
 
+                    <p class="thank-you-message">
+                        Thank you {{ $application->name }} for booking your consultation with us.
+                    </p>
+
+                    <a href="{{ route('consultation.schedule-consultation') }}" class="proceed-button">
+                        Proceed to scheduling your session
+                    </a>
                 </div>
-
-                <p class="thank-you-message">
-                    Thank you for booking your consultation with us.
-                </p>
-
-                <a href="{{ route('consultation.schedule-consultation') }}" class="proceed-button">
-                    Proceed to scheduling your session
-                </a>
             </div>
-        </div>
     </section>
 
 

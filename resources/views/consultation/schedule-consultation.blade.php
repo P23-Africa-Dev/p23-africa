@@ -1442,6 +1442,15 @@
                                 <div><img src="../img/right-colored-r.png" alt="" /></div>
                             </button>
                         </div>
+
+                        <!-- Hidden form for actual submission -->
+                        <form id="scheduleForm" method="POST" action="{{ route('consultation.schedule.submit') }}"
+                            style="display: none;">
+                            @csrf
+                            <input type="hidden" name="session_date" id="hiddenDate">
+                            <input type="hidden" name="session_time" id="hiddenTime">
+                            <input type="hidden" name="timezone" id="hiddenTimezone">
+                        </form>
                     </div>
                 </div>
                 <!-- </div> -->
@@ -2415,6 +2424,19 @@
                 const second = timeWheels.second.items[timeWheels.second.currentIndex];
                 const ampm = timeWheels.ampm.items[timeWheels.ampm.currentIndex];
 
+                // Format the date for the form submission (YYYY-MM-DD)
+                const formattedDate = selectedDate.getFullYear() + '-' +
+                    String(selectedDate.getMonth() + 1).padStart(2, '0') + '-' +
+                    String(selectedDate.getDate()).padStart(2, '0');
+
+                // Format time for form submission (HH:MM format)
+                const formattedTime = `${hour}:${minute}`;
+
+                // Set hidden form values
+                document.getElementById('hiddenDate').value = formattedDate;
+                document.getElementById('hiddenTime').value = formattedTime;
+                document.getElementById('hiddenTimezone').value = timezoneDropdown.getValue();
+
                 modalDateText.textContent = "Date: " + selectedDate.toDateString();
                 modalTimeText.textContent =
                     "Time: " +
@@ -2475,6 +2497,18 @@
                     root.querySelector(".cd-toggle").click();
                 }
             });
+        });
+
+        // Handle modal form submission
+        document.querySelectorAll('.submit-btn-modal').forEach(btn => {
+            if (btn.textContent.includes('Open customer') || btn.textContent.includes(
+                    'customer@example.com')) {
+                btn.textContent = 'Confirm Booking';
+                btn.onclick = function(e) {
+                    e.preventDefault();
+                    document.getElementById('scheduleForm').submit();
+                };
+            }
         });
 
     });

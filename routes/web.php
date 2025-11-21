@@ -229,18 +229,30 @@ Route::get('/feedback/thank-you', function () {
 Route::get('/book-consultation', function () {
     return view('consultation.index');
 })->name('consultation.index');
-Route::get('/book-consultation/form', function () {
-    return view('consultation.application-forms');
-})->name('consultation.application-forms');
-Route::get('/book-consultation/summary', function () {
-    return view('consultation.consultation-summary');
-})->name('consultation.consultation-summary');
-Route::get('/book-consultation/payment-success', function () {
-    return view('consultation.payment-success');
-})->name('consultation.payment-success');
-Route::get('/book-consultation/schedule-consultation', function () {
-    return view('consultation.schedule-consultation');
-})->name('consultation.schedule-consultation');
+
+// Consultation Application Routes
+Route::get('/book-consultation/form', [App\Http\Controllers\ConsultationController::class, 'showApplicationForm'])->name('consultation.application-forms');
+Route::post('/book-consultation/submit', [App\Http\Controllers\ConsultationController::class, 'submitApplication'])->name('consultation.submit');
+
+// Consultation Summary
+Route::get('/book-consultation/summary', [App\Http\Controllers\ConsultationController::class, 'showSummary'])->name('consultation.consultation-summary');
+
+// Payment Selection
+Route::get('/book-consultation/payment-selection', [App\Http\Controllers\ConsultationController::class, 'showPaymentSelection'])->name('consultation.payment-selection');
+
+// Payment Routes
+Route::post('/book-consultation/payment/initiate', [App\Http\Controllers\ConsultationController::class, 'initiatePayment'])->name('consultation.payment.initiate');
+Route::post('/book-consultation/payment/process', [App\Http\Controllers\ConsultationController::class, 'processPayment'])->name('consultation.payment.process');
+Route::post('/book-consultation/payment/callback', [App\Http\Controllers\ConsultationController::class, 'handlePaymentCallback'])->name('consultation.payment.callback');
+Route::post('/book-consultation/payment/create-intent', [App\Http\Controllers\ConsultationController::class, 'createStripePaymentIntent'])->name('consultation.payment.create-intent');
+Route::get('/book-consultation/payment/callback/{reference}/{status}', [App\Http\Controllers\ConsultationController::class, 'handlePaymentCallbackLegacy'])->name('consultation.payment.callback.legacy');
+
+// Payment Success
+Route::get('/book-consultation/payment-success', [App\Http\Controllers\ConsultationController::class, 'showPaymentSuccess'])->name('consultation.payment-success');
+
+// Scheduling
+Route::get('/book-consultation/schedule', [App\Http\Controllers\ConsultationController::class, 'showScheduling'])->name('consultation.schedule-consultation');
+Route::post('/book-consultation/schedule', [App\Http\Controllers\ConsultationController::class, 'scheduleSession'])->name('consultation.schedule.submit');
 Route::get('/thank-you', function () {
     return view('emails.thank-you');
 })->name('feedback.thankyou');
@@ -288,6 +300,11 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|staff'])->prefix('admi
 
         // Ultimate Funding
         Route::resource('/ultimatefunding', \App\Http\Controllers\Admin\UltimateFundingController::class);
+
+        // Consultation Management
+        Route::get('/consultations', [\App\Http\Controllers\Admin\ConsultationController::class, 'index'])->name('consultation.index');
+        Route::get('/consultations/{id}', [\App\Http\Controllers\Admin\ConsultationController::class, 'show'])->name('consultation.show');
+        Route::post('/consultations/{id}/update-status', [\App\Http\Controllers\Admin\ConsultationController::class, 'updateStatus'])->name('consultation.updateStatus');
     });
 
     // Route::get('/staff/create', [StaffController::class, 'create'])->name('admin.staff.create');

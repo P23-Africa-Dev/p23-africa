@@ -300,7 +300,7 @@
 
     .payment-btn a {
         text-decoration: none;
-          background: #591044f0;
+        background: #591044f0;
         color: #fff;
     }
 
@@ -535,7 +535,7 @@
                     </h1>
 
                     <p>
-                        Thank You <span id="userName">FullName</span>, We’ve Captured Your
+                        Thank You <span id="userName">{{ $application->name }}</span>, We've Captured Your
                         Key Goals And Challenges.
                     </p>
                 </div>
@@ -543,11 +543,9 @@
                 <div class="overview">
                     <h3>Business Overview:</h3>
                     <p>
-                        Fortify is a brand and digital strategy agency that specializes in
-                        brand identity design, digital positioning, and business growth
-                        solutions. We help startups and small businesses achieve strong
-                        market visibility and customer trust through a blend of creative
-                        design, data-driven strategy, and digital innovation.
+                        (<strong>{{ $application->company }}</strong>) {{ $application->business_description }}
+                        <br><br>
+                        <strong>Industry:</strong> {{ $application->industry }}
                     </p>
                 </div>
 
@@ -555,23 +553,12 @@
                     <h4>Your Key Challenges:</h4>
                     <div id="challengeList" class="list-container">
                         <div class="lists">
-                            <label class="list-card">
-                                <input type="checkbox" name="key_challenges[]" value="Low or inconsistent sales" />
-                                <span class="list-text">Weak marketing strategy</span>
-                                <span class="list-checkmark"><img src="../img/marked.png" alt="" /></span>
-                            </label>
-
-                            <label class="list-card">
-                                <input type="checkbox" name="key_challenges[]" value="Operational inefficiencies" />
-                                <span class="list-text">Difficulty acquiring customers</span>
-                                <span class="list-checkmark"><img src="../img/marked.png" alt="" /></span>
-                            </label>
-
-                            <label class="list-card">
-                                <input type="checkbox" name="key_challenges[]" value="Monetization not working" />
-                                <span class="list-text">Difficulty acquiring customers</span>
-                                <span class="list-checkmark"><img src="../img/marked.png" alt="" /></span>
-                            </label>
+                            @foreach ($application->selected_challenges as $challenge)
+                                <label class="list-card">
+                                    <span class="list-text">{{ $challenge }}</span>
+                                    <span class="list-checkmark"><img src="../img/marked.png" alt="" /></span>
+                                </label>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -581,19 +568,14 @@
             <div class="summary-right-content">
                 <div class="summary-section goals">
                     <h4>Your Current Goals:</h4>
-                    <div id="challengeList" class="list-container">
+                    <div id="goalList" class="list-container">
                         <div class="lists">
-                            <label class="list-card">
-                                <input type="checkbox" name="business_goals[]" value="Low or inconsistent sales" />
-                                <span class="list-text">Weak marketing strategy</span>
-                                <span class="list-checkmark"><img src="../img/marked.png" alt="" /></span>
-                            </label>
-
-                            <label class="list-card">
-                                <input type="checkbox" name="business_goals[]" value="Operational inefficiencies" />
-                                <span class="list-text">Difficulty acquiring customers</span>
-                                <span class="list-checkmark"><img src="../img/marked.png" alt="" /></span>
-                            </label>
+                            @foreach ($application->selected_goals as $goal)
+                                <label class="list-card">
+                                    <span class="list-text">{{ $goal }}</span>
+                                    <span class="list-checkmark"><img src="../img/marked.png" alt="" /></span>
+                                </label>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -615,13 +597,13 @@
                     </ul>
                 </div>
                 <div class="payment-btn">
-                    <a href="{{ route('consultation.payment-success') }}">
-                        <button class="btn proceed-btn">
+                    <form method="POST" action="{{ route('consultation.payment.initiate') }}">
+                        @csrf
+                        <button type="submit" class="btn proceed-btn">
                             Proceed to Payment
-
                             <i class="fa-solid fa-arrow-right"></i>
                         </button>
-                    </a>
+                    </form>
                 </div>
             </div>
         </div>

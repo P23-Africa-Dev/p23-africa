@@ -10,6 +10,8 @@ use App\Models\PlaybookDownload;
 use App\Models\SalesBookDownload;
 use App\Models\UltimateFundingDownload;
 use App\Models\ContactSubmission;
+use App\Models\ConsultationApplication;
+use App\Http\Controllers\Admin\ConsultationController;
 use Illuminate\Support\Facades\Log;
 
 class DashboardController extends Controller
@@ -32,6 +34,10 @@ class DashboardController extends Controller
             $totalContacts = ContactSubmission::count();
             $recentContacts = ContactSubmission::where('created_at', '>=', now()->subDays(30))->count();
             $todayContacts = ContactSubmission::whereDate('created_at', today())->count();
+
+            // Consultation stats
+            $consultationController = new ConsultationController();
+            $consultationStats = $consultationController->getConsultationStats();
 
             // Additional stats for more insights
             $recentEvents = Event::where('created_at', '>=', now()->subDays(30))->count();
@@ -56,6 +62,13 @@ class DashboardController extends Controller
                 'recent_downloads' => $recentDownloads,
                 'recent_contacts' => $recentContacts,
                 'today_contacts' => $todayContacts,
+                // Consultation stats
+                'total_consultations' => $consultationStats['total_applications'],
+                'pending_consultations' => $consultationStats['pending_applications'],
+                'paid_consultations' => $consultationStats['paid_applications'],
+                'scheduled_consultations' => $consultationStats['scheduled_applications'],
+                'today_consultations' => $consultationStats['today_applications'],
+                'recent_consultations' => $consultationStats['recent_applications'],
             ];
 
             return view('admin.dashboard', compact('stats'));
