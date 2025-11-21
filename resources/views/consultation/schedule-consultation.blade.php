@@ -218,7 +218,7 @@
     }
 
     #monthInput:focus {
-        border: 1px solid #88C1B7;
+        border: 1px solid #88c1b750;
         outline: none;
     }
 
@@ -238,10 +238,21 @@
         letter-spacing: 1.3px;
         text-align: center;
         font-size: 22px;
+
+        /* Remove spinner in Firefox */
+        -moz-appearance: textfield;
     }
 
+    /* Remove arrows in Chrome/Safari/Edge */
+    #yearInput::-webkit-outer-spin-button,
+    #yearInput::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+
     #yearInput:focus {
-        border: 1px solid #88C1B7;
+        border: 1px solid #88c1b750;
         outline: none;
     }
 
@@ -335,23 +346,23 @@
     }
 
     .date.disabled {
-        color: #4a4a4a !important;
-        opacity: 0.3;
-        cursor: not-allowed;
-        background: #1a1a1a !important;
+           color: #808080 !important;
+        opacity: 0.6;
+         cursor: not-allowed;
     }
 
-    .date.disabled:hover {
+    /* .date.disabled:hover {
         background: #1a1a1a !important;
         cursor: not-allowed;
-    }
+    } */
 
     .date.selected {
         background: #88C1B7;
         color: #0D4036 !important;
     }
 
-    .selected-date, .selected-time {
+    .selected-date,
+    .selected-time {
         margin-top: -1rem;
         font-family: "GT Walsheim Con";
         font-weight: 100;
@@ -371,11 +382,13 @@
         display: flex;
         gap: 30px;
         justify-content: space-between;
-        margin-bottom: 15px;
+        margin-bottom: 4px;
     }
 
     .timezone-row>label {
-        font-size: 18px;
+        font-size: 19px;
+        margin-top: 0.15rem;
+        padding-left: 4px;
     }
 
     .time-restriction-notice {
@@ -666,11 +679,28 @@
     /* Selected text & caret */
     .cd-selected {
         font-size: 14px;
+        font-family: "GT Walsheim Trial Cn Md";
+        font-weight: 600;
+        color: #fff;
+        letter-spacing: 0.8px;
+
     }
 
     .cd-caret {
-        opacity: 0.75;
-        font-size: 12px;
+        font-size: 14px;
+    }
+
+    .cd-caret img {
+        width: auto;
+        height: 7px;
+        transition: transform 0.25s ease;
+
+    }
+
+
+
+    .cd-toggle.rotated img {
+        transform: rotate(180deg);
     }
 
     /* Floating list */
@@ -753,7 +783,7 @@
         justify-content: center;
         align-items: center;
         /* gap: 20px; */
-        margin: 20px 0;
+        margin: 0px 0;
         border-radius: 12px;
         /* border: 1px solid rgba(136, 193, 183, 0.2); */
     }
@@ -965,7 +995,7 @@
         }
 
         .schedule-conversation-section .left-content h3 {
-            font-size: 3rem;
+            font-size: 3.6rem;
         }
 
         .schedule-conversation-section .left-content .content-pattern {
@@ -984,6 +1014,7 @@
             flex-direction: row;
             gap: 80px;
         }
+
 
         #calendar-wrapper {
             padding-top: 5rem;
@@ -1011,7 +1042,7 @@
             font-family: "GT Walsheim Con";
 
             color: #0D4036;
-            margin-top: -2rem;
+            margin-top: -1rem;
 
         }
 
@@ -1030,23 +1061,21 @@
 
     @media (min-width: 1400px) {
         .schedule-conversation-section .intro-container {
-            gap: 0px;
+            gap: 30px;
         }
 
         .schedule-conversation-section .left-content {
             padding-top: 17rem;
-            /* flex: 0.38; */
-            width: 55rem;
-            /* border: 1px solid red; */
-            /* max-width: 550px; */
+        
         }
 
         .schedule-conversation-section .left-content h3 {
-            font-size: 4.1rem;
+            font-size: 4.8rem;
             max-width: initial;
             margin-left: 60px;
             margin-bottom: 30px;
-            width: 500px;
+            width: 560px;
+            line-height: 0.9;
         }
 
         .schedule-conversation-section .left-content .info-content {
@@ -1094,28 +1123,72 @@
         }
 
         .calendar-wrapper-container {
-            max-width: 780px;
+            max-width: 600px;
             /* border: 1px solid; */
             margin: 0 auto;
             width: 100%;
-            /* display: none; */
+            /* display: non; */
         }
 
-           #calendar-wrapper {
-    
-        margin-bottom: 0px;
+          .calendar-header h3 {
+   
+        font-size: 24px;
     }
 
+        #calendar-wrapper {
+
+            margin-bottom: 0px;
+        }
+
         #calendar-grid {
-            max-width: 650px;
-            margin: 0 auto;
-            margin-right: 4rem;
+            /* max-width: 550px; */
+            /* margin: 0 auto; */
+            /* margin-right: 10rem; */
+            padding: 0;
+
+        }
+
+        #dates {
+            gap: 10px;
+            margin-left: 2.5rem;
+            /* max-width: 550px; */
+
+            
+        }
+
+
+        .timezone-row {
+            gap: 80px;
+        }
+
+        .date {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 4px;
+            margin-bottom: -4px !important;
+            height: auto;
+            width: 35px;
+            margin: 0;
+            box-sizing: border-box;
+            font-size: 0.8rem !important;
+            
+        }
+
+        .weekdays {
+            gap: 0px;
+            margin-bottom: 1rem;
+            transform: translate(-20px);
+            margin-left: 2rem;
+            font-size: 0.9rem;
+            max-width: 760px;
 
         }
 
         .nav-row {
             margin-block: 30px;
-            margin-right: 6rem;
+            margin-right: 0rem;
+            margin-top: 1rem;
 
         }
 
@@ -1129,13 +1202,15 @@
 
         .time-box {
             /* margin: 0px 40px; */
-            margin-top: 50px;
+            /* margin-top: 50px; */
             max-width: 650px;
             margin: 0 auto;
             background-color: transparent;
             display: flex;
-            margin-top: 2rem;
+            /* margin-top: 2rem; */
             margin-bottom: 5rem;
+            margin-left: 2rem;
+            margin-top: 2.2rem;
 
 
 
@@ -1143,7 +1218,8 @@
 
         .time-box-container {
             background-color: #0d403666;
-            padding: 20px;
+            padding: 12px 10px;
+            padding-bottom: 7px;
             border-radius: 10px;
         }
 
@@ -1156,29 +1232,7 @@
             padding: 0px 40px;
         }
 
-        #dates {
-            gap: 0px;
-        }
-
-        .timezone-row {
-            gap: 80px;
-        }
-
-        .date {
-            padding: 4px;
-            width: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 35px;
-            /* margin-left:  -5rem; */
-        }
-
-        .weekdays {
-            gap: 10px;
-            margin-bottom: 1rem;
-            transform: translate(-20px);
-        }
+     
 
         .modal-box {
             width: 55vw;
@@ -1210,7 +1264,7 @@
         }
 
 
- 
+
 
     }
 </style>
@@ -1308,7 +1362,9 @@
                                         role="listbox" aria-label="Timezone">
                                         <button class="cd-toggle" aria-haspopup="listbox" aria-expanded="false">
                                             <span class="cd-selected">GMT</span>
-                                            <span class="cd-caret">▾</span>
+                                            <span class="cd-caret">
+                                                <img src="../img/arrow-up-01.png" alt="" />
+                                            </span>
                                         </button>
                                         <ul class="cd-list" role="listbox" aria-hidden="true">
                                             <li role="option" data-value="GMT" class="cd-option">GMT</li>
@@ -1567,6 +1623,7 @@
 
             function open() {
                 root.classList.add("open");
+                   toggle.classList.add("rotated");  
                 toggle.setAttribute("aria-expanded", "true");
                 list.setAttribute("aria-hidden", "false");
                 isOpen = true;
@@ -1583,6 +1640,7 @@
 
             function close() {
                 root.classList.remove("open");
+                 toggle.classList.remove("rotated"); 
                 toggle.setAttribute("aria-expanded", "false");
                 list.setAttribute("aria-hidden", "true");
                 isOpen = false;
@@ -1621,6 +1679,9 @@
                 if (isOpen) close();
                 else open();
             }
+
+            toggle.addEventListener("click", onToggleClick);
+
 
             function onOptionClick(e) {
                 const li = e.currentTarget;

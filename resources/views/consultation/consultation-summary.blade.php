@@ -601,7 +601,7 @@
                 <div class="summary-box">
                     <h3>Your 1hr 30m Consultation Will;</h3>
                     <ul>
-                        <li>Review Your Current Business Position And Growth Stage</li>
+                        <li>Review Your Business Position And Growth Stage</li>
                         <li>Identify The Key Blockers Slowing Your Progress</li>
                         <li>Provide Practical, Step-By-Step Recommendations</li>
                         <li>Outline A Clear Roadmap To Move Forward With Confidence</li>

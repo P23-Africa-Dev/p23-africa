@@ -298,7 +298,7 @@
         font-weight: bold;
         resize: none;
         color: #0d4036;
-        box-shadow: 0px 14px 13px -3px rgba(0, 0, 0, 0.3);
+        box-shadow: 0px 14px 13px -3px rgba(0, 0, 0, 0.17);
         font-family: "GT Walsheim Con";
         letter-spacing: 0.8px;
     }
@@ -457,7 +457,7 @@
 
         border-radius: 14px;
         border: 1px solid #e2e2e2;
-        box-shadow: 0px 10px 13px -3px rgba(0, 0, 0, 0.3);
+        box-shadow: 0px 10px 7px -3px rgba(0, 0, 0, 0.17);
 
         padding: 15px 0px;
         width: 34vw;
@@ -468,7 +468,7 @@
         justify-content: center;
         text-align: center;
 
-        font-size: 0.6rem;
+        font-size: 0.5rem;
     }
 
     .goal-card input {
@@ -476,11 +476,14 @@
     }
 
     .goal-text {
-        font-weight: 600;
         font-size: 0.85rem;
         line-height: 1.1;
         pointer-events: none;
-        font-family: "GT Walsheim Con";
+        /* font-family: "GT Walsheim Con"; */
+        font-family: "GT Walsheim Trial Cn Md";
+
+        font-weight: 800;
+
         padding: 0px 8px;
         letter-spacing: 0.7px;
         max-width: 115px;
@@ -664,6 +667,7 @@
 
         .step-title.title3 p {
             white-space: nowrap;
+            margin-right: 60px;
         }
 
         /* .step-title.title2,
@@ -706,7 +710,7 @@
 
         .form-grid .grid-input textarea {
             height: 120px;
-            margin-top: -3.5rem;
+            margin-top: -0.1rem;
         }
 
         .form-grid .grid-input.outcome-input textarea {
@@ -814,6 +818,11 @@
             padding: 0px 3px;
         }
 
+        .form-grid input.email{
+            /* padding: 0px; */
+            /* height: 5px;; */
+        }
+
     }
 </style>
 
@@ -907,15 +916,19 @@
                         <div class="grid-input">
                             <input type="text" name="full_name" placeholder="Full Name" required />
 
-                            <input type="text" name="company_brand_name" placeholder="Company/Brand Name" required />
+                            <input type="text" name="phone_number" placeholder="Phone Number"  required />
 
-                            <input type="text" name="website_or_handle" placeholder="Website or social media Handle"
+                            <input type="text" name="company_brand_name" placeholder="Company Name" required />
+
+                            <input type="text" name="website_or_handle" placeholder="Website/Social media"
                                 required />
 
-                            <input type="email" name="email" placeholder="Email Address" autocomplete="cc-name"
-                                required />
+                           
                         </div>
                         <div class="grid-input industry-cont">
+                             <input type="email" name="email" class="email" placeholder="Email Address" autocomplete="cc-name"
+                                required />
+
                             <input type="text" class="input-industry" name="industry" placeholder="Industry" required />
 
                             <textarea name="business_description" class="brief"
@@ -1260,6 +1273,12 @@
 
                 if (wordCount > 4) {
                     text.style.maxWidth = "100%";
+                   
+                }
+                if (wordCount > 5) {
+                    text.style.maxWidth = "98%";
+                    text.style.paddingLeft = "1px";
+                    text.style.paddingRight = "1px";
                 }
             });
         }

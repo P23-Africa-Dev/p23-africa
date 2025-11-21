@@ -50,7 +50,7 @@
     .book-conversation-section .intro-container {
         display: flex;
         flex-direction: column;
-        gap: 80px;
+        gap: 40px;
     }
 
     .book-conversation-section .left-content {
@@ -62,7 +62,7 @@
         color: #0d4036;
         font-family: "GT Walsheim ProCB";
         line-height: 1.1;
-        padding: 0 20px 0px 25px;
+        padding: 0 20px 0px 40px;
         max-width: 370px;
     }
 
@@ -75,6 +75,7 @@
 
     .book-conversation-section .left-content .info-content div.btn {
         align-self: start;
+        margin-left: -11px;
     }
 
     .book-conversation-section .left-content .info-content div.btn a {
@@ -131,7 +132,7 @@
         width: 120px;
         height: 100px;
         position: relative;
-        left: -90px;
+        left: -70px;
     }
 
     .book-conversation-section .right-content {
@@ -240,7 +241,7 @@
             max-width: initial;
             margin-left: 60px;
             margin-bottom: 30px;
-            line-height: 0.9;
+            line-height: 1;
 
             width: 500px;
         }
@@ -257,6 +258,11 @@
             max-width: 260px;
             margin-top: 20px;
         }
+
+            .book-conversation-section .left-content .info-content div.btn {
+        align-self: start;
+        margin-left: 0px;
+    }
 
         .book-conversation-section .left-content .info-content div.btn a {
             padding: 1.2rem 2.5rem;
@@ -280,23 +286,31 @@
             align-items: center;
             justify-content: flex-end;
             background-color: transparent;
-            min-height: 100vh;
-            padding-bottom: 2rem;
+            /* min-height: 100vh; */
+            /* padding-bottom: 2rem; */
             margin-bottom: 0px;
-            margin-top: 50px;
+            /* margin-top: 50px; */
+            /* height: 600px; */
+            /* background-image: url(../img/first-image.png); */
+
 
         }
 
-        .book-conversation-section .right-content::before {
+
+        /* .book-conversation-section .right-content::before {
             content: "";
             position: absolute;
             right: 0;
             top: 0;
-            width: 88.5%;
+            width: 70%;
             height: 100%;
+            margin-top: 40px;
+
             background-color: #06221d;
             z-index: 1;
-        }
+            scrollbar-width: none;
+
+        } */
 
         .book-conversation-section .desktop-image-cont,
         .book-conversation-section .right-content img {
@@ -306,20 +320,32 @@
         }
 
         .book-conversation-section .desktop-image-cont {
-            /* overflow: visible; */
-            width: 70%;
-            transform: scale(1.35);
-            /* padding-top: 5rem; */
+            /* width: 86%;
+            transform: scale(1.15);
+            scrollbar-width: none; */
+            overflow: hidden;
         }
+
+
 
         .book-conversation-section .desktop-image-cont img.desktop {
-            object-fit: cover;
+            object-fit: top;
+            max-width: 100%;
             display: block;
             position: relative;
-            transform: translateX(-150px);
-            margin-bottom: 30px;
+            top: 48px;
+            overflow: auto;
+            scrollbar-width: none;
+
+            scrollbar-width: none;
+            padding-top: 1rem;
+            min-height: 820px;
+
+
 
         }
+
+
     }
 </style>
 
@@ -354,7 +380,8 @@
                 <div class="right-content">
                     <img class="mobile" src="../img/mobile-main-bg.png" loading="lazy" alt="" />
                     <div class="desktop-image-cont">
-                        <img class="desktop" loading="lazy" src="../img/right-desktop-bg.png" alt="" />
+                        <img class="desktop" loading="lazy" src="../img/first-image.png" alt="" />
+                        {{-- <img class="desktop" loading="lazy" src="../img/right-desktop-bg.png" alt="" /> --}}
                     </div>
                 </div>
             </div>

@@ -94,15 +94,34 @@
         /* justify-content: center; */
         flex-direction: column;
         text-align: center;
-        background-color: #ffffff;
+        /* background-color: #ffffff; */
         position: relative;
-        width: 85%;
+        width: 100%;
         border-radius: 20px;
         color: #06271f;
         padding: 2rem;
-        box-shadow: 0px 10px 13px -3px rgba(0, 0, 0, 0.9);
 
         margin-top: 50px;
+        position: relative;
+
+        /* background-image: url(../img/payment-bg.png); */
+    }
+
+    .payment-box-content .payment-card .payment-card-cont{
+        z-index: 2;
+    }
+
+    .payment-box-content .payment-card img {
+        position: absolute;
+        object-fit: cover;
+        z-index: 0;
+        top: 0;
+        width: auto;
+        height: 100%;
+        border-radius: 20px;
+        transform: translateX(-28px);
+        /* box-shadow: 0px 10px 13px -3px rgba(0, 0, 0, 0.9); */
+
     }
 
     .payment-card .card-title {
@@ -154,7 +173,7 @@
         gap: 20px;
         max-width: 250px;
         margin: 0 auto;
-        margin-top: 13px;
+        margin-top: 0px;
     }
 
     .details-row .detail-item {
@@ -212,6 +231,17 @@
 
 
     }
+
+      @media (min-width: 1400px) {
+
+    .payment-box-content .payment-card img {
+        transform: translateX(-40px);
+
+    }
+
+      }
+
+
 </style>
 @section('content')
     <section class="payment-main-container">
@@ -226,26 +256,30 @@
                 <h1 class="payment-status">Payment Successful!</h1>
 
                 <div class="payment-card">
-                    <p class="card-title">P23 Africa Consultation</p>
-                    <div class="amount-date-time">
-                        <span class="amount">$320.1</span>
-                        <div class="date-time">
-                            <span class="date">Mar 22, 2023</span>
-                            <span class="time">10:40AM</span>
-                        </div>
-                    </div>
-                    <div class="details-row">
-                        <div class="detail-item">
-                            <span class="label">Reference Number</span>
-                            <span class="value">000865782257</span>
-                        </div>
-                        <div class="divider"></div>
+                    <img src="../img/payment-bg.png" alt="" />
 
-                        <div class="detail-item">
-                            <span class="label">Payment Method</span>
-                            <span class="value">Credit Card</span>
+                    <div class="payment-card-cont">
+                        <div class="amount-date-time">
+                            <span class="amount">$320.1</span>
+                            <div class="date-time">
+                                <span class="date">Mar 22, 2023</span>
+                                <span class="time">10:40AM</span>
+                            </div>
+                        </div>
+                        <div class="details-row">
+                            <div class="detail-item">
+                                <span class="label">Reference Number</span>
+                                <span class="value">000865782257</span>
+                            </div>
+                            <div class="divider"></div>
+
+                            <div class="detail-item">
+                                <span class="label">Payment Method</span>
+                                <span class="value">Credit Card</span>
+                            </div>
                         </div>
                     </div>
+
                 </div>
 
                 <p class="thank-you-message">
