@@ -228,28 +228,28 @@
                 <div class="payment-card">
                     <p class="card-title">P23 Africa Consultation</p>
                     <div class="amount-date-time">
-                        <span class="amount">$320.1</span>
+                        <span class="amount">${{ number_format($application->payment->amount, 2) }}</span>
                         <div class="date-time">
-                            <span class="date">Mar 22, 2023</span>
-                            <span class="time">10:40AM</span>
+                            <span class="date">{{ $application->payment->created_at->format('M d, Y') }}</span>
+                            <span class="time">{{ $application->payment->created_at->format('g:iA') }}</span>
                         </div>
                     </div>
                     <div class="details-row">
                         <div class="detail-item">
                             <span class="label">Reference Number</span>
-                            <span class="value">000865782257</span>
+                            <span class="value">{{ $application->payment->payment_reference }}</span>
                         </div>
                         <div class="divider"></div>
 
                         <div class="detail-item">
                             <span class="label">Payment Method</span>
-                            <span class="value">Credit Card</span>
+                            <span class="value">{{ ucfirst($application->payment->payment_method) }}</span>
                         </div>
                     </div>
                 </div>
 
                 <p class="thank-you-message">
-                    Thank you for booking your consultation with us.
+                    Thank you {{ $application->name }} for booking your consultation with us.
                 </p>
 
                 <a href="{{ route('consultation.schedule-consultation') }}" class="proceed-button">

@@ -144,6 +144,78 @@
                 </div>
             @endif
 
+            <!-- Consultation Stats Row -->
+            <div class="row mb-4">
+                <div class="col-md-3 mb-3">
+                    <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0 bg-primary bg-opacity-10 rounded p-3">
+                                    <i class="fa fa-handshake text-primary fa-2x"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h6 class="text-muted dark:text-gray-400 mb-1">Total Consultations</h6>
+                                    <h3 class="mb-0 text-dark dark:text-gray-100">
+                                        {{ $stats['total_consultations'] ?? 0 }}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0 bg-warning bg-opacity-10 rounded p-3">
+                                    <i class="fa fa-clock text-warning fa-2x"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h6 class="text-muted dark:text-gray-400 mb-1">Pending Payment</h6>
+                                    <h3 class="mb-0 text-dark dark:text-gray-100">
+                                        {{ $stats['pending_consultations'] ?? 0 }}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0 bg-success bg-opacity-10 rounded p-3">
+                                    <i class="fa fa-credit-card text-success fa-2x"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h6 class="text-muted dark:text-gray-400 mb-1">Paid</h6>
+                                    <h3 class="mb-0 text-dark dark:text-gray-100">
+                                        {{ $stats['paid_consultations'] ?? 0 }}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0 bg-info bg-opacity-10 rounded p-3">
+                                    <i class="fa fa-calendar-check text-info fa-2x"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h6 class="text-muted dark:text-gray-400 mb-1">Scheduled</h6>
+                                    <h3 class="mb-0 text-dark dark:text-gray-100">
+                                        {{ $stats['scheduled_consultations'] ?? 0 }}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Main Dashboard Cards -->
             <div class="row">
                 <!-- Content Management Section -->
@@ -251,7 +323,20 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-6 mb-3 mb-md-0">
+                                    <div class="col-md-4 mb-3">
+                                        <a href="{{ route('admin.consultation.index') }}"
+                                            class="d-flex align-items-center justify-content-between text-decoration-none p-3 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark-transition">
+                                            <div class="d-flex align-items-center">
+                                                <div class="bg-primary bg-opacity-10 rounded p-2 me-3">
+                                                    <i class="fa fa-handshake text-primary"></i>
+                                                </div>
+                                                <span class="text-dark dark:text-gray-100 fw-medium">Consultation
+                                                    Bookings</span>
+                                            </div>
+                                            <i class="fa fa-arrow-right text-muted dark:text-gray-400"></i>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
                                         <a href="{{ route('admin.brn.index') }}"
                                             class="d-flex align-items-center justify-content-between text-decoration-none p-3 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark-transition">
                                             <div class="d-flex align-items-center">
@@ -264,7 +349,7 @@
                                             <i class="fa fa-arrow-right text-muted dark:text-gray-400"></i>
                                         </a>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4 mb-3">
                                         <a href="{{ route('admin.clicks.report') }}"
                                             class="d-flex align-items-center justify-content-between text-decoration-none p-3 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark-transition">
                                             <div class="d-flex align-items-center">

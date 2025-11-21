@@ -900,27 +900,54 @@
             </div>
 
             <!-- Step Content -->
-            <form id="multiStepForm" method="POST" action="submit.php">
+            <form id="multiStepForm" method="POST" action="{{ route('consultation.submit') }}">
+                @csrf
                 <!-- STEP 1 -->
                 <div class="form-step active">
                     <div class="form-grid">
-
                         <div class="grid-input">
-                            <input type="text" name="full_name" placeholder="Full Name" required />
+                            <input type="text" name="full_name" placeholder="Full Name" value="{{ old('full_name') }}"
+                                required />
+                            @error('full_name')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
 
-                            <input type="text" name="company_brand_name" placeholder="Company/Brand Name" required />
+                            <input type="text" name="company_brand_name" placeholder="Company/Brand Name"
+                                value="{{ old('company_brand_name') }}" required />
+                            @error('company_brand_name')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
 
                             <input type="text" name="website_or_handle" placeholder="Website or social media Handle"
-                                required />
+                                value="{{ old('website_or_handle') }}" />
+                            @error('website_or_handle')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
 
-                            <input type="email" name="email" placeholder="Email Address" autocomplete="cc-name"
-                                required />
+                            <input type="email" name="email" placeholder="Email Address" autocomplete="email"
+                                value="{{ old('email') }}" required />
+                            @error('email')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
+
+                            <input type="tel" name="phone" placeholder="Phone Number (Optional)"
+                                value="{{ old('phone') }}" />
+                            @error('phone')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="grid-input industry-cont">
-                            <input type="text" class="input-industry" name="industry" placeholder="Industry" required />
+                            <input type="text" class="input-industry" name="industry" placeholder="Industry"
+                                value="{{ old('industry') }}" required />
+                            @error('industry')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
 
                             <textarea name="business_description" class="brief"
-                                placeholder="Briefly describe what your business does (1–2 sentences)." required></textarea>
+                                placeholder="Briefly describe what your business does (1–2 sentences)." required>{{ old('business_description') }}</textarea>
+                            @error('business_description')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
                         </div>
 
                     </div>
@@ -1075,12 +1102,18 @@
                 <div class="form-step step4">
                     <div class="form-grid outcome-grid">
                         <div class="grid-input outcome-input">
-                            <label for="question">What made you book this consultation today?</label>
-                            <textarea name="business_description" required></textarea>
+                            <label for="motivation">What made you book this consultation today?</label>
+                            <textarea name="motivation" required>{{ old('motivation') }}</textarea>
+                            @error('motivation')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="grid-input outcome-input">
-                            <label for="">What would make this session a success for you?</label>
-                            <textarea name="business_description" required></textarea>
+                            <label for="success_definition">What would make this session a success for you?</label>
+                            <textarea name="success_definition" required>{{ old('success_definition') }}</textarea>
+                            @error('success_definition')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
 
@@ -1088,11 +1121,9 @@
                         <button type="button" class="form-btn back-btn" disabled>
                             <i class="fa-solid fa-arrow-left"></i>
                         </button>
-                        <a href="{{ route('consultation.consultation-summary') }}">
-                            <button type="button" class="form-btn next-btn">
-                                <i class="fa-solid fa-arrow-right"></i>
-                            </button>
-                        </a>
+                        <button type="submit" class="form-btn next-btn" id="submitFormBtn">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
                     </div>
                 </div>
             </form>
@@ -1149,11 +1180,16 @@
 
         //  NEXT BUTTONS
         nextBtns.forEach((btn) => {
-            btn.addEventListener("click", () => {
-                if (currentStep < steps.length - 1) {
-                    currentStep++;
-                    updateStep();
+            btn.addEventListener("click", (e) => {
+                // If it's not the submit button, prevent default and navigate
+                if (btn.type !== 'submit') {
+                    e.preventDefault();
+                    if (currentStep < steps.length - 1) {
+                        currentStep++;
+                        updateStep();
+                    }
                 }
+                // If it's the submit button, allow form submission
             });
         });
 

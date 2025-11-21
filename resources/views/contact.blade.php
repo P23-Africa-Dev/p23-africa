@@ -1538,7 +1538,7 @@
                                             <span class="range-label">$100</span>
                                             <div class="range-value" id="rangeValue">Please select budget</div>
                                             <input type="range" id="priceRange" name="budget_range" min="100"
-                                                max="5000" value="{{ old('budget_range', 2500) }}" step="50"
+                                                max="5000" value="{{ old('budget_range', 350 ) }}" step="50"
                                                 data-touched="false" />
                                             <span class="range-label">$Max</span>
                                         </div>
