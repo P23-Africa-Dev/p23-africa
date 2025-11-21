@@ -47,8 +47,7 @@
         padding: 20px 25px 37px 25px;
         border-radius: 25px;
         overflow: hidden;
-        /* box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.4),
-            0px -14px 15px -3px rgba(0, 0, 0, 0.1); */
+
 
         box-shadow: 0px 9px 15px -8px rgba(0, 0, 0, 0.8);
 
@@ -57,7 +56,7 @@
         background-image: url(../img/form-bg1.jpg);
         background-color: #ffffffa9;
         background-blend-mode: soft-light;
-        background-repeat: no-repeat;
+        background-repeat: repeat;
         background-size: cover;
         background-position: center;
     }
@@ -299,7 +298,7 @@
         font-weight: bold;
         resize: none;
         color: #0d4036;
-        box-shadow: 0px 14px 13px -3px rgba(0, 0, 0, 0.3);
+        box-shadow: 0px 14px 13px -3px rgba(0, 0, 0, 0.17);
         font-family: "GT Walsheim Con";
         letter-spacing: 0.8px;
     }
@@ -458,7 +457,7 @@
 
         border-radius: 14px;
         border: 1px solid #e2e2e2;
-        box-shadow: 0px 10px 13px -3px rgba(0, 0, 0, 0.3);
+        box-shadow: 0px 10px 7px -3px rgba(0, 0, 0, 0.17);
 
         padding: 15px 0px;
         width: 34vw;
@@ -469,7 +468,7 @@
         justify-content: center;
         text-align: center;
 
-        font-size: 0.6rem;
+        font-size: 0.5rem;
     }
 
     .goal-card input {
@@ -477,11 +476,14 @@
     }
 
     .goal-text {
-        font-weight: 600;
         font-size: 0.85rem;
         line-height: 1.1;
         pointer-events: none;
-        font-family: "GT Walsheim Con";
+        /* font-family: "GT Walsheim Con"; */
+        font-family: "GT Walsheim Trial Cn Md";
+
+        font-weight: 800;
+
         padding: 0px 8px;
         letter-spacing: 0.7px;
         max-width: 115px;
@@ -665,6 +667,7 @@
 
         .step-title.title3 p {
             white-space: nowrap;
+            margin-right: 60px;
         }
 
         /* .step-title.title2,
@@ -707,7 +710,7 @@
 
         .form-grid .grid-input textarea {
             height: 120px;
-            margin-top: -3.5rem;
+            margin-top: -0.1rem;
         }
 
         .form-grid .grid-input.outcome-input textarea {
@@ -815,6 +818,11 @@
             padding: 0px 3px;
         }
 
+        .form-grid input.email{
+            /* padding: 0px; */
+            /* height: 5px;; */
+        }
+
     }
 </style>
 
@@ -912,36 +920,20 @@
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
 
-                            <input type="text" name="company_brand_name" placeholder="Company/Brand Name"
-                                value="{{ old('company_brand_name') }}" required />
-                            @error('company_brand_name')
-                                <span class="text-red-500 text-sm">{{ $message }}</span>
-                            @enderror
+                            <input type="text" name="phone_number" placeholder="Phone Number"  required />
 
-                            <input type="text" name="website_or_handle" placeholder="Website or social media Handle"
-                                value="{{ old('website_or_handle') }}" />
-                            @error('website_or_handle')
-                                <span class="text-red-500 text-sm">{{ $message }}</span>
-                            @enderror
+                            <input type="text" name="company_brand_name" placeholder="Company Name" required />
 
-                            <input type="email" name="email" placeholder="Email Address" autocomplete="email"
-                                value="{{ old('email') }}" required />
-                            @error('email')
-                                <span class="text-red-500 text-sm">{{ $message }}</span>
-                            @enderror
+                            <input type="text" name="website_or_handle" placeholder="Website/Social media"
+                                required />
 
-                            <input type="tel" name="phone" placeholder="Phone Number (Optional)"
-                                value="{{ old('phone') }}" />
-                            @error('phone')
-                                <span class="text-red-500 text-sm">{{ $message }}</span>
-                            @enderror
+                           
                         </div>
                         <div class="grid-input industry-cont">
-                            <input type="text" class="input-industry" name="industry" placeholder="Industry"
-                                value="{{ old('industry') }}" required />
-                            @error('industry')
-                                <span class="text-red-500 text-sm">{{ $message }}</span>
-                            @enderror
+                             <input type="email" name="email" class="email" placeholder="Email Address" autocomplete="cc-name"
+                                required />
+
+                            <input type="text" class="input-industry" name="industry" placeholder="Industry" required />
 
                             <textarea name="business_description" class="brief"
                                 placeholder="Briefly describe what your business does (1–2 sentences)." required>{{ old('business_description') }}</textarea>
@@ -1297,6 +1289,12 @@
 
                 if (wordCount > 4) {
                     text.style.maxWidth = "100%";
+                   
+                }
+                if (wordCount > 5) {
+                    text.style.maxWidth = "98%";
+                    text.style.paddingLeft = "1px";
+                    text.style.paddingRight = "1px";
                 }
             });
         }
