@@ -2364,20 +2364,76 @@
                     String(selectedDate.getMonth() + 1).padStart(2, '0') + '-' +
                     String(selectedDate.getDate()).padStart(2, '0');
 
-                // Format time for form submission (HH:MM format)
-                const formattedTime = `${hour}:${minute}`;
+                // Convert to 24-hour format for form submission
+                let hour24 = parseInt(hour);
+                if (ampm === 'PM' && hour24 !== 12) {
+                    hour24 += 12;
+                } else if (ampm === 'AM' && hour24 === 12) {
+                    hour24 = 0;
+                }
+                const formattedTime = `${String(hour24).padStart(2, '0')}:${minute}`;
 
                 // Set hidden form values
                 document.getElementById('hiddenDate').value = formattedDate;
                 document.getElementById('hiddenTime').value = formattedTime;
                 document.getElementById('hiddenTimezone').value = timezoneDropdown.getValue();
 
-                modalDateText.textContent = "Date: " + selectedDate.toDateString();
-                modalTimeText.textContent =
-                    "Time: " +
-                    `${hour}:${minute}:${second} ${ampm} ${timezoneDropdown.getValue()}`;
+                // Submit the form
+                const form = document.getElementById('scheduleForm');
 
-                modal.style.display = "flex";
+                // Create a FormData object to submit via AJAX
+                const formData = new FormData(form);
+
+                // Show loading state on button
+                btn.disabled = true;
+                btn.textContent = 'Submitting...';
+
+                // Submit form via AJAX
+                fetch(form.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Show success modal with submitted details
+                            modalDateText.textContent = "Date: " + selectedDate.toDateString();
+                            modalTimeText.textContent =
+                                "Time: " +
+                                `${hour}:${minute}:${second} ${ampm} ${timezoneDropdown.getValue()}`;
+
+                            // Update email button with actual user email if provided
+                            if (data.user_email) {
+                                const emailBtn = document.querySelector(
+                                        '.submit-btn-modal[textContent*="Open"]') ||
+                                    document.querySelector('.submit-btn-modal');
+                                if (emailBtn) {
+                                    emailBtn.textContent = `Open ${data.user_email}`;
+                                    emailBtn.onclick = function(e) {
+                                        e.preventDefault();
+                                        window.location.href = `mailto:${data.user_email}`;
+                                    };
+                                }
+                            }
+
+                            modal.style.display = "flex";
+                        } else {
+                            flashMessage(data.message || "An error occurred. Please try again.",
+                                btn);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        flashMessage("An error occurred. Please try again.", btn);
+                    })
+                    .finally(() => {
+                        // Reset button state
+                        btn.disabled = false;
+                        btn.textContent = 'Submit';
+                    });
             };
         });
 
@@ -2434,14 +2490,21 @@
             });
         });
 
-        // Handle modal form submission
+        // Handle modal buttons
         document.querySelectorAll('.submit-btn-modal').forEach(btn => {
             if (btn.textContent.includes('Open customer') || btn.textContent.includes(
                     'customer@example.com')) {
-                btn.textContent = 'Confirm Booking';
+                // This would be dynamically updated with the user's actual email
+                btn.textContent = 'Open Email';
                 btn.onclick = function(e) {
                     e.preventDefault();
-                    document.getElementById('scheduleForm').submit();
+                    // Open default email client
+                    window.location.href = 'mailto:';
+                };
+            } else if (btn.textContent.includes('Return to Homepage')) {
+                btn.onclick = function(e) {
+                    e.preventDefault();
+                    window.location.href = '/';
                 };
             }
         });

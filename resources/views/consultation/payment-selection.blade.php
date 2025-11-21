@@ -235,7 +235,7 @@
                 </div>
                 <div class="detail-row">
                     <span>Total Amount:</span>
-                    <span><strong>$50.00 USD</strong></span>
+                    <span><strong>$75.00 USD</strong></span>
                 </div>
             </div>
 
@@ -274,7 +274,7 @@
 
                 <button type="button" class="proceed-payment-btn" id="proceedBtn" disabled onclick="processPayment()">
                     <i class="fa-solid fa-lock"></i>
-                    Secure Payment - $50.00
+                    Secure Payment - $75.00
                     <i class="fa-solid fa-arrow-right"></i>
                 </button>
             </form>
@@ -346,7 +346,7 @@
             FlutterwaveCheckout({
                 public_key: FLUTTERWAVE_PUBLIC_KEY,
                 tx_ref: 'REF_' + Date.now(),
-                amount: 50,
+                amount: 75,
                 currency: 'USD',
                 country: 'US',
                 payment_options: 'card,mobilemoney,ussd,banktransfer',
@@ -403,13 +403,13 @@
             modalContent.innerHTML = `
                 <div style="text-align: center; margin-bottom: 20px;">
                     <h3 style="color: #591044; margin: 0 0 10px 0;">Complete Payment</h3>
-                    <p style="color: #6c757d; margin: 0;">Enter your card details to complete the $50.00 payment</p>
+                    <p style="color: #6c757d; margin: 0;">Enter your card details to complete the $75.00 payment</p>
                 </div>
                 <div id="stripe-card-element" style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 20px;"></div>
                 <div id="stripe-card-errors" style="color: #dc3545; margin-bottom: 15px; font-size: 14px;"></div>
                 <div style="display: flex; gap: 10px;">
                     <button id="stripe-cancel-btn" style="flex: 1; padding: 12px; border: 1px solid #ddd; background: white; border-radius: 8px; cursor: pointer;">Cancel</button>
-                    <button id="stripe-pay-btn" style="flex: 2; padding: 12px; background: #591044; color: white; border: none; border-radius: 8px; cursor: pointer;">Pay $50.00</button>
+                    <button id="stripe-pay-btn" style="flex: 2; padding: 12px; background: #591044; color: white; border: none; border-radius: 8px; cursor: pointer;">Pay $75.00</button>
                 </div>
             `;
 
@@ -466,7 +466,7 @@
                         },
                         body: JSON.stringify({
                             payment_method: 'stripe',
-                            amount: 5000,
+                            amount: 7500,
                         })
                     })
                     .then(response => response.json())
@@ -555,7 +555,7 @@
             const proceedBtn = document.getElementById('proceedBtn');
             proceedBtn.disabled = false;
             proceedBtn.innerHTML =
-                '<i class="fa-solid fa-lock"></i> Secure Payment - $50.00 <i class="fa-solid fa-arrow-right"></i>';
+                '<i class="fa-solid fa-lock"></i> Secure Payment - $75.00 <i class="fa-solid fa-arrow-right"></i>';
         }
     </script>
 @endsection
