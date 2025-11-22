@@ -48,9 +48,7 @@
         border-radius: 25px;
         overflow: hidden;
 
-
         box-shadow: 0px 9px 15px -8px rgba(0, 0, 0, 0.8);
-
 
         padding-top: 70px;
         background-image: url(../img/form-bg1.jpg);
@@ -303,9 +301,7 @@
         letter-spacing: 0.8px;
     }
 
-    .form-grid .phone-number-input{
-        
-    }
+    .form-grid .phone-number-input {}
 
     .form-grid input::placeholder,
     .form-grid textarea::placeholder {
@@ -1038,7 +1034,8 @@
                                         {{ old('phone') && str_starts_with(old('phone'), '+1 ') ? 'selected' : '' }}>🇺🇸 +1
                                     </option>
                                     <option value="+44"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+44 ') ? 'selected' : (!old('phone') ? 'selected' : '') }}>🇬🇧
+                                        {{ old('phone') && str_starts_with(old('phone'), '+44 ') ? 'selected' : (!old('phone') ? 'selected' : '') }}>
+                                        🇬🇧
                                         +44</option>
                                     <option value="+91"
                                         {{ old('phone') && str_starts_with(old('phone'), '+91 ') ? 'selected' : '' }}>🇮🇳
@@ -1206,7 +1203,7 @@
                                 <input type="checkbox" name="business_goals[]" value="Increase revenue or sales" />
                                 <span class="goal-text">Increase revenue or sales</span>
                                 <span class="goal-checkmark">
-                                    <img src="../img/marked.png" alt="" />
+                                    <img src="{{ asset('img/marked.png') }}" alt="" />
                                 </span>
                             </label>
 
@@ -1214,7 +1211,7 @@
                                 <input type="checkbox" name="business_goals[]" value="Generate more leads" />
                                 <span class="goal-text">Generate more leads</span>
                                 <span class="goal-checkmark">
-                                    <img src="../img/marked.png" alt="" />
+                                    <img src="{{ asset('img/marked.png') }}" alt="" />
                                 </span>
                             </label>
 
@@ -1222,7 +1219,7 @@
                                 <input type="checkbox" name="business_goals[]" value="Improve brand visibility" />
                                 <span class="goal-text">Improve brand visibility</span>
                                 <span class="goal-checkmark">
-                                    <img src="../img/marked.png" alt="" />
+                                    <img src="{{ asset('img/marked.png') }}" alt="" />
                                 </span>
                             </label>
 
@@ -1230,7 +1227,7 @@
                                 <input type="checkbox" name="business_goals[]" value="Launch a new product or service" />
                                 <span class="goal-text">Launch a new product or service</span>
                                 <span class="goal-checkmark">
-                                    <img src="../img/marked.png" alt="" />
+                                    <img src="{{ asset('img/marked.png') }}" alt="" />
                                 </span>
                             </label>
 
@@ -1238,7 +1235,7 @@
                                 <input type="checkbox" name="business_goals[]" value="Expand into new markets" />
                                 <span class="goal-text">Expand into new markets</span>
                                 <span class="goal-checkmark">
-                                    <img src="../img/marked.png" alt="" />
+                                    <img src="{{ asset('img/marked.png') }}" alt="" />
                                 </span>
                             </label>
 
@@ -1247,7 +1244,7 @@
                                     value="Prepare for funding or investor conversations" />
                                 <span class="goal-text">Prepare for funding or investor conversations</span>
                                 <span class="goal-checkmark">
-                                    <img src="../img/marked.png" alt="" />
+                                    <img src="{{ asset('img/marked.png') }}" alt="" />
                                 </span>
                             </label>
 
@@ -1256,7 +1253,7 @@
                                     value="Build internal systems or operational structure" />
                                 <span class="goal-text">Build internal systems or operational structure</span>
                                 <span class="goal-checkmark">
-                                    <img src="../img/marked.png" alt="" />
+                                    <img src="{{ asset('img/marked.png') }}" alt="" />
                                 </span>
                             </label>
                         </div>
@@ -1281,44 +1278,51 @@
                             <label class="goal-card">
                                 <input type="checkbox" name="key_challenges[]" value="Low or inconsistent sales" />
                                 <span class="goal-text">Low or inconsistent sales</span>
-                                <span class="goal-checkmark"><img src="../img/marked.png" alt="" /></span>
+                                <span class="goal-checkmark"><img src="{{ asset('img/marked.png') }}"
+                                        alt="" /></span>
                             </label>
 
                             <label class="goal-card">
                                 <input type="checkbox" name="key_challenges[]" value="Weak marketing strategy" />
                                 <span class="goal-text">Weak marketing strategy</span>
-                                <span class="goal-checkmark"><img src="../img/marked.png" alt="" /></span>
+                                <span class="goal-checkmark"><img src="{{ asset('img/marked.png') }}"
+                                        alt="" /></span>
                             </label>
 
                             <label class="goal-card">
                                 <input type="checkbox" name="key_challenges[]" value="Difficulty acquiring customers" />
                                 <span class="goal-text">Difficulty acquiring customers</span>
-                                <span class="goal-checkmark"><img src="../img/marked.png" alt="" /></span>
+                                <span class="goal-checkmark"><img src="{{ asset('img/marked.png') }}"
+                                        alt="" /></span>
                             </label>
 
                             <label class="goal-card">
                                 <input type="checkbox" name="key_challenges[]" value="Operational inefficiencies" />
                                 <span class="goal-text">Operational inefficiencies</span>
-                                <span class="goal-checkmark"><img src="../img/marked.png" alt="" /></span>
+                                <span class="goal-checkmark"><img src="{{ asset('img/marked.png') }}"
+                                        alt="" /></span>
                             </label>
 
                             <label class="goal-card">
                                 <input type="checkbox" name="key_challenges[]" value="Monetization not working" />
                                 <span class="goal-text">Monetization not working</span>
-                                <span class="goal-checkmark"><img src="../img/marked.png" alt="" /></span>
+                                <span class="goal-checkmark"><img src="{{ asset('img/marked.png') }}"
+                                        alt="" /></span>
                             </label>
 
                             <label class="goal-card">
                                 <input type="checkbox" name="key_challenges[]"
                                     value="Need clarity on product-market fit" />
                                 <span class="goal-text">Need clarity on product-market fit</span>
-                                <span class="goal-checkmark"><img src="../img/marked.png" alt="" /></span>
+                                <span class="goal-checkmark"><img src="{{ asset('img/marked.png') }}"
+                                        alt="" /></span>
                             </label>
 
                             <label class="goal-card">
                                 <input type="checkbox" name="key_challenges[]" value="Scaling challenges" />
                                 <span class="goal-text">Scaling challenges</span>
-                                <span class="goal-checkmark"><img src="../img/marked.png" alt="" /></span>
+                                <span class="goal-checkmark"><img src="{{ asset('img/marked.png') }}"
+                                        alt="" /></span>
                             </label>
                         </div>
                     </div>
@@ -1379,8 +1383,14 @@
         const progressText = document.querySelector(".progress-text");
         const counterCircleText = document.querySelector(".counter-circle span");
 
-        //  Load saved step or default to 0
-        let currentStep = parseInt(localStorage.getItem("currentStep")) || 0;
+        // Clear saved progress when starting fresh from consultation page
+        // This ensures users always start from step 1
+        localStorage.removeItem("currentStep");
+        localStorage.removeItem("selectedBusinessGoals");
+        localStorage.removeItem("selectedKeyChallenges");
+
+        //  Always start from step 0 (first step)
+        let currentStep = 0;
 
         // ============= VALIDATION FUNCTIONS =============
 
@@ -1791,13 +1801,13 @@
         // Function to combine country code and phone number
         function updateCombinedPhone() {
             const countryCode = document.getElementById('countryCode').value;
-            const phoneNumber = document.getElementById('phoneNumber').value.trim();
+            const phoneNumber = document.getElementById('phoneNumber').value;
             const combinedPhone = document.getElementById('combinedPhone');
 
-            if (phoneNumber) {
-                // Remove any leading zeros or country code that user might have entered
-                const cleanPhoneNumber = phoneNumber.replace(/^[\+]?[\d]*[-\s]?/, '').replace(/^0+/, '');
-                combinedPhone.value = countryCode + ' ' + cleanPhoneNumber;
+            const digitsOnly = phoneNumber.replace(/[^\d]/g, '');
+
+            if (digitsOnly.length) {
+                combinedPhone.value = `${countryCode} ${digitsOnly}`;
             } else {
                 combinedPhone.value = '';
             }
@@ -1830,6 +1840,11 @@
         // Add event listeners for phone field updates
         document.getElementById('countryCode').addEventListener('change', updateCombinedPhone);
         document.getElementById('phoneNumber').addEventListener('input', updateCombinedPhone);
+
+        const multiStepForm = document.getElementById('multiStepForm');
+        if (multiStepForm) {
+            multiStepForm.addEventListener('submit', updateCombinedPhone);
+        }
 
         // Clear errors when user changes phone inputs
         document.getElementById('countryCode').addEventListener('change', function() {

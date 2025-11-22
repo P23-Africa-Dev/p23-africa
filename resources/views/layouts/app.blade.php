@@ -664,6 +664,19 @@
             filter: brightness(1) contrast(1);
             transition: filter 0.3s ease;
         }
+
+        /* Responsive Sidebar Content Adjustment */
+        @media (max-width: 991px) {
+            .main-content-wrapper {
+                margin-left: 0 !important;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .main-content-wrapper {
+                /* Desktop sidebar spacing handled by Alpine.js */
+            }
+        }
     </style>
 </head>
 
@@ -671,24 +684,33 @@
     <div class="min-h-screen dark-transition" style="background-color: var(--bg-secondary) !important;">
         @include('layouts.navigation')
 
-        <!-- Page Heading -->
-        @isset($header)
-            <header class="bg-white dark:bg-gray-800 shadow border-b border-gray-100 dark:border-gray-700 dark-transition"
-                style="background-color: var(--bg-primary) !important; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    <div class="text-gray-900 dark:text-gray-100 dark-transition"
-                        style="color: var(--text-primary) !important;">
-                        {{ $header }}
-                    </div>
-                </div>
-            </header>
-        @endisset
+        <!-- Sidebar -->
+        @include('layouts.sidebar')
 
-        <!-- Page Content -->
-        <main class="dark-transition"
-            style="background-color: var(--bg-secondary) !important; min-height: calc(100vh - 64px);">
-            {{ $slot }}
-        </main>
+        <!-- Main Content Area with Sidebar Offset -->
+        <div x-data="{ sidebarOpen: localStorage.getItem('sidebarOpen') === 'true' || localStorage.getItem('sidebarOpen') === null }" :style="sidebarOpen ? 'margin-left: 260px;' : 'margin-left: 70px;'"
+            class="main-content-wrapper dark-transition mt-[64px]" style="transition: margin-left 0.3s ease; margin-top: 64px;">
+
+            <!-- Page Heading -->
+            @isset($header)
+                <header
+                    class="bg-white dark:bg-gray-800 shadow border-b border-gray-100 dark:border-gray-700 dark-transition"
+                    style="background-color: var(--bg-primary) !important; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);">
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        <div class="text-gray-900 dark:text-gray-100 dark-transition"
+                            style="color: var(--text-primary) !important;">
+                            {{ $header }}
+                        </div>
+                    </div>
+                </header>
+            @endisset
+
+            <!-- Page Content -->
+            <main class="dark-transition"
+                style="background-color: var(--bg-secondary) !important; min-height: calc(100vh - 64px);">
+                {{ $slot }}
+            </main>
+        </div>
 
     </div>
 

@@ -253,6 +253,11 @@ Route::get('/book-consultation/payment-success', [App\Http\Controllers\Consultat
 // Scheduling
 Route::get('/book-consultation/schedule', [App\Http\Controllers\ConsultationController::class, 'showScheduling'])->name('consultation.schedule-consultation');
 Route::post('/book-consultation/schedule', [App\Http\Controllers\ConsultationController::class, 'scheduleSession'])->name('consultation.schedule.submit');
+
+// Calendar integration
+Route::get('/book-consultation/download-ics/{filename}', [App\Http\Controllers\ConsultationController::class, 'downloadIcs'])->name('consultation.download-ics');
+Route::get('/google/calendar/auth', [App\Http\Controllers\ConsultationController::class, 'googleCalendarAuth'])->name('google.calendar.auth');
+Route::get('/google/calendar/callback', [App\Http\Controllers\ConsultationController::class, 'googleCalendarCallback'])->name('google.calendar.callback');
 Route::get('/thank-you', function () {
     return view('emails.thank-you');
 })->name('feedback.thankyou');
@@ -282,6 +287,9 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|staff'])->prefix('admi
     // })->name('dashboard');
 
     Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+
+    // Calendar
+    Route::get('/calendar', [\App\Http\Controllers\Admin\CalendarController::class, 'index'])->name('calendar.index');
 
     Route::middleware('role:admin')->group(function () {
         Route::resource('staff', StaffController::class);

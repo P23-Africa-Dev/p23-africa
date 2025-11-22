@@ -358,12 +358,12 @@
                     <h3>Let’s help you unlock growth clarity for your business.</h3>
 
                     <div class="info">
-                        <img src="../img/left-conv-pattern.png" class="content-pattern" alt="" />
+                        <img src="{{ asset('img/left-conv-pattern.png') }}" class="content-pattern" alt="" />
                         <div class="info-content">
                             <div class="btn">
                                 <a href="{{ route('consultation.application-forms') }}">Let’s get started
                                     <div>
-                                        <img src="../img/right.png" alt="" />
+                                        <img src="{{ asset('img/right.png') }}" alt="" />
                                     </div>
                                 </a>
                             </div>
@@ -378,9 +378,9 @@
                     </div>
                 </div>
                 <div class="right-content">
-                    <img class="mobile" src="../img/mobile-main-bg.png" loading="lazy" alt="" />
+                    <img class="mobile" src="{{ asset('img/mobile-main-bg.png') }}" loading="lazy" alt="" />
                     <div class="desktop-image-cont">
-                        <img class="desktop" loading="lazy" src="../img/first-image.png" alt="" />
+                        <img class="desktop" loading="lazy" src="{{ asset('img/first-image.png') }}" alt="" />
                         {{-- <img class="desktop" loading="lazy" src="../img/right-desktop-bg.png" alt="" /> --}}
                     </div>
                 </div>

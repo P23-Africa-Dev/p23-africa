@@ -346,8 +346,8 @@
             FlutterwaveCheckout({
                 public_key: FLUTTERWAVE_PUBLIC_KEY,
                 tx_ref: 'REF_' + Date.now(),
-                amount: 75,
-                currency: 'USD',
+                amount: 1,
+                currency: 'NGN',
                 country: 'US',
                 payment_options: 'card,mobilemoney,ussd,banktransfer',
                 customer: {

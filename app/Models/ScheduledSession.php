@@ -13,6 +13,9 @@ class ScheduledSession extends Model
         'session_time',
         'timezone',
         'meet_link',
+        'google_calendar_event_id',
+        'google_meet_link',
+        'calendar_html_link',
         'status'
     ];
 

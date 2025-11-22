@@ -116,8 +116,10 @@
         object-fit: cover;
         z-index: 0;
         top: 0;
-        width: auto;
-        height: 100%;
+        /* width: auto; */
+        width: 405px;
+        /* height: 100%; */
+        height: 269px;
         border-radius: 20px;
         transform: translateX(-28px);
         /* box-shadow: 0px 10px 13px -3px rgba(0, 0, 0, 0.9); */
@@ -254,7 +256,7 @@
                 <h1 class="payment-status">Payment Successful!</h1>
 
                 <div class="payment-card">
-                    <img src="../img/payment-bg.png" alt="" />
+                    <img src="{{ asset('img/payment-bg.png') }}" alt="" />
 
                     <div class="payment-card-cont">
 

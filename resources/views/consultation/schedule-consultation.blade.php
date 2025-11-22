@@ -346,9 +346,9 @@
     }
 
     .date.disabled {
-           color: #808080 !important;
+        color: #808080 !important;
         opacity: 0.6;
-         cursor: not-allowed;
+        cursor: not-allowed;
     }
 
     /* .date.disabled:hover {
@@ -1066,7 +1066,7 @@
 
         .schedule-conversation-section .left-content {
             padding-top: 17rem;
-        
+
         }
 
         .schedule-conversation-section .left-content h3 {
@@ -1130,10 +1130,10 @@
             /* display: non; */
         }
 
-          .calendar-header h3 {
-   
-        font-size: 24px;
-    }
+        .calendar-header h3 {
+
+            font-size: 24px;
+        }
 
         #calendar-wrapper {
 
@@ -1153,7 +1153,7 @@
             margin-left: 2.5rem;
             /* max-width: 550px; */
 
-            
+
         }
 
 
@@ -1172,7 +1172,7 @@
             margin: 0;
             box-sizing: border-box;
             font-size: 0.8rem !important;
-            
+
         }
 
         .weekdays {
@@ -1232,7 +1232,7 @@
             padding: 0px 40px;
         }
 
-     
+
 
         .modal-box {
             width: 55vw;
@@ -1285,15 +1285,15 @@
                     </div>
 
                     <div class="info">
-                        <img src="../img/left-conv-pattern.png" class="content-pattern" alt="" />
-                        <img src="../img/schedule-pattern.png" class="schedule-pattern" alt="" />
+                        <img src="{{ asset('img/left-conv-pattern.png') }}" class="content-pattern" alt="" />
+                        <img src="{{ asset('img/schedule-pattern.png') }}" class="schedule-pattern" alt="" />
                         <div class="info-content">
                             <!-- SUBMIT BUTTON -->
 
                             <div class="btn">
                                 <button class="submit-schedule">
                                     Submit
-                                    <div><img src="../img/right.png" alt="" /></div>
+                                    <div><img src="{{ asset('img/right.png') }}" alt="" /></div>
                                 </button>
                             </div>
 
@@ -1313,7 +1313,7 @@
                             <div class="nav-row">
                                 <div class="prev-wrapper">
                                     <button id="prevMonth">
-                                        <img src="../img/left.png" alt="" />
+                                        <img src="{{ asset('img/left.png') }}" alt="" />
                                     </button>
                                     <div class="prev-tooltip">
                                         You cannot go before the current month
@@ -1329,7 +1329,7 @@
                                 </div>
 
                                 <button id="nextMonth">
-                                    <img src="../img/right-arrow.png" alt="" />
+                                    <img src="{{ asset('img/right-arrow.png') }}" alt="" />
                                 </button>
                             </div>
                         </div>
@@ -1363,7 +1363,7 @@
                                         <button class="cd-toggle" aria-haspopup="listbox" aria-expanded="false">
                                             <span class="cd-selected">GMT</span>
                                             <span class="cd-caret">
-                                                <img src="../img/arrow-up-01.png" alt="" />
+                                                <img src="{{ asset('img/arrow-up-01.png') }}" alt="" />
                                             </span>
                                         </button>
                                         <ul class="cd-list" role="listbox" aria-hidden="true">
@@ -1439,7 +1439,7 @@
                         <div class="mobile-btn">
                             <button class="submit-schedule">
                                 Submit
-                                <div><img src="../img/right-colored-r.png" alt="" /></div>
+                                <div><img src="{{ asset('img/right-colored-r.png') }}" alt="" /></div>
                             </button>
                         </div>
 
@@ -1469,7 +1469,7 @@
                 <a href="#" class="submit-btn-modal">
                     Open customer@example.com
                 </a>
-                <a href="#" class="submit-btn-modal">
+                <a href="{{ route('consultation.index') }}" class="submit-btn-modal">
                     Return to Homepage
                 </a>
             </div>
@@ -1632,7 +1632,7 @@
 
             function open() {
                 root.classList.add("open");
-                   toggle.classList.add("rotated");  
+                toggle.classList.add("rotated");
                 toggle.setAttribute("aria-expanded", "true");
                 list.setAttribute("aria-hidden", "false");
                 isOpen = true;
@@ -1649,7 +1649,7 @@
 
             function close() {
                 root.classList.remove("open");
-                 toggle.classList.remove("rotated"); 
+                toggle.classList.remove("rotated");
                 toggle.setAttribute("aria-expanded", "false");
                 list.setAttribute("aria-hidden", "true");
                 isOpen = false;
@@ -1791,7 +1791,7 @@
                 },
                 {
                     label: "WAT",
-                    value: "WAT"
+                    value: "Africa/Lagos"
                 },
             ],
             initialIndex: 0,

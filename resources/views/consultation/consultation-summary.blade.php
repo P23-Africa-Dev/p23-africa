@@ -556,7 +556,7 @@
                             @foreach ($application->selected_challenges as $challenge)
                                 <label class="list-card">
                                     <span class="list-text">{{ $challenge }}</span>
-                                    <span class="list-checkmark"><img src="../img/marked.png" alt="" /></span>
+                                    <span class="list-checkmark"><img src="{{ asset('img/marked.png') }}" alt="" /></span>
                                 </label>
                             @endforeach
                         </div>
@@ -573,7 +573,7 @@
                             @foreach ($application->selected_goals as $goal)
                                 <label class="list-card">
                                     <span class="list-text">{{ $goal }}</span>
-                                    <span class="list-checkmark"><img src="../img/marked.png" alt="" /></span>
+                                    <span class="list-checkmark"><img src="{{ asset('img/marked.png') }}" alt="" /></span>
                                 </label>
                             @endforeach
                         </div>
