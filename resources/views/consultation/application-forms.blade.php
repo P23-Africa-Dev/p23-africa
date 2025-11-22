@@ -303,6 +303,10 @@
         letter-spacing: 0.8px;
     }
 
+    .form-grid .phone-number-input{
+        
+    }
+
     .form-grid input::placeholder,
     .form-grid textarea::placeholder {
         font-size: 13px;
@@ -594,6 +598,114 @@
         color: #fff;
     }
 
+    /* --------------- ERROR MESSAGES --------------- */
+    .error-message {
+        color: #dc3545;
+        font-size: 12px;
+        margin-top: 5px;
+        display: block;
+        font-family: "GT Walsheim Con";
+        letter-spacing: 0.5px;
+        padding-left: 20px;
+    }
+
+    .form-grid input.error,
+    .form-grid textarea.error {
+        border-color: #dc3545;
+        box-shadow: 0px 14px 13px -3px rgba(220, 53, 69, 0.2);
+    }
+
+    .step-error {
+        background: #dc3545;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 20px;
+        margin: 10px 0;
+        text-align: center;
+        font-family: "GT Walsheim Con";
+        font-size: 14px;
+        letter-spacing: 0.5px;
+    }
+
+    .goal-card.error {
+        border-color: #dc3545;
+        box-shadow: 0px 10px 7px -3px rgba(220, 53, 69, 0.3);
+    }
+
+    /* --------------- PHONE INPUT WITH COUNTRY CODE --------------- */
+    .phone-input-container {
+        display: flex;
+        align-items: stretch;
+        position: relative;
+        width: 100%;
+    }
+
+    .country-code-dropdown {
+        position: relative;
+        min-width: 100px;
+        max-width: 100px;
+    }
+
+    .country-code-select {
+        padding: 14px 12px 14px 20px;
+        font-size: 14px;
+        border-radius: 40px 0 0 40px;
+        border: 1px solid #ddd;
+        border-right: none;
+        outline: none;
+        background: #fff;
+        font-weight: bold;
+        color: #525252;
+        box-shadow: 0px 14px 13px -3px rgba(0, 0, 0, 0.17);
+        font-family: "GT Walsheim Con";
+        letter-spacing: 0.8px;
+        cursor: pointer;
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        background-size: 16px;
+        display: flex;
+        align-items: center;
+        height: auto;
+    }
+
+    .phone-number-input {
+        flex: 1;
+        padding: 18px 40px 18px 20px;
+        font-size: 14px;
+        border-radius: 0 40px 40px 0;
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+        border: 1px solid #ddd;
+        outline: none;
+        background: #fff;
+        font-weight: bold;
+        resize: none;
+        color: #0d4036;
+        box-shadow: 0px 14px 13px -3px rgba(0, 0, 0, 0.17);
+        font-family: "GT Walsheim Con";
+        letter-spacing: 0.8px;
+    }
+
+    .phone-number-input::placeholder {
+        font-size: 13px;
+        letter-spacing: 0.6px;
+        font-weight: 300;
+        opacity: 0.86;
+    }
+
+    .country-code-select.error,
+    .phone-number-input.error {
+        border-color: #dc3545;
+        box-shadow: 0px 14px 13px -3px rgba(220, 53, 69, 0.2);
+    }
+
+    /* Hidden phone field for form submission */
+    .phone-hidden-field {
+        display: none;
+    }
+
     /* --------------- RESPONSIVE: MOBILE COLUMN --------------- */
 
     /* Medium screens (small laptops) and up */
@@ -818,7 +930,7 @@
             padding: 0px 3px;
         }
 
-        .form-grid input.email{
+        .form-grid input.email {
             /* padding: 0px; */
             /* height: 5px;; */
         }
@@ -917,28 +1029,159 @@
                             <input type="text" name="full_name" placeholder="Full Name" value="{{ old('full_name') }}"
                                 required />
                             @error('full_name')
-                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                                <span class="text-red-600 text-sm">{{ $message }}</span>
                             @enderror
 
-                            <input type="text" name="phone_number" placeholder="Phone Number"  required />
+                            <div class="phone-input-container">
+                                <select class="country-code-select" id="countryCode">
+                                    <option value="+1"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+1 ') ? 'selected' : '' }}>🇺🇸 +1
+                                    </option>
+                                    <option value="+44"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+44 ') ? 'selected' : (!old('phone') ? 'selected' : '') }}>🇬🇧
+                                        +44</option>
+                                    <option value="+91"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+91 ') ? 'selected' : '' }}>🇮🇳
+                                        +91</option>
+                                    <option value="+86"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+86 ') ? 'selected' : '' }}>🇨🇳
+                                        +86</option>
+                                    <option value="+81"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+81 ') ? 'selected' : '' }}>🇯🇵
+                                        +81</option>
+                                    <option value="+49"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+49 ') ? 'selected' : '' }}>🇩🇪
+                                        +49</option>
+                                    <option value="+33"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+33 ') ? 'selected' : '' }}>🇫🇷
+                                        +33</option>
+                                    <option value="+39"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+39 ') ? 'selected' : '' }}>🇮🇹
+                                        +39</option>
+                                    <option value="+7"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+7 ') ? 'selected' : '' }}>🇷🇺
+                                        +7</option>
+                                    <option value="+55"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+55 ') ? 'selected' : '' }}>🇧🇷
+                                        +55</option>
+                                    <option value="+52"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+52 ') ? 'selected' : '' }}>🇲🇽
+                                        +52</option>
+                                    <option value="+61"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+61 ') ? 'selected' : '' }}>🇦🇺
+                                        +61</option>
+                                    <option value="+27"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+27 ') ? 'selected' : '' }}>
+                                        🇿🇦 +27</option>
+                                    <option value="+234"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+234 ') ? 'selected' : '' }}>🇳🇬
+                                        +234</option>
+                                    <option value="+254"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+254 ') ? 'selected' : '' }}>🇰🇪
+                                        +254</option>
+                                    <option value="+233"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+233 ') ? 'selected' : '' }}>🇬🇭
+                                        +233</option>
+                                    <option value="+256"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+256 ') ? 'selected' : '' }}>🇺🇬
+                                        +256</option>
+                                    <option value="+255"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+255 ') ? 'selected' : '' }}>🇹🇿
+                                        +255</option>
+                                    <option value="+20"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+20 ') ? 'selected' : '' }}>🇪🇬
+                                        +20</option>
+                                    <option value="+213"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+213 ') ? 'selected' : '' }}>🇩🇿
+                                        +213</option>
+                                    <option value="+212"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+212 ') ? 'selected' : '' }}>🇲🇦
+                                        +212</option>
+                                    <option value="+216"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+216 ') ? 'selected' : '' }}>🇹🇳
+                                        +216</option>
+                                    <option value="+218"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+218 ') ? 'selected' : '' }}>🇱🇾
+                                        +218</option>
+                                    <option value="+251"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+251 ') ? 'selected' : '' }}>🇪🇹
+                                        +251</option>
+                                    <option value="+260"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+260 ') ? 'selected' : '' }}>🇿🇲
+                                        +260</option>
+                                    <option value="+263"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+263 ') ? 'selected' : '' }}>🇿🇼
+                                        +263</option>
+                                    <option value="+265"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+265 ') ? 'selected' : '' }}>🇲🇼
+                                        +265</option>
+                                    <option value="+267"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+267 ') ? 'selected' : '' }}>🇧🇼
+                                        +267</option>
+                                    <option value="+268"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+268 ') ? 'selected' : '' }}>🇸🇿
+                                        +268</option>
+                                    <option value="+266"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+266 ') ? 'selected' : '' }}>🇱🇸
+                                        +266</option>
+                                    <option value="+264"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+264 ') ? 'selected' : '' }}>🇳🇦
+                                        +264</option>
+                                    <option value="+258"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+258 ') ? 'selected' : '' }}>🇲🇿
+                                        +258</option>
+                                    <option value="+261"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+261 ') ? 'selected' : '' }}>🇲🇬
+                                        +261</option>
+                                    <option value="+230"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+230 ') ? 'selected' : '' }}>🇲🇺
+                                        +230</option>
+                                    <option value="+248"
+                                        {{ old('phone') && str_starts_with(old('phone'), '+248 ') ? 'selected' : '' }}>🇸🇨
+                                        +248</option>
+                                </select>
+                                <input type="text" class="phone-number-input" id="phoneNumber"
+                                    placeholder="Phone Number"
+                                    value="{{ old('phone') ? (strpos(old('phone'), ' ') !== false ? substr(old('phone'), strpos(old('phone'), ' ') + 1) : old('phone')) : '' }}"
+                                    required />
+                                <!-- Hidden field for form submission -->
+                                <input type="hidden" name="phone" id="combinedPhone" value="{{ old('phone') }}" />
+                            </div>
+                            @error('phone')
+                                <span class="text-red-600 text-sm">{{ $message }}</span>
+                            @enderror
 
-                            <input type="text" name="company_brand_name" placeholder="Company Name" required />
+                            <input type="text" name="company_brand_name" value="{{ old('company_brand_name') }}"
+                                placeholder="Company Name" required />
+                            @error('company_brand_name')
+                                <span class="text-red-600 text-sm">{{ $message }}</span>
+                            @enderror
 
-                            <input type="text" name="website_or_handle" placeholder="Website/Social media"
-                                required />
+                            <input type="text" name="website_or_handle" placeholder="Website/Social media (Optional)"
+                                value="{{ old('website_or_handle') }}" />
+                            @error('website_or_handle')
+                                <span class="text-red-600 text-sm">{{ $message }}</span>
+                            @enderror
 
-                           
+
                         </div>
                         <div class="grid-input industry-cont">
-                             <input type="email" name="email" class="email" placeholder="Email Address" autocomplete="cc-name"
-                                required />
+                            <input type="email" name="email" class="email" placeholder="Email Address"
+                                autocomplete="email" required value="{{ old('email') }}" />
+                            @error('email')
+                                <span class="text-red-600 text-sm">{{ $message }}</span>
+                            @enderror
 
-                            <input type="text" class="input-industry" name="industry" placeholder="Industry" required />
+                            <input type="text" class="input-industry" name="industry" placeholder="Industry"
+                                value="{{ old('industry') }}" required />
+                            @error('industry')
+                                <span class="text-red-600 text-sm">{{ $message }}</span>
+                            @enderror
 
                             <textarea name="business_description" class="brief"
                                 placeholder="Briefly describe what your business does (1–2 sentences)." required>{{ old('business_description') }}</textarea>
                             @error('business_description')
-                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                                <span class="text-red-600 text-sm">{{ $message }}</span>
                             @enderror
                         </div>
 
@@ -1097,14 +1340,14 @@
                             <label for="motivation">What made you book this consultation today?</label>
                             <textarea name="motivation" required>{{ old('motivation') }}</textarea>
                             @error('motivation')
-                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                                <span class="text-red-600 text-sm">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="grid-input outcome-input">
                             <label for="success_definition">What would make this session a success for you?</label>
                             <textarea name="success_definition" required>{{ old('success_definition') }}</textarea>
                             @error('success_definition')
-                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                                <span class="text-red-600 text-sm">{{ $message }}</span>
                             @enderror
                         </div>
                     </div>
@@ -1136,14 +1379,254 @@
         const progressText = document.querySelector(".progress-text");
         const counterCircleText = document.querySelector(".counter-circle span");
 
-        //  Custom Select Dropdown
-        // const select = document.getElementById("industrySelect");
-        // const optionsBox = document.querySelector(".custom-options");
-        // const hiddenInput = document.getElementById("industryInput");
-        // const selectedOption = select.querySelector(".selected-option");
-
         //  Load saved step or default to 0
         let currentStep = parseInt(localStorage.getItem("currentStep")) || 0;
+
+        // ============= VALIDATION FUNCTIONS =============
+
+        // Clear previous errors
+        function clearErrors(step) {
+            const stepElement = steps[step];
+
+            // Remove error classes from inputs
+            stepElement.querySelectorAll('input, textarea').forEach(input => {
+                input.classList.remove('error');
+            });
+
+            // Remove error messages
+            stepElement.querySelectorAll('.error-message').forEach(msg => {
+                msg.remove();
+            });
+
+            // Remove step error message
+            stepElement.querySelectorAll('.step-error').forEach(error => {
+                error.remove();
+            });
+
+            // Remove error classes from goal cards  
+            stepElement.querySelectorAll('.goal-card').forEach(card => {
+                card.classList.remove('error');
+            });
+        }
+
+        // Show error message for input field
+        function showInputError(input, message) {
+            input.classList.add('error');
+
+            const errorMsg = document.createElement('span');
+            errorMsg.className = 'error-message';
+            errorMsg.textContent = message;
+
+            input.parentNode.insertBefore(errorMsg, input.nextSibling);
+        }
+
+        // Show step error message
+        function showStepError(step, message) {
+            const stepElement = steps[step];
+            const existingError = stepElement.querySelector('.step-error');
+
+            if (!existingError) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'step-error';
+                errorDiv.textContent = message;
+
+                const stepButtons = stepElement.querySelector('.step-buttons');
+                stepButtons.parentNode.insertBefore(errorDiv, stepButtons);
+            }
+        }
+
+        // Validate email format
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Validate phone format (with country code)
+        function isValidPhone(phone) {
+            // Phone should be in format "+countrycode phonenumber"
+            const phoneRegex = /^\+\d{1,4}\s\d{4,14}$/;
+            return phoneRegex.test(phone);
+        }
+
+        // Validate individual phone number (without country code)
+        function isValidPhoneNumber(phoneNumber) {
+            // Basic phone number validation (4-14 digits)
+            const phoneRegex = /^\d{4,14}$/;
+            return phoneRegex.test(phoneNumber.replace(/[\s\-\(\)]/g, ''));
+        }
+
+        // Validate Step 1: Basic Information
+        function validateStep1() {
+            clearErrors(0);
+            let isValid = true;
+
+            const requiredFields = [{
+                    name: 'full_name',
+                    label: 'Full Name'
+                },
+                {
+                    name: 'phone',
+                    label: 'Phone Number'
+                },
+                {
+                    name: 'company_brand_name',
+                    label: 'Company Name'
+                },
+                {
+                    name: 'email',
+                    label: 'Email Address'
+                },
+                {
+                    name: 'industry',
+                    label: 'Industry'
+                },
+                {
+                    name: 'business_description',
+                    label: 'Business Description'
+                }
+            ];
+
+            requiredFields.forEach(field => {
+                if (field.name === 'phone') {
+                    // Special handling for phone field
+                    const phoneNumberInput = document.getElementById('phoneNumber');
+                    const countryCodeSelect = document.getElementById('countryCode');
+                    const combinedPhoneInput = document.getElementById('combinedPhone');
+
+                    if (!phoneNumberInput.value.trim()) {
+                        // Show error on both visible fields
+                        phoneNumberInput.classList.add('error');
+                        countryCodeSelect.classList.add('error');
+
+                        const errorMsg = document.createElement('span');
+                        errorMsg.className = 'error-message';
+                        errorMsg.textContent = 'Phone Number is required';
+                        phoneNumberInput.closest('.grid-input').insertBefore(errorMsg, phoneNumberInput
+                            .closest('.phone-input-container').nextSibling);
+
+                        isValid = false;
+                    } else if (!isValidPhoneNumber(phoneNumberInput.value.trim())) {
+                        phoneNumberInput.classList.add('error');
+                        countryCodeSelect.classList.add('error');
+
+                        const errorMsg = document.createElement('span');
+                        errorMsg.className = 'error-message';
+                        errorMsg.textContent = 'Please enter a valid phone number';
+                        phoneNumberInput.closest('.grid-input').insertBefore(errorMsg, phoneNumberInput
+                            .closest('.phone-input-container').nextSibling);
+
+                        isValid = false;
+                    } else {
+                        // Update combined phone field for backend
+                        updateCombinedPhone();
+                    }
+                } else {
+                    const input = document.querySelector(
+                        `input[name="${field.name}"], textarea[name="${field.name}"]`);
+                    if (!input || !input.value.trim()) {
+                        showInputError(input, `${field.label} is required`);
+                        isValid = false;
+                    } else {
+                        // Additional validation for specific fields
+                        if (field.name === 'email' && !isValidEmail(input.value.trim())) {
+                            showInputError(input, 'Please enter a valid email address');
+                            isValid = false;
+                        } else if (field.name === 'business_description' && input.value.trim().length <
+                            10) {
+                            showInputError(input,
+                                'Please provide at least 10 characters describing your business');
+                            isValid = false;
+                        }
+                    }
+                }
+            });
+
+            if (!isValid) {
+                showStepError(0, 'Please fill in all required fields correctly before proceeding.');
+            }
+
+            return isValid;
+        }
+
+        // Validate Step 2: Business Goals  
+        function validateStep2() {
+            clearErrors(1);
+
+            const checkedGoals = document.querySelectorAll('.step2-wrapper input[type="checkbox"]:checked');
+
+            if (checkedGoals.length === 0) {
+                showStepError(1, 'Please select at least one business goal.');
+
+                // Highlight goal cards as error
+                document.querySelectorAll('.step2-wrapper .goal-card').forEach(card => {
+                    card.classList.add('error');
+                });
+
+                return false;
+            } else if (checkedGoals.length > 2) {
+                showStepError(1, 'Please select no more than 2 business goals.');
+                return false;
+            }
+
+            return true;
+        }
+
+        // Validate Step 3: Key Challenges
+        function validateStep3() {
+            clearErrors(2);
+
+            const checkedChallenges = document.querySelectorAll(
+                '.step3-wrapper input[type="checkbox"]:checked');
+
+            if (checkedChallenges.length === 0) {
+                showStepError(2, 'Please select at least one key challenge.');
+
+                // Highlight goal cards as error  
+                document.querySelectorAll('.step3-wrapper .goal-card').forEach(card => {
+                    card.classList.add('error');
+                });
+
+                return false;
+            } else if (checkedChallenges.length > 3) {
+                showStepError(2, 'Please select no more than 3 key challenges.');
+                return false;
+            }
+
+            return true;
+        }
+
+        // Validate Step 4: Outcome Questions
+        function validateStep4() {
+            clearErrors(3);
+            let isValid = true;
+
+            const motivationField = document.querySelector('textarea[name="motivation"]');
+            const successField = document.querySelector('textarea[name="success_definition"]');
+
+            if (!motivationField.value.trim()) {
+                showInputError(motivationField, 'Please explain what made you book this consultation');
+                isValid = false;
+            } else if (motivationField.value.trim().length < 10) {
+                showInputError(motivationField, 'Please provide at least 10 characters');
+                isValid = false;
+            }
+
+            if (!successField.value.trim()) {
+                showInputError(successField, 'Please define what would make this session successful');
+                isValid = false;
+            } else if (successField.value.trim().length < 10) {
+                showInputError(successField, 'Please provide at least 10 characters');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                showStepError(3, 'Please complete both questions before submitting.');
+            }
+
+            return isValid;
+        }
+
+        // ============= STEP MANAGEMENT =============
 
         //  Update Steps
         function updateStep() {
@@ -1171,17 +1654,44 @@
         }
 
         //  NEXT BUTTONS
-        nextBtns.forEach((btn) => {
+        nextBtns.forEach((btn, index) => {
             btn.addEventListener("click", (e) => {
-                // If it's not the submit button, prevent default and navigate
+                // If it's not the submit button, prevent default and validate current step
                 if (btn.type !== 'submit') {
                     e.preventDefault();
-                    if (currentStep < steps.length - 1) {
+
+                    let isValid = false;
+
+                    // Validate current step
+                    switch (currentStep) {
+                        case 0:
+                            isValid = validateStep1();
+                            break;
+                        case 1:
+                            isValid = validateStep2();
+                            break;
+                        case 2:
+                            isValid = validateStep3();
+                            break;
+                        case 3:
+                            isValid = validateStep4();
+                            break;
+                        default:
+                            isValid = true;
+                    }
+
+                    // Only proceed if validation passes
+                    if (isValid && currentStep < steps.length - 1) {
                         currentStep++;
                         updateStep();
                     }
+                } else {
+                    // It's the submit button - validate step 4 before allowing submission
+                    if (!validateStep4()) {
+                        e.preventDefault();
+                        return false;
+                    }
                 }
-                // If it's the submit button, allow form submission
             });
         });
 
@@ -1195,38 +1705,12 @@
             });
         });
 
-        //  Initialize
-        updateStep();
-
-        //  Custom Select Dropdown Logic
-        // select.addEventListener("click", () => {
-        //     select.classList.toggle("open");
-        //     optionsBox.classList.toggle("show");
-        // });
-
-        // document.querySelectorAll(".custom-options li").forEach((option) => {
-        //     option.addEventListener("click", () => {
-        //         const value = option.getAttribute("data-value");
-        //         selectedOption.textContent = value;
-        //         hiddenInput.value = value;
-        //         select.classList.remove("open");
-        //         optionsBox.classList.remove("show");
-        //     });
-        // });
-
-        // document.addEventListener("click", function(e) {
-        //     if (!select.contains(e.target)) {
-        //         select.classList.remove("open");
-        //         optionsBox.classList.remove("show");
-        //     }
-        // });
+        // ============= GOAL CARD HANDLING =============
 
         // === Handle Selectable Goal Cards ===
         function handleSelectableCards(selector, maxSelection, storageKey) {
             const cards = document.querySelectorAll(`${selector} .goal-card`);
-            const inputs = document.querySelectorAll(
-                `${selector} input[type="checkbox"]`
-            );
+            const inputs = document.querySelectorAll(`${selector} input[type="checkbox"]`);
 
             inputs.forEach((input) => {
                 input.addEventListener("change", () => {
@@ -1236,6 +1720,8 @@
                     cards.forEach((card) => {
                         const checkbox = card.querySelector('input[type="checkbox"]');
                         card.classList.toggle("selected", checkbox.checked);
+                        // Clear error state when selection is made
+                        card.classList.remove("error");
                     });
 
                     // Blur unselected if max reached
@@ -1252,6 +1738,13 @@
                     // Save selections to localStorage
                     const selectedValues = checked.map((i) => i.value);
                     localStorage.setItem(storageKey, JSON.stringify(selectedValues));
+
+                    // Clear any existing error messages for this step
+                    if (selector.includes('step2')) {
+                        clearErrors(1);
+                    } else if (selector.includes('step3')) {
+                        clearErrors(2);
+                    }
                 });
             });
         }
@@ -1262,24 +1755,6 @@
         // Step 3: Key Challenges (max 3)
         handleSelectableCards(".step3-wrapper", 3, "selectedKeyChallenges");
 
-        // STEP 4 — Navigate to Summary Page
-        const summaryBtn = document.querySelector(".summary-btn");
-        if (summaryBtn) {
-            summaryBtn.addEventListener("click", () => {
-                // Save all form fields to localStorage
-                const form = document.getElementById("multiStepForm");
-                const formData = new FormData(form);
-
-                formData.forEach((value, key) => {
-                    localStorage.setItem(key, value);
-                });
-
-                // Redirect to summary screen
-                window.location.href = "consultation-summary.html";
-            });
-        }
-
-
         // === Apply max-width rule for long goal-text ===
         function adjustGoalTextWidths() {
             const goalTexts = document.querySelectorAll(".goal-card .goal-text");
@@ -1289,7 +1764,6 @@
 
                 if (wordCount > 4) {
                     text.style.maxWidth = "100%";
-                   
                 }
                 if (wordCount > 5) {
                     text.style.maxWidth = "98%";
@@ -1299,8 +1773,90 @@
             });
         }
 
-        // Run immediately after DOM loads
-        adjustGoalTextWidths();
+        // Clear errors when user starts typing in input fields
+        document.querySelectorAll('input, textarea').forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.classList.contains('error')) {
+                    this.classList.remove('error');
+                    const errorMsg = this.parentNode.querySelector('.error-message');
+                    if (errorMsg) {
+                        errorMsg.remove();
+                    }
+                }
+            });
+        });
 
+        // ============= COUNTRY CODE + PHONE NUMBER HANDLING =============
+
+        // Function to combine country code and phone number
+        function updateCombinedPhone() {
+            const countryCode = document.getElementById('countryCode').value;
+            const phoneNumber = document.getElementById('phoneNumber').value.trim();
+            const combinedPhone = document.getElementById('combinedPhone');
+
+            if (phoneNumber) {
+                // Remove any leading zeros or country code that user might have entered
+                const cleanPhoneNumber = phoneNumber.replace(/^[\+]?[\d]*[-\s]?/, '').replace(/^0+/, '');
+                combinedPhone.value = countryCode + ' ' + cleanPhoneNumber;
+            } else {
+                combinedPhone.value = '';
+            }
+        }
+
+        // Initialize phone field with existing value
+        function initializePhoneField() {
+            const combinedPhone = document.getElementById('combinedPhone');
+            const countryCodeSelect = document.getElementById('countryCode');
+            const phoneNumberInput = document.getElementById('phoneNumber');
+
+            if (combinedPhone.value) {
+                // Split existing value to populate fields
+                const parts = combinedPhone.value.split(' ');
+                if (parts.length >= 2) {
+                    const countryCode = parts[0];
+                    const phoneNumber = parts.slice(1).join(' ');
+
+                    // Set country code if it exists in options
+                    const option = countryCodeSelect.querySelector(`option[value="${countryCode}"]`);
+                    if (option) {
+                        countryCodeSelect.value = countryCode;
+                    }
+
+                    phoneNumberInput.value = phoneNumber;
+                }
+            }
+        }
+
+        // Add event listeners for phone field updates
+        document.getElementById('countryCode').addEventListener('change', updateCombinedPhone);
+        document.getElementById('phoneNumber').addEventListener('input', updateCombinedPhone);
+
+        // Clear errors when user changes phone inputs
+        document.getElementById('countryCode').addEventListener('change', function() {
+            if (this.classList.contains('error')) {
+                this.classList.remove('error');
+                document.getElementById('phoneNumber').classList.remove('error');
+                const errorMsg = this.closest('.grid-input').querySelector('.error-message');
+                if (errorMsg) {
+                    errorMsg.remove();
+                }
+            }
+        });
+
+        document.getElementById('phoneNumber').addEventListener('input', function() {
+            if (this.classList.contains('error')) {
+                this.classList.remove('error');
+                document.getElementById('countryCode').classList.remove('error');
+                const errorMsg = this.closest('.grid-input').querySelector('.error-message');
+                if (errorMsg) {
+                    errorMsg.remove();
+                }
+            }
+        });
+
+        //  Initialize
+        updateStep();
+        adjustGoalTextWidths();
+        initializePhoneField();
     });
 </script>
