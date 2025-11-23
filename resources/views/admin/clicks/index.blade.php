@@ -4,7 +4,7 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Advanced Analytics Dashboard') }}
             </h2>
-            <div class="flex space-x-2">
+            <div class="flex space-x-2 flex-wrap items-center">
                 <a href="{{ route('admin.clicks.export', request()->query()) }}"
                     class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                     <i class="fas fa-download mr-2"></i>Export CSV
@@ -13,6 +13,21 @@
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     <i class="fas fa-sync mr-2"></i>Refresh
                 </button>
+
+                @php
+                    // Check if there are records that need country backfilling
+                    $needsBackfill = \App\Models\PageVisit::whereIn('country', ['Others', 'Unknown'])
+                        ->orWhereNull('country')
+                        ->count();
+                @endphp
+
+                @if ($needsBackfill > 0)
+                    <button onclick="showBackfillModal()"
+                        class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">
+                        <i class="fas fa-globe-americas mr-2"></i>Update Countries ({{ number_format($needsBackfill) }})
+                    </button>
+                @endif
+
                 <div class="text-xs text-gray-500 mt-1">
                     Data cached for 5min
                 </div>
@@ -281,14 +296,84 @@
                 <!-- Top Countries -->
                 <div class="bg-white overflow-hidden shadow rounded-lg">
                     <div class="px-4 py-5 sm:p-6">
-                        <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Top Countries</h3>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900">Top Countries</h3>
+                            <div class="text-xs text-gray-500">
+                                <i class="fas fa-globe mr-1"></i>{{ $analytics['top_countries']->count() }} countries
+                            </div>
+                        </div>
                         <div class="space-y-3">
-                            @foreach ($analytics['top_countries']->take(5) as $countryData)
-                                <div class="flex justify-between items-center">
-                                    <div class="text-sm font-medium text-gray-900">{{ $countryData->country }}</div>
-                                    <div class="text-sm text-gray-500">{{ $countryData->total }}</div>
+                            @if ($analytics['top_countries']->isEmpty())
+                                <div class="text-center py-4">
+                                    <i class="fas fa-globe text-gray-300 text-2xl mb-2"></i>
+                                    <p class="text-sm text-gray-500">No country data available yet</p>
+                                    <p class="text-xs text-gray-400 mt-1">
+                                        Run: <code class="bg-gray-100 px-2 py-1 rounded">php artisan
+                                            analytics:backfill-countries</code>
+                                    </p>
                                 </div>
-                            @endforeach
+                            @else
+                                @foreach ($analytics['top_countries']->take(5) as $index => $countryData)
+                                    <div class="flex justify-between items-center">
+                                        <div class="flex items-center">
+                                            <div class="w-6 text-center mr-3">
+                                                @php
+                                                    $countryFlags = [
+                                                        'Nigeria' => '🇳🇬',
+                                                        'United States' => '🇺🇸',
+                                                        'United Kingdom' => '🇬🇧',
+                                                        'Ghana' => '🇬🇭',
+                                                        'Kenya' => '🇰🇪',
+                                                        'South Africa' => '🇿🇦',
+                                                        'Canada' => '🇨🇦',
+                                                        'Germany' => '🇩🇪',
+                                                        'France' => '🇫🇷',
+                                                        'Australia' => '🇦🇺',
+                                                        'India' => '🇮🇳',
+                                                        'Brazil' => '🇧🇷',
+                                                        'Egypt' => '🇪🇬',
+                                                        'Morocco' => '🇲🇦',
+                                                        'Rwanda' => '🇷🇼',
+                                                        'Tanzania' => '🇹🇿',
+                                                        'Uganda' => '🇺🇬',
+                                                        'Ethiopia' => '🇪🇹',
+                                                        'Local' => '🏠',
+                                                        'Unknown' => '❓',
+                                                    ];
+                                                @endphp
+                                                <span
+                                                    class="text-base">{{ $countryFlags[$countryData->country] ?? '🌍' }}</span>
+                                            </div>
+                                            <div class="text-sm font-medium text-gray-900">{{ $countryData->country }}
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <div class="text-sm text-gray-500 mr-2">
+                                                {{ number_format($countryData->total) }}</div>
+                                            @php
+                                                $totalVisits = $analytics['total_visits'] ?? 1;
+                                                $percentage = ($countryData->total / $totalVisits) * 100;
+                                            @endphp
+                                            <div class="text-xs text-gray-400">({{ number_format($percentage, 1) }}%)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Progress bar -->
+                                    <div class="w-full bg-gray-200 rounded-full h-1.5 -mt-1">
+                                        <div class="bg-blue-600 h-1.5 rounded-full transition-all duration-300"
+                                            style="width: {{ min($percentage, 100) }}%"></div>
+                                    </div>
+                                @endforeach
+
+                                @if ($analytics['top_countries']->count() > 5)
+                                    <div class="mt-4 pt-3 border-t border-gray-200">
+                                        <div class="text-xs text-gray-500 text-center">
+                                            <i class="fas fa-plus-circle mr-1"></i>
+                                            {{ $analytics['top_countries']->count() - 5 }} more countries
+                                        </div>
+                                    </div>
+                                @endif
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -711,6 +796,105 @@
             window.closeVisitDetails = function() {
                 document.getElementById('visitDetailsModal').classList.add('hidden');
             };
+
+            // Country backfill modal functions
+            window.showBackfillModal = function() {
+                document.getElementById('backfillModal').classList.remove('hidden');
+            };
+
+            window.closeBackfillModal = function() {
+                document.getElementById('backfillModal').classList.add('hidden');
+            };
+
+            window.runBackfill = function() {
+                const button = document.getElementById('runBackfillBtn');
+                const status = document.getElementById('backfillStatus');
+
+                button.disabled = true;
+                button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
+                status.innerHTML =
+                    '<div class="text-blue-600"><i class="fas fa-info-circle mr-2"></i>Starting country data update...</div>';
+
+                // Note: This would normally be an AJAX call to a route that runs the command
+                // For now, we'll show instructions to run the command manually
+                setTimeout(() => {
+                    status.innerHTML = `
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                            <h4 class="text-yellow-800 font-medium mb-2">Manual Command Required</h4>
+                            <p class="text-yellow-700 text-sm mb-3">Please run this command in your terminal:</p>
+                            <code class="block bg-gray-800 text-green-400 p-3 rounded text-sm font-mono">
+                                php artisan analytics:backfill-countries --limit=100
+                            </code>
+                            <p class="text-yellow-700 text-xs mt-2">
+                                This will update 100 records with real country data. Run multiple times until complete.
+                            </p>
+                        </div>
+                    `;
+                    button.disabled = false;
+                    button.innerHTML = '<i class="fas fa-terminal mr-2"></i>Show Commands';
+                }, 1000);
+            };
         });
     </script>
+
+    <!-- Country Backfill Modal -->
+    <div id="backfillModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
+        <div
+            class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 max-w-2xl shadow-lg rounded-lg bg-white">
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-gray-200">
+                <h3 class="text-xl font-semibold text-gray-900">
+                    <i class="fas fa-globe-americas mr-2 text-orange-500"></i>Update Country Data
+                </h3>
+                <button onclick="closeBackfillModal()"
+                    class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <div class="mb-6">
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                    <h4 class="text-blue-800 font-medium mb-2">
+                        <i class="fas fa-info-circle mr-2"></i>Country Tracking Enhancement
+                    </h4>
+                    <p class="text-blue-700 text-sm">
+                        Your analytics now detects real countries instead of showing "Others".
+                        Update your historical records to see accurate geographical data.
+                    </p>
+                </div>
+
+                @if ($needsBackfill > 0)
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                        <div class="bg-orange-50 border border-orange-200 rounded-lg p-3 text-center">
+                            <div class="text-2xl font-bold text-orange-600">{{ number_format($needsBackfill) }}</div>
+                            <div class="text-sm text-orange-700">Records to Update</div>
+                        </div>
+                        <div class="bg-green-50 border border-green-200 rounded-lg p-3 text-center">
+                            <div class="text-2xl font-bold text-green-600">195+</div>
+                            <div class="text-sm text-green-700">Countries Supported</div>
+                        </div>
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 text-center">
+                            <div class="text-2xl font-bold text-blue-600">FREE</div>
+                            <div class="text-sm text-blue-700">GeoIP Service</div>
+                        </div>
+                    </div>
+                @endif
+
+                <div id="backfillStatus" class="mb-4">
+                    <!-- Status updates will appear here -->
+                </div>
+            </div>
+
+            <div class="flex justify-end space-x-3">
+                <button onclick="closeBackfillModal()"
+                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-2 rounded-lg font-medium transition-colors duration-200">
+                    Cancel
+                </button>
+                <button id="runBackfillBtn" onclick="runBackfill()"
+                    class="bg-orange-600 hover:bg-orange-700 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200">
+                    <i class="fas fa-play mr-2"></i>Start Update
+                </button>
+            </div>
+        </div>
+    </div>
+
 </x-app-layout>

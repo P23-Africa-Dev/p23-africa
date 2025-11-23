@@ -370,6 +370,7 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|staff'])->prefix('admi
 
     Route::get('/clicks/report', [ClickReportController::class, 'index'])->name('clicks.report');
     Route::get('/clicks/export', [ClickReportController::class, 'export'])->name('clicks.export');
+    Route::post('/clicks/backfill-countries', [ClickReportController::class, 'backfillCountries'])->name('clicks.backfill-countries');
 });
 
 Broadcast::routes(['middleware' => ['auth', 'check.suspended', 'role:admin|staff']]);
