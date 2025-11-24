@@ -8,6 +8,8 @@ use App\Models\Click;
 use App\Models\PageVisit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 
 class ClickReportController extends Controller
@@ -364,5 +366,49 @@ class ClickReportController extends Controller
         ];
 
         return $titles[$routeName] ?? ucwords(str_replace(['_', '-'], ' ', $routeName));
+    }
+
+    /**
+     * Run country backfill process via web interface
+     */
+    public function backfillCountries(Request $request)
+    {
+        $limit = (int) $request->get('limit', 50);
+
+        try {
+            // Run the backfill command
+            Artisan::call('analytics:backfill-countries', [
+                '--limit' => $limit
+            ]);
+
+            $output = Artisan::output();
+
+            // Count remaining records that need updating
+            $remaining = PageVisit::where(function ($query) {
+                $query->where('country', 'Others')
+                    ->orWhere('country', 'Unknown')
+                    ->orWhereNull('country');
+            })
+                ->whereNotNull('ip_address')
+                ->where('ip_address', '!=', '127.0.0.1')
+                ->where('ip_address', 'not like', '192.168.%')
+                ->where('ip_address', 'not like', '10.%')
+                ->count();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Country data updated successfully!',
+                'output' => $output,
+                'remaining' => $remaining,
+                'processed' => $limit
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Country backfill failed: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to update country data: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }

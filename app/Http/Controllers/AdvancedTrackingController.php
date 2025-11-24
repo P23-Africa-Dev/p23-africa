@@ -156,65 +156,131 @@ class AdvancedTrackingController extends Controller
 
     private function getCountryFromIP($ipAddress)
     {
-        // Placeholder for GeoIP integration
-        if ($ipAddress === '127.0.0.1' || $ipAddress === '::1') {
+        // Handle local IPs
+        if ($ipAddress === '127.0.0.1' || $ipAddress === '::1' || strpos($ipAddress, '192.168.') === 0 || strpos($ipAddress, '10.') === 0) {
             return 'Local';
         }
 
-        // Integrate with a GeoIP service like:
-        // - MaxMind GeoIP2
-        // - ip-api.com
-        // - ipinfo.io
-        return null;
+        // Check if IP is valid for API lookup
+        if (!filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+            return 'Unknown';
+        }
+
+        try {
+            // Use ip-api.com (free tier: 45 requests per minute)
+            // Cache the result for 24 hours to reduce API calls
+            $cacheKey = 'geoip_country_' . md5($ipAddress);
+
+            return cache()->remember($cacheKey, 86400, function () use ($ipAddress) {
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, "http://ip-api.com/json/{$ipAddress}?fields=status,country");
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 3); // 3 second timeout
+                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2);
+
+                $response = curl_exec($ch);
+                $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                curl_close($ch);
+
+                if ($httpCode === 200 && $response) {
+                    $data = json_decode($response, true);
+                    if (isset($data['status']) && $data['status'] === 'success' && isset($data['country'])) {
+                        return $data['country'];
+                    }
+                }
+
+                return 'Unknown';
+            });
+        } catch (\Exception $e) {
+            // Log error but don't break the tracking
+            Log::warning('GeoIP lookup failed for IP: ' . $ipAddress . ' - ' . $e->getMessage());
+            return 'Unknown';
+        }
     }
 
     private function getCityFromIP($ipAddress)
     {
-        // Placeholder for GeoIP integration
-        if ($ipAddress === '127.0.0.1' || $ipAddress === '::1') {
+        // Handle local IPs
+        if ($ipAddress === '127.0.0.1' || $ipAddress === '::1' || strpos($ipAddress, '192.168.') === 0 || strpos($ipAddress, '10.') === 0) {
             return 'Local';
         }
 
-        return null;
+        // Check if IP is valid for API lookup
+        if (!filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+            return 'Unknown';
+        }
+
+        try {
+            // Cache the result for 24 hours
+            $cacheKey = 'geoip_city_' . md5($ipAddress);
+
+            return cache()->remember($cacheKey, 86400, function () use ($ipAddress) {
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, "http://ip-api.com/json/{$ipAddress}?fields=status,city");
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2);
+
+                $response = curl_exec($ch);
+                $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                curl_close($ch);
+
+                if ($httpCode === 200 && $response) {
+                    $data = json_decode($response, true);
+                    if (isset($data['status']) && $data['status'] === 'success' && isset($data['city'])) {
+                        return $data['city'];
+                    }
+                }
+
+                return 'Unknown';
+            });
+        } catch (\Exception $e) {
+            Log::warning('GeoIP city lookup failed for IP: ' . $ipAddress . ' - ' . $e->getMessage());
+            return 'Unknown';
+        }
     }
 
     /**
-     * Normalize country name to specific allowed countries or "Others"
+     * Normalize country name to handle common variations
+     * Now stores all actual country names instead of forcing "Others"
      */
     private function normalizeCountry($country)
     {
         if (empty($country)) {
-            return 'Others';
+            return 'Unknown';
         }
 
-        // Define allowed countries
-        $allowedCountries = [
-            'Nigeria',
-            'United States',
-            'United Kingdom',
-            'Ghana',
-            'Kenya',
-            'South Africa',
-            'Egypt',
-            'Morocco',
-            'Local'
-        ];
-
-        // Normalize common variations
+        // Normalize common variations to standard names
         $countryMapping = [
+            // United States variations
             'USA' => 'United States',
             'US' => 'United States',
             'America' => 'United States',
+            'United States of America' => 'United States',
+
+            // United Kingdom variations
             'UK' => 'United Kingdom',
             'Britain' => 'United Kingdom',
             'Great Britain' => 'United Kingdom',
             'England' => 'United Kingdom',
+            'Scotland' => 'United Kingdom',
+            'Wales' => 'United Kingdom',
+            'Northern Ireland' => 'United Kingdom',
+
+            // Other common variations
+            'UAE' => 'United Arab Emirates',
+            'South Korea' => 'Korea, Republic of',
+            'North Korea' => 'Korea, Democratic People\'s Republic of',
+            'Congo' => 'Congo, Republic of the',
+            'DRC' => 'Congo, Democratic Republic of the',
+            'Ivory Coast' => 'Côte d\'Ivoire',
+
+            // Keep these as is
+            'Local' => 'Local',
+            'Unknown' => 'Unknown',
         ];
 
-        // Apply mapping if exists
-        $normalizedCountry = $countryMapping[$country] ?? $country;
-
-        // Check if the normalized country is in allowed list
-        return in_array($normalizedCountry, $allowedCountries) ? $normalizedCountry : 'Others';
+        // Apply mapping if exists, otherwise return the original country name
+        return $countryMapping[$country] ?? $country;
     }
 }
