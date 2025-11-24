@@ -294,7 +294,7 @@
         border-radius: 40px;
         border: 1px solid #ddd;
         outline: none;
-        background: #fff;
+        /* background: #fff; */
         font-weight: bold;
         resize: none;
         color: #0d4036;
@@ -666,7 +666,7 @@
         border-radius: 50px;
         border: 1px solid #ddd;
         cursor: pointer;
-        background: #fff;
+        /* background: #fff; */
         position: relative;
         box-shadow: 0px 14px 13px -3px rgba(0, 0, 0, 0.17);
     }
@@ -698,11 +698,43 @@
         border: 1px solid #eee;
         background: #0a3d43;
         box-shadow: 0 4px 14px rgba(0, 0, 0, .08);
-        max-height: 200px;
+        max-height: 250px;
         overflow-y: auto;
         z-index: 5;
         overflow-x: hidden;
 
+    }
+
+    /* SEARCH INPUT */
+    .flag-search-container {
+        padding: 8px 12px;
+        border-bottom: 1px solid #196770;
+        background: #0a3d43;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    #flagSearch {
+        width: 100%;
+        padding: 8px 12px;
+        border: 1px solid #196770;
+        border-radius: 8px;
+        background: #fff;
+        color: #0a3d43;
+        font-size: 12px;
+        font-family: "GT Walsheim Con";
+        outline: none;
+    }
+
+    #flagSearch::placeholder {
+        color: #898D8D;
+        opacity: 0.8;
+    }
+
+    #flagSearch:focus {
+        border-color: #1ed2aa;
+        box-shadow: 0 0 5px rgba(30, 210, 170, 0.3);
     }
 
     .flag-dropdown::-webkit-scrollbar {
@@ -745,6 +777,21 @@
         /* enlarge flag slightly */
     }
 
+    /* HIDDEN FLAG ITEMS DURING SEARCH */
+    .flag-item.hidden {
+        display: none;
+    }
+
+    /* NO RESULTS MESSAGE */
+    .no-results {
+        padding: 12px;
+        text-align: center;
+        color: #898D8D;
+        font-size: 12px;
+        font-family: "GT Walsheim Con";
+        font-style: italic;
+    }
+
 
 
     /* NUMBER FIELD */
@@ -757,6 +804,10 @@
         border-radius: 40px;
         width: 100%;
         box-shadow: 0px 14px 13px -3px rgba(0, 0, 0, 0.17);
+    }
+
+    .number-wrapper input {
+        padding: 14px 10px !important;
     }
 
     #countryPrefix {
@@ -1158,6 +1209,11 @@
                                         alt="" />
                                     <!-- DROPDOWN -->
                                     <div class="flag-dropdown" id="flagDropdown">
+                                        <!-- Search Input -->
+                                        <div class="flag-search-container">
+                                            <input type="text" id="flagSearch" placeholder="Search countries..."
+                                                autocomplete="off">
+                                        </div>
 
                                         <div class="flag-item" data-flag="https://flagcdn.com/us.svg" data-code="+1">
                                             <img src="https://flagcdn.com/us.svg"> USA (+1)
@@ -2379,51 +2435,168 @@
             const isOpen = dropdown.style.display === "block";
             dropdown.style.display = isOpen ? "none" : "block";
             dropdownIcon.classList.toggle("rotate", !isOpen);
+
+            // Focus search input when opening dropdown
+            if (!isOpen) {
+                setTimeout(() => {
+                    const searchInput = document.getElementById('flagSearch');
+                    if (searchInput) {
+                        searchInput.focus();
+                        searchInput.value = ''; // Clear previous search
+                        filterCountries(''); // Show all countries
+                    }
+                }, 100);
+            }
         });
 
         // SELECT COUNTRY
-        document.querySelectorAll(".flag-item").forEach(item => {
-            item.addEventListener("click", (e) => {
-                e.stopPropagation(); // IMPORTANT FIX
+        function setupCountrySelection() {
+            document.querySelectorAll(".flag-item").forEach((item, index) => {
+                // Make items focusable
+                item.tabIndex = 0;
 
-                const newFlag = item.dataset.flag;
-                const newCode = item.dataset.code;
+                item.addEventListener("click", (e) => {
+                    e.stopPropagation(); // IMPORTANT FIX
+                    selectCountry(item);
+                });
 
-                // Update UI
-                flagImg.src = newFlag;
-                flagImg.style.display = "block";
+                // Handle keyboard selection
+                item.addEventListener("keydown", (e) => {
+                    const visibleItems = Array.from(document.querySelectorAll(
+                        '.flag-item:not(.hidden)'));
+                    const currentIndex = visibleItems.indexOf(item);
 
-                // Hide placeholder text
-                const flagPlaceholder = document.getElementById('flagPlaceholder');
-                if (flagPlaceholder) {
-                    flagPlaceholder.style.display = "none";
-                }
-
-                // Show and update prefix
-                prefixSpan.textContent = newCode;
-                prefixSpan.style.display = "block";
-
-                // Enable phone input and update placeholder
-                phoneNumberInput.disabled = false;
-                phoneNumberInput.placeholder = "Enter phone number";
-
-                // Remove error styling if present
-                flagBox.classList.remove('error');
-                phoneNumberInput.classList.remove('error');
-
-                // Update hidden backend field
-                updateCombinedPhone();
-
-                // Close dropdown immediately
-                dropdown.style.display = "none";
-                dropdownIcon.classList.remove("rotate");
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        selectCountry(item);
+                    } else if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        const nextIndex = Math.min(currentIndex + 1, visibleItems.length - 1);
+                        visibleItems[nextIndex]?.focus();
+                    } else if (e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        if (currentIndex === 0) {
+                            // Go back to search input
+                            flagSearch?.focus();
+                        } else {
+                            const prevIndex = Math.max(currentIndex - 1, 0);
+                            visibleItems[prevIndex]?.focus();
+                        }
+                    } else if (e.key === 'Escape') {
+                        dropdown.style.display = "none";
+                        dropdownIcon.classList.remove("rotate");
+                        flagBox.focus();
+                    }
+                });
             });
-        });
+        }
 
+        function selectCountry(item) {
+            const newFlag = item.dataset.flag;
+            const newCode = item.dataset.code;
+
+            // Update UI
+            flagImg.src = newFlag;
+            flagImg.style.display = "block";
+
+            // Hide placeholder text
+            const flagPlaceholder = document.getElementById('flagPlaceholder');
+            if (flagPlaceholder) {
+                flagPlaceholder.style.display = "none";
+            }
+
+            // Show and update prefix
+            prefixSpan.textContent = newCode;
+            prefixSpan.style.display = "block";
+
+            // Enable phone input and update placeholder
+            phoneNumberInput.disabled = false;
+            phoneNumberInput.placeholder = "Enter phone number";
+
+            // Remove error styling if present
+            flagBox.classList.remove('error');
+            phoneNumberInput.classList.remove('error');
+
+            // Update hidden backend field
+            updateCombinedPhone();
+
+            // Close dropdown immediately
+            dropdown.style.display = "none";
+            dropdownIcon.classList.remove("rotate");
+
+            // Focus phone input
+            phoneNumberInput.focus();
+        }
+
+        // Initialize country selection
+        setupCountrySelection();
+
+
+        // SEARCH FUNCTIONALITY
+        const flagSearch = document.getElementById('flagSearch');
+        if (flagSearch) {
+            flagSearch.addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                filterCountries(searchTerm);
+            });
+
+            // Prevent dropdown from closing when clicking on search input
+            flagSearch.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+
+            // Handle keyboard navigation
+            flagSearch.addEventListener('keydown', function(e) {
+                const visibleItems = document.querySelectorAll('.flag-item:not(.hidden)');
+
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    if (visibleItems.length > 0) {
+                        visibleItems[0].focus();
+                    }
+                } else if (e.key === 'Escape') {
+                    dropdown.style.display = "none";
+                    dropdownIcon.classList.remove("rotate");
+                    flagBox.focus();
+                }
+            });
+        }
+
+        // FILTER COUNTRIES FUNCTION
+        function filterCountries(searchTerm) {
+            const flagItems = document.querySelectorAll('.flag-item');
+            let visibleCount = 0;
+
+            // Remove existing no-results message
+            const existingNoResults = dropdown.querySelector('.no-results');
+            if (existingNoResults) {
+                existingNoResults.remove();
+            }
+
+            flagItems.forEach(item => {
+                const countryText = item.textContent.toLowerCase();
+                const countryCode = item.dataset.code.toLowerCase();
+
+                if (countryText.includes(searchTerm) || countryCode.includes(searchTerm)) {
+                    item.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+
+            // Show "no results" message if no countries match
+            if (visibleCount === 0 && searchTerm.trim() !== '') {
+                const noResultsDiv = document.createElement('div');
+                noResultsDiv.className = 'no-results';
+                noResultsDiv.textContent = 'No countries found';
+                dropdown.appendChild(noResultsDiv);
+            }
+        }
 
         // CLICK OUTSIDE CLOSES DROPDOWN
         document.addEventListener("click", (e) => {
-            if (!flagBox.contains(e.target)) {
+            if (!flagBox.contains(e.target) && !dropdown.contains(e.target)) {
                 dropdown.style.display = "none";
                 dropdownIcon.classList.remove("rotate");
             }
