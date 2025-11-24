@@ -488,6 +488,12 @@
         letter-spacing: 0.7px;
         max-width: 115px;
     }
+    .goal-text.prepare-text{
+        padding: 0px 12px;
+    }
+    .goal-text.build-text{
+        padding: 0px 8px;
+    }
 
     /* === CHECKMARK CIRCLE === */
     .goal-checkmark {
@@ -1377,7 +1383,7 @@
                             <label class="goal-card">
                                 <input type="checkbox" name="business_goals[]"
                                     value="Prepare for funding or investor conversations" />
-                                <span class="goal-text">Prepare for funding or investor conversations</span>
+                                <span class="goal-text prepare-text">Prepare for funding or investor conversations</span>
                                 <span class="goal-checkmark">
                                     <img src="{{ asset('img/marked.png') }}" alt="" />
                                 </span>
@@ -1386,7 +1392,7 @@
                             <label class="goal-card">
                                 <input type="checkbox" name="business_goals[]"
                                     value="Build internal systems or operational structure" />
-                                <span class="goal-text">Build internal systems or operational structure</span>
+                                <span class="goal-text build-text">Build internal systems or operational structure</span>
                                 <span class="goal-checkmark">
                                     <img src="{{ asset('img/marked.png') }}" alt="" />
                                 </span>
@@ -1525,7 +1531,7 @@
         localStorage.removeItem("selectedKeyChallenges");
 
         //  Always start from step 0 (first step)
-        let currentStep = 0;
+        let currentStep = 1;
 
         // ============= VALIDATION FUNCTIONS =============
 
