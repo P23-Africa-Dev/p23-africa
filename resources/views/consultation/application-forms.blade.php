@@ -806,7 +806,8 @@
         /* padding-left: 40px; */
 
     }
-   /* .grid-input .phone-rounded::placeholder{
+
+    /* .grid-input .phone-rounded::placeholder{
         margin-left: 20px !important;
     } */
 
@@ -2443,7 +2444,7 @@
                 dropdown.style.display = "none";
                 dropdownIcon.classList.remove("rotate");
 
-              updatePhoneBorder(prefixSpan, phoneNumberInput);
+                updatePhoneBorder(prefixSpan, phoneNumberInput);
             });
         });
 
@@ -2455,6 +2456,50 @@
                 dropdownIcon.classList.remove("rotate");
             }
         });
+
+        // ============ HIDDEN TYPE-TO-SEARCH FOR COUNTRY DROPDOWN ===============
+
+        // Cache flag items
+        const flagItems = document.querySelectorAll(".flag-item");
+
+        let searchBuffer = "";
+        let typingTimeout;
+
+        // Detect typing ONLY when dropdown is open
+        document.addEventListener("keydown", function(event) {
+
+            // Only work if dropdown is visible
+            if (dropdown.style.display !== "block") return;
+
+            // Ignore non-character keys unless Backspace
+            if (event.key.length !== 1 && event.key !== "Backspace") return;
+
+            // Build search string
+            if (event.key === "Backspace") {
+                searchBuffer = searchBuffer.slice(0, -1);
+            } else {
+                searchBuffer += event.key.toLowerCase();
+            }
+
+            // Reset after 1 second of inactivity
+            clearTimeout(typingTimeout);
+            typingTimeout = setTimeout(() => {
+                searchBuffer = "";
+                // show all items again
+                flagItems.forEach(item => item.style.display = "flex");
+            }, 1000);
+
+            // Filter matching countries
+            flagItems.forEach(item => {
+                const text = item.innerText.toLowerCase();
+                if (text.includes(searchBuffer)) {
+                    item.style.display = "flex";
+                } else {
+                    item.style.display = "none";
+                }
+            });
+        });
+
 
         // UPDATE HIDDEN FIELD (backend)
         function updateCombinedPhone() {

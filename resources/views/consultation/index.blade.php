@@ -205,7 +205,7 @@
 
     @media (min-width: 1200px) {
         .book-conversation-section .intro-container {
-            flex-direction: row;
+            flex-direction: column;
             gap: 80px;
         }
 
@@ -224,8 +224,11 @@
     }
 
     @media (min-width: 1400px) {
+    
         .book-conversation-section .intro-container {
             gap: 0px;
+            flex-direction: row;
+
         }
 
         .book-conversation-section .left-content {
@@ -259,15 +262,16 @@
             margin-top: 20px;
         }
 
-            .book-conversation-section .left-content .info-content div.btn {
-        align-self: start;
-        margin-left: 0px;
-    }
+        .book-conversation-section .left-content .info-content div.btn {
+            align-self: start;
+            margin-left: 0px;
+        }
 
         .book-conversation-section .left-content .info-content div.btn a {
             /* padding: 1.2rem 2.5rem; */
         }
-        .book-conversation-section .left-content .info-content div.btn  {
+
+        .book-conversation-section .left-content .info-content div.btn {
             margin-left: -1rem;
         }
 
@@ -342,12 +346,19 @@
 
             scrollbar-width: none;
             padding-top: 1rem;
-            min-height: 820px;
+            /* min-height: 820px; */
 
 
 
         }
 
+
+    }
+
+    @media (min-width: 1560px) {
+        .book-conversation-section .desktop-image-cont img.desktop {
+            min-height: 820px;
+        }
 
     }
 </style>
