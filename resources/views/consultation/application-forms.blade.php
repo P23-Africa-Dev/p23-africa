@@ -672,7 +672,7 @@
     }
 
     .flag-box img.flagImagee {
-        width: 27px;
+        width: 25px;
         height: 22px;
         /* border-radius: 3px; */
         object-fit: cover;
