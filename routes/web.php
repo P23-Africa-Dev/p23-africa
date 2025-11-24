@@ -231,6 +231,11 @@ Route::get('/book-consultation', function () {
 })->name('consultation.index');
 
 
+Route::get('/book-pay', function () {
+    return view('consultation.payment');
+})->name('consultation.payment');
+
+
 // Consultation Application Routes
 Route::get('/book-consultation/form', [App\Http\Controllers\ConsultationController::class, 'showApplicationForm'])->name('consultation.application-forms');
 Route::post('/book-consultation/submit', [App\Http\Controllers\ConsultationController::class, 'submitApplication'])->name('consultation.submit');

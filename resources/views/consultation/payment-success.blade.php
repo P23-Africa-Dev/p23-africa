@@ -198,7 +198,6 @@
     .details-row .detail-item span.label {
         color: #707070;
         margin-bottom: 3px;
-        /* border-right: 1px solid red; */
     }
 
     .details-row .detail-item span.value {
