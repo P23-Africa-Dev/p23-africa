@@ -230,6 +230,7 @@ Route::get('/book-consultation', function () {
     return view('consultation.index');
 })->name('consultation.index');
 
+
 // Consultation Application Routes
 Route::get('/book-consultation/form', [App\Http\Controllers\ConsultationController::class, 'showApplicationForm'])->name('consultation.application-forms');
 Route::post('/book-consultation/submit', [App\Http\Controllers\ConsultationController::class, 'submitApplication'])->name('consultation.submit');
@@ -395,5 +396,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
+
+
 
 require __DIR__ . '/auth.php';

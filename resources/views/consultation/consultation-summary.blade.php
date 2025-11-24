@@ -414,7 +414,7 @@
         }
 
         .challenges .list-container .lists .list-card:last-of-type {
-            margin-top: -1.5rem;
+            /* margin-top: -1.5rem; */
         }
 
         .list-container {
@@ -556,7 +556,8 @@
                             @foreach ($application->selected_challenges as $challenge)
                                 <label class="list-card">
                                     <span class="list-text">{{ $challenge }}</span>
-                                    <span class="list-checkmark"><img src="{{ asset('img/marked.png') }}" alt="" /></span>
+                                    <span class="list-checkmark"><img src="{{ asset('img/marked.png') }}"
+                                            alt="" /></span>
                                 </label>
                             @endforeach
                         </div>
@@ -573,7 +574,8 @@
                             @foreach ($application->selected_goals as $goal)
                                 <label class="list-card">
                                     <span class="list-text">{{ $goal }}</span>
-                                    <span class="list-checkmark"><img src="{{ asset('img/marked.png') }}" alt="" /></span>
+                                    <span class="list-checkmark"><img src="{{ asset('img/marked.png') }}"
+                                            alt="" /></span>
                                 </label>
                             @endforeach
                         </div>
@@ -613,4 +615,13 @@
 @endsection
 
 
-<script></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const challengeCards = document.querySelectorAll("#challengeList .list-card");
+
+        if (challengeCards.length === 3) {
+            const lastCard = challengeCards[challengeCards.length - 1];
+            lastCard.style.marginTop = "-1.5rem";
+        }
+    });
+</script>

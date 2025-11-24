@@ -301,7 +301,7 @@
         letter-spacing: 0.8px;
     }
 
-    .form-grid .phone-number-input {}
+
 
     .form-grid input::placeholder,
     .form-grid textarea::placeholder {
@@ -460,7 +460,7 @@
         box-shadow: 0px 10px 7px -3px rgba(0, 0, 0, 0.17);
 
         padding: 15px 0px;
-        width: 34vw;
+        width: 35vw;
         cursor: pointer;
         transition: all 0.3s ease;
         display: flex;
@@ -476,7 +476,7 @@
     }
 
     .goal-text {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         line-height: 1.1;
         pointer-events: none;
         /* font-family: "GT Walsheim Con"; */
@@ -484,7 +484,7 @@
 
         font-weight: 800;
 
-        padding: 0px 8px;
+        padding: 0px 11.3px;
         letter-spacing: 0.7px;
         max-width: 115px;
     }
@@ -619,8 +619,11 @@
         margin: 10px 0;
         text-align: center;
         font-family: "GT Walsheim Con";
-        font-size: 14px;
+        font-size: 12px;
         letter-spacing: 0.5px;
+        /* position: absolute;
+        top: 40px; */
+        /* display: none; */
     }
 
     .goal-card.error {
@@ -629,67 +632,140 @@
     }
 
     /* --------------- PHONE INPUT WITH COUNTRY CODE --------------- */
-    .phone-input-container {
-        display: flex;
-        align-items: stretch;
-        position: relative;
-        width: 100%;
-    }
-
-    .country-code-dropdown {
-        position: relative;
-        min-width: 100px;
-        max-width: 100px;
-    }
-
-    .country-code-select {
-        padding: 14px 12px 14px 20px;
-        font-size: 14px;
-        border-radius: 40px 0 0 40px;
-        border: 1px solid #ddd;
-        border-right: none;
-        outline: none;
-        background: #fff;
-        font-weight: bold;
-        color: #525252;
-        box-shadow: 0px 14px 13px -3px rgba(0, 0, 0, 0.17);
-        font-family: "GT Walsheim Con";
-        letter-spacing: 0.8px;
-        cursor: pointer;
-        appearance: none;
-        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
-        background-repeat: no-repeat;
-        background-position: right 12px center;
-        background-size: 16px;
+    .phone-field {
         display: flex;
         align-items: center;
-        height: auto;
+        gap: 12px;
+        font-family: sans-serif;
     }
 
-    .phone-number-input {
-        flex: 1;
-        padding: 18px 40px 18px 20px;
-        font-size: 14px;
-        border-radius: 0 40px 40px 0;
-        border-top-left-radius: 0 !important;
-        border-bottom-left-radius: 0 !important;
+    /* FLAG BOX */
+    .flag-box {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 16px;
+        border-radius: 50px;
         border: 1px solid #ddd;
-        outline: none;
+        cursor: pointer;
         background: #fff;
-        font-weight: bold;
-        resize: none;
-        color: #0d4036;
+        position: relative;
         box-shadow: 0px 14px 13px -3px rgba(0, 0, 0, 0.17);
-        font-family: "GT Walsheim Con";
-        letter-spacing: 0.8px;
     }
 
-    .phone-number-input::placeholder {
+    .flag-box img.flagImagee {
+        width: 27px;
+        height: 22px;
+        /* border-radius: 3px; */
+        object-fit: cover;
+    }
+
+    .dropdown-icon {
+        width: 10px;
+        transition: transform .3s ease;
+    }
+
+    .dropdown-icon.rotate {
+        transform: rotate(180deg);
+    }
+
+    /* DROPDOWN */
+    .flag-dropdown {
+        position: absolute;
+        top: 48px;
+        left: 0;
+        width: 200px;
+        display: none;
+        border-radius: 14px;
+        border: 1px solid #eee;
+        background: #0a3d43;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, .08);
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 5;
+        overflow-x: hidden;
+
+    }
+
+    .flag-dropdown::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .flag-dropdown::-webkit-scrollbar-thumb {
+        background: #196770;
+        border-radius: 8px;
+    }
+
+    .flag-item {
+        padding: 12px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        color: #fff;
+        font-family: "GT Walsheim Con";
+
+        font-size: 13px;
+        /* transition: background 0.25s ease, transform 0.2s ease; */
+
+    }
+
+
+    .flag-item img {
+        width: auto;
+        height: 12px;
+        transition: transform 0.25s ease;
+    }
+
+    /* HOVER EFFECT */
+    .flag-item:hover {
+        background: #196770;
+    }
+
+    .flag-item:hover img {
+        transform: translateX(2px);
+        /* enlarge flag slightly */
+    }
+
+
+
+    /* NUMBER FIELD */
+    .number-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 0px;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 40px;
+        width: 100%;
+        box-shadow: 0px 14px 13px -3px rgba(0, 0, 0, 0.17);
+    }
+
+    #countryPrefix {
+        padding: 0px 12px 0px 16px;
+        margin-right: 4px;
+        font-family: "GT Walsheim Con";
         font-size: 13px;
         letter-spacing: 0.6px;
-        font-weight: 300;
         opacity: 0.86;
+        border-right: 1px solid #898d8d7b;
+        color: #898D8D;
+
     }
+
+    .form-grid input#phoneInput {
+        border: none;
+        outline: none;
+        font-size: 15px;
+        flex: 1;
+        box-shadow: none;
+        border-radius: 0px;
+        border-top-right-radius: 40px;
+        border-bottom-right-radius: 40px;
+        padding: 16px 40px 16px 0px;
+
+    }
+
 
     .country-code-select.error,
     .phone-number-input.error {
@@ -875,6 +951,12 @@
             margin: 0 auto;
             padding: 0px 18px;
         }
+
+        .step-error {
+            max-width: 500px;
+            margin: 0 auto;
+            margin-top: 20px;
+        }
     }
 
     @media (min-width: 1440px) {
@@ -1028,122 +1110,175 @@
                                 <span class="text-red-600 text-sm">{{ $message }}</span>
                             @enderror
 
-                            <div class="phone-input-container">
-                                <select class="country-code-select" id="countryCode">
-                                    <option value="+1"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+1 ') ? 'selected' : '' }}>🇺🇸 +1
-                                    </option>
-                                    <option value="+44"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+44 ') ? 'selected' : (!old('phone') ? 'selected' : '') }}>
-                                        🇬🇧
-                                        +44</option>
-                                    <option value="+91"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+91 ') ? 'selected' : '' }}>🇮🇳
-                                        +91</option>
-                                    <option value="+86"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+86 ') ? 'selected' : '' }}>🇨🇳
-                                        +86</option>
-                                    <option value="+81"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+81 ') ? 'selected' : '' }}>🇯🇵
-                                        +81</option>
-                                    <option value="+49"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+49 ') ? 'selected' : '' }}>🇩🇪
-                                        +49</option>
-                                    <option value="+33"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+33 ') ? 'selected' : '' }}>🇫🇷
-                                        +33</option>
-                                    <option value="+39"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+39 ') ? 'selected' : '' }}>🇮🇹
-                                        +39</option>
-                                    <option value="+7"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+7 ') ? 'selected' : '' }}>🇷🇺
-                                        +7</option>
-                                    <option value="+55"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+55 ') ? 'selected' : '' }}>🇧🇷
-                                        +55</option>
-                                    <option value="+52"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+52 ') ? 'selected' : '' }}>🇲🇽
-                                        +52</option>
-                                    <option value="+61"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+61 ') ? 'selected' : '' }}>🇦🇺
-                                        +61</option>
-                                    <option value="+27"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+27 ') ? 'selected' : '' }}>
-                                        🇿🇦 +27</option>
-                                    <option value="+234"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+234 ') ? 'selected' : '' }}>🇳🇬
-                                        +234</option>
-                                    <option value="+254"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+254 ') ? 'selected' : '' }}>🇰🇪
-                                        +254</option>
-                                    <option value="+233"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+233 ') ? 'selected' : '' }}>🇬🇭
-                                        +233</option>
-                                    <option value="+256"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+256 ') ? 'selected' : '' }}>🇺🇬
-                                        +256</option>
-                                    <option value="+255"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+255 ') ? 'selected' : '' }}>🇹🇿
-                                        +255</option>
-                                    <option value="+20"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+20 ') ? 'selected' : '' }}>🇪🇬
-                                        +20</option>
-                                    <option value="+213"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+213 ') ? 'selected' : '' }}>🇩🇿
-                                        +213</option>
-                                    <option value="+212"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+212 ') ? 'selected' : '' }}>🇲🇦
-                                        +212</option>
-                                    <option value="+216"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+216 ') ? 'selected' : '' }}>🇹🇳
-                                        +216</option>
-                                    <option value="+218"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+218 ') ? 'selected' : '' }}>🇱🇾
-                                        +218</option>
-                                    <option value="+251"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+251 ') ? 'selected' : '' }}>🇪🇹
-                                        +251</option>
-                                    <option value="+260"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+260 ') ? 'selected' : '' }}>🇿🇲
-                                        +260</option>
-                                    <option value="+263"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+263 ') ? 'selected' : '' }}>🇿🇼
-                                        +263</option>
-                                    <option value="+265"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+265 ') ? 'selected' : '' }}>🇲🇼
-                                        +265</option>
-                                    <option value="+267"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+267 ') ? 'selected' : '' }}>🇧🇼
-                                        +267</option>
-                                    <option value="+268"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+268 ') ? 'selected' : '' }}>🇸🇿
-                                        +268</option>
-                                    <option value="+266"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+266 ') ? 'selected' : '' }}>🇱🇸
-                                        +266</option>
-                                    <option value="+264"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+264 ') ? 'selected' : '' }}>🇳🇦
-                                        +264</option>
-                                    <option value="+258"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+258 ') ? 'selected' : '' }}>🇲🇿
-                                        +258</option>
-                                    <option value="+261"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+261 ') ? 'selected' : '' }}>🇲🇬
-                                        +261</option>
-                                    <option value="+230"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+230 ') ? 'selected' : '' }}>🇲🇺
-                                        +230</option>
-                                    <option value="+248"
-                                        {{ old('phone') && str_starts_with(old('phone'), '+248 ') ? 'selected' : '' }}>🇸🇨
-                                        +248</option>
-                                </select>
-                                <input type="text" class="phone-number-input" id="phoneNumber"
-                                    placeholder="Phone Number"
-                                    value="{{ old('phone') ? (strpos(old('phone'), ' ') !== false ? substr(old('phone'), strpos(old('phone'), ' ') + 1) : old('phone')) : '' }}"
-                                    required />
+                            <div class="phone-field">
+
+                                <!-- FLAG SELECTOR -->
+                                <div class="flag-box" id="flagBox">
+                                    <img id="flagImg" class="flagImagee" src="https://flagcdn.com/za.svg" alt="flag">
+
+                                    <img id="dropdownIcon" class="dropdown-icon" src="{{ asset('img/arrow-up.png') }}"
+                                        alt="" />
+                                    <!-- DROPDOWN -->
+                                    <div class="flag-dropdown" id="flagDropdown">
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/us.svg" data-code="+1">
+                                            <img src="https://flagcdn.com/us.svg"> USA (+1)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/gb.svg" data-code="+44">
+                                            <img src="https://flagcdn.com/gb.svg"> United Kingdom (+44)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/in.svg" data-code="+91">
+                                            <img src="https://flagcdn.com/in.svg"> India (+91)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/cn.svg" data-code="+86">
+                                            <img src="https://flagcdn.com/cn.svg"> China (+86)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/jp.svg" data-code="+81">
+                                            <img src="https://flagcdn.com/jp.svg"> Japan (+81)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/de.svg" data-code="+49">
+                                            <img src="https://flagcdn.com/de.svg"> Germany (+49)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/fr.svg" data-code="+33">
+                                            <img src="https://flagcdn.com/fr.svg"> France (+33)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/it.svg" data-code="+39">
+                                            <img src="https://flagcdn.com/it.svg"> Italy (+39)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/ru.svg" data-code="+7">
+                                            <img src="https://flagcdn.com/ru.svg"> Russia (+7)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/br.svg" data-code="+55">
+                                            <img src="https://flagcdn.com/br.svg"> Brazil (+55)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/mx.svg" data-code="+52">
+                                            <img src="https://flagcdn.com/mx.svg"> Mexico (+52)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/au.svg" data-code="+61">
+                                            <img src="https://flagcdn.com/au.svg"> Australia (+61)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/za.svg" data-code="+27">
+                                            <img src="https://flagcdn.com/za.svg"> South Africa (+27)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/ng.svg" data-code="+234">
+                                            <img src="https://flagcdn.com/ng.svg"> Nigeria (+234)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/ke.svg" data-code="+254">
+                                            <img src="https://flagcdn.com/ke.svg"> Kenya (+254)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/gh.svg" data-code="+233">
+                                            <img src="https://flagcdn.com/gh.svg"> Ghana (+233)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/ug.svg" data-code="+256">
+                                            <img src="https://flagcdn.com/ug.svg"> Uganda (+256)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/tz.svg" data-code="+255">
+                                            <img src="https://flagcdn.com/tz.svg"> Tanzania (+255)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/eg.svg" data-code="+20">
+                                            <img src="https://flagcdn.com/eg.svg"> Egypt (+20)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/dz.svg" data-code="+213">
+                                            <img src="https://flagcdn.com/dz.svg"> Algeria (+213)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/ma.svg" data-code="+212">
+                                            <img src="https://flagcdn.com/ma.svg"> Morocco (+212)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/tn.svg" data-code="+216">
+                                            <img src="https://flagcdn.com/tn.svg"> Tunisia (+216)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/ly.svg" data-code="+218">
+                                            <img src="https://flagcdn.com/ly.svg"> Libya (+218)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/et.svg" data-code="+251">
+                                            <img src="https://flagcdn.com/et.svg"> Ethiopia (+251)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/zm.svg" data-code="+260">
+                                            <img src="https://flagcdn.com/zm.svg"> Zambia (+260)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/zw.svg" data-code="+263">
+                                            <img src="https://flagcdn.com/zw.svg"> Zimbabwe (+263)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/mw.svg" data-code="+265">
+                                            <img src="https://flagcdn.com/mw.svg"> Malawi (+265)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/bw.svg" data-code="+267">
+                                            <img src="https://flagcdn.com/bw.svg"> Botswana (+267)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/sz.svg" data-code="+268">
+                                            <img src="https://flagcdn.com/sz.svg"> Eswatini (+268)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/ls.svg" data-code="+266">
+                                            <img src="https://flagcdn.com/ls.svg"> Lesotho (+266)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/na.svg" data-code="+264">
+                                            <img src="https://flagcdn.com/na.svg"> Namibia (+264)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/mz.svg" data-code="+258">
+                                            <img src="https://flagcdn.com/mz.svg"> Mozambique (+258)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/mg.svg" data-code="+261">
+                                            <img src="https://flagcdn.com/mg.svg"> Madagascar (+261)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/mu.svg" data-code="+230">
+                                            <img src="https://flagcdn.com/mu.svg"> Mauritius (+230)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/sc.svg" data-code="+248">
+                                            <img src="https://flagcdn.com/sc.svg"> Seychelles (+248)
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <!-- PREFIX + INPUT -->
+                                <div class="number-wrapper">
+                                    <span id="countryPrefix">+27</span>
+                                    <input type="text" id="phoneInput" placeholder="">
+                                </div>
+
                                 <!-- Hidden field for form submission -->
                                 <input type="hidden" name="phone" id="combinedPhone" value="{{ old('phone') }}" />
+
                             </div>
+
+
+
+
                             @error('phone')
                                 <span class="text-red-600 text-sm">{{ $message }}</span>
                             @enderror
@@ -1499,37 +1634,38 @@
             requiredFields.forEach(field => {
                 if (field.name === 'phone') {
                     // Special handling for phone field
-                    const phoneNumberInput = document.getElementById('phoneNumber');
-                    const countryCodeSelect = document.getElementById('countryCode');
+                    const phoneNumberInput = document.getElementById('phoneInput');
                     const combinedPhoneInput = document.getElementById('combinedPhone');
 
                     if (!phoneNumberInput.value.trim()) {
-                        // Show error on both visible fields
                         phoneNumberInput.classList.add('error');
-                        countryCodeSelect.classList.add('error');
 
                         const errorMsg = document.createElement('span');
                         errorMsg.className = 'error-message';
                         errorMsg.textContent = 'Phone Number is required';
-                        phoneNumberInput.closest('.grid-input').insertBefore(errorMsg, phoneNumberInput
-                            .closest('.phone-input-container').nextSibling);
+
+                        phoneNumberInput.closest('.phone-field')
+                            .insertAdjacentElement('afterend', errorMsg);
 
                         isValid = false;
+
                     } else if (!isValidPhoneNumber(phoneNumberInput.value.trim())) {
+
                         phoneNumberInput.classList.add('error');
-                        countryCodeSelect.classList.add('error');
 
                         const errorMsg = document.createElement('span');
                         errorMsg.className = 'error-message';
                         errorMsg.textContent = 'Please enter a valid phone number';
-                        phoneNumberInput.closest('.grid-input').insertBefore(errorMsg, phoneNumberInput
-                            .closest('.phone-input-container').nextSibling);
+
+                        phoneNumberInput.closest('.phone-field')
+                            .insertAdjacentElement('afterend', errorMsg);
 
                         isValid = false;
+
                     } else {
-                        // Update combined phone field for backend
                         updateCombinedPhone();
                     }
+
                 } else {
                     const input = document.querySelector(
                         `input[name="${field.name}"], textarea[name="${field.name}"]`);
@@ -1775,11 +1911,12 @@
                 if (wordCount > 4) {
                     text.style.maxWidth = "100%";
                 }
-                if (wordCount > 5) {
-                    text.style.maxWidth = "98%";
+
+                if (wordCount === 3 || wordCount === 2) {
                     text.style.paddingLeft = "1px";
                     text.style.paddingRight = "1px";
                 }
+
             });
         }
 
@@ -1796,15 +1933,81 @@
             });
         });
 
-        // ============= COUNTRY CODE + PHONE NUMBER HANDLING =============
 
-        // Function to combine country code and phone number
-        function updateCombinedPhone() {
-            const countryCode = document.getElementById('countryCode').value;
-            const phoneNumber = document.getElementById('phoneNumber').value;
+
+        // Initialize phone field with existing value
+        function initializePhoneField() {
             const combinedPhone = document.getElementById('combinedPhone');
+            const phoneNumberInput = document.getElementById('phoneInput');
+            const prefixSpan = document.getElementById('countryPrefix');
 
-            const digitsOnly = phoneNumber.replace(/[^\d]/g, '');
+            if (combinedPhone.value.includes('+')) {
+                const parts = combinedPhone.value.split(' ');
+                prefixSpan.textContent = parts[0];
+                phoneNumberInput.value = parts.slice(1).join(' ');
+            }
+        }
+
+
+
+        const multiStepForm = document.getElementById('multiStepForm');
+        if (multiStepForm) {
+            multiStepForm.addEventListener('submit', updateCombinedPhone);
+        }
+
+
+
+        // New custom phone field JS
+
+        const flagBox = document.getElementById('flagBox');
+        const dropdown = document.getElementById('flagDropdown');
+        const flagImg = document.getElementById('flagImg');
+        const dropdownIcon = document.getElementById('dropdownIcon');
+        const prefixSpan = document.getElementById('countryPrefix');
+        const phoneNumberInput = document.getElementById('phoneInput');
+        const combinedPhone = document.getElementById('combinedPhone');
+
+        // OPEN / CLOSE DROPDOWN
+        flagBox.addEventListener("click", () => {
+            const isOpen = dropdown.style.display === "block";
+            dropdown.style.display = isOpen ? "none" : "block";
+            dropdownIcon.classList.toggle("rotate", !isOpen);
+        });
+
+        // SELECT COUNTRY
+        document.querySelectorAll(".flag-item").forEach(item => {
+            item.addEventListener("click", (e) => {
+                e.stopPropagation(); // IMPORTANT FIX
+
+                const newFlag = item.dataset.flag;
+                const newCode = item.dataset.code;
+
+                // Update UI
+                flagImg.src = newFlag;
+                prefixSpan.textContent = newCode;
+
+                // Update hidden backend field
+                updateCombinedPhone();
+
+                // Close dropdown immediately
+                dropdown.style.display = "none";
+                dropdownIcon.classList.remove("rotate");
+            });
+        });
+
+
+        // CLICK OUTSIDE CLOSES DROPDOWN
+        document.addEventListener("click", (e) => {
+            if (!flagBox.contains(e.target)) {
+                dropdown.style.display = "none";
+                dropdownIcon.classList.remove("rotate");
+            }
+        });
+
+        // UPDATE HIDDEN FIELD (backend)
+        function updateCombinedPhone() {
+            const digitsOnly = phoneNumberInput.value.replace(/[^\d]/g, '');
+            const countryCode = prefixSpan.textContent;
 
             if (digitsOnly.length) {
                 combinedPhone.value = `${countryCode} ${digitsOnly}`;
@@ -1813,61 +2016,19 @@
             }
         }
 
-        // Initialize phone field with existing value
-        function initializePhoneField() {
-            const combinedPhone = document.getElementById('combinedPhone');
-            const countryCodeSelect = document.getElementById('countryCode');
-            const phoneNumberInput = document.getElementById('phoneNumber');
+        // UPDATE ON TYPING
+        phoneNumberInput.addEventListener('input', updateCombinedPhone);
 
-            if (combinedPhone.value) {
-                // Split existing value to populate fields
-                const parts = combinedPhone.value.split(' ');
-                if (parts.length >= 2) {
-                    const countryCode = parts[0];
-                    const phoneNumber = parts.slice(1).join(' ');
 
-                    // Set country code if it exists in options
-                    const option = countryCodeSelect.querySelector(`option[value="${countryCode}"]`);
-                    if (option) {
-                        countryCodeSelect.value = countryCode;
-                    }
 
-                    phoneNumberInput.value = phoneNumber;
-                }
-            }
-        }
-
-        // Add event listeners for phone field updates
-        document.getElementById('countryCode').addEventListener('change', updateCombinedPhone);
-        document.getElementById('phoneNumber').addEventListener('input', updateCombinedPhone);
-
-        const multiStepForm = document.getElementById('multiStepForm');
-        if (multiStepForm) {
-            multiStepForm.addEventListener('submit', updateCombinedPhone);
-        }
-
-        // Clear errors when user changes phone inputs
-        document.getElementById('countryCode').addEventListener('change', function() {
+        phoneNumberInput.addEventListener('input', function() {
             if (this.classList.contains('error')) {
                 this.classList.remove('error');
-                document.getElementById('phoneNumber').classList.remove('error');
-                const errorMsg = this.closest('.grid-input').querySelector('.error-message');
-                if (errorMsg) {
-                    errorMsg.remove();
-                }
+                const msg = this.closest('.phone-field').parentNode.querySelector('.error-message');
+                if (msg) msg.remove();
             }
         });
 
-        document.getElementById('phoneNumber').addEventListener('input', function() {
-            if (this.classList.contains('error')) {
-                this.classList.remove('error');
-                document.getElementById('countryCode').classList.remove('error');
-                const errorMsg = this.closest('.grid-input').querySelector('.error-message');
-                if (errorMsg) {
-                    errorMsg.remove();
-                }
-            }
-        });
 
         //  Initialize
         updateStep();
