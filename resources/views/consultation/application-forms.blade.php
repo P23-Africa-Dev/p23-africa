@@ -38,12 +38,14 @@
         background-color: #ffffffe4;
         background-blend-mode: soft-light;
         padding: 0px 14px;
+        padding-bottom: 40px;
     }
 
     .multi-step-wrapper {
         /* width: 90%; */
         max-width: 1100px;
-        margin: 40px auto;
+        margin: 0px auto;
+        margin-top: 50px;
         padding: 20px 25px 37px 25px;
         border-radius: 25px;
         overflow: hidden;
@@ -51,11 +53,11 @@
         box-shadow: 0px 9px 15px -8px rgba(0, 0, 0, 0.8);
 
         padding-top: 70px;
-        background-image: url(../img/form-bg1.jpg);
-        background-color: #ffffffa9;
-        background-blend-mode: soft-light;
-        background-repeat: repeat;
-        background-size: cover;
+        background-image: url(../img/form-inner-bg.png);
+        /* background-color: #ffffffa9; */
+        /* background-blend-mode: soft-light; */
+        background-repeat: no-repeat;
+        /* background-size:cover; */
         background-position: center;
     }
 
@@ -650,7 +652,7 @@
         display: flex;
         align-items: center;
         gap: 8px;
-        padding: 16px;
+        padding: 16px 18px;
         border-radius: 50px;
         border: 1px solid #ddd;
         cursor: pointer;
@@ -748,7 +750,7 @@
     }
 
     #countryPrefix {
-        padding: 0px 12px 0px 16px;
+        padding: 0px 12px 0px 18px;
         margin-right: 4px;
         font-family: "GT Walsheim Con";
         font-size: 13px;
@@ -1531,7 +1533,7 @@
         localStorage.removeItem("selectedKeyChallenges");
 
         //  Always start from step 0 (first step)
-        let currentStep = 1;
+        let currentStep = 0;
 
         // ============= VALIDATION FUNCTIONS =============
 
