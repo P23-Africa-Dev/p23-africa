@@ -265,7 +265,10 @@
     }
 
         .book-conversation-section .left-content .info-content div.btn a {
-            padding: 1.2rem 2.5rem;
+            /* padding: 1.2rem 2.5rem; */
+        }
+        .book-conversation-section .left-content .info-content div.btn  {
+            margin-left: -1rem;
         }
 
         .book-conversation-section .left-content .content-pattern {
