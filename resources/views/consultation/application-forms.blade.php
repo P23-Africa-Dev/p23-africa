@@ -12,7 +12,7 @@
     <meta property="og:title" content="Book a Consultation | P23 Africa">
     <meta property="og:description"
         content="Schedule a one-on-one consultation to strengthen your business strategy, improve funding readiness, and unlock growth opportunities with expert advisors at P23 Africa.">
-    <meta property="og:image" content="{{ asset('img/mobile.png') }}">
+    <meta property="og:image" content="{{ asset('img/consultation-form.png') }}">
     <meta property="og:type" content="website">
 
     {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
@@ -494,6 +494,7 @@
     .goal-text.prepare-text {
         padding: 0px 12px;
     }
+
     .goal-text.increase-text {
         padding: 0px 8px;
     }
@@ -786,6 +787,11 @@
 
     .country-code-select.error,
     .phone-number-input.error {
+        border-color: #dc3545;
+        box-shadow: 0px 14px 13px -3px rgba(220, 53, 69, 0.2);
+    }
+
+    .flag-box.error {
         border-color: #dc3545;
         box-shadow: 0px 14px 13px -3px rgba(220, 53, 69, 0.2);
     }
@@ -1144,7 +1150,9 @@
 
                                 <!-- FLAG SELECTOR -->
                                 <div class="flag-box" id="flagBox">
-                                    <img id="flagImg" class="flagImagee" src="https://flagcdn.com/za.svg" alt="flag">
+                                    <img id="flagImg" class="flagImagee" src="" alt="flag"
+                                        style="display: none;">
+                                    <span id="flagPlaceholder" class="flag-icon placeholder-flag">🌍</span>
 
                                     <img id="dropdownIcon" class="dropdown-icon" src="{{ asset('img/arrow-up.png') }}"
                                         alt="" />
@@ -1291,14 +1299,335 @@
                                             <img src="https://flagcdn.com/sc.svg"> Seychelles (+248)
                                         </div>
 
+                                        <div class="flag-item" data-flag="https://flagcdn.com/rw.svg" data-code="+250">
+                                            <img src="https://flagcdn.com/rw.svg"> Rwanda (+250)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/sn.svg" data-code="+221">
+                                            <img src="https://flagcdn.com/sn.svg"> Senegal (+221)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/ci.svg" data-code="+225">
+                                            <img src="https://flagcdn.com/ci.svg"> Ivory Coast (+225)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/bf.svg" data-code="+226">
+                                            <img src="https://flagcdn.com/bf.svg"> Burkina Faso (+226)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/ml.svg" data-code="+223">
+                                            <img src="https://flagcdn.com/ml.svg"> Mali (+223)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/ne.svg" data-code="+227">
+                                            <img src="https://flagcdn.com/ne.svg"> Niger (+227)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/td.svg" data-code="+235">
+                                            <img src="https://flagcdn.com/td.svg"> Chad (+235)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/cm.svg" data-code="+237">
+                                            <img src="https://flagcdn.com/cm.svg"> Cameroon (+237)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/cf.svg" data-code="+236">
+                                            <img src="https://flagcdn.com/cf.svg"> Central African Republic (+236)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/cg.svg" data-code="+242">
+                                            <img src="https://flagcdn.com/cg.svg"> Republic of Congo (+242)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/cd.svg" data-code="+243">
+                                            <img src="https://flagcdn.com/cd.svg"> Democratic Republic of Congo (+243)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/ga.svg" data-code="+241">
+                                            <img src="https://flagcdn.com/ga.svg"> Gabon (+241)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/gq.svg" data-code="+240">
+                                            <img src="https://flagcdn.com/gq.svg"> Equatorial Guinea (+240)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/st.svg" data-code="+239">
+                                            <img src="https://flagcdn.com/st.svg"> São Tomé and Príncipe (+239)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/cv.svg" data-code="+238">
+                                            <img src="https://flagcdn.com/cv.svg"> Cape Verde (+238)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/gn.svg" data-code="+224">
+                                            <img src="https://flagcdn.com/gn.svg"> Guinea (+224)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/gw.svg" data-code="+245">
+                                            <img src="https://flagcdn.com/gw.svg"> Guinea-Bissau (+245)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/lr.svg" data-code="+231">
+                                            <img src="https://flagcdn.com/lr.svg"> Liberia (+231)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/sl.svg" data-code="+232">
+                                            <img src="https://flagcdn.com/sl.svg"> Sierra Leone (+232)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/tg.svg" data-code="+228">
+                                            <img src="https://flagcdn.com/tg.svg"> Togo (+228)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/bj.svg" data-code="+229">
+                                            <img src="https://flagcdn.com/bj.svg"> Benin (+229)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/mr.svg" data-code="+222">
+                                            <img src="https://flagcdn.com/mr.svg"> Mauritania (+222)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/gm.svg" data-code="+220">
+                                            <img src="https://flagcdn.com/gm.svg"> Gambia (+220)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/bi.svg" data-code="+257">
+                                            <img src="https://flagcdn.com/bi.svg"> Burundi (+257)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/dj.svg" data-code="+253">
+                                            <img src="https://flagcdn.com/dj.svg"> Djibouti (+253)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/er.svg" data-code="+291">
+                                            <img src="https://flagcdn.com/er.svg"> Eritrea (+291)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/so.svg" data-code="+252">
+                                            <img src="https://flagcdn.com/so.svg"> Somalia (+252)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/ss.svg" data-code="+211">
+                                            <img src="https://flagcdn.com/ss.svg"> South Sudan (+211)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/sd.svg" data-code="+249">
+                                            <img src="https://flagcdn.com/sd.svg"> Sudan (+249)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/ao.svg" data-code="+244">
+                                            <img src="https://flagcdn.com/ao.svg"> Angola (+244)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/km.svg" data-code="+269">
+                                            <img src="https://flagcdn.com/km.svg"> Comoros (+269)
+                                        </div>
+
+                                        <!-- Non-African Countries -->
+                                        <div class="flag-item" data-flag="https://flagcdn.com/ca.svg" data-code="+1">
+                                            <img src="https://flagcdn.com/ca.svg"> Canada (+1)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/es.svg" data-code="+34">
+                                            <img src="https://flagcdn.com/es.svg"> Spain (+34)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/pt.svg" data-code="+351">
+                                            <img src="https://flagcdn.com/pt.svg"> Portugal (+351)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/nl.svg" data-code="+31">
+                                            <img src="https://flagcdn.com/nl.svg"> Netherlands (+31)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/be.svg" data-code="+32">
+                                            <img src="https://flagcdn.com/be.svg"> Belgium (+32)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/ch.svg" data-code="+41">
+                                            <img src="https://flagcdn.com/ch.svg"> Switzerland (+41)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/at.svg" data-code="+43">
+                                            <img src="https://flagcdn.com/at.svg"> Austria (+43)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/se.svg" data-code="+46">
+                                            <img src="https://flagcdn.com/se.svg"> Sweden (+46)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/no.svg" data-code="+47">
+                                            <img src="https://flagcdn.com/no.svg"> Norway (+47)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/dk.svg" data-code="+45">
+                                            <img src="https://flagcdn.com/dk.svg"> Denmark (+45)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/fi.svg" data-code="+358">
+                                            <img src="https://flagcdn.com/fi.svg"> Finland (+358)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/ie.svg" data-code="+353">
+                                            <img src="https://flagcdn.com/ie.svg"> Ireland (+353)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/nz.svg" data-code="+64">
+                                            <img src="https://flagcdn.com/nz.svg"> New Zealand (+64)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/sg.svg" data-code="+65">
+                                            <img src="https://flagcdn.com/sg.svg"> Singapore (+65)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/my.svg" data-code="+60">
+                                            <img src="https://flagcdn.com/my.svg"> Malaysia (+60)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/th.svg" data-code="+66">
+                                            <img src="https://flagcdn.com/th.svg"> Thailand (+66)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/ph.svg" data-code="+63">
+                                            <img src="https://flagcdn.com/ph.svg"> Philippines (+63)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/id.svg" data-code="+62">
+                                            <img src="https://flagcdn.com/id.svg"> Indonesia (+62)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/vn.svg" data-code="+84">
+                                            <img src="https://flagcdn.com/vn.svg"> Vietnam (+84)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/kr.svg" data-code="+82">
+                                            <img src="https://flagcdn.com/kr.svg"> South Korea (+82)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/pk.svg" data-code="+92">
+                                            <img src="https://flagcdn.com/pk.svg"> Pakistan (+92)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/bd.svg" data-code="+880">
+                                            <img src="https://flagcdn.com/bd.svg"> Bangladesh (+880)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/lk.svg" data-code="+94">
+                                            <img src="https://flagcdn.com/lk.svg"> Sri Lanka (+94)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/ar.svg" data-code="+54">
+                                            <img src="https://flagcdn.com/ar.svg"> Argentina (+54)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/cl.svg" data-code="+56">
+                                            <img src="https://flagcdn.com/cl.svg"> Chile (+56)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/co.svg" data-code="+57">
+                                            <img src="https://flagcdn.com/co.svg"> Colombia (+57)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/pe.svg" data-code="+51">
+                                            <img src="https://flagcdn.com/pe.svg"> Peru (+51)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/ve.svg" data-code="+58">
+                                            <img src="https://flagcdn.com/ve.svg"> Venezuela (+58)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/ec.svg" data-code="+593">
+                                            <img src="https://flagcdn.com/ec.svg"> Ecuador (+593)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/uy.svg" data-code="+598">
+                                            <img src="https://flagcdn.com/uy.svg"> Uruguay (+598)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/py.svg" data-code="+595">
+                                            <img src="https://flagcdn.com/py.svg"> Paraguay (+595)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/bo.svg" data-code="+591">
+                                            <img src="https://flagcdn.com/bo.svg"> Bolivia (+591)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/gy.svg" data-code="+592">
+                                            <img src="https://flagcdn.com/gy.svg"> Guyana (+592)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/sr.svg" data-code="+597">
+                                            <img src="https://flagcdn.com/sr.svg"> Suriname (+597)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/tr.svg" data-code="+90">
+                                            <img src="https://flagcdn.com/tr.svg"> Turkey (+90)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/ae.svg" data-code="+971">
+                                            <img src="https://flagcdn.com/ae.svg"> United Arab Emirates (+971)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/sa.svg" data-code="+966">
+                                            <img src="https://flagcdn.com/sa.svg"> Saudi Arabia (+966)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/qa.svg" data-code="+974">
+                                            <img src="https://flagcdn.com/qa.svg"> Qatar (+974)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/kw.svg" data-code="+965">
+                                            <img src="https://flagcdn.com/kw.svg"> Kuwait (+965)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/bh.svg" data-code="+973">
+                                            <img src="https://flagcdn.com/bh.svg"> Bahrain (+973)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/om.svg" data-code="+968">
+                                            <img src="https://flagcdn.com/om.svg"> Oman (+968)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/jo.svg" data-code="+962">
+                                            <img src="https://flagcdn.com/jo.svg"> Jordan (+962)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/lb.svg" data-code="+961">
+                                            <img src="https://flagcdn.com/lb.svg"> Lebanon (+961)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/sy.svg" data-code="+963">
+                                            <img src="https://flagcdn.com/sy.svg"> Syria (+963)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/iq.svg" data-code="+964">
+                                            <img src="https://flagcdn.com/iq.svg"> Iraq (+964)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/ir.svg" data-code="+98">
+                                            <img src="https://flagcdn.com/ir.svg"> Iran (+98)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/af.svg" data-code="+93">
+                                            <img src="https://flagcdn.com/af.svg"> Afghanistan (+93)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/il.svg" data-code="+972">
+                                            <img src="https://flagcdn.com/il.svg"> Israel (+972)
+                                        </div>
+
+                                        <div class="flag-item" data-flag="https://flagcdn.com/ps.svg" data-code="+970">
+                                            <img src="https://flagcdn.com/ps.svg"> Palestine (+970)
+                                        </div>
+
                                     </div>
 
                                 </div>
 
                                 <!-- PREFIX + INPUT -->
                                 <div class="number-wrapper">
-                                    <span id="countryPrefix">+27</span>
-                                    <input type="text" id="phoneInput" placeholder="">
+                                    <span id="countryPrefix" style="display: none;"></span>
+                                    <input type="text" id="phoneInput" placeholder="Select country first" disabled>
                                 </div>
 
                                 <!-- Hidden field for form submission -->
@@ -1319,8 +1648,8 @@
                                 <span class="text-red-600 text-sm">{{ $message }}</span>
                             @enderror
 
-                            <input type="text" name="website_or_handle" placeholder="Website/Social media (Optional)"
-                                value="{{ old('website_or_handle') }}" />
+                            <input type="text" name="website_or_handle" placeholder="Website/Social media"
+                                value="{{ old('website_or_handle') }}" required />
                             @error('website_or_handle')
                                 <span class="text-red-600 text-sm">{{ $message }}</span>
                             @enderror
@@ -1630,6 +1959,12 @@
             return phoneRegex.test(phoneNumber.replace(/[\s\-\(\)]/g, ''));
         }
 
+        // Check if country code is selected
+        function isCountryCodeSelected() {
+            const prefixSpan = document.getElementById('countryPrefix');
+            return prefixSpan && prefixSpan.textContent.trim() !== '';
+        }
+
         // Validate Step 1: Basic Information
         function validateStep1() {
             clearErrors(0);
@@ -1646,6 +1981,10 @@
                 {
                     name: 'company_brand_name',
                     label: 'Company Name'
+                },
+                {
+                    name: 'website_or_handle',
+                    label: 'Website/Social media'
                 },
                 {
                     name: 'email',
@@ -1666,8 +2005,21 @@
                     // Special handling for phone field
                     const phoneNumberInput = document.getElementById('phoneInput');
                     const combinedPhoneInput = document.getElementById('combinedPhone');
+                    const flagBox = document.getElementById('flagBox');
 
-                    if (!phoneNumberInput.value.trim()) {
+                    if (!isCountryCodeSelected()) {
+                        flagBox.classList.add('error');
+
+                        const errorMsg = document.createElement('span');
+                        errorMsg.className = 'error-message';
+                        errorMsg.textContent = 'Please select a country code';
+
+                        phoneNumberInput.closest('.phone-field')
+                            .insertAdjacentElement('afterend', errorMsg);
+
+                        isValid = false;
+
+                    } else if (!phoneNumberInput.value.trim()) {
                         phoneNumberInput.classList.add('error');
 
                         const errorMsg = document.createElement('span');
@@ -1828,7 +2180,10 @@
                 el.classList.add("fade-in");
             });
 
-            window.scrollTo({ top: 0, behavior: "smooth" });
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
         }
 
         //  NEXT BUTTONS
@@ -1972,11 +2327,31 @@
             const combinedPhone = document.getElementById('combinedPhone');
             const phoneNumberInput = document.getElementById('phoneInput');
             const prefixSpan = document.getElementById('countryPrefix');
+            const flagImg = document.getElementById('flagImg');
+            const flagPlaceholder = document.getElementById('flagPlaceholder');
 
-            if (combinedPhone.value.includes('+')) {
+            // Only initialize if there's an existing value (like from validation errors)
+            if (combinedPhone.value && combinedPhone.value.includes('+')) {
                 const parts = combinedPhone.value.split(' ');
-                prefixSpan.textContent = parts[0];
-                phoneNumberInput.value = parts.slice(1).join(' ');
+                const countryCode = parts[0];
+
+                // Find the corresponding flag item
+                const flagItem = document.querySelector(`[data-code="${countryCode}"]`);
+                if (flagItem) {
+                    const flagSrc = flagItem.dataset.flag;
+
+                    // Update UI
+                    flagImg.src = flagSrc;
+                    flagImg.style.display = "block";
+                    flagPlaceholder.style.display = "none";
+
+                    prefixSpan.textContent = countryCode;
+                    prefixSpan.style.display = "block";
+
+                    phoneNumberInput.disabled = false;
+                    phoneNumberInput.placeholder = "Enter phone number";
+                    phoneNumberInput.value = parts.slice(1).join(' ');
+                }
             }
         }
 
@@ -2016,7 +2391,25 @@
 
                 // Update UI
                 flagImg.src = newFlag;
+                flagImg.style.display = "block";
+
+                // Hide placeholder text
+                const flagPlaceholder = document.getElementById('flagPlaceholder');
+                if (flagPlaceholder) {
+                    flagPlaceholder.style.display = "none";
+                }
+
+                // Show and update prefix
                 prefixSpan.textContent = newCode;
+                prefixSpan.style.display = "block";
+
+                // Enable phone input and update placeholder
+                phoneNumberInput.disabled = false;
+                phoneNumberInput.placeholder = "Enter phone number";
+
+                // Remove error styling if present
+                flagBox.classList.remove('error');
+                phoneNumberInput.classList.remove('error');
 
                 // Update hidden backend field
                 updateCombinedPhone();
@@ -2041,7 +2434,7 @@
             const digitsOnly = phoneNumberInput.value.replace(/[^\d]/g, '');
             const countryCode = prefixSpan.textContent;
 
-            if (digitsOnly.length) {
+            if (digitsOnly.length && countryCode && countryCode.trim()) {
                 combinedPhone.value = `${countryCode} ${digitsOnly}`;
             } else {
                 combinedPhone.value = '';
@@ -2057,6 +2450,16 @@
             if (this.classList.contains('error')) {
                 this.classList.remove('error');
                 const msg = this.closest('.phone-field').parentNode.querySelector('.error-message');
+                if (msg) msg.remove();
+            }
+        });
+
+        // Clear flag box error when clicked
+        flagBox.addEventListener('click', function() {
+            if (flagBox.classList.contains('error')) {
+                flagBox.classList.remove('error');
+                const msg = phoneNumberInput.closest('.phone-field').parentNode.querySelector(
+                    '.error-message');
                 if (msg) msg.remove();
             }
         });

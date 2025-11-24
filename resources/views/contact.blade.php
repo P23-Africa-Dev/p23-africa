@@ -333,6 +333,18 @@
         object-fit: cover;
     }
 
+    .country_with_phone .placeholder-flag {
+        width: 32px;
+        height: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+        opacity: 0.7;
+    }
+
     .country_with_phone .arrow {
         font-size: 12px;
         color: #fff;
@@ -1301,83 +1313,279 @@
                                             <!-- Country Flag Dropdown -->
                                             <div class="country-select" id="countrySelect">
                                                 <div class="selected-country">
-                                                    <img src="https://flagcdn.com/w40/gb.png" alt="flag"
-                                                        class="flag-icon" />
+                                                    <div class="flag-icon placeholder-flag" id="selectedFlag">🌍</div>
                                                     <span class="arrow">▼</span>
                                                 </div>
 
                                                 <ul class="country-list">
+                                                    <!-- Popular/Most Used Countries -->
                                                     <li data-code="+1" data-flag="us">
                                                         <img src="https://flagcdn.com/w40/us.png" alt="" />
                                                         United States (+1)
-                                                    </li>
-                                                    <li data-code="+1" data-flag="ca">
-                                                        <img src="https://flagcdn.com/w40/ca.png" alt="" />
-                                                        Canada (+1)
                                                     </li>
                                                     <li data-code="+44" data-flag="gb">
                                                         <img src="https://flagcdn.com/w40/gb.png" alt="" />
                                                         United Kingdom (+44)
                                                     </li>
-                                                    <li data-code="+27" data-flag="za">
-                                                        <img src="https://flagcdn.com/w40/za.png" alt="" />
-                                                        South Africa (+27)
+                                                    <li data-code="+1" data-flag="ca">
+                                                        <img src="https://flagcdn.com/w40/ca.png" alt="" />
+                                                        Canada (+1)
                                                     </li>
                                                     <li data-code="+234" data-flag="ng">
                                                         <img src="https://flagcdn.com/w40/ng.png" alt="" />
                                                         Nigeria (+234)
                                                     </li>
-                                                    <li data-code="+254" data-flag="ke">
-                                                        <img src="https://flagcdn.com/w40/ke.png" alt="" />
-                                                        Kenya (+254)
+                                                    <li data-code="+27" data-flag="za">
+                                                        <img src="https://flagcdn.com/w40/za.png" alt="" />
+                                                        South Africa (+27)
                                                     </li>
-                                                    <li data-code="+233" data-flag="gh">
-                                                        <img src="https://flagcdn.com/w40/gh.png" alt="" />
-                                                        Ghana (+233)
+
+                                                    <!-- African Countries -->
+                                                    <li data-code="+213" data-flag="dz">
+                                                        <img src="https://flagcdn.com/w40/dz.png" alt="" />
+                                                        Algeria (+213)
                                                     </li>
-                                                    <li data-code="+255" data-flag="tz">
-                                                        <img src="https://flagcdn.com/w40/tz.png" alt="" />
-                                                        Tanzania (+255)
+                                                    <li data-code="+244" data-flag="ao">
+                                                        <img src="https://flagcdn.com/w40/ao.png" alt="" />
+                                                        Angola (+244)
                                                     </li>
-                                                    <li data-code="+256" data-flag="ug">
-                                                        <img src="https://flagcdn.com/w40/ug.png" alt="" />
-                                                        Uganda (+256)
+                                                    <li data-code="+229" data-flag="bj">
+                                                        <img src="https://flagcdn.com/w40/bj.png" alt="" />
+                                                        Benin (+229)
+                                                    </li>
+                                                    <li data-code="+267" data-flag="bw">
+                                                        <img src="https://flagcdn.com/w40/bw.png" alt="" />
+                                                        Botswana (+267)
+                                                    </li>
+                                                    <li data-code="+226" data-flag="bf">
+                                                        <img src="https://flagcdn.com/w40/bf.png" alt="" />
+                                                        Burkina Faso (+226)
+                                                    </li>
+                                                    <li data-code="+257" data-flag="bi">
+                                                        <img src="https://flagcdn.com/w40/bi.png" alt="" />
+                                                        Burundi (+257)
+                                                    </li>
+                                                    <li data-code="+237" data-flag="cm">
+                                                        <img src="https://flagcdn.com/w40/cm.png" alt="" />
+                                                        Cameroon (+237)
+                                                    </li>
+                                                    <li data-code="+238" data-flag="cv">
+                                                        <img src="https://flagcdn.com/w40/cv.png" alt="" />
+                                                        Cape Verde (+238)
+                                                    </li>
+                                                    <li data-code="+236" data-flag="cf">
+                                                        <img src="https://flagcdn.com/w40/cf.png" alt="" />
+                                                        Central African Republic (+236)
+                                                    </li>
+                                                    <li data-code="+235" data-flag="td">
+                                                        <img src="https://flagcdn.com/w40/td.png" alt="" />
+                                                        Chad (+235)
+                                                    </li>
+                                                    <li data-code="+269" data-flag="km">
+                                                        <img src="https://flagcdn.com/w40/km.png" alt="" />
+                                                        Comoros (+269)
+                                                    </li>
+                                                    <li data-code="+243" data-flag="cd">
+                                                        <img src="https://flagcdn.com/w40/cd.png" alt="" />
+                                                        Congo (DRC) (+243)
+                                                    </li>
+                                                    <li data-code="+242" data-flag="cg">
+                                                        <img src="https://flagcdn.com/w40/cg.png" alt="" />
+                                                        Congo Republic (+242)
+                                                    </li>
+                                                    <li data-code="+225" data-flag="ci">
+                                                        <img src="https://flagcdn.com/w40/ci.png" alt="" />
+                                                        Côte d'Ivoire (+225)
+                                                    </li>
+                                                    <li data-code="+253" data-flag="dj">
+                                                        <img src="https://flagcdn.com/w40/dj.png" alt="" />
+                                                        Djibouti (+253)
                                                     </li>
                                                     <li data-code="+20" data-flag="eg">
                                                         <img src="https://flagcdn.com/w40/eg.png" alt="" />
                                                         Egypt (+20)
                                                     </li>
+                                                    <li data-code="+240" data-flag="gq">
+                                                        <img src="https://flagcdn.com/w40/gq.png" alt="" />
+                                                        Equatorial Guinea (+240)
+                                                    </li>
+                                                    <li data-code="+291" data-flag="er">
+                                                        <img src="https://flagcdn.com/w40/er.png" alt="" />
+                                                        Eritrea (+291)
+                                                    </li>
+                                                    <li data-code="+268" data-flag="sz">
+                                                        <img src="https://flagcdn.com/w40/sz.png" alt="" />
+                                                        Eswatini (+268)
+                                                    </li>
+                                                    <li data-code="+251" data-flag="et">
+                                                        <img src="https://flagcdn.com/w40/et.png" alt="" />
+                                                        Ethiopia (+251)
+                                                    </li>
+                                                    <li data-code="+241" data-flag="ga">
+                                                        <img src="https://flagcdn.com/w40/ga.png" alt="" />
+                                                        Gabon (+241)
+                                                    </li>
+                                                    <li data-code="+220" data-flag="gm">
+                                                        <img src="https://flagcdn.com/w40/gm.png" alt="" />
+                                                        Gambia (+220)
+                                                    </li>
+                                                    <li data-code="+233" data-flag="gh">
+                                                        <img src="https://flagcdn.com/w40/gh.png" alt="" />
+                                                        Ghana (+233)
+                                                    </li>
+                                                    <li data-code="+224" data-flag="gn">
+                                                        <img src="https://flagcdn.com/w40/gn.png" alt="" />
+                                                        Guinea (+224)
+                                                    </li>
+                                                    <li data-code="+245" data-flag="gw">
+                                                        <img src="https://flagcdn.com/w40/gw.png" alt="" />
+                                                        Guinea-Bissau (+245)
+                                                    </li>
+                                                    <li data-code="+254" data-flag="ke">
+                                                        <img src="https://flagcdn.com/w40/ke.png" alt="" />
+                                                        Kenya (+254)
+                                                    </li>
+                                                    <li data-code="+266" data-flag="ls">
+                                                        <img src="https://flagcdn.com/w40/ls.png" alt="" />
+                                                        Lesotho (+266)
+                                                    </li>
+                                                    <li data-code="+231" data-flag="lr">
+                                                        <img src="https://flagcdn.com/w40/lr.png" alt="" />
+                                                        Liberia (+231)
+                                                    </li>
+                                                    <li data-code="+218" data-flag="ly">
+                                                        <img src="https://flagcdn.com/w40/ly.png" alt="" />
+                                                        Libya (+218)
+                                                    </li>
+                                                    <li data-code="+261" data-flag="mg">
+                                                        <img src="https://flagcdn.com/w40/mg.png" alt="" />
+                                                        Madagascar (+261)
+                                                    </li>
+                                                    <li data-code="+265" data-flag="mw">
+                                                        <img src="https://flagcdn.com/w40/mw.png" alt="" />
+                                                        Malawi (+265)
+                                                    </li>
+                                                    <li data-code="+223" data-flag="ml">
+                                                        <img src="https://flagcdn.com/w40/ml.png" alt="" />
+                                                        Mali (+223)
+                                                    </li>
+                                                    <li data-code="+222" data-flag="mr">
+                                                        <img src="https://flagcdn.com/w40/mr.png" alt="" />
+                                                        Mauritania (+222)
+                                                    </li>
+                                                    <li data-code="+230" data-flag="mu">
+                                                        <img src="https://flagcdn.com/w40/mu.png" alt="" />
+                                                        Mauritius (+230)
+                                                    </li>
                                                     <li data-code="+212" data-flag="ma">
                                                         <img src="https://flagcdn.com/w40/ma.png" alt="" />
                                                         Morocco (+212)
                                                     </li>
-                                                    <li data-code="+216" data-flag="tn">
-                                                        <img src="https://flagcdn.com/w40/tn.png" alt="" />
-                                                        Tunisia (+216)
+                                                    <li data-code="+258" data-flag="mz">
+                                                        <img src="https://flagcdn.com/w40/mz.png" alt="" />
+                                                        Mozambique (+258)
                                                     </li>
-                                                    <li data-code="+213" data-flag="dz">
-                                                        <img src="https://flagcdn.com/w40/dz.png" alt="" />
-                                                        Algeria (+213)
+                                                    <li data-code="+264" data-flag="na">
+                                                        <img src="https://flagcdn.com/w40/na.png" alt="" />
+                                                        Namibia (+264)
+                                                    </li>
+                                                    <li data-code="+227" data-flag="ne">
+                                                        <img src="https://flagcdn.com/w40/ne.png" alt="" />
+                                                        Niger (+227)
                                                     </li>
                                                     <li data-code="+250" data-flag="rw">
                                                         <img src="https://flagcdn.com/w40/rw.png" alt="" />
                                                         Rwanda (+250)
                                                     </li>
-                                                    <li data-code="+91" data-flag="in">
-                                                        <img src="https://flagcdn.com/w40/in.png" alt="" />
-                                                        India (+91)
+                                                    <li data-code="+239" data-flag="st">
+                                                        <img src="https://flagcdn.com/w40/st.png" alt="" />
+                                                        São Tomé and Príncipe (+239)
                                                     </li>
-                                                    <li data-code="+61" data-flag="au">
-                                                        <img src="https://flagcdn.com/w40/au.png" alt="" />
-                                                        Australia (+61)
+                                                    <li data-code="+221" data-flag="sn">
+                                                        <img src="https://flagcdn.com/w40/sn.png" alt="" />
+                                                        Senegal (+221)
                                                     </li>
-                                                    <li data-code="+86" data-flag="cn">
-                                                        <img src="https://flagcdn.com/w40/cn.png" alt="" />
-                                                        China (+86)
+                                                    <li data-code="+248" data-flag="sc">
+                                                        <img src="https://flagcdn.com/w40/sc.png" alt="" />
+                                                        Seychelles (+248)
                                                     </li>
-                                                    <li data-code="+971" data-flag="ae">
-                                                        <img src="https://flagcdn.com/w40/ae.png" alt="" />
-                                                        UAE (+971)
+                                                    <li data-code="+232" data-flag="sl">
+                                                        <img src="https://flagcdn.com/w40/sl.png" alt="" />
+                                                        Sierra Leone (+232)
+                                                    </li>
+                                                    <li data-code="+252" data-flag="so">
+                                                        <img src="https://flagcdn.com/w40/so.png" alt="" />
+                                                        Somalia (+252)
+                                                    </li>
+                                                    <li data-code="+211" data-flag="ss">
+                                                        <img src="https://flagcdn.com/w40/ss.png" alt="" />
+                                                        South Sudan (+211)
+                                                    </li>
+                                                    <li data-code="+249" data-flag="sd">
+                                                        <img src="https://flagcdn.com/w40/sd.png" alt="" />
+                                                        Sudan (+249)
+                                                    </li>
+                                                    <li data-code="+255" data-flag="tz">
+                                                        <img src="https://flagcdn.com/w40/tz.png" alt="" />
+                                                        Tanzania (+255)
+                                                    </li>
+                                                    <li data-code="+228" data-flag="tg">
+                                                        <img src="https://flagcdn.com/w40/tg.png" alt="" />
+                                                        Togo (+228)
+                                                    </li>
+                                                    <li data-code="+216" data-flag="tn">
+                                                        <img src="https://flagcdn.com/w40/tn.png" alt="" />
+                                                        Tunisia (+216)
+                                                    </li>
+                                                    <li data-code="+256" data-flag="ug">
+                                                        <img src="https://flagcdn.com/w40/ug.png" alt="" />
+                                                        Uganda (+256)
+                                                    </li>
+                                                    <li data-code="+260" data-flag="zm">
+                                                        <img src="https://flagcdn.com/w40/zm.png" alt="" />
+                                                        Zambia (+260)
+                                                    </li>
+                                                    <li data-code="+263" data-flag="zw">
+                                                        <img src="https://flagcdn.com/w40/zw.png" alt="" />
+                                                        Zimbabwe (+263)
+                                                    </li>
+
+                                                    <!-- European Countries -->
+                                                    <li data-code="+43" data-flag="at">
+                                                        <img src="https://flagcdn.com/w40/at.png" alt="" />
+                                                        Austria (+43)
+                                                    </li>
+                                                    <li data-code="+32" data-flag="be">
+                                                        <img src="https://flagcdn.com/w40/be.png" alt="" />
+                                                        Belgium (+32)
+                                                    </li>
+                                                    <li data-code="+359" data-flag="bg">
+                                                        <img src="https://flagcdn.com/w40/bg.png" alt="" />
+                                                        Bulgaria (+359)
+                                                    </li>
+                                                    <li data-code="+385" data-flag="hr">
+                                                        <img src="https://flagcdn.com/w40/hr.png" alt="" />
+                                                        Croatia (+385)
+                                                    </li>
+                                                    <li data-code="+357" data-flag="cy">
+                                                        <img src="https://flagcdn.com/w40/cy.png" alt="" />
+                                                        Cyprus (+357)
+                                                    </li>
+                                                    <li data-code="+420" data-flag="cz">
+                                                        <img src="https://flagcdn.com/w40/cz.png" alt="" />
+                                                        Czech Republic (+420)
+                                                    </li>
+                                                    <li data-code="+45" data-flag="dk">
+                                                        <img src="https://flagcdn.com/w40/dk.png" alt="" />
+                                                        Denmark (+45)
+                                                    </li>
+                                                    <li data-code="+372" data-flag="ee">
+                                                        <img src="https://flagcdn.com/w40/ee.png" alt="" />
+                                                        Estonia (+372)
+                                                    </li>
+                                                    <li data-code="+358" data-flag="fi">
+                                                        <img src="https://flagcdn.com/w40/fi.png" alt="" />
+                                                        Finland (+358)
                                                     </li>
                                                     <li data-code="+33" data-flag="fr">
                                                         <img src="https://flagcdn.com/w40/fr.png" alt="" />
@@ -1387,19 +1595,332 @@
                                                         <img src="https://flagcdn.com/w40/de.png" alt="" />
                                                         Germany (+49)
                                                     </li>
+                                                    <li data-code="+30" data-flag="gr">
+                                                        <img src="https://flagcdn.com/w40/gr.png" alt="" />
+                                                        Greece (+30)
+                                                    </li>
+                                                    <li data-code="+36" data-flag="hu">
+                                                        <img src="https://flagcdn.com/w40/hu.png" alt="" />
+                                                        Hungary (+36)
+                                                    </li>
+                                                    <li data-code="+354" data-flag="is">
+                                                        <img src="https://flagcdn.com/w40/is.png" alt="" />
+                                                        Iceland (+354)
+                                                    </li>
+                                                    <li data-code="+353" data-flag="ie">
+                                                        <img src="https://flagcdn.com/w40/ie.png" alt="" />
+                                                        Ireland (+353)
+                                                    </li>
+                                                    <li data-code="+39" data-flag="it">
+                                                        <img src="https://flagcdn.com/w40/it.png" alt="" />
+                                                        Italy (+39)
+                                                    </li>
+                                                    <li data-code="+371" data-flag="lv">
+                                                        <img src="https://flagcdn.com/w40/lv.png" alt="" />
+                                                        Latvia (+371)
+                                                    </li>
+                                                    <li data-code="+370" data-flag="lt">
+                                                        <img src="https://flagcdn.com/w40/lt.png" alt="" />
+                                                        Lithuania (+370)
+                                                    </li>
+                                                    <li data-code="+352" data-flag="lu">
+                                                        <img src="https://flagcdn.com/w40/lu.png" alt="" />
+                                                        Luxembourg (+352)
+                                                    </li>
+                                                    <li data-code="+356" data-flag="mt">
+                                                        <img src="https://flagcdn.com/w40/mt.png" alt="" />
+                                                        Malta (+356)
+                                                    </li>
+                                                    <li data-code="+31" data-flag="nl">
+                                                        <img src="https://flagcdn.com/w40/nl.png" alt="" />
+                                                        Netherlands (+31)
+                                                    </li>
+                                                    <li data-code="+47" data-flag="no">
+                                                        <img src="https://flagcdn.com/w40/no.png" alt="" />
+                                                        Norway (+47)
+                                                    </li>
+                                                    <li data-code="+48" data-flag="pl">
+                                                        <img src="https://flagcdn.com/w40/pl.png" alt="" />
+                                                        Poland (+48)
+                                                    </li>
+                                                    <li data-code="+351" data-flag="pt">
+                                                        <img src="https://flagcdn.com/w40/pt.png" alt="" />
+                                                        Portugal (+351)
+                                                    </li>
+                                                    <li data-code="+40" data-flag="ro">
+                                                        <img src="https://flagcdn.com/w40/ro.png" alt="" />
+                                                        Romania (+40)
+                                                    </li>
+                                                    <li data-code="+421" data-flag="sk">
+                                                        <img src="https://flagcdn.com/w40/sk.png" alt="" />
+                                                        Slovakia (+421)
+                                                    </li>
+                                                    <li data-code="+386" data-flag="si">
+                                                        <img src="https://flagcdn.com/w40/si.png" alt="" />
+                                                        Slovenia (+386)
+                                                    </li>
+                                                    <li data-code="+34" data-flag="es">
+                                                        <img src="https://flagcdn.com/w40/es.png" alt="" />
+                                                        Spain (+34)
+                                                    </li>
+                                                    <li data-code="+46" data-flag="se">
+                                                        <img src="https://flagcdn.com/w40/se.png" alt="" />
+                                                        Sweden (+46)
+                                                    </li>
+                                                    <li data-code="+41" data-flag="ch">
+                                                        <img src="https://flagcdn.com/w40/ch.png" alt="" />
+                                                        Switzerland (+41)
+                                                    </li>
+
+                                                    <!-- Asian Countries -->
+                                                    <li data-code="+93" data-flag="af">
+                                                        <img src="https://flagcdn.com/w40/af.png" alt="" />
+                                                        Afghanistan (+93)
+                                                    </li>
+                                                    <li data-code="+973" data-flag="bh">
+                                                        <img src="https://flagcdn.com/w40/bh.png" alt="" />
+                                                        Bahrain (+973)
+                                                    </li>
+                                                    <li data-code="+880" data-flag="bd">
+                                                        <img src="https://flagcdn.com/w40/bd.png" alt="" />
+                                                        Bangladesh (+880)
+                                                    </li>
+                                                    <li data-code="+975" data-flag="bt">
+                                                        <img src="https://flagcdn.com/w40/bt.png" alt="" />
+                                                        Bhutan (+975)
+                                                    </li>
+                                                    <li data-code="+673" data-flag="bn">
+                                                        <img src="https://flagcdn.com/w40/bn.png" alt="" />
+                                                        Brunei (+673)
+                                                    </li>
+                                                    <li data-code="+855" data-flag="kh">
+                                                        <img src="https://flagcdn.com/w40/kh.png" alt="" />
+                                                        Cambodia (+855)
+                                                    </li>
+                                                    <li data-code="+86" data-flag="cn">
+                                                        <img src="https://flagcdn.com/w40/cn.png" alt="" />
+                                                        China (+86)
+                                                    </li>
+                                                    <li data-code="+91" data-flag="in">
+                                                        <img src="https://flagcdn.com/w40/in.png" alt="" />
+                                                        India (+91)
+                                                    </li>
+                                                    <li data-code="+62" data-flag="id">
+                                                        <img src="https://flagcdn.com/w40/id.png" alt="" />
+                                                        Indonesia (+62)
+                                                    </li>
+                                                    <li data-code="+98" data-flag="ir">
+                                                        <img src="https://flagcdn.com/w40/ir.png" alt="" />
+                                                        Iran (+98)
+                                                    </li>
+                                                    <li data-code="+964" data-flag="iq">
+                                                        <img src="https://flagcdn.com/w40/iq.png" alt="" />
+                                                        Iraq (+964)
+                                                    </li>
+                                                    <li data-code="+972" data-flag="il">
+                                                        <img src="https://flagcdn.com/w40/il.png" alt="" />
+                                                        Israel (+972)
+                                                    </li>
+                                                    <li data-code="+81" data-flag="jp">
+                                                        <img src="https://flagcdn.com/w40/jp.png" alt="" />
+                                                        Japan (+81)
+                                                    </li>
+                                                    <li data-code="+962" data-flag="jo">
+                                                        <img src="https://flagcdn.com/w40/jo.png" alt="" />
+                                                        Jordan (+962)
+                                                    </li>
+                                                    <li data-code="+7" data-flag="kz">
+                                                        <img src="https://flagcdn.com/w40/kz.png" alt="" />
+                                                        Kazakhstan (+7)
+                                                    </li>
+                                                    <li data-code="+965" data-flag="kw">
+                                                        <img src="https://flagcdn.com/w40/kw.png" alt="" />
+                                                        Kuwait (+965)
+                                                    </li>
+                                                    <li data-code="+996" data-flag="kg">
+                                                        <img src="https://flagcdn.com/w40/kg.png" alt="" />
+                                                        Kyrgyzstan (+996)
+                                                    </li>
+                                                    <li data-code="+856" data-flag="la">
+                                                        <img src="https://flagcdn.com/w40/la.png" alt="" />
+                                                        Laos (+856)
+                                                    </li>
+                                                    <li data-code="+961" data-flag="lb">
+                                                        <img src="https://flagcdn.com/w40/lb.png" alt="" />
+                                                        Lebanon (+961)
+                                                    </li>
+                                                    <li data-code="+60" data-flag="my">
+                                                        <img src="https://flagcdn.com/w40/my.png" alt="" />
+                                                        Malaysia (+60)
+                                                    </li>
+                                                    <li data-code="+960" data-flag="mv">
+                                                        <img src="https://flagcdn.com/w40/mv.png" alt="" />
+                                                        Maldives (+960)
+                                                    </li>
+                                                    <li data-code="+976" data-flag="mn">
+                                                        <img src="https://flagcdn.com/w40/mn.png" alt="" />
+                                                        Mongolia (+976)
+                                                    </li>
+                                                    <li data-code="+95" data-flag="mm">
+                                                        <img src="https://flagcdn.com/w40/mm.png" alt="" />
+                                                        Myanmar (+95)
+                                                    </li>
+                                                    <li data-code="+977" data-flag="np">
+                                                        <img src="https://flagcdn.com/w40/np.png" alt="" />
+                                                        Nepal (+977)
+                                                    </li>
+                                                    <li data-code="+850" data-flag="kp">
+                                                        <img src="https://flagcdn.com/w40/kp.png" alt="" />
+                                                        North Korea (+850)
+                                                    </li>
+                                                    <li data-code="+968" data-flag="om">
+                                                        <img src="https://flagcdn.com/w40/om.png" alt="" />
+                                                        Oman (+968)
+                                                    </li>
+                                                    <li data-code="+92" data-flag="pk">
+                                                        <img src="https://flagcdn.com/w40/pk.png" alt="" />
+                                                        Pakistan (+92)
+                                                    </li>
+                                                    <li data-code="+970" data-flag="ps">
+                                                        <img src="https://flagcdn.com/w40/ps.png" alt="" />
+                                                        Palestine (+970)
+                                                    </li>
+                                                    <li data-code="+63" data-flag="ph">
+                                                        <img src="https://flagcdn.com/w40/ph.png" alt="" />
+                                                        Philippines (+63)
+                                                    </li>
+                                                    <li data-code="+974" data-flag="qa">
+                                                        <img src="https://flagcdn.com/w40/qa.png" alt="" />
+                                                        Qatar (+974)
+                                                    </li>
+                                                    <li data-code="+966" data-flag="sa">
+                                                        <img src="https://flagcdn.com/w40/sa.png" alt="" />
+                                                        Saudi Arabia (+966)
+                                                    </li>
+                                                    <li data-code="+65" data-flag="sg">
+                                                        <img src="https://flagcdn.com/w40/sg.png" alt="" />
+                                                        Singapore (+65)
+                                                    </li>
+                                                    <li data-code="+82" data-flag="kr">
+                                                        <img src="https://flagcdn.com/w40/kr.png" alt="" />
+                                                        South Korea (+82)
+                                                    </li>
+                                                    <li data-code="+94" data-flag="lk">
+                                                        <img src="https://flagcdn.com/w40/lk.png" alt="" />
+                                                        Sri Lanka (+94)
+                                                    </li>
+                                                    <li data-code="+963" data-flag="sy">
+                                                        <img src="https://flagcdn.com/w40/sy.png" alt="" />
+                                                        Syria (+963)
+                                                    </li>
+                                                    <li data-code="+886" data-flag="tw">
+                                                        <img src="https://flagcdn.com/w40/tw.png" alt="" />
+                                                        Taiwan (+886)
+                                                    </li>
+                                                    <li data-code="+992" data-flag="tj">
+                                                        <img src="https://flagcdn.com/w40/tj.png" alt="" />
+                                                        Tajikistan (+992)
+                                                    </li>
+                                                    <li data-code="+66" data-flag="th">
+                                                        <img src="https://flagcdn.com/w40/th.png" alt="" />
+                                                        Thailand (+66)
+                                                    </li>
+                                                    <li data-code="+90" data-flag="tr">
+                                                        <img src="https://flagcdn.com/w40/tr.png" alt="" />
+                                                        Turkey (+90)
+                                                    </li>
+                                                    <li data-code="+993" data-flag="tm">
+                                                        <img src="https://flagcdn.com/w40/tm.png" alt="" />
+                                                        Turkmenistan (+993)
+                                                    </li>
+                                                    <li data-code="+971" data-flag="ae">
+                                                        <img src="https://flagcdn.com/w40/ae.png" alt="" />
+                                                        UAE (+971)
+                                                    </li>
+                                                    <li data-code="+998" data-flag="uz">
+                                                        <img src="https://flagcdn.com/w40/uz.png" alt="" />
+                                                        Uzbekistan (+998)
+                                                    </li>
+                                                    <li data-code="+84" data-flag="vn">
+                                                        <img src="https://flagcdn.com/w40/vn.png" alt="" />
+                                                        Vietnam (+84)
+                                                    </li>
+                                                    <li data-code="+967" data-flag="ye">
+                                                        <img src="https://flagcdn.com/w40/ye.png" alt="" />
+                                                        Yemen (+967)
+                                                    </li>
+
+                                                    <!-- Oceania -->
+                                                    <li data-code="+61" data-flag="au">
+                                                        <img src="https://flagcdn.com/w40/au.png" alt="" />
+                                                        Australia (+61)
+                                                    </li>
+                                                    <li data-code="+679" data-flag="fj">
+                                                        <img src="https://flagcdn.com/w40/fj.png" alt="" />
+                                                        Fiji (+679)
+                                                    </li>
+                                                    <li data-code="+64" data-flag="nz">
+                                                        <img src="https://flagcdn.com/w40/nz.png" alt="" />
+                                                        New Zealand (+64)
+                                                    </li>
+                                                    <li data-code="+675" data-flag="pg">
+                                                        <img src="https://flagcdn.com/w40/pg.png" alt="" />
+                                                        Papua New Guinea (+675)
+                                                    </li>
+
+                                                    <!-- Americas -->
+                                                    <li data-code="+54" data-flag="ar">
+                                                        <img src="https://flagcdn.com/w40/ar.png" alt="" />
+                                                        Argentina (+54)
+                                                    </li>
+                                                    <li data-code="+55" data-flag="br">
+                                                        <img src="https://flagcdn.com/w40/br.png" alt="" />
+                                                        Brazil (+55)
+                                                    </li>
+                                                    <li data-code="+56" data-flag="cl">
+                                                        <img src="https://flagcdn.com/w40/cl.png" alt="" />
+                                                        Chile (+56)
+                                                    </li>
+                                                    <li data-code="+57" data-flag="co">
+                                                        <img src="https://flagcdn.com/w40/co.png" alt="" />
+                                                        Colombia (+57)
+                                                    </li>
+                                                    <li data-code="+593" data-flag="ec">
+                                                        <img src="https://flagcdn.com/w40/ec.png" alt="" />
+                                                        Ecuador (+593)
+                                                    </li>
+                                                    <li data-code="+52" data-flag="mx">
+                                                        <img src="https://flagcdn.com/w40/mx.png" alt="" />
+                                                        Mexico (+52)
+                                                    </li>
+                                                    <li data-code="+51" data-flag="pe">
+                                                        <img src="https://flagcdn.com/w40/pe.png" alt="" />
+                                                        Peru (+51)
+                                                    </li>
+                                                    <li data-code="+58" data-flag="ve">
+                                                        <img src="https://flagcdn.com/w40/ve.png" alt="" />
+                                                        Venezuela (+58)
+                                                    </li>
+
+                                                    <!-- Russia -->
+                                                    <li data-code="+7" data-flag="ru">
+                                                        <img src="https://flagcdn.com/w40/ru.png" alt="" />
+                                                        Russia (+7)
+                                                    </li>
                                                 </ul>
                                             </div>
 
                                             <!-- Phone Input -->
                                             <div class="phone-input-wrapper">
                                                 <label class="floating-phone">Phone Number</label>
-                                                <span class="prefix" id="phonePrefix">+44</span>
+                                                <span class="prefix" id="phonePrefix" style="display: none;"></span>
                                                 <input type="tel" id="phoneNumber" name="phone"
                                                     class="floating-input phone @error('phone') error @enderror"
-                                                    placeholder="" value="{{ old('phone') }}" />
+                                                    placeholder="Select country first" value="{{ old('phone') }}"
+                                                    readonly />
                                                 <!-- Hidden input for country code -->
                                                 <input type="hidden" id="countryCode" name="country_code"
-                                                    value="+44" />
+                                                    value="{{ old('country_code') }}" />
                                             </div>
                                         </div>
                                         @error('phone')
@@ -1450,16 +1971,16 @@
                                 </div>
 
                                 <!-- <div class="form-group2 field">
-                                                        <div class="contact-info-form__group name-field">
-                                                                                    <label class="floating-label">Phone Number</label>
-                                                                                    <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
-                                                                                        placeholder="+1234567890" value="{{ old('phone') }}" />
-                                                                                    @error('phone')
+                                                                <div class="contact-info-form__group name-field">
+                                                                                            <label class="floating-label">Phone Number</label>
+                                                                                            <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
+                                                                                                placeholder="+1234567890" value="{{ old('phone') }}" />
+                                                                                            @error('phone')
         <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
-                                                                                                                                                {{ $message }}</div>
+                                                                                                                                                                {{ $message }}</div>
     @enderror
-                                                                                </div>
-                                                                                </div> -->
+                                                                                        </div>
+                                                                                        </div> -->
 
 
 
@@ -1538,7 +2059,7 @@
                                             <span class="range-label">$100</span>
                                             <div class="range-value" id="rangeValue">Please select budget</div>
                                             <input type="range" id="priceRange" name="budget_range" min="100"
-                                                max="5000" value="{{ old('budget_range', 350 ) }}" step="50"
+                                                max="5000" value="{{ old('budget_range', 350) }}" step="50"
                                                 data-touched="false" />
                                             <span class="range-label">$Max</span>
                                         </div>
@@ -1549,12 +2070,6 @@
                                         </div>
                                     @enderror
                                 </div>
-
-
-
-
-
-
 
                                 <!-- reCAPTCHA v3 - Invisible -->
                                 <input type="hidden" id="recaptchaToken" name="g-recaptcha-response" value="">
@@ -1783,6 +2298,16 @@
                         field: 'email',
                         message: 'Please enter a valid email address.',
                         element: emailInput
+                    });
+                }
+
+                // Country code validation (must be selected first)
+                const countryCodeInput = document.querySelector('input[name="country_code"]');
+                if (!countryCodeInput.value.trim()) {
+                    validationErrors.push({
+                        field: 'country_code',
+                        message: 'Please select your country first.',
+                        element: document.querySelector('.country_with_phone')
                     });
                 }
 
@@ -2135,6 +2660,29 @@
             const countryList = countrySelect.querySelector(".country-list");
             const phonePrefix = document.getElementById("phonePrefix");
             const countryCodeInput = document.getElementById("countryCode");
+            const phoneInput = document.getElementById("phoneNumber");
+
+            // Initialize country from old values if present
+            const oldCountryCode = countryCodeInput.value;
+            if (oldCountryCode) {
+                // Find the country item that matches the old code
+                const countryItem = countryList.querySelector(`li[data-code="${oldCountryCode}"]`);
+                if (countryItem) {
+                    const flag = countryItem.dataset.flag;
+                    const code = countryItem.dataset.code;
+
+                    // Set flag and prefix
+                    const flagContainer = selectedCountry.querySelector('#selectedFlag');
+                    flagContainer.innerHTML =
+                        `<img src="https://flagcdn.com/w40/${flag}.png" alt="${countryItem.textContent.trim()} flag" class="flag-icon">`;
+                    phonePrefix.textContent = code;
+                    phonePrefix.style.display = 'inline';
+
+                    // Enable phone input
+                    phoneInput.removeAttribute('readonly');
+                    phoneInput.placeholder = 'Enter phone number';
+                }
+            }
 
             selectedCountry.addEventListener("click", (e) => {
                 e.stopPropagation();
@@ -2146,11 +2694,23 @@
                     const flag = item.dataset.flag;
                     const code = item.dataset.code;
 
-                    selectedImg.src = `https://flagcdn.com/w40/${flag}.png`;
+                    // Replace placeholder with actual flag image
+                    const flagContainer = selectedCountry.querySelector('#selectedFlag');
+                    flagContainer.innerHTML =
+                        `<img src="https://flagcdn.com/w40/${flag}.png" alt="${item.textContent.trim()} flag" class="flag-icon">`;
+
                     phonePrefix.textContent = code;
+                    phonePrefix.style.display = 'inline';
 
                     if (countryCodeInput) {
                         countryCodeInput.value = code;
+                    }
+
+                    // Enable phone input after country selection
+                    if (phoneInput) {
+                        phoneInput.removeAttribute('readonly');
+                        phoneInput.placeholder = 'Enter phone number';
+                        phoneInput.focus();
                     }
 
                     countryList.style.opacity = "0";
