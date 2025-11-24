@@ -340,7 +340,7 @@
         letter-spacing: 0.8px;
         color: #0d4036;
         font-size: 14px;
-        margin-left: 35px;
+        margin-left: 22px;
     }
 
     .outcome-grid .outcome-input textarea {
@@ -490,11 +490,20 @@
         letter-spacing: 0.7px;
         max-width: 115px;
     }
-    .goal-text.prepare-text{
+
+    .goal-text.prepare-text {
         padding: 0px 12px;
     }
-    .goal-text.build-text{
+    .goal-text.increase-text {
         padding: 0px 8px;
+    }
+
+    .goal-text.build-text {
+        padding: 0px 9px;
+    }
+
+    .goal-text.launch-text {
+        padding: 0px 30px;
     }
 
     /* === CHECKMARK CIRCLE === */
@@ -970,7 +979,14 @@
     @media (min-width: 1440px) {
         .multistep-form-container {
             padding-top: 20px;
+            background-image: url(../img/form-bg1.png);
+            background-color: #ffffffa9;
+            background-blend-mode: soft-light;
+            background-repeat: repeat;
+            background-size: cover;
+            background-position: center;
         }
+
 
         .step-counter-container {
             width: 98px;
@@ -1015,6 +1031,12 @@
             max-width: 130px;
             padding: 0px 3px;
         }
+
+        .outcome-grid label {
+
+            margin-left: 35px;
+        }
+
 
         .form-grid input.email {
             /* padding: 0px; */
@@ -1344,7 +1366,7 @@
                         <div class="goals-grid">
                             <label class="goal-card">
                                 <input type="checkbox" name="business_goals[]" value="Increase revenue or sales" />
-                                <span class="goal-text">Increase revenue or sales</span>
+                                <span class="goal-text increase-text">Increase revenue or sales</span>
                                 <span class="goal-checkmark">
                                     <img src="{{ asset('img/marked.png') }}" alt="" />
                                 </span>
@@ -1368,7 +1390,7 @@
 
                             <label class="goal-card">
                                 <input type="checkbox" name="business_goals[]" value="Launch a new product or service" />
-                                <span class="goal-text">Launch a new product or service</span>
+                                <span class="goal-text launch-text">Launch a new product or service</span>
                                 <span class="goal-checkmark">
                                     <img src="{{ asset('img/marked.png') }}" alt="" />
                                 </span>
@@ -1805,6 +1827,8 @@
                 void el.offsetWidth;
                 el.classList.add("fade-in");
             });
+
+            window.scrollTo({ top: 0, behavior: "smooth" });
         }
 
         //  NEXT BUTTONS
