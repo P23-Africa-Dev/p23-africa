@@ -780,7 +780,7 @@
         border-radius: 0px;
         border-top-right-radius: 40px;
         border-bottom-right-radius: 40px;
-        padding: 16px 40px 16px 0px;
+        padding: 16px 40px 16px 12px;
 
     }
 
@@ -800,6 +800,16 @@
     .phone-hidden-field {
         display: none;
     }
+
+    .phone-rounded {
+        border-radius: 40px !important;
+        /* padding-left: 40px; */
+
+    }
+   /* .grid-input .phone-rounded::placeholder{
+        margin-left: 20px !important;
+    } */
+
 
     /* --------------- RESPONSIVE: MOBILE COLUMN --------------- */
 
@@ -1965,6 +1975,21 @@
             return prefixSpan && prefixSpan.textContent.trim() !== '';
         }
 
+        // Update phone border when country is not selected
+        function updatePhoneBorder(prefixSpan, phoneNumberInput) {
+            const hasCountry = prefixSpan.textContent.trim() !== "";
+
+            if (!hasCountry) {
+                phoneNumberInput.classList.add("phone-rounded");
+                phoneNumberInput.classList.remove("phone-no-radius");
+            } else {
+                phoneNumberInput.classList.remove("phone-rounded");
+                phoneNumberInput.classList.add("phone-no-radius");
+            }
+        }
+
+
+
         // Validate Step 1: Basic Information
         function validateStep1() {
             clearErrors(0);
@@ -2417,6 +2442,8 @@
                 // Close dropdown immediately
                 dropdown.style.display = "none";
                 dropdownIcon.classList.remove("rotate");
+
+              updatePhoneBorder(prefixSpan, phoneNumberInput);
             });
         });
 
@@ -2469,5 +2496,7 @@
         updateStep();
         adjustGoalTextWidths();
         initializePhoneField();
+        updatePhoneBorder(prefixSpan, phoneNumberInput);
+
     });
 </script>
