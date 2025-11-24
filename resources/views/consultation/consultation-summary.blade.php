@@ -543,7 +543,8 @@
                 <div class="overview">
                     <h3>Business Overview:</h3>
                     <p>
-                        (<strong>{{ $application->company }}</strong>) {{ $application->business_description }}
+                        {{-- (<strong>{{ $application->company }}</strong>)  --}}
+                        {{ $application->business_description }}
                         <br><br>
                         <strong>Industry:</strong> {{ $application->industry }}
                     </p>
