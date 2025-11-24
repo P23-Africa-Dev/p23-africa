@@ -93,6 +93,8 @@
         display: flex;
         /* justify-content: center; */
         flex-direction: column;
+        justify-content: center;
+        align-items: center;
         text-align: center;
         /* background-color: #ffffff; */
         position: relative;
@@ -113,15 +115,16 @@
 
     .payment-box-content .payment-card img {
         position: absolute;
-        object-fit: cover;
+        object-fit: contain;
         z-index: 0;
         top: 0;
         /* width: auto; */
-        width: 405px;
+        width: auto;
+        max-width: 100%;
         /* height: 100%; */
         height: 269px;
         border-radius: 20px;
-        transform: translateX(-28px);
+        /* transform: translateX(-28px); */
         /* box-shadow: 0px 10px 13px -3px rgba(0, 0, 0, 0.9); */
 
     }
@@ -213,10 +216,11 @@
         max-width: 300px;
         margin: 0 auto;
         margin-top: 60px;
+        color: #fff;
     }
 
     a.proceed-button {
-        width: 75%;
+        width: 100%;
         padding: 1rem;
         font-size: 0.8rem;
         letter-spacing: 0.6px;
@@ -224,7 +228,7 @@
         font-family: 600;
         color: #fff;
         background-color: #0d4036;
-        margin-top: 40px;
+        margin: 40px auto;
         text-decoration: none;
         border-radius: 10px;
         font-family: "GT Walsheim Trial Cn Md";
@@ -234,12 +238,9 @@
     }
 
     @media (min-width: 1400px) {
-
-        .payment-box-content .payment-card img {
-            transform: translateX(-40px);
-
+        .payment-box-content {
+            margin-top: 2rem;
         }
-
     }
 </style>
 @section('content')
@@ -254,6 +255,7 @@
 
                 <h1 class="payment-status">Payment Successful!</h1>
 
+            
                 <div class="payment-card">
                     <img src="{{ asset('img/payment-bg.png') }}" alt="" />
 
