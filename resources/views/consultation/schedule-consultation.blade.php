@@ -2019,7 +2019,7 @@
         function validateWorkingHours(type, newIndex) {
             // Allow all selections during normal interaction
             // Only show a gentle reminder message for times outside working hours
-            
+
             // Get current selections (with the proposed change)
             const currentHour = type === 'hour' ? parseInt(timeWheels.hour.items[newIndex]) : parseInt(
                 timeWheels.hour.items[timeWheels.hour.currentIndex]);
@@ -2526,7 +2526,9 @@
                 // Gentle reminder about working hours (but don't block submission)
                 if (hour24 < 10 || hour24 > 20) {
                     const isOutsideHours = hour24 < 10 ? 'before 10:00 AM' : 'after 8:00 PM';
-                    if (!confirm(`You've selected a time ${isOutsideHours}. Our normal consultation hours are 10:00 AM to 8:00 PM, Monday to Saturday. Would you like to proceed with this booking?`)) {
+                    if (!confirm(
+                            `You've selected a time ${isOutsideHours}. Our normal consultation hours are 10:00 AM to 8:00 PM, Monday to Saturday. Would you like to proceed with this booking?`
+                            )) {
                         return; // User chose not to proceed
                     }
                 }
@@ -2644,6 +2646,7 @@
 
         /* Gentle working hours notification */
         let workingHoursNoticeTimeout;
+
         function showWorkingHoursNotice(msg) {
             // Clear any existing timeout
             if (workingHoursNoticeTimeout) {
@@ -2672,9 +2675,10 @@
                     transition: opacity 0.3s ease;
                     pointer-events: none;
                 `;
-                
+
                 // Add to time box container
-                const timeBox = document.querySelector('.time-box-container') || document.querySelector('.time-box');
+                const timeBox = document.querySelector('.time-box-container') || document.querySelector(
+                    '.time-box');
                 if (timeBox) {
                     timeBox.style.position = 'relative';
                     timeBox.appendChild(notice);
