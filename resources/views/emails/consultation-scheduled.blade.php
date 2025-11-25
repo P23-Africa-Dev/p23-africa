@@ -4,63 +4,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consultation Scheduled</title>
+    <title>Consultation Scheduled - P23 Africa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=GT+Walsheim+Trial+Condensed:wght@300;400;500;600;700&display=swap');
+
+        @font-face {
+            font-family: "GT Walsheim Con";
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+            src: url("https://www.p23africa.com/fonts/gt-walsheim-pro/GTWalsheimPro-CondensedRegular.woff2") format("woff2"),
+                url("https://www.p23africa.com/fonts/gt-walsheim-pro/GTWalsheimPro-CondensedRegular.woff") format("woff");
+        }
+
+        @font-face {
+            font-family: "GT Walsheim Con";
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+            src: url("https://www.p23africa.com/fonts/gt-walsheim-pro/GTWalsheimPro-CondensedBold.woff2") format("woff2"),
+                url("https://www.p23africa.com/fonts/gt-walsheim-pro/GTWalsheimPro-CondensedBold.woff") format("woff");
+        }
+
         body {
             margin: 0;
-            padding: 0;
-            font-family: 'Arial', 'Helvetica', sans-serif;
-            background-color: #f4f4f4;
-            color: #333333;
+            padding: 20px;
+            background-color: #f5f5f5;
+            font-family: "GT Walsheim Con", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
         }
 
         .email-container {
             max-width: 600px;
             margin: 0 auto;
             background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: url('https://p23africa.com/images/thank-you-header-email.png') no-repeat center center;
+            background-size: cover;
+            margin-top: 20px;
             padding: 40px 30px;
             text-align: center;
+            color: white;
         }
 
-        .header h1 {
-            color: #ffffff;
-            margin: 0;
-            font-size: 28px;
+        .email-icon {
+            width: 115px;
+            height: 98px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .email-icon img {
+            width: 115px;
+            height: 98px;
+            fill: white;
+        }
+
+        .greeting {
+            font-size: 16px;
             font-weight: 600;
+            margin: 0;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 10px;
+            opacity: 0.9;
+            margin: 8px 0 0 0;
         }
 
         .content {
             padding: 40px 30px;
-        }
-
-        .greeting {
-            font-size: 18px;
-            color: #333333;
-            margin-bottom: 20px;
-        }
-
-        .intro-text {
             font-size: 16px;
-            line-height: 1.6;
-            color: #555555;
-            margin-bottom: 30px;
+        }
+
+        .content h3 {
+            color: #0D4036;
+            font-size: 16px;
+            font-weight: 500;
+            margin: 0 0 20px 0;
+            line-height: 1.4;
+        }
+
+        .content p {
+            color: #0D4036;
+            font-size: 16px;
+            line-height: 1.7;
+            margin: 0 0 20px 0;
+        }
+
+        .content p:last-child {
+            margin-bottom: 0;
         }
 
         .details-card {
-            background-color: #f8f9fa;
-            border-left: 4px solid #667eea;
+            background-color: #f8fafa;
+            border-left: 4px solid #2c5f5f;
             padding: 20px;
             margin: 25px 0;
-            border-radius: 4px;
+            border-radius: 8px;
         }
 
         .details-card h2 {
-            color: #667eea;
-            font-size: 18px;
+            color: #2c5f5f;
+            font-size: 16px;
+            font-weight: 600;
             margin-top: 0;
             margin-bottom: 15px;
         }
@@ -73,70 +130,123 @@
 
         .detail-label {
             font-weight: 600;
-            color: #333333;
+            color: #0D4036;
             min-width: 120px;
         }
 
         .detail-value {
-            color: #555555;
+            color: #0D4036;
         }
 
         .meeting-link {
-            background-color: #667eea;
-            color: #ffffff !important;
-            padding: 15px 30px;
+            background-color: #FCDD0A;
+            color: #193E47 !important;
+            padding: 12px 30px;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 25px;
             display: inline-block;
             margin: 20px 0;
             font-weight: 600;
-            font-size: 16px;
+            font-size: 14px;
+            transition: all 0.3s ease;
         }
 
         .meeting-link:hover {
-            background-color: #5568d3;
+            background-color: #e6c600;
         }
 
         .calendar-section {
             text-align: center;
             margin: 30px 0;
             padding: 20px;
-            background-color: #f8f9fa;
+            background-color: #f8fafa;
             border-radius: 8px;
         }
 
         .calendar-link {
-            color: #667eea;
+            color: #2c5f5f;
             text-decoration: none;
             font-weight: 600;
             font-size: 15px;
         }
 
         .important-note {
-            background-color: #fff3cd;
+            background-color: #fff8e1;
             border-left: 4px solid #ffc107;
-            padding: 15px;
+            padding: 15px 20px;
             margin: 25px 0;
-            border-radius: 4px;
+            border-radius: 0 8px 8px 0;
         }
 
         .important-note p {
             margin: 5px 0;
             font-size: 14px;
-            color: #856404;
+            color: #f57c00;
+            font-weight: 600;
+        }
+
+        .highlight-box {
+            margin: 25px 0;
+            color: #0D4036;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .signature {
+            color: #2c5f5f;
+            font-weight: 600;
+            font-size: 16px;
+            margin: 25px 0 0 0;
+        }
+
+        .signature .img {
+            position: relative;
+            width: 105px;
+            height: 50px;
+            left: -14px;
+        }
+
+        .signature img {
+            z-index: 1000 !important;
+            margin-top: -15px;
         }
 
         .footer {
-            background-color: #2c3e50;
-            color: #ffffff;
-            padding: 30px;
+            padding: 25px 30px;
             text-align: center;
-            font-size: 14px;
+            background-color: #f8fafa;
         }
 
-        .footer a {
-            color: #667eea;
+        .social-icons {
+            margin-top: 15px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            padding: 10px;
+            margin: 0 3px;
+            border-radius: 50%;
             text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            transform: translateY(-2px);
+        }
+
+        .social-icons svg {
+            width: 26px;
+            height: 26px;
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .copyright {
+            font-size: 12px;
+            color: #000000;
+            margin: 0;
         }
 
         .divider {
@@ -151,16 +261,27 @@
     <div class="email-container">
         <!-- Header -->
         <div class="header">
-            <h1>✓ Consultation Confirmed</h1>
+            <div class="email-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="115" height="98" viewBox="0 0 24 24" fill="none"
+                    stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+            </div>
+            <h1 class="greeting">Hello {{ $scheduledSession->name }},</h1>
+            <p class="subtitle">Your consultation with <br>P23 Africa is confirmed.</p>
         </div>
 
         <!-- Content -->
-        <div class="content">
-            <p class="greeting">Dear {{ $scheduledSession->name }},</p>
+        <div class="content px-md-5">
+            <h3>We're excited to connect with you and discuss how we can support your business goals.</h3>
 
-            <p class="intro-text">
-                Thank you for scheduling a consultation with P23 Africa. We're excited to connect with you and discuss
-                how we can support your goals. Your consultation has been successfully scheduled and confirmed.
+            <p>
+                Thank you for scheduling a consultation with P23 Africa. Your consultation has been successfully
+                scheduled and confirmed. Below are your consultation details and important information for our upcoming
+                session.
             </p>
 
             <!-- Consultation Details -->
@@ -168,6 +289,7 @@
                 <h2>📅 Consultation Details</h2>
                 <div class="detail-row">
                     <span class="detail-label">Date:</span>
+                    <span class="detail-value"> </span>
                     <span
                         class="detail-value">{{ \Carbon\Carbon::parse($scheduledSession->consultation_date)->format('l, F j, Y') }}</span>
                 </div>
@@ -254,29 +376,40 @@
 
             <div class="divider"></div>
 
-            <p class="intro-text">
+            <p>
                 If you have any questions or need to make changes to your consultation, please don't hesitate to reach
-                out to us at <a href="mailto:contact@p23africa.com" style="color: #667eea;">contact@p23africa.com</a>.
+                out to us at <a href="mailto:contact@p23africa.com"
+                    style="color: #D65F5F; text-decoration: none;"><i>contact@p23africa.com</i></a>.
             </p>
 
-            <p class="intro-text">
-                We look forward to speaking with you!
-            </p>
+            <div class="highlight-box">
+                <p>We look forward to speaking with you and helping your business grow strategically.</p>
+            </div>
 
-            <p style="margin-top: 30px; font-size: 16px;">
-                Best regards,<br>
-                <strong>The P23 Africa Team</strong>
-            </p>
+            <div class="signature">
+                <img src="https://p23africa.com/images/signature.png" class="img" alt="">
+                <br>
+                <img src="https://p23africa.com/images/Logo2.png" alt="Logo" style="width: 31px; height: 15px;"><br>
+            </div>
         </div>
 
         <!-- Footer -->
         <div class="footer">
-            <p><strong>P23 Africa</strong></p>
-            <p>Email: <a href="mailto:contact@p23africa.com">contact@p23africa.com</a></p>
-            <p>Website: <a href="https://p23africa.com">www.p23africa.com</a></p>
-            <p style="margin-top: 20px; font-size: 12px; color: #95a5a6;">
-                © {{ date('Y') }} P23 Africa. All rights reserved.
-            </p>
+            <div class="social-icons">
+                <a href="https://instagram.com/p23africa/" class="social-instagram">
+                    <img src="https://www.p23africa.com/images/instagram.png" alt="">
+                </a>
+                <a href="https://tiktok.com/@p23africa?_t=ZN-8zOFQMxpTU6&_r=1" class="social-twitter">
+                    <img src="https://www.p23africa.com/images/tiktok.png" alt="">
+                </a>
+                <a href="https://linkedin.com/company/p23-africa/" class="social-linkedin">
+                    <img src="https://www.p23africa.com/images/linkedin.png" alt="">
+                </a>
+                <a href="https://p23africa.com/" class="social-pinterest">
+                    <img src="https://www.p23africa.com/images/web.png" alt="">
+                </a>
+            </div>
+            <p class="copyright"><b>Copyright</b> © {{ date('Y') }}, <b>P23 Africa</b></p>
         </div>
     </div>
 </body>

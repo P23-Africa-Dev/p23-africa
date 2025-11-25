@@ -375,7 +375,7 @@
                 customizations: {
                     title: 'P23 Africa Consultation',
                     description: '90-minute Business Strategy Session',
-                    logo: '{{ asset('img/logo.png') }}',
+                    logo: '{{ asset('images/Logo2.png') }}',
                 },
             });
         }

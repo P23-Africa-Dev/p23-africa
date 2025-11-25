@@ -1809,32 +1809,72 @@
             minute: {
                 element: null,
                 items: [],
-                currentIndex: 28
-            }, // Default to 28
+                currentIndex: 0
+            }, // Default to 00
             second: {
                 element: null,
                 items: [],
-                currentIndex: 55
-            }, // Default to 55
+                currentIndex: 0
+            }, // Default to 00
             ampm: {
                 element: null,
                 items: ['AM', 'PM'],
-                currentIndex: 1
-            } // Default to PM
+                currentIndex: 0
+            } // Default to AM
         };
 
         // Initialize time wheels
         function initTimeWheels() {
-            // Generate hours (01-12)
-            for (let i = 1; i <= 12; i++) {
-                timeWheels.hour.items.push(String(i).padStart(2, '0'));
-            }
+            // Generate hours (10 AM to 8 PM only)
+            // 10 AM, 11 AM, 12 PM, 1 PM, 2 PM, 3 PM, 4 PM, 5 PM, 6 PM, 7 PM, 8 PM
+            const allowedHours = [10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8];
+            allowedHours.forEach(hour => {
+                timeWheels.hour.items.push(String(hour).padStart(2, '0'));
+            });
 
             // Generate minutes/seconds (00-59)
             for (let i = 0; i <= 59; i++) {
                 timeWheels.minute.items.push(String(i).padStart(2, '0'));
                 timeWheels.second.items.push(String(i).padStart(2, '0'));
             }
+
+            // Set default time to 10:00 AM (or current time if within working hours)
+            const now = new Date();
+            let currentHour = now.getHours();
+            const currentMinute = now.getMinutes();
+            const currentSecond = 0; // Set seconds to 00 by default
+
+            let defaultHourIndex = 0; // 10 AM by default
+            let defaultAmPmIndex = 0; // AM by default
+            let defaultMinuteIndex = 0; // 00 minutes by default
+
+            // Check if current time is within working hours (10 AM - 8 PM)
+            if (currentHour >= 10 && currentHour <= 20) {
+                // Convert to 12-hour format for display
+                let displayHour = currentHour;
+                let ampm = 'AM';
+
+                if (currentHour >= 12) {
+                    ampm = 'PM';
+                    if (currentHour > 12) {
+                        displayHour = currentHour - 12;
+                    }
+                }
+
+                // Find the index in our allowed hours
+                const hourIndex = timeWheels.hour.items.findIndex(h => parseInt(h) === displayHour);
+                if (hourIndex !== -1) {
+                    defaultHourIndex = hourIndex;
+                    defaultAmPmIndex = ampm === 'AM' ? 0 : 1;
+                    defaultMinuteIndex = currentMinute;
+                }
+            }
+
+            // Update default indices
+            timeWheels.hour.currentIndex = defaultHourIndex;
+            timeWheels.minute.currentIndex = defaultMinuteIndex;
+            timeWheels.second.currentIndex = 0;
+            timeWheels.ampm.currentIndex = defaultAmPmIndex;
 
             // Setup each wheel
             setupTimeWheel('hour');
@@ -1948,11 +1988,14 @@
         }
 
         function setWheelIndex(type, index) {
-            // Validate time selection if today is selected
+            // Only validate working hours for gentle reminders (don't block selection)
+            validateWorkingHours(type, index);
+
+            // Validate time selection if today is selected (only for past times)
             if (selectedDate && selectedDate.toDateString() === today.toDateString()) {
-                const validatedIndex = validateTimeSelection(type, index);
-                if (validatedIndex !== index) {
-                    index = validatedIndex;
+                const todayValidatedIndex = validateTimeSelection(type, index);
+                if (todayValidatedIndex !== index) {
+                    index = todayValidatedIndex;
                     // Show a brief flash message about time restriction
                     const now = new Date();
                     const minHour = now.getHours() + 1;
@@ -1971,6 +2014,37 @@
 
             updateActiveItem(type);
             updateTimeDisplay();
+        }
+
+        function validateWorkingHours(type, newIndex) {
+            // Allow all selections during normal interaction
+            // Only show a gentle reminder message for times outside working hours
+
+            // Get current selections (with the proposed change)
+            const currentHour = type === 'hour' ? parseInt(timeWheels.hour.items[newIndex]) : parseInt(
+                timeWheels.hour.items[timeWheels.hour.currentIndex]);
+            const currentAmPm = type === 'ampm' ? timeWheels.ampm.items[newIndex] : timeWheels.ampm.items[
+                timeWheels.ampm.currentIndex];
+
+            // Convert to 24-hour format for validation
+            let hour24 = currentHour;
+            if (currentAmPm === 'PM' && currentHour !== 12) {
+                hour24 += 12;
+            } else if (currentAmPm === 'AM' && currentHour === 12) {
+                hour24 = 0;
+            }
+
+            // Check if time is outside working hours (10 AM - 8 PM = 10:00 - 20:00)
+            if (hour24 < 10 || hour24 > 20) {
+                // Show a gentle notification but don't block the selection
+                if (hour24 < 10) {
+                    showWorkingHoursNotice('Consultation hours start at 10:00 AM');
+                } else if (hour24 > 20) {
+                    showWorkingHoursNotice('Consultation hours end at 8:00 PM');
+                }
+            }
+
+            return newIndex; // Always allow the selection
         }
 
         function validateTimeSelection(type, newIndex) {
@@ -2096,7 +2170,10 @@
                 // Check if this previous month date is in the past
                 const isPastDate = prevDate < today && prevDate.toDateString() !== today.toDateString();
 
-                if (isPastDate) {
+                // Check if this date is Sunday (0 = Sunday)
+                const isSunday = prevDate.getDay() === 0;
+
+                if (isPastDate || isSunday) {
                     div.classList.add("disabled");
                     div.onclick = null;
                 } else {
@@ -2116,13 +2193,16 @@
                 // Check if this date is in the past
                 const isPastDate = dateObj < today && dateObj.toDateString() !== today.toDateString();
 
+                // Check if this date is Sunday (0 = Sunday)
+                const isSunday = dateObj.getDay() === 0;
+
                 // highlight today
                 if (dateObj.toDateString() === today.toDateString()) {
                     div.classList.add("today");
                 }
 
-                // disable past days
-                if (isPastDate) {
+                // disable past days and Sundays
+                if (isPastDate || isSunday) {
                     div.classList.add("disabled");
                     div.onclick = null; // Remove click handler
                 } else {
@@ -2142,8 +2222,16 @@
                 div.textContent = i;
 
                 const nextDate = new Date(year, month + 1, i);
-                // Next month dates are always in the future, so they're always clickable
-                div.onclick = () => selectDate(nextDate, div);
+
+                // Check if this date is Sunday (0 = Sunday)
+                const isSunday = nextDate.getDay() === 0;
+
+                if (isSunday) {
+                    div.classList.add("disabled");
+                    div.onclick = null;
+                } else {
+                    div.onclick = () => selectDate(nextDate, div);
+                }
 
                 datesContainer.appendChild(div);
             }
@@ -2198,9 +2286,12 @@
             let minHour = now.getHours() + 1; // At least 1 hour ahead
             const minMinute = now.getMinutes();
 
-            // Handle hour overflow (if current time + 1 hour goes to next day)
-            if (minHour >= 24) {
-                minHour = 23; // Cap at 11 PM
+            // Ensure minimum time is within working hours (10 AM - 8 PM)
+            if (minHour < 10) {
+                minHour = 10; // Start at 10 AM
+            } else if (minHour > 20) {
+                // If it's past 8 PM, they can't book for today
+                return;
             }
 
             // Convert to 12-hour format
@@ -2424,18 +2515,29 @@
                 const second = timeWheels.second.items[timeWheels.second.currentIndex];
                 const ampm = timeWheels.ampm.items[timeWheels.ampm.currentIndex];
 
-                // Format the date for the form submission (YYYY-MM-DD)
-                const formattedDate = selectedDate.getFullYear() + '-' +
-                    String(selectedDate.getMonth() + 1).padStart(2, '0') + '-' +
-                    String(selectedDate.getDate()).padStart(2, '0');
-
-                // Convert to 24-hour format for form submission
+                // Convert to 24-hour format for validation
                 let hour24 = parseInt(hour);
                 if (ampm === 'PM' && hour24 !== 12) {
                     hour24 += 12;
                 } else if (ampm === 'AM' && hour24 === 12) {
                     hour24 = 0;
                 }
+
+                // Gentle reminder about working hours (but don't block submission)
+                if (hour24 < 10 || hour24 > 20) {
+                    const isOutsideHours = hour24 < 10 ? 'before 10:00 AM' : 'after 8:00 PM';
+                    if (!confirm(
+                            `You've selected a time ${isOutsideHours}. Our normal consultation hours are 10:00 AM to 8:00 PM, Monday to Saturday. Would you like to proceed with this booking?`
+                            )) {
+                        return; // User chose not to proceed
+                    }
+                }
+
+                // Format the date for the form submission (YYYY-MM-DD)
+                const formattedDate = selectedDate.getFullYear() + '-' +
+                    String(selectedDate.getMonth() + 1).padStart(2, '0') + '-' +
+                    String(selectedDate.getDate()).padStart(2, '0');
+
                 const formattedTime = `${String(hour24).padStart(2, '0')}:${minute}`;
 
                 // Set hidden form values
@@ -2540,6 +2642,56 @@
             requestAnimationFrame(() => toast.classList.add("show"));
             setTimeout(() => toast.classList.add("hide"), 2000);
             setTimeout(() => toast.remove(), 2600);
+        }
+
+        /* Gentle working hours notification */
+        let workingHoursNoticeTimeout;
+
+        function showWorkingHoursNotice(msg) {
+            // Clear any existing timeout
+            if (workingHoursNoticeTimeout) {
+                clearTimeout(workingHoursNoticeTimeout);
+            }
+
+            // Show a subtle notice near the time picker
+            let notice = document.getElementById('workingHoursNotice');
+            if (!notice) {
+                notice = document.createElement('div');
+                notice.id = 'workingHoursNotice';
+                notice.style.cssText = `
+                    position: absolute;
+                    top: -30px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: rgba(136, 193, 183, 0.1);
+                    border: 1px solid rgba(136, 193, 183, 0.3);
+                    color: #88C1B7;
+                    padding: 5px 10px;
+                    border-radius: 4px;
+                    font-size: 12px;
+                    font-family: "GT Walsheim Con";
+                    z-index: 100;
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                    pointer-events: none;
+                `;
+
+                // Add to time box container
+                const timeBox = document.querySelector('.time-box-container') || document.querySelector(
+                    '.time-box');
+                if (timeBox) {
+                    timeBox.style.position = 'relative';
+                    timeBox.appendChild(notice);
+                }
+            }
+
+            notice.textContent = msg;
+            notice.style.opacity = '1';
+
+            // Hide after 3 seconds
+            workingHoursNoticeTimeout = setTimeout(() => {
+                notice.style.opacity = '0';
+            }, 3000);
         }
 
 
