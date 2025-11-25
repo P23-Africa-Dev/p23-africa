@@ -258,8 +258,8 @@ Route::post('/book-consultation/schedule', [App\Http\Controllers\ConsultationCon
 Route::get('/book-consultation/download-ics/{filename}', [App\Http\Controllers\ConsultationController::class, 'downloadIcs'])->name('consultation.download-ics');
 Route::get('/google/calendar/auth', [App\Http\Controllers\ConsultationController::class, 'googleCalendarAuth'])->name('google.calendar.auth');
 Route::get('/google/calendar/callback', [App\Http\Controllers\ConsultationController::class, 'googleCalendarCallback'])->name('google.calendar.callback');
-Route::get('/thank-you', function () {
-    return view('emails.thank-you');
+Route::get('/email-test', function () {
+    return view('emails.consultation-scheduled');
 })->name('feedback.thankyou');
 
 // Route::get('/events/all-events', function () {

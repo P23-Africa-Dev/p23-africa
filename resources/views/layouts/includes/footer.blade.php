@@ -11,7 +11,7 @@
                     <div class="col-md-2 col-lg-2 col-4 footer-links desk">
                         <p>Who We Are</p>
                         <a href="{{ url('about') }}">About Us</a>
-                        <a href="#">Business Referral Network</a>
+                        <a href="{{ route('brn') }}">Business Referral Network</a>
                         <a href="#">University Partnership</a>
                         <a href="https://the54thpitch.co.uk">The 54th Pitch</a>
                     </div>
