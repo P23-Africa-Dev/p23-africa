@@ -103,7 +103,7 @@
 
 
                     <div class="subscribe">
-                        <a href="#" class="btn" id="btn">Subscribe</a>
+                        <a href="/book-consultation" class="btn" id="btn">Book a Consultation</a>
                     </div>
 
                     <div class="social-icons">

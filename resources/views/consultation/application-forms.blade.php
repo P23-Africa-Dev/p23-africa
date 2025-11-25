@@ -22,13 +22,7 @@
 <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>  -->
 
 <style>
-    /* body{
-   background-image: url(../img/bg-effect.png);
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center;
 
-    } */
     .multistep-form-container {
         background-image: url(../img/bg-effect.png);
         background-repeat: no-repeat;
@@ -888,7 +882,7 @@
         .multi-step-wrapper {
             padding: 0px;
             overflow: visible;
-            margin-top: 70px;
+            /* margin-top: 70px; */
         }
 
         .step-header {
@@ -1045,9 +1039,15 @@
     }
 
     @media (min-width: 1440px) {
+
         .multistep-form-container {
-            padding-top: 20px;
-            background-image: url(../img/form-bg1.png);
+            padding-top: 80px;
+        }
+
+        .multi-step-wrapper {
+
+            background-image: url(../img/form-bg1.jpg);
+
             background-color: #ffffffa9;
             background-blend-mode: soft-light;
             background-repeat: repeat;

@@ -229,6 +229,9 @@ Route::get('/feedback/thank-you', function () {
 Route::get('/book-consultation', function () {
     return view('consultation.index');
 })->name('consultation.index');
+Route::get('/book', function () {
+    return view('consultation.schedule');
+})->name('consultation.schedule');
 
 // Consultation Application Routes
 Route::get('/book-consultation/form', [App\Http\Controllers\ConsultationController::class, 'showApplicationForm'])->name('consultation.application-forms');

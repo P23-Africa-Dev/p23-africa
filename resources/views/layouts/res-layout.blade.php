@@ -57,7 +57,7 @@
         </style>
     </head>
 
-    <body>
+    <body class="resource-hub">
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg">
             <div class="container">
@@ -99,7 +99,10 @@
                 </div>
 
                 <div class="d-flex align-items-right desktop">
-                    <button class="subscribe-btn me-3">Subscribe</button>
+                    <button class="subscribe-btn me-3">
+                          <a href="/book-consultation" class="btn  me-3" id="btn" style="color: #fff;">Book a Consultation</a>
+                        
+                        </button>
                     <div class="social-icons">
                         <a href="https://linkedin.com/company/p23-africa/" target="_blank">
                             <i class="fab fa-linkedin-in"></i>

@@ -174,7 +174,7 @@
 
         .book-conversation-section .intro-container {
             flex-direction: column;
-            gap: 80px;
+            /* gap: 80px; */
         }
 
         .book-conversation-section .left-content {
@@ -205,36 +205,78 @@
 
     @media (min-width: 1200px) {
         .book-conversation-section .intro-container {
-            flex-direction: column;
-            gap: 80px;
+            flex-direction: row;
+            gap: 0px;
         }
 
         .book-conversation-section .left-content {
             padding-top: 10rem;
-            margin-top: 0rem
+            margin-top: 0rem;
+            /* border: 1px solid red; */
+
+            /* padding-bottom: 0rem; */
         }
 
         .book-conversation-section .left-content h3 {
-            font-size: 4rem;
+            margin-left: 30px;
+            /* font-size: 4rem; */
         }
 
         .book-conversation-section .right-content {
             margin-bottom: 0px;
+            background: none;
+
         }
+
+        .book-conversation-section .info {
+
+            /* margin-left: -3rem; */
+        }
+
+        .book-conversation-section .left-content .content-pattern {
+            /* width: 120px;
+        height: 100px;
+        position: relative; */
+            left: -30px;
+        }
+
+        .book-conversation-section .left-content .info-content div.btn{
+            margin-left: 1.5rem;
+        }
+
+        .book-conversation-section .desktop-image-cont {
+            width: 100%;
+
+
+        }
+
+            .book-conversation-section .left-content .info-content div.para p{
+                font-size: 1.2rem;
+            margin-left: 1.9rem;
+
+            }
+
+        .book-conversation-section .desktop-image-cont img.desktop {
+            min-height: 500px;
+            /* max-width: 80%; */
+
+        }
+
     }
 
     @media (min-width: 1400px) {
-    
+
         .book-conversation-section .intro-container {
-            gap: 0px;
+            gap: 0px !important;
             flex-direction: row;
 
         }
 
         .book-conversation-section .left-content {
-            padding-top: 10rem;
+            padding-top: 11rem !important;
             /* flex: 0.38; */
             width: 55rem;
+            padding-bottom: 0rem;
             /* border: 1px solid red; */
             /* max-width: 550px; */
         }
@@ -260,6 +302,8 @@
             font-size: 1.3rem;
             max-width: 260px;
             margin-top: 20px;
+            margin-left: 0rem !important;
+
         }
 
         .book-conversation-section .left-content .info-content div.btn {
@@ -304,20 +348,6 @@
         }
 
 
-        /* .book-conversation-section .right-content::before {
-            content: "";
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: 70%;
-            height: 100%;
-            margin-top: 40px;
-
-            background-color: #06221d;
-            z-index: 1;
-            scrollbar-width: none;
-
-        } */
 
         .book-conversation-section .desktop-image-cont,
         .book-conversation-section .right-content img {
@@ -345,8 +375,8 @@
             scrollbar-width: none;
 
             scrollbar-width: none;
-            padding-top: 1rem;
-            /* min-height: 820px; */
+            /* padding-top: 1rem; */
+            /* min-height: 810px !important; */
 
 
 
@@ -357,7 +387,7 @@
 
     @media (min-width: 1560px) {
         .book-conversation-section .desktop-image-cont img.desktop {
-            min-height: 820px;
+            min-height: 850px;
         }
 
     }

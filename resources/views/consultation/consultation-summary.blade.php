@@ -486,7 +486,7 @@
         }
 
         .summary-box ul li {
-            font-size: 1.1rem;
+            font-size: 1rem;
             line-height: 1.3;
         }
 
@@ -534,6 +534,7 @@
                         <span class="bold">Consultation Summary</span>
                     </h1>
 
+                
                     <p>
                         Thank You <span id="userName">{{ $application->name }}</span>, We've Captured Your
                         Key Goals And Challenges.
@@ -543,10 +544,11 @@
                 <div class="overview">
                     <h3>Business Overview:</h3>
                     <p>
+                     
                         {{-- (<strong>{{ $application->company }}</strong>)  --}}
                         {{ $application->business_description }}
-                        <br><br>
-                        <strong>Industry:</strong> {{ $application->industry }}
+                        {{-- <br><br> --}}
+                        {{-- <strong>Industry:</strong> {{ $application->industry }} --}}
                     </p>
                 </div>
 

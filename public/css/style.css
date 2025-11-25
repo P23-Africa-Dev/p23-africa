@@ -442,10 +442,21 @@ section.visible{
     .main-nav .subscribe #btn {
         background-color: transparent;
         color: #fff;
-        border-radius: 5px;
+        border-radius: 7px;
         margin-bottom: 0rem;
-        padding: 10px 30px;
+        padding: 10px 20px;
+        font-size: 0.7rem;
+        margin-right: 20px;
     }
+   .resource-hub #btnresource-btn {
+     background-color: transparent;
+        color: #fff;
+        border-radius: 7px;
+        margin-bottom: 0rem;
+        padding: 10px 20px;
+        font-size: 0.65rem;
+        border: 1px solid white;
+   }
     .social-icons a {
         font-size: 20px;
         margin-left: 10px !important;
