@@ -474,14 +474,12 @@
         height: 12px;
     }
 
+
     /* ====================================== CALL FOR HELP */
     .call-for-help {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        z-index: 1000;
         display: flex;
         justify-content: end;
+        margin-top: 5rem;
     }
 
     .call-for-help .callforhelp-container {
@@ -490,11 +488,8 @@
         justify-content: center;
         font-family: "GT Walsheim Trial Cn Lt";
         gap: 10px;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .call-for-help .callforhelp-container:hover {
-        transform: translateY(-2px);
+        /* position: fixed;
+        bottom: 70px; */
     }
 
     .call-for-help .callforhelp-container button {
@@ -507,15 +502,6 @@
         border: none;
         border-radius: 50px;
         outline: none;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        transition: all 0.3s ease;
-        cursor: pointer;
-    }
-
-    .call-for-help .callforhelp-container button:hover {
-        background-color: #D4F26A;
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-        transform: scale(1.05);
     }
 
     .call-for-help .callforhelp-container button div img {
@@ -526,44 +512,8 @@
 
     .callforhelp-container p {
         font-size: 0.9rem;
-        margin-top: 0;
-        letter-spacing: 0.9px;
-        color: #0D4036;
-        padding: 2px 5px;
-        border-radius: 10px;
-        background: #eee;
-        font-weight: 500;
-        white-space: nowrap;
-        margin-right: 8px;
-    }
-
-    /* Responsive positioning for floating chat */
-    @media (max-width: 767px) {
-        .call-for-help {
-            bottom: 15px;
-            right: 15px;
-        }
-
-        .call-for-help .callforhelp-container button {
-            width: 55px;
-            height: 55px;
-        }
-
-        .call-for-help .callforhelp-container button div img {
-            height: 25px;
-        }
-
-        .callforhelp-container p {
-            font-size: 0.8rem;
-            margin-right: 6px;
-        }
-    }
-
-    @media (min-width: 768px) {
-        .call-for-help {
-            bottom: 25px;
-            right: 25px;
-        }
+        margin-top: 10px;
+        letter-spacing: 0.9px
     }
 
 
@@ -615,6 +565,9 @@
         width: 350px;
         background: transparent;
         box-shadow: -4px 0 18px rgba(0, 0, 0, 0.18);
+        background-color: #0d4036;
+        border-radius: 20px;
+
 
     }
 
@@ -626,16 +579,21 @@
         position: relative;
         height: 82vh;
         z-index: 1;
+        background: #fff;
+        border-radius: 40px;
+
     }
 
     .panel-container img.chat-inset-pattern {
         position: absolute;
         width: auto;
         max-width: 100%;
-        height: 100%;
-        top: 0;
+        /* height: 100%; */
+        top: 0px;
         object-fit: contain;
-        z-index: 0;
+        z-index: 1;
+        border-top-right-radius: 20px;
+        border-top-left-radius: 20px;
     }
 
     .chat-header,
@@ -659,7 +617,9 @@
         padding-top: 40px;
         border-top-left-radius: 15px;
         border-top-right-radius: 15px;
-        background: #0D4036;
+        background: transparent;
+        position: relative;
+        z-index: 4;
     }
 
     .close-chat-btn {
@@ -675,7 +635,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background-color: #fff;
+        background-color: transparent;
         border-top-left-radius: 60px;
 
 
@@ -685,7 +645,7 @@
         display: flex;
         align-items: center;
         color: #0D4036;
-        margin-left: 30px;
+        margin-left: 25px;
         margin-top: 20px;
         gap: 9px;
 
@@ -731,8 +691,11 @@
         display: flex;
         align-items: center;
         color: #0D4036;
-        background-color: #0D4036;
+        background-color: transparent;
         padding: 10px;
+        position: absolute;
+        right: 5px;
+        z-index: 3;
     }
 
 
@@ -740,8 +703,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 30px;
-        height: 30px;
+        width: 37px;
+        height: 37px;
         border-radius: 50px;
         background-color: #fff;
     }
@@ -749,8 +712,8 @@
     .call-info-icon img {
         object-fit: cover;
         width: auto;
-        height: 20px;
-        ;
+        height: 14px;
+
     }
 
     .chat-info h3 {
@@ -758,7 +721,7 @@
         font-family: "GT Walsheim Trial Cn Md";
         font-weight: bold;
         color: #0D4036;
-        line-height: 0.8;
+        line-height: 0.9;
         font-size: 1.2rem;
         letter-spacing: 0.8px;
     }
@@ -767,7 +730,7 @@
         font-family: "GT Walsheim Trial Cn Md";
         font-weight: 100;
         letter-spacing: 0.8px;
-        font-size: 0.8rem;
+        font-size: 0.82rem;
     }
 
     /* Chat body */
@@ -797,8 +760,9 @@
         color: #fff;
         border-radius: 0px;
         font-size: 13px;
-        letter-spacing: 0.8px;
         font-family: "GT Walsheim Trial Cn Lt";
+        font-weight: lighter;
+        /* padding-right: 44px; */
 
 
         border-bottom-left-radius: 15px;
@@ -806,6 +770,13 @@
         border-top-right-radius: 15px;
         border-bottom-right-radius: 15px;
         border-bottom-left-radius: 15px;
+    }
+
+    .msg.bot span {
+        opacity: 0.96;
+        letter-spacing: 0.9px;
+
+
     }
 
     /* User Message */
@@ -824,9 +795,10 @@
 
         color: #83818C;
         font-family: "GT Walsheim Trial Cn Md";
+        font-weight: 600;
 
         font-size: 0.8rem;
-        letter-spacing: 0.6px;
+        letter-spacing: 1px;
     }
 
     .msg.longtext {
@@ -850,19 +822,18 @@
     }
 
     .chat-input-container .input-container {
-        box-shadow: 0px 2px 8px -2px rgba(0, 0, 0, 0.4);
+        box-shadow: 0px 2px 6px -2px rgba(0, 0, 0, 0.5);
         margin: 0 auto;
         background: #ffff;
         width: 100%;
         padding: 6px 0px;
         padding-left: 20px;
-        border-radius: 20px;
+        border-radius: 17px;
         /* max-width: 100%; */
 
     }
 
     .chat-input-container input {
-        /* flex: 1; */
         padding: 5px 14px;
         height: 18px;
         border-radius: 0px;
@@ -871,7 +842,7 @@
         border: none;
         width: 80%;
         border-left: 1px solid #E4E4E4;
-        /* display: flex; */
+        color: #0D4036;
     }
 
     .chat-input-container input::placeholder {
@@ -1408,6 +1379,10 @@
         .schedule-conversation-section .left-content .info-content div.para p {
             font-size: 1.5rem;
         }
+
+        .calendar-wrapper-container .mobile-btn {
+            width: 50%;
+        }
     }
 
     @media (min-width: 1024px) {
@@ -1692,6 +1667,9 @@
 
         }
 
+        .panel-container img.chat-inset-pattern {
+            right: 0.3px;
+        }
 
 
 
@@ -1893,8 +1871,9 @@
 
                                 <div class="panel-container">
 
-                                    {{-- <img class="chat-inset-pattern" src="{{ asset('img/Subtract-chat.png') }}"
-                                                alt="" /> --}}
+
+                                    <img class="chat-inset-pattern" src="{{ asset('img/side-chat-pattern.png') }}"
+                                        alt="" />
                                     <div class="chat-header">
 
 
@@ -1922,8 +1901,17 @@
                                     </div>
 
                                     <div class="chat-body" id="chat-body">
-                                        <div class="msg bot">Hey 👋</div>
-                                        <div class="msg bot">Welcome to P23 Africa, what can we help you with?</div>
+                                        <div class="msg bot">
+                                            <span>
+                                                Hey 👋
+                                            </span>
+                                        </div>
+                                        <div class="msg bot">
+                                            <span>
+                                                Welcome to P23 Africa, what can we help you with?
+                                            </span>
+
+                                        </div>
                                     </div>
 
                                     <div class="chat-input-container">
@@ -3242,6 +3230,8 @@
         // Get application data from session
         const applicationId = {{ Session::get('consultation_application_id', 'null') }};
         const applicationData = @json(optional($application));
+
+
 
         // Open Chat Panel
         helpContainer.addEventListener('click', () => {

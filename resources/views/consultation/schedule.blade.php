@@ -15,7 +15,7 @@
     <meta property="og:image" content="{{ asset('img/mobile.png') }}">
     <meta property="og:type" content="website">
 
-    {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
 
@@ -474,6 +474,7 @@
         height: 12px;
     }
 
+
     /* ====================================== CALL FOR HELP */
     .call-for-help {
         display: flex;
@@ -487,6 +488,8 @@
         justify-content: center;
         font-family: "GT Walsheim Trial Cn Lt";
         gap: 10px;
+        /* position: fixed;
+        bottom: 70px; */
     }
 
     .call-for-help .callforhelp-container button {
@@ -538,7 +541,7 @@
     .chat-panel {
         position: fixed;
         top: 0;
-        right: 0px;
+        right: -420px;
         /* transform: translateX(1000px); */
         width: 100%;
         background: transparent;
@@ -548,8 +551,8 @@
         align-items: end;
         flex-direction: column;
 
-        opacity: 1;
-        /* visibility: hidden; */
+        opacity: 0;
+        visibility: hidden;
 
         z-index: 2000;
 
@@ -759,6 +762,7 @@
         font-size: 13px;
         font-family: "GT Walsheim Trial Cn Lt";
         font-weight: lighter;
+        /* padding-right: 44px; */
 
 
         border-bottom-left-radius: 15px;
@@ -768,7 +772,7 @@
         border-bottom-left-radius: 15px;
     }
 
-    .msg.bot span{
+    .msg.bot span {
         opacity: 0.96;
         letter-spacing: 0.9px;
 
@@ -1375,6 +1379,10 @@
         .schedule-conversation-section .left-content .info-content div.para p {
             font-size: 1.5rem;
         }
+
+        .calendar-wrapper-container .mobile-btn {
+            width: 50%;
+        }
     }
 
     @media (min-width: 1024px) {
@@ -1659,6 +1667,9 @@
 
         }
 
+        .panel-container img.chat-inset-pattern {
+            right: 0.3px;
+        }
 
 
 
@@ -1860,6 +1871,7 @@
 
                                 <div class="panel-container">
 
+
                                     <img class="chat-inset-pattern" src="{{ asset('img/side-chat-pattern.png') }}"
                                         alt="" />
                                     <div class="chat-header">
@@ -1888,9 +1900,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="chat-body">
-
-
+                                    <div class="chat-body" id="chat-body">
                                         <div class="msg bot">
                                             <span>
                                                 Hey 👋
@@ -1902,21 +1912,17 @@
                                             </span>
 
                                         </div>
-
-                                        <div class="msg user">Hello!</div>
-                                        <div class="msg user longtext">Yea, I'd like to  .......  </div>
                                     </div>
 
                                     <div class="chat-input-container">
-
                                         <div class="input-container">
-                                            <input placeholder="Type your message here" />
-                                            <button class="send-btn">
+                                            <input id="chat-input" placeholder="Type your message here"
+                                                maxlength="1000" />
+                                            <button class="send-btn" id="send-btn">
                                                 <img class="arr-left" src="{{ asset('img/send-icon.png') }}"
                                                     alt="" />
                                             </button>
                                         </div>
-
                                     </div>
 
                                 </div>
@@ -3216,16 +3222,27 @@
         const helpContainer = document.querySelector('.callforhelp-container');
         const chatPanel = document.getElementById('chat-panel');
         const chatOverlay = document.getElementById('chat-overlay');
-        // const closeBtn = document.getElementById('close-chat'); 
         const chatPanelContainer = document.querySelector('.chat-panel-container');
+        const chatBody = document.getElementById('chat-body');
+        const chatInput = document.getElementById('chat-input');
+        const sendBtn = document.getElementById('send-btn');
+
+        // Get application data from session
+        const applicationId = {{ Session::get('consultation_application_id', 'null') }};
+        const applicationData = @json(optional($application));
+
+
 
         // Open Chat Panel
         helpContainer.addEventListener('click', () => {
             chatPanel.classList.add('open');
             chatOverlay.classList.add('show');
-
-            // Disable background page scrolling
             document.body.style.overflow = "hidden";
+
+            // Focus on input after panel opens
+            setTimeout(() => {
+                chatInput.focus();
+            }, 300);
         });
 
         function closeChatPanel() {
@@ -3233,10 +3250,6 @@
             chatOverlay.classList.remove('show');
             document.body.style.overflow = "";
         }
-
-        // if (closeBtn) {
-        //     closeBtn.addEventListener('click', closeChatPanel);
-        // }
 
         // Close when clicking outside the chat-panel-container
         chatPanel.addEventListener('click', (e) => {
@@ -3247,6 +3260,246 @@
 
         // Close chat when clicking overlay
         chatOverlay.addEventListener('click', closeChatPanel);
+
+        // Send message function
+        async function sendChatMessage() {
+            const message = chatInput.value.trim();
+
+            if (!message) {
+                showFlashMessage('Please type a message', 'warning');
+                return;
+            }
+
+            if (!applicationId) {
+                showFlashMessage('Session expired. Please refresh the page.', 'error');
+                return;
+            }
+
+            // Disable input and button during sending
+            chatInput.disabled = true;
+            sendBtn.disabled = true;
+            sendBtn.style.opacity = '0.6';
+
+            // Add user message to chat immediately (optimistic UI)
+            addMessageToChat(message, 'user', true);
+            chatInput.value = '';
+
+            // Show immediate feedback
+            showFlashMessage('Sending your message...', 'info');
+
+            try {
+                const response = await fetch('/api/consultation/chat/send-message', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                            ?.getAttribute('content') || ''
+                    },
+                    body: JSON.stringify({
+                        application_id: applicationId,
+                        message: message,
+                        sender_name: applicationData?.name || 'Guest',
+                        sender_email: applicationData?.email || null
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Show success animation on the last message
+                    const lastMessage = chatBody.lastElementChild;
+                    if (lastMessage && lastMessage.classList.contains('sending')) {
+                        lastMessage.classList.remove('sending');
+                        lastMessage.classList.add('sent');
+
+                        // Add timestamp
+                        setTimeout(() => {
+                            const timestamp = document.createElement('div');
+                            timestamp.style.fontSize = '11px';
+                            timestamp.style.color = '#999';
+                            timestamp.style.marginTop = '4px';
+                            timestamp.textContent = 'Just now ✓';
+                            lastMessage.appendChild(timestamp);
+                        }, 500);
+                    }
+
+                    // Show immediate success feedback
+                    showFlashMessage(
+                        'Your message has been sent and someone from our team will get back to you shortly!',
+                        'success');
+
+                    // Show automated response after a short delay
+                    setTimeout(() => {
+                        addMessageToChat(
+                            "Thank you for reaching out! We've received your message and will get back to you soon. In the meantime, feel free to ask any other questions.",
+                            'bot'
+                        );
+                    }, 1500);
+                } else {
+                    throw new Error(data.message || 'Failed to send message');
+                }
+
+            } catch (error) {
+                console.error('Chat message error:', error);
+
+                // Remove the failed message
+                const lastMessage = chatBody.lastElementChild;
+                if (lastMessage && lastMessage.classList.contains('sending')) {
+                    lastMessage.remove();
+                }
+
+                // Show specific error messages based on error type
+                let errorMessage = 'Failed to send message. Please try again.';
+                if (error.message.includes('500')) {
+                    errorMessage = 'Server error occurred. Please try again in a moment.';
+                } else if (error.message.includes('404')) {
+                    errorMessage = 'Service not found. Please refresh the page and try again.';
+                } else if (error.message.includes('Network')) {
+                    errorMessage = 'Network error. Please check your connection and try again.';
+                }
+
+                showFlashMessage(errorMessage, 'error');
+                chatInput.value = message; // Restore the message
+            } finally {
+                // Re-enable input and button
+                chatInput.disabled = false;
+                sendBtn.disabled = false;
+                sendBtn.style.opacity = '1';
+                chatInput.focus();
+            }
+        }
+
+        // Add message to chat UI
+        function addMessageToChat(message, type, sending = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `msg ${type}`;
+
+            if (sending) {
+                messageDiv.classList.add('sending');
+                messageDiv.style.opacity = '0.7';
+            }
+
+            messageDiv.textContent = message;
+
+            // Add animation
+            messageDiv.style.transform = 'translateY(20px)';
+            messageDiv.style.opacity = sending ? '0.7' : '0';
+
+            chatBody.appendChild(messageDiv);
+
+            // Animate message in
+            setTimeout(() => {
+                messageDiv.style.transition = 'all 0.3s ease';
+                messageDiv.style.transform = 'translateY(0)';
+                messageDiv.style.opacity = sending ? '0.7' : '1';
+            }, 10);
+
+            // Scroll to bottom
+            setTimeout(() => {
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 100);
+        }
+
+        // Send button click handler
+        sendBtn.addEventListener('click', sendChatMessage);
+
+        // Enter key handler
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                sendChatMessage();
+            }
+        });
+
+        // Add some CSS animations via JavaScript
+        const style = document.createElement('style');
+        style.textContent = `
+            .msg.sending {
+                position: relative;
+            }
+            .msg.sending::after {
+                content: '';
+                position: absolute;
+                right: -20px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 12px;
+                height: 12px;
+                border: 2px solid #ddd;
+                border-top: 2px solid #0d4036;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+            }
+            .msg.sent {
+                opacity: 1 !important;
+            }
+            @keyframes spin {
+                0% { transform: translateY(-50%) rotate(0deg); }
+                100% { transform: translateY(-50%) rotate(360deg); }
+            }
+            #chat-input:disabled {
+                background-color: #f5f5f5;
+                cursor: not-allowed;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Flash message function for user feedback
+        function showFlashMessage(message, type = 'info') {
+            // Remove any existing flash messages
+            const existingFlash = document.querySelector('.flash-message');
+            if (existingFlash) {
+                existingFlash.remove();
+            }
+
+            // Create flash message element
+            const flashDiv = document.createElement('div');
+            flashDiv.className = `flash-message flash-${type}`;
+            flashDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 10000;
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                font-weight: 500;
+                max-width: 350px;
+                word-wrap: break-word;
+                transform: translateX(400px);
+                transition: all 0.3s ease;
+                ${type === 'success' ? 'background: #d4edda; color: #155724; border-left: 4px solid #28a745;' : ''}
+                ${type === 'error' ? 'background: #f8d7da; color: #721c24; border-left: 4px solid #dc3545;' : ''}
+                ${type === 'warning' ? 'background: #fff3cd; color: #856404; border-left: 4px solid #ffc107;' : ''}
+                ${type === 'info' ? 'background: #d1ecf1; color: #0c5460; border-left: 4px solid #17a2b8;' : ''}
+            `;
+
+            // Add icon based on type
+            const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : type === 'warning' ? '⚠️' : 'ℹ️';
+            flashDiv.innerHTML = `<strong>${icon}</strong> ${message}`;
+
+            // Add to document
+            document.body.appendChild(flashDiv);
+
+            // Animate in
+            setTimeout(() => {
+                flashDiv.style.transform = 'translateX(0)';
+            }, 10);
+
+            // Auto remove after 4 seconds
+            setTimeout(() => {
+                flashDiv.style.transform = 'translateX(400px)';
+                setTimeout(() => {
+                    if (flashDiv.parentNode) {
+                        flashDiv.parentNode.removeChild(flashDiv);
+                    }
+                }, 300);
+            }, 4000);
+        }
 
     });
 </script>
