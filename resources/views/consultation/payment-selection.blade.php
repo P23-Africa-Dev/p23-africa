@@ -204,6 +204,11 @@
             font-size: 1.8rem;
         }
     }
+
+    .fw-checkout-logo img {
+        border-radius: 0 !important;
+        object-fit: contain !important;
+    }
 </style>
 
 @section('content')
@@ -248,7 +253,7 @@
                     <div class="payment-options">
                         <label class="payment-option" for="flutterwave" data-gateway="flutterwave">
                             <input type="radio" id="flutterwave" name="payment_method" value="flutterwave" required>
-                            <img src="{{ asset('img/flutterwave-logo.png') }}" alt="Flutterwave" class="payment-logo"
+                            <img src="{{ asset('img/stripe-logo.png') }}" alt="Flutterwave" class="payment-logo"
                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                             <div style="display:none; font-size: 2rem; color: #f5a623;">💳</div>
                             <h4>Flutterwave</h4>
@@ -356,12 +361,28 @@
                     name: '{{ $application->name }}',
                 },
                 callback: function(data) {
-                    console.log('Flutterwave callback:', data);
+                    console.log('Flutterwave callback data:', data);
+                    console.log('Flutterwave payment status:', data.status);
+
+                    // Handle different payment statuses
                     if (data.status === 'successful') {
-                        // Submit form to our callback handler
+                        // Immediate success (cards, mobile money, etc.)
+                        console.log('Payment successful, redirecting...');
                         submitPaymentCallback('flutterwave', data.transaction_id, 'successful', data);
+                    } else if (data.status === 'pending' || data.status === 'processing' ||
+                        data.status === 'completed' || data.status === 'success') {
+                        // Bank transfers and other delayed payments
+                        // Also handle 'completed' and 'success' as variants
+                        console.log('Payment pending verification, redirecting...');
+                        submitPaymentCallback('flutterwave', data.transaction_id, 'pending_verification', data);
+                    } else if (data.status === 'cancelled' || data.status === 'failed') {
+                        // Explicitly failed or cancelled payments
+                        console.log('Payment failed or cancelled:', data.status);
+                        handlePaymentError('Payment was ' + data.status + '. Please try again.');
                     } else {
-                        handlePaymentError('Payment was not completed');
+                        // Unknown status - treat as pending for safety
+                        console.log('Unknown payment status:', data.status, 'treating as pending');
+                        submitPaymentCallback('flutterwave', data.transaction_id, 'pending_verification', data);
                     }
                 },
                 onclose: function() {
@@ -375,7 +396,7 @@
                 customizations: {
                     title: 'P23 Africa Consultation',
                     description: '90-minute Business Strategy Session',
-                    logo: '{{ asset('images/Logo2.png') }}',
+                    logo: '{{ asset('img/flutterwave-logo.png') }}',
                 },
             });
         }
@@ -466,7 +487,7 @@
                         },
                         body: JSON.stringify({
                             payment_method: 'stripe',
-                            amount: 7500,
+                            amount: 100,
                         })
                     })
                     .then(response => response.json())

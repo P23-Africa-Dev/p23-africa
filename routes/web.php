@@ -374,7 +374,12 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|staff'])->prefix('admi
     Route::get('/clicks/report', [ClickReportController::class, 'index'])->name('clicks.report');
     Route::get('/clicks/export', [ClickReportController::class, 'export'])->name('clicks.export');
     Route::post('/clicks/backfill-countries', [ClickReportController::class, 'backfillCountries'])->name('clicks.backfill-countries');
+
+    // Playbook email resend functionality
+    Route::post('/playbooks/resend-funding', [\App\Http\Controllers\PlaybookController::class, 'resendFundingReadinessPending'])->name('playbooks.resend-funding');
 });
+
+
 
 Broadcast::routes(['middleware' => ['auth', 'check.suspended', 'role:admin|staff']]);
 
@@ -400,7 +405,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
+// Add these routes in your admin section
 
 
 

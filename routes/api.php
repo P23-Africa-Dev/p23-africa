@@ -24,6 +24,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/event/{id}/booking-fields', [EventController::class, 'getBookingFields'])
     ->name('api.event.booking-fields');
 
+// Payment Webhook routes - accessible without authentication for payment gateways
+Route::post('/webhooks/flutterwave', [App\Http\Controllers\ConsultationController::class, 'handleFlutterwaveWebhook'])
+    ->name('api.webhooks.flutterwave');
+
 // BRN Token API routes - accessible without authentication for external app
 Route::prefix('brn')->group(function () {
     // Get encrypted data using token (marks token as used)

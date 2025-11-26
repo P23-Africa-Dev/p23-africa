@@ -462,6 +462,82 @@ class PlaybookController extends Controller
         }
     }
 
+    public function resendFundingReadinessPending(Request $request)
+    {
+        try {
+            Log::info('Resend funding readiness pending emails request initiated');
+
+            // Get all funding readiness downloads where email_sent_at is null (pending)
+            $pendingDownloads = SalesBookDownload::whereNull('email_sent_at')->get();
+
+            if ($pendingDownloads->isEmpty()) {
+                Log::info('No pending funding readiness downloads found');
+                return response()->json([
+                    'success' => true,
+                    'message' => 'No pending emails found to resend.',
+                    'sent_count' => 0,
+                    'failed_count' => 0
+                ]);
+            }
+
+            $successCount = 0;
+            $failedCount = 0;
+            $failedEmails = [];
+
+            foreach ($pendingDownloads as $download) {
+                try {
+                    Log::info('Attempting to resend funding readiness email', ['email' => $download->email]);
+
+                    // Send email with funding readiness guide attachment
+                    Mail::to($download->email)->send(new SalesBookDownloadMail($download));
+
+                    // Update email sent timestamp
+                    $download->update(['email_sent_at' => now()]);
+
+                    $successCount++;
+                    Log::info('Funding readiness email resent successfully', ['email' => $download->email]);
+                } catch (\Exception $emailError) {
+                    $failedCount++;
+                    $failedEmails[] = $download->email;
+                    Log::error('Failed to resend funding readiness email', [
+                        'email' => $download->email,
+                        'error' => $emailError->getMessage()
+                    ]);
+                }
+            }
+
+            $message = "Resend completed! {$successCount} emails sent successfully.";
+            if ($failedCount > 0) {
+                $message .= " {$failedCount} emails failed to send.";
+            }
+
+            Log::info('Funding readiness resend operation completed', [
+                'total_pending' => $pendingDownloads->count(),
+                'success_count' => $successCount,
+                'failed_count' => $failedCount,
+                'failed_emails' => $failedEmails
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => $message,
+                'sent_count' => $successCount,
+                'failed_count' => $failedCount,
+                'failed_emails' => $failedEmails
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Error in resend funding readiness pending operation', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while resending emails. Please try again later.'
+            ], 500);
+        }
+    }
+
     public function dashboard()
     {
         try {

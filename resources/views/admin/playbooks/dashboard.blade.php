@@ -53,22 +53,23 @@
                             </div>
                         </div>
                         @if (auth()->user()->hasRole('admin'))
-                        <div class="col-md-4">
-                            <div class="card bg-gradient-warning text-white h-100">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <h5 class="card-title mb-0">Total Revenue</h5>
-                                            <h2 class="mt-2 mb-0">${{ number_format($stats['total_revenue'], 2) }}</h2>
-                                            <small class="opacity-75">From premium downloads</small>
-                                        </div>
-                                        <div class="text-end">
-                                            <i class="fas fa-dollar-sign fa-3x opacity-75"></i>
+                            <div class="col-md-4">
+                                <div class="card bg-gradient-warning text-white h-100">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h5 class="card-title mb-0">Total Revenue</h5>
+                                                <h2 class="mt-2 mb-0">${{ number_format($stats['total_revenue'], 2) }}
+                                                </h2>
+                                                <small class="opacity-75">From premium downloads</small>
+                                            </div>
+                                            <div class="text-end">
+                                                <i class="fas fa-dollar-sign fa-3x opacity-75"></i>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         @endif
                     </div>
 
@@ -145,11 +146,14 @@
                                         </div>
                                     </div>
 
-                                    <div class="d-grid">
+                                    <div class="d-grid gap-2">
                                         <a href="{{ route('admin.salesbooks.index') }}" class="btn btn-success"
                                             style="color: #fff !important;">
                                             <i class="fas fa-eye me-2"></i>View Download Records
                                         </a>
+                                        <button type="button" class="btn btn-outline-success" id="resendPendingBtn">
+                                            <i class="fas fa-paper-plane me-2"></i>Resend Pending Emails
+                                        </button>
                                     </div>
                                 </div>
                                 <div class="card-footer text-muted">
@@ -168,65 +172,65 @@
 
                         <!-- Ultimate Funding & Investor Directory (Premium) -->
                         @if (auth()->user()->hasRole('admin'))
-                        <div class="col-lg-4 mb-4">
-                            <div class="card playbook-card h-100">
-                                <div class="card-header bg-warning text-dark">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="mb-0">
-                                            <i class="fas fa-crown me-2"></i>Ultimate Funding Directory
-                                        </h5>
-                                        <span class="badge bg-dark">{{ $stats['ultimate_funding_downloads'] }}
-                                            signups</span>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text text-muted mb-3">
-                                        Premium directory with 500+ verified investors and funding opportunities
-                                        across Africa. Includes direct contact information and investment criteria.
-                                    </p>
-
-                                    <div class="premium-stats mb-4">
-                                        <div class="row text-center">
-                                            <div class="col-6">
-                                                <div class="stat-value text-warning">
-                                                    {{ $stats['ultimate_funding_downloads'] }}</div>
-                                                <div class="stat-label">Total Signups</div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="stat-value text-success">
-                                                    {{ $stats['ultimate_funding_paid'] }}</div>
-                                                <div class="stat-label">Paid Access</div>
-                                            </div>
-                                        </div>
-                                        <div class="row text-center mt-2">
-                                            <div class="col-12">
-                                                <div class="stat-value text-primary">
-                                                    ${{ number_format($stats['total_revenue'], 2) }}</div>
-                                                <div class="stat-label">Total Revenue</div>
-                                            </div>
+                            <div class="col-lg-4 mb-4">
+                                <div class="card playbook-card h-100">
+                                    <div class="card-header bg-warning text-dark">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h5 class="mb-0">
+                                                <i class="fas fa-crown me-2"></i>Ultimate Funding Directory
+                                            </h5>
+                                            <span class="badge bg-dark">{{ $stats['ultimate_funding_downloads'] }}
+                                                signups</span>
                                         </div>
                                     </div>
+                                    <div class="card-body">
+                                        <p class="card-text text-muted mb-3">
+                                            Premium directory with 500+ verified investors and funding opportunities
+                                            across Africa. Includes direct contact information and investment criteria.
+                                        </p>
 
-                                    <div class="d-grid">
-                                        <a href="{{ route('admin.ultimatefunding.index') }}" class="btn btn-warning"
-                                            style="color: #fff !important;">
-                                            <i class="fas fa-eye me-2"></i>View Premium Records
-                                        </a>
+                                        <div class="premium-stats mb-4">
+                                            <div class="row text-center">
+                                                <div class="col-6">
+                                                    <div class="stat-value text-warning">
+                                                        {{ $stats['ultimate_funding_downloads'] }}</div>
+                                                    <div class="stat-label">Total Signups</div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="stat-value text-success">
+                                                        {{ $stats['ultimate_funding_paid'] }}</div>
+                                                    <div class="stat-label">Paid Access</div>
+                                                </div>
+                                            </div>
+                                            <div class="row text-center mt-2">
+                                                <div class="col-12">
+                                                    <div class="stat-value text-primary">
+                                                        ${{ number_format($stats['total_revenue'], 2) }}</div>
+                                                    <div class="stat-label">Total Revenue</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid">
+                                            <a href="{{ route('admin.ultimatefunding.index') }}"
+                                                class="btn btn-warning" style="color: #fff !important;">
+                                                <i class="fas fa-eye me-2"></i>View Premium Records
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="card-footer text-muted">
-                                    <small>
-                                        <i class="fas fa-clock me-1"></i>
-                                        Last signup:
-                                        @if ($recentDownloads['ultimate_funding']->count() > 0)
-                                            {{ $recentDownloads['ultimate_funding']->first()->created_at->diffForHumans() }}
-                                        @else
-                                            No signups yet
-                                        @endif
-                                    </small>
+                                    <div class="card-footer text-muted">
+                                        <small>
+                                            <i class="fas fa-clock me-1"></i>
+                                            Last signup:
+                                            @if ($recentDownloads['ultimate_funding']->count() > 0)
+                                                {{ $recentDownloads['ultimate_funding']->first()->created_at->diffForHumans() }}
+                                            @else
+                                                No signups yet
+                                            @endif
+                                        </small>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         @endif
                     </div>
 
@@ -363,6 +367,111 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Resend Button Styles */
+        #resendPendingBtn {
+            transition: all 0.3s ease;
+        }
+
+        #resendPendingBtn:hover {
+            background-color: #28a745;
+            color: white !important;
+            border-color: #28a745;
+        }
+
+        #resendPendingBtn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-loading {
+            position: relative;
+        }
+
+        .btn-loading::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            margin: auto;
+            border: 2px solid transparent;
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const resendBtn = document.getElementById('resendPendingBtn');
+
+            if (resendBtn) {
+                resendBtn.addEventListener('click', function() {
+                    // Confirm action
+                    if (!confirm(
+                            'Are you sure you want to resend emails to all users who haven\'t received their Funding Readiness Guide? This will only send to users with pending email status.'
+                            )) {
+                        return;
+                    }
+
+                    // Disable button and show loading state
+                    resendBtn.disabled = true;
+                    resendBtn.classList.add('btn-loading');
+                    const originalText = resendBtn.innerHTML;
+                    resendBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
+
+                    // Make AJAX request
+                    fetch('{{ route('admin.playbooks.resend-funding') }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({})
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                // Show success message
+                                alert(
+                                    `Success! ${data.message}\n\nEmails sent: ${data.sent_count}\nFailed: ${data.failed_count}`);
+
+                                // Optionally reload the page to update statistics
+                                if (data.sent_count > 0) {
+                                    setTimeout(() => {
+                                        window.location.reload();
+                                    }, 2000);
+                                }
+                            } else {
+                                // Show error message
+                                alert('Error: ' + (data.message ||
+                                    'Failed to send emails. Please try again.'));
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert(
+                                'An error occurred while sending emails. Please check the console and try again.');
+                        })
+                        .finally(() => {
+                            // Re-enable button and restore original state
+                            resendBtn.disabled = false;
+                            resendBtn.classList.remove('btn-loading');
+                            resendBtn.innerHTML = originalText;
+                        });
+                });
+            }
+        });
+    </script>
 
 </x-app-layout>
