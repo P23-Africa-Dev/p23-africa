@@ -291,7 +291,7 @@
                     <span class="detail-label">Time:</span>
                     <span
                         class="detail-value">{{ \Carbon\Carbon::parse($scheduledSession->consultation_date)->format('g:i A') }}
-                        (EAT)</span>
+                    </span>
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">Duration:</span>
