@@ -8,6 +8,9 @@ use App\Models\ConsultationApplication;
 use App\Models\Payment;
 use App\Models\ScheduledSession;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class ConsultationController extends Controller
 {
@@ -129,11 +132,15 @@ class ConsultationController extends Controller
         $application = ConsultationApplication::findOrFail($id);
 
         try {
+            // Get admin user info with fallback
+            $adminName = Auth::check() ? Auth::user()->name : 'P23 Africa Admin';
+            $adminEmail = Auth::check() ? Auth::user()->email : 'contact@p23africa.com';
+
             // Create admin message
             $chatMessage = \App\Models\ChatMessage::create([
                 'consultation_application_id' => $application->id,
-                'sender_name' => auth()->user()->name ?? 'P23 Africa Admin',
-                'sender_email' => auth()->user()->email,
+                'sender_name' => $adminName,
+                'sender_email' => $adminEmail,
                 'message' => $request->message,
                 'sender_type' => 'admin',
                 'is_read' => true, // Admin messages are automatically read
@@ -142,12 +149,19 @@ class ConsultationController extends Controller
 
             // Send email to client
             try {
-                \Mail::to($application->email)->send(new \App\Mail\ConsultationAdminReply($chatMessage));
-            } catch (\Exception $e) {
-                \Log::error('Failed to send admin reply email', [
-                    'error' => $e->getMessage(),
-                    'application_id' => $application->id
+                Mail::to($application->email)->send(new \App\Mail\ConsultationAdminReply($chatMessage));
+                Log::info('Admin reply email sent successfully', [
+                    'application_id' => $application->id,
+                    'client_email' => $application->email,
+                    'admin_name' => $adminName
                 ]);
+            } catch (\Exception $e) {
+                Log::error('Failed to send admin reply email', [
+                    'error' => $e->getMessage(),
+                    'application_id' => $application->id,
+                    'client_email' => $application->email
+                ]);
+                // Don't fail the entire request if email fails
             }
 
             return response()->json([
@@ -155,14 +169,16 @@ class ConsultationController extends Controller
                 'message' => 'Reply sent successfully'
             ]);
         } catch (\Exception $e) {
-            \Log::error('Failed to send admin reply', [
+            Log::error('Failed to send admin reply', [
                 'error' => $e->getMessage(),
-                'application_id' => $id
+                'trace' => $e->getTraceAsString(),
+                'application_id' => $id,
+                'user_authenticated' => Auth::check()
             ]);
 
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to send reply'
+                'message' => 'Failed to send reply: ' . $e->getMessage()
             ], 500);
         }
     }
@@ -181,7 +197,7 @@ class ConsultationController extends Controller
                 'message' => 'Message marked as read'
             ]);
         } catch (\Exception $e) {
-            \Log::error('Failed to mark message as read', [
+            Log::error('Failed to mark message as read', [
                 'error' => $e->getMessage(),
                 'message_id' => $messageId
             ]);

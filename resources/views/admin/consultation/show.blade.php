@@ -411,7 +411,7 @@
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin me-1"></i>Sending...';
 
-                fetch(`/admin/consultation/{{ $application->id }}/reply`, {
+                fetch(`/admin/consultations/{{ $application->id }}/reply`, {
                         method: 'POST',
                         headers: {
                             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
