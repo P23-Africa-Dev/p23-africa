@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\ConsultationApplication;
 use App\Models\Payment;
 use App\Models\ScheduledSession;
+use App\Models\ChatMessage;
 use App\Services\GoogleCalendarService;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ConsultationScheduledMail;
 use App\Mail\ConsultationScheduledNotificationMail;
+use App\Mail\ChatMessageNotification;
 use Stripe\Stripe;
 use Stripe\PaymentIntent;
 
@@ -725,5 +727,127 @@ class ConsultationController extends Controller
         }
 
         return response()->json(['status' => 'success'], 200);
+    }
+
+    /**
+     * Send a chat message from the help system
+     */
+    public function sendChatMessage(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'application_id' => 'required|exists:consultation_applications,id',
+            'message' => 'required|string|min:1|max:1000',
+            'sender_name' => 'required|string|max:255',
+            'sender_email' => 'nullable|email|max:255'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        try {
+            // Get the consultation application
+            $application = ConsultationApplication::find($request->application_id);
+
+            if (!$application) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Consultation application not found'
+                ], 404);
+            }
+
+            // Create the chat message
+            $chatMessage = ChatMessage::create([
+                'consultation_application_id' => $application->id,
+                'sender_name' => $request->sender_name,
+                'sender_email' => $request->sender_email,
+                'message' => $request->message,
+                'sender_type' => 'user',
+                'sent_at' => now()
+            ]);
+
+            // Send email notification
+            try {
+                Mail::to('contact@p23africa.com')->send(new ChatMessageNotification($chatMessage));
+            } catch (\Exception $e) {
+                Log::error('Failed to send chat message email notification', [
+                    'error' => $e->getMessage(),
+                    'chat_message_id' => $chatMessage->id
+                ]);
+                // Don't fail the entire request if email fails
+            }
+
+            Log::info('Chat message sent', [
+                'chat_message_id' => $chatMessage->id,
+                'application_id' => $application->id,
+                'sender' => $request->sender_name
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Message sent successfully',
+                'data' => [
+                    'id' => $chatMessage->id,
+                    'sent_at' => $chatMessage->sent_at->toISOString()
+                ]
+            ], 201);
+        } catch (\Exception $e) {
+            Log::error('Failed to send chat message', [
+                'error' => $e->getMessage(),
+                'application_id' => $request->application_id
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to send message. Please try again.'
+            ], 500);
+        }
+    }
+
+    /**
+     * Get chat messages for a consultation application
+     */
+    public function getChatMessages($applicationId)
+    {
+        try {
+            $application = ConsultationApplication::with('chatMessages')->find($applicationId);
+
+            if (!$application) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Consultation application not found'
+                ], 404);
+            }
+
+            $messages = $application->chatMessages->map(function ($message) {
+                return [
+                    'id' => $message->id,
+                    'sender_name' => $message->sender_name,
+                    'sender_type' => $message->sender_type,
+                    'message' => $message->message,
+                    'sent_at' => $message->sent_at->toISOString(),
+                    'is_read' => $message->is_read
+                ];
+            });
+
+            return response()->json([
+                'success' => true,
+                'data' => $messages
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Failed to get chat messages', [
+                'error' => $e->getMessage(),
+                'application_id' => $applicationId
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to get messages'
+            ], 500);
+        }
     }
 }

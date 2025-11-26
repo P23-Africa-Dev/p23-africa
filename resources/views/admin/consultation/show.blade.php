@@ -195,6 +195,92 @@
                         </div>
                     </div>
 
+                    <!-- Help Messages -->
+                    <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition mb-4">
+                        <div class="card-header bg-transparent border-0 pt-4 pb-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0 text-dark dark:text-gray-100">
+                                    <i class="fa fa-comments me-2"></i>Help Messages
+                                </h5>
+                                @if ($application->unreadChatMessages->count() > 0)
+                                    <span class="badge bg-danger">{{ $application->unreadChatMessages->count() }}
+                                        new</span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                            @if ($application->chatMessages->count() > 0)
+                                <div class="chat-messages">
+                                    @foreach ($application->chatMessages as $message)
+                                        <div class="mb-3 pb-3 {{ !$loop->last ? 'border-bottom' : '' }}">
+                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="me-2">
+                                                        @if ($message->sender_type === 'user')
+                                                            <i class="fa fa-user-circle text-primary"></i>
+                                                        @else
+                                                            <i class="fa fa-user-shield text-success"></i>
+                                                        @endif
+                                                    </div>
+                                                    <div>
+                                                        <div class="fw-medium text-dark dark:text-gray-100">
+                                                            {{ $message->sender_name }}
+                                                            @if ($message->sender_type === 'admin')
+                                                                <small class="text-success">(Admin)</small>
+                                                            @endif
+                                                        </div>
+                                                        <div class="small text-muted dark:text-gray-400">
+                                                            {{ $message->sent_at->format('M d, Y h:i A') }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @if (!$message->is_read && $message->sender_type === 'user')
+                                                    <span class="badge bg-warning">New</span>
+                                                @endif
+                                            </div>
+                                            <div class="text-dark dark:text-gray-200 message-content">
+                                                {{ $message->message }}
+                                            </div>
+                                            @if (!$message->is_read && $message->sender_type === 'user')
+                                                <div class="mt-2">
+                                                    <button class="btn btn-sm btn-outline-primary mark-read-btn"
+                                                        data-message-id="{{ $message->id }}">
+                                                        <i class="fa fa-check me-1"></i>Mark as Read
+                                                    </button>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    @endforeach
+                                </div>
+
+                                <!-- Quick Reply -->
+                                <div class="mt-3 pt-3 border-top">
+                                    <h6 class="text-dark dark:text-gray-100 mb-3">Quick Reply</h6>
+                                    <form id="quick-reply-form">
+                                        <div class="mb-3">
+                                            <textarea class="form-control" id="reply-message" rows="3" placeholder="Type your reply here..."
+                                                maxlength="1000"></textarea>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <small class="text-muted">This will be sent via email to the client</small>
+                                            <button type="submit" class="btn btn-primary btn-sm">
+                                                <i class="fa fa-paper-plane me-1"></i>Send Reply
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            @else
+                                <div class="text-center py-3">
+                                    <i class="fa fa-comments fa-2x text-muted dark:text-gray-400 mb-2"></i>
+                                    <p class="text-muted dark:text-gray-400 mb-0">No help messages</p>
+                                    <small class="text-muted dark:text-gray-400">
+                                        The client can use the "Call For Help" feature during consultation booking
+                                    </small>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
                     <!-- Scheduled Sessions -->
                     <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition">
                         <div class="card-header bg-transparent border-0 pt-4 pb-3">
@@ -237,4 +323,125 @@
             </div>
         </div>
     </div>
+
+    <style>
+        .message-content {
+            line-height: 1.6;
+            word-wrap: break-word;
+        }
+
+        .chat-messages {
+            font-size: 14px;
+        }
+
+        .mark-read-btn {
+            font-size: 12px;
+        }
+
+        #reply-message {
+            resize: vertical;
+            min-height: 80px;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mark message as read functionality
+            document.querySelectorAll('.mark-read-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const messageId = this.getAttribute('data-message-id');
+                    const btn = this;
+
+                    btn.disabled = true;
+                    btn.innerHTML = '<i class="fa fa-spinner fa-spin me-1"></i>Marking...';
+
+                    fetch(`/admin/consultation/chat/mark-read/${messageId}`, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector(
+                                    'meta[name="csrf-token"]').getAttribute('content'),
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                btn.closest('.mb-3').querySelector('.badge')?.remove();
+                                btn.remove();
+
+                                // Update the header badge
+                                const headerBadge = document.querySelector(
+                                    '.card-header .badge');
+                                if (headerBadge) {
+                                    const currentCount = parseInt(headerBadge.textContent.split(
+                                        ' ')[0]);
+                                    if (currentCount <= 1) {
+                                        headerBadge.remove();
+                                    } else {
+                                        headerBadge.textContent = `${currentCount - 1} new`;
+                                    }
+                                }
+                            } else {
+                                throw new Error(data.message || 'Failed to mark as read');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            btn.disabled = false;
+                            btn.innerHTML = '<i class="fa fa-check me-1"></i>Mark as Read';
+                            alert('Failed to mark message as read. Please try again.');
+                        });
+                });
+            });
+
+            // Quick reply functionality
+            document.getElementById('quick-reply-form')?.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const textarea = document.getElementById('reply-message');
+                const message = textarea.value.trim();
+                const submitBtn = this.querySelector('button[type="submit"]');
+
+                if (!message) {
+                    alert('Please type a message before sending.');
+                    textarea.focus();
+                    return;
+                }
+
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin me-1"></i>Sending...';
+
+                fetch(`/admin/consultation/{{ $application->id }}/reply`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                                .getAttribute('content'),
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            message: message
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            textarea.value = '';
+                            alert('Reply sent successfully!');
+                            // Optionally reload the page to show the new message
+                            window.location.reload();
+                        } else {
+                            throw new Error(data.message || 'Failed to send reply');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Failed to send reply. Please try again.');
+                    })
+                    .finally(() => {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = '<i class="fa fa-paper-plane me-1"></i>Send Reply';
+                    });
+            });
+        });
+    </script>
 </x-app-layout>

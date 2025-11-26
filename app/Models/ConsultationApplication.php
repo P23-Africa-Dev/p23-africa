@@ -45,4 +45,14 @@ class ConsultationApplication extends Model
     {
         return $this->hasMany(ScheduledSession::class);
     }
+
+    public function chatMessages(): HasMany
+    {
+        return $this->hasMany(ChatMessage::class)->orderBy('sent_at', 'asc');
+    }
+
+    public function unreadChatMessages(): HasMany
+    {
+        return $this->hasMany(ChatMessage::class)->where('is_read', false);
+    }
 }

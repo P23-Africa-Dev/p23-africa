@@ -28,6 +28,15 @@ Route::get('/event/{id}/booking-fields', [EventController::class, 'getBookingFie
 Route::post('/webhooks/flutterwave', [App\Http\Controllers\ConsultationController::class, 'handleFlutterwaveWebhook'])
     ->name('api.webhooks.flutterwave');
 
+// Chat API routes for consultation help system
+Route::prefix('consultation')->group(function () {
+    Route::post('/chat/send-message', [App\Http\Controllers\ConsultationController::class, 'sendChatMessage'])
+        ->name('api.consultation.chat.send');
+
+    Route::get('/chat/{applicationId}/messages', [App\Http\Controllers\ConsultationController::class, 'getChatMessages'])
+        ->name('api.consultation.chat.messages');
+});
+
 // BRN Token API routes - accessible without authentication for external app
 Route::prefix('brn')->group(function () {
     // Get encrypted data using token (marks token as used)
