@@ -474,12 +474,15 @@
         height: 12px;
     }
 
-
-    /* ====================================== CALL FOR HELP */
+   
+       /* ====================================== CALL FOR HELP */
     .call-for-help {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
         display: flex;
         justify-content: end;
-        margin-top: 5rem;
     }
 
     .call-for-help .callforhelp-container {
@@ -491,6 +494,11 @@
         /* position: fixed;
         bottom: 70px; */
     }
+
+        .call-for-help .callforhelp-container:hover {
+        transform: translateY(-2px);
+    }
+
 
     .call-for-help .callforhelp-container button {
         background-color: #CCED60;
@@ -504,6 +512,12 @@
         outline: none;
     }
 
+      .call-for-help .callforhelp-container button:hover {
+        background-color: #D4F26A;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        transform: scale(1.05);
+    }
+
     .call-for-help .callforhelp-container button div img {
         object-fit: cover;
         width: auto;
@@ -513,7 +527,41 @@
     .callforhelp-container p {
         font-size: 0.9rem;
         margin-top: 10px;
-        letter-spacing: 0.9px
+        letter-spacing: 0.9px;
+         color: #0d4036;
+        padding: 2px 5px;
+        border-radius: 10px;
+        background: #eee;
+    }
+
+
+      /* Responsive positioning for floating chat */
+    @media (max-width: 767px) {
+        .call-for-help {
+            bottom: 15px;
+            right: 15px;
+        }
+
+        .call-for-help .callforhelp-container button {
+            width: 55px;
+            height: 55px;
+        }
+
+        .call-for-help .callforhelp-container button div img {
+            height: 25px;
+        }
+
+        .callforhelp-container p {
+            font-size: 0.8rem;
+            margin-right: 6px;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .call-for-help {
+            bottom: 25px;
+            right: 25px;
+        }
     }
 
 
@@ -772,7 +820,7 @@
         border-bottom-left-radius: 15px;
     }
 
-    .msg.bot span {
+    .msg.bot span{
         opacity: 0.96;
         letter-spacing: 0.9px;
 
@@ -1380,7 +1428,7 @@
             font-size: 1.5rem;
         }
 
-        .calendar-wrapper-container .mobile-btn {
+            .calendar-wrapper-container .mobile-btn {
             width: 50%;
         }
     }
@@ -1667,9 +1715,9 @@
 
         }
 
-        .panel-container img.chat-inset-pattern {
-            right: 0.3px;
-        }
+          .panel-container img.chat-inset-pattern {
+           right: 0.3px;
+    }
 
 
 
@@ -1871,7 +1919,7 @@
 
                                 <div class="panel-container">
 
-
+                                  
                                     <img class="chat-inset-pattern" src="{{ asset('img/side-chat-pattern.png') }}"
                                         alt="" />
                                     <div class="chat-header">
@@ -1901,7 +1949,7 @@
                                     </div>
 
                                     <div class="chat-body" id="chat-body">
-                                        <div class="msg bot">
+                                          <div class="msg bot">
                                             <span>
                                                 Hey 👋
                                             </span>
@@ -3227,11 +3275,10 @@
         const chatInput = document.getElementById('chat-input');
         const sendBtn = document.getElementById('send-btn');
 
-        // Get application data from session
+          // Get application data from session
         const applicationId = {{ Session::get('consultation_application_id', 'null') }};
         const applicationData = @json(optional($application));
-
-
+     
 
         // Open Chat Panel
         helpContainer.addEventListener('click', () => {
