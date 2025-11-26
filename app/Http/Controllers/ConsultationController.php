@@ -224,7 +224,7 @@ class ConsultationController extends Controller
 
             // Create PaymentIntent
             $paymentIntent = PaymentIntent::create([
-                'amount' => 7500, // $75.00 in cents
+                'amount' => 100, // $75.00 in cents (75 * 100)
                 'currency' => 'usd',
                 'metadata' => [
                     'application_id' => $application->id,
@@ -280,10 +280,42 @@ class ConsultationController extends Controller
                 ->with('error', 'Application not found.');
         }
 
-        // Find or create payment record
-        $payment = Payment::where('consultation_application_id', $application->id)
-            ->where('status', 'pending')
-            ->first();
+        Log::info('Payment callback received', [
+            'gateway' => $request->gateway,
+            'transaction_id' => $request->transaction_id,
+            'status' => $request->status,
+            'application_id' => $application->id
+        ]);
+
+        // Find payment record - for Stripe, look by payment_reference first since it was set during PaymentIntent creation
+        $payment = null;
+
+        if ($request->gateway === 'stripe') {
+            // For Stripe, first try to find by the payment_reference (PaymentIntent ID)
+            $payment = Payment::where('payment_reference', $request->transaction_id)
+                ->where('consultation_application_id', $application->id)
+                ->first();
+
+            Log::info('Stripe payment lookup by reference', [
+                'payment_reference' => $request->transaction_id,
+                'found' => $payment ? true : false,
+                'payment_id' => $payment ? $payment->id : null
+            ]);
+        }
+
+        // If not found by payment_reference, try the original method
+        if (!$payment) {
+            $payment = Payment::where('consultation_application_id', $application->id)
+                ->where('status', 'pending')
+                ->first();
+
+            Log::info('Payment lookup by application and pending status', [
+                'application_id' => $application->id,
+                'found' => $payment ? true : false,
+                'payment_id' => $payment ? $payment->id : null,
+                'current_reference' => $payment ? $payment->payment_reference : null
+            ]);
+        }
 
         if (!$payment) {
             // Create payment record if doesn't exist (direct callback scenario)
@@ -302,12 +334,28 @@ class ConsultationController extends Controller
 
         // Map external gateway status to our DB enum values
         if ($request->status === 'successful' || $request->status === 'success') {
-            $payment->update([
+            // For Stripe payments that already have the correct payment_reference, don't update it again
+            $updateData = [
                 'status' => 'successful',
                 'paid_at' => now(),
-                'payment_reference' => $request->transaction_id,
                 'payment_data' => $paymentData,
+            ];
+
+            // Only update payment_reference if it's different (to avoid unique constraint violation)
+            $referenceNeedsUpdate = $payment->payment_reference !== $request->transaction_id;
+            if ($referenceNeedsUpdate) {
+                $updateData['payment_reference'] = $request->transaction_id;
+            }
+
+            Log::info('Updating payment to successful', [
+                'payment_id' => $payment->id,
+                'current_reference' => $payment->payment_reference,
+                'new_reference' => $request->transaction_id,
+                'reference_needs_update' => $referenceNeedsUpdate,
+                'update_data_keys' => array_keys($updateData)
             ]);
+
+            $payment->update($updateData);
 
             // Mark application as paid
             $payment->consultationApplication->update(['status' => 'paid']);
@@ -316,11 +364,17 @@ class ConsultationController extends Controller
             return redirect()->route('consultation.payment-success');
         } elseif ($request->status === 'pending_verification' || $request->status === 'pending' || $request->status === 'processing') {
             // Handle bank transfers and other delayed verification payments
-            $payment->update([
+            $updateData = [
                 'status' => 'pending',
-                'payment_reference' => $request->transaction_id,
                 'payment_data' => $paymentData,
-            ]);
+            ];
+
+            // Only update payment_reference if it's different (to avoid unique constraint violation)
+            if ($payment->payment_reference !== $request->transaction_id) {
+                $updateData['payment_reference'] = $request->transaction_id;
+            }
+
+            $payment->update($updateData);
 
             // Mark application as paid for bank transfers (trust the payment gateway)
             // Bank transfers will be verified by Flutterwave webhook later
@@ -333,11 +387,17 @@ class ConsultationController extends Controller
             return redirect()->route('consultation.payment-success');
         } else {
             // Any other status => failed
-            $payment->update([
+            $updateData = [
                 'status' => 'failed',
-                'payment_reference' => $request->transaction_id,
                 'payment_data' => $paymentData,
-            ]);
+            ];
+
+            // Only update payment_reference if it's different (to avoid unique constraint violation)
+            if ($payment->payment_reference !== $request->transaction_id) {
+                $updateData['payment_reference'] = $request->transaction_id;
+            }
+
+            $payment->update($updateData);
 
             return redirect()->route('consultation.payment-selection')
                 ->with('error', 'Payment failed. Please try again.');

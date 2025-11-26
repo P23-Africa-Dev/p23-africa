@@ -275,7 +275,7 @@
                         <div class="details-row">
                             <div class="detail-item">
                                 <span class="label">Reference Number</span>
-                                <span class="value">{{ $application->payment->payment_reference }}</span>
+                                <span class="value">{{ Str::limit($application->payment->payment_reference, 10) }}</span>
                             </div>
                             <div class="divider"></div>
 
