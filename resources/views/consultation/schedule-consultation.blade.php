@@ -445,7 +445,8 @@
     }
 
     .calendar-wrapper-container .mobile-btn {
-        margin-top: 60px;
+        margin-top: 30px;
+
     }
 
     .calendar-wrapper-container .mobile-btn button {
@@ -465,12 +466,387 @@
         width: 70%;
         margin: 0 auto;
         margin-bottom: 2rem;
+        margin-left: -0.3rem;
     }
 
     .calendar-wrapper-container .mobile-btn button img {
         width: 12px;
         height: 12px;
     }
+
+    /* ====================================== CALL FOR HELP */
+    .call-for-help {
+        display: flex;
+        justify-content: end;
+        margin-top: 5rem;
+    }
+
+    .call-for-help .callforhelp-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "GT Walsheim Trial Cn Lt";
+        gap: 10px;
+    }
+
+    .call-for-help .callforhelp-container button {
+        background-color: #CCED60;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        border-radius: 50px;
+        outline: none;
+    }
+
+    .call-for-help .callforhelp-container button div img {
+        object-fit: cover;
+        width: auto;
+        height: 30px;
+    }
+
+    .callforhelp-container p {
+        font-size: 0.9rem;
+        margin-top: 10px;
+        letter-spacing: 0.9px
+    }
+
+
+    /* Overlay */
+    .chat-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.25);
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.3s ease;
+        z-index: 1500;
+    }
+
+    .chat-overlay.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+
+    /* Slide-in Panel */
+    .chat-panel {
+        position: fixed;
+        top: 0;
+        right: -420px;
+        /* transform: translateX(1000px); */
+        width: 100%;
+        background: transparent;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: end;
+        flex-direction: column;
+
+        opacity: 0;
+        visibility: hidden;
+
+        z-index: 2000;
+
+
+        transition: right 0.35s ease-in-out;
+
+    }
+
+    .chat-panel .chat-panel-container {
+        width: 350px;
+        background: transparent;
+        box-shadow: -4px 0 18px rgba(0, 0, 0, 0.18);
+
+    }
+
+    .chat-panel-container .panel-container {
+        z-index: 2;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        position: relative;
+        height: 82vh;
+        z-index: 1;
+    }
+
+    .panel-container img.chat-inset-pattern {
+        position: absolute;
+        width: auto;
+        max-width: 100%;
+        height: 100%;
+        top: 0;
+        object-fit: contain;
+        z-index: 0;
+    }
+
+    .chat-header,
+    .chat-body,
+    .chat-input-container {
+        position: relative;
+        z-index: 0;
+        /* background:  */
+    }
+
+
+    .chat-panel.open {
+        right: 0;
+        opacity: 1;
+        visibility: visible;
+
+    }
+
+    /* Header */
+    .chat-header {
+        padding-top: 40px;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        background: #0D4036;
+    }
+
+    .close-chat-btn {
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 22px;
+        cursor: pointer;
+    }
+
+
+    .chat-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #fff;
+        border-top-left-radius: 60px;
+
+
+    }
+
+    .chat-info .chat-info-left-content {
+        display: flex;
+        align-items: center;
+        color: #0D4036;
+        margin-left: 30px;
+        margin-top: 20px;
+        gap: 9px;
+
+
+    }
+
+    .chat-info-left-content .avatar {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        background: #0D4036;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .chat-info-left-content .avatar img {
+        width: auto;
+        height: 10px;
+        ;
+    }
+
+    .chat-info-left-content .avatar .active {
+        position: absolute;
+        top: 0px;
+        right: -2px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50px;
+        background: #2CD931;
+    }
+
+    .chat-info .chat-info-left-content img.arr-left {
+        object-fit: cover;
+        widows: auto;
+        height: 13px;
+        margin-right: 10px;
+    }
+
+
+    .chat-info .chat-info-right-content {
+        display: flex;
+        align-items: center;
+        color: #0D4036;
+        background-color: #0D4036;
+        padding: 10px;
+    }
+
+
+    .chat-info-right-content .call-info-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 50px;
+        background-color: #fff;
+    }
+
+    .call-info-icon img {
+        object-fit: cover;
+        width: auto;
+        height: 20px;
+        ;
+    }
+
+    .chat-info h3 {
+        margin: 0;
+        font-family: "GT Walsheim Trial Cn Md";
+        font-weight: bold;
+        color: #0D4036;
+        line-height: 0.8;
+        font-size: 1.2rem;
+        letter-spacing: 0.8px;
+    }
+
+    .chat-info .ct-cont small {
+        font-family: "GT Walsheim Trial Cn Md";
+        font-weight: 100;
+        letter-spacing: 0.8px;
+        font-size: 0.8rem;
+    }
+
+    /* Chat body */
+    .chat-body {
+        padding: 20px;
+        padding-top: 5rem;
+        flex: 1;
+        overflow-y: auto;
+        background: #ffff;
+
+    }
+
+
+    .msg {
+        width: fit-content;
+        max-width: 80%;
+        padding: 10px 15px;
+        margin-bottom: 10px;
+        border-radius: 12px;
+        font-size: 14px;
+        line-height: 1.4;
+    }
+
+    /* Bot Message */
+    .msg.bot {
+        background: #06221D;
+        color: #fff;
+        border-radius: 0px;
+        font-size: 13px;
+        letter-spacing: 0.8px;
+        font-family: "GT Walsheim Trial Cn Lt";
+
+
+        border-bottom-left-radius: 15px;
+
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+        border-bottom-left-radius: 15px;
+    }
+
+    /* User Message */
+    .msg.user {
+        padding: 11px 14px;
+        background: #D1F0EB;
+        border-radius: 0px;
+
+        border-bottom-left-radius: 15px;
+
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 15px;
+        border-bottom-left-radius: 15px;
+        border-top-left-radius: 15px;
+        margin-left: auto;
+
+        color: #83818C;
+        font-family: "GT Walsheim Trial Cn Md";
+
+        font-size: 0.8rem;
+        letter-spacing: 0.6px;
+    }
+
+    .msg.longtext {
+        min-width: 180px;
+        padding: 14px 14px;
+
+
+    }
+
+
+    /* Input */
+    .chat-input-container {
+        padding: 12px;
+        display: flex;
+        /* justify-content: center; */
+        gap: 10px;
+        background: #ffff;
+        border: none;
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+    }
+
+    .chat-input-container .input-container {
+        box-shadow: 0px 2px 8px -2px rgba(0, 0, 0, 0.4);
+        margin: 0 auto;
+        background: #ffff;
+        width: 100%;
+        padding: 6px 0px;
+        padding-left: 20px;
+        border-radius: 20px;
+        /* max-width: 100%; */
+
+    }
+
+    .chat-input-container input {
+        /* flex: 1; */
+        padding: 5px 14px;
+        height: 18px;
+        border-radius: 0px;
+
+        outline: none;
+        border: none;
+        width: 80%;
+        border-left: 1px solid #E4E4E4;
+        /* display: flex; */
+    }
+
+    .chat-input-container input::placeholder {
+        color: #605E6C;
+        letter-spacing: 0.9px;
+        font-family: "GT Walsheim Trial Cn Lt";
+
+    }
+
+    .send-btn {
+        border: none;
+        background: transparent;
+        color: #fff;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    .send-btn img {
+        object-fit: cover;
+        width: auto;
+        height: 18px;
+    }
+
+
+
+
 
     /* Wrapper for tooltip */
     .prev-wrapper {
@@ -1442,6 +1818,85 @@
                                 <div><img src="{{ asset('img/right-colored-r.png') }}" alt="" /></div>
                             </button>
                         </div>
+
+                        <div class="call-for-help">
+
+                            <div class="callforhelp-container">
+                                <p>Call For Help</p>
+                                <button>
+                                    <div><img src="{{ asset('img/customer-service.png') }}" alt="" /></div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- CHAT MODAL OVERLAY -->
+                        <div id="chat-overlay" class="chat-overlay"></div>
+
+                        <!-- CHAT SLIDE-IN PANEL -->
+                        <div id="chat-panel" class="chat-panel">
+
+                            <div class="chat-panel-container">
+
+
+                                <div class="panel-container">
+
+                                    {{-- <img class="chat-inset-pattern" src="{{ asset('img/Subtract-chat.png') }}"
+                                                alt="" /> --}}
+                                    <div class="chat-header">
+
+
+                                        <div class="chat-info">
+                                            <div class="chat-info-left-content">
+                                                <img class="arr-left" src="{{ asset('img/arrow-left.png') }}"
+                                                    alt="" />
+                                                <div class="avatar">
+                                                    <div class="active"></div>
+                                                    <img src="{{ asset('images/logo.png') }}" alt="" />
+                                                </div>
+                                                <div class="ct-cont">
+                                                    <h3>P23 Africa</h3>
+                                                    <small>Online</small>
+                                                </div>
+                                            </div>
+                                            <div class="chat-info-right-content">
+                                                <div class="call-info-icon">
+                                                    <img src="{{ asset('img/phone.png') }}" alt="" />
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="chat-body">
+
+
+                                        <div class="msg bot">Hey 👋</div>
+                                        <div class="msg bot">Welcome to P23 Africa, what can we help you with?</div>
+
+                                        <div class="msg user">Hello!</div>
+                                        <div class="msg user longtext">Yea, I'd like to…</div>
+                                    </div>
+
+                                    <div class="chat-input-container">
+
+                                        <div class="input-container">
+                                            <input placeholder="Type your message here" />
+                                            <button class="send-btn">
+                                                <img class="arr-left" src="{{ asset('img/send-icon.png') }}"
+                                                    alt="" />
+                                            </button>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
 
                         <!-- Hidden form for actual submission -->
                         <form id="scheduleForm" method="POST" action="{{ route('consultation.schedule.submit') }}"
@@ -2528,7 +2983,7 @@
                     const isOutsideHours = hour24 < 10 ? 'before 10:00 AM' : 'after 8:00 PM';
                     if (!confirm(
                             `You've selected a time ${isOutsideHours}. Our normal consultation hours are 10:00 AM to 8:00 PM, Monday to Saturday. Would you like to proceed with this booking?`
-                            )) {
+                        )) {
                         return; // User chose not to proceed
                     }
                 }
@@ -2725,6 +3180,44 @@
                 };
             }
         });
+
+
+
+        // CALL FOR HELP CHAT LOGIC
+        const helpContainer = document.querySelector('.callforhelp-container');
+        const chatPanel = document.getElementById('chat-panel');
+        const chatOverlay = document.getElementById('chat-overlay');
+        // const closeBtn = document.getElementById('close-chat'); 
+        const chatPanelContainer = document.querySelector('.chat-panel-container');
+
+        // Open Chat Panel
+        helpContainer.addEventListener('click', () => {
+            chatPanel.classList.add('open');
+            chatOverlay.classList.add('show');
+
+            // Disable background page scrolling
+            document.body.style.overflow = "hidden";
+        });
+
+        function closeChatPanel() {
+            chatPanel.classList.remove('open');
+            chatOverlay.classList.remove('show');
+            document.body.style.overflow = "";
+        }
+
+        // if (closeBtn) {
+        //     closeBtn.addEventListener('click', closeChatPanel);
+        // }
+
+        // Close when clicking outside the chat-panel-container
+        chatPanel.addEventListener('click', (e) => {
+            if (!chatPanelContainer.contains(e.target)) {
+                closeChatPanel();
+            }
+        });
+
+        // Close chat when clicking overlay
+        chatOverlay.addEventListener('click', closeChatPanel);
 
     });
 </script>
