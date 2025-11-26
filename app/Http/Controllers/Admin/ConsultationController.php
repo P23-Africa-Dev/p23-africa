@@ -61,7 +61,7 @@ class ConsultationController extends Controller
      */
     public function show($id)
     {
-        $application = ConsultationApplication::with(['payments', 'scheduledSessions'])
+        $application = ConsultationApplication::with(['payments', 'scheduledSessions', 'chatMessages', 'unreadChatMessages'])
             ->findOrFail($id);
 
         return view('admin.consultation.show', compact('application'));
@@ -115,5 +115,81 @@ class ConsultationController extends Controller
             'today_applications' => $todayApplications,
             'recent_applications' => $recentApplications,
         ];
+    }
+
+    /**
+     * Send admin reply to consultation application
+     */
+    public function sendReply(Request $request, $id)
+    {
+        $request->validate([
+            'message' => 'required|string|min:1|max:1000'
+        ]);
+
+        $application = ConsultationApplication::findOrFail($id);
+
+        try {
+            // Create admin message
+            $chatMessage = \App\Models\ChatMessage::create([
+                'consultation_application_id' => $application->id,
+                'sender_name' => auth()->user()->name ?? 'P23 Africa Admin',
+                'sender_email' => auth()->user()->email,
+                'message' => $request->message,
+                'sender_type' => 'admin',
+                'is_read' => true, // Admin messages are automatically read
+                'sent_at' => now()
+            ]);
+
+            // Send email to client
+            try {
+                \Mail::to($application->email)->send(new \App\Mail\ConsultationAdminReply($chatMessage));
+            } catch (\Exception $e) {
+                \Log::error('Failed to send admin reply email', [
+                    'error' => $e->getMessage(),
+                    'application_id' => $application->id
+                ]);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Reply sent successfully'
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Failed to send admin reply', [
+                'error' => $e->getMessage(),
+                'application_id' => $id
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to send reply'
+            ], 500);
+        }
+    }
+
+    /**
+     * Mark chat message as read
+     */
+    public function markMessageAsRead($messageId)
+    {
+        try {
+            $message = \App\Models\ChatMessage::findOrFail($messageId);
+            $message->update(['is_read' => true]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Message marked as read'
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Failed to mark message as read', [
+                'error' => $e->getMessage(),
+                'message_id' => $messageId
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to mark message as read'
+            ], 500);
+        }
     }
 }

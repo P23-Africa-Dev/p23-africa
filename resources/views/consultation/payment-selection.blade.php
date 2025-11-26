@@ -474,8 +474,10 @@
             // Handle payment
             document.getElementById('stripe-pay-btn').addEventListener('click', () => {
                 const payBtn = document.getElementById('stripe-pay-btn');
+                const cancelBtn = document.getElementById('stripe-cancel-btn');
                 payBtn.disabled = true;
-                payBtn.textContent = 'Processing...';
+                cancelBtn.disabled = true;
+                payBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing Payment...';
 
                 // Create PaymentIntent on server
                 fetch('{{ route('consultation.payment.create-intent') }}', {
@@ -487,7 +489,7 @@
                         },
                         body: JSON.stringify({
                             payment_method: 'stripe',
-                            amount: 100,
+                            amount: 75.00,
                         })
                     })
                     .then(response => response.json())
@@ -507,13 +509,24 @@
                         }
                     })
                     .then(result => {
-                        document.body.removeChild(modal);
                         if (result.error) {
+                            document.body.removeChild(modal);
                             handlePaymentError(result.error.message);
                         } else {
-                            // Payment succeeded
-                            submitPaymentCallback('stripe', result.paymentIntent.id, 'successful', result
-                                .paymentIntent);
+                            // Payment succeeded - show success state briefly
+                            const payBtn = document.getElementById('stripe-pay-btn');
+                            payBtn.innerHTML = '<i class="fa-solid fa-check-circle"></i> Payment Successful!';
+                            payBtn.style.background = '#28a745';
+
+                            console.log('Stripe payment successful, redirecting...');
+
+                            // Close modal after brief success display
+                            setTimeout(() => {
+                                document.body.removeChild(modal);
+                                submitPaymentCallback('stripe', result.paymentIntent.id, 'successful',
+                                    result
+                                    .paymentIntent);
+                            }, 1500);
                         }
                     })
                     .catch(error => {
@@ -525,6 +538,17 @@
         }
 
         function submitPaymentCallback(gateway, transactionId, status, data) {
+            // Show loading state while redirecting
+            const proceedBtn = document.getElementById('proceedBtn');
+            proceedBtn.innerHTML = '<i class="fa-solid fa-check-circle"></i> Payment Successful - Redirecting...';
+            proceedBtn.style.background = '#28a745';
+
+            console.log(`${gateway} payment callback:`, {
+                transactionId,
+                status,
+                data
+            });
+
             // Create a form to submit the payment callback data
             const form = document.createElement('form');
             form.method = 'POST';
@@ -564,7 +588,11 @@
             form.appendChild(dataInput);
 
             document.body.appendChild(form);
-            form.submit();
+
+            // Add a small delay for better UX, then submit
+            setTimeout(() => {
+                form.submit();
+            }, 1000);
         }
 
         function handlePaymentError(message) {
