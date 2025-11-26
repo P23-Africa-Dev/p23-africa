@@ -253,9 +253,13 @@
                     </div>
                 </div>
 
-                <h1 class="payment-status">Payment Successful!</h1>
+                @if (session('is_pending_verification'))
+                    <h1 class="payment-status">Payment Initiated!</h1>
+                @else
+                    <h1 class="payment-status">Payment Successful!</h1>
+                @endif
 
-            
+
                 <div class="payment-card">
                     <img src="{{ asset('img/payment-bg.png') }}" alt="" />
 
@@ -283,9 +287,16 @@
 
                     </div>
 
-                    <p class="thank-you-message">
-                        Thank you {{ $application->name }} for booking your consultation with us.
-                    </p>
+                    @if (session('is_pending_verification'))
+                        <p class="thank-you-message">
+                            Thank you {{ $application->name }}! Your bank transfer payment is being processed. You can
+                            proceed to schedule your consultation - we'll confirm your payment shortly.
+                        </p>
+                    @else
+                        <p class="thank-you-message">
+                            Thank you {{ $application->name }} for booking your consultation with us.
+                        </p>
+                    @endif
 
                     <a href="{{ route('consultation.schedule-consultation') }}" class="proceed-button">
                         Proceed to scheduling your session

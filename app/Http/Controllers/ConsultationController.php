@@ -312,8 +312,25 @@ class ConsultationController extends Controller
 
             Session::put('payment_success', true);
             return redirect()->route('consultation.payment-success');
+        } elseif ($request->status === 'pending_verification' || $request->status === 'pending' || $request->status === 'processing') {
+            // Handle bank transfers and other delayed verification payments
+            $payment->update([
+                'status' => 'pending',
+                'payment_reference' => $request->transaction_id,
+                'payment_data' => $paymentData,
+            ]);
+
+            // Mark application as paid for bank transfers (trust the payment gateway)
+            // Bank transfers will be verified by Flutterwave webhook later
+            $payment->consultationApplication->update(['status' => 'paid']);
+
+            Session::put('payment_success', true);
+            Session::put('payment_method_used', $request->gateway);
+            Session::put('is_pending_verification', true);
+
+            return redirect()->route('consultation.payment-success');
         } else {
-            // Any non-success => failed
+            // Any other status => failed
             $payment->update([
                 'status' => 'failed',
                 'payment_reference' => $request->transaction_id,
@@ -619,5 +636,94 @@ class ConsultationController extends Controller
         $authUrl = $calendarService->getAuthUrl();
 
         return redirect($authUrl);
+    }
+
+    /**
+     * Handle Flutterwave webhook notifications
+     * This endpoint will be called by Flutterwave when payment status changes
+     */
+    public function handleFlutterwaveWebhook(Request $request)
+    {
+        // Verify webhook signature if available
+        $secretKey = env('FLUTTERWAVE_SECRET_KEY');
+        $signature = $request->header('verif-hash');
+
+        if ($signature && $secretKey) {
+            $expectedSignature = hash('sha256', $secretKey);
+            if ($signature !== $expectedSignature) {
+                Log::warning('Invalid Flutterwave webhook signature');
+                return response()->json(['status' => 'error', 'message' => 'Invalid signature'], 400);
+            }
+        }
+
+        $webhookData = $request->all();
+        Log::info('Flutterwave webhook received:', $webhookData);
+
+        // Extract transaction data
+        if (!isset($webhookData['data'])) {
+            return response()->json(['status' => 'error', 'message' => 'Invalid webhook data'], 400);
+        }
+
+        $transactionData = $webhookData['data'];
+        $transactionId = $transactionData['id'] ?? null;
+        $status = $transactionData['status'] ?? null;
+        $txRef = $transactionData['tx_ref'] ?? null;
+
+        if (!$transactionId || !$status) {
+            return response()->json(['status' => 'error', 'message' => 'Missing required data'], 400);
+        }
+
+        // Find payment record by transaction reference
+        $payment = Payment::where('payment_reference', $transactionId)
+            ->orWhere('payment_reference', $txRef)
+            ->first();
+
+        if (!$payment) {
+            Log::warning('Payment not found for Flutterwave webhook', [
+                'transaction_id' => $transactionId,
+                'tx_ref' => $txRef
+            ]);
+            return response()->json(['status' => 'error', 'message' => 'Payment not found'], 404);
+        }
+
+        // Update payment status based on webhook
+        switch (strtolower($status)) {
+            case 'successful':
+                $payment->update([
+                    'status' => 'successful',
+                    'paid_at' => now(),
+                    'payment_data' => $transactionData,
+                ]);
+
+                // Ensure application is marked as paid
+                $payment->consultationApplication->update(['status' => 'paid']);
+
+                Log::info('Payment confirmed via webhook', ['payment_id' => $payment->id]);
+                break;
+
+            case 'failed':
+            case 'cancelled':
+                $payment->update([
+                    'status' => 'failed',
+                    'payment_data' => $transactionData,
+                ]);
+
+                Log::info('Payment failed via webhook', ['payment_id' => $payment->id]);
+                break;
+
+            default:
+                // For pending, processing, etc., keep current status
+                $payment->update([
+                    'payment_data' => $transactionData,
+                ]);
+
+                Log::info('Payment status updated via webhook', [
+                    'payment_id' => $payment->id,
+                    'status' => $status
+                ]);
+                break;
+        }
+
+        return response()->json(['status' => 'success'], 200);
     }
 }
