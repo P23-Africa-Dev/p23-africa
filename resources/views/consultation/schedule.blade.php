@@ -3328,7 +3328,7 @@
             const distanceToBottom = fullHeight - (scrollY + viewportHeight);
 
             // If user is within 200px of the bottom → move button up
-            if (distanceToBottom < 300) {
+            if (distanceToBottom < 150) {
                 callForHelp.classList.add('raise-up');
             } else {
                 callForHelp.classList.remove('raise-up');
