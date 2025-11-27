@@ -1204,6 +1204,9 @@
                 <!-- Step Content -->
                 <form id="multiStepForm" method="POST" action="{{ route('consultation.submit') }}">
                     @csrf
+                    <!-- Session ID for live form capture - will be populated by JavaScript -->
+                    <input type="hidden" name="session_id" id="form_session_id" value="">
+
                     <!-- STEP 1 -->
                     <div class="form-step active">
                         <div class="form-grid">
