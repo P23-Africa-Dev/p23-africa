@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <title> @yield('title') </title>
 
         <link rel="shortcut icon" href="{{ asset('images/logo.png') }}" type="image/x-icon">
@@ -30,6 +30,8 @@
 
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
+        <!-- Alpine.js for Live Form Capture -->
+        <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
   
     </head>
 

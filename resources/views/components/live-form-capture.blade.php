@@ -126,12 +126,20 @@
             },
 
             setupEventListeners() {
+                // Find ALL inputs including hidden ones in multi-step forms
                 const inputs = this.form.querySelectorAll('input, textarea, select');
 
-                inputs.forEach(input => {
+                this.log(`Found ${inputs.length} form inputs to monitor`);
+
+                inputs.forEach((input, index) => {
+                    this.log(
+                        `Setting up listeners for input ${index + 1}: ${input.name || input.id || input.type}`
+                        );
+
                     // Track field interactions
                     input.addEventListener('focus', (e) => {
                         this.trackFieldInteraction(e.target.name || e.target.id, 'focus');
+                        this.log(`Focus event on: ${e.target.name || e.target.id}`);
                     });
 
                     input.addEventListener('blur', (e) => {
@@ -139,6 +147,7 @@
 
                         this.trackFieldInteraction(e.target.name || e.target.id, 'blur');
                         this.scheduleSave(); // Save on blur
+                        this.log(`Blur event on: ${e.target.name || e.target.id}, scheduling save`);
                     });
 
                     // Track keystrokes and changes
@@ -149,6 +158,9 @@
                         this.isActive = true;
                         this.trackFieldInteraction(e.target.name || e.target.id, 'input');
                         this.scheduleSave();
+                        this.log(
+                            `Input event on: ${e.target.name || e.target.id}, keystroke count: ${this.keystrokeCount}`
+                            );
                     });
 
                     // Track selections for select/radio/checkbox
@@ -157,7 +169,21 @@
 
                         this.trackFieldInteraction(e.target.name || e.target.id, 'change');
                         this.scheduleSave();
+                        this.log(
+                            `Change event on: ${e.target.name || e.target.id}, value: ${e.target.value}`
+                            );
                     });
+                });
+
+                // Special handling for multi-step forms - monitor step changes
+                const stepButtons = this.form.querySelectorAll('.next-btn, .back-btn, [class*="step"]');
+                stepButtons.forEach(button => {
+                    if (button.tagName === 'BUTTON' || button.tagName === 'A') {
+                        button.addEventListener('click', () => {
+                            this.log('Step change detected, scheduling save');
+                            this.scheduleSave();
+                        });
+                    }
                 });
 
                 // Hook into form submission but don't prevent it initially
@@ -193,8 +219,13 @@
             async saveFormData(isSubmission = false) {
                 // Don't save if already submitted
                 if (this.isSubmitted && !isSubmission) {
+                    this.log('Skipping save - form already submitted');
                     return;
                 }
+
+                this.log('Starting form data save...', {
+                    isSubmission
+                });
 
                 const formData = new FormData(this.form);
                 const formObject = {};
@@ -219,14 +250,18 @@
                 formObject.field_interactions = this.fieldInteractions;
                 formObject.is_submission = isSubmission;
 
+                this.log('Form data to save:', formObject);
+
                 // Skip save if data hasn't changed (unless it's a submission)
                 const currentData = JSON.stringify(formObject);
                 if (!isSubmission && currentData === this.lastSavedData) {
+                    this.log('Skipping save - no data changes detected');
                     return;
                 }
 
                 this.status = 'saving';
                 this.statusMessage = 'Saving draft...';
+                this.log('Sending save request to:', this.saveUrl);
 
                 try {
                     const response = await fetch(this.saveUrl, {
