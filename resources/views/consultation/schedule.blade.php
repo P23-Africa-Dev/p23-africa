@@ -3313,7 +3313,9 @@
         const chatInput = document.getElementById('chat-input');
         const sendBtn = document.getElementById('send-btn');
 
-        // Get application data from session
+     // Get application data from session
+        const applicationId = {{ Session::get('consultation_application_id', 'null') }};
+        const applicationData = @json(optional($application));
 
 
 

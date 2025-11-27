@@ -168,7 +168,6 @@
         letter-spacing: 1.4px;
         margin-top: 30px;
         font-size: 21px;
-        white-space: nowrap;
     }
 
     .nav-row {
@@ -389,20 +388,20 @@
     .timezone-row>label {
         font-size: 19px;
         margin-top: 0.15rem;
-        padding-left: 4px;
+        /* padding-left: 4px; */
     }
 
     .time-restriction-notice {
         background: rgba(136, 193, 183, 0.1);
         border: 1px solid rgba(136, 193, 183, 0.3);
         border-radius: 6px;
-        padding: 8px 12px;
+        padding: 5px 7px;
         margin-top: 10px;
     }
 
     .time-restriction-notice p {
         color: #88C1B7;
-        font-size: 14px;
+        font-size: 11px;
         margin: 0;
         font-family: "GT Walsheim Con";
         text-align: center;
@@ -475,15 +474,20 @@
         height: 12px;
     }
 
-   
-       /* ====================================== CALL FOR HELP */
+
+    /* ====================================== CALL FOR HELP */
     .call-for-help {
         position: fixed;
-        bottom: 20px;
-        right: 20px;
-        z-index: 1000;
+        right: 25px;
+        bottom: 40px;
+        /* z-index: 9999; */
+        transition: bottom 1.3s ease;
         display: flex;
         justify-content: end;
+    }
+
+    .call-for-help.raise-up {
+        bottom: 380px;
     }
 
     .call-for-help .callforhelp-container {
@@ -496,15 +500,15 @@
         bottom: 70px; */
     }
 
-        .call-for-help .callforhelp-container:hover {
+    .call-for-help .callforhelp-container:hover {
         transform: translateY(-2px);
     }
 
 
     .call-for-help .callforhelp-container button {
-        background-color: #CCED60;
-        width: 60px;
-        height: 60px;
+        background-color: #234F47;
+        width: 50px;
+        height: 50px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -513,8 +517,7 @@
         outline: none;
     }
 
-      .call-for-help .callforhelp-container button:hover {
-        background-color: #D4F26A;
+    .call-for-help .callforhelp-container button:hover {
         box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
         transform: scale(1.05);
     }
@@ -522,48 +525,23 @@
     .call-for-help .callforhelp-container button div img {
         object-fit: cover;
         width: auto;
-        height: 30px;
+        height: 25px;
     }
 
     .callforhelp-container p {
         font-size: 0.9rem;
         margin-top: 10px;
         letter-spacing: 0.9px;
-         color: #0d4036;
+        color: #fff;
         padding: 2px 5px;
         border-radius: 10px;
-        background: #eee;
+        background: #06221D;
     }
 
 
-      /* Responsive positioning for floating chat */
-    @media (max-width: 767px) {
-        .call-for-help {
-            bottom: 15px;
-            right: 15px;
-        }
 
-        .call-for-help .callforhelp-container button {
-            width: 55px;
-            height: 55px;
-        }
 
-        .call-for-help .callforhelp-container button div img {
-            height: 25px;
-        }
 
-        .callforhelp-container p {
-            font-size: 0.8rem;
-            margin-right: 6px;
-        }
-    }
-
-    @media (min-width: 768px) {
-        .call-for-help {
-            bottom: 25px;
-            right: 25px;
-        }
-    }
 
 
     /* Overlay */
@@ -821,7 +799,7 @@
         border-bottom-left-radius: 15px;
     }
 
-    .msg.bot span{
+    .msg.bot span {
         opacity: 0.96;
         letter-spacing: 0.9px;
 
@@ -1389,6 +1367,31 @@
         transform: translateY(-8px);
     }
 
+
+    /* ===================================== workingHoursNotice BOUNCE  */
+    @keyframes bounceNotice {
+        0% {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        30% {
+            transform: translateX(-50%) translateY(-6px);
+        }
+
+        60% {
+            transform: translateX(-50%) translateY(3px);
+        }
+
+        100% {
+            transform: translateX(-50%) translateY(0);
+        }
+    }
+
+    #workingHoursNotice.bounceWorkingHours {
+        animation: bounceNotice 0.45s ease;
+    }
+
+
     @media (max-width: 767px) {
         .month-year-inputs {
             gap: 8px;
@@ -1411,6 +1414,8 @@
             padding: 6px 10px;
             font-size: 14px;
         }
+
+
     }
 
     @media (min-width: 768px) {
@@ -1429,7 +1434,7 @@
             font-size: 1.5rem;
         }
 
-            .calendar-wrapper-container .mobile-btn {
+        .calendar-wrapper-container .mobile-btn {
             width: 50%;
         }
     }
@@ -1510,6 +1515,11 @@
         .schedule-conversation-section .left-content .schedule-pattern {
             display: none;
         }
+
+        /* .call-for-help {
+            bottom: 400px;
+            right: 25px;
+        } */
     }
 
     @media (min-width: 1400px) {
@@ -1611,7 +1621,7 @@
 
 
         .timezone-row {
-            gap: 80px;
+            gap: 40px;
         }
 
         .date {
@@ -1656,7 +1666,7 @@
         .time-box {
             /* margin: 0px 40px; */
             /* margin-top: 50px; */
-            max-width: 650px;
+            max-width: 750px;
             margin: 0 auto;
             background-color: transparent;
             display: flex;
@@ -1683,6 +1693,7 @@
         .calendar-wrapper-container .output-box.desktop {
             display: block;
             padding: 0px 40px;
+            padding-right: 0px;
         }
 
 
@@ -1716,9 +1727,9 @@
 
         }
 
-          .panel-container img.chat-inset-pattern {
-           right: 0.3px;
-    }
+        .panel-container img.chat-inset-pattern {
+            right: 0.3px;
+        }
 
 
 
@@ -1831,7 +1842,7 @@
                                 </div>
 
                                 <div class="time-restriction-notice" id="timeRestrictionNotice" style="display: none;">
-                                    <p>⏰ For today's date, only times at least 1 hour ahead are available</p>
+                                    <p>⏰ Same-day bookings must be scheduled at least one hour in advance.</p>
                                 </div>
 
                                 <!-- Scrollable Time Picker -->
@@ -1904,7 +1915,7 @@
                             <div class="callforhelp-container">
                                 <p>Call For Help</p>
                                 <button>
-                                    <div><img src="{{ asset('img/customer-service.png') }}" alt="" /></div>
+                                    <div><img src="{{ asset('img/customer-service-01.png') }}" alt="" /></div>
                                 </button>
                             </div>
                         </div>
@@ -1920,7 +1931,7 @@
 
                                 <div class="panel-container">
 
-                                  
+
                                     <img class="chat-inset-pattern" src="{{ asset('img/side-chat-pattern.png') }}"
                                         alt="" />
                                     <div class="chat-header">
@@ -1950,7 +1961,7 @@
                                     </div>
 
                                     <div class="chat-body" id="chat-body">
-                                          <div class="msg bot">
+                                        <div class="msg bot">
                                             <span>
                                                 Hey 👋
                                             </span>
@@ -3187,51 +3198,77 @@
         let workingHoursNoticeTimeout;
 
         function showWorkingHoursNotice(msg) {
-            // Clear any existing timeout
-            if (workingHoursNoticeTimeout) {
-                clearTimeout(workingHoursNoticeTimeout);
+            // Clear any existing timeout (use window-scoped var to be safe)
+            if (window.workingHoursNoticeTimeout) {
+                clearTimeout(window.workingHoursNoticeTimeout);
             }
 
-            // Show a subtle notice near the time picker
+            // Locate or create the notice element
             let notice = document.getElementById('workingHoursNotice');
             if (!notice) {
                 notice = document.createElement('div');
                 notice.id = 'workingHoursNotice';
-                notice.style.cssText = `
-                    position: absolute;
-                    top: -30px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    background: rgba(136, 193, 183, 0.1);
-                    border: 1px solid rgba(136, 193, 183, 0.3);
-                    color: #88C1B7;
-                    padding: 5px 10px;
-                    border-radius: 4px;
-                    font-size: 12px;
-                    font-family: "GT Walsheim Con";
-                    z-index: 100;
-                    opacity: 0;
-                    transition: opacity 0.3s ease;
-                    pointer-events: none;
-                `;
 
-                // Add to time box container
+                notice.dataset.shownCount = '0';
+
+                notice.style.cssText = `
+            position: absolute;
+            top: 53px;
+            left: 47%;
+            margin-bottom: 50px;
+            white-space: nowrap;
+            transform: translateX(-50%);
+            background: #06221D;
+            border: 1px solid rgba(136, 193, 183, 0.3);
+            color: #88C1B7;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-family: "GT Walsheim Con";
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        `;
+
                 const timeBox = document.querySelector('.time-box-container') || document.querySelector(
                     '.time-box');
                 if (timeBox) {
-                    timeBox.style.position = 'relative';
+                    if (getComputedStyle(timeBox).position === 'static') {
+                        timeBox.style.position = 'relative';
+                    }
                     timeBox.appendChild(notice);
+                } else {
+                    document.body.appendChild(notice);
                 }
             }
 
+            // Set the message and show it
             notice.textContent = msg;
+            notice.classList.remove('bounceWorkingHours');
+
             notice.style.opacity = '1';
 
-            // Hide after 3 seconds
-            workingHoursNoticeTimeout = setTimeout(() => {
+            // Read and increment shown count from data attribute
+            const shownCount = parseInt(notice.dataset.shownCount || '0', 10);
+
+            // If this is not the first show, trigger bounce to draw attention
+            if (shownCount > 0) {
+                void notice.offsetWidth;
+                notice.classList.add('bounceWorkingHours');
+            }
+
+            // Update shown count
+            notice.dataset.shownCount = String(shownCount + 1);
+
+            // Hide after 3 seconds and remove bounce class so next time first show works again
+            window.workingHoursNoticeTimeout = setTimeout(() => {
                 notice.style.opacity = '0';
+                notice.classList.remove('bounce');
+
             }, 3000);
         }
+
 
 
         /* ------------------------- Accessibility: keyboard open/close for dropdowns ------------------------- */
@@ -3276,10 +3313,30 @@
         const chatInput = document.getElementById('chat-input');
         const sendBtn = document.getElementById('send-btn');
 
-          // Get application data from session
+     // Get application data from session
         const applicationId = {{ Session::get('consultation_application_id', 'null') }};
         const applicationData = @json(optional($application));
-     
+
+
+
+        // MOVE CALL FOR HELP BUTTON ON SCROLL
+        const callForHelp = document.querySelector('.call-for-help');
+
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            const viewportHeight = window.innerHeight;
+            const fullHeight = document.body.offsetHeight;
+
+            const distanceToBottom = fullHeight - (scrollY + viewportHeight);
+
+            // If user is within 200px of the bottom → move button up
+            if (distanceToBottom < 150) {
+                callForHelp.classList.add('raise-up');
+            } else {
+                callForHelp.classList.remove('raise-up');
+            }
+        });
+
 
         // Open Chat Panel
         helpContainer.addEventListener('click', () => {
