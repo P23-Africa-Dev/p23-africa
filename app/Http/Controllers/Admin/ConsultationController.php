@@ -25,10 +25,17 @@ class ConsultationController extends Controller
         // Filter by status if provided
         if ($request->filled('status')) {
             switch ($request->status) {
+                case 'draft':
+                    $query->drafts();
+                    break;
+                case 'submitted':
+                    $query->submitted();
+                    break;
                 case 'pending':
-                    $query->whereDoesntHave('payments', function ($q) {
-                        $q->where('status', 'successful');
-                    });
+                    $query->where('status', 'pending')
+                        ->whereDoesntHave('payments', function ($q) {
+                            $q->where('status', 'successful');
+                        });
                     break;
                 case 'paid':
                     $query->whereHas('payments', function ($q) {
@@ -95,10 +102,13 @@ class ConsultationController extends Controller
     public function getConsultationStats()
     {
         $totalApplications = ConsultationApplication::count();
+        $totalSubmitted = ConsultationApplication::submitted()->count();
+        $totalDrafts = ConsultationApplication::drafts()->count();
 
-        $pendingApplications = ConsultationApplication::whereDoesntHave('payments', function ($q) {
-            $q->where('status', 'successful');
-        })->count();
+        $pendingApplications = ConsultationApplication::where('status', 'pending')
+            ->whereDoesntHave('payments', function ($q) {
+                $q->where('status', 'successful');
+            })->count();
 
         $paidApplications = ConsultationApplication::whereHas('payments', function ($q) {
             $q->where('status', 'successful');
@@ -107,16 +117,31 @@ class ConsultationController extends Controller
         $scheduledApplications = ConsultationApplication::whereHas('scheduledSessions')->count();
 
         $todayApplications = ConsultationApplication::whereDate('created_at', today())->count();
+        $todayDrafts = ConsultationApplication::drafts()->whereDate('draft_created_at', today())->count();
 
         $recentApplications = ConsultationApplication::where('created_at', '>=', now()->subDays(30))->count();
 
+        $activeDrafts = ConsultationApplication::drafts()
+            ->where('last_activity_at', '>=', now()->subHours(24))
+            ->count();
+
+        // Get average completion percentage for drafts
+        $avgCompletion = ConsultationApplication::drafts()
+            ->get()
+            ->avg(fn($app) => $app->getCompletionPercentage());
+
         return [
             'total_applications' => $totalApplications,
+            'total_submitted' => $totalSubmitted,
+            'total_drafts' => $totalDrafts,
             'pending_applications' => $pendingApplications,
             'paid_applications' => $paidApplications,
             'scheduled_applications' => $scheduledApplications,
             'today_applications' => $todayApplications,
+            'today_drafts' => $todayDrafts,
             'recent_applications' => $recentApplications,
+            'active_drafts' => $activeDrafts,
+            'avg_completion' => round($avgCompletion ?? 0, 1),
         ];
     }
 
@@ -207,5 +232,83 @@ class ConsultationController extends Controller
                 'message' => 'Failed to mark message as read'
             ], 500);
         }
+    }
+
+    /**
+     * Get draft statistics for admin dashboard
+     */
+    public function getDraftStats()
+    {
+        $stats = ConsultationApplication::getDraftStats();
+
+        // Add additional debug info
+        $recentDrafts = ConsultationApplication::drafts()
+            ->where('last_activity_at', '>=', now()->subMinutes(5))
+            ->orderBy('last_activity_at', 'desc')
+            ->take(3)
+            ->get(['id', 'session_id', 'name', 'email', 'last_activity_at', 'keystroke_count']);
+
+        $stats['recent_activity'] = $recentDrafts->map(function ($draft) {
+            return [
+                'id' => $draft->id,
+                'session_id' => substr($draft->session_id ?? '', 0, 8) . '...',
+                'name' => $draft->name ?? 'Anonymous',
+                'email' => $draft->email ?? 'N/A',
+                'last_activity' => $draft->last_activity_at ? $draft->last_activity_at->diffForHumans() : 'N/A',
+                'keystrokes' => $draft->keystroke_count ?? 0,
+                'completion' => $draft->getCompletionPercentage()
+            ];
+        });
+
+        return response()->json($stats);
+    }
+
+    /**
+     * Get applications table HTML for AJAX updates
+     */
+    public function getApplicationsTable(Request $request)
+    {
+        $query = ConsultationApplication::with(['payments', 'scheduledSessions'])
+            ->orderBy('created_at', 'desc');
+
+        // Filter by status if provided
+        if ($request->filled('status')) {
+            switch ($request->status) {
+                case 'draft':
+                    $query->drafts();
+                    break;
+                case 'submitted':
+                    $query->submitted();
+                    break;
+                case 'pending':
+                    $query->where('status', 'pending')
+                        ->whereDoesntHave('payments', function ($q) {
+                            $q->where('status', 'successful');
+                        });
+                    break;
+                case 'paid':
+                    $query->whereHas('payments', function ($q) {
+                        $q->where('status', 'successful');
+                    })->whereDoesntHave('scheduledSessions');
+                    break;
+                case 'scheduled':
+                    $query->whereHas('scheduledSessions');
+                    break;
+            }
+        }
+
+        // Search functionality
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('company', 'like', "%{$search}%");
+            });
+        }
+
+        $applications = $query->paginate(15);
+
+        return view('admin.consultation.partials.applications-table', compact('applications'))->render();
     }
 }

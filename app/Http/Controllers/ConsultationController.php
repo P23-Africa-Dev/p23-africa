@@ -94,6 +94,168 @@ class ConsultationController extends Controller
         return redirect()->route('consultation.consultation-summary');
     }
 
+    /**
+     * Save or update consultation form draft as user types
+     */
+    public function saveDraft(Request $request)
+    {
+        try {
+            // Basic validation for draft saves - more lenient than final submission
+            $validator = Validator::make($request->all(), [
+                'session_id' => 'required|string|max:255',
+                'full_name' => 'nullable|string|max:255',
+                'email' => 'nullable|email|max:255',
+                'phone' => 'nullable|string|max:20',
+                'company_brand_name' => 'nullable|string|max:255',
+                'website_or_handle' => 'nullable|string|max:255',
+                'industry' => 'nullable|string|max:255',
+                'business_description' => 'nullable|string|max:1000',
+                'business_goals' => 'nullable|array|max:2',
+                'business_goals.*' => 'string|max:255',
+                'key_challenges' => 'nullable|array|max:3',
+                'key_challenges.*' => 'string|max:255',
+                'motivation' => 'nullable|string|max:1000',
+                'success_definition' => 'nullable|string|max:1000',
+                'keystroke_count' => 'nullable|integer|min:0',
+                'field_interactions' => 'nullable|array',
+                'is_submission' => 'nullable|boolean'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid data provided',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            $data = $validator->validated();
+            $isSubmission = $data['is_submission'] ?? false;
+
+            // Prepare data for storage
+            $consultationData = [
+                'session_id' => $data['session_id'],
+                'name' => !empty($data['full_name']) ? strip_tags($data['full_name']) : null,
+                'email' => !empty($data['email']) ? filter_var($data['email'], FILTER_SANITIZE_EMAIL) : null,
+                'phone' => !empty($data['phone']) ? strip_tags($data['phone']) : null,
+                'company' => !empty($data['company_brand_name']) ? strip_tags($data['company_brand_name']) : null,
+                'website_or_handle' => !empty($data['website_or_handle']) ? strip_tags($data['website_or_handle']) : null,
+                'industry' => !empty($data['industry']) ? strip_tags($data['industry']) : null,
+                'business_description' => !empty($data['business_description']) ? strip_tags($data['business_description']) : null,
+                'selected_goals' => $data['business_goals'] ?? null,
+                'selected_challenges' => $data['key_challenges'] ?? null,
+                'desired_outcomes' => !empty($data['motivation']) || !empty($data['success_definition']) ? json_encode([
+                    'motivation' => $data['motivation'] ?? null,
+                    'success_definition' => $data['success_definition'] ?? null
+                ]) : null,
+                'keystroke_count' => $data['keystroke_count'] ?? 0,
+                'field_interactions' => $data['field_interactions'] ?? null,
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+                'last_activity_at' => now(),
+                'status' => $isSubmission ? 'pending' : 'draft'
+            ];
+
+            // Add draft-specific fields
+            if (!$isSubmission) {
+                $consultationData['draft_created_at'] = now();
+                $consultationData['draft_data'] = json_encode($data);
+            } else {
+                $consultationData['submitted_at'] = now();
+            }
+
+            // Find existing draft or create new one
+            $application = ConsultationApplication::where('session_id', $data['session_id'])
+                ->first();
+
+            if ($application) {
+                // If this is a submission and the record is already submitted, avoid duplicate
+                if ($isSubmission && $application->status !== 'draft') {
+                    Log::warning('Duplicate consultation submission attempt via live capture', [
+                        'session_id' => $data['session_id'],
+                        'application_id' => $application->id,
+                        'email' => $application->email
+                    ]);
+
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Form already submitted successfully!',
+                        'application_id' => $application->id,
+                        'status' => $application->status
+                    ]);
+                }
+
+                // Update existing draft/submission
+                if ($isSubmission) {
+                    $consultationData['submitted_at'] = now();
+                }
+
+                $application->update($consultationData);
+
+                Log::info('Consultation draft updated', [
+                    'session_id' => $data['session_id'],
+                    'application_id' => $application->id,
+                    'is_submission' => $isSubmission
+                ]);
+            } else {
+                // Check for duplicate based on email if this is a submission
+                if ($isSubmission && !empty($consultationData['email'])) {
+                    $duplicateCheck = ConsultationApplication::where('email', $consultationData['email'])
+                        ->where('created_at', '>=', now()->subMinutes(5))
+                        ->first();
+
+                    if ($duplicateCheck) {
+                        Log::warning('Duplicate consultation submission attempt detected in saveDraft', [
+                            'email' => $consultationData['email'],
+                            'existing_id' => $duplicateCheck->id
+                        ]);
+
+                        return response()->json([
+                            'success' => true,
+                            'message' => 'Application already submitted recently!',
+                            'application_id' => $duplicateCheck->id,
+                            'status' => $duplicateCheck->status
+                        ]);
+                    }
+                }
+
+                // Create new draft/submission
+                $application = ConsultationApplication::create($consultationData);
+
+                Log::info('New consultation draft created', [
+                    'session_id' => $data['session_id'],
+                    'application_id' => $application->id,
+                    'is_submission' => $isSubmission
+                ]);
+            }
+
+            // If this is a final submission, handle additional processing
+            if ($isSubmission && $application->status === 'pending') {
+                // Store application ID in session for next steps
+                Session::put('consultation_application_id', $application->id);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => $isSubmission ? 'Application submitted successfully!' : 'Draft saved',
+                'application_id' => $application->id,
+                'status' => $application->status
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Consultation draft save error', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'session_id' => $request->input('session_id'),
+                'input' => $request->all()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to save draft'
+            ], 500);
+        }
+    }
+
     public function showSummary()
     {
         $applicationId = Session::get('consultation_application_id');
@@ -224,7 +386,7 @@ class ConsultationController extends Controller
 
             // Create PaymentIntent
             $paymentIntent = PaymentIntent::create([
-                'amount' => 7500, // $75.00 in cents
+                'amount' => 100, // $75.00 in cents (75 * 100)
                 'currency' => 'usd',
                 'metadata' => [
                     'application_id' => $application->id,
@@ -280,10 +442,42 @@ class ConsultationController extends Controller
                 ->with('error', 'Application not found.');
         }
 
-        // Find or create payment record
-        $payment = Payment::where('consultation_application_id', $application->id)
-            ->where('status', 'pending')
-            ->first();
+        Log::info('Payment callback received', [
+            'gateway' => $request->gateway,
+            'transaction_id' => $request->transaction_id,
+            'status' => $request->status,
+            'application_id' => $application->id
+        ]);
+
+        // Find payment record - for Stripe, look by payment_reference first since it was set during PaymentIntent creation
+        $payment = null;
+
+        if ($request->gateway === 'stripe') {
+            // For Stripe, first try to find by the payment_reference (PaymentIntent ID)
+            $payment = Payment::where('payment_reference', $request->transaction_id)
+                ->where('consultation_application_id', $application->id)
+                ->first();
+
+            Log::info('Stripe payment lookup by reference', [
+                'payment_reference' => $request->transaction_id,
+                'found' => $payment ? true : false,
+                'payment_id' => $payment ? $payment->id : null
+            ]);
+        }
+
+        // If not found by payment_reference, try the original method
+        if (!$payment) {
+            $payment = Payment::where('consultation_application_id', $application->id)
+                ->where('status', 'pending')
+                ->first();
+
+            Log::info('Payment lookup by application and pending status', [
+                'application_id' => $application->id,
+                'found' => $payment ? true : false,
+                'payment_id' => $payment ? $payment->id : null,
+                'current_reference' => $payment ? $payment->payment_reference : null
+            ]);
+        }
 
         if (!$payment) {
             // Create payment record if doesn't exist (direct callback scenario)
@@ -302,12 +496,28 @@ class ConsultationController extends Controller
 
         // Map external gateway status to our DB enum values
         if ($request->status === 'successful' || $request->status === 'success') {
-            $payment->update([
+            // For Stripe payments that already have the correct payment_reference, don't update it again
+            $updateData = [
                 'status' => 'successful',
                 'paid_at' => now(),
-                'payment_reference' => $request->transaction_id,
                 'payment_data' => $paymentData,
+            ];
+
+            // Only update payment_reference if it's different (to avoid unique constraint violation)
+            $referenceNeedsUpdate = $payment->payment_reference !== $request->transaction_id;
+            if ($referenceNeedsUpdate) {
+                $updateData['payment_reference'] = $request->transaction_id;
+            }
+
+            Log::info('Updating payment to successful', [
+                'payment_id' => $payment->id,
+                'current_reference' => $payment->payment_reference,
+                'new_reference' => $request->transaction_id,
+                'reference_needs_update' => $referenceNeedsUpdate,
+                'update_data_keys' => array_keys($updateData)
             ]);
+
+            $payment->update($updateData);
 
             // Mark application as paid
             $payment->consultationApplication->update(['status' => 'paid']);
@@ -316,11 +526,17 @@ class ConsultationController extends Controller
             return redirect()->route('consultation.payment-success');
         } elseif ($request->status === 'pending_verification' || $request->status === 'pending' || $request->status === 'processing') {
             // Handle bank transfers and other delayed verification payments
-            $payment->update([
+            $updateData = [
                 'status' => 'pending',
-                'payment_reference' => $request->transaction_id,
                 'payment_data' => $paymentData,
-            ]);
+            ];
+
+            // Only update payment_reference if it's different (to avoid unique constraint violation)
+            if ($payment->payment_reference !== $request->transaction_id) {
+                $updateData['payment_reference'] = $request->transaction_id;
+            }
+
+            $payment->update($updateData);
 
             // Mark application as paid for bank transfers (trust the payment gateway)
             // Bank transfers will be verified by Flutterwave webhook later
@@ -333,11 +549,17 @@ class ConsultationController extends Controller
             return redirect()->route('consultation.payment-success');
         } else {
             // Any other status => failed
-            $payment->update([
+            $updateData = [
                 'status' => 'failed',
-                'payment_reference' => $request->transaction_id,
                 'payment_data' => $paymentData,
-            ]);
+            ];
+
+            // Only update payment_reference if it's different (to avoid unique constraint violation)
+            if ($payment->payment_reference !== $request->transaction_id) {
+                $updateData['payment_reference'] = $request->transaction_id;
+            }
+
+            $payment->update($updateData);
 
             return redirect()->route('consultation.payment-selection')
                 ->with('error', 'Payment failed. Please try again.');

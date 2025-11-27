@@ -262,7 +262,7 @@
         <!-- Header -->
         <div class="header">
             <div class="email-icon">
-                <img src="https://p23africa.com/img/calendar-icon.png" alt="Calendar" width="115" height="98">
+                <img src="https://p23africa.com/img/success-icon.png" alt="Calendar" width="115" height="98">
             </div>
             <h1 class="greeting">Hello {{ $scheduledSession->name }},</h1>
             <p class="subtitle">Your consultation with <br>P23 Africa is confirmed.</p>
@@ -291,7 +291,7 @@
                     <span class="detail-label">Time:</span>
                     <span
                         class="detail-value">{{ \Carbon\Carbon::parse($scheduledSession->consultation_date)->format('g:i A') }}
-                        (EAT)</span>
+                    </span>
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">Duration:</span>

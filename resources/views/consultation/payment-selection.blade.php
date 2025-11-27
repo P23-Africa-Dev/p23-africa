@@ -251,15 +251,6 @@
                     <h3>Choose Payment Method</h3>
 
                     <div class="payment-options">
-                        <label class="payment-option" for="flutterwave" data-gateway="flutterwave">
-                            <input type="radio" id="flutterwave" name="payment_method" value="flutterwave" required>
-                            <img src="{{ asset('img/stripe-logo.png') }}" alt="Flutterwave" class="payment-logo"
-                                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                            <div style="display:none; font-size: 2rem; color: #f5a623;">💳</div>
-                            <h4>Flutterwave</h4>
-                            <p>Pay with cards, bank transfers, mobile money and more payment methods across Africa</p>
-                        </label>
-
                         <label class="payment-option" for="stripe" data-gateway="stripe">
                             <input type="radio" id="stripe" name="payment_method" value="stripe" required>
                             <img src="{{ asset('img/stripe-logo.png') }}" alt="Stripe" class="payment-logo"
@@ -267,6 +258,15 @@
                             <div style="display:none; font-size: 2rem; color: #635bff;">💳</div>
                             <h4>Stripe</h4>
                             <p>Secure payment processing with major credit cards and digital wallets worldwide</p>
+                        </label>
+
+                        <label class="payment-option" for="flutterwave" data-gateway="flutterwave">
+                            <input type="radio" id="flutterwave" name="payment_method" value="flutterwave" required>
+                            <img src="{{ asset('img/stripe-logo.png') }}" alt="Flutterwave" class="payment-logo"
+                                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <div style="display:none; font-size: 2rem; color: #f5a623;">💳</div>
+                            <h4>Flutterwave</h4>
+                            <p>Pay with cards, bank transfers, mobile money and more payment methods across Africa</p>
                         </label>
                     </div>
 

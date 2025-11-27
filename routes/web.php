@@ -236,6 +236,12 @@ Route::get('/book', function () {
 // Consultation Application Routes
 Route::get('/book-consultation/form', [App\Http\Controllers\ConsultationController::class, 'showApplicationForm'])->name('consultation.application-forms');
 Route::post('/book-consultation/submit', [App\Http\Controllers\ConsultationController::class, 'submitApplication'])->name('consultation.submit');
+Route::post('/book-consultation/save-draft', [App\Http\Controllers\ConsultationController::class, 'saveDraft'])->name('consultation.save-draft');
+
+// Test route for live form capture
+Route::get('/test-live-capture', function () {
+    return view('test-live-capture');
+})->name('test.live-capture');
 
 // Consultation Summary
 Route::get('/book-consultation/summary', [App\Http\Controllers\ConsultationController::class, 'showSummary'])->name('consultation.consultation-summary');
@@ -323,6 +329,8 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|staff'])->prefix('admi
         Route::post('/consultations/{id}/update-status', [\App\Http\Controllers\Admin\ConsultationController::class, 'updateStatus'])->name('consultation.updateStatus');
         Route::post('/consultations/{id}/reply', [\App\Http\Controllers\Admin\ConsultationController::class, 'sendReply'])->name('consultation.reply');
         Route::post('/consultation/chat/mark-read/{messageId}', [\App\Http\Controllers\Admin\ConsultationController::class, 'markMessageAsRead'])->name('consultation.chat.markRead');
+        Route::get('/consultation/draft-stats', [\App\Http\Controllers\Admin\ConsultationController::class, 'getDraftStats'])->name('consultation.draft-stats');
+        Route::get('/consultation/applications-table', [\App\Http\Controllers\Admin\ConsultationController::class, 'getApplicationsTable'])->name('consultation.applications-table');
     });
 
     // Route::get('/staff/create', [StaffController::class, 'create'])->name('admin.staff.create');
@@ -417,3 +425,66 @@ Route::middleware('auth')->group(function () {
 
 
 require __DIR__ . '/auth.php';
+
+Route::get('/test-admin-debug', function () {
+    $applications = App\Models\ConsultationApplication::with(['payments', 'scheduledSessions'])
+        ->orderBy('created_at', 'desc')
+        ->paginate(15);
+
+    $output = 'Applications found: ' . $applications->count() . PHP_EOL . PHP_EOL;
+
+    foreach ($applications as $app) {
+        $output .= 'ID: ' . $app->id . PHP_EOL;
+        $output .= 'Name: ' . ($app->name ?? 'NULL') . PHP_EOL;
+        $output .= 'Email: ' . ($app->email ?? 'NULL') . PHP_EOL;
+        $output .= 'Status: ' . $app->status . PHP_EOL;
+        $output .= 'Is Draft: ' . ($app->isDraft() ? 'YES' : 'NO') . PHP_EOL;
+        $output .= 'Created: ' . $app->created_at . PHP_EOL;
+        $output .= 'Session ID: ' . ($app->session_id ?? 'NULL') . PHP_EOL;
+        $output .= '---' . PHP_EOL;
+    }
+
+    return response($output, 200, ['Content-Type' => 'text/plain']);
+});
+
+Route::get('/test-admin-consultation', function () {
+    // Simulate the exact admin controller logic
+    $query = App\Models\ConsultationApplication::with(['payments', 'scheduledSessions'])
+        ->orderBy('created_at', 'desc');
+
+    $applications = $query->paginate(15);
+
+    // Get statistics
+    $controller = new App\Http\Controllers\Admin\ConsultationController();
+    $stats = $controller->getConsultationStats();
+
+    $html = '<h1>Admin Consultation Dashboard Test</h1>';
+    $html .= '<p>Total Applications: ' . $stats['total_applications'] . '</p>';
+    $html .= '<p>Total Drafts: ' . $stats['total_drafts'] . '</p>';
+    $html .= '<p>Active Drafts: ' . $stats['active_drafts'] . '</p>';
+    $html .= '<h2>Applications:</h2>';
+    $html .= '<table border="1" cellpadding="5" cellspacing="0">';
+    $html .= '<tr><th>ID</th><th>Name</th><th>Email</th><th>Status</th><th>Is Draft</th><th>Session ID</th></tr>';
+
+    foreach ($applications as $app) {
+        $html .= '<tr>';
+        $html .= '<td>' . $app->id . '</td>';
+        $html .= '<td>' . ($app->name ?? 'NULL') . '</td>';
+        $html .= '<td>' . ($app->email ?? 'NULL') . '</td>';
+        $html .= '<td>' . $app->status . '</td>';
+        $html .= '<td>' . ($app->isDraft() ? 'YES' : 'NO') . '</td>';
+        $html .= '<td>' . ($app->session_id ?? 'NULL') . '</td>';
+        $html .= '</tr>';
+    }
+    $html .= '</table>';
+
+    return $html;
+});
+
+Route::get('/test-applications-table', function () {
+    $applications = App\Models\ConsultationApplication::with(['payments', 'scheduledSessions'])
+        ->orderBy('created_at', 'desc')
+        ->paginate(15);
+
+    return view('admin.consultation.partials.applications-table', compact('applications'))->render();
+});

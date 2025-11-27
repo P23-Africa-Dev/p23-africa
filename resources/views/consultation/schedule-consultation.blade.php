@@ -484,6 +484,8 @@
         transition: bottom 1.3s ease;
         display: flex;
         justify-content: end;
+
+
     }
 
     .call-for-help.raise-up {
