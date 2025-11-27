@@ -1118,10 +1118,10 @@
     <x-live-form-capture formId="multiStepForm" :saveUrl="route('consultation.save-draft')" :saveInterval="3000" :enableLogging="true">
 
         <!-- Live Capture Status Indicator (for testing) -->
-        <div id="live-capture-status"
+        {{-- <div id="live-capture-status"
             style="position: fixed; top: 10px; right: 10px; z-index: 9999; padding: 8px 12px; background: #28a745; color: white; border-radius: 5px; font-size: 12px; display: none;">
             <i class="fa fa-wifi"></i> Live Capture Active
-        </div>
+        </div> --}}
 
         <section class="multistep-form-container">
             <div class="multi-step-wrapper">
@@ -2841,22 +2841,22 @@
             }, 12000);
 
             // Show indicator briefly when user types
-            document.addEventListener('input', function(e) {
-                if (statusIndicator && e.target.closest('form')) {
-                    statusIndicator.style.display = 'block';
-                    statusIndicator.innerHTML = '<i class="fa fa-sync fa-spin"></i> Saving Draft...';
-                    statusIndicator.style.background = '#ffc107';
+            // document.addEventListener('input', function(e) {
+            //     if (statusIndicator && e.target.closest('form')) {
+            //         statusIndicator.style.display = 'block';
+            //         statusIndicator.innerHTML = '<i class="fa fa-sync fa-spin"></i> Saving Draft...';
+            //         statusIndicator.style.background = '#ffc107';
 
-                    setTimeout(() => {
-                        statusIndicator.innerHTML = '<i class="fa fa-check"></i> Draft Saved';
-                        statusIndicator.style.background = '#28a745';
+            //         setTimeout(() => {
+            //             statusIndicator.innerHTML = '<i class="fa fa-check"></i> Draft Saved';
+            //             statusIndicator.style.background = '#28a745';
 
-                        setTimeout(() => {
-                            statusIndicator.style.display = 'none';
-                        }, 2000);
-                    }, 1000);
-                }
-            });
+            //             setTimeout(() => {
+            //                 statusIndicator.style.display = 'none';
+            //             }, 2000);
+            //         }, 1000);
+            //     }
+            // });
         });
     </script>
 
