@@ -2817,6 +2817,9 @@
         function updateTimeRestrictions() {
             const timeRestrictionNotice = document.getElementById('timeRestrictionNotice');
 
+            // Always hide other notice so only 1 message is active
+            hideWorkingHoursNotice();
+
             if (!selectedDate) {
                 if (timeRestrictionNotice) timeRestrictionNotice.style.display = 'none';
                 return;
@@ -2832,6 +2835,8 @@
                 if (timeRestrictionNotice) timeRestrictionNotice.style.display = 'none';
             }
         }
+
+
 
         function restrictTimeToCurrentPlusOne() {
             const now = new Date();
@@ -3200,6 +3205,12 @@
         let workingHoursNoticeTimeout;
 
         function showWorkingHoursNotice(msg) {
+
+            // Hide the date-based message if showing
+            const trNotice = document.getElementById('timeRestrictionNotice');
+            if (trNotice) {
+                trNotice.style.display = 'none';
+            }
             // Clear any existing timeout (use window-scoped var to be safe)
             if (window.workingHoursNoticeTimeout) {
                 clearTimeout(window.workingHoursNoticeTimeout);
@@ -3272,6 +3283,18 @@
         }
 
 
+        function hideWorkingHoursNotice() {
+            const n = document.getElementById('workingHoursNotice');
+            if (!n) return;
+
+            n.style.opacity = '0';
+            // also stop future timers
+            if (window.workingHoursNoticeTimeout) {
+                clearTimeout(window.workingHoursNoticeTimeout);
+            }
+        }
+
+
 
         /* ------------------------- Accessibility: keyboard open/close for dropdowns ------------------------- */
         /* Provide space/enter to open focused dropdowns */
@@ -3315,9 +3338,10 @@
         const chatInput = document.getElementById('chat-input');
         const sendBtn = document.getElementById('send-btn');
 
-     // Get application data from session
+        // Get application data from session
         const applicationId = {{ Session::get('consultation_application_id', 'null') }};
         const applicationData = @json(optional($application));
+
 
 
 
