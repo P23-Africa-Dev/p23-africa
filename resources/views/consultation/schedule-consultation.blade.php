@@ -168,6 +168,7 @@
         letter-spacing: 1.4px;
         margin-top: 30px;
         font-size: 21px;
+        white-space: nowrap;
     }
 
     .nav-row {
