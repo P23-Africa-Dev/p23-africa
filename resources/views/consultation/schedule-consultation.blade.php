@@ -1393,6 +1393,21 @@
         animation: bounceNotice 0.45s ease;
     }
 
+    /* show that wheel is fixed and prevent pointer interactions */
+    .time-wheel-locked {
+        cursor: default;
+    }
+
+    .time-wheel-locked .time-wheel-list {
+        pointer-events: none;
+        /* prevents accidental selection/clicks */
+    }
+
+    .time-wheel-locked .time-wheel-item {
+        opacity: 1;
+        /* keep normal appearance; you can dim it if you prefer */
+    }
+
 
     @media (max-width: 767px) {
         .month-year-inputs {
@@ -2363,11 +2378,12 @@
                 items: [],
                 currentIndex: 0
             }, // Default to 00
+            // SECOND wheel: only include "00" so it is fixed
             second: {
                 element: null,
-                items: [],
+                items: ['00'],
                 currentIndex: 0
-            }, // Default to 00
+            }, // Fixed to 00
             ampm: {
                 element: null,
                 items: ['AM', 'PM'],
@@ -2376,25 +2392,27 @@
         };
 
         // Initialize time wheels
+        // Initialize time wheels
         function initTimeWheels() {
             // Generate hours (10 AM to 8 PM only)
-            // 10 AM, 11 AM, 12 PM, 1 PM, 2 PM, 3 PM, 4 PM, 5 PM, 6 PM, 7 PM, 8 PM
             const allowedHours = [10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8];
+            timeWheels.hour.items = []; // reset to be safe
             allowedHours.forEach(hour => {
                 timeWheels.hour.items.push(String(hour).padStart(2, '0'));
             });
 
-            // Generate minutes/seconds (00-59)
+            // Generate minutes (00-59). NOTE: seconds are intentionally not generated beyond '00'
+            timeWheels.minute.items = [];
             for (let i = 0; i <= 59; i++) {
                 timeWheels.minute.items.push(String(i).padStart(2, '0'));
-                timeWheels.second.items.push(String(i).padStart(2, '0'));
             }
+
+            // second.items already set to ['00'] above and currentIndex 0
 
             // Set default time to 10:00 AM (or current time if within working hours)
             const now = new Date();
             let currentHour = now.getHours();
             const currentMinute = now.getMinutes();
-            const currentSecond = 0; // Set seconds to 00 by default
 
             let defaultHourIndex = 0; // 10 AM by default
             let defaultAmPmIndex = 0; // AM by default
@@ -2402,7 +2420,6 @@
 
             // Check if current time is within working hours (10 AM - 8 PM)
             if (currentHour >= 10 && currentHour <= 20) {
-                // Convert to 12-hour format for display
                 let displayHour = currentHour;
                 let ampm = 'AM';
 
@@ -2413,7 +2430,6 @@
                     }
                 }
 
-                // Find the index in our allowed hours
                 const hourIndex = timeWheels.hour.items.findIndex(h => parseInt(h) === displayHour);
                 if (hourIndex !== -1) {
                     defaultHourIndex = hourIndex;
@@ -2425,13 +2441,13 @@
             // Update default indices
             timeWheels.hour.currentIndex = defaultHourIndex;
             timeWheels.minute.currentIndex = defaultMinuteIndex;
-            timeWheels.second.currentIndex = 0;
+            timeWheels.second.currentIndex = 0; // always 0 (00)
             timeWheels.ampm.currentIndex = defaultAmPmIndex;
 
             // Setup each wheel
             setupTimeWheel('hour');
             setupTimeWheel('minute');
-            setupTimeWheel('second');
+            setupTimeWheel('second'); // will be built but locked
             setupTimeWheel('ampm');
 
             // Update initial display
@@ -2440,6 +2456,7 @@
 
         function setupTimeWheel(type) {
             const wheel = document.getElementById(`${type}-wheel`);
+            if (!wheel) return;
             const list = wheel.querySelector('.time-wheel-list');
 
             timeWheels[type].element = wheel;
@@ -2463,7 +2480,19 @@
             // Update active item
             updateActiveItem(type);
 
-            // Add scroll functionality
+            // If this is the second wheel, lock it: don't attach any scroll/drag listeners
+            if (type === 'second') {
+                // add a marker class so CSS can render it as locked
+                wheel.classList.add('time-wheel-locked');
+
+                // ensure it always stays at index 0 and transform exactly matches index 0
+                timeWheels.second.currentIndex = 0;
+                list.style.transform = `translateY(${0}px)`;
+                updateActiveItem('second');
+                return;
+            }
+
+            // Add scroll functionality for non-locked wheels (hour, minute, ampm)
             let isScrolling = false;
             let startY = 0;
             let startTransform = 0;
@@ -2531,7 +2560,9 @@
             }
         }
 
+        // Only allow scrolling for non-locked wheels
         function scrollWheel(type, direction) {
+            if (type === 'second') return; // guard: seconds are locked
             const newIndex = Math.max(0, Math.min(
                 timeWheels[type].items.length - 1,
                 timeWheels[type].currentIndex + direction
@@ -3338,9 +3369,12 @@
         const chatInput = document.getElementById('chat-input');
         const sendBtn = document.getElementById('send-btn');
 
+
         // Get application data from session
         const applicationId = {{ Session::get('consultation_application_id', 'null') }};
         const applicationData = @json(optional($application));
+
+
 
 
 
