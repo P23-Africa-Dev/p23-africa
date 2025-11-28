@@ -116,12 +116,21 @@
             },
 
             addSessionIdToForm() {
-                if (!this.form.querySelector('input[name="session_id"]')) {
-                    const sessionInput = document.createElement('input');
+                // Check if session_id input already exists
+                let sessionInput = this.form.querySelector('input[name="session_id"]');
+
+                if (sessionInput) {
+                    // Update existing input's value
+                    sessionInput.value = this.sessionId;
+                    this.log('Updated existing session_id input with value:', this.sessionId);
+                } else {
+                    // Create new hidden input if it doesn't exist
+                    sessionInput = document.createElement('input');
                     sessionInput.type = 'hidden';
                     sessionInput.name = 'session_id';
                     sessionInput.value = this.sessionId;
                     this.form.appendChild(sessionInput);
+                    this.log('Created new session_id input with value:', this.sessionId);
                 }
             },
 
@@ -134,7 +143,7 @@
                 inputs.forEach((input, index) => {
                     this.log(
                         `Setting up listeners for input ${index + 1}: ${input.name || input.id || input.type}`
-                        );
+                    );
 
                     // Track field interactions
                     input.addEventListener('focus', (e) => {
@@ -160,7 +169,7 @@
                         this.scheduleSave();
                         this.log(
                             `Input event on: ${e.target.name || e.target.id}, keystroke count: ${this.keystrokeCount}`
-                            );
+                        );
                     });
 
                     // Track selections for select/radio/checkbox
@@ -171,7 +180,7 @@
                         this.scheduleSave();
                         this.log(
                             `Change event on: ${e.target.name || e.target.id}, value: ${e.target.value}`
-                            );
+                        );
                     });
                 });
 

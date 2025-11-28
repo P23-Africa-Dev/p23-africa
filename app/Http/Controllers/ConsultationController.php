@@ -71,12 +71,32 @@ class ConsultationController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        // Create consultation application
-        $application = ConsultationApplication::create([
+        // Check if there's an existing draft for this session
+        $sessionId = $request->input('session_id');
+        $application = null;
+
+        if ($sessionId) {
+            // Try to find existing draft by session_id
+            $application = ConsultationApplication::where('session_id', $sessionId)
+                ->where('status', 'draft')
+                ->first();
+        }
+
+        // If no draft found by session, check by email to avoid duplicates
+        if (!$application && $request->email) {
+            $application = ConsultationApplication::where('email', $request->email)
+                ->where('status', 'draft')
+                ->where('created_at', '>=', now()->subHours(24))
+                ->first();
+        }
+
+        // Prepare the application data
+        $applicationData = [
             'name' => $request->full_name,
             'email' => $request->email,
             'phone' => $request->phone,
             'company' => $request->company_brand_name,
+            'website_or_handle' => $request->website_or_handle,
             'industry' => $request->industry,
             'business_description' => $request->business_description,
             'selected_goals' => $request->business_goals,
@@ -85,8 +105,26 @@ class ConsultationController extends Controller
                 'motivation' => $request->motivation,
                 'success_definition' => $request->success_definition
             ]),
-            'status' => 'pending'
-        ]);
+            'status' => 'pending',
+            'submitted_at' => now()
+        ];
+
+        if ($application) {
+            // Update existing draft to submitted status
+            $application->update($applicationData);
+            Log::info('Consultation draft updated to submitted', [
+                'application_id' => $application->id,
+                'session_id' => $sessionId,
+                'email' => $request->email
+            ]);
+        } else {
+            // Create new consultation application if no draft exists
+            $application = ConsultationApplication::create($applicationData);
+            Log::info('New consultation application created', [
+                'application_id' => $application->id,
+                'email' => $request->email
+            ]);
+        }
 
         // Store application ID in session for next steps
         Session::put('consultation_application_id', $application->id);
@@ -678,11 +716,12 @@ class ConsultationController extends Controller
             $calendarService = new GoogleCalendarService();
 
             // Get admin email from config or environment
-            $adminEmail = env('ADMIN_EMAIL', 'admin@p23africa.com');
+            $adminEmail = env('ADMIN_EMAIL', 'contact@p23africa.com');
 
             // Prepare event details
-            $eventSummary = 'P23 Africa Business Consultation - ' . $application->name;
-            $eventDescription = "90-minute business consultation session\n\n"
+            // $eventSummary = 'P23 Africa Business Consultation - ' . $application->name;
+            $eventSummary = 'P23 Africa Consultation';
+            $eventDescription = "90-minute consultation session\n\n"
                 . "Client: {$application->name}\n"
                 . "Company: {$application->company}\n"
                 . "Industry: {$application->industry}\n"
