@@ -122,7 +122,8 @@
             font-size: 1.5rem;
             font-weight: bold;
         }
-        .logo img{
+
+        .logo img {
             width: 60px;
             height: 40px;
         }
@@ -169,7 +170,7 @@
             </p>
 
             @auth
-                @if (auth()->user()->hasRole(['admin', 'staff']))
+                @if (auth()->user()->hasRole(['admin', 'supervisor', 'staff']))
                     <a href="{{ route('admin.dashboard') }}" class="btn-dashboard">
                         <i class="fas fa-tachometer-alt"></i>
                         Back to Dashboard

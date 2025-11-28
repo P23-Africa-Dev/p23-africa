@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Mail\StaffPromotedToAdminMail;
+use App\Mail\StaffPromotedToSupervisorMail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -18,7 +18,8 @@ class StaffController extends Controller
 {
     public function index()
     {
-        $staff = User::role('staff')->paginate(10);
+        // Show both supervisors and staff (exclude admins)
+        $staff = User::role(['supervisor', 'staff'])->paginate(10);
         return view('admin.staff.index', compact('staff'));
     }
 
@@ -45,7 +46,7 @@ class StaffController extends Controller
         ]);
 
 
-        // Ensure staff role exists
+        // Assign staff role to new users
         $role = Role::firstOrCreate(['name' => 'staff']);
         $user->assignRole($role);
 
@@ -126,20 +127,24 @@ class StaffController extends Controller
 
     public function promote(User $staff)
     {
-        // Ensure only staff can be promoted
+        // Ensure only staff can be promoted to supervisor
+        if ($staff->hasRole('supervisor')) {
+            return back()->with('error', 'User is already a supervisor.');
+        }
+
         if ($staff->hasRole('admin')) {
             return back()->with('error', 'User is already an admin.');
         }
 
-        $staff->syncRoles('admin'); // Replace 'staff' with 'admin'
+        $staff->syncRoles('supervisor'); // Promote staff to supervisor
 
-        Mail::to($staff->email)->send(new StaffPromotedToAdminMail($staff));
+        Mail::to($staff->email)->send(new StaffPromotedToSupervisorMail($staff));
 
         // activity()
         //     ->causedBy(Auth::user())
         //     ->performedOn($staff)
-        //     ->log('Promoted staff to admin');
+        //     ->log('Promoted staff to supervisor');
 
-        return redirect()->back()->with('success', 'Staff promoted to admin successfully.');
+        return redirect()->back()->with('success', 'Staff promoted to supervisor successfully.');
     }
 }

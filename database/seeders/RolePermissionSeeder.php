@@ -21,9 +21,9 @@ class RolePermissionSeeder extends Seeder
         }
 
         $adminRole = Role::firstOrCreate(['name' => 'admin']);
-        $staffRole = Role::firstOrCreate(['name' => 'staff']);
+        $supervisorRole = Role::firstOrCreate(['name' => 'supervisor']);
 
         $adminRole->syncPermissions(Permission::all());
-        $staffRole->syncPermissions(['manage_events', 'view_students']);
+        $supervisorRole->syncPermissions(['manage_events', 'view_students']);
     }
 }

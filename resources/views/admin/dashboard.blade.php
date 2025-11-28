@@ -21,6 +21,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
             <!-- Quick Stats Section -->
+            @if (auth()->user() && auth()->user()->hasRole('admin', 'supervisor'))
             <div class="row mb-4">
                 <div class="col-md-3 mb-3">
                     <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition">
@@ -86,9 +87,10 @@
                     </div>
                 </div>
             </div>
+            @endif
 
             <!-- Contact Stats Row -->
-            @if (auth()->user() && auth()->user()->hasRole('admin'))
+            @if (auth()->user() && auth()->user()->hasRole('admin', 'supervisor'))
                 <div class="row mb-4">
                     <div class="col-md-4 mb-3">
                         <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition">
@@ -145,6 +147,7 @@
             @endif
 
             <!-- Consultation Stats Row -->
+            @if (auth()->user() && auth()->user()->hasRole('admin', 'supervisor'))
             <div class="row mb-4">
                 <div class="col-md-3 mb-3">
                     <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition">
@@ -215,6 +218,7 @@
                     </div>
                 </div>
             </div>
+            @endif
 
             <!-- Main Dashboard Cards -->
             <div class="row">
