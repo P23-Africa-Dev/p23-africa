@@ -83,7 +83,7 @@
 
                                         <p class="text-muted small mb-3"
                                             style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
-                                            {{ $project->description ?? 'No description available' }}
+                                            {{ strip_tags($project->description ?? 'No description available') }}
                                         </p>
 
                                         <div class="d-flex gap-2 mb-3 flex-wrap">

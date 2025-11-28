@@ -22,7 +22,7 @@
                                     class="badge {{ $project->priority_badge_class }}">{{ ucfirst($project->priority) }}
                                     Priority</span>
                             </div>
-                            <p class="text-muted mb-0">{{ $project->description ?? 'No description' }}</p>
+                            <p class="text-muted mb-0">{{ strip_tags($project->description ?? 'No description available') }}</p>
                         </div>
                         <div class="d-flex gap-2">
                             <a href="{{ route('admin.projects.index') }}" class="btn btn-outline-secondary">
@@ -164,7 +164,7 @@
                                                 <div class="fw-semibold">{{ $task->title }}</div>
                                                 @if ($task->description)
                                                     <small
-                                                        class="text-muted">{{ Str::limit($task->description, 50) }}</small>
+                                                        class="text-muted">{{ Str::limit(strip_tags($task->description), 50) }}</small>
                                                 @endif
                                             </td>
                                             <td>
