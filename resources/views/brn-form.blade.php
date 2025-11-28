@@ -408,7 +408,7 @@
         transform: translateY(-10px);
         transition: all 0.3s ease;
         overflow-y: auto;
-        z-index: 10;
+        z-index: 0;
         font-family: "GT Walsheim Trial Md";
         font-weight: 400;
         max-height: 180px;
@@ -435,6 +435,12 @@
         background: #ffffffac;
     }
 
+    div#countryReg-options{
+        scrollbar-width: none;
+        
+    }
+
+
 
 
     /* Scrollable options container */
@@ -442,6 +448,8 @@
         max-height: 200px;
         overflow-y: auto;
         overflow-x: hidden;
+        z-index: 10;
+        position: relative;
     }
 
     /* Custom scrollbar for options */
@@ -455,12 +463,12 @@
     }
 
     .custom-options-scrollable::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.3);
+         background: #fff;
         border-radius: 3px;
     }
 
     .custom-options-scrollable::-webkit-scrollbar-thumb:hover {
-        background: rgba(255, 255, 255, 0.5);
+          background: #ffffffac;
     }
 
     /* Search input for country dropdown */
@@ -478,6 +486,10 @@
         border-radius: 0;
         width: 100%;
         box-sizing: border-box;
+    }
+    input#countrySearchReg{
+        z-index: 40;
+
     }
 
     .country-search::placeholder {
@@ -2146,8 +2158,8 @@
                                                 <polyline points="6 9 12 15 18 9"></polyline>
                                             </svg>
                                         </div>
-                                        <div class="custom-options">
-                                            <input type="text" class="country-search"
+                                        <div class="custom-options countryReg-options" id="countryReg-options">
+                                            <input type="text" class="country-search" id="countrySearchReg"
                                                 placeholder="Search countries..." autocomplete="off">
                                             <div class="custom-options-scrollable">
                                                 <span class="custom-option" data-value="Afghanistan">Afghanistan</span>
