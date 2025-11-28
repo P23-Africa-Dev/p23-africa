@@ -114,6 +114,7 @@
 
     .form-layout-container {
         padding: 20px 22px;
+        background: #ffffffc6;
         /* padding: 20px 12px 20px 23px; */
         display: grid;
         grid-template-columns: repeat(1, 1fr);
@@ -384,6 +385,8 @@
     .custom-select-text {
         color: rgba(255, 255, 255, 0.9) !important;
         font-family: "GT Walsheim Trial Md";
+        padding-left: 7px;
+        color: #ececec80 !important;
     }
 
     /* Arrow styling */
@@ -404,12 +407,35 @@
         pointer-events: none;
         transform: translateY(-10px);
         transition: all 0.3s ease;
-        overflow: hidden;
+        overflow-y: auto;
         z-index: 10;
         font-family: "GT Walsheim Trial Md";
         font-weight: 400;
-        max-height: 200px;
+        max-height: 180px;
+
     }
+
+
+    /* Custom scrollbar for country list */
+    .custom-options::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .custom-options::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 3px;
+    }
+
+    .custom-options::-webkit-scrollbar-thumb {
+        background: #fff;
+        border-radius: 3px;
+    }
+
+    .custom-options::-webkit-scrollbar-thumb:hover {
+        background: #ffffffac;
+    }
+
+
 
     /* Scrollable options container */
     .custom-options-scrollable {
@@ -489,9 +515,9 @@
     }
 
     /* Active option (highlighted) */
-    .custom-option.active {
+    /* .custom-option.active {
         background-color: rgba(255, 255, 255, 0.25) !important;
-    }
+    } */
 
 
 
@@ -896,6 +922,10 @@
         animation: slideDown 0.3s ease-out;
     }
 
+    .error-message {
+        display: flex !important;
+    }
+
     @keyframes slideDown {
         from {
             opacity: 0;
@@ -918,33 +948,193 @@
         box-shadow: 0 0 0 3px rgba(25, 62, 71, 0.1);
     }
 
-    /* Phone input styling */
     .phone-input-container {
+        display: flex;
+        gap: 4px;
+        align-items: center;
         position: relative;
     }
 
-    .country-code-select {
-        font-size: 12px;
-        text-align: center;
+    .input-with-prefix {
+        display: flex;
         background-color: rgba(255, 255, 255, 0.2) !important;
-        border-color: #fff;
-        color: #ffffff;
+        border-radius: 30px;
+        width: 100%;
+        padding: 18px 20px;
+        border: 1px solid #fff;
     }
 
-    .country-code-select:focus {
-        background-color: rgba(255, 255, 255, 0.3);
-        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+    input#phoneNumber {
+        width: 100%;
+        flex: 1;
+        background-color: transparent !important;
+        border-radius: none;
+        border: none;
+        padding: 0px;
+        padding-left: 15px;
+
     }
 
-    .country-code-select option {
-        background-color: #137077;
-        color: #ffffff;
-        padding: 5px;
+    /* Phone prefix block inside input group */
+    .phone-prefix {
+        /* padding: 10px 12px; */
+        background: transparent;
+        padding-right: 10px;
+        /* border-left: 1px solid #ccc; */
+        border-right: 1px solid #ccc;
+        /* border-radius: 8px 0 0 8px; */
+        font-size: 10.2px;
+        /* min-width: 10px; */
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
     }
 
-    .phone-input-container input[name="phone"]:focus {
-        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+    /* When phonePrefix sits beside input */
+    .phone-input-container input#phoneNumber {
+        border-radius: 0 8px 8px 0 !important;
     }
+
+
+
+    .country-select {
+        position: relative;
+        /* width: 100%; */
+        cursor: pointer;
+    }
+
+    .selected-country {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        justify-content: center;
+        border: 1px solid #ccc;
+        padding: 4px 10px;
+        border-radius: 30px;
+        background: #4BA1A780;
+        width: 70px;
+        height: 55px;
+    }
+
+
+
+    .flag-icon {
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+    }
+
+    .flag-icon img {
+        height: 15px !important;
+        width: auto !important;
+    }
+
+    .arrow {
+        transition: transform 0.25s ease;
+        font-size: 14px;
+    }
+
+    .arrow.rotate-up {
+        transform: rotate(180deg);
+    }
+
+    .country-dropdown {
+        background: #137077;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+        border-radius: 8px;
+        margin-top: 6px;
+        display: none;
+        position: absolute;
+        z-index: 10;
+        width: 200px;
+    }
+
+    /* Scrollbar Styling */
+    .country-list::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .country-list::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 3px;
+    }
+
+    .country-list::-webkit-scrollbar-thumb {
+        background: #fff;
+        border-radius: 3px;
+    }
+
+    .country-list::-webkit-scrollbar-thumb:hover {
+        background: #ffffffac;
+
+    }
+
+
+    input#countrySearch {
+        width: 89%;
+        /* margin: 0 20px; */
+        margin: 6px 0px;
+        margin-left: 13px;
+        padding: 8px 10px;
+
+        border: none;
+        border-bottom: 1px solid #eee;
+        border-radius: 14px;
+        color: #fff;
+        font-size: 10px;
+
+    }
+
+    .country-list {
+        max-height: 180px;
+        overflow-y: auto;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    .country-list li {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 10px;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .country-list li.no-country {
+        font-size: 10px !important;
+        color: #fff !important;
+
+
+    }
+
+    .country-list li.no-country:hover {
+        font-size: 10px !important;
+        background: transparent !important;
+        color: #fff !important;
+    }
+
+    .country-list li span {
+        font-size: 10px;
+    }
+
+    .country-list li:hover {
+        background: #f4f4f4;
+    }
+
+    .country-list img {
+        object-fit: contain;
+        width: 14px;
+        height: 14px;
+    }
+
+
+
 
     /* Desktop specific styles */
     @media (min-width: 992px) {
@@ -1051,6 +1241,18 @@
 
         .interest-form-footer-contact-row>div:last-of-type span:last-of-type {
             margin-bottom: 0px;
+        }
+
+        input {
+
+            padding-left: 40px;
+        }
+
+        /* Text inside the trigger */
+        .custom-select-text {
+            /* color: rgba(255, 255, 255, 0.9) !important;
+        font-family: "GT Walsheim Trial Md"; */
+            padding-left: 20px;
         }
     }
 
@@ -1319,203 +1521,603 @@
                                     </div>
                                 </div>
 
+                                {{-- Phone Number --}}
                                 <div class="interest-form-group">
                                     <label for="phoneNumber">Phone Number</label>
-                                    <div class="phone-input-container" style="display: flex; gap: 8px;">
-                                        <!-- Country code select -->
-                                        <select name="country_code" class="country-code-select"
-                                            style="flex: 0 0 130px; border-radius: 30px; padding: 18px 12px; border: 1px solid #fff; background-color: rgba(255, 255, 255, 0.2) !important; color: #ffffff; font-size: 12px; outline: none;">
-                                            <option value="+93">🇦🇫 +93</option>
-                                            <option value="+355">🇦🇱 +355</option>
-                                            <option value="+213">🇩🇿 +213</option>
-                                            <option value="+376">🇦🇩 +376</option>
-                                            <option value="+244">🇦🇴 +244</option>
-                                            <option value="+54">🇦🇷 +54</option>
-                                            <option value="+374">🇦🇲 +374</option>
-                                            <option value="+61">🇦🇺 +61</option>
-                                            <option value="+43">🇦🇹 +43</option>
-                                            <option value="+994">🇦🇿 +994</option>
-                                            <option value="+973">🇧🇭 +973</option>
-                                            <option value="+880">🇧🇩 +880</option>
-                                            <option value="+375">🇧🇾 +375</option>
-                                            <option value="+32">🇧🇪 +32</option>
-                                            <option value="+229">🇧🇯 +229</option>
-                                            <option value="+975">🇧🇹 +975</option>
-                                            <option value="+591">🇧🇴 +591</option>
-                                            <option value="+55">🇧🇷 +55</option>
-                                            <option value="+673">🇧🇳 +673</option>
-                                            <option value="+359">🇧🇬 +359</option>
-                                            <option value="+226">🇧🇫 +226</option>
-                                            <option value="+257">🇧🇮 +257</option>
-                                            <option value="+855">🇰🇭 +855</option>
-                                            <option value="+237">🇨🇲 +237</option>
-                                            <option value="+1">🇨🇦 +1</option>
-                                            <option value="+238">🇨🇻 +238</option>
-                                            <option value="+236">🇨🇫 +236</option>
-                                            <option value="+235">🇹🇩 +235</option>
-                                            <option value="+56">🇨🇱 +56</option>
-                                            <option value="+86">🇨🇳 +86</option>
-                                            <option value="+57">🇨🇴 +57</option>
-                                            <option value="+269">🇰🇲 +269</option>
-                                            <option value="+242">🇨🇬 +242</option>
-                                            <option value="+243">🇨🇩 +243</option>
-                                            <option value="+506">🇨🇷 +506</option>
-                                            <option value="+225">🇨🇮 +225</option>
-                                            <option value="+385">🇭🇷 +385</option>
-                                            <option value="+53">🇨🇺 +53</option>
-                                            <option value="+357">🇨🇾 +357</option>
-                                            <option value="+420">🇨🇿 +420</option>
-                                            <option value="+45">🇩🇰 +45</option>
-                                            <option value="+253">🇩🇯 +253</option>
-                                            <option value="+593">🇪🇨 +593</option>
-                                            <option value="+20">🇪🇬 +20</option>
-                                            <option value="+503">🇸🇻 +503</option>
-                                            <option value="+240">🇬🇶 +240</option>
-                                            <option value="+291">🇪🇷 +291</option>
-                                            <option value="+372">🇪🇪 +372</option>
-                                            <option value="+251">🇪🇹 +251</option>
-                                            <option value="+679">🇫🇯 +679</option>
-                                            <option value="+358">🇫🇮 +358</option>
-                                            <option value="+33">🇫🇷 +33</option>
-                                            <option value="+241">🇬🇦 +241</option>
-                                            <option value="+220">🇬🇲 +220</option>
-                                            <option value="+995">🇬🇪 +995</option>
-                                            <option value="+49">🇩🇪 +49</option>
-                                            <option value="+233">🇬🇭 +233</option>
-                                            <option value="+30">🇬🇷 +30</option>
-                                            <option value="+502">🇬🇹 +502</option>
-                                            <option value="+224">🇬🇳 +224</option>
-                                            <option value="+245">🇬🇼 +245</option>
-                                            <option value="+592">🇬🇾 +592</option>
-                                            <option value="+509">🇭🇹 +509</option>
-                                            <option value="+504">🇭🇳 +504</option>
-                                            <option value="+852">🇭🇰 +852</option>
-                                            <option value="+36">🇭🇺 +36</option>
-                                            <option value="+354">🇮🇸 +354</option>
-                                            <option value="+91">🇮🇳 +91</option>
-                                            <option value="+62">🇮🇩 +62</option>
-                                            <option value="+98">🇮🇷 +98</option>
-                                            <option value="+964">🇮🇶 +964</option>
-                                            <option value="+353">🇮🇪 +353</option>
-                                            <option value="+972">🇮🇱 +972</option>
-                                            <option value="+39">🇮🇹 +39</option>
-                                            <option value="+81">🇯🇵 +81</option>
-                                            <option value="+962">🇯🇴 +962</option>
-                                            <option value="+7">🇰🇿 +7</option>
-                                            <option value="+254">🇰🇪 +254</option>
-                                            <option value="+686">🇰🇮 +686</option>
-                                            <option value="+850">🇰🇵 +850</option>
-                                            <option value="+82">🇰🇷 +82</option>
-                                            <option value="+965">🇰🇼 +965</option>
-                                            <option value="+996">🇰🇬 +996</option>
-                                            <option value="+856">🇱🇦 +856</option>
-                                            <option value="+371">🇱🇻 +371</option>
-                                            <option value="+961">🇱🇧 +961</option>
-                                            <option value="+266">🇱🇸 +266</option>
-                                            <option value="+231">🇱🇷 +231</option>
-                                            <option value="+218">🇱🇾 +218</option>
-                                            <option value="+423">🇱🇮 +423</option>
-                                            <option value="+370">🇱🇹 +370</option>
-                                            <option value="+352">🇱🇺 +352</option>
-                                            <option value="+853">🇲🇴 +853</option>
-                                            <option value="+389">🇲🇰 +389</option>
-                                            <option value="+261">🇲🇬 +261</option>
-                                            <option value="+265">🇲🇼 +265</option>
-                                            <option value="+60">🇲🇾 +60</option>
-                                            <option value="+960">🇲🇻 +960</option>
-                                            <option value="+223">🇲🇱 +223</option>
-                                            <option value="+356">🇲🇹 +356</option>
-                                            <option value="+692">🇲🇭 +692</option>
-                                            <option value="+222">🇲🇷 +222</option>
-                                            <option value="+230">🇲🇺 +230</option>
-                                            <option value="+52">🇲🇽 +52</option>
-                                            <option value="+691">🇫🇲 +691</option>
-                                            <option value="+373">🇲🇩 +373</option>
-                                            <option value="+377">🇲🇨 +377</option>
-                                            <option value="+976">🇲🇳 +976</option>
-                                            <option value="+382">🇲🇪 +382</option>
-                                            <option value="+212">🇲🇦 +212</option>
-                                            <option value="+258">🇲🇿 +258</option>
-                                            <option value="+95">🇲🇲 +95</option>
-                                            <option value="+264">🇳🇦 +264</option>
-                                            <option value="+674">🇳🇷 +674</option>
-                                            <option value="+977">🇳🇵 +977</option>
-                                            <option value="+31">🇳🇱 +31</option>
-                                            <option value="+64">🇳🇿 +64</option>
-                                            <option value="+505">🇳🇮 +505</option>
-                                            <option value="+227">🇳🇪 +227</option>
-                                            <option value="+234" selected>🇳🇬 +234</option>
-                                            <option value="+683">🇳🇺 +683</option>
-                                            <option value="+672">🇳🇫 +672</option>
-                                            <option value="+47">🇳🇴 +47</option>
-                                            <option value="+968">🇴🇲 +968</option>
-                                            <option value="+92">🇵🇰 +92</option>
-                                            <option value="+680">🇵🇼 +680</option>
-                                            <option value="+507">🇵🇦 +507</option>
-                                            <option value="+675">🇵🇬 +675</option>
-                                            <option value="+595">🇵🇾 +595</option>
-                                            <option value="+51">🇵🇪 +51</option>
-                                            <option value="+63">🇵🇭 +63</option>
-                                            <option value="+48">🇵🇱 +48</option>
-                                            <option value="+351">🇵🇹 +351</option>
-                                            <option value="+974">🇶🇦 +974</option>
-                                            <option value="+40">🇷🇴 +40</option>
-                                            <option value="+7">🇷🇺 +7</option>
-                                            <option value="+250">🇷🇼 +250</option>
-                                            <option value="+685">🇼🇸 +685</option>
-                                            <option value="+378">🇸🇲 +378</option>
-                                            <option value="+239">🇸🇹 +239</option>
-                                            <option value="+966">🇸🇦 +966</option>
-                                            <option value="+221">🇸🇳 +221</option>
-                                            <option value="+381">🇷🇸 +381</option>
-                                            <option value="+248">🇸🇨 +248</option>
-                                            <option value="+232">🇸🇱 +232</option>
-                                            <option value="+65">🇸🇬 +65</option>
-                                            <option value="+421">🇸🇰 +421</option>
-                                            <option value="+386">🇸🇮 +386</option>
-                                            <option value="+677">🇸🇧 +677</option>
-                                            <option value="+252">🇸🇴 +252</option>
-                                            <option value="+27">🇿🇦 +27</option>
-                                            <option value="+211">🇸🇸 +211</option>
-                                            <option value="+34">🇪🇸 +34</option>
-                                            <option value="+94">🇱🇰 +94</option>
-                                            <option value="+249">🇸🇩 +249</option>
-                                            <option value="+597">🇸🇷 +597</option>
-                                            <option value="+268">🇸🇿 +268</option>
-                                            <option value="+46">🇸🇪 +46</option>
-                                            <option value="+41">🇨🇭 +41</option>
-                                            <option value="+963">🇸🇾 +963</option>
-                                            <option value="+886">🇹🇼 +886</option>
-                                            <option value="+992">🇹🇯 +992</option>
-                                            <option value="+255">🇹🇿 +255</option>
-                                            <option value="+66">🇹🇭 +66</option>
-                                            <option value="+670">🇹🇱 +670</option>
-                                            <option value="+228">🇹🇬 +228</option>
-                                            <option value="+676">🇹🇴 +676</option>
-                                            <option value="+216">🇹🇳 +216</option>
-                                            <option value="+90">🇹🇷 +90</option>
-                                            <option value="+993">🇹🇲 +993</option>
-                                            <option value="+688">🇹🇻 +688</option>
-                                            <option value="+256">🇺🇬 +256</option>
-                                            <option value="+380">🇺🇦 +380</option>
-                                            <option value="+971">🇦🇪 +971</option>
-                                            <option value="+44">🇬🇧 +44</option>
-                                            <option value="+1">🇺🇸 +1</option>
-                                            <option value="+598">🇺🇾 +598</option>
-                                            <option value="+998">🇺🇿 +998</option>
-                                            <option value="+678">🇻🇺 +678</option>
-                                            <option value="+39">🇻🇦 +39</option>
-                                            <option value="+58">🇻🇪 +58</option>
-                                            <option value="+84">🇻🇳 +84</option>
-                                            <option value="+967">🇾🇪 +967</option>
-                                            <option value="+260">🇿🇲 +260</option>
-                                            <option value="+263">🇿🇼 +263</option>
-                                        </select>
-                                        <!-- Phone number input -->
-                                        <input type="tel" id="phoneNumber" name="phone"
-                                            placeholder="Phone number" style="flex: 1;" />
+                                    <div class="phone-input-container">
+
+                                        <!-- Country Selector -->
+                                        <div class="country-select" id="countrySelect">
+
+                                            <!-- Selected Country Display -->
+                                            <div class="selected-country" id="selectedCountry">
+                                                <div class="flag-icon placeholder-flag" id="selectedFlag">🌍</div>
+                                                <span class="arrow" id="countryArrow">▼</span>
+                                            </div>
+
+                                            <!-- Dropdown -->
+                                            <div class="country-dropdown" id="countryDropdown">
+                                                <input type="text" id="countrySearch" class="country-search"
+                                                    placeholder="Search country...">
+                                                <ul class="country-list" id="countryList">
+                                                    <li data-code="+93" data-flag="af"><img
+                                                            src="https://flagcdn.com/w40/af.png"><span>Afghanistan
+                                                            (+93)</span></li>
+                                                    <li data-code="+355" data-flag="al"><img
+                                                            src="https://flagcdn.com/w40/al.png"><span>Albania
+                                                            (+355)</span></li>
+                                                    <li data-code="+213" data-flag="dz"><img
+                                                            src="https://flagcdn.com/w40/dz.png"><span>Algeria
+                                                            (+213)</span></li>
+                                                    <li data-code="+376" data-flag="ad"><img
+                                                            src="https://flagcdn.com/w40/ad.png"><span>Andorra
+                                                            (+376)</span></li>
+                                                    <li data-code="+244" data-flag="ao"><img
+                                                            src="https://flagcdn.com/w40/ao.png"><span>Angola (+244)</span>
+                                                    </li>
+                                                    <li data-code="+54" data-flag="ar"><img
+                                                            src="https://flagcdn.com/w40/ar.png"><span>Argentina
+                                                            (+54)</span></li>
+                                                    <li data-code="+374" data-flag="am"><img
+                                                            src="https://flagcdn.com/w40/am.png"><span>Armenia
+                                                            (+374)</span></li>
+                                                    <li data-code="+61" data-flag="au"><img
+                                                            src="https://flagcdn.com/w40/au.png"><span>Australia
+                                                            (+61)</span></li>
+                                                    <li data-code="+43" data-flag="at"><img
+                                                            src="https://flagcdn.com/w40/at.png"><span>Austria (+43)</span>
+                                                    </li>
+                                                    <li data-code="+994" data-flag="az"><img
+                                                            src="https://flagcdn.com/w40/az.png"><span>Azerbaijan
+                                                            (+994)</span></li>
+                                                    <li data-code="+973" data-flag="bh"><img
+                                                            src="https://flagcdn.com/w40/bh.png"><span>Bahrain
+                                                            (+973)</span></li>
+                                                    <li data-code="+880" data-flag="bd"><img
+                                                            src="https://flagcdn.com/w40/bd.png"><span>Bangladesh
+                                                            (+880)</span></li>
+                                                    <li data-code="+375" data-flag="by"><img
+                                                            src="https://flagcdn.com/w40/by.png"><span>Belarus
+                                                            (+375)</span></li>
+                                                    <li data-code="+32" data-flag="be"><img
+                                                            src="https://flagcdn.com/w40/be.png"><span>Belgium (+32)</span>
+                                                    </li>
+                                                    <li data-code="+229" data-flag="bj"><img
+                                                            src="https://flagcdn.com/w40/bj.png"><span>Benin (+229)</span>
+                                                    </li>
+                                                    <li data-code="+975" data-flag="bt"><img
+                                                            src="https://flagcdn.com/w40/bt.png"><span>Bhutan (+975)</span>
+                                                    </li>
+                                                    <li data-code="+591" data-flag="bo"><img
+                                                            src="https://flagcdn.com/w40/bo.png"><span>Bolivia
+                                                            (+591)</span></li>
+                                                    <li data-code="+55" data-flag="br"><img
+                                                            src="https://flagcdn.com/w40/br.png"><span>Brazil (+55)</span>
+                                                    </li>
+                                                    <li data-code="+673" data-flag="bn"><img
+                                                            src="https://flagcdn.com/w40/bn.png"><span>Brunei (+673)</span>
+                                                    </li>
+                                                    <li data-code="+359" data-flag="bg"><img
+                                                            src="https://flagcdn.com/w40/bg.png"><span>Bulgaria
+                                                            (+359)</span></li>
+                                                    <li data-code="+226" data-flag="bf"><img
+                                                            src="https://flagcdn.com/w40/bf.png"><span>Burkina Faso
+                                                            (+226)</span></li>
+                                                    <li data-code="+257" data-flag="bi"><img
+                                                            src="https://flagcdn.com/w40/bi.png"><span>Burundi
+                                                            (+257)</span></li>
+                                                    <li data-code="+855" data-flag="kh"><img
+                                                            src="https://flagcdn.com/w40/kh.png"><span>Cambodia
+                                                            (+855)</span></li>
+                                                    <li data-code="+237" data-flag="cm"><img
+                                                            src="https://flagcdn.com/w40/cm.png"><span>Cameroon
+                                                            (+237)</span></li>
+                                                    <li data-code="+1" data-flag="ca"><img
+                                                            src="https://flagcdn.com/w40/ca.png"><span>Canada (+1)</span>
+                                                    </li>
+                                                    <li data-code="+238" data-flag="cv"><img
+                                                            src="https://flagcdn.com/w40/cv.png"><span>Cape Verde
+                                                            (+238)</span></li>
+                                                    <li data-code="+236" data-flag="cf"><img
+                                                            src="https://flagcdn.com/w40/cf.png"><span>Central African
+                                                            Republic (+236)</span></li>
+                                                    <li data-code="+235" data-flag="td"><img
+                                                            src="https://flagcdn.com/w40/td.png"><span>Chad (+235)</span>
+                                                    </li>
+                                                    <li data-code="+56" data-flag="cl"><img
+                                                            src="https://flagcdn.com/w40/cl.png"><span>Chile (+56)</span>
+                                                    </li>
+                                                    <li data-code="+86" data-flag="cn"><img
+                                                            src="https://flagcdn.com/w40/cn.png"><span>China (+86)</span>
+                                                    </li>
+                                                    <li data-code="+57" data-flag="co"><img
+                                                            src="https://flagcdn.com/w40/co.png"><span>Colombia
+                                                            (+57)</span></li>
+                                                    <li data-code="+269" data-flag="km"><img
+                                                            src="https://flagcdn.com/w40/km.png"><span>Comoros
+                                                            (+269)</span></li>
+                                                    <li data-code="+242" data-flag="cg"><img
+                                                            src="https://flagcdn.com/w40/cg.png"><span>Congo (+242)</span>
+                                                    </li>
+                                                    <li data-code="+243" data-flag="cd"><img
+                                                            src="https://flagcdn.com/w40/cd.png"><span>DR Congo
+                                                            (+243)</span></li>
+                                                    <li data-code="+506" data-flag="cr"><img
+                                                            src="https://flagcdn.com/w40/cr.png"><span>Costa Rica
+                                                            (+506)</span></li>
+                                                    <li data-code="+225" data-flag="ci"><img
+                                                            src="https://flagcdn.com/w40/ci.png"><span>Ivory Coast
+                                                            (+225)</span></li>
+                                                    <li data-code="+385" data-flag="hr"><img
+                                                            src="https://flagcdn.com/w40/hr.png"><span>Croatia
+                                                            (+385)</span></li>
+                                                    <li data-code="+53" data-flag="cu"><img
+                                                            src="https://flagcdn.com/w40/cu.png"><span>Cuba (+53)</span>
+                                                    </li>
+                                                    <li data-code="+357" data-flag="cy"><img
+                                                            src="https://flagcdn.com/w40/cy.png"><span>Cyprus (+357)</span>
+                                                    </li>
+                                                    <li data-code="+420" data-flag="cz"><img
+                                                            src="https://flagcdn.com/w40/cz.png"><span>Czech Republic
+                                                            (+420)</span></li>
+                                                    <li data-code="+45" data-flag="dk"><img
+                                                            src="https://flagcdn.com/w40/dk.png"><span>Denmark (+45)</span>
+                                                    </li>
+                                                    <li data-code="+253" data-flag="dj"><img
+                                                            src="https://flagcdn.com/w40/dj.png"><span>Djibouti
+                                                            (+253)</span></li>
+                                                    <li data-code="+593" data-flag="ec"><img
+                                                            src="https://flagcdn.com/w40/ec.png"><span>Ecuador
+                                                            (+593)</span></li>
+                                                    <li data-code="+20" data-flag="eg"><img
+                                                            src="https://flagcdn.com/w40/eg.png"><span>Egypt (+20)</span>
+                                                    </li>
+                                                    <li data-code="+503" data-flag="sv"><img
+                                                            src="https://flagcdn.com/w40/sv.png"><span>El Salvador
+                                                            (+503)</span></li>
+                                                    <li data-code="+240" data-flag="gq"><img
+                                                            src="https://flagcdn.com/w40/gq.png"><span>Equatorial Guinea
+                                                            (+240)</span></li>
+                                                    <li data-code="+291" data-flag="er"><img
+                                                            src="https://flagcdn.com/w40/er.png"><span>Eritrea
+                                                            (+291)</span></li>
+                                                    <li data-code="+372" data-flag="ee"><img
+                                                            src="https://flagcdn.com/w40/ee.png"><span>Estonia
+                                                            (+372)</span></li>
+                                                    <li data-code="+251" data-flag="et"><img
+                                                            src="https://flagcdn.com/w40/et.png"><span>Ethiopia
+                                                            (+251)</span></li>
+                                                    <li data-code="+679" data-flag="fj"><img
+                                                            src="https://flagcdn.com/w40/fj.png"><span>Fiji (+679)</span>
+                                                    </li>
+                                                    <li data-code="+358" data-flag="fi"><img
+                                                            src="https://flagcdn.com/w40/fi.png"><span>Finland
+                                                            (+358)</span></li>
+                                                    <li data-code="+33" data-flag="fr"><img
+                                                            src="https://flagcdn.com/w40/fr.png"><span>France (+33)</span>
+                                                    </li>
+                                                    <li data-code="+241" data-flag="ga"><img
+                                                            src="https://flagcdn.com/w40/ga.png"><span>Gabon (+241)</span>
+                                                    </li>
+                                                    <li data-code="+220" data-flag="gm"><img
+                                                            src="https://flagcdn.com/w40/gm.png"><span>Gambia (+220)</span>
+                                                    </li>
+                                                    <li data-code="+995" data-flag="ge"><img
+                                                            src="https://flagcdn.com/w40/ge.png"><span>Georgia
+                                                            (+995)</span></li>
+                                                    <li data-code="+49" data-flag="de"><img
+                                                            src="https://flagcdn.com/w40/de.png"><span>Germany (+49)</span>
+                                                    </li>
+                                                    <li data-code="+233" data-flag="gh"><img
+                                                            src="https://flagcdn.com/w40/gh.png"><span>Ghana (+233)</span>
+                                                    </li>
+                                                    <li data-code="+30" data-flag="gr"><img
+                                                            src="https://flagcdn.com/w40/gr.png"><span>Greece (+30)</span>
+                                                    </li>
+                                                    <li data-code="+502" data-flag="gt"><img
+                                                            src="https://flagcdn.com/w40/gt.png"><span>Guatemala
+                                                            (+502)</span></li>
+                                                    <li data-code="+224" data-flag="gn"><img
+                                                            src="https://flagcdn.com/w40/gn.png"><span>Guinea (+224)</span>
+                                                    </li>
+                                                    <li data-code="+245" data-flag="gw"><img
+                                                            src="https://flagcdn.com/w40/gw.png"><span>Guinea-Bissau
+                                                            (+245)</span></li>
+                                                    <li data-code="+592" data-flag="gy"><img
+                                                            src="https://flagcdn.com/w40/gy.png"><span>Guyana (+592)</span>
+                                                    </li>
+                                                    <li data-code="+509" data-flag="ht"><img
+                                                            src="https://flagcdn.com/w40/ht.png"><span>Haiti (+509)</span>
+                                                    </li>
+                                                    <li data-code="+504" data-flag="hn"><img
+                                                            src="https://flagcdn.com/w40/hn.png"><span>Honduras
+                                                            (+504)</span></li>
+                                                    <li data-code="+852" data-flag="hk"><img
+                                                            src="https://flagcdn.com/w40/hk.png"><span>Hong Kong
+                                                            (+852)</span></li>
+                                                    <li data-code="+36" data-flag="hu"><img
+                                                            src="https://flagcdn.com/w40/hu.png"><span>Hungary (+36)</span>
+                                                    </li>
+                                                    <li data-code="+354" data-flag="is"><img
+                                                            src="https://flagcdn.com/w40/is.png"><span>Iceland
+                                                            (+354)</span></li>
+                                                    <li data-code="+91" data-flag="in"><img
+                                                            src="https://flagcdn.com/w40/in.png"><span>India (+91)</span>
+                                                    </li>
+                                                    <li data-code="+62" data-flag="id"><img
+                                                            src="https://flagcdn.com/w40/id.png"><span>Indonesia
+                                                            (+62)</span></li>
+                                                    <li data-code="+98" data-flag="ir"><img
+                                                            src="https://flagcdn.com/w40/ir.png"><span>Iran (+98)</span>
+                                                    </li>
+                                                    <li data-code="+964" data-flag="iq"><img
+                                                            src="https://flagcdn.com/w40/iq.png"><span>Iraq (+964)</span>
+                                                    </li>
+                                                    <li data-code="+353" data-flag="ie"><img
+                                                            src="https://flagcdn.com/w40/ie.png"><span>Ireland
+                                                            (+353)</span></li>
+                                                    <li data-code="+972" data-flag="il"><img
+                                                            src="https://flagcdn.com/w40/il.png"><span>Israel (+972)</span>
+                                                    </li>
+                                                    <li data-code="+39" data-flag="it"><img
+                                                            src="https://flagcdn.com/w40/it.png"><span>Italy (+39)</span>
+                                                    </li>
+                                                    <li data-code="+81" data-flag="jp"><img
+                                                            src="https://flagcdn.com/w40/jp.png"><span>Japan (+81)</span>
+                                                    </li>
+                                                    <li data-code="+962" data-flag="jo"><img
+                                                            src="https://flagcdn.com/w40/jo.png"><span>Jordan (+962)</span>
+                                                    </li>
+                                                    <li data-code="+7" data-flag="kz"><img
+                                                            src="https://flagcdn.com/w40/kz.png"><span>Kazakhstan
+                                                            (+7)</span></li>
+                                                    <li data-code="+254" data-flag="ke"><img
+                                                            src="https://flagcdn.com/w40/ke.png"><span>Kenya (+254)</span>
+                                                    </li>
+                                                    <li data-code="+686" data-flag="ki"><img
+                                                            src="https://flagcdn.com/w40/ki.png"><span>Kiribati
+                                                            (+686)</span></li>
+                                                    <li data-code="+850" data-flag="kp"><img
+                                                            src="https://flagcdn.com/w40/kp.png"><span>North Korea
+                                                            (+850)</span></li>
+                                                    <li data-code="+82" data-flag="kr"><img
+                                                            src="https://flagcdn.com/w40/kr.png"><span>South Korea
+                                                            (+82)</span></li>
+                                                    <li data-code="+965" data-flag="kw"><img
+                                                            src="https://flagcdn.com/w40/kw.png"><span>Kuwait (+965)</span>
+                                                    </li>
+                                                    <li data-code="+996" data-flag="kg"><img
+                                                            src="https://flagcdn.com/w40/kg.png"><span>Kyrgyzstan
+                                                            (+996)</span></li>
+                                                    <li data-code="+856" data-flag="la"><img
+                                                            src="https://flagcdn.com/w40/la.png"><span>Laos (+856)</span>
+                                                    </li>
+                                                    <li data-code="+371" data-flag="lv"><img
+                                                            src="https://flagcdn.com/w40/lv.png"><span>Latvia (+371)</span>
+                                                    </li>
+                                                    <li data-code="+961" data-flag="lb"><img
+                                                            src="https://flagcdn.com/w40/lb.png"><span>Lebanon
+                                                            (+961)</span></li>
+                                                    <li data-code="+266" data-flag="ls"><img
+                                                            src="https://flagcdn.com/w40/ls.png"><span>Lesotho
+                                                            (+266)</span></li>
+                                                    <li data-code="+231" data-flag="lr"><img
+                                                            src="https://flagcdn.com/w40/lr.png"><span>Liberia
+                                                            (+231)</span></li>
+                                                    <li data-code="+218" data-flag="ly"><img
+                                                            src="https://flagcdn.com/w40/ly.png"><span>Libya (+218)</span>
+                                                    </li>
+                                                    <li data-code="+423" data-flag="li"><img
+                                                            src="https://flagcdn.com/w40/li.png"><span>Liechtenstein
+                                                            (+423)</span></li>
+                                                    <li data-code="+370" data-flag="lt"><img
+                                                            src="https://flagcdn.com/w40/lt.png"><span>Lithuania
+                                                            (+370)</span></li>
+                                                    <li data-code="+352" data-flag="lu"><img
+                                                            src="https://flagcdn.com/w40/lu.png"><span>Luxembourg
+                                                            (+352)</span></li>
+                                                    <li data-code="+853" data-flag="mo"><img
+                                                            src="https://flagcdn.com/w40/mo.png"><span>Macau (+853)</span>
+                                                    </li>
+                                                    <li data-code="+389" data-flag="mk"><img
+                                                            src="https://flagcdn.com/w40/mk.png"><span>North Macedonia
+                                                            (+389)</span></li>
+                                                    <li data-code="+261" data-flag="mg"><img
+                                                            src="https://flagcdn.com/w40/mg.png"><span>Madagascar
+                                                            (+261)</span></li>
+                                                    <li data-code="+265" data-flag="mw"><img
+                                                            src="https://flagcdn.com/w40/mw.png"><span>Malawi (+265)</span>
+                                                    </li>
+                                                    <li data-code="+60" data-flag="my"><img
+                                                            src="https://flagcdn.com/w40/my.png"><span>Malaysia
+                                                            (+60)</span></li>
+                                                    <li data-code="+960" data-flag="mv"><img
+                                                            src="https://flagcdn.com/w40/mv.png"><span>Maldives
+                                                            (+960)</span></li>
+                                                    <li data-code="+223" data-flag="ml"><img
+                                                            src="https://flagcdn.com/w40/ml.png"><span>Mali (+223)</span>
+                                                    </li>
+                                                    <li data-code="+356" data-flag="mt"><img
+                                                            src="https://flagcdn.com/w40/mt.png"><span>Malta (+356)</span>
+                                                    </li>
+                                                    <li data-code="+692" data-flag="mh"><img
+                                                            src="https://flagcdn.com/w40/mh.png"><span>Marshall Islands
+                                                            (+692)</span></li>
+                                                    <li data-code="+222" data-flag="mr"><img
+                                                            src="https://flagcdn.com/w40/mr.png"><span>Mauritania
+                                                            (+222)</span></li>
+                                                    <li data-code="+230" data-flag="mu"><img
+                                                            src="https://flagcdn.com/w40/mu.png"><span>Mauritius
+                                                            (+230)</span></li>
+                                                    <li data-code="+52" data-flag="mx"><img
+                                                            src="https://flagcdn.com/w40/mx.png"><span>Mexico (+52)</span>
+                                                    </li>
+                                                    <li data-code="+691" data-flag="fm"><img
+                                                            src="https://flagcdn.com/w40/fm.png"><span>Micronesia
+                                                            (+691)</span></li>
+                                                    <li data-code="+373" data-flag="md"><img
+                                                            src="https://flagcdn.com/w40/md.png"><span>Moldova
+                                                            (+373)</span></li>
+                                                    <li data-code="+377" data-flag="mc"><img
+                                                            src="https://flagcdn.com/w40/mc.png"><span>Monaco (+377)</span>
+                                                    </li>
+                                                    <li data-code="+976" data-flag="mn"><img
+                                                            src="https://flagcdn.com/w40/mn.png"><span>Mongolia
+                                                            (+976)</span></li>
+                                                    <li data-code="+382" data-flag="me"><img
+                                                            src="https://flagcdn.com/w40/me.png"><span>Montenegro
+                                                            (+382)</span></li>
+                                                    <li data-code="+212" data-flag="ma"><img
+                                                            src="https://flagcdn.com/w40/ma.png"><span>Morocco
+                                                            (+212)</span></li>
+                                                    <li data-code="+258" data-flag="mz"><img
+                                                            src="https://flagcdn.com/w40/mz.png"><span>Mozambique
+                                                            (+258)</span></li>
+                                                    <li data-code="+95" data-flag="mm"><img
+                                                            src="https://flagcdn.com/w40/mm.png"><span>Myanmar (+95)</span>
+                                                    </li>
+                                                    <li data-code="+264" data-flag="na"><img
+                                                            src="https://flagcdn.com/w40/na.png"><span>Namibia
+                                                            (+264)</span></li>
+                                                    <li data-code="+674" data-flag="nr"><img
+                                                            src="https://flagcdn.com/w40/nr.png"><span>Nauru (+674)</span>
+                                                    </li>
+                                                    <li data-code="+977" data-flag="np"><img
+                                                            src="https://flagcdn.com/w40/np.png"><span>Nepal (+977)</span>
+                                                    </li>
+                                                    <li data-code="+31" data-flag="nl"><img
+                                                            src="https://flagcdn.com/w40/nl.png"><span>Netherlands
+                                                            (+31)</span></li>
+                                                    <li data-code="+64" data-flag="nz"><img
+                                                            src="https://flagcdn.com/w40/nz.png"><span>New Zealand
+                                                            (+64)</span></li>
+                                                    <li data-code="+505" data-flag="ni"><img
+                                                            src="https://flagcdn.com/w40/ni.png"><span>Nicaragua
+                                                            (+505)</span></li>
+                                                    <li data-code="+227" data-flag="ne"><img
+                                                            src="https://flagcdn.com/w40/ne.png"><span>Niger (+227)</span>
+                                                    </li>
+                                                    <li data-code="+234" data-flag="ng"><img
+                                                            src="https://flagcdn.com/w40/ng.png"><span>Nigeria
+                                                            (+234)</span></li>
+                                                    <li data-code="+683" data-flag="nu"><img
+                                                            src="https://flagcdn.com/w40/nu.png"><span>Niue (+683)</span>
+                                                    </li>
+                                                    <li data-code="+672" data-flag="nf"><img
+                                                            src="https://flagcdn.com/w40/nf.png"><span>Norfolk Island
+                                                            (+672)</span></li>
+                                                    <li data-code="+47" data-flag="no"><img
+                                                            src="https://flagcdn.com/w40/no.png"><span>Norway (+47)</span>
+                                                    </li>
+                                                    <li data-code="+968" data-flag="om"><img
+                                                            src="https://flagcdn.com/w40/om.png"><span>Oman (+968)</span>
+                                                    </li>
+                                                    <li data-code="+92" data-flag="pk"><img
+                                                            src="https://flagcdn.com/w40/pk.png"><span>Pakistan
+                                                            (+92)</span></li>
+                                                    <li data-code="+680" data-flag="pw"><img
+                                                            src="https://flagcdn.com/w40/pw.png"><span>Palau (+680)</span>
+                                                    </li>
+                                                    <li data-code="+507" data-flag="pa"><img
+                                                            src="https://flagcdn.com/w40/pa.png"><span>Panama (+507)</span>
+                                                    </li>
+                                                    <li data-code="+675" data-flag="pg"><img
+                                                            src="https://flagcdn.com/w40/pg.png"><span>Papua New Guinea
+                                                            (+675)</span></li>
+                                                    <li data-code="+595" data-flag="py"><img
+                                                            src="https://flagcdn.com/w40/py.png"><span>Paraguay
+                                                            (+595)</span></li>
+                                                    <li data-code="+51" data-flag="pe"><img
+                                                            src="https://flagcdn.com/w40/pe.png"><span>Peru (+51)</span>
+                                                    </li>
+                                                    <li data-code="+63" data-flag="ph"><img
+                                                            src="https://flagcdn.com/w40/ph.png"><span>Philippines
+                                                            (+63)</span></li>
+                                                    <li data-code="+48" data-flag="pl"><img
+                                                            src="https://flagcdn.com/w40/pl.png"><span>Poland (+48)</span>
+                                                    </li>
+                                                    <li data-code="+351" data-flag="pt"><img
+                                                            src="https://flagcdn.com/w40/pt.png"><span>Portugal
+                                                            (+351)</span></li>
+                                                    <li data-code="+974" data-flag="qa"><img
+                                                            src="https://flagcdn.com/w40/qa.png"><span>Qatar (+974)</span>
+                                                    </li>
+                                                    <li data-code="+40" data-flag="ro"><img
+                                                            src="https://flagcdn.com/w40/ro.png"><span>Romania (+40)</span>
+                                                    </li>
+                                                    <li data-code="+7" data-flag="ru"><img
+                                                            src="https://flagcdn.com/w40/ru.png"><span>Russia (+7)</span>
+                                                    </li>
+                                                    <li data-code="+250" data-flag="rw"><img
+                                                            src="https://flagcdn.com/w40/rw.png"><span>Rwanda (+250)</span>
+                                                    </li>
+                                                    <li data-code="+685" data-flag="ws"><img
+                                                            src="https://flagcdn.com/w40/ws.png"><span>Samoa (+685)</span>
+                                                    </li>
+                                                    <li data-code="+378" data-flag="sm"><img
+                                                            src="https://flagcdn.com/w40/sm.png"><span>San Marino
+                                                            (+378)</span></li>
+                                                    <li data-code="+239" data-flag="st"><img
+                                                            src="https://flagcdn.com/w40/st.png"><span>São Tomé and
+                                                            Príncipe (+239)</span></li>
+                                                    <li data-code="+966" data-flag="sa"><img
+                                                            src="https://flagcdn.com/w40/sa.png"><span>Saudi Arabia
+                                                            (+966)</span></li>
+                                                    <li data-code="+221" data-flag="sn"><img
+                                                            src="https://flagcdn.com/w40/sn.png"><span>Senegal
+                                                            (+221)</span></li>
+                                                    <li data-code="+381" data-flag="rs"><img
+                                                            src="https://flagcdn.com/w40/rs.png"><span>Serbia (+381)</span>
+                                                    </li>
+                                                    <li data-code="+248" data-flag="sc"><img
+                                                            src="https://flagcdn.com/w40/sc.png"><span>Seychelles
+                                                            (+248)</span></li>
+                                                    <li data-code="+232" data-flag="sl"><img
+                                                            src="https://flagcdn.com/w40/sl.png"><span>Sierra Leone
+                                                            (+232)</span></li>
+                                                    <li data-code="+65" data-flag="sg"><img
+                                                            src="https://flagcdn.com/w40/sg.png"><span>Singapore
+                                                            (+65)</span></li>
+                                                    <li data-code="+421" data-flag="sk"><img
+                                                            src="https://flagcdn.com/w40/sk.png"><span>Slovakia
+                                                            (+421)</span></li>
+                                                    <li data-code="+386" data-flag="si"><img
+                                                            src="https://flagcdn.com/w40/si.png"><span>Slovenia
+                                                            (+386)</span></li>
+                                                    <li data-code="+677" data-flag="sb"><img
+                                                            src="https://flagcdn.com/w40/sb.png"><span>Solomon Islands
+                                                            (+677)</span></li>
+                                                    <li data-code="+252" data-flag="so"><img
+                                                            src="https://flagcdn.com/w40/so.png"><span>Somalia
+                                                            (+252)</span></li>
+                                                    <li data-code="+27" data-flag="za"><img
+                                                            src="https://flagcdn.com/w40/za.png"><span>South Africa
+                                                            (+27)</span></li>
+                                                    <li data-code="+211" data-flag="ss"><img
+                                                            src="https://flagcdn.com/w40/ss.png"><span>South Sudan
+                                                            (+211)</span></li>
+                                                    <li data-code="+34" data-flag="es"><img
+                                                            src="https://flagcdn.com/w40/es.png"><span>Spain (+34)</span>
+                                                    </li>
+                                                    <li data-code="+94" data-flag="lk"><img
+                                                            src="https://flagcdn.com/w40/lk.png"><span>Sri Lanka
+                                                            (+94)</span></li>
+                                                    <li data-code="+249" data-flag="sd"><img
+                                                            src="https://flagcdn.com/w40/sd.png"><span>Sudan (+249)</span>
+                                                    </li>
+                                                    <li data-code="+597" data-flag="sr"><img
+                                                            src="https://flagcdn.com/w40/sr.png"><span>Suriname
+                                                            (+597)</span></li>
+                                                    <li data-code="+268" data-flag="sz"><img
+                                                            src="https://flagcdn.com/w40/sz.png"><span>Eswatini
+                                                            (+268)</span></li>
+                                                    <li data-code="+46" data-flag="se"><img
+                                                            src="https://flagcdn.com/w40/se.png"><span>Sweden (+46)</span>
+                                                    </li>
+                                                    <li data-code="+41" data-flag="ch"><img
+                                                            src="https://flagcdn.com/w40/ch.png"><span>Switzerland
+                                                            (+41)</span></li>
+                                                    <li data-code="+963" data-flag="sy"><img
+                                                            src="https://flagcdn.com/w40/sy.png"><span>Syria (+963)</span>
+                                                    </li>
+                                                    <li data-code="+886" data-flag="tw"><img
+                                                            src="https://flagcdn.com/w40/tw.png"><span>Taiwan (+886)</span>
+                                                    </li>
+                                                    <li data-code="+992" data-flag="tj"><img
+                                                            src="https://flagcdn.com/w40/tj.png"><span>Tajikistan
+                                                            (+992)</span></li>
+                                                    <li data-code="+255" data-flag="tz"><img
+                                                            src="https://flagcdn.com/w40/tz.png"><span>Tanzania
+                                                            (+255)</span></li>
+                                                    <li data-code="+66" data-flag="th"><img
+                                                            src="https://flagcdn.com/w40/th.png"><span>Thailand
+                                                            (+66)</span></li>
+                                                    <li data-code="+670" data-flag="tl"><img
+                                                            src="https://flagcdn.com/w40/tl.png"><span>Timor-Leste
+                                                            (+670)</span></li>
+                                                    <li data-code="+228" data-flag="tg"><img
+                                                            src="https://flagcdn.com/w40/tg.png"><span>Togo (+228)</span>
+                                                    </li>
+                                                    <li data-code="+676" data-flag="to"><img
+                                                            src="https://flagcdn.com/w40/to.png"><span>Tonga (+676)</span>
+                                                    </li>
+                                                    <li data-code="+216" data-flag="tn"><img
+                                                            src="https://flagcdn.com/w40/tn.png"><span>Tunisia
+                                                            (+216)</span></li>
+                                                    <li data-code="+90" data-flag="tr"><img
+                                                            src="https://flagcdn.com/w40/tr.png"><span>Turkey (+90)</span>
+                                                    </li>
+                                                    <li data-code="+993" data-flag="tm"><img
+                                                            src="https://flagcdn.com/w40/tm.png"><span>Turkmenistan
+                                                            (+993)</span></li>
+                                                    <li data-code="+688" data-flag="tv"><img
+                                                            src="https://flagcdn.com/w40/tv.png"><span>Tuvalu (+688)</span>
+                                                    </li>
+                                                    <li data-code="+256" data-flag="ug"><img
+                                                            src="https://flagcdn.com/w40/ug.png"><span>Uganda (+256)</span>
+                                                    </li>
+                                                    <li data-code="+380" data-flag="ua"><img
+                                                            src="https://flagcdn.com/w40/ua.png"><span>Ukraine
+                                                            (+380)</span></li>
+                                                    <li data-code="+971" data-flag="ae"><img
+                                                            src="https://flagcdn.com/w40/ae.png"><span>United Arab Emirates
+                                                            (+971)</span></li>
+                                                    <li data-code="+44" data-flag="gb"><img
+                                                            src="https://flagcdn.com/w40/gb.png"><span>United Kingdom
+                                                            (+44)</span></li>
+                                                    <li data-code="+1" data-flag="us"><img
+                                                            src="https://flagcdn.com/w40/us.png"><span>United States
+                                                            (+1)</span></li>
+                                                    <li data-code="+598" data-flag="uy"><img
+                                                            src="https://flagcdn.com/w40/uy.png"><span>Uruguay
+                                                            (+598)</span></li>
+                                                    <li data-code="+998" data-flag="uz"><img
+                                                            src="https://flagcdn.com/w40/uz.png"><span>Uzbekistan
+                                                            (+998)</span></li>
+                                                    <li data-code="+678" data-flag="vu"><img
+                                                            src="https://flagcdn.com/w40/vu.png"><span>Vanuatu
+                                                            (+678)</span></li>
+                                                    <li data-code="+39" data-flag="va"><img
+                                                            src="https://flagcdn.com/w40/va.png"><span>Vatican City
+                                                            (+39)</span></li>
+                                                    <li data-code="+58" data-flag="ve"><img
+                                                            src="https://flagcdn.com/w40/ve.png"><span>Venezuela
+                                                            (+58)</span></li>
+                                                    <li data-code="+84" data-flag="vn"><img
+                                                            src="https://flagcdn.com/w40/vn.png"><span>Vietnam (+84)</span>
+                                                    </li>
+                                                    <li data-code="+967" data-flag="ye"><img
+                                                            src="https://flagcdn.com/w40/ye.png"><span>Yemen (+967)</span>
+                                                    </li>
+                                                    <li data-code="+260" data-flag="zm"><img
+                                                            src="https://flagcdn.com/w40/zm.png"><span>Zambia (+260)</span>
+                                                    </li>
+                                                    <li data-code="+263" data-flag="zw"><img
+                                                            src="https://flagcdn.com/w40/zw.png"><span>Zimbabwe
+                                                            (+263)</span></li>
+                                                </ul>
+
+
+                                            </div>
+                                        </div>
+
+                                        <!-- Hidden actual country code -->
+                                        <input type="hidden" name="country_code" id="countryCode">
+                                        <div class="input-with-prefix">
+
+                                            <!-- Phone Prefix (new UI block) -->
+                                            <div class="phone-prefix" id="phonePrefix">--</div>
+                                            <!-- Phone Input -->
+                                            <input type="tel" id="phoneNumber" name="phone"
+                                                placeholder="Select country code first" disabled>
+                                        </div>
+
                                     </div>
+
+
                                 </div>
+
+
 
                                 <div class="interest-form-actions">
                                     <button type="button" class="interest-form-proceed-button" data-next="form2">
@@ -1699,30 +2301,35 @@
                                                 <span class="custom-option" data-value="Romania">Romania</span>
                                                 <span class="custom-option" data-value="Russia">Russia</span>
                                                 <span class="custom-option" data-value="Rwanda">Rwanda</span>
-                                                <span class="custom-option" data-value="Saint Kitts and Nevis">Saint Kitts
+                                                <span class="custom-option" data-value="Saint Kitts and Nevis">Saint
+                                                    Kitts
                                                     and
                                                     Nevis</span>
                                                 <span class="custom-option" data-value="Saint Lucia">Saint Lucia</span>
                                                 <span class="custom-option"
-                                                    data-value="Saint Vincent and the Grenadines">Saint Vincent and the
+                                                    data-value="Saint Vincent and the Grenadines">Saint
+                                                    Vincent and the
                                                     Grenadines</span>
                                                 <span class="custom-option" data-value="Samoa">Samoa</span>
                                                 <span class="custom-option" data-value="San Marino">San Marino</span>
                                                 <span class="custom-option" data-value="Sao Tome and Principe">Sao Tome
                                                     and
                                                     Principe</span>
-                                                <span class="custom-option" data-value="Saudi Arabia">Saudi Arabia</span>
+                                                <span class="custom-option" data-value="Saudi Arabia">Saudi
+                                                    Arabia</span>
                                                 <span class="custom-option" data-value="Senegal">Senegal</span>
                                                 <span class="custom-option" data-value="Serbia">Serbia</span>
                                                 <span class="custom-option" data-value="Seychelles">Seychelles</span>
-                                                <span class="custom-option" data-value="Sierra Leone">Sierra Leone</span>
+                                                <span class="custom-option" data-value="Sierra Leone">Sierra
+                                                    Leone</span>
                                                 <span class="custom-option" data-value="Singapore">Singapore</span>
                                                 <span class="custom-option" data-value="Slovakia">Slovakia</span>
                                                 <span class="custom-option" data-value="Slovenia">Slovenia</span>
                                                 <span class="custom-option" data-value="Solomon Islands">Solomon
                                                     Islands</span>
                                                 <span class="custom-option" data-value="Somalia">Somalia</span>
-                                                <span class="custom-option" data-value="South Africa">South Africa</span>
+                                                <span class="custom-option" data-value="South Africa">South
+                                                    Africa</span>
                                                 <span class="custom-option" data-value="South Sudan">South Sudan</span>
                                                 <span class="custom-option" data-value="Spain">Spain</span>
                                                 <span class="custom-option" data-value="Sri Lanka">Sri Lanka</span>
@@ -1738,15 +2345,18 @@
                                                 <span class="custom-option" data-value="Thailand">Thailand</span>
                                                 <span class="custom-option" data-value="Togo">Togo</span>
                                                 <span class="custom-option" data-value="Tonga">Tonga</span>
-                                                <span class="custom-option" data-value="Trinidad and Tobago">Trinidad and
+                                                <span class="custom-option" data-value="Trinidad and Tobago">Trinidad
+                                                    and
                                                     Tobago</span>
                                                 <span class="custom-option" data-value="Tunisia">Tunisia</span>
                                                 <span class="custom-option" data-value="Turkey">Turkey</span>
-                                                <span class="custom-option" data-value="Turkmenistan">Turkmenistan</span>
+                                                <span class="custom-option"
+                                                    data-value="Turkmenistan">Turkmenistan</span>
                                                 <span class="custom-option" data-value="Tuvalu">Tuvalu</span>
                                                 <span class="custom-option" data-value="Uganda">Uganda</span>
                                                 <span class="custom-option" data-value="Ukraine">Ukraine</span>
-                                                <span class="custom-option" data-value="United Arab Emirates">United Arab
+                                                <span class="custom-option" data-value="United Arab Emirates">United
+                                                    Arab
                                                     Emirates</span>
                                                 <span class="custom-option" data-value="United Kingdom">United
                                                     Kingdom</span>
@@ -1755,7 +2365,8 @@
                                                 <span class="custom-option" data-value="Uruguay">Uruguay</span>
                                                 <span class="custom-option" data-value="Uzbekistan">Uzbekistan</span>
                                                 <span class="custom-option" data-value="Vanuatu">Vanuatu</span>
-                                                <span class="custom-option" data-value="Vatican City">Vatican City</span>
+                                                <span class="custom-option" data-value="Vatican City">Vatican
+                                                    City</span>
                                                 <span class="custom-option" data-value="Venezuela">Venezuela</span>
                                                 <span class="custom-option" data-value="Vietnam">Vietnam</span>
                                                 <span class="custom-option" data-value="Yemen">Yemen</span>
@@ -2799,53 +3410,104 @@
         /*************************************
          * COUNTRY SEARCH FUNCTIONALITY
          *************************************/
-        const countryDropdown = document.querySelector('[data-select="country"]');
-        if (countryDropdown) {
-            const countrySearchInput = countryDropdown.querySelector('.country-search');
-            const countryOptionsContainer = countryDropdown.querySelector('.custom-options-scrollable');
-            const countryOptions = countryOptionsContainer.querySelectorAll('.custom-option');
+        const selectedCountry = document.getElementById("selectedCountry");
+        const countryDropdown = document.getElementById("countryDropdown");
+        const arrow = document.getElementById("countryArrow");
 
-            // Handle search input
-            if (countrySearchInput) {
-                countrySearchInput.addEventListener('input', function(e) {
-                    const searchTerm = e.target.value.toLowerCase();
+        const selectedFlag = document.getElementById("selectedFlag");
+        const countryCodeInput = document.getElementById("countryCode");
+        const phonePrefix = document.getElementById("phonePrefix");
+        const phoneInput = document.getElementById("phoneNumber");
 
-                    countryOptions.forEach(option => {
-                        const countryName = option.textContent.toLowerCase();
-                        if (countryName.includes(searchTerm)) {
-                            option.style.display = 'block';
-                        } else {
-                            option.style.display = 'none';
-                        }
-                    });
-                });
+        const searchInput = document.getElementById("countrySearch");
+        const list = document.getElementById("countryList");
 
-                // Prevent dropdown from closing when clicking on search input
-                countrySearchInput.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                });
+        // Create a "No country found" placeholder item
+        let noCountryItem = document.createElement("li");
+        noCountryItem.className = "no-country";
+        noCountryItem.style.display = "none";
+        noCountryItem.style.justifyContent = "center";
+        noCountryItem.style.padding = "8px";
+        noCountryItem.style.color = "#6b7280";
+        noCountryItem.textContent = "No country found";
+        list.appendChild(noCountryItem);
 
-                // Clear search when dropdown closes
-                countryDropdown.addEventListener('click', function() {
-                    if (!countryDropdown.classList.contains('open')) {
-                        countrySearchInput.value = '';
-                        countryOptions.forEach(option => {
-                            option.style.display = 'block';
-                        });
-                    }
-                });
+        // Helper function to check if dropdown is open
+        const isDropdownOpen = () => countryDropdown.classList.contains("open");
 
-                // Focus search input when dropdown opens
-                const countryTrigger = countryDropdown.querySelector('.custom-select-trigger');
-                countryTrigger.addEventListener('click', function() {
-                    setTimeout(() => {
-                        if (countryDropdown.classList.contains('open')) {
-                            countrySearchInput.focus();
-                        }
-                    }, 100);
-                });
+        // Toggle dropdown
+        selectedCountry.addEventListener("click", (e) => {
+            e.stopPropagation();
+            if (isDropdownOpen()) {
+                countryDropdown.style.display = "none";
+                countryDropdown.classList.remove("open");
+                arrow.classList.remove("rotate-up");
+            } else {
+                countryDropdown.style.display = "block";
+                countryDropdown.classList.add("open");
+                arrow.classList.add("rotate-up");
             }
-        }
+        });
+
+        // Prevent closing when clicking inside dropdown
+        countryDropdown.addEventListener("click", (e) => {
+            e.stopPropagation();
+        });
+
+        // Search filter
+        searchInput.addEventListener("input", function() {
+            const query = this.value.toLowerCase();
+            const items = list.querySelectorAll("li:not(.no-country)");
+            let matchFound = false;
+
+            items.forEach(li => {
+                if (li.innerText.toLowerCase().includes(query)) {
+                    li.style.display = "flex";
+                    matchFound = true;
+                } else {
+                    li.style.display = "none";
+                }
+            });
+
+            // Show "No country found" if no matches
+            noCountryItem.style.display = matchFound ? "none" : "flex";
+
+            // Clear selected country info if no match
+            if (!matchFound) {
+                selectedFlag.innerHTML = `<span>🌍</span>`;
+                countryCodeInput.value = "";
+                phonePrefix.textContent = "--";
+                phoneInput.disabled = true;
+                phoneInput.placeholder = "Select country code first";
+            }
+        });
+
+        // Select country
+        list.querySelectorAll("li:not(.no-country)").forEach(item => {
+            item.addEventListener("click", () => {
+                const code = item.dataset.code;
+                const flag = item.querySelector("img").src;
+
+                selectedFlag.innerHTML = `<img src="${flag}" width="20">`;
+                countryCodeInput.value = code;
+                phonePrefix.textContent = code;
+
+                phoneInput.disabled = false;
+                phoneInput.placeholder = `Enter phone number`;
+
+                countryDropdown.style.display = "none";
+                countryDropdown.classList.remove("open");
+                arrow.classList.remove("rotate-up");
+            });
+        });
+
+        // Close dropdown on outside click
+        document.addEventListener("click", () => {
+            countryDropdown.style.display = "none";
+            countryDropdown.classList.remove("open");
+            arrow.classList.remove("rotate-up");
+        });
+
 
         /*************************************
          * INDUSTRY → CATEGORY HANDLER
