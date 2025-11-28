@@ -1261,14 +1261,14 @@
                             <div class="first-stage-form-container hidden">
                                 <div class="interest-form-group">
                                     <label for="fullName">Full Name</label>
-                                    <input type="text" id="fullName" name="name" placeholder="Input Full name" />
+                                    <input type="text" id="fullName" name="name" placeholder="Full name" />
                                 </div>
 
                                 <div class="interest-form-group">
                                     <label for="title">Title</label>
                                     <div class="custom-select" id="customSelect" data-select="title">
                                         <div class="custom-select-trigger">
-                                            <span class="custom-select-text">Input your title, e.g CEO</span>
+                                            <span class="custom-select-text">Title, e.g CEO</span>
                                             <svg class="custom-select-arrow" xmlns="http://www.w3.org/2000/svg"
                                                 width="18" height="18" viewBox="0 0 24 24" fill="none"
                                                 stroke="#ffffff" stroke-width="2" stroke-linecap="round"
@@ -1280,7 +1280,9 @@
                                             <span class="custom-option" data-value="CEO">CEO</span>
                                             <span class="custom-option" data-value="CTO">CTO</span>
                                             <span class="custom-option" data-value="CFO">CFO</span>
-                                            <span class="custom-option" data-value="Manager">Manager</span>
+                                            <span class="custom-option" data-value="CFO">Founder</span>
+                                            <span class="custom-option" data-value="CFO">Investor</span>
+                                            <span class="custom-option" data-value="Manager">Managing Director</span>
                                             <span class="custom-option" data-value="Director">Director</span>
                                             <span class="custom-option" data-value="Other">Other</span>
                                         </div>
@@ -1288,7 +1290,7 @@
 
                                     <!-- Hidden native select for form submission -->
                                     <select id="title" name="position" style="display: none">
-                                        <option value="">Input your title, e.g CEO</option>
+                                        <option value="">Title, e.g CEO</option>
                                         <option value="CEO">CEO</option>
                                         <option value="CTO">CTO</option>
                                         <option value="CFO">CFO</option>
@@ -1301,13 +1303,13 @@
                                 <div class="interest-form-group">
                                     <label for="businessName">Official Business Name</label>
                                     <input type="text" id="businessName" name="company_name"
-                                        placeholder="Input your business Name" />
+                                        placeholder="Business Name" />
                                 </div>
 
                                 <div class="interest-form-group">
                                     <label for="emailAddress">Email Address</label>
                                     <input type="email" id="emailAddress" name="email"
-                                        placeholder="Input Email Address" />
+                                        placeholder="Email Address" />
                                     <!-- Email validation status -->
                                     <div id="email-status" style="display: none; margin-top: 8px; font-size: 0.875rem;">
                                         <span id="email-checkmark" style="color: #10b981; display: none;">✓ Email
@@ -1511,7 +1513,7 @@
                                         </select>
                                         <!-- Phone number input -->
                                         <input type="tel" id="phoneNumber" name="phone"
-                                            placeholder="Input phone number" style="flex: 1;" />
+                                            placeholder="Phone number" style="flex: 1;" />
                                     </div>
                                 </div>
 
@@ -2423,7 +2425,7 @@
                             <div>
                                 <div class="interest-form-footer-contact-item">
                                     <span class="interest-form-footer-icon"><i class="fas fa-phone-alt"></i></span>
-                                    <a href="tel:+442080921281" class="phone">+44 208 0921 281</a>
+                                    <a href="tel:+442080921281" class="phone">+44 7535 659835</a>
                                 </div>
 
                                 <div class="interest-form-footer-contact-item">
