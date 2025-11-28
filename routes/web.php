@@ -294,8 +294,7 @@ Route::get('/events/{slug}', [UserEventController::class, 'show'])->name('events
 // });
 
 
-
-Route::middleware(['auth', 'check.suspended', 'role:admin|staff'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->prefix('admin')->name('admin.')->group(function () {
     // Route::get('/dashboard', function () {
     //     return view('admin.dashboard');
     // })->name('dashboard');
@@ -392,11 +391,27 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|staff'])->prefix('admi
 
     // Playbook email resend functionality
     Route::post('/playbooks/resend-funding', [\App\Http\Controllers\PlaybookController::class, 'resendFundingReadinessPending'])->name('playbooks.resend-funding');
+
+    // Project Management
+    Route::resource('projects', \App\Http\Controllers\Admin\ProjectController::class);
+    Route::patch('/projects/{project}/status', [\App\Http\Controllers\Admin\ProjectController::class, 'updateStatus'])->name('projects.update-status');
+
+    // Task Management
+    Route::get('/tasks', [\App\Http\Controllers\Admin\TaskController::class, 'index'])->name('tasks.index');
+    Route::get('/tasks/kanban', [\App\Http\Controllers\Admin\TaskController::class, 'kanban'])->name('tasks.kanban');
+    Route::get('/tasks/create', [\App\Http\Controllers\Admin\TaskController::class, 'create'])->name('tasks.create');
+    Route::post('/tasks', [\App\Http\Controllers\Admin\TaskController::class, 'store'])->name('tasks.store');
+    Route::get('/tasks/{task}/edit', [\App\Http\Controllers\Admin\TaskController::class, 'edit'])->name('tasks.edit');
+    Route::put('/tasks/{task}', [\App\Http\Controllers\Admin\TaskController::class, 'update'])->name('tasks.update');
+    Route::delete('/tasks/{task}', [\App\Http\Controllers\Admin\TaskController::class, 'destroy'])->name('tasks.destroy');
+    Route::patch('/tasks/{task}/status', [\App\Http\Controllers\Admin\TaskController::class, 'updateStatus'])->name('tasks.update-status');
+    Route::post('/tasks/update-order', [\App\Http\Controllers\Admin\TaskController::class, 'updateOrder'])->name('tasks.update-order');
+    Route::post('/tasks/{task}/assign', [\App\Http\Controllers\Admin\TaskController::class, 'assign'])->name('tasks.assign');
 });
 
 
 
-Broadcast::routes(['middleware' => ['auth', 'check.suspended', 'role:admin|staff']]);
+Broadcast::routes(['middleware' => ['auth', 'check.suspended', 'role:admin|supervisor|staff']]);
 
 
 Route::get('/admin/activity-logs', function () {
@@ -404,8 +419,8 @@ Route::get('/admin/activity-logs', function () {
     return view('admin.activity_logs', compact('logs'));
 })->middleware(['auth', 'role:admin'])->name('admin.activity.logs');
 
-Route::middleware(['auth', 'check_role:staff'])->group(function () {
-    // Staff-only routes here
+Route::middleware(['auth', 'check_role:supervisor'])->group(function () {
+    // Supervisor-only routes here
 });
 
 

@@ -85,11 +85,13 @@
                                             @if ($staffs->hasRole('staff'))
                                                 <form method="POST"
                                                     action="{{ route('admin.staff.promote', $staffs->id) }}"
-                                                    onsubmit="return confirm('Are you sure you want to promote this staff to admin?');">
+                                                    onsubmit="return confirm('Are you sure you want to promote this staff to supervisor?');">
                                                     @csrf
                                                     <button type="submit" class="btn btn-sm btn-success">Promote to
-                                                        Admin</button>
+                                                        Supervisor</button>
                                                 </form>
+                                            @elseif ($staffs->hasRole('supervisor'))
+                                                <span class="badge bg-info">Supervisor</span>
                                             @else
                                                 <span class="badge bg-primary">Admin</span>
                                             @endif

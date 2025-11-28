@@ -257,7 +257,7 @@
                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                             <div style="display:none; font-size: 2rem; color: #635bff;">💳</div>
                             <h4>Stripe</h4>
-                            <p>Secure payment processing with major credit cards and digital wallets worldwide</p>
+                            <p>Secure payment processing with major credit cards and digital wallets <b>Globally</b></p>
                         </label>
 
                         <label class="payment-option" for="flutterwave" data-gateway="flutterwave">
@@ -266,7 +266,7 @@
                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                             <div style="display:none; font-size: 2rem; color: #f5a623;">💳</div>
                             <h4>Flutterwave</h4>
-                            <p>Pay with cards, bank transfers, mobile money and more payment methods across Africa</p>
+                            <p>Pay with cards, bank transfers, mobile money and more payment methods across <b>Africa</b></p>
                         </label>
                     </div>
 

@@ -20,10 +20,10 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'view_students']);
 
         $adminRole = Role::create(['name' => 'admin']);
-        $staffRole = Role::create(['name' => 'staff']);
+        $supervisorRole = Role::create(['name' => 'supervisor']);
 
         $adminRole->givePermissionTo(Permission::all());
-        $staffRole->givePermissionTo(['manage_events', 'view_students']);
+        $supervisorRole->givePermissionTo(['manage_events', 'view_students']);
 
         $admin = User::create([
             'name' => 'Admin User',
@@ -32,11 +32,11 @@ class DatabaseSeeder extends Seeder
         ]);
         $admin->assignRole($adminRole);
 
-        $staff = User::create([
-            'name' => 'Staff User',
-            'email' => 'staff@mail.com',
+        $supervisor = User::create([
+            'name' => 'Supervisor User',
+            'email' => 'supervisor@mail.com',
             'password' => bcrypt('password'),
         ]);
-        $staff->assignRole($staffRole);
+        $supervisor->assignRole($supervisorRole);
     }
 }

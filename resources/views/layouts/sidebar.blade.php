@@ -44,6 +44,36 @@
                 <span x-show="sidebarOpen" x-transition class="sidebar-text">Calendar</span>
             </a>
 
+            <!-- Project Management Section -->
+            <div class="sidebar-section" x-data="{ open: {{ request()->routeIs('admin.projects.*', 'admin.tasks.*') ? 'true' : 'false' }} }">
+                <button @click="open = !open" class="sidebar-item sidebar-dropdown-toggle">
+                    <div class="d-flex align-items-center flex-grow-1">
+                        <i class="fa fa-project-diagram sidebar-icon"></i>
+                        <span x-show="sidebarOpen" x-transition class="sidebar-text">Projects</span>
+                    </div>
+                    <i x-show="sidebarOpen" :class="open ? 'fa fa-chevron-down' : 'fa fa-chevron-right'"
+                        class="sidebar-dropdown-icon" x-transition></i>
+                </button>
+
+                <div x-show="open && sidebarOpen" x-transition class="sidebar-submenu">
+                    <a href="{{ route('admin.projects.index') }}"
+                        class="sidebar-subitem {{ request()->routeIs('admin.projects.*') ? 'active' : '' }}">
+                        <i class="fa fa-folder-open"></i>
+                        <span>All Projects</span>
+                    </a>
+                    <a href="{{ route('admin.tasks.kanban') }}"
+                        class="sidebar-subitem {{ request()->routeIs('admin.tasks.kanban') ? 'active' : '' }}">
+                        <i class="fa fa-columns"></i>
+                        <span>Kanban Board</span>
+                    </a>
+                    <a href="{{ route('admin.tasks.index') }}"
+                        class="sidebar-subitem {{ request()->routeIs('admin.tasks.index') ? 'active' : '' }}">
+                        <i class="fa fa-tasks"></i>
+                        <span>Task List</span>
+                    </a>
+                </div>
+            </div>
+
             <!-- Content Management Section -->
             <div class="sidebar-section" x-data="{ open: {{ request()->routeIs('admin.events.*', 'admin.blogs.*', 'admin.playbooks.*', 'admin.contact.*') ? 'true' : 'false' }} }">
                 <button @click="open = !open" class="sidebar-item sidebar-dropdown-toggle">
@@ -175,7 +205,13 @@
                         {{ auth()->user()->name }}
                     </p>
                     <p class="mb-0 text-muted dark:text-gray-400" style="font-size: 0.75rem;">
-                        {{ auth()->user()->hasRole('admin') ? 'Administrator' : 'Staff' }}
+                        @if (auth()->user()->hasRole('admin'))
+                            Administrator
+                        @elseif(auth()->user()->hasRole('supervisor'))
+                            Supervisor
+                        @else
+                            Staff
+                        @endif
                     </p>
                 </div>
             </div>
