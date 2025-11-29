@@ -435,9 +435,9 @@
         background: #ffffffac;
     }
 
-    div#countryReg-options{
+    div#countryReg-options {
         scrollbar-width: none;
-        
+
     }
 
 
@@ -463,12 +463,12 @@
     }
 
     .custom-options-scrollable::-webkit-scrollbar-thumb {
-         background: #fff;
+        background: #fff;
         border-radius: 3px;
     }
 
     .custom-options-scrollable::-webkit-scrollbar-thumb:hover {
-          background: #ffffffac;
+        background: #ffffffac;
     }
 
     /* Search input for country dropdown */
@@ -487,7 +487,8 @@
         width: 100%;
         box-sizing: border-box;
     }
-    input#countrySearchReg{
+
+    input#countrySearchReg {
         z-index: 40;
 
     }
@@ -1498,7 +1499,7 @@
                                             <span class="custom-option" data-value="CFO">Investor</span>
                                             <span class="custom-option" data-value="Manager">Managing Director</span>
                                             <span class="custom-option" data-value="Director">Director</span>
-                                            <span class="custom-option" data-value="Other">Other</span>
+                                            {{-- <span class="custom-option" data-value="Other">Other</span> --}}
                                         </div>
                                     </div>
 
