@@ -1,12 +1,13 @@
 <x-app-layout>
+    <x-admin-dark-mode />
 
     <x-slot name="header">
         <div class="flex items-center">
             <a href="{{ route('admin.events.index') }}"
-                class="mr-4 text-gray-600 hover:text-gray-900 transition-colors duration-200">
+                class="mr-4 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-200">
                 <i class="fas fa-arrow-left text-lg"></i>
             </a>
-            <h2 class="font-semibold text-2xl text-gray-800 leading-tight">
+            <h2 class="font-semibold text-2xl text-gray-800 dark:text-gray-200 leading-tight dark-transition">
                 <i class="fas fa-plus-circle mr-3 text-blue-600"></i>{{ __('Create New Event') }}
             </h2>
         </div>
@@ -14,7 +15,7 @@
 
     <div class="py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-8">
 
                     <form action="{{ route('admin.events.store') }}" method="POST" enctype="multipart/form-data"
@@ -28,16 +29,17 @@
                         </div>
 
                         <!-- Basic Information Section -->
-                        <div class="bg-gray-50 p-6 rounded-lg">
-                            <h4 class="text-lg font-semibold text-gray-900 mb-4">
+                        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
+                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                                 <i class="fas fa-info-circle mr-2 text-blue-600"></i>Basic Information
                             </h4>
 
                             <div class="grid grid-cols-1 gap-6">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Event Title *</label>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Event
+                                        Title *</label>
                                     <input name="title" type="text"
-                                        class="w-full px-4 py-3 border {{ $errors->has('title') ? 'border-red-500' : 'border-gray-300' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                        class="w-full px-4 py-3 border {{ $errors->has('title') ? 'border-red-500' : 'border-gray-300 dark:border-gray-600' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                                         placeholder="Enter a compelling event title" value="{{ old('title') }}"
                                         required>
                                     @error('title')
@@ -46,9 +48,10 @@
                                 </div>
 
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Subtitle</label>
+                                    <label
+                                        class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Subtitle</label>
                                     <input name="subtitle" type="text"
-                                        class="w-full px-4 py-3 border {{ $errors->has('subtitle') ? 'border-red-500' : 'border-gray-300' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                        class="w-full px-4 py-3 border {{ $errors->has('subtitle') ? 'border-red-500' : 'border-gray-300 dark:border-gray-600' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                                         placeholder="Optional subtitle or tagline" value="{{ old('subtitle') }}">
                                     @error('subtitle')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -56,9 +59,11 @@
                                 </div>
 
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Description *</label>
+                                    <label
+                                        class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Description
+                                        *</label>
                                     <textarea name="description" rows="5"
-                                        class="w-full px-4 py-3 border {{ $errors->has('description') ? 'border-red-500' : 'border-gray-300' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                        class="w-full px-4 py-3 border {{ $errors->has('description') ? 'border-red-500' : 'border-gray-300 dark:border-gray-600' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                                         placeholder="Describe your event in detail..." required>{{ old('description') }}</textarea>
                                     @error('description')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -68,16 +73,17 @@
                         </div>
 
                         <!-- Schedule & Location Section -->
-                        <div class="bg-gray-50 p-6 rounded-lg">
-                            <h4 class="text-lg font-semibold text-gray-900 mb-4">
+                        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
+                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                                 <i class="fas fa-calendar-alt mr-2 text-green-600"></i>Schedule & Location
                             </h4>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Event Date *</label>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Event
+                                        Date *</label>
                                     <input type="date" name="event_date"
-                                        class="w-full px-4 py-3 border {{ $errors->has('event_date') ? 'border-red-500' : 'border-gray-300' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                        class="w-full px-4 py-3 border {{ $errors->has('event_date') ? 'border-red-500' : 'border-gray-300 dark:border-gray-600' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                                         value="{{ old('event_date') }}" required>
                                     @error('event_date')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -85,9 +91,10 @@
                                 </div>
 
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Event Time *</label>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Event
+                                        Time *</label>
                                     <input type="time" name="event_time"
-                                        class="w-full px-4 py-3 border {{ $errors->has('event_time') ? 'border-red-500' : 'border-gray-300' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                        class="w-full px-4 py-3 border {{ $errors->has('event_time') ? 'border-red-500' : 'border-gray-300 dark:border-gray-600' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                                         value="{{ old('event_time') }}" required>
                                     @error('event_time')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -95,9 +102,10 @@
                                 </div>
 
                                 <div class="md:col-span-2">
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Venue *</label>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Venue
+                                        *</label>
                                     <input name="venue" type="text"
-                                        class="w-full px-4 py-3 border {{ $errors->has('venue') ? 'border-red-500' : 'border-gray-300' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                        class="w-full px-4 py-3 border {{ $errors->has('venue') ? 'border-red-500' : 'border-gray-300 dark:border-gray-600' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                                         placeholder="e.g., Google Meet, Conference Room A, or Physical Address"
                                         value="{{ old('venue') }}" required>
                                     @error('venue')
@@ -108,15 +116,16 @@
                         </div>
 
                         <!-- Display Settings Section -->
-                        <div class="bg-gray-50 p-6 rounded-lg">
-                            <h4 class="text-lg font-semibold text-gray-900 mb-4">
+                        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
+                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                                 <i class="fas fa-cog mr-2 text-purple-600"></i>Display Settings
                             </h4>
 
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Event Display Page *</label>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Event
+                                    Display Page *</label>
                                 <select name="display"
-                                    class="w-full px-4 py-3 border {{ $errors->has('display') ? 'border-red-500' : 'border-gray-300' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                    class="w-full px-4 py-3 border {{ $errors->has('display') ? 'border-red-500' : 'border-gray-300 dark:border-gray-600' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                                     required>
                                     <option value="open_to_all"
                                         {{ old('display') == 'open_to_all' ? 'selected' : '' }}>Open to All (Event +
@@ -134,17 +143,18 @@
                         </div>
 
                         <!-- Visibility & Access Section -->
-                        <div class="bg-gray-50 p-6 rounded-lg">
-                            <h4 class="text-lg font-semibold text-gray-900 mb-4">
+                        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
+                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                                 <i class="fas fa-eye mr-2 text-indigo-600"></i>Visibility & Access
                             </h4>
 
                             <div class="grid grid-cols-1 gap-6">
                                 <div>
-                                    <label for="visibility" class="block text-sm font-medium text-gray-700 mb-2">Event
+                                    <label for="visibility"
+                                        class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Event
                                         Visibility *</label>
                                     <select name="visibility" id="visibility"
-                                        class="w-full px-4 py-3 border {{ $errors->has('visibility') ? 'border-red-500' : 'border-gray-300' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                        class="w-full px-4 py-3 border {{ $errors->has('visibility') ? 'border-red-500' : 'border-gray-300 dark:border-gray-600' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                                         required>
                                         <option value="public"
                                             {{ old('visibility') == 'public' || old('visibility') == null ? 'selected' : '' }}>
@@ -158,15 +168,17 @@
                                 </div>
 
                                 <div id="link-input-wrapper">
-                                    <label for="link" class="block text-sm font-medium text-gray-700 mb-2">Event
+                                    <label for="link"
+                                        class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Event
                                         Link</label>
                                     <input type="url" name="link" id="link"
-                                        class="w-full px-4 py-3 border {{ $errors->has('link') ? 'border-red-500' : 'border-gray-300' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                        class="w-full px-4 py-3 border {{ $errors->has('link') ? 'border-red-500' : 'border-gray-300 dark:border-gray-600' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                                         placeholder="https://example.com/meeting-link" value="{{ old('link') }}">
                                     @error('link')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @else
-                                        <p class="text-sm text-gray-500 mt-1">Meeting link or registration URL for
+                                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Meeting link or
+                                            registration URL for
                                             participants</p>
                                     @enderror
                                 </div>
@@ -174,14 +186,16 @@
                         </div>
 
                         <!-- Booking Fields Selection -->
-                        <div class="bg-gray-50 p-6 rounded-lg">
-                            <h4 class="text-lg font-semibold text-gray-900 mb-4">
+                        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
+                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                                 <i class="fas fa-clipboard-list mr-2 text-orange-600"></i>Booking Form Fields
                             </h4>
-                            <p class="text-gray-600 mb-6">Select which information you'd like to collect from attendees
+                            <p class="text-gray-600 dark:text-gray-400 mb-6">Select which information you'd like to
+                                collect from attendees
                                 when they book a seat</p>
                             @error('booking_fields')
-                                <div class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-md">
+                                <div
+                                    class="mb-4 p-3 bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-600 text-red-700 dark:text-red-300 rounded-md">
                                     {{ $message }}
                                 </div>
                             @enderror
@@ -189,62 +203,67 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div class="space-y-3">
                                     <div
-                                        class="flex items-center p-3 bg-white rounded-lg border border-gray-200 hover:border-blue-300 transition-colors duration-200">
+                                        class="flex items-center p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-blue-300 dark:hover:border-blue-500 transition-colors duration-200">
                                         <input
-                                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded"
                                             type="checkbox" name="booking_fields[]" value="name" id="field_name"
                                             {{ in_array('name', old('booking_fields', [])) || old('booking_fields') === null ? 'checked' : '' }}>
-                                        <label class="ml-3 text-sm font-medium text-gray-700 cursor-pointer"
+                                        <label
+                                            class="ml-3 text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer"
                                             for="field_name">
                                             <i class="fas fa-user mr-2 text-blue-500"></i>Full Name
                                         </label>
                                     </div>
 
                                     <div
-                                        class="flex items-center p-3 bg-white rounded-lg border border-gray-200 hover:border-blue-300 transition-colors duration-200">
+                                        class="flex items-center p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-blue-300 dark:hover:border-blue-500 transition-colors duration-200">
                                         <input
-                                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded"
                                             type="checkbox" name="booking_fields[]" value="email" id="field_email"
                                             {{ in_array('email', old('booking_fields', [])) || old('booking_fields') === null ? 'checked' : '' }}>
-                                        <label class="ml-3 text-sm font-medium text-gray-700 cursor-pointer"
+                                        <label
+                                            class="ml-3 text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer"
                                             for="field_email">
                                             <i class="fas fa-envelope mr-2 text-green-500"></i>Email Address
                                         </label>
                                     </div>
 
                                     <div
-                                        class="flex items-center p-3 bg-white rounded-lg border border-gray-200 hover:border-blue-300 transition-colors duration-200">
+                                        class="flex items-center p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-blue-300 dark:hover:border-blue-500 transition-colors duration-200">
                                         <input
-                                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded"
                                             type="checkbox" name="booking_fields[]" value="phone" id="field_phone"
                                             {{ in_array('phone', old('booking_fields', [])) ? 'checked' : '' }}>
-                                        <label class="ml-3 text-sm font-medium text-gray-700 cursor-pointer"
+                                        <label
+                                            class="ml-3 text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer"
                                             for="field_phone">
                                             <i class="fas fa-phone mr-2 text-purple-500"></i>Phone Number
                                         </label>
                                     </div>
 
                                     <div
-                                        class="flex items-center p-3 bg-white rounded-lg border border-gray-200 hover:border-blue-300 transition-colors duration-200">
+                                        class="flex items-center p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-blue-300 dark:hover:border-blue-500 transition-colors duration-200">
                                         <input
-                                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded"
                                             type="checkbox" name="booking_fields[]" value="job_title"
                                             id="field_job_title"
                                             {{ in_array('job_title', old('booking_fields', [])) ? 'checked' : '' }}>
-                                        <label class="ml-3 text-sm font-medium text-gray-700 cursor-pointer"
+                                        <label
+                                            class="ml-3 text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer"
                                             for="field_job_title">
                                             <i class="fas fa-briefcase mr-2 text-indigo-500"></i>Job Title
                                         </label>
                                     </div>
 
                                     <div
-                                        class="flex items-center p-3 bg-white rounded-lg border border-gray-200 hover:border-blue-300 transition-colors duration-200">
+                                        class="flex items-center p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-blue-300 dark:hover:border-blue-500 transition-colors duration-200">
                                         <input
-                                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded"
                                             type="checkbox" name="booking_fields[]" value="organization"
                                             id="field_organization"
                                             {{ in_array('organization', old('booking_fields', [])) ? 'checked' : '' }}>
-                                        <label class="ml-3 text-sm font-medium text-gray-700 cursor-pointer"
+                                        <label
+                                            class="ml-3 text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer"
                                             for="field_organization">
                                             <i class="fas fa-building mr-2 text-teal-500"></i>Organization
                                         </label>
@@ -253,52 +272,56 @@
 
                                 <div class="space-y-3">
                                     <div
-                                        class="flex items-center p-3 bg-white rounded-lg border border-gray-200 hover:border-blue-300 transition-colors duration-200">
+                                        class="flex items-center p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-blue-300 dark:hover:border-blue-500 transition-colors duration-200">
                                         <input
-                                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded"
                                             type="checkbox" name="booking_fields[]" value="location"
                                             id="field_location"
                                             {{ in_array('location', old('booking_fields', [])) ? 'checked' : '' }}>
-                                        <label class="ml-3 text-sm font-medium text-gray-700 cursor-pointer"
+                                        <label
+                                            class="ml-3 text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer"
                                             for="field_location">
                                             <i class="fas fa-map-marker-alt mr-2 text-red-500"></i>Location
                                         </label>
                                     </div>
 
                                     <div
-                                        class="flex items-center p-3 bg-white rounded-lg border border-gray-200 hover:border-blue-300 transition-colors duration-200">
+                                        class="flex items-center p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-blue-300 dark:hover:border-blue-500 transition-colors duration-200">
                                         <input
-                                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded"
                                             type="checkbox" name="booking_fields[]" value="industry"
                                             id="field_industry"
                                             {{ in_array('industry', old('booking_fields', [])) ? 'checked' : '' }}>
-                                        <label class="ml-3 text-sm font-medium text-gray-700 cursor-pointer"
+                                        <label
+                                            class="ml-3 text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer"
                                             for="field_industry">
                                             <i class="fas fa-industry mr-2 text-yellow-500"></i>Industry
                                         </label>
                                     </div>
 
                                     <div
-                                        class="flex items-center p-3 bg-white rounded-lg border border-gray-200 hover:border-blue-300 transition-colors duration-200">
+                                        class="flex items-center p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-blue-300 dark:hover:border-blue-500 transition-colors duration-200">
                                         <input
-                                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded"
                                             type="checkbox" name="booking_fields[]" value="expectations"
                                             id="field_expectations"
                                             {{ in_array('expectations', old('booking_fields', [])) ? 'checked' : '' }}>
-                                        <label class="ml-3 text-sm font-medium text-gray-700 cursor-pointer"
+                                        <label
+                                            class="ml-3 text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer"
                                             for="field_expectations">
                                             <i class="fas fa-lightbulb mr-2 text-orange-500"></i>Expectations
                                         </label>
                                     </div>
 
                                     <div
-                                        class="flex items-center p-3 bg-white rounded-lg border border-gray-200 hover:border-blue-300 transition-colors duration-200">
+                                        class="flex items-center p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-blue-300 dark:hover:border-blue-500 transition-colors duration-200">
                                         <input
-                                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded"
                                             type="checkbox" name="booking_fields[]" value="referral_source"
                                             id="field_referral_source"
                                             {{ in_array('referral_source', old('booking_fields', [])) ? 'checked' : '' }}>
-                                        <label class="ml-3 text-sm font-medium text-gray-700 cursor-pointer"
+                                        <label
+                                            class="ml-3 text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer"
                                             for="field_referral_source">
                                             <i class="fas fa-share-alt mr-2 text-pink-500"></i>How did you hear about
                                             us?
@@ -307,13 +330,14 @@
                                 </div>
                             </div>
 
-                            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-6">
+                            <div
+                                class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-4 mt-6">
                                 <div class="flex">
                                     <div class="flex-shrink-0">
                                         <i class="fas fa-info-circle text-blue-400"></i>
                                     </div>
                                     <div class="ml-3">
-                                        <p class="text-sm text-blue-700">
+                                        <p class="text-sm text-blue-700 dark:text-blue-300">
                                             <strong>Tip:</strong> Name and Email are selected by default as they're
                                             typically required for most events. You can deselect them if needed.
                                         </p>
@@ -323,29 +347,33 @@
                         </div>
 
                         <!-- Event Image Section -->
-                        <div class="bg-gray-50 p-6 rounded-lg">
-                            <h4 class="text-lg font-semibold text-gray-900 mb-4">
+                        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
+                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                                 <i class="fas fa-image mr-2 text-pink-600"></i>Event Image
                             </h4>
 
                             <div class="space-y-4">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Upload Event
+                                    <label
+                                        class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Upload
+                                        Event
                                         Image</label>
                                     <div
-                                        class="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 {{ $errors->has('image') ? 'border-red-500' : 'border-gray-300' }} border-dashed rounded-lg hover:border-blue-400 transition-colors duration-200">
+                                        class="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 {{ $errors->has('image') ? 'border-red-500' : 'border-gray-300 dark:border-gray-600' }} border-dashed rounded-lg hover:border-blue-400 dark:hover:border-blue-500 transition-colors duration-200">
                                         <div class="space-y-1 text-center">
-                                            <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-3"></i>
-                                            <div class="flex text-sm text-gray-600">
+                                            <i
+                                                class="fas fa-cloud-upload-alt text-4xl text-gray-400 dark:text-gray-500 mb-3"></i>
+                                            <div class="flex text-sm text-gray-600 dark:text-gray-400">
                                                 <label for="image"
-                                                    class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
+                                                    class="relative cursor-pointer bg-white dark:bg-gray-800 rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
                                                     <span>Upload a file</span>
                                                     <input id="image" name="image" type="file"
                                                         class="sr-only" accept="image/*">
                                                 </label>
                                                 <p class="pl-1">or drag and drop</p>
                                             </div>
-                                            <p class="text-xs text-gray-500">PNG, JPG, GIF up to 2MB</p>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG, GIF up to 2MB
+                                            </p>
                                         </div>
                                     </div>
                                     @error('image')
@@ -370,7 +398,7 @@
                         <!-- Submit Button -->
                         <div class="flex items-center justify-between pt-6">
                             <a href="{{ route('admin.events.index') }}"
-                                class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-3 rounded-lg font-medium transition-colors duration-200">
+                                class="bg-gray-300 hover:bg-gray-400 dark:bg-gray-600 dark:hover:bg-gray-500 text-gray-800 dark:text-gray-200 px-6 py-3 rounded-lg font-medium transition-colors duration-200">
                                 <i class="fas fa-arrow-left mr-2"></i>Cancel
                             </a>
                             <button type="submit"
