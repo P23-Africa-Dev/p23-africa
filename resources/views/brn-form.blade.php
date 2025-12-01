@@ -333,7 +333,8 @@
         background-color: rgba(255, 255, 255, 0.2) !important;
         color: #ffffff;
         font-size: 16px;
-        font-family: "Montserrat", sans-serif;
+        font-family: "GT Walsheim Trial Md" !important;
+
         outline: none;
         transition: background-color 0.3s ease, box-shadow 0.3s ease;
         box-sizing: border-box;
@@ -359,8 +360,10 @@
     .custom-select {
         position: relative;
         width: 100%;
-        font-family: "Montserrat", sans-serif;
+        font-family: "GT Walsheim Trial Md";
+
         color: #ffffff;
+
     }
 
     /* Trigger (main visible input) */
@@ -383,10 +386,20 @@
 
     /* Text inside the trigger */
     .custom-select-text {
-        color: rgba(255, 255, 255, 0.9) !important;
         font-family: "GT Walsheim Trial Md";
         padding-left: 7px;
-        color: #ececec80 !important;
+        color: #ececec80;
+        /* color: #fff !important; */
+
+    }
+
+
+    .custom-select-text.selected {
+        color: #ffffff !important;
+    }
+
+    [data-select] .custom-select-text.selected {
+        color: #ffffff !important;
     }
 
     /* Arrow styling */
@@ -415,7 +428,6 @@
 
     }
 
-
     /* Custom scrollbar for country list */
     .custom-options::-webkit-scrollbar {
         width: 6px;
@@ -435,9 +447,13 @@
         background: #ffffffac;
     }
 
-    div#countryReg-options{
+    div#countryReg-options {
         scrollbar-width: none;
-        
+
+    }
+
+    div#number-of-employees {
+        z-index: 5;
     }
 
 
@@ -463,12 +479,12 @@
     }
 
     .custom-options-scrollable::-webkit-scrollbar-thumb {
-         background: #fff;
+        background: #fff;
         border-radius: 3px;
     }
 
     .custom-options-scrollable::-webkit-scrollbar-thumb:hover {
-          background: #ffffffac;
+        background: #ffffffac;
     }
 
     /* Search input for country dropdown */
@@ -487,7 +503,8 @@
         width: 100%;
         box-sizing: border-box;
     }
-    input#countrySearchReg{
+
+    input#countrySearchReg {
         z-index: 40;
 
     }
@@ -528,8 +545,9 @@
 
     /* Active option (highlighted) */
     /* .custom-option.active {
-        background-color: rgba(255, 255, 255, 0.25) !important;
+        color: #fff !important;
     } */
+
 
 
 
@@ -793,6 +811,7 @@
         font-weight: 500;
 
         font-family: "GT Walsheim Trial Md";
+        outline: none;
     }
 
     .interest-form-proceed-button:hover {
@@ -936,6 +955,8 @@
 
     .error-message {
         display: flex !important;
+        font-size: 12px !important;
+        margin-left: 27px !important;
     }
 
     @keyframes slideDown {
@@ -1266,6 +1287,12 @@
         font-family: "GT Walsheim Trial Md"; */
             padding-left: 20px;
         }
+
+        .error-message {
+
+            margin-left: 35px !important;
+        }
+
     }
 
     @media (min-width: 1440px) {
@@ -1528,7 +1555,7 @@
                                     <div id="email-status" style="display: none; margin-top: 8px; font-size: 0.875rem;">
                                         <span id="email-checkmark" style="color: #10b981; display: none;">✓ Email
                                             available</span>
-                                        <span id="email-spinner" style="color: #6b7280; display: none;">⏳
+                                        <span id="email-spinner" style="color: #ffff; display: none;">⏳
                                             Validating...</span>
                                     </div>
                                 </div>
@@ -1547,6 +1574,7 @@
                                                 <span class="arrow" id="countryArrow">▼</span>
                                             </div>
 
+                                            <!-- Dropdown -->
                                             <!-- Dropdown -->
                                             <div class="country-dropdown" id="countryDropdown">
                                                 <input type="text" id="countrySearch" class="country-search"
@@ -2588,6 +2616,7 @@
                                     </select>
                                 </div>
 
+
                                 <div class="interest-form-group">
                                     <label for="website">Company Website or Social Handle</label>
                                     <input type="text" id="website" name="website"
@@ -2672,7 +2701,7 @@
                                             </svg>
                                         </div>
 
-                                        <div class="custom-options">
+                                        <div class="custom-options" id="number-of-employees">
                                             <span class="custom-option" data-value="1-10">1-10</span>
                                             <span class="custom-option" data-value="11-50">11-50</span>
                                             <span class="custom-option" data-value="50-200">50-200</span>
@@ -3190,6 +3219,8 @@
             }
         }
 
+
+
         // Map custom select names to form field names
         function getFieldName(selectName) {
             const mapping = {
@@ -3305,7 +3336,8 @@
             clearError(input);
 
             input.style.border = '2px solid #ef4444';
-            input.style.backgroundColor = '#fef2f2';
+            input.style.borderRadius = '30px';
+            // input.style.backgroundColor = '#fef2f2';
 
             const errorDiv = document.createElement('div');
             errorDiv.className = 'error-message';
@@ -3362,51 +3394,64 @@
          *************************************/
         const allCustomSelects = document.querySelectorAll(".custom-select");
 
+
+
         allCustomSelects.forEach((customSelect) => {
             const trigger = customSelect.querySelector(".custom-select-trigger");
             const text = customSelect.querySelector(".custom-select-text");
             const options = customSelect.querySelectorAll(".custom-option");
             const selectName = customSelect.dataset.select;
-            const hiddenSelect = document.querySelector(`select[name="${getFieldName(selectName)}"]`);
+            const hiddenSelect = document.querySelector(
+                `select[name="${getFieldName(selectName)}"]`
+            );
 
-            // Toggle dropdown open/close
+            // Toggle dropdown
             trigger.addEventListener("click", (e) => {
                 e.stopPropagation();
+
                 document.querySelectorAll(".custom-select.open").forEach((openSelect) => {
                     if (openSelect !== customSelect) openSelect.classList.remove(
                         "open");
                 });
+
                 customSelect.classList.toggle("open");
             });
 
-            // Handle option click
+            // Handle selecting an option
             options.forEach((option) => {
                 option.addEventListener("click", (e) => {
                     e.stopPropagation();
+
                     const value = option.dataset.value;
                     const label = option.textContent;
 
-                    // Update visible text + active state
+                    // Update visible trigger text
                     text.textContent = label;
-                    options.forEach((o) => o.classList.remove("active"));
-                    option.classList.add("active");
 
-                    // Sync to hidden select
+                    // Remove active + selected from all options
+                    options.forEach((o) => o.classList.remove("active", "selected"));
+                    text.classList.remove("selected");
+
+                    // Add active + selected to clicked option
+                    option.classList.add("active", "selected");
+
+                    // Make trigger text white
+                    text.classList.add("selected");
+
+                    // Update hidden select
                     if (hiddenSelect) {
                         hiddenSelect.value = value;
-                    } else {
-                        // console.warn(`Hidden select not found for ${selectName}`);
                     }
 
                     // Close dropdown
                     customSelect.classList.remove("open");
 
-                    // If this is the "industry" select, trigger category update
+                    // Update categories if needed
                     if (selectName === "industry") {
                         updateCategories(value);
                     }
 
-                    // Save form data after selection
+                    // Save form data
                     saveFormData();
                 });
             });
@@ -3422,6 +3467,10 @@
         /*************************************
          * COUNTRY SEARCH FUNCTIONALITY
          *************************************/
+
+
+        // FOR STEP 1 - Phone NUmber Input 
+
         const selectedCountry = document.getElementById("selectedCountry");
         const countryDropdown = document.getElementById("countryDropdown");
         const arrow = document.getElementById("countryArrow");
@@ -3519,6 +3568,45 @@
             countryDropdown.classList.remove("open");
             arrow.classList.remove("rotate-up");
         });
+
+
+
+
+
+
+        // FOR STEP 2 -  COUNTRY OF REGISTRATIOON
+        const countrySearchInput = document.getElementById('countrySearchReg');
+        const optionsContainer = document.querySelector('#countryReg-options .custom-options-scrollable');
+        const allOptions = Array.from(optionsContainer.querySelectorAll('.custom-option'));
+
+        // Create a "no results" element
+        const noResults = document.createElement('span');
+        noResults.className = 'no-results';
+        noResults.textContent = 'No results found';
+        noResults.style.display = 'none';
+        noResults.style.color = '#ffff';
+        noResults.style.padding = '8px 12px';
+        optionsContainer.appendChild(noResults);
+
+        // Listen for input in the search box
+        countrySearchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            let hasVisible = false;
+
+            allOptions.forEach(option => {
+                const text = option.dataset.value.toLowerCase();
+                if (text.includes(query)) {
+                    option.style.display = 'block';
+                    hasVisible = true;
+                } else {
+                    option.style.display = 'none';
+                }
+            });
+
+            // Show "no results" message if nothing matches
+            noResults.style.display = hasVisible ? 'none' : 'block';
+        });
+
 
 
         /*************************************
@@ -3770,10 +3858,32 @@
                     isValid = false;
                 }
 
+
                 if (!phone.value.trim()) {
-                    showError(phone, 'Phone number is required');
+                    const phoneContainer = currentStage.querySelector('.phone-input-container');
+
+                    if (phoneContainer) {
+                        // highlight border of phone input container
+                        phoneContainer.style.border = "1px solid #ef4444";
+                        phoneContainer.style.borderRadius = "30px";
+
+                        // create error message
+                        const error = document.createElement("div");
+                        error.className = "error-message";
+                        error.style.color = "#ef4444";
+                        error.style.fontSize = "0.875rem";
+                        error.style.marginTop = "6px";
+                        error.textContent = "Phone number is required";
+
+                        // append error message after the phone container
+                        phoneContainer.parentNode.insertBefore(error, phoneContainer.nextSibling);
+                    }
+
                     isValid = false;
                 }
+
+
+
 
                 if (!position.value.trim()) {
                     const customSelect = currentStage.querySelector('[data-select="title"]');
