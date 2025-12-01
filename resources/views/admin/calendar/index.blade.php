@@ -33,7 +33,7 @@
                     <div class="calendar-container"
                         style="position: relative; width: 100%; padding-bottom: 75%; min-height: 600px;">
                         <iframe
-                            src="https://calendar.google.com/calendar/embed?src=contact%40p23africa.com&ctz=Europe%2FLondon&mode=WEEK&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=1&showCalendars=0&showTz=1"
+                            src="https://calendar.google.com/calendar/embed?src=contact%40p23africa.com&ctz=Europe%2FLondon&mode=MONTH&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=1&showCalendars=0&showTz=1"
                             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; border-radius: 0 0 0.5rem 0.5rem;"
                             frameborder="0" scrolling="no">
                         </iframe>
