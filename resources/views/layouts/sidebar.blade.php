@@ -38,11 +38,13 @@
             </a>
 
             <!-- Calendar -->
+             @if (auth()->user()->hasRole('admin|supervisor'))  
             <a href="{{ route('admin.calendar.index') }}"
                 class="sidebar-item {{ request()->routeIs('admin.calendar.*') ? 'active' : '' }}">
                 <i class="fa fa-calendar-alt sidebar-icon"></i>
                 <span x-show="sidebarOpen" x-transition class="sidebar-text">Calendar</span>
             </a>
+            @endif
 
             <!-- Project Management Section -->
             <div class="sidebar-section" x-data="{ open: {{ request()->routeIs('admin.projects.*', 'admin.tasks.*') ? 'true' : 'false' }} }">

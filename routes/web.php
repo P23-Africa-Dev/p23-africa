@@ -301,12 +301,11 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
 
     Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
 
-    // Calendar
-    Route::get('/calendar', [\App\Http\Controllers\Admin\CalendarController::class, 'index'])->name('calendar.index');
-
-    Route::middleware('role:admin')->group(function () {
+    Route::middleware('role:admin|supervisor')->group(function () {
         Route::resource('staff', StaffController::class);
 
+        // Calendar
+        Route::get('/calendar', [\App\Http\Controllers\Admin\CalendarController::class, 'index'])->name('calendar.index');
 
         Route::post('/staff/{staff}/suspend', [StaffController::class, 'suspend'])->name('staff.suspend');
         Route::post('/staff/{staff}/reactivate', [StaffController::class, 'reactivate'])->name('staff.reactivate');
@@ -325,6 +324,8 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
         // Consultation Management
         Route::get('/consultations', [\App\Http\Controllers\Admin\ConsultationController::class, 'index'])->name('consultation.index');
         Route::get('/consultations/{id}', [\App\Http\Controllers\Admin\ConsultationController::class, 'show'])->name('consultation.show');
+        Route::delete('/consultation/{id}', [\App\Http\Controllers\Admin\ConsultationController::class, 'destroy'])->name('consultation.destroy');
+        Route::post('/consultation/bulk-delete', [\App\Http\Controllers\Admin\ConsultationController::class, 'bulkDelete'])->name('consultation.bulk-delete');
         Route::post('/consultations/{id}/update-status', [\App\Http\Controllers\Admin\ConsultationController::class, 'updateStatus'])->name('consultation.updateStatus');
         Route::post('/consultations/{id}/reply', [\App\Http\Controllers\Admin\ConsultationController::class, 'sendReply'])->name('consultation.reply');
         Route::post('/consultation/chat/mark-read/{messageId}', [\App\Http\Controllers\Admin\ConsultationController::class, 'markMessageAsRead'])->name('consultation.chat.markRead');

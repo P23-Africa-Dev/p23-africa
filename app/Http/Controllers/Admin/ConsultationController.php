@@ -311,4 +311,99 @@ class ConsultationController extends Controller
 
         return view('admin.consultation.partials.applications-table', compact('applications'))->render();
     }
+
+    /**
+     * Delete a consultation application
+     */
+    public function destroy($id)
+    {
+        try {
+            $application = ConsultationApplication::findOrFail($id);
+
+            // Delete related records first
+            $application->payments()->delete();
+            $application->scheduledSessions()->delete();
+            $application->chatMessages()->delete();
+
+            // Delete the application
+            $application->delete();
+
+            Log::info('Consultation application deleted', [
+                'id' => $id,
+                'deleted_by' => Auth::id()
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Application deleted successfully'
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Failed to delete consultation application', [
+                'error' => $e->getMessage(),
+                'id' => $id
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete application: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Bulk delete consultation applications
+     */
+    public function bulkDelete(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'integer|exists:consultation_applications,id'
+        ]);
+
+        try {
+            $ids = $request->ids;
+            $deletedCount = 0;
+
+            DB::beginTransaction();
+
+            foreach ($ids as $id) {
+                $application = ConsultationApplication::find($id);
+                if ($application) {
+                    // Delete related records first
+                    $application->payments()->delete();
+                    $application->scheduledSessions()->delete();
+                    $application->chatMessages()->delete();
+
+                    // Delete the application
+                    $application->delete();
+                    $deletedCount++;
+                }
+            }
+
+            DB::commit();
+
+            Log::info('Bulk delete consultation applications', [
+                'ids' => $ids,
+                'deleted_count' => $deletedCount,
+                'deleted_by' => Auth::id()
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => "{$deletedCount} application(s) deleted successfully"
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            Log::error('Failed to bulk delete consultation applications', [
+                'error' => $e->getMessage(),
+                'ids' => $request->ids
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete applications: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 }
