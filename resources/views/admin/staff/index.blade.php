@@ -93,7 +93,7 @@
                                             @elseif ($staffs->hasRole('supervisor'))
                                                 <span class="badge bg-info">Supervisor</span>
                                             @else
-                                                <span class="badge bg-primary">Admin</span>
+                                                <span class="badge bg-primary">Staff</span>
                                             @endif
                                         </td>
 
