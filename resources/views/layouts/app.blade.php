@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" href="{{ asset('images/service-group.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('images/Logo2.png') }}" type="image/x-icon">
 
     <title>P23 Africa | Admin Dashboard</title>
 
@@ -813,8 +813,8 @@
                         const title = 'New Activity Log';
                         const options = {
                             body: `${activity.causer_name} ${activity.description}${activity.subject_type ? ' - ' + activity.subject_type : ''}`,
-                            icon: '{{ asset('images/service-group.png') }}',
-                            badge: '{{ asset('images/service-group.png') }}',
+                            icon: '{{ asset('images/Logo2.png') }}',
+                            badge: '{{ asset('images/Logo2.png') }}',
                             tag: 'activity-' + activity.id,
                             requireInteraction: false,
                             silent: false,
