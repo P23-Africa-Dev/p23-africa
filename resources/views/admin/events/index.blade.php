@@ -281,7 +281,7 @@
                                                     </a>
 
                                                     <!-- Delete -->
-                                                    @if (auth()->user()->hasRole('admin|supervisor'))
+                                                    @if (auth()->user()->hasRole('admin|supervisor|staff'))
                                                     <form action="{{ route('admin.events.destroy', $event) }}"
                                                         method="POST" class="inline"
                                                         onsubmit="return confirm('Are you sure you want to delete this event? This action cannot be undone.');">
