@@ -141,6 +141,12 @@ class TaskController extends Controller
             $task->assignees()->sync($assigneeData);
         }
 
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($task)
+            ->withProperties(['title' => $task->title, 'project_id' => $task->project_id])
+            ->log('Created task');
+
         if ($request->expectsJson()) {
             return response()->json([
                 'success' => true,
@@ -213,6 +219,12 @@ class TaskController extends Controller
             $task->assignees()->sync($assigneeData);
         }
 
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($task)
+            ->withProperties(['title' => $task->title])
+            ->log('Updated task');
+
         if ($request->expectsJson()) {
             return response()->json([
                 'success' => true,
@@ -234,7 +246,15 @@ class TaskController extends Controller
         }
 
         $projectId = $task->project_id;
+        $taskTitle = $task->title;
+        $taskId = $task->id;
+
         $task->delete();
+
+        activity()
+            ->causedBy(Auth::user())
+            ->withProperties(['title' => $taskTitle, 'task_id' => $taskId, 'project_id' => $projectId])
+            ->log('Deleted task');
 
         if (request()->expectsJson()) {
             return response()->json([

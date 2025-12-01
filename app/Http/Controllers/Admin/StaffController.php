@@ -56,7 +56,11 @@ class StaffController extends Controller
         // $permissions = $user->getPermissionNames();
         Mail::to($user->email)->send(new StaffWelcomeMail($user, $password));
 
-        // activity()->causedBy(Auth::user())->performedOn($user)->log('Created staff account');
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($user)
+            ->withProperties(['role' => 'staff', 'email' => $user->email])
+            ->log('Created staff account');
 
         return redirect()->route('admin.staff.index')->with('success', 'Staff created and notified.');
     }
@@ -111,7 +115,11 @@ class StaffController extends Controller
 
         $staff->update(['suspended_at' => now()]);
 
-        // activity()->causedBy(Auth::user())->performedOn($staff)->log('Suspended staff account');
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($staff)
+            ->withProperties(['action' => 'suspend'])
+            ->log('Suspended staff account');
 
         return redirect()->back()->with('success', 'Staff account suspended successfully.');
     }
@@ -120,7 +128,11 @@ class StaffController extends Controller
     {
         $staff->update(['suspended_at' => null]);
 
-        // activity()->causedBy(Auth::user())->performedOn($staff)->log('Reactivated staff account');
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($staff)
+            ->withProperties(['action' => 'reactivate'])
+            ->log('Reactivated staff account');
 
         return redirect()->back()->with('success', 'Staff account reactivated successfully.');
     }
@@ -140,10 +152,11 @@ class StaffController extends Controller
 
         Mail::to($staff->email)->send(new StaffPromotedToSupervisorMail($staff));
 
-        // activity()
-        //     ->causedBy(Auth::user())
-        //     ->performedOn($staff)
-        //     ->log('Promoted staff to supervisor');
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($staff)
+            ->withProperties(['promoted_to' => 'supervisor'])
+            ->log('Promoted staff to supervisor');
 
         return redirect()->back()->with('success', 'Staff promoted to supervisor successfully.');
     }

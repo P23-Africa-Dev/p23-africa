@@ -146,10 +146,12 @@
                                             Settings</th>
                                         <th
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                            Actions</th>
+                                            Actions</th>  
+                                        @if (auth()->user()->hasRole('admin|supervisor'))  
                                         <th
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                             Notifications</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
@@ -279,6 +281,7 @@
                                                     </a>
 
                                                     <!-- Delete -->
+                                                    @if (auth()->user()->hasRole('admin|supervisor|staff'))
                                                     <form action="{{ route('admin.events.destroy', $event) }}"
                                                         method="POST" class="inline"
                                                         onsubmit="return confirm('Are you sure you want to delete this event? This action cannot be undone.');">
@@ -290,10 +293,12 @@
                                                             <i class="fas fa-trash"></i>
                                                         </button>
                                                     </form>
+                                                    @endif
                                                 </div>
                                             </td>
 
                                             <!-- Notifications -->
+                                            @if (auth()->user()->hasRole('admin|supervisor'))
                                             <td class="px-6 py-4">
                                                 <div class="space-y-2">
                                                     @if ($hoursUntilEvent <= 24 && $hoursUntilEvent > 0)
@@ -322,6 +327,7 @@
                                                     @endif
                                                 </div>
                                             </td>
+                                            @endif
                                         </tr>
                                     @empty
                                         <tr>

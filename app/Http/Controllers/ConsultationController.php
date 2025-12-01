@@ -170,6 +170,39 @@ class ConsultationController extends Controller
             $data = $validator->validated();
             $isSubmission = $data['is_submission'] ?? false;
 
+            // Check if user has provided a valid name or email
+            $hasValidName = !empty($data['full_name']) && strlen(trim($data['full_name'])) >= 2;
+            $hasValidEmail = !empty($data['email']) && filter_var($data['email'], FILTER_VALIDATE_EMAIL);
+
+            // If this is not a submission and user hasn't provided valid name or email, don't save draft
+            if (!$isSubmission && !$hasValidName && !$hasValidEmail) {
+                // Check if there's an existing draft to delete
+                $existingDraft = ConsultationApplication::where('session_id', $data['session_id'])
+                    ->where('status', 'draft')
+                    ->first();
+
+                if ($existingDraft) {
+                    // Delete the draft since user cleared their identifying info
+                    $existingDraft->delete();
+                    Log::info('Consultation draft deleted - no valid name or email', [
+                        'session_id' => $data['session_id'],
+                        'application_id' => $existingDraft->id
+                    ]);
+
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Draft cleared - please provide a name or email to save progress',
+                        'draft_deleted' => true
+                    ]);
+                }
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Please provide a valid name or email to save your progress',
+                    'draft_saved' => false
+                ]);
+            }
+
             // Prepare data for storage
             $consultationData = [
                 'session_id' => $data['session_id'],

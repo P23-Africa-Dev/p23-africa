@@ -52,7 +52,13 @@ class ProjectController extends Controller
 
         $data['created_by'] = Auth::id();
 
-        Project::create($data);
+        $project = Project::create($data);
+
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($project)
+            ->withProperties(['name' => $project->name, 'status' => $project->status])
+            ->log('Created project');
 
         return redirect()->route('admin.projects.index')->with('success', 'Project created successfully.');
     }
@@ -104,6 +110,12 @@ class ProjectController extends Controller
 
         $project->update($data);
 
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($project)
+            ->withProperties(['name' => $project->name])
+            ->log('Updated project');
+
         return redirect()->route('admin.projects.index')->with('success', 'Project updated successfully.');
     }
 
@@ -111,7 +123,15 @@ class ProjectController extends Controller
     {
         $this->authorize('delete', $project);
 
+        $projectName = $project->name;
+        $projectId = $project->id;
+
         $project->delete();
+
+        activity()
+            ->causedBy(Auth::user())
+            ->withProperties(['name' => $projectName, 'project_id' => $projectId])
+            ->log('Deleted project');
 
         return redirect()->route('admin.projects.index')->with('success', 'Project deleted successfully.');
     }
@@ -123,6 +143,12 @@ class ProjectController extends Controller
         ]);
 
         $project->update(['status' => $request->status]);
+
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($project)
+            ->withProperties(['name' => $project->name, 'new_status' => $request->status])
+            ->log('Updated project status');
 
         return response()->json([
             'success' => true,

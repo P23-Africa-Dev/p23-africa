@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" href="{{ asset('images/service-group.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('images/Logo2.png') }}" type="image/x-icon">
 
     <title>P23 Africa | Admin Dashboard</title>
 
@@ -67,7 +67,7 @@
 
     <!--{{-- Use built assets on production --}}-->
     @env('production')
-        <link rel="stylesheet" href="{{ asset('build/assets/app-Cm1TRZA9.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/assets/app-D-jcgBiz.css') }}">
         <script src="{{ asset('build/assets/app-BGjDqbHR.js') }}" defer></script>
     @endenv
 
@@ -689,7 +689,8 @@
 
         <!-- Main Content Area with Sidebar Offset -->
         <div x-data="{ sidebarOpen: localStorage.getItem('sidebarOpen') === 'true' || localStorage.getItem('sidebarOpen') === null }" :style="sidebarOpen ? 'margin-left: 260px;' : 'margin-left: 70px;'"
-            class="main-content-wrapper dark-transition mt-[64px]" style="transition: margin-left 0.3s ease; margin-top: 64px;">
+            class="main-content-wrapper dark-transition mt-[64px]"
+            style="transition: margin-left 0.3s ease; margin-top: 64px;">
 
             <!-- Page Heading -->
             @isset($header)
@@ -716,6 +717,141 @@
 
     <!-- Bootstrap JavaScript Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Activity Log Notifications (Admin Only) -->
+    @if (auth()->check() && auth()->user()->hasRole('admin'))
+        <script>
+            (function() {
+                const ActivityNotifications = {
+                    lastKnownCount: 0,
+                    pollInterval: 30000, // 30 seconds
+                    notificationPermission: Notification.permission,
+
+                    init() {
+                        this.requestNotificationPermission();
+                        this.updateBadge();
+                        this.startPolling();
+                    },
+
+                    async requestNotificationPermission() {
+                        if ('Notification' in window && Notification.permission === 'default') {
+                            try {
+                                const permission = await Notification.requestPermission();
+                                this.notificationPermission = permission;
+                                console.log('Notification permission:', permission);
+                            } catch (e) {
+                                console.log('Notification permission request failed:', e);
+                            }
+                        }
+                    },
+
+                    async updateBadge() {
+                        try {
+                            const response = await fetch('{{ route('admin.activity.unseen-count') }}', {
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'X-Requested-With': 'XMLHttpRequest',
+                                }
+                            });
+
+                            if (!response.ok) return;
+
+                            const data = await response.json();
+                            const badge = document.getElementById('activity-unseen-badge');
+
+                            if (badge) {
+                                if (data.count > 0) {
+                                    badge.textContent = data.count > 99 ? '99+' : data.count;
+                                    badge.style.display = 'flex';
+                                    badge.style.alignItems = 'center';
+                                    badge.style.justifyContent = 'center';
+                                } else {
+                                    badge.style.display = 'none';
+                                }
+                            }
+
+                            // Check for new activities and show notification
+                            if (data.count > this.lastKnownCount && this.lastKnownCount > 0) {
+                                this.fetchAndNotify();
+                            }
+
+                            this.lastKnownCount = data.count;
+                        } catch (e) {
+                            console.log('Failed to update activity badge:', e);
+                        }
+                    },
+
+                    async fetchAndNotify() {
+                        if (this.notificationPermission !== 'granted') return;
+
+                        try {
+                            const response = await fetch('{{ route('admin.activity.new-activities') }}', {
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'X-Requested-With': 'XMLHttpRequest',
+                                }
+                            });
+
+                            if (!response.ok) return;
+
+                            const data = await response.json();
+
+                            if (data.activities && data.activities.length > 0) {
+                                const activity = data.activities[0]; // Show the latest one
+                                this.showNotification(activity);
+                            }
+                        } catch (e) {
+                            console.log('Failed to fetch new activities:', e);
+                        }
+                    },
+
+                    showNotification(activity) {
+                        if (!('Notification' in window) || Notification.permission !== 'granted') {
+                            return;
+                        }
+
+                        const title = 'New Activity Log';
+                        const options = {
+                            body: `${activity.causer_name} ${activity.description}${activity.subject_type ? ' - ' + activity.subject_type : ''}`,
+                            icon: '{{ asset('images/Logo2.png') }}',
+                            badge: '{{ asset('images/Logo2.png') }}',
+                            tag: 'activity-' + activity.id,
+                            requireInteraction: false,
+                            silent: false,
+                        };
+
+                        try {
+                            const notification = new Notification(title, options);
+
+                            notification.onclick = function() {
+                                window.focus();
+                                window.location.href = '{{ route('admin.activity.logs') }}';
+                                notification.close();
+                            };
+
+                            // Auto close after 5 seconds
+                            setTimeout(() => notification.close(), 5000);
+                        } catch (e) {
+                            console.log('Failed to show notification:', e);
+                        }
+                    },
+
+                    startPolling() {
+                        setInterval(() => {
+                            this.updateBadge();
+                        }, this.pollInterval);
+                    }
+                };
+
+                // Initialize when DOM is ready
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', () => ActivityNotifications.init());
+                } else {
+                    ActivityNotifications.init();
+                }
+            })();
+        </script>
+    @endif
 
     <!-- Custom Scripts Stack -->
     @stack('scripts')

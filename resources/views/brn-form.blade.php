@@ -449,6 +449,8 @@
 
     div#countryReg-options {
         scrollbar-width: none;
+        background: #137077;
+
 
     }
 
@@ -461,11 +463,14 @@
 
     /* Scrollable options container */
     .custom-options-scrollable {
-        max-height: 200px;
+    max-height: 180px;
         overflow-y: auto;
         overflow-x: hidden;
         z-index: 10;
         position: relative;
+        background: #137077;
+
+
     }
 
     /* Custom scrollbar for options */
@@ -1525,7 +1530,7 @@
                                             <span class="custom-option" data-value="CFO">Investor</span>
                                             <span class="custom-option" data-value="Manager">Managing Director</span>
                                             <span class="custom-option" data-value="Director">Director</span>
-                                            <span class="custom-option" data-value="Other">Other</span>
+                                            {{-- <span class="custom-option" data-value="Other">Other</span> --}}
                                         </div>
                                     </div>
 

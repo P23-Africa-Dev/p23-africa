@@ -38,11 +38,13 @@
             </a>
 
             <!-- Calendar -->
-            <a href="{{ route('admin.calendar.index') }}"
-                class="sidebar-item {{ request()->routeIs('admin.calendar.*') ? 'active' : '' }}">
-                <i class="fa fa-calendar-alt sidebar-icon"></i>
-                <span x-show="sidebarOpen" x-transition class="sidebar-text">Calendar</span>
-            </a>
+            @if (auth()->user()->hasRole('admin|supervisor'))
+                <a href="{{ route('admin.calendar.index') }}"
+                    class="sidebar-item {{ request()->routeIs('admin.calendar.*') ? 'active' : '' }}">
+                    <i class="fa fa-calendar-alt sidebar-icon"></i>
+                    <span x-show="sidebarOpen" x-transition class="sidebar-text">Calendar</span>
+                </a>
+            @endif
 
             <!-- Project Management Section -->
             <div class="sidebar-section" x-data="{ open: {{ request()->routeIs('admin.projects.*', 'admin.tasks.*') ? 'true' : 'false' }} }">
@@ -183,9 +185,16 @@
             <!-- Activity Logs (Admin Only) -->
             @if (auth()->user() && auth()->user()->hasRole('admin'))
                 <a href="{{ route('admin.activity.logs') }}"
-                    class="sidebar-item {{ request()->routeIs('admin.activity.logs') ? 'active' : '' }}">
-                    <i class="fa fa-history sidebar-icon"></i>
-                    <span x-show="sidebarOpen" x-transition class="sidebar-text">Activity Logs</span>
+                    class="sidebar-item {{ request()->routeIs('admin.activity.logs') ? 'active' : '' }}"
+                    id="activity-logs-link">
+                    <div class="d-flex align-items-center flex-grow-1 position-relative">
+                        <i class="fa fa-history sidebar-icon"></i>
+                        <span x-show="sidebarOpen" x-transition class="sidebar-text">Activity Logs</span>
+                        <span id="activity-unseen-badge" class="position-absolute badge rounded-pill bg-danger"
+                            style="display: none; font-size: 0.65rem; min-width: 18px; height: 18px; line-height: 12px; top: -8px; right: -8px;">
+                            0
+                        </span>
+                    </div>
                 </a>
             @endif
 
