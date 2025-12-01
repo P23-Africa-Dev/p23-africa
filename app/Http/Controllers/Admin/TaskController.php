@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
+use App\Notifications\TaskAssignedNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
 {
@@ -130,7 +132,7 @@ class TaskController extends Controller
 
         $task = Task::create($data);
 
-        // Assign users to the task
+        // Assign users to the task and send notifications
         if (!empty($data['assignees'])) {
             $this->validateAssignees($user, $data['assignees']);
 
@@ -139,13 +141,20 @@ class TaskController extends Controller
                 $assigneeData[$userId] = ['assigned_by' => Auth::id()];
             }
             $task->assignees()->sync($assigneeData);
+
+            // Send notifications to assignees
+            $this->notifyAssignees($task, $data['assignees'], $user);
         }
 
-        activity()
-            ->causedBy(Auth::user())
-            ->performedOn($task)
-            ->withProperties(['title' => $task->title, 'project_id' => $task->project_id])
-            ->log('Created task');
+        try {
+            activity()
+                ->causedBy(Auth::user())
+                ->performedOn($task)
+                ->withProperties(['title' => $task->title, 'project_id' => $task->project_id])
+                ->log('Created task');
+        } catch (\Exception $e) {
+            Log::warning('Activity log failed: ' . $e->getMessage());
+        }
 
         if ($request->expectsJson()) {
             return response()->json([
@@ -208,22 +217,35 @@ class TaskController extends Controller
 
         $task->update($data);
 
-        // Update assignees
+        // Update assignees and notify new ones
         if (isset($data['assignees'])) {
             $this->validateAssignees($user, $data['assignees']);
+
+            // Get current assignees before update
+            $currentAssigneeIds = $task->assignees->pluck('id')->toArray();
+            $newAssigneeIds = array_diff($data['assignees'], $currentAssigneeIds);
 
             $assigneeData = [];
             foreach ($data['assignees'] as $userId) {
                 $assigneeData[$userId] = ['assigned_by' => Auth::id()];
             }
             $task->assignees()->sync($assigneeData);
+
+            // Notify only new assignees
+            if (!empty($newAssigneeIds)) {
+                $this->notifyAssignees($task, $newAssigneeIds, $user);
+            }
         }
 
-        activity()
-            ->causedBy(Auth::user())
-            ->performedOn($task)
-            ->withProperties(['title' => $task->title])
-            ->log('Updated task');
+        try {
+            activity()
+                ->causedBy(Auth::user())
+                ->performedOn($task)
+                ->withProperties(['title' => $task->title])
+                ->log('Updated task');
+        } catch (\Exception $e) {
+            Log::warning('Activity log failed: ' . $e->getMessage());
+        }
 
         if ($request->expectsJson()) {
             return response()->json([
@@ -251,10 +273,14 @@ class TaskController extends Controller
 
         $task->delete();
 
-        activity()
-            ->causedBy(Auth::user())
-            ->withProperties(['title' => $taskTitle, 'task_id' => $taskId, 'project_id' => $projectId])
-            ->log('Deleted task');
+        try {
+            activity()
+                ->causedBy(Auth::user())
+                ->withProperties(['title' => $taskTitle, 'task_id' => $taskId, 'project_id' => $projectId])
+                ->log('Deleted task');
+        } catch (\Exception $e) {
+            Log::warning('Activity log failed: ' . $e->getMessage());
+        }
 
         if (request()->expectsJson()) {
             return response()->json([
@@ -347,11 +373,20 @@ class TaskController extends Controller
 
         $this->validateAssignees($user, $request->assignees);
 
+        // Get current assignees before update
+        $currentAssigneeIds = $task->assignees->pluck('id')->toArray();
+        $newAssigneeIds = array_diff($request->assignees, $currentAssigneeIds);
+
         $assigneeData = [];
         foreach ($request->assignees as $userId) {
             $assigneeData[$userId] = ['assigned_by' => Auth::id()];
         }
         $task->assignees()->sync($assigneeData);
+
+        // Notify only new assignees
+        if (!empty($newAssigneeIds)) {
+            $this->notifyAssignees($task, $newAssigneeIds, $user);
+        }
 
         return response()->json([
             'success' => true,
@@ -380,6 +415,22 @@ class TaskController extends Controller
                 if (!$assignee->hasRole('staff')) {
                     abort(403, 'Supervisor can only assign tasks to staff.');
                 }
+            }
+        }
+    }
+
+    /**
+     * Send notification to task assignees
+     */
+    protected function notifyAssignees(Task $task, array $assigneeIds, $assigner)
+    {
+        $assignees = User::whereIn('id', $assigneeIds)->get();
+
+        foreach ($assignees as $assignee) {
+            try {
+                $assignee->notify(new TaskAssignedNotification($task, $assigner));
+            } catch (\Exception $e) {
+                Log::warning('Failed to send task notification to user ' . $assignee->id . ': ' . $e->getMessage());
             }
         }
     }

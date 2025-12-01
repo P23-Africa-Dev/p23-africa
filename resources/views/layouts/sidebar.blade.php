@@ -64,9 +64,13 @@
                         <span>All Projects</span>
                     </a>
                     <a href="{{ route('admin.tasks.kanban') }}"
-                        class="sidebar-subitem {{ request()->routeIs('admin.tasks.kanban') ? 'active' : '' }}">
+                        class="sidebar-subitem {{ request()->routeIs('admin.tasks.kanban') ? 'active' : '' }}"
+                        style="position: relative;">
                         <i class="fa fa-columns"></i>
                         <span>Kanban Board</span>
+                        <span id="task-notification-badge"
+                            style="display: none; position: absolute; top: 50%; right: 8px; transform: translateY(-50%); min-width: 18px; height: 18px; font-size: 10px; font-weight: bold; color: white; background-color: #dc3545; border-radius: 50%; padding: 0 4px;">
+                        </span>
                     </a>
                     <a href="{{ route('admin.tasks.index') }}"
                         class="sidebar-subitem {{ request()->routeIs('admin.tasks.index') ? 'active' : '' }}">
