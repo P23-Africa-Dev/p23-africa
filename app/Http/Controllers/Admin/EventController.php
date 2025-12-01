@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Mail;
 use Mews\Purifier\Facades\Purifier;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
@@ -110,7 +111,13 @@ class EventController extends Controller
         $validated['description'] = Purifier::clean($request->description); // Sanitize HTML
 
         // Event::create($request->all());
-        Event::create($validated);
+        $event = Event::create($validated);
+
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($event)
+            ->withProperties(['title' => $event->title, 'event_date' => $event->event_date])
+            ->log('Created event');
 
         return redirect()->route('admin.events.index')->with('success', 'Event created successfully.');
     }
@@ -202,6 +209,12 @@ class EventController extends Controller
 
         $event->update($validated);
 
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($event)
+            ->withProperties(['title' => $event->title])
+            ->log('Updated event');
+
         return redirect()->route('admin.events.index')->with('success', 'Event updated successfully.');
     }
 
@@ -210,7 +223,16 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
+        $eventTitle = $event->title;
+        $eventId = $event->id;
+
         $event->delete();
+
+        activity()
+            ->causedBy(Auth::user())
+            ->withProperties(['title' => $eventTitle, 'event_id' => $eventId])
+            ->log('Deleted event');
+
         return redirect()->route('admin.events.index')->with('success', 'Event deleted');
     }
 

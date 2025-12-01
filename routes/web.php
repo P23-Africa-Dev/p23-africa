@@ -415,10 +415,21 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
 Broadcast::routes(['middleware' => ['auth', 'check.suspended', 'role:admin|supervisor|staff']]);
 
 
-Route::get('/admin/activity-logs', function () {
-    $logs = \Spatie\Activitylog\Models\Activity::latest()->paginate(30);
-    return view('admin.activity_logs', compact('logs'));
-})->middleware(['auth', 'role:admin'])->name('admin.activity.logs');
+Route::get('/admin/activity-logs', [\App\Http\Controllers\Admin\ActivityLogController::class, 'index'])
+    ->middleware(['auth', 'role:admin'])
+    ->name('admin.activity.logs');
+
+Route::get('/admin/activity-logs/unseen-count', [\App\Http\Controllers\Admin\ActivityLogController::class, 'getUnseenCount'])
+    ->middleware(['auth', 'role:admin'])
+    ->name('admin.activity.unseen-count');
+
+Route::get('/admin/activity-logs/new-activities', [\App\Http\Controllers\Admin\ActivityLogController::class, 'getNewActivities'])
+    ->middleware(['auth', 'role:admin'])
+    ->name('admin.activity.new-activities');
+
+Route::post('/admin/activity-logs/mark-seen', [\App\Http\Controllers\Admin\ActivityLogController::class, 'markAsSeen'])
+    ->middleware(['auth', 'role:admin'])
+    ->name('admin.activity.mark-seen');
 
 Route::middleware(['auth', 'check_role:supervisor'])->group(function () {
     // Supervisor-only routes here

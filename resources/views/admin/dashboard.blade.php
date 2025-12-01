@@ -346,19 +346,19 @@
                                         </a>
                                     </div>
                                     @if (auth()->user() && auth()->user()->hasRole('admin|supervisor'))
-                                    <div class="col-md-4 mb-3">
-                                        <a href="{{ route('admin.projects.create') }}"
-                                            class="d-flex align-items-center justify-content-between text-decoration-none p-3 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark-transition">
-                                            <div class="d-flex align-items-center">
-                                                <div class="bg-success bg-opacity-10 rounded p-2 me-3">
-                                                    <i class="fa fa-plus-circle text-success"></i>
+                                        <div class="col-md-4 mb-3">
+                                            <a href="{{ route('admin.projects.create') }}"
+                                                class="d-flex align-items-center justify-content-between text-decoration-none p-3 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark-transition">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="bg-success bg-opacity-10 rounded p-2 me-3">
+                                                        <i class="fa fa-plus-circle text-success"></i>
+                                                    </div>
+                                                    <span class="text-dark dark:text-gray-100 fw-medium">Create New
+                                                        Project</span>
                                                 </div>
-                                                <span class="text-dark dark:text-gray-100 fw-medium">Create New
-                                                    Project</span>
-                                            </div>
-                                            <i class="fa fa-arrow-right text-muted dark:text-gray-400"></i>
-                                        </a>
-                                    </div>
+                                                <i class="fa fa-arrow-right text-muted dark:text-gray-400"></i>
+                                            </a>
+                                        </div>
                                     @endif
                                     <div class="col-md-4 mb-3">
                                         <a href="{{ route('admin.tasks.index') }}"
@@ -367,7 +367,8 @@
                                                 <div class="bg-info bg-opacity-10 rounded p-2 me-3">
                                                     <i class="fa fa-tasks text-info"></i>
                                                 </div>
-                                                <span class="text-dark dark:text-gray-100 fw-medium">Manage Tasks</span>
+                                                <span class="text-dark dark:text-gray-100 fw-medium">Manage
+                                                    Tasks</span>
                                             </div>
                                             <i class="fa fa-arrow-right text-muted dark:text-gray-400"></i>
                                         </a>
@@ -424,6 +425,19 @@
                                                 </div>
                                                 <span class="text-dark dark:text-gray-100 fw-medium">Pages Report
                                                     (Clicks)</span>
+                                            </div>
+                                            <i class="fa fa-arrow-right text-muted dark:text-gray-400"></i>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <a href="{{ route('admin.activity.logs') }}"
+                                            class="d-flex align-items-center justify-content-between text-decoration-none p-3 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark-transition">
+                                            <div class="d-flex align-items-center">
+                                                <div class="bg-secondary bg-opacity-10 rounded p-2 me-3">
+                                                    <i class="fa fa-history text-secondary"></i>
+                                                </div>
+                                                <span class="text-dark dark:text-gray-100 fw-medium">Activity
+                                                    Logs</span>
                                             </div>
                                             <i class="fa fa-arrow-right text-muted dark:text-gray-400"></i>
                                         </a>

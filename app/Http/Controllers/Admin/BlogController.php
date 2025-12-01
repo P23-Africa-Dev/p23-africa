@@ -38,7 +38,7 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        try{
+        try {
             $data = $request->validate([
                 'title' => 'required|string|max:255',
                 'subtitle' => 'nullable|string|max:999',
@@ -80,7 +80,13 @@ class BlogController extends Controller
             $data['user_id'] = Auth::id();
 
             // ✅ Save the blog
-            Blog::create($data);
+            $blog = Blog::create($data);
+
+            activity()
+                ->causedBy(Auth::user())
+                ->performedOn($blog)
+                ->withProperties(['title' => $blog->title])
+                ->log('Created blog/resource');
 
             return redirect()->route('admin.blogs.index')->with('success', 'Blog created successfully.');
         } catch (\Illuminate\Validation\ValidationException $e) {
@@ -176,6 +182,12 @@ class BlogController extends Controller
                 // Update blog
                 $blog->update($data);
 
+                activity()
+                    ->causedBy(Auth::user())
+                    ->performedOn($blog)
+                    ->withProperties(['title' => $blog->title])
+                    ->log('Updated blog/resource');
+
                 return redirect()->route('admin.blogs.index')
                     ->with('success', 'Blog updated successfully.');
             } catch (\Exception $e) {
@@ -211,8 +223,17 @@ class BlogController extends Controller
      */
     public function destroy(Blog $blog)
     {
+        $blogTitle = $blog->title;
+        $blogId = $blog->id;
+
         if ($blog->image_path) Storage::disk('public')->delete($blog->image_path);
         $blog->delete();
+
+        activity()
+            ->causedBy(Auth::user())
+            ->withProperties(['title' => $blogTitle, 'blog_id' => $blogId])
+            ->log('Deleted blog/resource');
+
         return redirect()->route('admin.blogs.index')->with('success', 'Blog deleted.');
     }
 }

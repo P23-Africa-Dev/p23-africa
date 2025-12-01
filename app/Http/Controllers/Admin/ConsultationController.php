@@ -319,6 +319,8 @@ class ConsultationController extends Controller
     {
         try {
             $application = ConsultationApplication::findOrFail($id);
+            $applicationName = $application->name ?? 'Unknown';
+            $applicationEmail = $application->email ?? 'N/A';
 
             // Delete related records first
             $application->payments()->delete();
@@ -327,6 +329,11 @@ class ConsultationController extends Controller
 
             // Delete the application
             $application->delete();
+
+            activity()
+                ->causedBy(Auth::user())
+                ->withProperties(['name' => $applicationName, 'email' => $applicationEmail, 'id' => $id])
+                ->log('Deleted consultation application');
 
             Log::info('Consultation application deleted', [
                 'id' => $id,
@@ -381,6 +388,11 @@ class ConsultationController extends Controller
             }
 
             DB::commit();
+
+            activity()
+                ->causedBy(Auth::user())
+                ->withProperties(['deleted_count' => $deletedCount, 'ids' => $ids])
+                ->log('Bulk deleted consultation applications');
 
             Log::info('Bulk delete consultation applications', [
                 'ids' => $ids,
