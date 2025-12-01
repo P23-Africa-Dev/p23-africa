@@ -460,6 +460,96 @@
         .kanban-column-body::-webkit-scrollbar-thumb:hover {
             background: #adb5bd;
         }
+
+        /* Dark Mode Styles for Kanban Board */
+        .dark .kanban-column {
+            background: #1f2937 !important;
+            border: 1px solid #374151;
+        }
+
+        .dark .kanban-column-header {
+            border-bottom-color: #374151 !important;
+        }
+
+        .dark .kanban-column-header h6 {
+            color: #f9fafb !important;
+        }
+
+        .dark .kanban-column-header .badge {
+            background: #374151 !important;
+            color: #d1d5db !important;
+        }
+
+        .dark .kanban-column-body.drag-over {
+            background-color: #374151 !important;
+        }
+
+        .dark .kanban-card {
+            background: #374151 !important;
+            border-color: #4b5563 !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .dark .kanban-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            border-color: #6b7280 !important;
+        }
+
+        .dark .kanban-card-title {
+            color: #f9fafb !important;
+        }
+
+        .dark .kanban-card-desc {
+            color: #9ca3af !important;
+        }
+
+        .dark .project-tag {
+            background: #4b5563 !important;
+            color: #d1d5db !important;
+        }
+
+        .dark .due-date {
+            color: #9ca3af !important;
+        }
+
+        .dark .due-date.overdue {
+            color: #f87171 !important;
+        }
+
+        .dark .avatar-circle {
+            border-color: #374151 !important;
+        }
+
+        .dark .kanban-empty {
+            color: #6b7280 !important;
+        }
+
+        .dark .kanban-empty i,
+        .dark .kanban-empty p {
+            color: #6b7280 !important;
+        }
+
+        /* Dark mode scrollbar */
+        .dark .kanban-column-body::-webkit-scrollbar-track {
+            background: #1f2937;
+        }
+
+        .dark .kanban-column-body::-webkit-scrollbar-thumb {
+            background: #4b5563;
+        }
+
+        .dark .kanban-column-body::-webkit-scrollbar-thumb:hover {
+            background: #6b7280;
+        }
+
+        /* Dark mode for header card */
+        .dark .bg-white {
+            background-color: #1f2937 !important;
+        }
+
+        .dark .kanban-container h4 {
+            color: #f9fafb !important;
+        }
     </style>
 
     <script>

@@ -431,6 +431,23 @@ Route::post('/admin/activity-logs/mark-seen', [\App\Http\Controllers\Admin\Activ
     ->middleware(['auth', 'role:admin'])
     ->name('admin.activity.mark-seen');
 
+// Task Notification Routes (for all authenticated users)
+Route::get('/admin/notifications/tasks', [\App\Http\Controllers\Admin\NotificationController::class, 'getTaskNotifications'])
+    ->middleware(['auth', 'check.suspended'])
+    ->name('admin.notifications.tasks');
+
+Route::get('/admin/notifications/unread-count', [\App\Http\Controllers\Admin\NotificationController::class, 'getUnreadCount'])
+    ->middleware(['auth', 'check.suspended'])
+    ->name('admin.notifications.unread-count');
+
+Route::post('/admin/notifications/{id}/mark-read', [\App\Http\Controllers\Admin\NotificationController::class, 'markAsRead'])
+    ->middleware(['auth', 'check.suspended'])
+    ->name('admin.notifications.mark-read');
+
+Route::post('/admin/notifications/mark-all-read', [\App\Http\Controllers\Admin\NotificationController::class, 'markAllAsRead'])
+    ->middleware(['auth', 'check.suspended'])
+    ->name('admin.notifications.mark-all-read');
+
 Route::middleware(['auth', 'check_role:supervisor'])->group(function () {
     // Supervisor-only routes here
 });

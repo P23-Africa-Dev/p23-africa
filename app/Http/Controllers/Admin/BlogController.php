@@ -182,11 +182,7 @@ class BlogController extends Controller
                 // Update blog
                 $blog->update($data);
 
-                activity()
-                    ->causedBy(Auth::user())
-                    ->performedOn($blog)
-                    ->withProperties(['title' => $blog->title])
-                    ->log('Updated blog/resource');
+                $this->logActivity('Updated blog/resource', $blog, ['title' => $blog->title]);
 
                 return redirect()->route('admin.blogs.index')
                     ->with('success', 'Blog updated successfully.');

@@ -853,6 +853,172 @@
         </script>
     @endif
 
+    <!-- Task Assignment Notifications (For All Authenticated Users) -->
+    @auth
+        <script>
+            (function() {
+                const TaskNotifications = {
+                    lastKnownCount: 0,
+                    lastNotificationId: null,
+                    pollInterval: 30000, // 30 seconds
+                    notificationPermission: 'default',
+
+                    init() {
+                        if ('Notification' in window) {
+                            this.notificationPermission = Notification.permission;
+                        }
+                        this.requestNotificationPermission();
+                        this.updateBadge();
+                        this.startPolling();
+                    },
+
+                    async requestNotificationPermission() {
+                        if ('Notification' in window && Notification.permission === 'default') {
+                            try {
+                                const permission = await Notification.requestPermission();
+                                this.notificationPermission = permission;
+                                console.log('Task notification permission:', permission);
+                            } catch (e) {
+                                console.log('Task notification permission request failed:', e);
+                            }
+                        }
+                    },
+
+                    async updateBadge() {
+                        try {
+                            const response = await fetch('{{ route('admin.notifications.unread-count') }}', {
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'X-Requested-With': 'XMLHttpRequest',
+                                }
+                            });
+
+                            if (!response.ok) return;
+
+                            const data = await response.json();
+                            const badge = document.getElementById('task-notification-badge');
+
+                            if (badge) {
+                                if (data.count > 0) {
+                                    badge.textContent = data.count > 99 ? '99+' : data.count;
+                                    badge.style.display = 'flex';
+                                    badge.style.alignItems = 'center';
+                                    badge.style.justifyContent = 'center';
+                                } else {
+                                    badge.style.display = 'none';
+                                }
+                            }
+
+                            // Check for new notifications and show browser notification
+                            if (data.count > this.lastKnownCount && this.lastKnownCount >= 0) {
+                                this.fetchAndNotify();
+                            }
+
+                            this.lastKnownCount = data.count;
+                        } catch (e) {
+                            console.log('Failed to update task notification badge:', e);
+                        }
+                    },
+
+                    async fetchAndNotify() {
+                        if (this.notificationPermission !== 'granted') return;
+
+                        try {
+                            const response = await fetch('{{ route('admin.notifications.tasks') }}', {
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'X-Requested-With': 'XMLHttpRequest',
+                                }
+                            });
+
+                            if (!response.ok) return;
+
+                            const data = await response.json();
+
+                            if (data.notifications && data.notifications.length > 0) {
+                                // Show notification for the latest unread one
+                                const latestUnread = data.notifications.find(n => !n.read_at);
+                                if (latestUnread && latestUnread.id !== this.lastNotificationId) {
+                                    this.showNotification(latestUnread);
+                                    this.lastNotificationId = latestUnread.id;
+                                }
+                            }
+                        } catch (e) {
+                            console.log('Failed to fetch task notifications:', e);
+                        }
+                    },
+
+                    showNotification(notification) {
+                        if (!('Notification' in window) || Notification.permission !== 'granted') {
+                            return;
+                        }
+
+                        const title = '📋 New Task Assigned';
+                        const priorityEmoji = {
+                            'urgent': '🔴',
+                            'high': '🟠',
+                            'medium': '🟡',
+                            'low': '🟢'
+                        };
+
+                        let body = `${notification.task_title}`;
+                        if (notification.project_name) {
+                            body += ` - ${notification.project_name}`;
+                        }
+                        body += `\nAssigned by: ${notification.assigned_by}`;
+                        if (notification.priority) {
+                            body +=
+                                ` ${priorityEmoji[notification.priority] || ''} ${notification.priority.charAt(0).toUpperCase() + notification.priority.slice(1)} Priority`;
+                        }
+
+                        const options = {
+                            body: body,
+                            icon: '{{ asset('images/Logo2.png') }}',
+                            badge: '{{ asset('images/Logo2.png') }}',
+                            tag: 'task-' + notification.id,
+                            requireInteraction: true,
+                            silent: false,
+                        };
+
+                        try {
+                            const browserNotification = new Notification(title, options);
+
+                            browserNotification.onclick = function() {
+                                window.focus();
+                                if (notification.project_id) {
+                                    window.location.href = '{{ url('/admin/tasks/kanban') }}?project_id=' +
+                                        notification.project_id;
+                                } else {
+                                    window.location.href = '{{ route('admin.tasks.kanban') }}';
+                                }
+                                browserNotification.close();
+                            };
+
+                            // Auto close after 10 seconds
+                            setTimeout(() => browserNotification.close(), 10000);
+                        } catch (e) {
+                            console.log('Failed to show task notification:', e);
+                        }
+                    },
+
+                    startPolling() {
+                        setInterval(() => {
+                            this.updateBadge();
+                        }, this.pollInterval);
+                    }
+                };
+
+                // Initialize when DOM is ready
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', () => TaskNotifications.init());
+                } else {
+                    TaskNotifications.init();
+                }
+            })
+            ();
+        </script>
+    @endauth
+
     <!-- Custom Scripts Stack -->
     @stack('scripts')
 </body>
