@@ -1971,16 +1971,16 @@
                                 </div>
 
                                 <!-- <div class="form-group2 field">
-                                                                <div class="contact-info-form__group name-field">
-                                                                                            <label class="floating-label">Phone Number</label>
-                                                                                            <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
-                                                                                                placeholder="+1234567890" value="{{ old('phone') }}" />
-                                                                                            @error('phone')
+                                                                    <div class="contact-info-form__group name-field">
+                                                                                                <label class="floating-label">Phone Number</label>
+                                                                                                <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
+                                                                                                    placeholder="+1234567890" value="{{ old('phone') }}" />
+                                                                                                @error('phone')
         <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
-                                                                                                                                                                {{ $message }}</div>
+                                                                                                                                                                        {{ $message }}</div>
     @enderror
-                                                                                        </div>
-                                                                                        </div> -->
+                                                                                            </div>
+                                                                                            </div> -->
 
 
 
@@ -2441,6 +2441,20 @@
 
                                             resetForm();
                                         }
+                                    } else if (result.status === 419) {
+                                        // CSRF token mismatch - refresh page to get new token
+                                        console.log('CSRF token expired, refreshing...');
+                                        showPopup('error', 'Session Expired',
+                                            'Your session has expired. The page will refresh automatically. Please try again.'
+                                        );
+                                        setTimeout(() => {
+                                            window.location.reload();
+                                        }, 2000);
+                                    } else if (result.status === 429) {
+                                        // Too many requests
+                                        showPopup('error', 'Please Wait',
+                                            'Too many requests. Please wait a moment and try again.'
+                                        );
                                     } else if (result.status === 422) {
                                         // Validation errors
                                         console.log('Validation Errors:', result.data
