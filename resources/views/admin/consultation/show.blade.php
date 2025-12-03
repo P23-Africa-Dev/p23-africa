@@ -79,34 +79,38 @@
                                 <div class="col-md-6">
                                     <h6 class="text-dark dark:text-gray-100 mb-3">Personal Information</h6>
                                     <div class="mb-3">
-                                        <label class="form-label text-muted dark:text-gray-400">Full Name</label>
-                                        <p class="text-dark dark:text-gray-200 mb-0">{{ $application->name }}</p>
+                                        <label class="form-label text-muted dark:text-gray-400"><small>Full Name</small></label><br>
+                                        <p class="text-dark dark:text-gray-200 mb-0 d-inline">{{ $application->name }}</p>
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label text-muted dark:text-gray-400">Email Address</label>
-                                        <p class="text-dark dark:text-gray-200 mb-0">{{ $application->email }}</p>
+                                        <label class="form-label text-muted dark:text-gray-400"><small>Email Address</small></label><br>
+                                        <p class="text-dark dark:text-gray-200 mb-0 d-inline">{{ $application->email }}</p>
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label text-muted dark:text-gray-400">Phone Number</label>
-                                        <p class="text-dark dark:text-gray-200 mb-0">
+                                        <label class="form-label text-muted dark:text-gray-400"><small>Phone Number</small></label><br>
+                                        <p class="text-dark dark:text-gray-200 mb-0 d-inline">
                                             {{ $application->phone ?? 'Not provided' }}</p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label text-muted dark:text-gray-400"><small>Website/Social Handle</small></label><br>
+                                        <p class="text-dark dark:text-gray-200 mb-0 d-inline">{{ $application->website_or_handle }}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <h6 class="text-dark dark:text-gray-100 mb-3">Business Information</h6>
                                     <div class="mb-3">
-                                        <label class="form-label text-muted dark:text-gray-400">Company</label>
-                                        <p class="text-dark dark:text-gray-200 mb-0">
+                                        <label class="form-label text-muted dark:text-gray-400"><small>Company</small></label><br>
+                                        <p class="text-dark dark:text-gray-200 mb-0 d-inline">
                                             {{ $application->company ?? 'Not provided' }}</p>
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label text-muted dark:text-gray-400">Industry</label>
-                                        <p class="text-dark dark:text-gray-200 mb-0">
+                                        <label class="form-label text-muted dark:text-gray-400"><small>Industry</small></label><br>
+                                        <p class="text-dark dark:text-gray-200 mb-0 d-inline">
                                             {{ $application->industry ?? 'Not provided' }}</p>
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label text-muted dark:text-gray-400">Applied On</label>
-                                        <p class="text-dark dark:text-gray-200 mb-0">
+                                        <label class="form-label text-muted dark:text-gray-400"><small>Applied On</small></label><br>
+                                        <p class="text-dark dark:text-gray-200 mb-0 d-inline">
                                             {{ $application->created_at->format('F d, Y \a\t h:i A') }}</p>
                                     </div>
                                 </div>
