@@ -83,7 +83,8 @@
                                         <h6 class="kanban-card-title">{{ $task->title }}</h6>
 
                                         @if ($task->description)
-                                            <p class="kanban-card-desc">{{ Str::limit(strip_tags($task->description), 80) }}</p>
+                                            <p class="kanban-card-desc">
+                                                {{ Str::limit(strip_tags($task->description), 80) }}</p>
                                         @endif
 
                                         <div class="kanban-card-footer">
@@ -110,6 +111,15 @@
                                                         {{ $task->due_date->format('M d') }}
                                                     </span>
                                                 @endif
+
+                                                <!-- Comments Button -->
+                                                <button type="button" class="btn btn-link btn-sm p-0 text-muted"
+                                                    onclick="openCommentsModal({{ $task->id }}, '{{ addslashes($task->title) }}')"
+                                                    title="View Comments">
+                                                    <i class="fas fa-comment"></i>
+                                                    <span class="badge bg-secondary"
+                                                        id="comment-count-{{ $task->id }}">{{ $task->comments->count() }}</span>
+                                                </button>
 
                                                 @if (auth()->user()->hasRole(['admin', 'supervisor']))
                                                     <div class="dropdown">
@@ -164,7 +174,8 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="addTaskModalLabel"><i class="fas fa-plus-circle me-2"></i>Add New
                             Task</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
                     </div>
                     <form action="{{ route('admin.tasks.store') }}" method="POST">
                         @csrf
@@ -661,6 +672,250 @@
                 // Alpine.js data for kanban board
             };
         }
+
+        // Comments functionality
+        let currentTaskId = null;
+        let currentTaskTitle = '';
+
+        function openCommentsModal(taskId, taskTitle) {
+            currentTaskId = taskId;
+            currentTaskTitle = taskTitle;
+            document.getElementById('commentsModalLabel').textContent = `Comments - ${taskTitle}`;
+            document.getElementById('commentInput').value = '';
+            loadComments(taskId);
+            new bootstrap.Modal(document.getElementById('commentsModal')).show();
+        }
+
+        function loadComments(taskId) {
+            const container = document.getElementById('commentsContainer');
+            container.innerHTML =
+                '<div class="text-center py-4"><i class="fas fa-spinner fa-spin"></i> Loading comments...</div>';
+
+            fetch(`/admin/tasks/${taskId}/comments`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        displayComments(data.comments);
+                    }
+                })
+                .catch(error => {
+                    container.innerHTML = '<div class="alert alert-danger">Failed to load comments.</div>';
+                    console.error('Error:', error);
+                });
+        }
+
+        function displayComments(comments) {
+            const container = document.getElementById('commentsContainer');
+
+            if (comments.length === 0) {
+                container.innerHTML =
+                    '<div class="text-center text-muted py-4"><i class="fas fa-comments fa-2x mb-2"></i><p>No comments yet. Be the first to comment!</p></div>';
+                return;
+            }
+
+            let html = '';
+            comments.forEach(comment => {
+                const createdAt = new Date(comment.created_at);
+                const timeAgo = getTimeAgo(createdAt);
+                const canDelete = {{ auth()->id() }} === comment.user_id ||
+                    {{ auth()->user()->hasRole('admin') ? 'true' : 'false' }};
+
+                html += `
+                <div class="comment-item" id="comment-${comment.id}">
+                    <div class="comment-avatar">
+                        ${comment.user.name.charAt(0).toUpperCase()}
+                    </div>
+                    <div class="comment-content">
+                        <div class="comment-header">
+                            <strong>${comment.user.name}</strong>
+                            <span class="text-muted small">${timeAgo}</span>
+                        </div>
+                        <div class="comment-body">${escapeHtml(comment.comment)}</div>
+                        ${canDelete ? `<button class="btn btn-link btn-sm text-danger p-0 mt-1" onclick="deleteComment(${currentTaskId}, ${comment.id})"><i class="fas fa-trash"></i> Delete</button>` : ''}
+                    </div>
+                </div>
+            `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function addComment() {
+            const commentInput = document.getElementById('commentInput');
+            const comment = commentInput.value.trim();
+
+            if (!comment) {
+                alert('Please enter a comment.');
+                return;
+            }
+
+            const submitBtn = document.getElementById('submitCommentBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Posting...';
+
+            fetch(`/admin/tasks/${currentTaskId}/comments`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        comment: comment
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        commentInput.value = '';
+                        loadComments(currentTaskId);
+                        // Update comment count badge
+                        const badge = document.getElementById(`comment-count-${currentTaskId}`);
+                        if (badge) {
+                            badge.textContent = parseInt(badge.textContent) + 1;
+                        }
+                    } else {
+                        alert(data.message || 'Failed to add comment.');
+                    }
+                })
+                .catch(error => {
+                    alert('An error occurred. Please try again.');
+                    console.error('Error:', error);
+                })
+                .finally(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane me-1"></i> Post Comment';
+                });
+        }
+
+        function deleteComment(taskId, commentId) {
+            if (!confirm('Delete this comment?')) {
+                return;
+            }
+
+            fetch(`/admin/tasks/${taskId}/comments/${commentId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        loadComments(taskId);
+                        // Update comment count badge
+                        const badge = document.getElementById(`comment-count-${taskId}`);
+                        if (badge) {
+                            badge.textContent = Math.max(0, parseInt(badge.textContent) - 1);
+                        }
+                    } else {
+                        alert(data.message || 'Failed to delete comment.');
+                    }
+                })
+                .catch(error => {
+                    alert('An error occurred. Please try again.');
+                    console.error('Error:', error);
+                });
+        }
+
+        function getTimeAgo(date) {
+            const seconds = Math.floor((new Date() - date) / 1000);
+            const intervals = {
+                year: 31536000,
+                month: 2592000,
+                week: 604800,
+                day: 86400,
+                hour: 3600,
+                minute: 60
+            };
+
+            for (const [key, value] of Object.entries(intervals)) {
+                const interval = Math.floor(seconds / value);
+                if (interval >= 1) {
+                    return interval === 1 ? `1 ${key} ago` : `${interval} ${key}s ago`;
+                }
+            }
+            return 'Just now';
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
     </script>
+
+    <!-- Comments Modal -->
+    <div class="modal fade" id="commentsModal" tabindex="-1" aria-labelledby="commentsModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="commentsModalLabel"><i class="fas fa-comments me-2"></i>Comments</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="commentsContainer">
+                        <!-- Comments will be loaded here -->
+                    </div>
+                </div>
+                <div class="modal-footer d-block">
+                    <div class="input-group">
+                        <textarea class="form-control" id="commentInput" rows="2" placeholder="Write a comment..." maxlength="2000"></textarea>
+                        <button class="btn btn-primary" type="button" id="submitCommentBtn" onclick="addComment()">
+                            <i class="fas fa-paper-plane me-1"></i> Post Comment
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .comment-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .comment-item:last-child {
+            border-bottom: none;
+        }
+
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #6c757d;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .comment-content {
+            flex: 1;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .comment-body {
+            color: #495057;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+    </style>
 
 </x-app-layout>

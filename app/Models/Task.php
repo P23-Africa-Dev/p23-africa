@@ -71,6 +71,11 @@ class Task extends Model
             ->withTimestamps();
     }
 
+    public function comments()
+    {
+        return $this->hasMany(TaskComment::class)->orderBy('created_at', 'desc');
+    }
+
     public function getStatusBadgeClassAttribute(): string
     {
         return match ($this->status) {

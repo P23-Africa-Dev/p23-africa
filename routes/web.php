@@ -414,6 +414,11 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
     Route::patch('/tasks/{task}/status', [\App\Http\Controllers\Admin\TaskController::class, 'updateStatus'])->name('tasks.update-status');
     Route::post('/tasks/update-order', [\App\Http\Controllers\Admin\TaskController::class, 'updateOrder'])->name('tasks.update-order');
     Route::post('/tasks/{task}/assign', [\App\Http\Controllers\Admin\TaskController::class, 'assign'])->name('tasks.assign');
+
+    // Task Comments
+    Route::get('/tasks/{task}/comments', [\App\Http\Controllers\Admin\TaskController::class, 'getComments'])->name('tasks.comments');
+    Route::post('/tasks/{task}/comments', [\App\Http\Controllers\Admin\TaskController::class, 'addComment'])->name('tasks.add-comment');
+    Route::delete('/tasks/{task}/comments/{comment}', [\App\Http\Controllers\Admin\TaskController::class, 'deleteComment'])->name('tasks.delete-comment');
 });
 
 
