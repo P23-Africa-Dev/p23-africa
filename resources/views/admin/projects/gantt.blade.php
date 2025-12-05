@@ -530,6 +530,29 @@
         .gantt-timeline-content {
             scrollbar-width: thin;
         }
+
+        /* Drag to scroll styles */
+        .gantt-timeline {
+            cursor: grab;
+        }
+
+        .gantt-timeline.dragging {
+            cursor: grabbing;
+            user-select: none;
+        }
+
+        .gantt-timeline.dragging * {
+            pointer-events: none;
+        }
+
+        .gantt-timeline-content {
+            cursor: grab;
+        }
+
+        .gantt-timeline-content.dragging {
+            cursor: grabbing;
+            user-select: none;
+        }
     </style>
 
     <script>
@@ -549,8 +572,95 @@
             renderTimeline();
             positionBars();
             syncScroll();
+            initDragToScroll();
             scrollToToday();
         });
+
+        // Drag to scroll functionality
+        function initDragToScroll() {
+            const timeline = document.getElementById('ganttTimeline');
+            const timelineContent = document.getElementById('timelineContent');
+
+            if (!timeline) return;
+
+            let isDragging = false;
+            let startX, startY;
+            let scrollLeftStart, scrollTopStart;
+
+            // Function to handle drag start
+            function handleDragStart(e) {
+                // Don't start drag if clicking on interactive elements
+                if (e.target.closest('.gantt-bar') || e.target.closest('a') || e.target.closest('button')) {
+                    return;
+                }
+
+                isDragging = true;
+                timeline.classList.add('dragging');
+                if (timelineContent) timelineContent.classList.add('dragging');
+
+                // Get starting position
+                startX = e.type === 'mousedown' ? e.pageX : e.touches[0].pageX;
+                startY = e.type === 'mousedown' ? e.pageY : e.touches[0].pageY;
+                scrollLeftStart = timeline.scrollLeft;
+                scrollTopStart = timelineContent ? timelineContent.scrollTop : 0;
+
+                // Prevent text selection
+                e.preventDefault();
+            }
+
+            // Function to handle drag move
+            function handleDragMove(e) {
+                if (!isDragging) return;
+
+                const x = e.type === 'mousemove' ? e.pageX : e.touches[0].pageX;
+                const y = e.type === 'mousemove' ? e.pageY : e.touches[0].pageY;
+
+                // Calculate distance moved
+                const walkX = (x - startX) * 1.5; // Multiplier for faster scrolling
+                const walkY = (y - startY) * 1.5;
+
+                // Apply scroll
+                timeline.scrollLeft = scrollLeftStart - walkX;
+
+                if (timelineContent) {
+                    timelineContent.scrollTop = scrollTopStart - walkY;
+                    // Sync sidebar scroll
+                    const sidebar = document.querySelector('.gantt-sidebar-content');
+                    if (sidebar) {
+                        sidebar.scrollTop = timelineContent.scrollTop;
+                    }
+                }
+
+                e.preventDefault();
+            }
+
+            // Function to handle drag end
+            function handleDragEnd() {
+                if (!isDragging) return;
+
+                isDragging = false;
+                timeline.classList.remove('dragging');
+                if (timelineContent) timelineContent.classList.remove('dragging');
+            }
+
+            // Mouse events
+            timeline.addEventListener('mousedown', handleDragStart);
+            document.addEventListener('mousemove', handleDragMove);
+            document.addEventListener('mouseup', handleDragEnd);
+            document.addEventListener('mouseleave', handleDragEnd);
+
+            // Touch events for mobile support
+            timeline.addEventListener('touchstart', handleDragStart, {
+                passive: false
+            });
+            document.addEventListener('touchmove', handleDragMove, {
+                passive: false
+            });
+            document.addEventListener('touchend', handleDragEnd);
+
+            // Prevent default drag behavior on the timeline
+            timeline.addEventListener('dragstart', (e) => e.preventDefault());
+        }
 
         function renderTimeline() {
             const monthsRow = document.getElementById('monthsRow');
