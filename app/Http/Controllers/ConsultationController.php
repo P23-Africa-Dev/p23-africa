@@ -457,7 +457,7 @@ class ConsultationController extends Controller
 
             // Create PaymentIntent
             $paymentIntent = PaymentIntent::create([
-                'amount' => 100, // $75.00 in cents (75 * 100)
+                'amount' => 7500, // $75.00 in cents (75 * 100)
                 'currency' => 'usd',
                 'metadata' => [
                     'application_id' => $application->id,
