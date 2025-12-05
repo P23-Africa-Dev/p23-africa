@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Cache;
 use App\Mail\ContactFormMail;
 use App\Mail\ThankYouMail;
 use App\Models\ContactSubmission;
@@ -19,54 +18,23 @@ class ContactController extends Controller
             // Check if this is from live capture (has session_id)
             $sessionId = $request->input('session_id');
             if ($sessionId) {
-                // If live capture is enabled, let saveDraft handle everything
-                // This prevents duplicate submissions
+                // If live capture is enabled, redirect to saveDraft with submission flag
                 $request->merge(['is_submission' => true]);
                 return $this->saveDraft($request);
             }
 
-            // Generate a unique submission key for deduplication
-            $submissionKey = 'contact_submission_' . md5(
-                $request->input('email') .
-                    $request->input('phone') .
-                    $request->ip()
-            );
-
-            // Check if we're already processing this submission (prevents double-click)
-            if (Cache::has($submissionKey)) {
-                Log::info('Duplicate submission prevented by cache lock', [
-                    'email' => $request->input('email'),
-                    'ip' => $request->ip()
-                ]);
-
-                if ($request->expectsJson()) {
-                    return response()->json([
-                        'success' => true,
-                        'message' => 'Your message has already been sent successfully! We will get back to you soon.'
-                    ]);
-                }
-
-                return redirect()->back()->with('success', 'Your message has already been sent successfully! We will get back to you soon.');
-            }
-
-            // Set a lock to prevent duplicate processing (expires in 60 seconds)
-            Cache::put($submissionKey, true, 60);
-
-            // Check for duplicate submission in database
+            // Check for duplicate submission based on unique criteria
             $duplicateCheck = ContactSubmission::where('email', $request->input('email'))
                 ->where('phone', $request->input('phone'))
-                ->where('status', 'submitted')
-                ->where('created_at', '>=', now()->subMinutes(10))
+                ->where('created_at', '>=', now()->subMinutes(5)) // Within last 5 minutes
                 ->first();
 
             if ($duplicateCheck) {
-                Log::warning('Duplicate submission attempt detected in DB', [
+                Log::warning('Duplicate submission attempt detected', [
                     'email' => $request->input('email'),
                     'ip' => $request->ip(),
                     'existing_id' => $duplicateCheck->id
                 ]);
-
-                Cache::forget($submissionKey);
 
                 if ($request->expectsJson()) {
                     return response()->json([
@@ -209,35 +177,6 @@ class ContactController extends Controller
             $data = $validator->validated();
             $isSubmission = $data['is_submission'] ?? false;
 
-            // For submissions, use a lock to prevent race conditions
-            if ($isSubmission) {
-                $submissionLockKey = 'submission_lock_' . $data['session_id'];
-
-                // Check if submission is already in progress
-                if (Cache::has($submissionLockKey)) {
-                    Log::info('Submission already in progress for session', [
-                        'session_id' => $data['session_id']
-                    ]);
-
-                    // Find the existing submission
-                    $existingSubmission = ContactSubmission::where('session_id', $data['session_id'])
-                        ->where('status', 'submitted')
-                        ->first();
-
-                    if ($existingSubmission) {
-                        return response()->json([
-                            'success' => true,
-                            'message' => 'Form already submitted successfully!',
-                            'submission_id' => $existingSubmission->id,
-                            'status' => $existingSubmission->status
-                        ]);
-                    }
-                }
-
-                // Set lock for 60 seconds
-                Cache::put($submissionLockKey, true, 60);
-            }
-
             // Parse services if provided
             $services = [];
             if (!empty($data['services'])) {
@@ -364,27 +303,10 @@ class ContactController extends Controller
 
     /**
      * Send emails for completed submissions
-     * Uses atomic locking to prevent duplicate emails
      */
     private function sendSubmissionEmails(ContactSubmission $submission)
     {
-        // Create a unique lock key for this submission
-        $lockKey = 'email_sending_' . $submission->id;
-
-        // Try to acquire a lock (prevents race conditions)
-        $lock = Cache::lock($lockKey, 120); // 2 minute lock
-
-        if (!$lock->get()) {
-            Log::info('Email sending already in progress for submission', [
-                'submission_id' => $submission->id
-            ]);
-            return;
-        }
-
         try {
-            // Refresh submission from DB to get latest state
-            $submission->refresh();
-
             // Check if emails have already been sent for this submission
             if ($submission->email_sent_at) {
                 Log::info('Emails already sent for this submission', [
@@ -395,21 +317,6 @@ class ContactController extends Controller
                 return;
             }
 
-            // Double-check by querying DB directly (in case of race condition)
-            $freshSubmission = ContactSubmission::where('id', $submission->id)
-                ->whereNotNull('email_sent_at')
-                ->first();
-
-            if ($freshSubmission) {
-                Log::info('Emails already sent (double-check)', [
-                    'submission_id' => $submission->id
-                ]);
-                return;
-            }
-
-            // Mark as sent FIRST to prevent race conditions
-            $submission->update(['email_sent_at' => now()]);
-
             $submissionData = $submission->toArray();
 
             // Send to site owner
@@ -419,6 +326,9 @@ class ContactController extends Controller
             if ($submission->email) {
                 Mail::to($submission->email)->send(new ThankYouMail($submissionData));
             }
+
+            // Update email sent timestamp
+            $submission->update(['email_sent_at' => now()]);
 
             Log::info('Submission emails sent successfully', [
                 'submission_id' => $submission->id,
@@ -431,12 +341,8 @@ class ContactController extends Controller
                 'email' => $submission->email
             ]);
 
-            // If email sending failed, clear the email_sent_at so it can be retried
-            // But only if it was set in this attempt
-            // $submission->update(['email_sent_at' => null]);
-        } finally {
-            // Always release the lock
-            $lock->release();
+            // Don't throw exception to avoid breaking the submission process
+            // Just log the error and continue
         }
     }
 

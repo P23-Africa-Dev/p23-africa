@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ClickTracker;
 use App\Models\Feedback;
+use App\Services\AdminNotificationService;
 use Illuminate\Http\Request;
 
 class FeedbackController extends Controller
@@ -27,7 +28,13 @@ class FeedbackController extends Controller
             'comments' => 'nullable|string',
         ]);
 
-        Feedback::create($request->only(['event_id', 'email', 'rating', 'comments']));
+        $feedback = Feedback::create($request->only(['event_id', 'email', 'rating', 'comments']));
+
+        // Load the event relationship for notification
+        $feedback->load('event');
+
+        // Send notification to admins
+        AdminNotificationService::notifyNewEventFeedback($feedback);
 
         return redirect()->route('feedback.thankyou'); // Optional thank-you page
     }

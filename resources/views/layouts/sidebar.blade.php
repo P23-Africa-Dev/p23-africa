@@ -77,6 +77,11 @@
                         <i class="fa fa-tasks"></i>
                         <span>Task List</span>
                     </a>
+                    <a href="{{ route('admin.projects.gantt') }}"
+                        class="sidebar-subitem {{ request()->routeIs('admin.projects.gantt') ? 'active' : '' }}">
+                        <i class="fa fa-chart-gantt"></i>
+                        <span>Gantt Chart</span>
+                    </a>
                 </div>
             </div>
 

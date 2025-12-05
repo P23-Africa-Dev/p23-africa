@@ -9,6 +9,7 @@ use App\Mail\UltimateFundingDownloadMail;
 use App\Models\PlaybookDownload;
 use App\Models\SalesBookDownload;
 use App\Models\UltimateFundingDownload;
+use App\Services\AdminNotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -89,6 +90,9 @@ class PlaybookController extends Controller
                     'email' => $request->email,
                     'company' => $request->company,
                 ]);
+
+                // Send notification to admins for new downloads only
+                AdminNotificationService::notifyPlaybookDownload($download);
             }
 
             // Send email with playbook attachment

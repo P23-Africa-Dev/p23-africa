@@ -8,6 +8,7 @@ use App\Models\Payment;
 use App\Models\ScheduledSession;
 use App\Models\ChatMessage;
 use App\Services\GoogleCalendarService;
+use App\Services\AdminNotificationService;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
@@ -120,6 +121,10 @@ class ConsultationController extends Controller
         } else {
             // Create new consultation application if no draft exists
             $application = ConsultationApplication::create($applicationData);
+
+            // Send notification to admins
+            AdminNotificationService::notifyNewConsultation($application);
+
             Log::info('New consultation application created', [
                 'application_id' => $application->id,
                 'email' => $request->email

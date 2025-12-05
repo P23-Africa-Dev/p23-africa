@@ -8,6 +8,7 @@ use App\Models\Task;
 use App\Models\TaskComment;
 use App\Models\User;
 use App\Notifications\TaskAssignedNotification;
+use App\Services\AdminNotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -134,6 +135,9 @@ class TaskController extends Controller
         $data['order'] = Task::where('project_id', $data['project_id'])->max('order') + 1;
 
         $task = Task::create($data);
+
+        // Send notification to admins about new task
+        AdminNotificationService::notifyNewTask($task, Auth::user());
 
         // Assign users to the task and send notifications
         if (!empty($data['assignees'])) {
@@ -427,6 +431,9 @@ class TaskController extends Controller
      */
     protected function notifyAssignees(Task $task, array $assigneeIds, $assigner)
     {
+        // Make sure task has project loaded for notification data
+        $task->load('project');
+
         $assignees = User::whereIn('id', $assigneeIds)->get();
 
         foreach ($assignees as $assignee) {
@@ -493,6 +500,9 @@ class TaskController extends Controller
         ]);
 
         $comment->load('user:id,name');
+
+        // Send notification about new comment
+        AdminNotificationService::notifyTaskComment($comment, $task, $user);
 
         try {
             activity()

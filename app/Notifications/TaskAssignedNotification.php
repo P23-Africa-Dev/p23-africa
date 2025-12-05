@@ -5,11 +5,10 @@ namespace App\Notifications;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class TaskAssignedNotification extends Notification implements ShouldQueue
+class TaskAssignedNotification extends Notification
 {
     use Queueable;
 
@@ -70,6 +69,11 @@ class TaskAssignedNotification extends Notification implements ShouldQueue
     public function toDatabase(object $notifiable): array
     {
         return [
+            'notification_type' => 'task_assigned',
+            'title' => 'New Task Assigned',
+            'message' => $this->assignedBy->name . ' assigned you a task: ' . $this->task->title,
+            'icon' => 'fas fa-user-plus',
+            'url' => '/admin/tasks/kanban?project_id=' . $this->task->project_id,
             'task_id' => $this->task->id,
             'task_title' => $this->task->title,
             'project_id' => $this->task->project_id,
@@ -78,7 +82,6 @@ class TaskAssignedNotification extends Notification implements ShouldQueue
             'assigned_by_name' => $this->assignedBy->name,
             'priority' => $this->task->priority,
             'due_date' => $this->task->due_date?->toDateString(),
-            'message' => $this->assignedBy->name . ' assigned you a task: ' . $this->task->title,
         ];
     }
 

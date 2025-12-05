@@ -13,11 +13,16 @@
 
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h4 class="mb-0">All Projects</h4>
-                        @if (auth()->user()->hasRole(['admin', 'supervisor']))
-                            <a href="{{ route('admin.projects.create') }}" class="btn btn-dark">
-                                <i class="fas fa-plus me-2"></i>New Project
+                        <div class="d-flex gap-2">
+                            <a href="{{ route('admin.projects.gantt') }}" class="btn btn-outline-primary">
+                                <i class="fas fa-chart-gantt me-2"></i>Gantt Chart
                             </a>
-                        @endif
+                            @if (auth()->user()->hasRole(['admin', 'supervisor']))
+                                <a href="{{ route('admin.projects.create') }}" class="btn btn-dark">
+                                    <i class="fas fa-plus me-2"></i>New Project
+                                </a>
+                            @endif
+                        </div>
                     </div>
 
                     @if (session('success'))

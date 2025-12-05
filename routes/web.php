@@ -400,6 +400,7 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
     Route::post('/playbooks/resend-funding', [\App\Http\Controllers\PlaybookController::class, 'resendFundingReadinessPending'])->name('playbooks.resend-funding');
 
     // Project Management
+    Route::get('/projects/gantt', [\App\Http\Controllers\Admin\ProjectController::class, 'gantt'])->name('projects.gantt');
     Route::resource('projects', \App\Http\Controllers\Admin\ProjectController::class);
     Route::patch('/projects/{project}/status', [\App\Http\Controllers\Admin\ProjectController::class, 'updateStatus'])->name('projects.update-status');
 
@@ -442,22 +443,33 @@ Route::post('/admin/activity-logs/mark-seen', [\App\Http\Controllers\Admin\Activ
     ->middleware(['auth', 'role:admin'])
     ->name('admin.activity.mark-seen');
 
-// Task Notification Routes (for all authenticated users)
-Route::get('/admin/notifications/tasks', [\App\Http\Controllers\Admin\NotificationController::class, 'getTaskNotifications'])
-    ->middleware(['auth', 'check.suspended'])
-    ->name('admin.notifications.tasks');
+// Comprehensive Notification Routes (for all authenticated users)
+Route::middleware(['auth', 'check.suspended'])->prefix('admin/notifications')->name('admin.notifications.')->group(function () {
+    // Get all notifications
+    Route::get('/all', [\App\Http\Controllers\Admin\NotificationController::class, 'getAllNotifications'])
+        ->name('all');
 
-Route::get('/admin/notifications/unread-count', [\App\Http\Controllers\Admin\NotificationController::class, 'getUnreadCount'])
-    ->middleware(['auth', 'check.suspended'])
-    ->name('admin.notifications.unread-count');
+    // Get all unread count
+    Route::get('/all-unread-count', [\App\Http\Controllers\Admin\NotificationController::class, 'getAllUnreadCount'])
+        ->name('all-unread-count');
 
-Route::post('/admin/notifications/{id}/mark-read', [\App\Http\Controllers\Admin\NotificationController::class, 'markAsRead'])
-    ->middleware(['auth', 'check.suspended'])
-    ->name('admin.notifications.mark-read');
+    // Get latest unread for browser notifications
+    Route::get('/latest-unread', [\App\Http\Controllers\Admin\NotificationController::class, 'getLatestUnread'])
+        ->name('latest-unread');
 
-Route::post('/admin/notifications/mark-all-read', [\App\Http\Controllers\Admin\NotificationController::class, 'markAllAsRead'])
-    ->middleware(['auth', 'check.suspended'])
-    ->name('admin.notifications.mark-all-read');
+    // Legacy task notifications
+    Route::get('/tasks', [\App\Http\Controllers\Admin\NotificationController::class, 'getTaskNotifications'])
+        ->name('tasks');
+
+    Route::get('/unread-count', [\App\Http\Controllers\Admin\NotificationController::class, 'getUnreadCount'])
+        ->name('unread-count');
+
+    Route::post('/{id}/mark-read', [\App\Http\Controllers\Admin\NotificationController::class, 'markAsRead'])
+        ->name('mark-read');
+
+    Route::post('/mark-all-read', [\App\Http\Controllers\Admin\NotificationController::class, 'markAllAsRead'])
+        ->name('mark-all-read');
+});
 
 Route::middleware(['auth', 'check_role:supervisor'])->group(function () {
     // Supervisor-only routes here
