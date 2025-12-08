@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Models\Task;
+use App\Models\TaskComment;
 use App\Models\User;
 use App\Notifications\TaskAssignedNotification;
+use App\Services\AdminNotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -18,7 +20,8 @@ class TaskController extends Controller
         $user = Auth::user();
         $projectId = $request->get('project_id');
 
-        $query = Task::with(['project', 'assignees', 'creator']);
+        $query = Task::with(['project', 'assignees', 'creator'])
+            ->withCount('comments');
 
         if ($projectId) {
             $query->where('project_id', $projectId);
@@ -42,7 +45,8 @@ class TaskController extends Controller
         $user = Auth::user();
         $projectId = $request->get('project_id');
 
-        $query = Task::with(['project', 'assignees', 'creator']);
+        $query = Task::with(['project', 'assignees', 'creator', 'comments'])
+            ->withCount('comments');
 
         if ($projectId) {
             $query->where('project_id', $projectId);
@@ -131,6 +135,9 @@ class TaskController extends Controller
         $data['order'] = Task::where('project_id', $data['project_id'])->max('order') + 1;
 
         $task = Task::create($data);
+
+        // Send notification to admins about new task
+        AdminNotificationService::notifyNewTask($task, Auth::user());
 
         // Assign users to the task and send notifications
         if (!empty($data['assignees'])) {
@@ -424,6 +431,9 @@ class TaskController extends Controller
      */
     protected function notifyAssignees(Task $task, array $assigneeIds, $assigner)
     {
+        // Make sure task has project loaded for notification data
+        $task->load('project');
+
         $assignees = User::whereIn('id', $assigneeIds)->get();
 
         foreach ($assignees as $assignee) {
@@ -433,5 +443,121 @@ class TaskController extends Controller
                 Log::warning('Failed to send task notification to user ' . $assignee->id . ': ' . $e->getMessage());
             }
         }
+    }
+
+    /**
+     * Get comments for a task
+     */
+    public function getComments(Task $task)
+    {
+        $user = Auth::user();
+
+        // Check if user can view this task (assigned to them or admin/supervisor)
+        $canView = $user->hasRole(['admin', 'supervisor']) ||
+            $task->assignees->contains('id', $user->id);
+
+        if (!$canView) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You are not authorized to view this task.',
+            ], 403);
+        }
+
+        $comments = $task->comments()->with('user:id,name')->get();
+
+        return response()->json([
+            'success' => true,
+            'comments' => $comments,
+        ]);
+    }
+
+    /**
+     * Add a comment to a task
+     */
+    public function addComment(Request $request, Task $task)
+    {
+        $user = Auth::user();
+
+        // Check if user can comment on this task (assigned to them or admin/supervisor)
+        $canComment = $user->hasRole(['admin', 'supervisor']) ||
+            $task->assignees->contains('id', $user->id);
+
+        if (!$canComment) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You are not authorized to comment on this task.',
+            ], 403);
+        }
+
+        $request->validate([
+            'comment' => 'required|string|max:2000',
+        ]);
+
+        $comment = TaskComment::create([
+            'task_id' => $task->id,
+            'user_id' => $user->id,
+            'comment' => $request->comment,
+        ]);
+
+        $comment->load('user:id,name');
+
+        // Send notification about new comment
+        AdminNotificationService::notifyTaskComment($comment, $task, $user);
+
+        try {
+            activity()
+                ->causedBy($user)
+                ->performedOn($task)
+                ->withProperties(['comment' => $comment->comment])
+                ->log('Added comment to task');
+        } catch (\Exception $e) {
+            Log::warning('Activity log failed: ' . $e->getMessage());
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Comment added successfully.',
+            'comment' => $comment,
+        ]);
+    }
+
+    /**
+     * Delete a comment
+     */
+    public function deleteComment(Task $task, TaskComment $comment)
+    {
+        $user = Auth::user();
+
+        // Only the comment author or admin can delete
+        if ($comment->user_id !== $user->id && !$user->hasRole('admin')) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You are not authorized to delete this comment.',
+            ], 403);
+        }
+
+        // Check if comment belongs to this task
+        if ($comment->task_id !== $task->id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Comment does not belong to this task.',
+            ], 400);
+        }
+
+        $comment->delete();
+
+        try {
+            activity()
+                ->causedBy($user)
+                ->performedOn($task)
+                ->log('Deleted comment from task');
+        } catch (\Exception $e) {
+            Log::warning('Activity log failed: ' . $e->getMessage());
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Comment deleted successfully.',
+        ]);
     }
 }

@@ -123,6 +123,10 @@ Route::post('/sales-book/download', [\App\Http\Controllers\PlaybookController::c
 Route::post('/ultimate-funding/download', [\App\Http\Controllers\PlaybookController::class, 'ultimateFundingDownload'])->name('ultimate-funding.download');
 Route::post('/ultimate-funding/payment-callback', [\App\Http\Controllers\PlaybookController::class, 'ultimateFundingPaymentCallback'])->name('ultimate-funding.payment-callback');
 
+// Stripe Payment Routes
+Route::post('/ultimate-funding/create-payment-intent', [\App\Http\Controllers\PlaybookController::class, 'createStripePaymentIntent'])->name('ultimate-funding.create-payment-intent');
+Route::post('/ultimate-funding/stripe-payment-callback', [\App\Http\Controllers\PlaybookController::class, 'stripePaymentCallback'])->name('ultimate-funding.stripe-callback');
+
 // Playbook Landing Page
 Route::get('/founders-playbook', [\App\Http\Controllers\PlaybookController::class, 'landing'])->name('playbook.landing');
 Route::get('/playbook/funding-readiness', [\App\Http\Controllers\PlaybookController::class, 'playbookOne'])->name('playbook.landing1');
@@ -281,8 +285,10 @@ Route::get('/email-test', function () {
 //     return view('all-events', compact('events'));
 // })->name('events.all-events');
 
-Route::post('/contact', [ContactController::class, 'submitForm'])->middleware('throttle:5,1')->name('contact.submit');
-Route::post('/contact/save-draft', [ContactController::class, 'saveDraft'])->middleware('throttle:30,1')->name('contact.save-draft');
+// Contact form - increased throttle to 15 requests per minute for better UX with retries
+Route::post('/contact', [ContactController::class, 'submitForm'])->middleware('throttle:15,1')->name('contact.submit');
+// Save draft - increased throttle to 60 requests per minute for live form capture
+Route::post('/contact/save-draft', [ContactController::class, 'saveDraft'])->middleware('throttle:60,1')->name('contact.save-draft');
 
 // Advanced tracking endpoint
 Route::post('/track-advanced', [\App\Http\Controllers\AdvancedTrackingController::class, 'track'])->name('track.advanced');
@@ -394,6 +400,7 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
     Route::post('/playbooks/resend-funding', [\App\Http\Controllers\PlaybookController::class, 'resendFundingReadinessPending'])->name('playbooks.resend-funding');
 
     // Project Management
+    Route::get('/projects/gantt', [\App\Http\Controllers\Admin\ProjectController::class, 'gantt'])->name('projects.gantt');
     Route::resource('projects', \App\Http\Controllers\Admin\ProjectController::class);
     Route::patch('/projects/{project}/status', [\App\Http\Controllers\Admin\ProjectController::class, 'updateStatus'])->name('projects.update-status');
 
@@ -408,6 +415,11 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
     Route::patch('/tasks/{task}/status', [\App\Http\Controllers\Admin\TaskController::class, 'updateStatus'])->name('tasks.update-status');
     Route::post('/tasks/update-order', [\App\Http\Controllers\Admin\TaskController::class, 'updateOrder'])->name('tasks.update-order');
     Route::post('/tasks/{task}/assign', [\App\Http\Controllers\Admin\TaskController::class, 'assign'])->name('tasks.assign');
+
+    // Task Comments
+    Route::get('/tasks/{task}/comments', [\App\Http\Controllers\Admin\TaskController::class, 'getComments'])->name('tasks.comments');
+    Route::post('/tasks/{task}/comments', [\App\Http\Controllers\Admin\TaskController::class, 'addComment'])->name('tasks.add-comment');
+    Route::delete('/tasks/{task}/comments/{comment}', [\App\Http\Controllers\Admin\TaskController::class, 'deleteComment'])->name('tasks.delete-comment');
 });
 
 
@@ -431,22 +443,33 @@ Route::post('/admin/activity-logs/mark-seen', [\App\Http\Controllers\Admin\Activ
     ->middleware(['auth', 'role:admin'])
     ->name('admin.activity.mark-seen');
 
-// Task Notification Routes (for all authenticated users)
-Route::get('/admin/notifications/tasks', [\App\Http\Controllers\Admin\NotificationController::class, 'getTaskNotifications'])
-    ->middleware(['auth', 'check.suspended'])
-    ->name('admin.notifications.tasks');
+// Comprehensive Notification Routes (for all authenticated users)
+Route::middleware(['auth', 'check.suspended'])->prefix('admin/notifications')->name('admin.notifications.')->group(function () {
+    // Get all notifications
+    Route::get('/all', [\App\Http\Controllers\Admin\NotificationController::class, 'getAllNotifications'])
+        ->name('all');
 
-Route::get('/admin/notifications/unread-count', [\App\Http\Controllers\Admin\NotificationController::class, 'getUnreadCount'])
-    ->middleware(['auth', 'check.suspended'])
-    ->name('admin.notifications.unread-count');
+    // Get all unread count
+    Route::get('/all-unread-count', [\App\Http\Controllers\Admin\NotificationController::class, 'getAllUnreadCount'])
+        ->name('all-unread-count');
 
-Route::post('/admin/notifications/{id}/mark-read', [\App\Http\Controllers\Admin\NotificationController::class, 'markAsRead'])
-    ->middleware(['auth', 'check.suspended'])
-    ->name('admin.notifications.mark-read');
+    // Get latest unread for browser notifications
+    Route::get('/latest-unread', [\App\Http\Controllers\Admin\NotificationController::class, 'getLatestUnread'])
+        ->name('latest-unread');
 
-Route::post('/admin/notifications/mark-all-read', [\App\Http\Controllers\Admin\NotificationController::class, 'markAllAsRead'])
-    ->middleware(['auth', 'check.suspended'])
-    ->name('admin.notifications.mark-all-read');
+    // Legacy task notifications
+    Route::get('/tasks', [\App\Http\Controllers\Admin\NotificationController::class, 'getTaskNotifications'])
+        ->name('tasks');
+
+    Route::get('/unread-count', [\App\Http\Controllers\Admin\NotificationController::class, 'getUnreadCount'])
+        ->name('unread-count');
+
+    Route::post('/{id}/mark-read', [\App\Http\Controllers\Admin\NotificationController::class, 'markAsRead'])
+        ->name('mark-read');
+
+    Route::post('/mark-all-read', [\App\Http\Controllers\Admin\NotificationController::class, 'markAllAsRead'])
+        ->name('mark-all-read');
+});
 
 Route::middleware(['auth', 'check_role:supervisor'])->group(function () {
     // Supervisor-only routes here

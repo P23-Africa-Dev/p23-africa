@@ -11,6 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Drop existing table if it exists with wrong structure
+        Schema::dropIfExists('notifications');
+
         Schema::create('notifications', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('type');
@@ -18,6 +21,8 @@ return new class extends Migration
             $table->text('data');
             $table->timestamp('read_at')->nullable();
             $table->timestamps();
+
+            $table->index(['notifiable_type', 'notifiable_id', 'read_at']);
         });
     }
 

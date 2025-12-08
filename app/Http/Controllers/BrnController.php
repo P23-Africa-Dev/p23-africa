@@ -6,6 +6,7 @@ use App\Helpers\ClickTracker;
 use App\Mail\BrnDeclined;
 use App\Models\BrnSubmission;
 use App\Models\Event;
+use App\Services\AdminNotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -152,6 +153,9 @@ class BrnController extends Controller
 
             // Create the submission
             $submission = BrnSubmission::create($validated);
+
+            // Send notification to admins
+            AdminNotificationService::notifyNewBrnApplication($submission);
 
             // Track submission for analytics
             ClickTracker::track('BRN_Form_Submission');

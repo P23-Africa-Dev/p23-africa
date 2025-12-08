@@ -9,6 +9,7 @@ use App\Mail\UltimateFundingDownloadMail;
 use App\Models\PlaybookDownload;
 use App\Models\SalesBookDownload;
 use App\Models\UltimateFundingDownload;
+use App\Services\AdminNotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -89,6 +90,9 @@ class PlaybookController extends Controller
                     'email' => $request->email,
                     'company' => $request->company,
                 ]);
+
+                // Send notification to admins for new downloads only
+                AdminNotificationService::notifyPlaybookDownload($download);
             }
 
             // Send email with playbook attachment
@@ -458,6 +462,209 @@ class PlaybookController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'An error occurred processing the payment. Please contact support.'
+            ], 500);
+        }
+    }
+
+    /**
+     * Create Stripe Payment Intent for Ultimate Funding Directory
+     */
+    public function createStripePaymentIntent(Request $request)
+    {
+        try {
+            Log::info('Stripe payment intent request received', [
+                'all_data' => $request->all(),
+                'download_id' => $request->download_id,
+                'amount' => $request->amount
+            ]);
+
+            $validator = Validator::make($request->all(), [
+                'download_id' => 'required|integer|exists:ultimate_funding_downloads,id',
+                'amount' => 'nullable|numeric|min:1',
+            ]);
+
+            if ($validator->fails()) {
+                Log::warning('Stripe payment intent validation failed', [
+                    'errors' => $validator->errors()->toArray()
+                ]);
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid request data.',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            $download = UltimateFundingDownload::find($request->download_id);
+
+            if (!$download) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Download record not found.'
+                ], 404);
+            }
+
+            // Check if already paid
+            if ($download->payment_completed) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Payment has already been completed for this order.'
+                ], 400);
+            }
+
+            // Use provided amount or default to 50
+            $amount = $request->amount ?? 50;
+
+            // Initialize Stripe
+            \Stripe\Stripe::setApiKey(config('services.stripe.secret_key'));
+
+            // Create Payment Intent
+            $paymentIntent = \Stripe\PaymentIntent::create([
+                'amount' => (int)($amount * 100), // Stripe expects amount in cents
+                'currency' => 'usd',
+                'metadata' => [
+                    'download_id' => $download->id,
+                    'email' => $download->email,
+                    'name' => $download->name,
+                    'product' => 'Ultimate Funding Directory'
+                ],
+                'description' => 'Ultimate Funding Directory for African Entrepreneurs',
+                'receipt_email' => $download->email,
+            ]);
+
+            Log::info('Stripe payment intent created', [
+                'payment_intent_id' => $paymentIntent->id,
+                'download_id' => $download->id
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'client_secret' => $paymentIntent->client_secret,
+                'payment_intent_id' => $paymentIntent->id
+            ]);
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            Log::error('Stripe API error', [
+                'message' => $e->getMessage(),
+                'code' => $e->getStripeCode()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Payment processing error: ' . $e->getMessage()
+            ], 500);
+        } catch (\Exception $e) {
+            Log::error('Error creating Stripe payment intent', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred. Please try again.'
+            ], 500);
+        }
+    }
+
+    /**
+     * Handle Stripe Payment Callback
+     */
+    public function stripePaymentCallback(Request $request)
+    {
+        try {
+            Log::info('Stripe payment callback received', $request->all());
+
+            $validator = Validator::make($request->all(), [
+                'payment_intent_id' => 'required|string',
+                'download_id' => 'required|integer|exists:ultimate_funding_downloads,id',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid callback data.',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            // Initialize Stripe
+            \Stripe\Stripe::setApiKey(config('services.stripe.secret_key'));
+
+            // Retrieve the payment intent to verify status
+            $paymentIntent = \Stripe\PaymentIntent::retrieve($request->payment_intent_id);
+
+            Log::info('Stripe payment intent retrieved', [
+                'status' => $paymentIntent->status,
+                'payment_intent_id' => $paymentIntent->id
+            ]);
+
+            if ($paymentIntent->status !== 'succeeded') {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Payment was not successful. Status: ' . $paymentIntent->status
+                ], 400);
+            }
+
+            $download = UltimateFundingDownload::find($request->download_id);
+
+            if (!$download) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Download record not found.'
+                ], 404);
+            }
+
+            // Update payment details
+            $download->update([
+                'payment_completed' => true,
+                'payment_reference' => $paymentIntent->id,
+                'payment_status' => 'successful',
+                'payment_method' => 'stripe',
+                'payment_date' => now(),
+                'payment_data' => [
+                    'payment_intent_id' => $paymentIntent->id,
+                    'amount' => $paymentIntent->amount / 100, // Convert from cents
+                    'currency' => $paymentIntent->currency,
+                    'status' => $paymentIntent->status,
+                    'receipt_email' => $paymentIntent->receipt_email,
+                ]
+            ]);
+
+            Log::info('Stripe payment verified and recorded', [
+                'download_id' => $download->id,
+                'payment_intent_id' => $paymentIntent->id
+            ]);
+
+            // Send email with the directory
+            Log::info('Sending ultimate funding directory email', ['email' => $download->email]);
+            Mail::to($download->email)->send(new UltimateFundingDownloadMail($download));
+
+            // Update email sent timestamp
+            $download->update(['email_sent_at' => now()]);
+
+            Log::info('Ultimate funding directory email sent successfully', ['email' => $download->email]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Payment successful! The Ultimate Funding Directory has been sent to your email.'
+            ]);
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            Log::error('Stripe API error in callback', [
+                'message' => $e->getMessage(),
+                'code' => $e->getStripeCode()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Payment verification error: ' . $e->getMessage()
+            ], 500);
+        } catch (\Exception $e) {
+            Log::error('Error in Stripe payment callback', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred verifying the payment. Please contact support.'
             ], 500);
         }
     }

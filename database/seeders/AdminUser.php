@@ -20,5 +20,12 @@ class AdminUser extends Seeder
             'password' => Hash::make('password123'), // Important!
             'is_admin' => true,
         ]);
+
+        User::create([
+            'name' => 'Staff',
+            'email' => 'danijunurdeen@gmail.com',
+            'password' => Hash::make('password123'), // Important!
+            'is_admin' => true,
+        ]);
     }
 }

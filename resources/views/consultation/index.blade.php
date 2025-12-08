@@ -12,7 +12,7 @@
     <meta property="og:title" content="Book a Consultation | P23 Africa">
     <meta property="og:description"
         content="Schedule a one-on-one consultation to strengthen your business strategy, improve funding readiness, and unlock growth opportunities with expert advisors at P23 Africa.">
-    <meta property="og:image" content="{{ asset('img/book-consultation.png') }}">
+    <meta property="og:image" content="{{ asset('img/consultation-page-thumbnail.png') }}">
     <meta property="og:type" content="website">
 
     {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}

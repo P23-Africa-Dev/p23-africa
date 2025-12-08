@@ -5,11 +5,67 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Models\User;
+use App\Services\AdminNotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
+    /**
+     * Display Gantt chart view for all projects and tasks
+     */
+    public function gantt(Request $request)
+    {
+        $user = Auth::user();
+
+        // Get projects with tasks
+        if ($user->hasRole(['admin', 'supervisor'])) {
+            $query = Project::with(['tasks.assignees', 'creator']);
+        } else {
+            // Staff sees only projects where they have assigned tasks
+            $query = Project::whereHas('tasks.assignees', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            })->with(['tasks' => function ($q) use ($user) {
+                $q->whereHas('assignees', function ($sq) use ($user) {
+                    $sq->where('user_id', $user->id);
+                });
+            }, 'tasks.assignees', 'creator']);
+        }
+
+        // Filter by status if provided
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $projects = $query->orderBy('start_date')->orderBy('name')->get();
+
+        // Calculate date range for the Gantt chart
+        $minDate = now()->subMonth();
+        $maxDate = now()->addMonths(3);
+
+        foreach ($projects as $project) {
+            if ($project->start_date && $project->start_date < $minDate) {
+                $minDate = $project->start_date->copy();
+            }
+            if ($project->due_date && $project->due_date > $maxDate) {
+                $maxDate = $project->due_date->copy();
+            }
+            foreach ($project->tasks as $task) {
+                if ($task->due_date && $task->due_date > $maxDate) {
+                    $maxDate = $task->due_date->copy();
+                }
+            }
+        }
+
+        // Extend range a bit for better visualization
+        $minDate = $minDate->startOfMonth();
+        $maxDate = $maxDate->endOfMonth();
+
+        $statuses = Project::getStatuses();
+
+        return view('admin.projects.gantt', compact('projects', 'minDate', 'maxDate', 'statuses'));
+    }
+
     public function index()
     {
         $user = Auth::user();
@@ -53,6 +109,9 @@ class ProjectController extends Controller
         $data['created_by'] = Auth::id();
 
         $project = Project::create($data);
+
+        // Send notification to admins
+        AdminNotificationService::notifyNewProject($project, Auth::user());
 
         activity()
             ->causedBy(Auth::user())

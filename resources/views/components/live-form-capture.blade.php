@@ -273,16 +273,40 @@
                 this.log('Sending save request to:', this.saveUrl);
 
                 try {
+                    // Get fresh CSRF token from meta tag
+                    const csrfToken = document.querySelector('meta[name="csrf-token"]');
+                    if (!csrfToken) {
+                        this.log('ERROR: CSRF token meta tag not found');
+                        return;
+                    }
+
                     const response = await fetch(this.saveUrl, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
-                                'content'),
+                            'X-CSRF-TOKEN': csrfToken.getAttribute('content'),
                             'Accept': 'application/json'
                         },
                         body: JSON.stringify(formObject)
                     });
+
+                    // Handle CSRF token mismatch (419) and rate limiting (429)
+                    if (response.status === 419) {
+                        this.log('CSRF token expired - will retry on next save');
+                        this.status = 'idle';
+                        // Don't show error for draft saves, just silently skip
+                        if (isSubmission) {
+                            // For submissions, refresh the page
+                            window.location.reload();
+                        }
+                        return;
+                    }
+
+                    if (response.status === 429) {
+                        this.log('Rate limited - will retry later');
+                        this.status = 'idle';
+                        return;
+                    }
 
                     const result = await response.json();
 
