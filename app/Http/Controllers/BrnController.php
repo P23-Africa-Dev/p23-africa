@@ -273,9 +273,9 @@ class BrnController extends Controller
         }
 
         // Clean position/title
-        if (!empty($data['position'])) {
-            $data['position'] = Str::of($data['position'])->trim()->title()->toString();
-        }
+        // if (!empty($data['position'])) {
+        //     $data['position'] = Str::of($data['position'])->trim()->title()->toString();
+        // }
 
         return $data;
     }
