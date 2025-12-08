@@ -28,7 +28,8 @@ class BrnApproved extends Mailable
 
         // Data to be encrypted and stored
         $data = [
-            'name' => $submission->name,
+            'name' => $submission->full_name ?? $submission->name,
+            'full_name' => $submission->full_name ?? $submission->name,
             'email' => $submission->email,
             'company_name' => $submission->company_name,
             'phone' => $submission->phone,
