@@ -450,20 +450,23 @@
     div#countryReg-options {
         scrollbar-width: none;
         background: #137077;
-
-
     }
 
     div#number-of-employees {
         z-index: 5;
     }
+    div#industry-selects-group .custom-options{
+        z-index: 5;
+    }
+
+   
 
 
 
 
     /* Scrollable options container */
     .custom-options-scrollable {
-    max-height: 180px;
+        max-height: 180px;
         overflow-y: auto;
         overflow-x: hidden;
         z-index: 10;
@@ -702,6 +705,7 @@
         gap: 6px;
         margin-top: 10px;
         justify-content: center;
+        width: 100%;
         /* margin-bottom: 30px; */
     }
 
@@ -712,8 +716,8 @@
 
     .interest-form-option label {
         display: block;
-        padding: 12px 18px;
-        border-radius: 25px;
+        padding: 12px 15px;
+        border-radius: 17px;
         cursor: pointer;
         font-size: 10px;
         font-weight: 600;
@@ -1172,6 +1176,60 @@
     }
 
 
+    /* ==================================  CHECKBOX FOR STAGE 2 Form Container */
+    .checkbox-wrapper {
+        padding-top: 17px;
+    }
+
+    .checkbox-container {
+        color: #ffffff;
+        font-size: 15px;
+        display: flex;
+        /* justify-content: center; */
+        align-items: center;
+        cursor: pointer;
+        gap: 10px;
+
+
+    }
+
+    .checkbox-container {
+        font-family: "GT Walsheim Con";
+
+        font-weight: 100;
+        opacity: 0.92;
+        font-size: 14px;
+        letter-spacing: 0.6px;
+    }
+
+    .checkbox-container input {
+        display: none;
+    }
+
+    .checkmark {
+        width: 18px;
+        height: 18px;
+        border: 2px solid #ffffff;
+        border-radius: 3px;
+        background: transparent;
+        position: relative;
+        transition: background 0.2s ease;
+    }
+
+    .checkbox-container input:checked+.checkmark {
+        background: #ffffff;
+    }
+
+    .checkbox-container input:checked+.checkmark::after {
+        content: "✓";
+        color: #137077;
+        font-size: 14px;
+        position: absolute;
+        top: -2px;
+        left: 2px;
+        font-weight: bold;
+    }
+
 
 
     /* Desktop specific styles */
@@ -1285,6 +1343,24 @@
 
             padding-left: 40px;
         }
+
+
+         textarea#offerValue{
+            padding-left: 40px;
+        
+    }
+         textarea#companyDescription{
+            padding-left: 40px;
+        
+    }
+
+        /* Custom Radio Button Group Styling (Three Buttons) */
+    .interest-form-option-buttons {
+     
+        flex-wrap: nowrap;
+  
+        /* margin-bottom: 30px; */
+    }
 
         /* Text inside the trigger */
         .custom-select-text {
@@ -1504,7 +1580,7 @@
                         <form class="interest-form" id="brnForm" action="{{ route('brn.submit') }}" method="POST">
                             @csrf
                             <!-- First Stage Form -->
-                            <div class="first-stage-form-container hidden">
+                             <div class="first-stage-form-container hidden">
                                 <div class="interest-form-group">
                                     <label for="fullName">Full Name</label>
                                     <input type="text" id="fullName" name="name" placeholder="Full name" />
@@ -2632,6 +2708,16 @@
                                     <label for="linkedin">LinkedIn Profile</label>
                                     <input type="url" id="linkedin" name="linkedin"
                                         placeholder="Add your profile Url (Optional)" />
+
+                                    <div class="checkbox-wrapper">
+                                        <label class="checkbox-container">
+                                            <input type="checkbox">
+                                            <span class="checkmark"></span>
+
+                                            I don’t have a LinkedIn account.
+
+                                        </label>
+                                    </div>
                                 </div>
 
                                 <div class="interest-form-group">
@@ -2654,7 +2740,7 @@
                             <!-- third Form -->
                             <div class="third-stage-form-container hidden">
                                 <!-- Industries -->
-                                <div class="interest-form-group">
+                                <div class="interest-form-group" id="industry-selects-group">
                                     <label for="industry">What industry does your business operate in?</label>
                                     <div class="custom-select" data-select="industry">
                                         <div class="custom-select-trigger">
