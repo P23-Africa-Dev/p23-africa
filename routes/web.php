@@ -113,6 +113,11 @@ Route::get('/noel54/interest-form', function () {
 Route::post('/noel54/interest-form', [BrnController::class, 'store'])->name('brn.submit');
 Route::post('/noel54/check-email', [BrnController::class, 'checkEmail'])->name('brn.check-email');
 
+// CSRF Token Refresh Route - for long forms that may experience session timeout
+Route::get('/csrf-token', function () {
+    return response()->json(['token' => csrf_token()]);
+})->name('csrf.refresh');
+
 // Playbook Download Route
 Route::post('/playbook/download', [\App\Http\Controllers\PlaybookController::class, 'download'])->name('playbook.download');
 

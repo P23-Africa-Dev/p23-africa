@@ -455,11 +455,12 @@
     div#number-of-employees {
         z-index: 5;
     }
-    div#industry-selects-group .custom-options{
+
+    div#industry-selects-group .custom-options {
         z-index: 5;
     }
 
-   
+
 
 
 
@@ -1345,22 +1346,23 @@
         }
 
 
-         textarea#offerValue{
+        textarea#offerValue {
             padding-left: 40px;
-        
-    }
-         textarea#companyDescription{
+
+        }
+
+        textarea#companyDescription {
             padding-left: 40px;
-        
-    }
+
+        }
 
         /* Custom Radio Button Group Styling (Three Buttons) */
-    .interest-form-option-buttons {
-     
-        flex-wrap: nowrap;
-  
-        /* margin-bottom: 30px; */
-    }
+        .interest-form-option-buttons {
+
+            flex-wrap: nowrap;
+
+            /* margin-bottom: 30px; */
+        }
 
         /* Text inside the trigger */
         .custom-select-text {
@@ -1580,7 +1582,7 @@
                         <form class="interest-form" id="brnForm" action="{{ route('brn.submit') }}" method="POST">
                             @csrf
                             <!-- First Stage Form -->
-                             <div class="first-stage-form-container hidden">
+                            <div class="first-stage-form-container hidden">
                                 <div class="interest-form-group">
                                     <label for="fullName">Full Name</label>
                                     <input type="text" id="fullName" name="name" placeholder="Full name" />
@@ -3355,20 +3357,47 @@
 
             showEmailStatus('loading');
 
+            // Get current CSRF token
+            const csrfToken = document.querySelector('input[name="_token"]')?.value ||
+                document.querySelector('meta[name="csrf-token"]')?.content;
+
             fetch('{{ route('brn.check-email') }}', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]')?.value ||
-                            document.querySelector('meta[name="csrf-token"]')?.content,
-                        'X-Requested-With': 'XMLHttpRequest'
+                        'X-CSRF-TOKEN': csrfToken,
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json'
                     },
                     body: JSON.stringify({
                         email: email
                     }),
                     credentials: 'same-origin'
                 })
-                .then(response => response.json())
+                .then(async response => {
+                    // Handle 419 error by refreshing token and retrying once
+                    if (response.status === 419) {
+                        const newToken = await refreshCsrfToken();
+                        if (newToken) {
+                            updateCsrfToken(newToken);
+                            // Retry with new token
+                            return fetch('{{ route('brn.check-email') }}', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': newToken,
+                                    'X-Requested-With': 'XMLHttpRequest',
+                                    'Accept': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    email: email
+                                }),
+                                credentials: 'same-origin'
+                            }).then(r => r.json());
+                        }
+                    }
+                    return response.json();
+                })
                 .then(data => {
                     if (data.exists) {
                         showEmailStatus('hide');
@@ -3382,7 +3411,9 @@
                     }
                 })
                 .catch(error => {
+                    // Silently fail - don't block user from continuing
                     showEmailStatus('hide');
+                    console.warn('Email check failed:', error);
                 });
         }
 
@@ -4122,8 +4153,211 @@
             });
         });
 
+        // ========== ROBUST FORM SUBMISSION WITH AUTO-RETRY ==========
+
+        // Function to refresh CSRF token
+        async function refreshCsrfToken() {
+            try {
+                // Primary method: Use dedicated CSRF refresh endpoint
+                const response = await fetch('{{ route('csrf.refresh') }}', {
+                    method: 'GET',
+                    credentials: 'same-origin',
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.token) {
+                        console.log('CSRF token refreshed successfully');
+                        return data.token;
+                    }
+                }
+
+                // Fallback: Try Sanctum cookie endpoint (if using Laravel Sanctum)
+                try {
+                    const sanctumResponse = await fetch('/sanctum/csrf-cookie', {
+                        method: 'GET',
+                        credentials: 'same-origin'
+                    });
+
+                    if (sanctumResponse.ok) {
+                        const cookies = document.cookie.split(';');
+                        for (let cookie of cookies) {
+                            const [name, value] = cookie.trim().split('=');
+                            if (name === 'XSRF-TOKEN') {
+                                return decodeURIComponent(value);
+                            }
+                        }
+                    }
+                } catch (e) {
+                    // Sanctum not available, continue to next fallback
+                }
+
+                // Last resort: fetch the form page to get new token from HTML
+                const pageResponse = await fetch(window.location.href, {
+                    method: 'GET',
+                    credentials: 'same-origin',
+                    headers: {
+                        'Accept': 'text/html'
+                    }
+                });
+
+                if (pageResponse.ok) {
+                    const html = await pageResponse.text();
+                    const tokenMatch = html.match(/name="_token"[^>]*value="([^"]+)"/);
+                    if (tokenMatch && tokenMatch[1]) {
+                        return tokenMatch[1];
+                    }
+                }
+            } catch (e) {
+                console.warn('Could not refresh CSRF token:', e);
+            }
+            return null;
+        }
+
+        // Get current CSRF token
+        function getCsrfToken() {
+            // 1. First priority: Form's hidden input
+            const formTokenInput = form.querySelector('input[name="_token"]');
+            if (formTokenInput && formTokenInput.value) {
+                return formTokenInput.value;
+            }
+
+            // 2. Second priority: Meta tag
+            const metaToken = document.querySelector('meta[name="csrf-token"]');
+            if (metaToken && metaToken.content) {
+                return metaToken.content;
+            }
+
+            // 3. Third priority: Laravel's global object
+            if (typeof window.Laravel !== 'undefined' && window.Laravel.csrfToken) {
+                return window.Laravel.csrfToken;
+            }
+
+            return null;
+        }
+
+        // Update CSRF token in form
+        function updateCsrfToken(newToken) {
+            if (!newToken) return;
+
+            const formTokenInput = form.querySelector('input[name="_token"]');
+            if (formTokenInput) {
+                formTokenInput.value = newToken;
+            }
+
+            const metaToken = document.querySelector('meta[name="csrf-token"]');
+            if (metaToken) {
+                metaToken.content = newToken;
+            }
+        }
+
+        // Submit form with retry logic
+        async function submitFormWithRetry(formData, maxRetries = 3) {
+            let lastError = null;
+
+            for (let attempt = 1; attempt <= maxRetries; attempt++) {
+                try {
+                    let csrfToken = getCsrfToken();
+
+                    // If this is a retry after 419 error, refresh the token first
+                    if (attempt > 1 || !csrfToken) {
+                        const newToken = await refreshCsrfToken();
+                        if (newToken) {
+                            csrfToken = newToken;
+                            updateCsrfToken(newToken);
+                            // Update the FormData with new token
+                            formData.set('_token', newToken);
+                        }
+                    }
+
+                    if (!csrfToken) {
+                        throw {
+                            status: 'NO_TOKEN',
+                            message: 'Security token missing. Please refresh the page.'
+                        };
+                    }
+
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken,
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: formData,
+                        credentials: 'same-origin'
+                    });
+
+                    // Handle 419 (CSRF token mismatch) - retry with fresh token
+                    if (response.status === 419) {
+                        console.log(`Attempt ${attempt}: Session expired, refreshing token...`);
+                        lastError = {
+                            status: 419,
+                            message: 'Session expired'
+                        };
+
+                        if (attempt < maxRetries) {
+                            // Wait a bit before retrying
+                            await new Promise(resolve => setTimeout(resolve, 500 * attempt));
+                            continue;
+                        }
+                    }
+
+                    // Handle other errors
+                    if (!response.ok) {
+                        const errorData = await response.json().catch(() => ({}));
+                        throw {
+                            status: response.status,
+                            data: errorData,
+                            message: errorData.message || 'Server error'
+                        };
+                    }
+
+                    // Success!
+                    return await response.json();
+
+                } catch (error) {
+                    lastError = error;
+
+                    // Network errors - retry
+                    if (error.name === 'TypeError' && error.message.includes('fetch')) {
+                        console.log(`Attempt ${attempt}: Network error, retrying...`);
+                        if (attempt < maxRetries) {
+                            await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
+                            continue;
+                        }
+                    }
+
+                    // Don't retry validation errors (422)
+                    if (error.status === 422) {
+                        throw error;
+                    }
+
+                    // Don't retry rate limiting (429)
+                    if (error.status === 429) {
+                        throw error;
+                    }
+
+                    // For other errors, retry if we have attempts left
+                    if (attempt >= maxRetries) {
+                        throw error;
+                    }
+                }
+            }
+
+            // All retries exhausted
+            throw lastError || {
+                status: 'UNKNOWN',
+                message: 'Submission failed after multiple attempts'
+            };
+        }
+
         // Form submission handling
-        form.addEventListener('submit', function(e) {
+        form.addEventListener('submit', async function(e) {
             e.preventDefault();
 
             // Validate all steps before submission
@@ -4143,137 +4377,94 @@
                 return;
             }
 
-            // Disable submit button
+            // Disable submit button and show spinner
             submitBtn.disabled = true;
             btnText.classList.add('d-none');
             spinner.classList.remove('d-none');
 
-            const formData = new FormData(form);
+            try {
+                const formData = new FormData(form);
+                const data = await submitFormWithRetry(formData);
 
-            // IMPROVED: Get CSRF token with proper priority order
-            let csrfToken = null;
-
-            // 1. First priority: Form's hidden input (most reliable)
-            const formTokenInput = form.querySelector('input[name="_token"]');
-            if (formTokenInput && formTokenInput.value) {
-                csrfToken = formTokenInput.value;
-            }
-
-            // 2. Second priority: Meta tag
-            if (!csrfToken) {
-                const metaToken = document.querySelector('meta[name="csrf-token"]');
-                if (metaToken && metaToken.content) {
-                    csrfToken = metaToken.content;
-                }
-            }
-
-            // 3. Third priority: Laravel's global object (if available)
-            if (!csrfToken && typeof window.Laravel !== 'undefined') {
-                csrfToken = window.Laravel.csrfToken;
-            }
-
-            // Verify token exists before submission
-            if (!csrfToken) {
-                submitBtn.disabled = false;
-                btnText.classList.remove('d-none');
-                spinner.classList.add('d-none');
-
-                responseMessage.textContent =
-                    'Security error: CSRF token missing. Please refresh the page and try again.';
-                responseMessage.style.color = '#dc2626';
+                // Success!
+                responseMessage.textContent = data.message ||
+                    'Your application was submitted successfully!';
+                responseMessage.style.color = '#059669';
                 modal.show();
-                return;
-            }
 
-            // Make the request with improved headers
-            fetch(form.action, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken,
-                        'Accept': 'application/json',
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
-                    body: formData,
-                    credentials: 'same-origin'
-                })
-                .then(response => {
-                    // Handle token mismatch specifically
-                    if (response.status === 419) {
-                        throw {
-                            status: 419,
-                            message: 'Your session has expired. Please refresh the page and try again.'
-                        };
-                    }
+                // Clear saved form data
+                clearFormData();
 
-                    if (!response.ok) {
-                        return response.json().then(err => {
-                            throw {
-                                status: response.status,
-                                data: err
-                            };
-                        });
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    responseMessage.textContent = data.message ||
-                        'Your application was submitted successfully!';
-                    responseMessage.style.color = '#059669';
-                    modal.show();
+                // Reset form
+                form.reset();
+                currentStep = 0;
+                showStep(currentStep);
 
-                    // Clear saved form data
-                    clearFormData();
-
-                    // Reset form
-                    form.reset();
-                    currentStep = 0;
-                    showStep(currentStep);
-
-                    // Clear custom selects
-                    document.querySelectorAll('.custom-select-text').forEach(text => {
-                        const defaultText = text.closest('.custom-select').querySelector(
-                            '.custom-option')?.textContent || 'Select option';
-                        text.textContent = defaultText;
-                    });
-                    document.querySelectorAll('.custom-option').forEach(option => option.classList
-                        .remove('active'));
-
-                    // Clear categories
-                    categoryContainer.innerHTML = '';
-                    renderTags(defaultTags, true);
-                    Object.keys(selectedCategories).forEach(key => delete selectedCategories[key]);
-                    hiddenCategoryInput.value = '';
-                })
-                .catch(error => {
-                    let errorMessage = 'Something went wrong. Please try again.';
-
-                    if (error.status === 419) {
-                        errorMessage =
-                            'Your session has expired. Please refresh the page and try again.';
-                    } else if (error.status === 422) {
-                        if (error.data?.errors) {
-                            showServerErrors(error.data.errors);
-                            errorMessage = 'Please correct the errors below and try again.';
-                        } else if (error.data?.message) {
-                            errorMessage = error.data.message;
-                        }
-                    } else if (error.status === 403) {
-                        errorMessage = 'Access denied. Please refresh the page and try again.';
-                    } else if (error.status === 429) {
-                        errorMessage = 'Too many attempts. Please wait a moment and try again.';
-                    } else if (error.message) {
-                        errorMessage = error.message;
-                    }
-
-                    responseMessage.textContent = errorMessage;
-                    responseMessage.style.color = '#ef4444';
-                    modal.show();
-                })
-                .finally(() => {
-                    submitBtn.disabled = false;
-                    spinner.classList.add('d-none');
-                    btnText.classList.remove('d-none');
+                // Clear custom selects
+                document.querySelectorAll('.custom-select-text').forEach(text => {
+                    const defaultText = text.closest('.custom-select').querySelector(
+                        '.custom-option')?.textContent || 'Select option';
+                    text.textContent = defaultText;
+                    text.classList.remove('selected');
                 });
+                document.querySelectorAll('.custom-option').forEach(option => option.classList
+                    .remove('active'));
+
+                // Clear categories
+                categoryContainer.innerHTML = '';
+                renderTags(defaultTags, true);
+                Object.keys(selectedCategories).forEach(key => delete selectedCategories[key]);
+                hiddenCategoryInput.value = '';
+
+            } catch (error) {
+                let errorMessage = 'Something went wrong. Please try again.';
+                let showRefreshButton = false;
+
+                if (error.status === 419 || error.status === 'NO_TOKEN') {
+                    errorMessage =
+                        'Your session has expired. Click the button below to refresh and try again.';
+                    showRefreshButton = true;
+                } else if (error.status === 422) {
+                    if (error.data?.errors) {
+                        showServerErrors(error.data.errors);
+                        errorMessage = error.data?.message ||
+                            'Please correct the errors below and try again.';
+                    } else if (error.data?.message) {
+                        errorMessage = error.data.message;
+                    }
+                } else if (error.status === 403) {
+                    errorMessage = 'Access denied. Please refresh the page and try again.';
+                    showRefreshButton = true;
+                } else if (error.status === 429) {
+                    errorMessage = 'Too many attempts. Please wait a few minutes and try again.';
+                } else if (error.name === 'TypeError' || error.message?.includes('network')) {
+                    errorMessage =
+                        'Network error. Please check your internet connection and try again.';
+                } else if (error.message) {
+                    errorMessage = error.message;
+                }
+
+                // Build response message with optional refresh button
+                if (showRefreshButton) {
+                    responseMessage.innerHTML = `
+                        <span style="display: block; margin-bottom: 15px;">${errorMessage}</span>
+                        <button onclick="location.reload()" 
+                                style="padding: 10px 25px; background: #137077; color: white; border: none; 
+                                       border-radius: 20px; cursor: pointer; font-weight: 500;">
+                            Refresh Page
+                        </button>
+                    `;
+                } else {
+                    responseMessage.textContent = errorMessage;
+                }
+                responseMessage.style.color = '#ef4444';
+                modal.show();
+
+            } finally {
+                submitBtn.disabled = false;
+                spinner.classList.add('d-none');
+                btnText.classList.remove('d-none');
+            }
         });
 
         // Function to show server errors
