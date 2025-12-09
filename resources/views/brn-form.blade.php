@@ -293,6 +293,7 @@
         margin-top: 40px;
 
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+
     }
 
     .interest-form {
@@ -322,6 +323,12 @@
 
     }
 
+    .fourth-stage-form-container label {
+        font-family: "GT Walsheim Con" !important;
+
+    }
+
+
 
 
     /* Input Field Styling */
@@ -332,7 +339,7 @@
         border-radius: 30px;
         background-color: rgba(255, 255, 255, 0.2) !important;
         color: #ffffff;
-        font-size: 16px;
+        font-size: 12px;
         font-family: "GT Walsheim Trial Md" !important;
 
         outline: none;
@@ -345,6 +352,7 @@
         color: #ececec80;
         font-size: 12px;
         font-family: "GT Walsheim Trial Md";
+        letter-spacing: 0.9px;
 
     }
 
@@ -382,6 +390,12 @@
 
     .custom-select-trigger:hover {
         background-color: rgba(255, 255, 255, 0.3) !important;
+    }
+
+    .custom-select-trigger img {
+        width: 13px;
+        object-fit: cover;
+        height: auto;
     }
 
     /* Text inside the trigger */
@@ -455,11 +469,12 @@
     div#number-of-employees {
         z-index: 5;
     }
-    div#industry-selects-group .custom-options{
+
+    div#industry-selects-group .custom-options {
         z-index: 5;
     }
 
-   
+
 
 
 
@@ -593,8 +608,8 @@
     }
 
     .interest-form-tag span:first-of-type {
-        width: 25px;
-        height: 25px;
+        width: 20px;
+        height: 20px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -603,16 +618,18 @@
         padding: 2px;
     }
 
+
     .interest-form-tag span svg {
         color: #fff;
 
-        width: 20px;
-        height: 20px;
+        width: 13px;
+        height: 13px;
         font-weight: 900;
     }
 
     .interest-form-tag span.active svg {
         color: #0d4036;
+        font-weight: bolder;
     }
 
     .interest-form-group label[for="revenue"] {
@@ -645,12 +662,15 @@
         /* Highly rounded corners for the single-line input/textarea */
         background-color: rgba(255, 255, 255, 0.2) !important;
         color: #ffffff;
-        font-size: 16px;
-        font-family: "Montserrat", sans-serif;
+        font-size: 12px;
+
+     font-family: "GT Walsheim Trial Md" !important;
+     letter-spacing: 0.5px;
+
         outline: none;
         transition: background-color 0.3s ease, box-shadow 0.3s ease;
         box-sizing: border-box;
-        resize: none;
+        resize: none !important;
         /* Prevent manual resizing */
         border: 1px solid #fff;
     }
@@ -679,10 +699,13 @@
     /* Question and List Styling */
     .interest-form-question {
         font-size: 12px;
-        font-weight: 600;
         color: #f0f0f0;
-        margin-left: 40px;
-        line-height: 1.5;
+        margin-left: 23px;
+        line-height: 1.18;
+        /* line-height: 1.5; */
+        font-family: "GT Walsheim Con";
+        margin-bottom: 0 !important;
+
     }
 
     .interest-form-list {
@@ -691,11 +714,15 @@
         font-weight: 500;
         padding-left: 20px;
         margin-left: 40px;
-        margin-top: 5px;
+        /* margin-top: 5px; */
+        font-family: "GT Walsheim Con";
+
     }
 
     .interest-form-list li {
         margin-bottom: 5px;
+        line-height: 1.1;
+
     }
 
     /* Custom Radio Button Group Styling (Three Buttons) */
@@ -720,8 +747,9 @@
         border-radius: 17px;
         cursor: pointer;
         font-size: 10px;
-        font-weight: 600;
+        /* font-weight: 600; */
         text-align: center;
+        letter-spacing: 0.6px;
         transition: background-color 0.3s ease, color 0.3s ease;
 
         background-color: white;
@@ -736,18 +764,18 @@
     .interest-form-option input[type="radio"]:checked+label {
         background-color: transparent;
         border-color: #ffffff;
-        color: #0d4036;
+        color: #fff;
         /* Dark teal text when active */
     }
 
     .interest-form-option label:hover {
-        background-color: rgba(255, 255, 255, 0.3);
+        background-color: rgba(255, 255, 255, 0.9);
     }
 
     /* Submit Button Override */
     .interest-form-submit-button {
         padding: 13px 45px;
-        background-color: #e2f091;
+        background-color: #CCED60;
         color: #4a6a00;
         border: none;
         border-radius: 30px;
@@ -761,7 +789,7 @@
     }
 
     .interest-form-submit-button:hover {
-        background-color: #d6e885;
+        background-color: rgba(214, 232, 133, 0.956);
         transform: translateY(-2px);
     }
 
@@ -1069,13 +1097,20 @@
     }
 
     .flag-icon img {
-        height: 15px !important;
-        width: auto !important;
+        height: 16px !important;
+        width: 24px !important;
     }
 
     .arrow {
         transition: transform 0.25s ease;
         font-size: 14px;
+    }
+
+    .arrow img {
+        width: 12px;
+        object-fit: cover;
+        height: auto;
+        opacity: 0.6;
     }
 
     .arrow.rotate-up {
@@ -1240,6 +1275,17 @@
             padding-right: 20px;
         }
 
+        .fourth-stage-form-container label.value-offer {
+            max-width: 220px;
+
+        }
+
+        .fourth-stage-form-container label.company-desc {
+            max-width: 280px;
+
+        }
+
+
         .row-two-container {
             display: flex;
             flex-direction: column;
@@ -1269,10 +1315,28 @@
             max-width: auto;
         }
 
+
         .interest-form-container .form-container {
             margin-top: 0px;
             max-width: 500px;
-            padding: 65px 40px;
+            padding: 35px 40px;
+            padding-bottom: 10px;
+        }
+
+        .interest-form-container .form-container .first-stage-form-container {
+            padding-bottom: 50px;
+
+        }
+
+        .interest-form-container .form-container .third-stage-form-container,
+        .interest-form-container .form-container .fourth-stage-form-container {
+            padding-bottom: 40px;
+
+        }
+
+        .interest-form-container .form-container .fourth-stage-form-container {
+            padding-bottom: 30px;
+
         }
 
         label {
@@ -1299,9 +1363,15 @@
 
 
         .interest-form-return-button,
-        .interest-form-proceed-button {
+        .interest-form-proceed-button ,   .interest-form-submit-button {
             /* Uses the slightly transparent input background for its base color */
-            padding: 15px 60px;
+            padding: 11px 70px;
+        }
+
+        .first-stage-form-container .interest-form-proceed-button {
+            padding: 11px 76px;
+            font-weight: lighter;
+
         }
 
         .interest-form-layout-container .desktop-heading {
@@ -1344,23 +1414,30 @@
             padding-left: 40px;
         }
 
+        input::placeholder {
 
-         textarea#offerValue{
+            letter-spacing: 0.5px;
+
+        }
+
+
+        textarea#offerValue {
             padding-left: 40px;
-        
-    }
-         textarea#companyDescription{
+
+        }
+
+        textarea#companyDescription {
             padding-left: 40px;
-        
-    }
+
+        }
 
         /* Custom Radio Button Group Styling (Three Buttons) */
-    .interest-form-option-buttons {
-     
-        flex-wrap: nowrap;
-  
-        /* margin-bottom: 30px; */
-    }
+        .interest-form-option-buttons {
+
+            flex-wrap: nowrap;
+
+            /* margin-bottom: 30px; */
+        }
 
         /* Text inside the trigger */
         .custom-select-text {
@@ -1373,6 +1450,25 @@
 
             margin-left: 35px !important;
         }
+        
+            .interest-form-question {
+        font-size: 14px;
+        margin-bottom: 4px !important;
+        padding-right: 40px !important;
+   
+
+    }
+
+      .interest-form-list {
+        font-size: 14px !important;
+   
+    }
+
+        .interest-form-list li {
+        line-height: 1;
+
+    }
+
 
     }
 
@@ -1380,6 +1476,11 @@
         .form-layout-container {
             padding: 0px;
         }
+
+        .interest-form-heading .header h1 {
+            font-size: 42px;
+        }
+
     }
 </style>
 
@@ -1580,7 +1681,7 @@
                         <form class="interest-form" id="brnForm" action="{{ route('brn.submit') }}" method="POST">
                             @csrf
                             <!-- First Stage Form -->
-                             <div class="first-stage-form-container hidden">
+                            <div class="-stage-form-container hidden">
                                 <div class="interest-form-group">
                                     <label for="fullName">Full Name</label>
                                     <input type="text" id="fullName" name="name" placeholder="Full name" />
@@ -1591,12 +1692,8 @@
                                     <div class="custom-select" id="customSelect" data-select="title">
                                         <div class="custom-select-trigger">
                                             <span class="custom-select-text">Title, e.g CEO</span>
-                                            <svg class="custom-select-arrow" xmlns="http://www.w3.org/2000/svg"
-                                                width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                                stroke="#ffffff" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <polyline points="6 9 12 15 18 9"></polyline>
-                                            </svg>
+                                            <img class="custom-select-arrow" src="{{ asset('img/arrown.png') }}"
+                                                alt="" />
                                         </div>
                                         <div class="custom-options">
                                             <span class="custom-option" data-value="CEO">CEO</span>
@@ -1652,7 +1749,10 @@
                                             <!-- Selected Country Display -->
                                             <div class="selected-country" id="selectedCountry">
                                                 <div class="flag-icon placeholder-flag" id="selectedFlag">🌍</div>
-                                                <span class="arrow" id="countryArrow">▼</span>
+                                                <span class="arrow" id="countryArrow">
+                                                    <img class="custom-select-arrow" src="{{ asset('img/arrown.png') }}"
+                                                        alt="" />
+                                                </span>
                                             </div>
 
                                             <!-- Dropdown -->
@@ -2248,7 +2348,7 @@
                             </div>
 
                             <!-- Second Form -->
-                            <div class="second-stage-form-container hidden">
+                            <div class="-stage-form-container hidden">
                                 <div class="interest-form-group">
                                     <label for="regNumber">Company Registration Number</label>
                                     <input type="text" id="regNumber" name="reg_number"
@@ -2260,12 +2360,8 @@
                                     <div class="custom-select" data-select="country">
                                         <div class="custom-select-trigger">
                                             <span class="custom-select-text">Select your country</span>
-                                            <svg class="custom-select-arrow" xmlns="http://www.w3.org/2000/svg"
-                                                width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                                stroke="#ffffff" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <polyline points="6 9 12 15 18 9"></polyline>
-                                            </svg>
+                                            <img class="custom-select-arrow" src="{{ asset('img/arrown.png') }}"
+                                                alt="" />
                                         </div>
                                         <div class="custom-options countryReg-options" id="countryReg-options">
                                             <input type="text" class="country-search" id="countrySearchReg"
@@ -2738,19 +2834,15 @@
                             </div>
 
                             <!-- third Form -->
-                            <div class="third-stage-form-container hidden">
+                            <div class="-stage-form-container hidden">
                                 <!-- Industries -->
                                 <div class="interest-form-group" id="industry-selects-group">
                                     <label for="industry">What industry does your business operate in?</label>
                                     <div class="custom-select" data-select="industry">
                                         <div class="custom-select-trigger">
                                             <span class="custom-select-text">Primary & Industrial sector</span>
-                                            <svg class="custom-select-arrow" xmlns="http://www.w3.org/2000/svg"
-                                                width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                                stroke="#ffffff" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <polyline points="6 9 12 15 18 9"></polyline>
-                                            </svg>
+                                            <img class="custom-select-arrow" src="{{ asset('img/arrown.png') }}"
+                                                alt="" />
                                         </div>
                                         <div class="custom-options">
                                             <span class="custom-option" data-value="agriculture">Agribusiness</span>
@@ -2784,12 +2876,8 @@
                                     <div class="custom-select" data-select="employees">
                                         <div class="custom-select-trigger">
                                             <span class="custom-select-text">Select Employees range</span>
-                                            <svg class="custom-select-arrow" xmlns="http://www.w3.org/2000/svg"
-                                                width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                                stroke="#ffffff" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <polyline points="6 9 12 15 18 9"></polyline>
-                                            </svg>
+                                            <img class="custom-select-arrow" src="{{ asset('img/arrown.png') }}"
+                                                alt="" />
                                         </div>
 
                                         <div class="custom-options" id="number-of-employees">
@@ -2822,12 +2910,8 @@
                                     <div class="custom-select" data-select="revenue">
                                         <div class="custom-select-trigger">
                                             <span class="custom-select-text">Select revenue range</span>
-                                            <svg class="custom-select-arrow" xmlns="http://www.w3.org/2000/svg"
-                                                width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                                stroke="#ffffff" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <polyline points="6 9 12 15 18 9"></polyline>
-                                            </svg>
+                                            <img class="custom-select-arrow" src="{{ asset('img/arrown.png') }}"
+                                                alt="" />
                                         </div>
 
                                         <div class="custom-options">
@@ -2859,13 +2943,15 @@
                             <!-- fourth Form -->
                             <div class="fourth-stage-form-container">
                                 <div class="interest-form-group">
-                                    <label for="offerValue">What value can your company offer to other CEOs in the
+                                    <label class="value-offer" for="offerValue">What value can your company offer to
+                                        other CEOs in the
                                         network?</label>
                                     <textarea id="offerValue" name="offer_value" rows="1" placeholder="Enter your value"></textarea>
                                 </div>
 
                                 <div class="interest-form-group">
-                                    <label for="companyDescription">Briefly describe what your company does and who your
+                                    <label for="companyDescription" class="company-desc">Briefly describe what your
+                                        company does and who your
                                         clients/customers are (max 150 words)</label>
                                     <textarea id="companyDescription" name="goals" rows="5" placeholder="Enter your description"></textarea>
                                 </div>
@@ -2877,11 +2963,8 @@
                                         <div class="custom-select-trigger">
                                             <span class="custom-select-text">Select interest</span>
                                             <span class="custom-select-arrow">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                                                    viewBox="0 0 24 24" fill="none" stroke="#ffffff"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                    <polyline points="6 9 12 15 18 9"></polyline>
-                                                </svg>
+                                                <img class="custom-select-arrow" src="{{ asset('img/arrown.png') }}"
+                                                    alt="" />
                                             </span>
                                         </div>
 
@@ -3774,12 +3857,14 @@
                 tag.innerHTML = `
       <span class="check-icon ${saved.includes(category) ? "active" : ""}">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-          viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          viewBox="0 0 24 24" stroke-width="3" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/>
         </svg>
       </span>
       <span>${category}</span>
     `;
+
+
 
                 // Add click event
                 tag.addEventListener("click", () => {
