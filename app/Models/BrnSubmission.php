@@ -10,7 +10,7 @@ class BrnSubmission extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'full_name',
         'email',
         'phone',
         'country_code',
@@ -31,4 +31,20 @@ class BrnSubmission extends Model
         'b2b_interest',
         'status' // approved, declined, pending
     ];
+
+    /**
+     * Get the name attribute (alias for full_name for backward compatibility)
+     */
+    public function getNameAttribute()
+    {
+        return $this->full_name;
+    }
+
+    /**
+     * Set the name attribute (alias for full_name for backward compatibility)
+     */
+    public function setNameAttribute($value)
+    {
+        $this->attributes['full_name'] = $value;
+    }
 }
