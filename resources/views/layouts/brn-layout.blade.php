@@ -32,6 +32,9 @@
         .navbar .mobile {
             display: none !important;
         }
+          .footer{
+                background-color: #193E47;
+            }
 
         @media screen and (max-width: 580px) {
             .navbar .mobile {
@@ -41,6 +44,8 @@
             .navbar .desktop {
                 display: none !important;
             }
+
+          
         }
 
         .reveal-section {
@@ -75,8 +80,29 @@
         }
 
         /* Let Bootstrap handle navbar collapse transitions naturally */
-        .navbar-collapse {
-            /* Remove custom transitions that conflict with Bootstrap */
+ 
+
+
+        .subscribe.brn-consult .btn {
+
+            background-color: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.948);
+            border-radius: 10px;
+            padding: 12px 24px;
+            color: #fff;
+            font-size: 0.7rem;
+        }
+
+        .social-icons.brn-consult {
+            margin-top: 10px;
+            margin-left: 6px;
+            display: flex;
+            gap: 0px;
+        }
+
+        .bg-scrolling .subscribe.brn-consult .btn {
+            border: 1px solid #0d4036;
+            color: #0d4036;
         }
     </style>
 </head>
@@ -105,16 +131,42 @@
                 </ul>
 
                 <div class="d-flex align-items-right mt-5 mobile">
-                    <a href="#" class="btn login-btn my-auto">Log In</a>
+                    {{-- <a href="#" class="btn login-btn my-auto">Log In</a>
                     <span class="mx-3"></span>
-                    <a href="#" class="btn register-btn my-auto">Register</a>
+                    <a href="#" class="btn register-btn my-auto">Register</a> --}}
+
+                    <div class="subscribe brn-consult">
+                        <a href="/book-consultation" class="btn" id="btn">Book a Consultation</a>
+                    </div>
+
+                    <div class="social-icons brn-consult">
+                        <a href="https://linkedin.com/company/p23-africa/" target="_blank"><i
+                                class="fab fa-linkedin "></i></a>
+                        <a href="https://facebook.com/p23africa" target="_blank"><i class="fab fa-facebook "></i></a>
+                        <a href="https://www.instagram.com/p23africa/" target="_blank"><i
+                                class="fab fa-instagram "></i></a>
+                        <a href="https://www.youtube.com/channel/UCmhdbCCyjpINgZ0Fgu20ZBQ" target="_blank"><i
+                                class="fab fa-youtube "></i></a>
+                    </div>
                 </div>
             </div>
 
-            <div class="d-flex align-items-right desktop">
-                <a href="#" class="btn login-btn my-auto">Log In</a>
+            <div class="d-flex align-items-right desktop brn-consult">
+                {{-- <a href="#" class="btn login-btn my-auto">Log In</a>
                 <span class="mx-3"></span>
-                <a href="#" class="btn register-btn my-auto">Register</a>
+                <a href="#" class="btn register-btn my-auto">Register</a> --}}
+                <div class="subscribe brn-consult">
+                    <a href="/book-consultation" class="btn" id="btn">Book a Consultation</a>
+                </div>
+
+                <div class="social-icons brn-consult">
+                    <a href="https://linkedin.com/company/p23-africa/" target="_blank"><i
+                            class="fab fa-linkedin "></i></a>
+                    <a href="https://facebook.com/p23africa" target="_blank"><i class="fab fa-facebook "></i></a>
+                    <a href="https://www.instagram.com/p23africa/" target="_blank"><i class="fab fa-instagram "></i></a>
+                    <a href="https://www.youtube.com/channel/UCmhdbCCyjpINgZ0Fgu20ZBQ" target="_blank"><i
+                            class="fab fa-youtube "></i></a>
+                </div>
             </div>
         </div>
     </nav>
@@ -257,7 +309,7 @@
                 observer.observe(section);
             });
 
-            // Let Bootstrap handle hamburger menu functionality completely
+
         });
     </script>
 

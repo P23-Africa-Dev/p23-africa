@@ -1473,6 +1473,9 @@
     }
 
     @media (min-width: 1440px) {
+        .interest-form-layout-container {
+            margin-top: 140px;
+        }
         .form-layout-container {
             padding: 0px;
         }
@@ -1681,7 +1684,7 @@
                         <form class="interest-form" id="brnForm" action="{{ route('brn.submit') }}" method="POST">
                             @csrf
                             <!-- First Stage Form -->
-                            <div class="-stage-form-container hidden">
+                            <div class="first-stage-form-container hidden">
                                 <div class="interest-form-group">
                                     <label for="fullName">Full Name</label>
                                     <input type="text" id="fullName" name="name" placeholder="Full name" />
@@ -2348,7 +2351,7 @@
                             </div>
 
                             <!-- Second Form -->
-                            <div class="-stage-form-container hidden">
+                            <div class="second-stage-form-container hidden">
                                 <div class="interest-form-group">
                                     <label for="regNumber">Company Registration Number</label>
                                     <input type="text" id="regNumber" name="reg_number"
@@ -2834,7 +2837,7 @@
                             </div>
 
                             <!-- third Form -->
-                            <div class="-stage-form-container hidden">
+                            <div class="third-stage-form-container hidden">
                                 <!-- Industries -->
                                 <div class="interest-form-group" id="industry-selects-group">
                                     <label for="industry">What industry does your business operate in?</label>
