@@ -104,6 +104,10 @@
             border: 1px solid #0d4036;
             color: #0d4036;
         }
+
+        .footer .subscribe input{
+            background: transparent !important;
+        }
     </style>
 </head>
 

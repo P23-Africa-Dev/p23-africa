@@ -303,7 +303,7 @@
 
     /* Form Group (Label + Input/Select) */
     .interest-form-group {
-        margin-bottom: 25px;
+        margin-bottom: 20px;
     }
 
     .interest-form-group:last-of-type {
@@ -325,6 +325,8 @@
 
     .fourth-stage-form-container label {
         font-family: "GT Walsheim Con" !important;
+        line-height: 1.18;
+
 
     }
 
@@ -355,6 +357,21 @@
         letter-spacing: 0.9px;
 
     }
+
+
+    /* For Webkit browsers (Chrome, Safari, Edge) */
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* For Firefox */
+    input[type="number"] {
+        -moz-appearance: textfield;
+    }
+
+
 
 
     /* Custom Select Styling */
@@ -664,8 +681,8 @@
         color: #ffffff;
         font-size: 12px;
 
-     font-family: "GT Walsheim Trial Md" !important;
-     letter-spacing: 0.5px;
+        font-family: "GT Walsheim Trial Md" !important;
+        letter-spacing: 0.5px;
 
         outline: none;
         transition: background-color 0.3s ease, box-shadow 0.3s ease;
@@ -677,8 +694,7 @@
 
     /* Specific styling for the larger description textarea */
     #companyDescription {
-        border-radius: 20px;
-        /* Slightly less rounded for the multi-line field */
+        /* border-radius: 20px; */
         min-height: 120px;
         padding-top: 20px;
     }
@@ -749,12 +765,13 @@
         font-size: 10px;
         /* font-weight: 600; */
         text-align: center;
-        letter-spacing: 0.6px;
+        letter-spacing: 0.5px;
         transition: background-color 0.3s ease, color 0.3s ease;
 
-        background-color: white;
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        color: #0d4036;
+        background-color: transparent;
+        border: 1px solid #fff;
+        color: #fff;
+
         margin: 0;
         /* Override default label margin */
         white-space: nowrap;
@@ -762,14 +779,17 @@
 
     /* Checked (Active) State for the Option Button */
     .interest-form-option input[type="radio"]:checked+label {
-        background-color: transparent;
+        background-color: #fff;
         border-color: #ffffff;
-        color: #fff;
+        color: #0d4036;
+
         /* Dark teal text when active */
     }
 
     .interest-form-option label:hover {
         background-color: rgba(255, 255, 255, 0.9);
+        color: #0d4036;
+
     }
 
     /* Submit Button Override */
@@ -1081,11 +1101,11 @@
         gap: 6px;
         justify-content: center;
         border: 1px solid #ccc;
-        padding: 4px 10px;
+        padding: 18px 10px;
         border-radius: 30px;
         background: #4BA1A780;
-        width: 70px;
-        height: 55px;
+        width: 73px;
+        height: 57px;
     }
 
 
@@ -1181,6 +1201,7 @@
         padding: 8px 10px;
         cursor: pointer;
         transition: background 0.2s;
+        color: white;
     }
 
     .country-list li.no-country {
@@ -1201,7 +1222,8 @@
     }
 
     .country-list li:hover {
-        background: #f4f4f4;
+        background-color: rgba(255, 255, 255, 0.15);
+
     }
 
     .country-list img {
@@ -1264,6 +1286,73 @@
         left: 2px;
         font-weight: bold;
     }
+
+    /* visual blur + dim when disabled by checkbox */
+    .interest-form-group input.blurred {
+        filter: blur(1px);
+        opacity: 0.85;
+        transition: filter .18s ease, opacity .18s ease;
+        pointer-events: none;
+        /* prevents focusing / interaction visually */
+    }
+
+    /* keep native disabled appearance accessible too */
+    .interest-form-group input:disabled {
+        background-color: #f5f5f5;
+        cursor: not-allowed;
+    }
+
+
+    #responseModal .modal-body {
+        font-family: "Montserrat", sans-serif;
+        color: #0D4036;
+    }
+
+
+    #responseModal .modal-dialog {
+        max-width: 800px !important;
+    }
+
+    #responseModal .modal-content {
+        border-radius: 30px !important;
+        padding: 30px 0px !important;
+        background-image: url(../img/modal-bg.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        background-color: #ffffff;
+        background-blend-mode: difference;
+
+    }
+
+    #responseModal .modal-body {
+        max-width: 460px !important;
+        margin: 0 auto !important;
+    }
+
+    #responseModal .modal-body button.btn-secondary.btn {
+        background-color: #0D4036 !important;
+        padding: 13px 70px;
+        border-radius: 10px;
+        margin-top: 20px;
+        font-family: "GT Walsheim Con" !important;
+
+    }
+
+    .response-messages p {
+        font-size: 18px;
+        font-weight: light;
+        margin-bottom: 2px;
+        padding: 0px 18px;
+    }
+
+    .response-messages h4 {
+        font-size: 20px;
+        font-weight: 500;
+        padding: 0px 17px;
+
+    }
+
 
 
 
@@ -1363,7 +1452,8 @@
 
 
         .interest-form-return-button,
-        .interest-form-proceed-button ,   .interest-form-submit-button {
+        .interest-form-proceed-button,
+        .interest-form-submit-button {
             /* Uses the slightly transparent input background for its base color */
             padding: 11px 70px;
         }
@@ -1415,7 +1505,7 @@
         }
 
 
-         textarea#offerValue{
+        textarea#offerValue {
             padding-left: 40px;
 
         }
@@ -1444,24 +1534,24 @@
 
             margin-left: 35px !important;
         }
-        
-            .interest-form-question {
-        font-size: 14px;
-        margin-bottom: 4px !important;
-        padding-right: 40px !important;
-   
 
-    }
+        .interest-form-question {
+            font-size: 14px;
+            margin-bottom: 4px !important;
+            padding-right: 40px !important;
 
-      .interest-form-list {
-        font-size: 14px !important;
-   
-    }
+
+        }
+
+        .interest-form-list {
+            font-size: 14px !important;
+
+        }
 
         .interest-form-list li {
-        line-height: 1;
+            line-height: 1;
 
-    }
+        }
 
 
     }
@@ -1470,12 +1560,17 @@
         .interest-form-layout-container {
             margin-top: 140px;
         }
+
         .form-layout-container {
             padding: 0px;
         }
 
         .interest-form-heading .header h1 {
             font-size: 42px;
+        }
+
+        .interest-form-option label {
+            font-size: 11px;
         }
 
     }
@@ -2803,12 +2898,10 @@
                                         placeholder="Add your profile Url (Optional)" />
 
                                     <div class="checkbox-wrapper">
-                                        <label class="checkbox-container">
-                                            <input type="checkbox">
+                                        <label class="checkbox-container" for="no_linkedin">
+                                            <input type="checkbox" id="no_linkedin" name="no_linkedin" />
                                             <span class="checkmark"></span>
-
                                             I don’t have a LinkedIn account.
-
                                         </label>
                                     </div>
                                 </div>
@@ -3042,9 +3135,11 @@
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-body text-center py-4">
-                                <p id="responseMessage" class="mb-3"></p>
-                                <button type="button" class="btn btn-secondary"
-                                    data-bs-dismiss="modal">Close</button>
+                                {{-- <p id="responseMessage" class="mb-3"></p> --}}
+                                <div id="responseMessage">
+
+                                </div>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Done</button>
                             </div>
                         </div>
                     </div>
@@ -4106,6 +4201,8 @@
                 const linkedin = currentStage.querySelector('input[name="linkedin"]');
                 const yearEstablished = currentStage.querySelector('input[name="year_established"]');
 
+                const noLinkedIn = currentStage.querySelector('input[name="no_linkedin"]')?.checked || false;
+
                 if (!regNumber.value.trim()) {
                     showError(regNumber, 'Company registration number is required');
                     isValid = false;
@@ -4130,12 +4227,28 @@
                 //     isValid = false;
                 // }
 
-                if (!linkedin.value.trim()) {
-                    // showError(linkedin, 'LinkedIn profile is required');
-                    isValid = true;
-                } else if (!linkedin.value.toLowerCase().includes('linkedin')) {
-                    showError(linkedin, 'Please enter a valid LinkedIn profile URL');
-                    isValid = false;
+                // if (!linkedin.value.trim()) {
+                //     // showError(linkedin, 'LinkedIn profile is required');
+                //     isValid = true;
+                // } else if (!linkedin.value.toLowerCase().includes('linkedin')) {
+                //     showError(linkedin, 'Please enter a valid LinkedIn profile URL');
+                //     isValid = false;
+                // }
+
+                if (!noLinkedIn) {
+                    // only validate LinkedIn if user has NOT checked "I don't have LinkedIn"
+                    if (!linkedin.value.trim()) {
+                        // linkedin is optional originally; 
+                        // showError(linkedin, 'LinkedIn profile is required');
+                        // isValid = false;
+
+                    } else if (!linkedin.value.toLowerCase().includes('linkedin')) {
+                        showError(linkedin, 'Please enter a valid LinkedIn profile URL');
+                        isValid = false;
+                    }
+                } else {
+                    // user opted-out of LinkedIn — ensure no lingering error state
+                    clearError(linkedin);
                 }
 
                 if (!yearEstablished.value.trim()) {
@@ -4218,6 +4331,39 @@
 
             return isValid;
         }
+
+
+        // --- Toggle blur/disable based on checkbox ---
+        (function() {
+            const linkedinInput = document.querySelector('input[name="linkedin"]');
+            const noLinkedInCheckbox = document.querySelector('input[name="no_linkedin"]');
+
+            if (!linkedinInput || !noLinkedInCheckbox) return;
+
+            function updateLinkedInState() {
+                const checked = noLinkedInCheckbox.checked;
+
+                if (checked) {
+                    // visually blur + disable
+                    linkedinInput.classList.add('blurred');
+                    linkedinInput.disabled = true;
+                    linkedinInput.setAttribute('aria-disabled', 'true');
+                    // optional: clear the value to avoid accidentally submitting a bad URL
+                    // linkedinInput.value = '';
+                } else {
+                    linkedinInput.classList.remove('blurred');
+                    linkedinInput.disabled = false;
+                    linkedinInput.removeAttribute('aria-disabled');
+                }
+            }
+
+            // init
+            updateLinkedInState();
+
+            // listen for changes
+            noLinkedInCheckbox.addEventListener('change', updateLinkedInState);
+        })();
+
 
         // Initialize first view
         showStep(currentStep);
@@ -4467,8 +4613,10 @@
                 const data = await submitFormWithRetry(formData);
 
                 // Success!
-                responseMessage.textContent = data.message ||
-                    'Your application was submitted successfully!';
+                responseMessage.innerHTML = `
+    <p>You’ve just taken a big step toward meaningful business growth!</p>
+    <h4>Check your email for next steps and more details from NOEL.</h4>
+`;
                 responseMessage.style.color = '#059669';
                 modal.show();
 
