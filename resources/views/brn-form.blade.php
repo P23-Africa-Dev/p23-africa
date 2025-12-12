@@ -1355,12 +1355,14 @@
         font-weight: light;
         margin-bottom: 2px;
         padding: 0px 18px;
+        color: #0D4036;
     }
 
     .response-messages h4 {
         font-size: 20px;
         font-weight: 500;
         padding: 0px 17px;
+        color: #0D4036;
 
     }
 
@@ -4673,7 +4675,7 @@
     <p>You’ve just taken a big step toward meaningful business growth!</p>
     <h4>Check your email for next steps and more details from NOEL.</h4>
 `;
-                responseMessage.style.color = '#059669';
+                // responseMessage.style.color = '#059669';
                 modal.show();
 
                 // Clear saved form data
@@ -4976,7 +4978,7 @@
          (function () {
 
   const BUTTON_SELECTOR = ".interest-form-proceed-button, .interest-form-return-button";
-  const SCROLL_OFFSET = 150; // adjust to fit your design
+  const SCROLL_OFFSET = 0; // adjust to fit your design
 
   // Handler: delegated click listener
   document.addEventListener("click", function (e) {
