@@ -192,7 +192,7 @@ class TaskController extends Controller
             ]);
         }
 
-        return redirect()->route('admin.tasks.kanban', ['project_id' => $task->project_id])
+        return redirect()->route('admin.tasks.index', ['project_id' => $task->project_id])
             ->with('success', 'Task created successfully.');
     }
 
@@ -283,7 +283,7 @@ class TaskController extends Controller
             ]);
         }
 
-        return redirect()->route('admin.tasks.kanban', ['project_id' => $task->project_id])
+        return redirect()->route('admin.tasks.index', ['project_id' => $task->project_id])
             ->with('success', 'Task updated successfully.');
     }
 
@@ -484,11 +484,100 @@ class TaskController extends Controller
             ], 403);
         }
 
-        $comments = $task->comments()->with('user:id,name')->get();
+        // Get top-level comments with replies
+        $comments = $task->comments()
+            ->whereNull('parent_id')
+            ->with(['user:id,name', 'replies.user:id,name'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        // Transform comments to include can_delete flag
+        $comments = $comments->map(function ($comment) use ($user) {
+            return $this->transformComment($comment, $user);
+        });
 
         return response()->json([
             'success' => true,
             'comments' => $comments,
+        ]);
+    }
+
+    /**
+     * Transform comment for JSON response
+     */
+    protected function transformComment($comment, $user)
+    {
+        $data = [
+            'id' => $comment->id,
+            'comment' => $comment->comment,
+            'user' => $comment->user,
+            'created_at' => $comment->created_at,
+            'can_delete' => $comment->user_id === $user->id || $user->hasRole('admin'),
+            'attachment_path' => $comment->attachment_path,
+            'attachment_name' => $comment->attachment_name,
+            'attachment_type' => $comment->attachment_type,
+            'attachment_url' => $comment->attachment_url,
+            'is_image' => $comment->isImageAttachment(),
+            'mentioned_users' => $comment->mentioned_users,
+            'parent_id' => $comment->parent_id,
+            'replies' => [],
+        ];
+
+        if ($comment->relationLoaded('replies') && $comment->replies->count() > 0) {
+            $data['replies'] = $comment->replies->map(function ($reply) use ($user) {
+                return $this->transformComment($reply, $user);
+            });
+        }
+
+        return $data;
+    }
+
+    /**
+     * Get assignees for @mentions
+     */
+    public function getAssigneesForMention(Task $task)
+    {
+        $user = Auth::user();
+
+        // Check if user can view this task
+        $canView = $user->hasRole(['admin', 'supervisor']) ||
+            $task->assignees->contains('id', $user->id);
+
+        if (!$canView) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You are not authorized to view this task.',
+            ], 403);
+        }
+
+        // Get all users who can be mentioned (assignees + creator + admin/supervisors)
+        $mentionableUsers = collect();
+
+        // Add task assignees
+        $mentionableUsers = $mentionableUsers->merge($task->assignees);
+
+        // Add task creator
+        if ($task->creator) {
+            $mentionableUsers->push($task->creator);
+        }
+
+        // Add project members if available
+        if ($task->project && $task->project->members) {
+            $mentionableUsers = $mentionableUsers->merge($task->project->members);
+        }
+
+        // Get unique users
+        $users = $mentionableUsers->unique('id')->values()->map(function ($u) {
+            return [
+                'id' => $u->id,
+                'name' => $u->name,
+                'initials' => strtoupper(substr($u->name, 0, 2)),
+            ];
+        });
+
+        return response()->json([
+            'success' => true,
+            'users' => $users,
         ]);
     }
 
@@ -512,18 +601,42 @@ class TaskController extends Controller
 
         $request->validate([
             'comment' => 'required|string|max:2000',
+            'parent_id' => 'nullable|exists:task_comments,id',
+            'attachment' => 'nullable|file|max:10240|mimes:jpg,jpeg,png,gif,pdf,doc,docx,xls,xlsx,txt,zip',
+            'mentioned_users' => 'nullable|array',
+            'mentioned_users.*' => 'exists:users,id',
         ]);
 
-        $comment = TaskComment::create([
+        $commentData = [
             'task_id' => $task->id,
             'user_id' => $user->id,
             'comment' => $request->comment,
-        ]);
+            'parent_id' => $request->parent_id,
+            'mentioned_users' => $request->mentioned_users,
+        ];
+
+        // Handle file attachment
+        if ($request->hasFile('attachment')) {
+            $file = $request->file('attachment');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $path = $file->storeAs('task-comments', $fileName, 'public');
+
+            $commentData['attachment_path'] = $path;
+            $commentData['attachment_name'] = $file->getClientOriginalName();
+            $commentData['attachment_type'] = $file->getMimeType();
+        }
+
+        $comment = TaskComment::create($commentData);
 
         $comment->load('user:id,name');
 
         // Send notification about new comment
         AdminNotificationService::notifyTaskComment($comment, $task, $user);
+
+        // Send notifications to mentioned users
+        if (!empty($request->mentioned_users)) {
+            $this->notifyMentionedUsers($comment, $task, $user, $request->mentioned_users);
+        }
 
         try {
             activity()
@@ -538,8 +651,28 @@ class TaskController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Comment added successfully.',
-            'comment' => $comment,
+            'comment' => $this->transformComment($comment, $user),
         ]);
+    }
+
+    /**
+     * Notify mentioned users
+     */
+    protected function notifyMentionedUsers($comment, $task, $mentioner, array $userIds)
+    {
+        $users = User::whereIn('id', $userIds)
+            ->where('id', '!=', $mentioner->id) // Don't notify the person who mentioned
+            ->get();
+
+        foreach ($users as $mentionedUser) {
+            try {
+                // You can create a specific MentionNotification if needed
+                // For now, we'll use the existing notification service
+                AdminNotificationService::notifyTaskComment($comment, $task, $mentioner);
+            } catch (\Exception $e) {
+                Log::warning('Failed to send mention notification to user ' . $mentionedUser->id . ': ' . $e->getMessage());
+            }
+        }
     }
 
     /**

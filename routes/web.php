@@ -426,6 +426,7 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
     Route::get('/tasks/{task}/comments', [\App\Http\Controllers\Admin\TaskController::class, 'getComments'])->name('tasks.comments');
     Route::post('/tasks/{task}/comments', [\App\Http\Controllers\Admin\TaskController::class, 'addComment'])->name('tasks.add-comment');
     Route::delete('/tasks/{task}/comments/{comment}', [\App\Http\Controllers\Admin\TaskController::class, 'deleteComment'])->name('tasks.delete-comment');
+    Route::get('/tasks/{task}/mentionable-users', [\App\Http\Controllers\Admin\TaskController::class, 'getAssigneesForMention'])->name('tasks.mentionable-users');
 });
 
 

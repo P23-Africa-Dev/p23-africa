@@ -228,7 +228,7 @@
 
     <!-- Comments Modal -->
     <div class="modal fade" id="commentsModal" tabindex="-1" aria-labelledby="commentsModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="commentsModalLabel">
@@ -237,6 +237,69 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <!-- Reply indicator -->
+                    <div id="replyingToContainer" class="alert alert-info d-none mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span><i class="fas fa-reply me-2"></i>Replying to: <strong
+                                    id="replyingToName"></strong></span>
+                            <button type="button" class="btn-close" onclick="cancelReply()"></button>
+                        </div>
+                    </div>
+
+                    <!-- Add Comment Form -->
+                    <div class="mb-4">
+                        <div class="position-relative">
+                            <textarea class="form-control mb-2" id="commentText" rows="3"
+                                placeholder="Write a comment... Use @ to mention someone"></textarea>
+
+                            <!-- Mentions Dropdown -->
+                            <div id="mentionsDropdown" class="mentions-dropdown d-none">
+                                <div class="mentions-list"></div>
+                            </div>
+                        </div>
+
+                        <!-- Attachment Preview -->
+                        <div id="attachmentPreview" class="d-none mb-2">
+                            <div class="card">
+                                <div class="card-body py-2 px-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i class="fas fa-paperclip text-muted"></i>
+                                            <span id="attachmentFileName" class="small"></span>
+                                        </div>
+                                        <button type="button" class="btn btn-sm btn-link text-danger"
+                                            onclick="removeAttachment()">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                    <div id="imagePreviewContainer" class="mt-2 d-none">
+                                        <img id="imagePreview" src="" alt="Preview" class="img-thumbnail"
+                                            style="max-height: 100px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <input type="file" id="attachmentInput" class="d-none"
+                                    accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.xls,.xlsx,.txt,.zip">
+                                <button type="button" class="btn btn-outline-secondary btn-sm"
+                                    onclick="document.getElementById('attachmentInput').click()">
+                                    <i class="fas fa-paperclip me-1"></i> Attach
+                                </button>
+                            </div>
+                            <button type="button" class="btn btn-primary btn-sm" id="submitCommentBtn"
+                                onclick="addComment()">
+                                <i class="fas fa-paper-plane me-1"></i> Send
+                            </button>
+                        </div>
+                        <input type="hidden" id="parentCommentId" value="">
+                    </div>
+
+                    <hr>
+
+                    <!-- Comments List -->
                     <div id="commentsContainer">
                         <div class="text-center py-3">
                             <div class="spinner-border spinner-border-sm text-primary" role="status">
@@ -245,37 +308,120 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <form id="addCommentForm" class="w-100">
-                        <div class="input-group">
-                            <textarea class="form-control" id="commentText" rows="2" placeholder="Write a comment..." required></textarea>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-paper-plane"></i> Send
-                            </button>
-                        </div>
-                    </form>
-                </div>
             </div>
         </div>
     </div>
 
+    <style>
+        .mentions-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 1050;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .mention-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background-color 0.2s;
+        }
+
+        .mention-item:hover,
+        .mention-item.active {
+            background-color: #f0f4ff;
+        }
+
+        .mention-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .comment-mention {
+            background-color: #e3f2fd;
+            color: #1976d2;
+            padding: 1px 4px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .reply-comment {
+            margin-left: 30px;
+            border-left: 3px solid #e9ecef;
+            padding-left: 12px;
+        }
+
+        .comment-attachment {
+            margin-top: 8px;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .comment-attachment img {
+            max-width: 200px;
+            max-height: 150px;
+            border-radius: 4px;
+        }
+
+        .comment-attachment-file {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #495057;
+            font-size: 0.85rem;
+        }
+    </style>
+
     <script>
         let currentTaskId = null;
         let commentsModal = null;
+        let mentionableUsers = [];
+        let selectedMentionIndex = 0;
+        let mentionStartPosition = -1;
+        let selectedFile = null;
+        const csrfToken = '{{ csrf_token() }}';
 
         // Initialize modal after DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
             const modalElement = document.getElementById('commentsModal');
             if (modalElement) {
                 commentsModal = new bootstrap.Modal(modalElement);
+
+                // Reset state when modal is hidden
+                modalElement.addEventListener('hidden.bs.modal', function() {
+                    cancelReply();
+                    removeAttachment();
+                    document.getElementById('commentText').value = '';
+                    mentionableUsers = [];
+                });
             }
+
+            setupMentions();
+            setupAttachment();
         });
 
         function openCommentsModal(taskId, taskTitle) {
             currentTaskId = taskId;
             document.getElementById('taskTitle').textContent = taskTitle;
 
-            // Initialize modal if not already done
             if (!commentsModal) {
                 const modalElement = document.getElementById('commentsModal');
                 if (modalElement) {
@@ -286,7 +432,169 @@
             if (commentsModal) {
                 commentsModal.show();
                 loadComments(taskId);
+                loadMentionableUsers(taskId);
             }
+        }
+
+        function loadMentionableUsers(taskId) {
+            fetch(`/admin/tasks/${taskId}/mentionable-users`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        mentionableUsers = data.users;
+                    }
+                })
+                .catch(error => console.error('Error loading mentionable users:', error));
+        }
+
+        function setupMentions() {
+            const textarea = document.getElementById('commentText');
+            const dropdown = document.getElementById('mentionsDropdown');
+
+            textarea.addEventListener('input', function(e) {
+                const cursorPos = this.selectionStart;
+                const text = this.value;
+
+                let atIndex = -1;
+                for (let i = cursorPos - 1; i >= 0; i--) {
+                    if (text[i] === '@') {
+                        atIndex = i;
+                        break;
+                    } else if (text[i] === ' ' || text[i] === '\n') {
+                        break;
+                    }
+                }
+
+                if (atIndex >= 0) {
+                    const searchText = text.substring(atIndex + 1, cursorPos).toLowerCase();
+                    mentionStartPosition = atIndex;
+                    showMentionsDropdown(searchText);
+                } else {
+                    hideMentionsDropdown();
+                }
+            });
+
+            textarea.addEventListener('keydown', function(e) {
+                if (!dropdown.classList.contains('d-none')) {
+                    const items = dropdown.querySelectorAll('.mention-item');
+
+                    if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        selectedMentionIndex = Math.min(selectedMentionIndex + 1, items.length - 1);
+                        updateMentionSelection(items);
+                    } else if (e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        selectedMentionIndex = Math.max(selectedMentionIndex - 1, 0);
+                        updateMentionSelection(items);
+                    } else if (e.key === 'Enter' && items.length > 0) {
+                        e.preventDefault();
+                        items[selectedMentionIndex]?.click();
+                    } else if (e.key === 'Escape') {
+                        hideMentionsDropdown();
+                    }
+                }
+            });
+        }
+
+        function showMentionsDropdown(searchText) {
+            const dropdown = document.getElementById('mentionsDropdown');
+            const list = dropdown.querySelector('.mentions-list');
+
+            const filtered = mentionableUsers.filter(user =>
+                user.name.toLowerCase().includes(searchText)
+            );
+
+            if (filtered.length === 0) {
+                hideMentionsDropdown();
+                return;
+            }
+
+            list.innerHTML = filtered.map((user, index) => `
+                <div class="mention-item ${index === 0 ? 'active' : ''}" 
+                     onclick="selectMention(${user.id}, '${escapeHtml(user.name)}')">
+                    <div class="mention-avatar">${user.initials}</div>
+                    <span>${escapeHtml(user.name)}</span>
+                </div>
+            `).join('');
+
+            selectedMentionIndex = 0;
+            dropdown.classList.remove('d-none');
+        }
+
+        function hideMentionsDropdown() {
+            document.getElementById('mentionsDropdown').classList.add('d-none');
+            mentionStartPosition = -1;
+        }
+
+        function updateMentionSelection(items) {
+            items.forEach((item, index) => {
+                item.classList.toggle('active', index === selectedMentionIndex);
+            });
+        }
+
+        function selectMention(userId, userName) {
+            const textarea = document.getElementById('commentText');
+            const text = textarea.value;
+            const cursorPos = textarea.selectionStart;
+
+            const before = text.substring(0, mentionStartPosition);
+            const after = text.substring(cursorPos);
+            textarea.value = before + '@' + userName + ' ' + after;
+
+            const newPos = mentionStartPosition + userName.length + 2;
+            textarea.setSelectionRange(newPos, newPos);
+            textarea.focus();
+
+            hideMentionsDropdown();
+        }
+
+        function setupAttachment() {
+            document.getElementById('attachmentInput').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    if (file.size > 10 * 1024 * 1024) {
+                        alert('File size must be less than 10MB');
+                        this.value = '';
+                        return;
+                    }
+
+                    selectedFile = file;
+                    document.getElementById('attachmentFileName').textContent = file.name;
+                    document.getElementById('attachmentPreview').classList.remove('d-none');
+
+                    if (file.type.startsWith('image/')) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            document.getElementById('imagePreview').src = e.target.result;
+                            document.getElementById('imagePreviewContainer').classList.remove('d-none');
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        document.getElementById('imagePreviewContainer').classList.add('d-none');
+                    }
+                }
+            });
+        }
+
+        function removeAttachment() {
+            selectedFile = null;
+            document.getElementById('attachmentInput').value = '';
+            document.getElementById('attachmentPreview').classList.add('d-none');
+            document.getElementById('imagePreviewContainer').classList.add('d-none');
+        }
+
+        function replyToComment(commentId, userName) {
+            document.getElementById('parentCommentId').value = commentId;
+            document.getElementById('replyingToName').textContent = userName;
+            document.getElementById('replyingToContainer').classList.remove('d-none');
+            document.getElementById('commentText').focus();
+            document.getElementById('commentText').placeholder = `Reply to ${userName}...`;
+        }
+
+        function cancelReply() {
+            document.getElementById('parentCommentId').value = '';
+            document.getElementById('replyingToContainer').classList.add('d-none');
+            document.getElementById('commentText').placeholder = 'Write a comment... Use @ to mention someone';
         }
 
         function loadComments(taskId) {
@@ -327,66 +635,122 @@
                 return;
             }
 
-            container.innerHTML = comments.map(comment => `
-                <div class="card mb-2" id="comment-${comment.id}">
+            container.innerHTML = comments.map(comment => renderComment(comment, false)).join('');
+        }
+
+        function renderComment(comment, isReply = false) {
+            const initials = comment.user.name.substring(0, 2).toUpperCase();
+            const formattedComment = formatCommentWithMentions(comment.comment);
+
+            let attachmentHtml = '';
+            if (comment.attachment_path) {
+                if (comment.is_image) {
+                    attachmentHtml = `
+                        <div class="comment-attachment">
+                            <a href="${comment.attachment_url}" target="_blank">
+                                <img src="${comment.attachment_url}" alt="${escapeHtml(comment.attachment_name)}">
+                            </a>
+                        </div>
+                    `;
+                } else {
+                    attachmentHtml = `
+                        <div class="comment-attachment">
+                            <a href="${comment.attachment_url}" target="_blank" class="comment-attachment-file text-decoration-none">
+                                <i class="fas fa-file"></i>
+                                <span>${escapeHtml(comment.attachment_name)}</span>
+                            </a>
+                        </div>
+                    `;
+                }
+            }
+
+            let repliesHtml = '';
+            if (comment.replies && comment.replies.length > 0) {
+                repliesHtml = comment.replies.map(reply => renderComment(reply, true)).join('');
+            }
+
+            return `
+                <div class="card mb-2 ${isReply ? 'reply-comment' : ''}" id="comment-${comment.id}">
                     <div class="card-body p-3">
                         <div class="d-flex justify-content-between align-items-start mb-2">
                             <div class="d-flex align-items-center">
                                 <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-2"
                                      style="width: 32px; height: 32px; font-size: 0.8rem;">
-                                    ${comment.user.name.substring(0, 2).toUpperCase()}
+                                    ${initials}
                                 </div>
                                 <div>
                                     <div class="fw-semibold">${escapeHtml(comment.user.name)}</div>
                                     <small class="text-muted">${getTimeAgo(comment.created_at)}</small>
                                 </div>
                             </div>
-                            ${comment.can_delete ? `
-                                            <button onclick="deleteComment(${currentTaskId}, ${comment.id})" 
-                                                    class="btn btn-sm btn-outline-danger" title="Delete">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        ` : ''}
+                            <div class="d-flex gap-1">
+                                ${!isReply ? `
+                                        <button onclick="replyToComment(${comment.id}, '${escapeHtml(comment.user.name)}')" 
+                                                class="btn btn-sm btn-outline-secondary" title="Reply">
+                                            <i class="fas fa-reply"></i>
+                                        </button>
+                                    ` : ''}
+                                ${comment.can_delete ? `
+                                        <button onclick="deleteComment(${currentTaskId}, ${comment.id})" 
+                                                class="btn btn-sm btn-outline-danger" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    ` : ''}
+                            </div>
                         </div>
                         <div class="ms-5">
-                            <p class="mb-0">${escapeHtml(comment.comment)}</p>
+                            <p class="mb-0">${formattedComment}</p>
+                            ${attachmentHtml}
                         </div>
                     </div>
                 </div>
-            `).join('');
+                ${repliesHtml}
+            `;
         }
 
-        document.getElementById('addCommentForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            addComment();
-        });
+        function formatCommentWithMentions(text) {
+            return escapeHtml(text).replace(/@(\w+(?:\s+\w+)*)/g, '<span class="comment-mention">@$1</span>');
+        }
 
         function addComment() {
             const commentText = document.getElementById('commentText').value.trim();
-            if (!commentText) return;
+            if (!commentText) {
+                alert('Please enter a comment');
+                return;
+            }
 
-            const submitBtn = document.querySelector('#addCommentForm button[type="submit"]');
+            const submitBtn = document.getElementById('submitCommentBtn');
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
+
+            const mentionedUserIds = extractMentionedUserIds(commentText);
+            const parentId = document.getElementById('parentCommentId').value || null;
+
+            const formData = new FormData();
+            formData.append('comment', commentText);
+            if (parentId) formData.append('parent_id', parentId);
+            if (selectedFile) formData.append('attachment', selectedFile);
+            if (mentionedUserIds.length > 0) {
+                mentionedUserIds.forEach(id => formData.append('mentioned_users[]', id));
+            }
 
             fetch(`/admin/tasks/${currentTaskId}/comments`, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        'X-CSRF-TOKEN': csrfToken
                     },
-                    body: JSON.stringify({
-                        comment: commentText
-                    })
+                    body: formData
                 })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
                         document.getElementById('commentText').value = '';
+                        removeAttachment();
+                        cancelReply();
                         loadComments(currentTaskId);
-
-                        // Update comment count badge in the table
                         updateCommentCount(currentTaskId, 1);
+                    } else {
+                        alert(data.message || 'Failed to add comment');
                     }
                 })
                 .catch(error => {
@@ -395,8 +759,25 @@
                 })
                 .finally(() => {
                     submitBtn.disabled = false;
-                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send';
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane me-1"></i> Send';
                 });
+        }
+
+        function extractMentionedUserIds(text) {
+            const mentions = text.match(/@(\w+(?:\s+\w+)*)/g) || [];
+            const userIds = [];
+
+            mentions.forEach(mention => {
+                const name = mention.substring(1);
+                const user = mentionableUsers.find(u =>
+                    u.name.toLowerCase() === name.toLowerCase()
+                );
+                if (user && !userIds.includes(user.id)) {
+                    userIds.push(user.id);
+                }
+            });
+
+            return userIds;
         }
 
         function deleteComment(taskId, commentId) {
@@ -405,15 +786,13 @@
             fetch(`/admin/tasks/${taskId}/comments/${commentId}`, {
                     method: 'DELETE',
                     headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        'X-CSRF-TOKEN': csrfToken
                     }
                 })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
                         loadComments(taskId);
-
-                        // Update comment count badge in the table
                         updateCommentCount(taskId, -1);
                     }
                 })
@@ -424,7 +803,6 @@
         }
 
         function updateCommentCount(taskId, delta) {
-            // Find the comment button for this task and update the badge
             const buttons = document.querySelectorAll(`button[onclick*="openCommentsModal(${taskId}"]`);
             buttons.forEach(button => {
                 const badge = button.querySelector('.badge');
