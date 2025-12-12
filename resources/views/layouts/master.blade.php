@@ -8,7 +8,9 @@
         {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
         <title> @yield('title') </title>
 
-        <link rel="shortcut icon" href="{{ asset('images/logo.png') }}" type="image/x-icon">
+        <!--<link rel="shortcut icon" href="{{ asset('images/logo.png') }}" type="image/x-icon">-->
+        <link rel="shortcut icon" href="{{ asset('images/favicon-new.png') }}" type="image/x-icon">
+        <meta property="og:image" content="https://p23africa.com/images/homepage-thumbnail-og.png">
 
         @yield('meta')
 
@@ -29,6 +31,7 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 
         <style>
             .nav-link.active-custom {

@@ -9,7 +9,8 @@
     <meta name="author" content="Nurudeen O. Daniju">
     <meta name="generator"
         content="Join an exclusive referral network designed for industry leaders who value trusted relationships and measurable growth | P23 Africa">
-    <meta property="og:image" content="{{ asset('images/brn-form-meta.png') }}">
+    <!--<meta property="og:image" content="{{ asset('images/brn-form-meta.png') }}">-->
+    <meta property="og:image" content="{{ asset('images/noel-thumbnail.png') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
