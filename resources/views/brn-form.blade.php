@@ -128,10 +128,11 @@
     }
 
     .interest-form-heading .header h1 {
-        font-size: 37px;
+        font-size: 32px;
         font-weight: 500;
         color: #0d4036;
         margin: 0 0 10px 0;
+        line-height: 0.7;
     }
 
 
@@ -157,7 +158,7 @@
 
     .interest-form-heading .subtitle p {
         margin: 0;
-        font-size: 15px;
+        font-size: 12px;
         font-weight: 600;
         color: #137077;
     }
@@ -285,7 +286,7 @@
 
     .interest-form-container .form-container {
         background-color: #137077;
-        padding: 65px 30px;
+        padding: 65px 24px;
         border-radius: 35px;
         width: 100%;
         max-width: 650px;
@@ -410,7 +411,7 @@
     }
 
     .custom-select-trigger img {
-        width: 13px;
+        width: 9px;
         object-fit: cover;
         height: auto;
     }
@@ -523,6 +524,9 @@
         border-radius: 3px;
     }
 
+        /* padding: 13px 45px; */
+
+
     .custom-options-scrollable::-webkit-scrollbar-thumb:hover {
         background: #ffffffac;
     }
@@ -609,7 +613,7 @@
         border-radius: 40px;
         display: flex;
         align-items: center;
-        padding: 8px 25px;
+        padding: 8px 10px;
         gap: 10px;
         cursor: pointer;
     }
@@ -759,7 +763,8 @@
 
     .interest-form-option label {
         display: block;
-        padding: 12px 15px;
+        padding: 8px 9px;
+
         border-radius: 17px;
         cursor: pointer;
         font-size: 10px;
@@ -853,14 +858,13 @@
 
     /* Adjust the proceed button alignment from the previous form to work with the button group */
     .interest-form-proceed-button {
-        /* align-self: flex-end; */
         padding: 13px 45px;
 
         background-color: #cced60;
         color: #0d4036;
         border: none;
         border-radius: 30px;
-        font-size: 16px;
+        font-size: 13px;
         font-weight: 700;
         cursor: pointer;
         transition: background-color 0.3s ease, transform 0.2s ease;
@@ -870,6 +874,13 @@
         font-family: "GT Walsheim Trial Md";
         outline: none;
     }
+
+         .interest-form-return-button,
+        .interest-form-proceed-button,
+        .interest-form-submit-button {
+            /* Uses the slightly transparent input background for its base color */
+            padding: 9px 35px;
+        }
 
     .interest-form-proceed-button:hover {
         background-color: #d6e885;
@@ -1050,7 +1061,8 @@
         background-color: rgba(255, 255, 255, 0.2) !important;
         border-radius: 30px;
         width: 100%;
-        padding: 18px 20px;
+               padding: 18px 10px;
+
         border: 1px solid #fff;
     }
 
@@ -1061,7 +1073,7 @@
         border-radius: none;
         border: none;
         padding: 0px;
-        padding-left: 15px;
+        padding-left: 11px;
 
     }
 
@@ -1289,8 +1301,7 @@
 
     /* visual blur + dim when disabled by checkbox */
     .interest-form-group input.blurred {
-        filter: blur(1px);
-        opacity: 0.85;
+        opacity: 0.25;
         transition: filter .18s ease, opacity .18s ease;
         pointer-events: none;
         /* prevents focusing / interaction visually */
@@ -1357,12 +1368,57 @@
 
 
     /* Desktop specific styles */
+
+        @media (min-width: 768px) {
+
+    .interest-form-tag {
+       
+            padding: 8px 25px;
+
+      
+    }
+                  .interest-form-return-button,
+        .interest-form-proceed-button,
+        .interest-form-submit-button {
+            /* Uses the slightly transparent input background for its base color */
+            padding: 13px 45px;
+        }
+
+            .custom-select-trigger img {
+        width: 13px;
+     
+    }
+
+
+      .interest-form-option label {
+              padding: 12px 15px;
+
+    
+    }
+        }
     @media (min-width: 992px) {
         .form-layout-container {
             grid-template-columns: repeat(2, 1fr);
             gap: 30px;
             padding-right: 20px;
         }
+
+        .interest-form-heading .header h1 {
+
+            line-height: 1;
+        }
+
+        .interest-form-heading .subtitle p {
+            font-size: 15px;
+
+        }
+
+        .input-with-prefix {
+        padding: 18px 20px;
+
+
+        }
+
 
         .fourth-stage-form-container label.value-offer {
             max-width: 220px;
@@ -4913,5 +4969,42 @@
             });
         }
 
+
+
+        // Scroll Back To Top FUnctionality
+
+         (function () {
+
+  const BUTTON_SELECTOR = ".interest-form-proceed-button, .interest-form-return-button";
+  const SCROLL_OFFSET = 150; // adjust to fit your design
+
+  // Handler: delegated click listener
+  document.addEventListener("click", function (e) {
+
+    const btn = e.target.closest && e.target.closest(BUTTON_SELECTOR);
+    if (!btn) return;
+
+    // If it's a submit (accidentally matched) or disabled, do nothing
+    if (btn.matches("[type='submit'], .interest-form-submit-button") || btn.disabled) return;
+
+    requestAnimationFrame(() => {
+  
+      try {
+        window.scrollTo({
+            top: SCROLL_OFFSET,
+          behavior: "smooth"
+        });
+      } catch (err) {
+        // Fallback for older browsers
+        window.scrollTo(0, 0);
+      }
     });
+  }, false);
+})();
+
+   
+
+    });
+
+   
 </script>
