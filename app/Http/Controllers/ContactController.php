@@ -213,6 +213,23 @@ class ContactController extends Controller
             $data = $validator->validated();
             $isSubmission = $data['is_submission'] ?? false;
 
+            // Require at least name OR email before saving draft (avoid empty rows)
+            $hasName = !empty($data['name']) && trim($data['name']) !== '';
+            $hasEmail = !empty($data['email']) && trim($data['email']) !== '';
+
+            if (!$isSubmission && !$hasName && !$hasEmail) {
+                // Don't save draft without at least name or email
+                Log::info('Skipping draft save - no name or email provided', [
+                    'session_id' => $data['session_id']
+                ]);
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Waiting for name or email',
+                    'status' => 'pending'
+                ]);
+            }
+
             // For submissions, use a lock to prevent race conditions
             if ($isSubmission) {
                 $submissionLockKey = 'submission_lock_' . $data['session_id'];

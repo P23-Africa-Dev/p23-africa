@@ -8,10 +8,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title> @yield('title') </title>
 
-    <link rel="shortcut icon" href="{{ asset('images/logo.png') }}" type="image/x-icon">
+    <!--<link rel="shortcut icon" href="{{ asset('images/logo.png') }}" type="image/x-icon">-->
+    <link rel="shortcut icon" href="{{ asset('images/favicon-new.png') }}" type="image/x-icon">
+    <meta property="og:image" content="{{ asset('img/consultation-page-thumbnail-1.png') }}">
 
     @yield('meta')
-
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <script src="https://kit.fontawesome.com/3df60fe6e2.js" crossorigin="anonymous"></script>

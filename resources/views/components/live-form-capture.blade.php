@@ -361,8 +361,11 @@
 
             handleFormAction(action, data) {
                 if (action === 'validationPassed') {
-                    this.log('Form validation passed - marking as submitted');
-                    this.saveFormData(true); // Mark as submitted
+                    this.log('Form validation passed - live form capture will handle submission');
+                    // Don't call saveFormData(true) here anymore
+                    // The form's own fetch submission will handle it via the submitForm route
+                    // which redirects to saveDraft with is_submission=true
+                    // This prevents duplicate email sending
                 } else if (action === 'submissionSuccess') {
                     this.handleSuccessfulSubmission(data);
                 } else if (action === 'submissionError') {
