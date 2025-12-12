@@ -80,7 +80,12 @@
                                             @endif
                                         </div>
 
-                                        <h6 class="kanban-card-title">{{ $task->title }}</h6>
+                                        <h6 class="kanban-card-title">
+                                            <a href="{{ route('admin.tasks.show', $task) }}"
+                                                class="text-decoration-none text-dark">
+                                                {{ $task->title }}
+                                            </a>
+                                        </h6>
 
                                         @if ($task->description)
                                             <p class="kanban-card-desc">
@@ -129,6 +134,10 @@
                                                         </button>
                                                         <ul class="dropdown-menu dropdown-menu-end">
                                                             <li><a class="dropdown-item"
+                                                                    href="{{ route('admin.tasks.show', $task) }}"><i
+                                                                        class="fas fa-eye me-2"></i>View Details</a>
+                                                            </li>
+                                                            <li><a class="dropdown-item"
                                                                     href="{{ route('admin.tasks.edit', $task) }}"><i
                                                                         class="fas fa-edit me-2"></i>Edit</a></li>
                                                             <li>
@@ -145,6 +154,11 @@
                                                             </li>
                                                         </ul>
                                                     </div>
+                                                @else
+                                                    <a href="{{ route('admin.tasks.show', $task) }}"
+                                                        class="btn btn-link btn-sm p-0 text-muted" title="View Details">
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>
                                                 @endif
                                             </div>
                                         </div>
@@ -168,7 +182,8 @@
 
     <!-- Add Task Modal -->
     @if (auth()->user()->hasRole(['admin', 'supervisor']))
-        <div class="modal fade" id="addTaskModal" tabindex="-1" aria-labelledby="addTaskModalLabel" aria-hidden="true">
+        <div class="modal fade" id="addTaskModal" tabindex="-1" aria-labelledby="addTaskModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">

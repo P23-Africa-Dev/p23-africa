@@ -414,6 +414,7 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
     Route::get('/tasks/kanban', [\App\Http\Controllers\Admin\TaskController::class, 'kanban'])->name('tasks.kanban');
     Route::get('/tasks/create', [\App\Http\Controllers\Admin\TaskController::class, 'create'])->name('tasks.create');
     Route::post('/tasks', [\App\Http\Controllers\Admin\TaskController::class, 'store'])->name('tasks.store');
+    Route::get('/tasks/{task}', [\App\Http\Controllers\Admin\TaskController::class, 'show'])->name('tasks.show');
     Route::get('/tasks/{task}/edit', [\App\Http\Controllers\Admin\TaskController::class, 'edit'])->name('tasks.edit');
     Route::put('/tasks/{task}', [\App\Http\Controllers\Admin\TaskController::class, 'update'])->name('tasks.update');
     Route::delete('/tasks/{task}', [\App\Http\Controllers\Admin\TaskController::class, 'destroy'])->name('tasks.destroy');

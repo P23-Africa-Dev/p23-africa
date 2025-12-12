@@ -83,6 +83,27 @@ class TaskController extends Controller
         return view('admin.tasks.kanban', compact('tasksByStatus', 'projects', 'projectId', 'statuses', 'assignableUsers'));
     }
 
+    public function show(Task $task)
+    {
+        $user = Auth::user();
+
+        // Check if user can view this task (assigned to them or admin/supervisor)
+        $canView = $user->hasRole(['admin', 'supervisor']) ||
+            $task->assignees->contains('id', $user->id);
+
+        if (!$canView) {
+            abort(403, 'You are not authorized to view this task.');
+        }
+
+        // Load relationships
+        $task->load(['project', 'assignees', 'creator', 'comments.user']);
+
+        $statuses = Task::getStatuses();
+        $priorities = Task::getPriorities();
+
+        return view('admin.tasks.show', compact('task', 'statuses', 'priorities'));
+    }
+
     public function create(Request $request)
     {
         $user = Auth::user();

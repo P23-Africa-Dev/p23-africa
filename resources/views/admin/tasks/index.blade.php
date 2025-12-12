@@ -165,6 +165,12 @@
                                         </td>
                                         <td>
                                             <div class="btn-group btn-group-sm">
+                                                <!-- View Button -->
+                                                <a href="{{ route('admin.tasks.show', $task) }}"
+                                                    class="btn btn-outline-info mx-1" title="View Details">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+
                                                 <!-- Comments Button -->
                                                 <button
                                                     onclick="openCommentsModal({{ $task->id }}, '{{ addslashes($task->title) }}')"
@@ -336,11 +342,11 @@
                                 </div>
                             </div>
                             ${comment.can_delete ? `
-                                        <button onclick="deleteComment(${currentTaskId}, ${comment.id})" 
-                                                class="btn btn-sm btn-outline-danger" title="Delete">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    ` : ''}
+                                            <button onclick="deleteComment(${currentTaskId}, ${comment.id})" 
+                                                    class="btn btn-sm btn-outline-danger" title="Delete">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        ` : ''}
                         </div>
                         <div class="ms-5">
                             <p class="mb-0">${escapeHtml(comment.comment)}</p>

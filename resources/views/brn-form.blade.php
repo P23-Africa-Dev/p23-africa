@@ -975,6 +975,9 @@
     .interest-form-footer-contact-item span i {
         color: #fff;
     }
+    .interest-form-footer-contact-item span i.fa-phone-alt{
+        transform: rotate(90deg);
+    }
 
     .interest-form-footer-contact-item a:hover {
         color: #0d4036;
