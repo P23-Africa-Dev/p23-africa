@@ -975,6 +975,15 @@
     .interest-form-footer-contact-item span i {
         color: #fff;
     }
+    .interest-form-footer-contact-item span.phone i {
+        rotate: 90deg;
+    }
+    .interest-form-footer-contact-item span.location img {
+        width: 16px;
+        height: auto;
+    }
+
+
 
     .interest-form-footer-contact-item a:hover {
         color: #0d4036;
@@ -1845,6 +1854,7 @@
                                             <span class="custom-select-text">Title, e.g CEO</span>
                                             <img class="custom-select-arrow" src="{{ asset('img/arrown.png') }}"
                                                 alt="" />
+                                    
                                         </div>
                                         <div class="custom-options">
                                             <span class="custom-option" data-value="CEO">CEO</span>
@@ -3401,7 +3411,7 @@
                         <div class="interest-form-footer-contact-row">
                             <div>
                                 <div class="interest-form-footer-contact-item">
-                                    <span class="interest-form-footer-icon"><i class="fas fa-phone-alt"></i></span>
+                                    <span class="interest-form-footer-icon phone"><i class="fas fa-phone-alt"></i></span>
                                     <a href="tel:+442080921281" class="phone">+44 7535 659835</a>
                                 </div>
 
@@ -3412,7 +3422,10 @@
                             </div>
 
                             <div class="interest-form-footer-contact-item">
-                                <span class="interest-form-footer-icon"><i class="fas fa-map-marker-alt"></i></span>
+                                <span class="interest-form-footer-icon location">
+                                    <img class="location-icon" src="{{ asset('img/location_pin_place_map.png') }}"
+                                                alt="" />
+                                </span>
                                 <span>London UK</span>
                             </div>
                         </div>
@@ -4744,7 +4757,7 @@
                 } else {
                     responseMessage.textContent = errorMessage;
                 }
-                responseMessage.style.color = '#ef4444';
+                responseMessage.style.color = '#193E47';
                 modal.show();
 
             } finally {
