@@ -113,6 +113,10 @@ Route::get('/noel54/interest-form', function () {
 Route::post('/noel54/interest-form', [BrnController::class, 'store'])->name('brn.submit');
 Route::post('/noel54/check-email', [BrnController::class, 'checkEmail'])->name('brn.check-email');
 
+// Step-by-step form validation endpoints
+Route::post('/noel54/validate-step/{step}', [BrnController::class, 'validateStep'])->name('brn.validate-step');
+Route::post('/noel54/validate-all', [BrnController::class, 'validateAllSteps'])->name('brn.validate-all');
+
 // CSRF Token Refresh Route - for long forms that may experience session timeout
 Route::get('/csrf-token', function () {
     return response()->json(['token' => csrf_token()]);

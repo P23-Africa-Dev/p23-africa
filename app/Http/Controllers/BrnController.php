@@ -101,6 +101,281 @@ class BrnController extends Controller
         }
     }
 
+    /**
+     * Validate a specific form step before proceeding
+     * This enables real-time step validation to prevent submission errors
+     */
+    public function validateStep(Request $request, int $step)
+    {
+        // Rate limiting - generous for validation
+        if (RateLimiter::tooManyAttempts('validate-step:' . $request->ip(), 60)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Too many validation requests. Please wait a moment.'
+            ], 429);
+        }
+
+        RateLimiter::hit('validate-step:' . $request->ip(), 60);
+
+        try {
+            // Pre-process/sanitize data before validation
+            $sanitizedData = $this->sanitizeInputData($request->all());
+            $request->merge($sanitizedData);
+
+            $rules = [];
+            $messages = $this->getValidationMessages();
+
+            switch ($step) {
+                case 1:
+                    // Step 1: Basic Information
+                    $rules = $this->getStep1Rules();
+
+                    // Additional check for duplicate email
+                    if (!empty($request->email)) {
+                        $email = strtolower(trim($request->email));
+                        $exists = BrnSubmission::whereRaw('LOWER(email) = ?', [$email])->exists();
+                        if ($exists) {
+                            return response()->json([
+                                'success' => false,
+                                'message' => 'Please correct the error below.',
+                                'errors' => ['email' => ['This email address is already registered.']]
+                            ], 422);
+                        }
+                    }
+                    break;
+
+                case 2:
+                    // Step 2: Company Information
+                    $rules = $this->getStep2Rules();
+                    break;
+
+                case 3:
+                    // Step 3: Industry Preference
+                    $rules = $this->getStep3Rules();
+                    break;
+
+                case 4:
+                    // Step 4: Goals and Interests
+                    $rules = $this->getStep4Rules();
+                    break;
+
+                default:
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Invalid step specified.'
+                    ], 400);
+            }
+
+            // Validate with step-specific rules
+            $validator = Validator::make($request->all(), $rules, $messages);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Please correct the errors below.',
+                    'errors' => $validator->errors()->toArray()
+                ], 422);
+            }
+
+            // Return sanitized data for frontend to use
+            $validatedFields = array_keys($rules);
+            $cleanData = [];
+            foreach ($validatedFields as $field) {
+                if (isset($sanitizedData[$field])) {
+                    $cleanData[$field] = $sanitizedData[$field];
+                }
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Step ' . $step . ' validated successfully.',
+                'data' => $cleanData
+            ]);
+        } catch (\Exception $e) {
+            Log::warning('Step validation error', [
+                'step' => $step,
+                'error' => $e->getMessage()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation check completed. You may proceed.'
+            ]);
+        }
+    }
+
+    /**
+     * Validate all steps at once (before final submission)
+     * This provides a comprehensive check before submission
+     */
+    public function validateAllSteps(Request $request)
+    {
+        // Rate limiting
+        if (RateLimiter::tooManyAttempts('validate-all:' . $request->ip(), 20)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Too many validation requests. Please wait a moment.'
+            ], 429);
+        }
+
+        RateLimiter::hit('validate-all:' . $request->ip(), 60);
+
+        try {
+            // Pre-process/sanitize data
+            $sanitizedData = $this->sanitizeInputData($request->all());
+            $request->merge($sanitizedData);
+
+            // Combine all validation rules
+            $allRules = array_merge(
+                $this->getStep1Rules(),
+                $this->getStep2Rules(),
+                $this->getStep3Rules(),
+                $this->getStep4Rules()
+            );
+
+            $messages = $this->getValidationMessages();
+
+            $validator = Validator::make($request->all(), $allRules, $messages);
+
+            if ($validator->fails()) {
+                // Group errors by step for better UX
+                $errors = $validator->errors()->toArray();
+                $errorsByStep = $this->groupErrorsByStep($errors);
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Please correct the errors in the form.',
+                    'errors' => $errors,
+                    'errors_by_step' => $errorsByStep,
+                    'first_error_step' => $this->getFirstErrorStep($errorsByStep)
+                ], 422);
+            }
+
+            // Check for duplicate email
+            if (!empty($request->email)) {
+                $email = strtolower(trim($request->email));
+                $exists = BrnSubmission::whereRaw('LOWER(email) = ?', [$email])->exists();
+                if ($exists) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'This email address is already registered.',
+                        'errors' => ['email' => ['This email address is already registered.']],
+                        'errors_by_step' => [1 => ['email' => ['This email address is already registered.']]],
+                        'first_error_step' => 1
+                    ], 422);
+                }
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'All validations passed. Ready to submit.',
+                'data' => $sanitizedData
+            ]);
+        } catch (\Exception $e) {
+            Log::warning('Full validation error', ['error' => $e->getMessage()]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation error occurred. Please try again.'
+            ], 500);
+        }
+    }
+
+    /**
+     * Get validation rules for Step 1: Basic Information
+     */
+    private function getStep1Rules(): array
+    {
+        return [
+            'name' => 'required|string|min:2|max:255',
+            'email' => 'required|email:rfc|max:255',
+            'phone' => 'required|string|min:6|max:50',
+            'country_code' => 'nullable|string|max:10',
+            'position' => 'required|string|min:2|max:255',
+            'company_name' => 'required|string|min:2|max:255',
+        ];
+    }
+
+    /**
+     * Get validation rules for Step 2: Company Information
+     */
+    private function getStep2Rules(): array
+    {
+        return [
+            'reg_number' => 'nullable|string|max:255',
+            'website' => 'nullable|string|max:500',
+            'year_established' => 'nullable|string|max:10',
+            'linkedin' => 'nullable|string|max:500',
+            'country' => 'required|string|max:100',
+        ];
+    }
+
+    /**
+     * Get validation rules for Step 3: Industry Preference
+     */
+    private function getStep3Rules(): array
+    {
+        return [
+            'industry' => 'nullable|string|max:100',
+            'categories' => 'nullable|string|max:1000',
+            'number_of_employees' => 'required|string|max:50',
+            'years_of_operation' => 'required|string|max:50',
+        ];
+    }
+
+    /**
+     * Get validation rules for Step 4: Goals and Interests
+     */
+    private function getStep4Rules(): array
+    {
+        return [
+            'offer_value' => 'nullable|string|max:2000',
+            'goals' => 'required|string|min:10|max:5000',
+            'selected_outcome' => 'required|string|max:500',
+            'b2b_interest' => 'required|string|max:20',
+        ];
+    }
+
+    /**
+     * Group validation errors by form step
+     */
+    private function groupErrorsByStep(array $errors): array
+    {
+        $step1Fields = ['name', 'email', 'phone', 'country_code', 'position', 'company_name'];
+        $step2Fields = ['reg_number', 'website', 'year_established', 'linkedin', 'country'];
+        $step3Fields = ['industry', 'categories', 'number_of_employees', 'years_of_operation'];
+        $step4Fields = ['offer_value', 'goals', 'selected_outcome', 'b2b_interest'];
+
+        $errorsByStep = [];
+
+        foreach ($errors as $field => $messages) {
+            if (in_array($field, $step1Fields)) {
+                $errorsByStep[1][$field] = $messages;
+            } elseif (in_array($field, $step2Fields)) {
+                $errorsByStep[2][$field] = $messages;
+            } elseif (in_array($field, $step3Fields)) {
+                $errorsByStep[3][$field] = $messages;
+            } elseif (in_array($field, $step4Fields)) {
+                $errorsByStep[4][$field] = $messages;
+            }
+        }
+
+        return $errorsByStep;
+    }
+
+    /**
+     * Get the first step that has errors
+     */
+    private function getFirstErrorStep(array $errorsByStep): int
+    {
+        for ($i = 1; $i <= 4; $i++) {
+            if (!empty($errorsByStep[$i])) {
+                return $i;
+            }
+        }
+        return 1;
+    }
+
     public function store(Request $request)
     {
         // Add rate limiting - more generous limit
@@ -120,35 +395,34 @@ class BrnController extends Controller
             // Merge sanitized data back into request for validation
             $request->merge($sanitizedData);
 
-            // Validate with relaxed but comprehensive rules
-            $validated = $request->validate([
-                // Personal Information
-                'name' => 'required|string|min:2|max:255',
-                'email' => 'required|email:rfc,dns|max:255',
-                'phone' => 'required|string|min:6|max:50',
-                'country_code' => 'nullable|string|max:10',
-                'position' => 'required|string|min:2|max:255',
+            // Combine all step validation rules for comprehensive validation
+            $allRules = array_merge(
+                $this->getStep1Rules(),
+                $this->getStep2Rules(),
+                $this->getStep3Rules(),
+                $this->getStep4Rules()
+            );
 
-                // Company Information
-                'company_name' => 'required|string|min:2|max:255',
-                'reg_number' => 'nullable|string|max:255',
-                'website' => 'nullable|string|max:500',
-                'year_established' => 'nullable|string|max:10',
-                'linkedin' => 'nullable|string|max:500',
-                'country' => 'required|string|max:100',
-                'industry' => 'nullable|string|max:100',
-                'categories' => 'nullable|string|max:1000',
+            $messages = $this->getValidationMessages();
 
-                // Business Details
-                'number_of_employees' => 'required|string|max:50',
-                'years_of_operation' => 'required|string|max:50',
+            // Create validator instance
+            $validator = Validator::make($request->all(), $allRules, $messages);
 
-                // Goals and Interests
-                'offer_value' => 'nullable|string|max:2000',
-                'goals' => 'required|string|min:10|max:5000',
-                'selected_outcome' => 'required|string|max:500',
-                'b2b_interest' => 'required|string|max:20',
-            ], $this->getValidationMessages());
+            if ($validator->fails()) {
+                $errors = $validator->errors()->toArray();
+                $errorsByStep = $this->groupErrorsByStep($errors);
+                $firstErrorStep = $this->getFirstErrorStep($errorsByStep);
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Please correct the errors in the form.',
+                    'errors' => $errors,
+                    'errors_by_step' => $errorsByStep,
+                    'first_error_step' => $firstErrorStep
+                ], 422);
+            }
+
+            $validated = $validator->validated();
 
             // Check for duplicate email after validation (with case-insensitive check)
             $emailExists = BrnSubmission::whereRaw('LOWER(email) = ?', [strtolower($validated['email'])])->exists();
@@ -156,7 +430,9 @@ class BrnController extends Controller
                 return response()->json([
                     'success' => false,
                     'message' => 'This email address is already registered. If you need to update your application, please contact us.',
-                    'errors' => ['email' => ['This email address is already registered.']]
+                    'errors' => ['email' => ['This email address is already registered.']],
+                    'errors_by_step' => [1 => ['email' => ['This email address is already registered.']]],
+                    'first_error_step' => 1
                 ], 422);
             }
 
@@ -187,11 +463,16 @@ class BrnController extends Controller
                 'clear_storage' => true
             ]);
         } catch (ValidationException $e) {
-            // Return user-friendly validation errors
+            // Return user-friendly validation errors with step information
+            $errors = $e->errors();
+            $errorsByStep = $this->groupErrorsByStep($errors);
+
             return response()->json([
                 'success' => false,
-                'message' => 'Please check the form and correct any errors.',
-                'errors' => $e->errors()
+                'message' => 'Please correct the errors in the form.',
+                'errors' => $errors,
+                'errors_by_step' => $errorsByStep,
+                'first_error_step' => $this->getFirstErrorStep($errorsByStep)
             ], 422);
         } catch (\Exception $e) {
             Log::error('BRN Form Submission Error', [
