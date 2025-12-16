@@ -1361,7 +1361,7 @@
     }
 
     .response-messages p {
-        font-size: 18px;
+        font-size: 15px;
         font-weight: light;
         margin-bottom: 2px;
         padding: 0px 18px;
@@ -1369,7 +1369,7 @@
     }
 
     .response-messages h4 {
-        font-size: 20px;
+        font-size: 17px;
         font-weight: 500;
         padding: 0px 17px;
         color: #0D4036;
@@ -1620,6 +1620,8 @@
             line-height: 1;
 
         }
+
+        
 
 
     }
@@ -2999,7 +3001,7 @@
                                     <label for="industry">What industry does your business operate in?</label>
                                     <div class="custom-select" data-select="industry">
                                         <div class="custom-select-trigger">
-                                            <span class="custom-select-text">Primary & Industrial sector</span>
+                                            <span class="custom-select-text">Select your industry</span>
                                             <img class="custom-select-arrow" src="{{ asset('img/arrown.png') }}"
                                                 alt="" />
                                         </div>
