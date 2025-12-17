@@ -106,6 +106,10 @@
             color: #0d4036;
         }
 
+        .footer .subscribe input::placeholder{
+            color: #dddddd !important;
+
+        }
         .footer .subscribe input{
             background: transparent !important;
         }
