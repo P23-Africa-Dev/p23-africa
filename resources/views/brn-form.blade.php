@@ -343,7 +343,7 @@
         border-radius: 30px;
         background-color: rgba(255, 255, 255, 0.2) !important;
         color: #ffffff;
-        font-size: 12px;
+        font-size: 13px !important;
         font-family: "GT Walsheim Trial Md" !important;
 
         outline: none;
@@ -606,7 +606,41 @@
         margin-top: 10px;
         width: 100%;
         justify-content: center;
+        height: 130px;
+        overflow: hidden;
+        overflow-y: auto
+
     }
+
+
+        /* Custom scrollbar for country list */
+    .interest-form-tags::-webkit-scrollbar {
+        width: 3px;
+    }
+
+    .interest-form-tags::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 3px;
+    }
+
+    .interest-form-tags::-webkit-scrollbar-thumb {
+        background: #fff;
+        border-radius: 3px;
+    }
+
+    .interest-form-tags::-webkit-scrollbar-thumb:hover {
+        background: #ffffffac;
+    }
+
+
+
+#industry-selects-group .industry-message{
+    font-size: 10px;
+    margin-left: 30px;
+    color: #f0f0f0;
+    margin-top: 6px;
+}
+
 
     /* Individual tag wrapper */
     .interest-form-tag {
@@ -614,7 +648,7 @@
         border-radius: 40px;
         display: flex;
         align-items: center;
-        padding: 8px 10px;
+        padding: 3.5px 9px;
         gap: 10px;
         cursor: pointer;
     }
@@ -654,12 +688,34 @@
         font-weight: bolder;
     }
 
+
+    /* Applied when an industry is selected */
+.interest-form-tags.industry-selected .interest-form-tag{
+           padding: 5px 10px;
+ /* adjust as needed */
+}
+
+/* Default tags state (before industry selection) */
+.interest-form-tag.is-default {
+    /* filter: blur(2px); */
+    opacity: 0.7;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* When industry is selected, restore default look */
+.interest-form-tags.industry-selected .interest-form-tag.is-default {
+    filter: none;
+    opacity: 1;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+
     .interest-form-group label[for="revenue"] {
         display: flex;
         flex-direction: column;
         justify-content: start;
-
-
 
 
 
@@ -684,7 +740,7 @@
         /* Highly rounded corners for the single-line input/textarea */
         background-color: rgba(255, 255, 255, 0.2) !important;
         color: #ffffff;
-        font-size: 12px;
+        font-size: 13px !important;
 
         font-family: "GT Walsheim Trial Md" !important;
         letter-spacing: 0.5px;
@@ -1389,6 +1445,11 @@
 
       
     }
+
+    .interest-form-tags.industry-selected .interest-form-tag {
+           padding: 9px 13px !important;
+
+    }
                   .interest-form-return-button,
         .interest-form-proceed-button,
         .interest-form-submit-button {
@@ -1621,7 +1682,23 @@
 
         }
 
-        
+
+            .response-messages p {
+        font-size: 18px;
+        font-weight: light;
+        margin-bottom: 2px;
+        padding: 0px 18px;
+        color: #0D4036;
+    }
+
+    .response-messages h4 {
+        font-size: 20px;
+        font-weight: 500;
+        padding: 0px 17px;
+        color: #0D4036;
+
+    }
+
 
 
     }
@@ -3005,20 +3082,79 @@
                                             <img class="custom-select-arrow" src="{{ asset('img/arrown.png') }}"
                                                 alt="" />
                                         </div>
-                                        <div class="custom-options">
-                                            <span class="custom-option" data-value="agriculture">Agribusiness</span>
-                                            <span class="custom-option" data-value="manufacturing">Manufacturing</span>
-                                            <span class="custom-option" data-value="mining">Mining</span>
-                                            <span class="custom-option" data-value="logistics">Logistics</span>
-                                        </div>
+                                      <div class="custom-options">
+                                            <span class="custom-option" data-value="technologyAndDigitalServices">
+                                                Technology & Digital Services
+                                            </span>
+
+                                            <span class="custom-option" data-value="financialAndProfessionalServices">
+                                                Financial & Professional Services
+                                            </span>
+
+                                            <span class="custom-option" data-value="manufacturingAndIndustrial">
+                                                Manufacturing & Industrial
+                                            </span>
+
+                                            <span class="custom-option" data-value="healthcareAndPharmaceuticals">
+                                                Healthcare & Pharmaceuticals
+                                            </span>
+
+                                            <span class="custom-option" data-value="energyAndUtilities">
+                                                Energy & Utilities
+                                            </span>
+
+                                            <span class="custom-option" data-value="retailAndConsumerGoods">
+                                                Retail & Consumer Goods
+                                            </span>
+
+                                            <span class="custom-option" data-value="logisticsAndTransportation">
+                                                Logistics & Transportation
+                                            </span>
+
+                                            <span class="custom-option" data-value="agricultureAndFoodProcessing">
+                                                Agriculture & Food Processing
+                                            </span>
+
+                                            <span class="custom-option" data-value="realEstateAndConstruction">
+                                                Real Estate & Construction
+                                            </span>
+
+                                            <span class="custom-option" data-value="mediaAndCommunications">
+                                                Media & Communications
+                                            </span>
+
+                                            <span class="custom-option" data-value="educationAndTraining">
+                                                Education & Training
+                                            </span>
+
+                                            <span class="custom-option" data-value="governmentAndPublicServices">
+                                                Government & Public Services
+                                            </span>
+
+                                            <span class="custom-option" data-value="environmentalAndSpecializedServices">
+                                                Environmental & Specialized Services
+                                            </span>
+                                      </div>
+
                                     </div>
 
+                                    {{-- <p class="industry-message">kindly select your industry first</p> --}}
+
                                     <select name="industry" id="industry" style="display: none">
-                                        <option value="">Primary & Industrial sector</option>
-                                        <option value="agriculture">Agribusiness</option>
-                                        <option value="manufacturing">Manufacturing</option>
-                                        <option value="mining">Mining</option>
-                                        <option value="logistics">Logistics</option>
+                                        <option value="technologyAndDigitalServices">  Technology & Digital Services</option>
+                                        <option value="financialAndProfessionalServices"> Financial & Professional Services</option>
+                                        <option value="manufacturingAndIndustrial"> Manufacturing & Industrial</option>
+                                        <option value="healthcareAndPharmaceuticals"> Healthcare & Pharmaceuticals</option>
+                                        <option value="energyAndUtilities"> Energy & Utilities</option>
+                                        <option value="retailAndConsumerGoods"> Retail & Consumer Goods</option>
+                                        <option value="logisticsAndTransportation"> Logistics & Transportation</option>
+                                        <option value="agricultureAndFoodProcessing"> Agriculture & Food Processing</option>
+                                        <option value="realEstateAndConstruction"> Real Estate & Construction</option>
+                                        <option value="mediaAndCommunications"> Media & Communications</option>
+                                        <option value="educationAndTraining">Education & Training</option>
+                                        <option value="governmentAndPublicServices"> Government & Public Services</option>
+                                        <option value="environmentalAndSpecializedServices"> Environmental & Specialized Services</option>
+                                     
                                     </select>
                                 </div>
 
@@ -3982,37 +4118,144 @@
          * INDUSTRY → CATEGORY HANDLER
          *************************************/
         const industryCategories = {
-            agriculture: [
-                "Crop Production",
-                "Livestock Farming",
-                "AgroTech",
-                "Food Processing",
-            ],
-            manufacturing: [
-                "Textile Production",
-                "Automobile Manufacturing",
-                "Electronics",
-                "Pharmaceuticals",
-            ],
-            mining: [
-                "Gold Mining",
-                "Oil & Gas Exploration",
-                "Quarrying",
-                "Metal Refining",
-            ],
-            logistics: [
-                "Freight Forwarding",
-                "Warehousing",
-                "Transportation",
-                "Supply Chain Solutions",
-            ],
-        };
+  technologyAndDigitalServices: [
+    "Software and SaaS Solutions",
+    "FinTech and Digital Payment Systems",
+    "Cybersecurity and Data Protection Services",
+    "Cloud Computing and IT Infrastructure",
+    "Artificial Intelligence and Machine Learning",
+    "Telecommunications and Network Services",
+    "E-commerce and Digital Platforms",
+    "Blockchain and Digital Asset Management",
+  ],
+
+  financialAndProfessionalServices: [
+    "Banking and Financial Institutions",
+    "Investment and Asset Management",
+    "Insurance and Risk Advisory Services",
+    "Legal and Regulatory Compliance Services",
+    "Accounting and Tax Advisory Services",
+    "Management Consulting",
+    "Marketing and Advertising Agencies",
+    "Human Resources and Talent Acquisition",
+  ],
+
+  manufacturingAndIndustrial: [
+    "Industrial Machinery and Equipment",
+    "Automotive and Aerospace Manufacturing",
+    "Electronics and Technology Components",
+    "Chemicals and Raw Materials Production",
+    "Construction Materials and Supplies",
+    "Packaging and Container Manufacturing",
+    "Medical Devices and Equipment Production",
+    "Textiles and Apparel Manufacturing",
+  ],
+
+  healthcareAndPharmaceuticals: [
+    "Pharmaceuticals and Biotechnology",
+    "Hospitals and Clinical Healthcare Facilities",
+    "Medical Equipment and Supplies",
+    "Healthcare Technology Systems",
+    "Laboratory and Diagnostic Services",
+    "Senior Care and Rehabilitation Services",
+    "Telemedicine and Digital Health Solutions",
+    "Clinical Research and Trials",
+  ],
+
+  energyAndUtilities: [
+    "Oil, Gas, and Petroleum",
+    "Renewable Energy (Solar, Wind, Hydroelectric)",
+    "Power Generation and Distribution",
+    "Utilities and Water Services Management",
+    "Mining and Natural Resources Extraction",
+    "Energy Storage and Management Systems",
+    "Environmental and Sustainability Services",
+  ],
+
+  retailAndConsumerGoods: [
+    "Wholesale and Distribution Networks",
+    "Retail Chains and Franchising Operations",
+    "Food and Beverage Production",
+    "Consumer Electronics",
+    "Fashion and Luxury Goods",
+    "Home Goods and Appliances",
+    "Sports and Leisure Products",
+  ],
+
+  logisticsAndTransportation: [
+    "Shipping and Freight Forwarding Services",
+    "Air Cargo and Logistics",
+    "Trucking and Ground Transportation",
+    "Warehousing and Storage Facilities",
+    "Supply Chain Management",
+    "Fleet and Vehicle Management",
+    "Ports and Terminal Operations",
+  ],
+
+  agricultureAndFoodProcessing: [
+    "Farming and Agricultural Production",
+    "Food Processing and Manufacturing",
+    "Beverage Production",
+    "Agricultural Technology (AgriTech)",
+    "Livestock and Animal Products",
+    "Commodity Trading and Export",
+    "Agricultural Equipment and Supplies",
+  ],
+
+  realEstateAndConstruction: [
+    "Commercial Real Estate Development",
+    "Property Management Services",
+    "Construction and Engineering Services",
+    "Architecture and Design Services",
+    "Facility Management",
+    "Real Estate Investment",
+    "Building Materials and Supplies",
+  ],
+
+  mediaAndCommunications: [
+    "Broadcasting and Entertainment",
+    "Digital Media and Publishing",
+    "Advertising and Public Relations",
+    "Telecommunications Services",
+    "Content Creation and Production",
+    "Event Management and Production",
+  ],
+
+  educationAndTraining: [
+    "Corporate Training and Development",
+    "Educational Technology (EdTech)",
+    "Schools and Educational Institutions",
+    "Professional Certification Programs",
+    "Language and Skills Training",
+    "E-learning and Online Education",
+  ],
+
+  governmentAndPublicServices: [
+    "Government and Public Administration",
+    "Defense and Security Services",
+    "Infrastructure Development",
+    "Municipal and Public Utilities",
+    "Public Health Services",
+    "Government Technology Solutions",
+  ],
+
+  environmentalAndSpecializedServices: [
+    "Waste Management and Recycling",
+    "Water Treatment and Management",
+    "Environmental Consulting",
+    "Engineering and Technical Services",
+    "Research and Development",
+    "Testing and Quality Assurance",
+  ],
+};
+
 
         const defaultTags = [
-            "Agrobusiness",
-            "Business Growth",
-            "Sustainability",
-            "Leadership",
+           "Software and SaaS Solutions",
+             "Research and Development",
+           "Oil, Gas, and Petroleum",
+             "Public Health Services",
+            //    "Consumer Electronics",
         ];
 
         let selectedCategories = {}; // store selections by industry
@@ -4025,73 +4268,151 @@
         renderTags(defaultTags, true);
 
         /** Update when user selects a new industry **/
+        // function updateCategories(industry) {
+        //     categoryContainer.innerHTML = "";
+        //     hiddenCategoryInput.value = "";
+
+        //     if (!industry || !industryCategories[industry]) {
+        //         renderTags(defaultTags, true);
+        //         return;
+        //     }
+
+        //     const categories = industryCategories[industry];
+        //     const saved = selectedCategories[industry] || [];
+
+        //     renderTags(categories, false, saved);
+        // }
+
         function updateCategories(industry) {
-            categoryContainer.innerHTML = "";
-            hiddenCategoryInput.value = "";
+    categoryContainer.innerHTML = "";
+    hiddenCategoryInput.value = "";
 
-            if (!industry || !industryCategories[industry]) {
-                renderTags(defaultTags, true);
-                return;
-            }
+    // Remove padding fix by default
+    categoryContainer.classList.remove("industry-selected");
 
-            const categories = industryCategories[industry];
-            const saved = selectedCategories[industry] || [];
+    if (!industry || !industryCategories[industry]) {
+        renderTags(defaultTags, true);
+        return;
+    }
 
-            renderTags(categories, false, saved);
-        }
+    // Apply padding fix once industry is selected
+    categoryContainer.classList.add("industry-selected");
+
+    const categories = industryCategories[industry];
+    const saved = selectedCategories[industry] || [];
+
+    renderTags(categories, false, saved);
+}
+
 
         /** Render tags **/
         function renderTags(categories, isDefault = false, saved = []) {
-            categoryContainer.innerHTML = "";
+    categoryContainer.innerHTML = "";
 
-            categories.forEach((category) => {
-                const tag = document.createElement("div");
-                tag.className = "interest-form-tag";
-                if (saved.includes(category)) tag.classList.add("active");
+    categories.forEach((category) => {
+        const tag = document.createElement("div");
+        tag.className = "interest-form-tag";
 
-                tag.innerHTML = `
-      <span class="check-icon ${saved.includes(category) ? "active" : ""}">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-          viewBox="0 0 24 24" stroke-width="3" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/>
-        </svg>
-      </span>
-      <span>${category}</span>
-    `;
+        if (isDefault) {
+            tag.classList.add("is-default");
+        }
 
+        if (saved.includes(category)) {
+            tag.classList.add("active");
+        }
 
+        tag.innerHTML = `
+            <span class="check-icon ${saved.includes(category) ? "active" : ""}">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 24 24" stroke-width="3" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="m4.5 12.75 6 6 9-13.5"/>
+                </svg>
+            </span>
+            <span>${category}</span>
+        `;
 
-                // Add click event
-                tag.addEventListener("click", () => {
-                    const currentIndustry = industrySelect.value;
+        // Prevent clicks on default tags
+        if (!isDefault) {
+            tag.addEventListener("click", () => {
+                const currentIndustry = industrySelect.value;
 
-                    // Toggle visual state
-                    tag.classList.toggle("active");
-                    const icon = tag.querySelector(".check-icon");
-                    icon.classList.toggle("active");
+                tag.classList.toggle("active");
+                tag.querySelector(".check-icon").classList.toggle("active");
 
-                    // Handle storage
-                    if (!isDefault && currentIndustry) {
-                        if (!selectedCategories[currentIndustry]) {
-                            selectedCategories[currentIndustry] = [];
-                        }
+                if (!selectedCategories[currentIndustry]) {
+                    selectedCategories[currentIndustry] = [];
+                }
 
-                        if (tag.classList.contains("active")) {
-                            selectedCategories[currentIndustry].push(category);
-                        } else {
-                            selectedCategories[currentIndustry] = selectedCategories[
-                                currentIndustry
-                            ].filter((c) => c !== category);
-                        }
-                    }
+                if (tag.classList.contains("active")) {
+                    selectedCategories[currentIndustry].push(category);
+                } else {
+                    selectedCategories[currentIndustry] =
+                        selectedCategories[currentIndustry].filter(
+                            (c) => c !== category
+                        );
+                }
 
-                    updateHiddenInput();
-                    saveFormData(); // Save after category selection
-                });
-
-                categoryContainer.appendChild(tag);
+                updateHiddenInput();
+                saveFormData();
             });
         }
+
+        categoryContainer.appendChild(tag);
+    });
+}
+
+    //     function renderTags(categories, isDefault = false, saved = []) {
+    //         categoryContainer.innerHTML = "";
+
+    //         categories.forEach((category) => {
+    //             const tag = document.createElement("div");
+    //             tag.className = "interest-form-tag";
+    //             if (saved.includes(category)) tag.classList.add("active");
+
+    //             tag.innerHTML = `
+    //   <span class="check-icon ${saved.includes(category) ? "active" : ""}">
+    //     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+    //       viewBox="0 0 24 24" stroke-width="3" stroke="currentColor">
+    //       <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/>
+    //     </svg>
+    //   </span>
+    //   <span>${category}</span>
+    // `;
+
+
+
+    //             // Add click event
+    //             tag.addEventListener("click", () => {
+    //                 const currentIndustry = industrySelect.value;
+
+    //                 // Toggle visual state
+    //                 tag.classList.toggle("active");
+    //                 const icon = tag.querySelector(".check-icon");
+    //                 icon.classList.toggle("active");
+
+    //                 // Handle storage
+    //                 if (!isDefault && currentIndustry) {
+    //                     if (!selectedCategories[currentIndustry]) {
+    //                         selectedCategories[currentIndustry] = [];
+    //                     }
+
+    //                     if (tag.classList.contains("active")) {
+    //                         selectedCategories[currentIndustry].push(category);
+    //                     } else {
+    //                         selectedCategories[currentIndustry] = selectedCategories[
+    //                             currentIndustry
+    //                         ].filter((c) => c !== category);
+    //                     }
+    //                 }
+
+    //                 updateHiddenInput();
+    //                 saveFormData(); // Save after category selection
+    //             });
+
+    //             categoryContainer.appendChild(tag);
+    //         });
+    //     }
 
         /** Sync hidden field for submission **/
         function updateHiddenInput() {
@@ -4342,7 +4663,7 @@
 
                 if (!industry.value.trim()) {
                     const customSelect = currentStage.querySelector('[data-select="industry"]');
-                    showError(customSelect || industry.parentNode, 'Please select your industry');
+                    showError(customSelect || industry.parentNode, 'Please select your industry, to get updated categories');
                     isValid = false;
                 }
 
