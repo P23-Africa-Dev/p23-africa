@@ -525,7 +525,7 @@
         border-radius: 3px;
     }
 
-    /* padding: 13px 45px; */
+        /* padding: 13px 45px; */
 
 
     .custom-options-scrollable::-webkit-scrollbar-thumb:hover {
@@ -932,12 +932,12 @@
         outline: none;
     }
 
-    .interest-form-return-button,
-    .interest-form-proceed-button,
-    .interest-form-submit-button {
-        /* Uses the slightly transparent input background for its base color */
-        padding: 9px 35px;
-    }
+         .interest-form-return-button,
+        .interest-form-proceed-button,
+        .interest-form-submit-button {
+            /* Uses the slightly transparent input background for its base color */
+            padding: 9px 35px;
+        }
 
     .interest-form-proceed-button:hover {
         background-color: #d6e885;
@@ -1031,8 +1031,12 @@
     .interest-form-footer-contact-item span i {
         color: #fff;
     }
-    .interest-form-footer-contact-item span i.fa-phone-alt{
-        transform: rotate(90deg);
+    .interest-form-footer-contact-item span.phone i {
+        rotate: 90deg;
+    }
+    .interest-form-footer-contact-item span.location img {
+        width: 16px;
+        height: auto;
     }
 
 
@@ -1123,7 +1127,7 @@
         background-color: rgba(255, 255, 255, 0.2) !important;
         border-radius: 30px;
         width: 100%;
-        padding: 18px 10px;
+               padding: 18px 10px;
 
         border: 1px solid #fff;
     }
@@ -1433,13 +1437,18 @@
 
     /* Desktop specific styles */
 
-    @media (min-width: 768px) {
+        @media (min-width: 768px) {
 
-        .interest-form-tag {
-
+    .interest-form-tag {
+       
             padding: 8px 25px;
 
       
+    }
+
+    .interest-form-tags.industry-selected .interest-form-tag {
+           padding: 9px 13px !important;
+
     }
                   .interest-form-return-button,
         .interest-form-proceed-button,
@@ -1448,19 +1457,18 @@
             padding: 13px 45px;
         }
 
-        .custom-select-trigger img {
-            width: 13px;
-
-        }
-
-
-        .interest-form-option label {
-            padding: 12px 15px;
-
-
-        }
+            .custom-select-trigger img {
+        width: 13px;
+     
     }
 
+
+      .interest-form-option label {
+              padding: 12px 15px;
+
+    
+    }
+        }
     @media (min-width: 992px) {
         .form-layout-container {
             grid-template-columns: repeat(2, 1fr);
@@ -1479,7 +1487,7 @@
         }
 
         .input-with-prefix {
-            padding: 18px 20px;
+        padding: 18px 20px;
 
 
         }
@@ -4354,57 +4362,57 @@
     });
 }
 
-    //     function renderTags(categories, isDefault = false, saved = []) {
-    //         categoryContainer.innerHTML = "";
+        function renderTags(categories, isDefault = false, saved = []) {
+            categoryContainer.innerHTML = "";
 
-    //         categories.forEach((category) => {
-    //             const tag = document.createElement("div");
-    //             tag.className = "interest-form-tag";
-    //             if (saved.includes(category)) tag.classList.add("active");
+            categories.forEach((category) => {
+                const tag = document.createElement("div");
+                tag.className = "interest-form-tag";
+                if (saved.includes(category)) tag.classList.add("active");
 
-    //             tag.innerHTML = `
-    //   <span class="check-icon ${saved.includes(category) ? "active" : ""}">
-    //     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-    //       viewBox="0 0 24 24" stroke-width="3" stroke="currentColor">
-    //       <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/>
-    //     </svg>
-    //   </span>
-    //   <span>${category}</span>
-    // `;
+                tag.innerHTML = `
+      <span class="check-icon ${saved.includes(category) ? "active" : ""}">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 24 24" stroke-width="3" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/>
+        </svg>
+      </span>
+      <span>${category}</span>
+    `;
 
 
 
-    //             // Add click event
-    //             tag.addEventListener("click", () => {
-    //                 const currentIndustry = industrySelect.value;
+                // Add click event
+                tag.addEventListener("click", () => {
+                    const currentIndustry = industrySelect.value;
 
-    //                 // Toggle visual state
-    //                 tag.classList.toggle("active");
-    //                 const icon = tag.querySelector(".check-icon");
-    //                 icon.classList.toggle("active");
+                    // Toggle visual state
+                    tag.classList.toggle("active");
+                    const icon = tag.querySelector(".check-icon");
+                    icon.classList.toggle("active");
 
-    //                 // Handle storage
-    //                 if (!isDefault && currentIndustry) {
-    //                     if (!selectedCategories[currentIndustry]) {
-    //                         selectedCategories[currentIndustry] = [];
-    //                     }
+                    // Handle storage
+                    if (!isDefault && currentIndustry) {
+                        if (!selectedCategories[currentIndustry]) {
+                            selectedCategories[currentIndustry] = [];
+                        }
 
-    //                     if (tag.classList.contains("active")) {
-    //                         selectedCategories[currentIndustry].push(category);
-    //                     } else {
-    //                         selectedCategories[currentIndustry] = selectedCategories[
-    //                             currentIndustry
-    //                         ].filter((c) => c !== category);
-    //                     }
-    //                 }
+                        if (tag.classList.contains("active")) {
+                            selectedCategories[currentIndustry].push(category);
+                        } else {
+                            selectedCategories[currentIndustry] = selectedCategories[
+                                currentIndustry
+                            ].filter((c) => c !== category);
+                        }
+                    }
 
-    //                 updateHiddenInput();
-    //                 saveFormData(); // Save after category selection
-    //             });
+                    updateHiddenInput();
+                    saveFormData(); // Save after category selection
+                });
 
-    //             categoryContainer.appendChild(tag);
-    //         });
-    //     }
+                categoryContainer.appendChild(tag);
+            });
+        }
 
         /** Sync hidden field for submission **/
         function updateHiddenInput() {
@@ -4485,50 +4493,17 @@
             });
         }
 
-        // Backend validation endpoint URLs
-        const validateStepUrl = '{{ route('brn.validate-step', ['step' => '__STEP__']) }}';
-        const validateAllUrl = '{{ route('brn.validate-all') }}';
-
-        // Handle navigation with backend validation
+        // Handle navigation
         proceedButtons.forEach((btn) => {
-            btn.addEventListener("click", async (e) => {
+            btn.addEventListener("click", (e) => {
                 e.preventDefault();
 
-                // Disable the button to prevent double-clicks
-                btn.disabled = true;
-                const originalText = btn.textContent;
-                btn.textContent = 'Validating...';
-
-                try {
-                    // First run client-side validation for immediate feedback
-                    if (!validateCurrentStep()) {
-                        btn.disabled = false;
-                        btn.textContent = originalText;
-                        return;
-                    }
-
-                    // Then run backend validation for the current step
-                    const backendValid = await validateStepWithBackend(currentStep + 1);
-
-                    if (backendValid) {
-                        if (currentStep < totalSteps - 1) {
-                            currentStep++;
-                            showStep(currentStep);
-                        }
-                    }
-                } catch (error) {
-                    console.warn(
-                        'Backend validation error, proceeding with client validation:',
-                        error);
-                    // If backend validation fails due to network, allow proceeding
-                    // The final submission will catch any issues
+                // Validate current step before proceeding
+                if (validateCurrentStep()) {
                     if (currentStep < totalSteps - 1) {
                         currentStep++;
                         showStep(currentStep);
                     }
-                } finally {
-                    btn.disabled = false;
-                    btn.textContent = originalText;
                 }
             });
         });
@@ -4543,118 +4518,7 @@
             });
         });
 
-        // Backend validation function for a specific step
-        async function validateStepWithBackend(stepNumber) {
-            try {
-                const formData = new FormData(form);
-                const csrfToken = getCsrfToken();
-
-                const url = validateStepUrl.replace('__STEP__', stepNumber);
-
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken,
-                        'Accept': 'application/json',
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
-                    body: formData,
-                    credentials: 'same-origin'
-                });
-
-                // Handle CSRF token expiration
-                if (response.status === 419) {
-                    const newToken = await refreshCsrfToken();
-                    if (newToken) {
-                        updateCsrfToken(newToken);
-                        // Retry once with new token
-                        const retryResponse = await fetch(url, {
-                            method: 'POST',
-                            headers: {
-                                'X-CSRF-TOKEN': newToken,
-                                'Accept': 'application/json',
-                                'X-Requested-With': 'XMLHttpRequest'
-                            },
-                            body: new FormData(form),
-                            credentials: 'same-origin'
-                        });
-                        return await handleValidationResponse(retryResponse, stepNumber);
-                    }
-                }
-
-                return await handleValidationResponse(response, stepNumber);
-
-            } catch (error) {
-                console.warn('Backend validation network error:', error);
-                // Return true to allow proceeding - final submission will validate again
-                return true;
-            }
-        }
-
-        // Handle validation response
-        async function handleValidationResponse(response, stepNumber) {
-            const data = await response.json();
-
-            if (response.ok && data.success) {
-                // Update form fields with sanitized data if provided
-                if (data.data) {
-                    Object.keys(data.data).forEach(field => {
-                        const input = form.querySelector(`[name="${field}"]`);
-                        if (input && data.data[field] !== undefined && data.data[field] !== null) {
-                            input.value = data.data[field];
-                        }
-                    });
-                }
-                return true;
-            }
-
-            if (data.errors) {
-                // Show backend validation errors on the current step
-                showBackendErrors(data.errors, stepNumber);
-            }
-
-            return false;
-        }
-
-        // Show backend validation errors on the form
-        function showBackendErrors(errors, stepNumber) {
-            const currentStage = formStages[stepNumber - 1];
-
-            // Clear previous errors in the current stage
-            currentStage.querySelectorAll('.error-message').forEach(msg => msg.remove());
-            currentStage.querySelectorAll('input, select, textarea').forEach(input => {
-                clearError(input);
-            });
-
-            // Show new errors
-            Object.keys(errors).forEach(field => {
-                const input = currentStage.querySelector(`[name="${field}"]`);
-                if (input) {
-                    const errorMessage = Array.isArray(errors[field]) ? errors[field][0] : errors[
-                    field];
-                    showError(input, errorMessage);
-                } else {
-                    // Try to find in the form (might be a custom select)
-                    const formInput = form.querySelector(`[name="${field}"]`);
-                    if (formInput) {
-                        const errorMessage = Array.isArray(errors[field]) ? errors[field][0] : errors[
-                            field];
-                        showError(formInput, errorMessage);
-                    }
-                }
-            });
-
-            // Scroll to first error
-            const firstError = currentStage.querySelector('.error-message');
-            if (firstError) {
-                firstError.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'center'
-                });
-            }
-        }
-
-        // Validation function for current step (client-side)
+        // Validation function for current step
         function validateCurrentStep() {
             const currentStage = formStages[currentStep];
             let isValid = true;
@@ -5117,26 +4981,20 @@
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
 
-            // Run client-side validation on all steps first
+            // Validate all steps before submission
             let allValid = true;
-            let firstInvalidStep = -1;
-
             for (let step = 0; step < totalSteps; step++) {
                 const prevStep = currentStep;
                 currentStep = step;
                 if (!validateCurrentStep()) {
                     allValid = false;
-                    if (firstInvalidStep === -1) {
-                        firstInvalidStep = step;
-                    }
+                    showStep(step);
+                    break;
                 }
                 currentStep = prevStep;
             }
 
             if (!allValid) {
-                // Navigate to the first step with errors
-                currentStep = firstInvalidStep;
-                showStep(currentStep);
                 return;
             }
 
@@ -5184,7 +5042,6 @@
             } catch (error) {
                 let errorMessage = 'Something went wrong. Please try again.';
                 let showRefreshButton = false;
-                let navigateToStep = null;
 
                 if (error.status === 419 || error.status === 'NO_TOKEN') {
                     errorMessage =
@@ -5192,26 +5049,9 @@
                     showRefreshButton = true;
                 } else if (error.status === 422) {
                     if (error.data?.errors) {
-                        // Handle step-based errors from backend
-                        if (error.data?.first_error_step) {
-                            navigateToStep = error.data.first_error_step -
-                            1; // Convert to 0-based index
-                            currentStep = navigateToStep;
-                            showStep(currentStep);
-                        }
-
-                        // Show errors for the specific step
-                        if (error.data?.errors_by_step && navigateToStep !== null) {
-                            const stepErrors = error.data.errors_by_step[navigateToStep + 1];
-                            if (stepErrors) {
-                                showBackendErrors(stepErrors, navigateToStep + 1);
-                            }
-                        } else {
-                            showServerErrors(error.data.errors);
-                        }
-
+                        showServerErrors(error.data.errors);
                         errorMessage = error.data?.message ||
-                            'Please correct the errors and try again.';
+                            'Please correct the errors below and try again.';
                     } else if (error.data?.message) {
                         errorMessage = error.data.message;
                     }
@@ -5225,14 +5065,6 @@
                         'Network error. Please check your internet connection and try again.';
                 } else if (error.message) {
                     errorMessage = error.message;
-                }
-
-                // For validation errors, don't show modal - user can see errors on the form
-                if (navigateToStep !== null) {
-                    submitBtn.disabled = false;
-                    spinner.classList.add('d-none');
-                    btnText.classList.remove('d-none');
-                    return;
                 }
 
                 // Build response message with optional refresh button
@@ -5480,37 +5312,38 @@
 
         // Scroll Back To Top FUnctionality
 
-        (function() {
+         (function () {
 
-            const BUTTON_SELECTOR = ".interest-form-proceed-button, .interest-form-return-button";
-            const SCROLL_OFFSET = 0; // adjust to fit your design
+  const BUTTON_SELECTOR = ".interest-form-proceed-button, .interest-form-return-button";
+  const SCROLL_OFFSET = 0; // adjust to fit your design
 
-            // Handler: delegated click listener
-            document.addEventListener("click", function(e) {
+  // Handler: delegated click listener
+  document.addEventListener("click", function (e) {
 
-                const btn = e.target.closest && e.target.closest(BUTTON_SELECTOR);
-                if (!btn) return;
+    const btn = e.target.closest && e.target.closest(BUTTON_SELECTOR);
+    if (!btn) return;
 
-                // If it's a submit (accidentally matched) or disabled, do nothing
-                if (btn.matches("[type='submit'], .interest-form-submit-button") || btn.disabled)
-                    return;
+    // If it's a submit (accidentally matched) or disabled, do nothing
+    if (btn.matches("[type='submit'], .interest-form-submit-button") || btn.disabled) return;
 
-                requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+  
+      try {
+        window.scrollTo({
+            top: SCROLL_OFFSET,
+          behavior: "smooth"
+        });
+      } catch (err) {
+        // Fallback for older browsers
+        window.scrollTo(0, 0);
+      }
+    });
+  }, false);
+})();
 
-                    try {
-                        window.scrollTo({
-                            top: SCROLL_OFFSET,
-                            behavior: "smooth"
-                        });
-                    } catch (err) {
-                        // Fallback for older browsers
-                        window.scrollTo(0, 0);
-                    }
-                });
-            }, false);
-        })();
-
-
+   
 
     });
+
+   
 </script>
