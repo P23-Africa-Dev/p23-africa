@@ -9,8 +9,8 @@
     <meta name="author" content="Nurudeen O. Daniju">
     <meta name="generator"
         content="Join an exclusive referral network designed for industry leaders who value trusted relationships and measurable growth | P23 Africa">
-    <!--<meta property="og:image" content="{{ asset('images/brn-form-meta.png') }}">-->
-    <meta property="og:image" content="{{ asset('images/noel-thumbnail.png') }}">
+    {{-- <!--<meta property="og:image" content="{{ asset('images/brn-form-meta.png') }}">--> --}}
+    {{-- <meta property="og:image" content="{{ asset('images/noel-thumbnail.png') }}"> --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
@@ -4309,7 +4309,7 @@
                 const input = currentStage.querySelector(`[name="${field}"]`);
                 if (input) {
                     const errorMessage = Array.isArray(errors[field]) ? errors[field][0] : errors[
-                    field];
+                        field];
                     showError(input, errorMessage);
                 } else {
                     // Try to find in the form (might be a custom select)
@@ -4873,7 +4873,7 @@
                         // Handle step-based errors from backend
                         if (error.data?.first_error_step) {
                             navigateToStep = error.data.first_error_step -
-                            1; // Convert to 0-based index
+                                1; // Convert to 0-based index
                             currentStep = navigateToStep;
                             showStep(currentStep);
                         }
