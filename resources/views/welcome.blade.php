@@ -79,8 +79,7 @@
         /* height: 64px;
         width: 351px; */
         border-radius: 10px;
-        text-align: center
-        background-color: transparent;
+        text-align: center background-color: transparent;
         color: #fff;
         border: 1px solid #fff;
         font-size: 20px;
@@ -92,7 +91,7 @@
         /* width: 45%; */
     }
 
-    #highlight .book{
+    #highlight .book {
         margin-top: 58px;
         z-index: 999 !important;
         position: relative;
@@ -308,7 +307,7 @@
 
             flex-direction: column-reverse;
             gap: 0px;
-            
+
             width: 500px;
 
         }
@@ -339,13 +338,12 @@
             padding: 0rem;
 
             font-size: 19px;
-            line-height: 1;
+            line-height: 1.3;
             width: 350px;
         }
 
         .network-cards {
             width: 700px;
-            border: 1px solid red;
         }
 
         .card-wrapper {
@@ -359,17 +357,25 @@
             height: 430px;
         }
 
-    .network-content .network-content-bottom .cta-button {
-        /* margin-top: 1.4rem; */
+           .network-content .network-content-bottom{
+            margin-top: 6rem;
+           }
 
-    }
-        .network-content .network-content-top p.match-text {
-        margin-top: 1.5rem;
-        margin-bottom: 0rem;
-        font-size: 3rem !important;
-       
+        .network-content .network-content-bottom .cta-button {
+            font-size: 20px;
+        }
 
-    }
+        .network-content .network-content-top p {
+            margin-top: 1.5rem;
+            margin-bottom: 0rem;
+
+
+
+        }
+
+        .network-content .network-content-top p span{
+            font-size: 2rem;
+        }
 
 
     }
@@ -496,7 +502,8 @@
                                     <img src="{{ asset('images/strategy.png') }}" loading='lazy' alt="">
                                 </div>
                                 <div class="service-title">Launch Support</div>
-                                <p>We help you get your product in front of the right people and make sure it’s understood from day one.</p>
+                                <p>We help you get your product in front of the right people and make sure it’s understood
+                                    from day one.</p>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -506,7 +513,8 @@
                                     <img src="{{ asset('images/sales.png') }}" loading='lazy' alt="">
                                 </div>
                                 <div class="service-title">Marketing and Sales</div>
-                                <p>Most businesses lose 30–50% of potential customers due to unclear messaging or poor follow-up. We fix that.</p>
+                                <p>Most businesses lose 30–50% of potential customers due to unclear messaging or poor
+                                    follow-up. We fix that.</p>
                             </div>
                         </div>
                         <div class="col-12">
@@ -517,7 +525,8 @@
                                 </div>
                                 <div class="service-title">Operations and Efficiency</div>
                                 <p>
-                                    Most growing businesses lose time due to broken processes. We help fix that by building clearer systems and workflows.
+                                    Most growing businesses lose time due to broken processes. We help fix that by building
+                                    clearer systems and workflows.
                                 </p>
                             </div>
                         </div>
