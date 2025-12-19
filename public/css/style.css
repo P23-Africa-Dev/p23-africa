@@ -793,10 +793,11 @@ section.visible{
     background-size: contain;
     width: 100%;
     height: 100%;
-    z-index: 10;
+    z-index: 10 !important;
+    position: absolute;
 }
 #highlight h3 {
-    font-size: 40px;
+    font-size: 32px;
     font-weight: 600;
     font-family: "Montserrat";
 }
@@ -981,15 +982,20 @@ section.visible{
 .service-card {
     background-color: #054b5e;
     color: white;
-    padding: 0.1rem 1.2rem;
+    padding: 23.5px 29px;
     border-radius: 0px;
     height: 100%;
 }
 .service-card .box-four {
     padding-top: 4rem;
 }
+/* .service-card#four{
+    position: relative;
+} */
 .service-card #read {
-    margin-top: 2rem;
+    margin-top: 6rem;
+    /* position: absolute;
+    bottom: 0; */
 }
 .service-card p {
     font-size: 22px;

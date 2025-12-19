@@ -74,6 +74,35 @@
         width: 38% !important;
     }
 
+    #highlight a {
+        padding: 15px 60px;
+        /* height: 64px;
+        width: 351px; */
+        border-radius: 10px;
+        text-align: center
+        background-color: transparent;
+        color: #fff;
+        border: 1px solid #fff;
+        font-size: 20px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: 500ms;
+        font-family: "GT Walsheim Con";
+        font-weight: 400;
+        /* width: 45%; */
+    }
+
+    #highlight .book{
+        margin-top: 58px;
+        z-index: 999 !important;
+        position: relative;
+    }
+
+    #highlight a:hover {
+        background-color: #fff;
+        color: #003c32;
+    }
+
     @media screen and (max-width: 580px) {
         .hero-text a {
             margin-top: -15px;
@@ -95,14 +124,17 @@
                                 Across</span><br><img src="{{ asset('images/dot.png') }}" loading='lazy' id="dot"
                                 alt=""><span id="fonts"> Global Markets</span></h1>
                         <br>
-                        <p>
+                        {{-- <p>
                             We help businesses in Africa, Europe and America grow by providing clear,<span
                                 class="mx-1"></span>practical solutions that fit their needs.
+                        </p> --}}
+                        <p>
+                            We work with businesses at any stage, helping them <br> grow and solve critical challenges.
                         </p>
                         <br>
                         <div>
                             <a href="{{ url('contact') }}" class="d-flex justify-content-between"><span>Contact Us</span>
-                            <span>→</span></a>
+                                <span>→</span></a>
                         </div>
                     </div>
                     <div class="col-md-5 animated-images mt-5 mt-md-0">
@@ -142,12 +174,14 @@
     </div>
     <section id="highlight"
         class="position-relative overflow-hidden content-section d-flex align-items-center justify-content-center">
-        <div class="highlight-overlay position-absolute top-0 start-0"></div>
-        <div class="me-auto ms-auto" style="width: 65%;">
+        <div class="highlight-overlay top-0 start-0"></div>
+        <div class="me-auto ms-auto text-center" style="width: 60%;">
             <h3>
-                We work with businesses at every stage, helping them grow, solve critical challenges, and drive
-                transformative change.
+                We help you identify what’s holding your business back and map a clear path forward.
             </h3>
+            <div class="book">
+                <a href="{{ url('book-consultation') }}" class="">Book a Consultation</a>
+            </div>
         </div>
     </section>
     <div style="background-color: #003c32;" class="py-3">
@@ -200,9 +234,8 @@
                                     {{-- <i class="bi bi-signpost-2-fill"></i> --}}
                                     <img src="{{ asset('images/strategy.png') }}" loading='lazy' alt="">
                                 </div>
-                                <div class="service-title">Business Strategy</div>
-                                <p>We develop detailed and practical strategies to solve business problems and drive
-                                    organisational goals</p>
+                                <div class="service-title">Launch Support</div>
+                                <p>We help you get your product in front of the right people and make sure it’s understood from day one.</p>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -212,8 +245,7 @@
                                     <img src="{{ asset('images/sales.png') }}" loading='lazy' alt="">
                                 </div>
                                 <div class="service-title">Marketing and Sales</div>
-                                <p>We build and execute brand awareness, lead generation and conversion & retention
-                                    strategies for businesses</p>
+                                <p>Most businesses lose 30–50% of potential customers due to unclear messaging or poor follow-up. We fix that.</p>
                             </div>
                         </div>
                         <div class="col-12">
@@ -224,9 +256,7 @@
                                 </div>
                                 <div class="service-title">Operations and Efficiency</div>
                                 <p>
-                                    We build systems and processes to drive operational efficiency and output for
-                                    businesses. <span>We aid in the development of strategic plan and operational support
-                                        tailored to your business goals & objectives.</span>
+                                    Most growing businesses lose time due to broken processes. We help fix that by building clearer systems and workflows.
                                 </p>
                             </div>
                         </div>
@@ -241,9 +271,8 @@
                                 {{-- <i class="bi bi-fullscreen"></i> --}}
                                 <img src="{{ asset('images/expansion.png') }}" loading='lazy' alt="">
                             </div>
-                            <div class="service-title">Expansion</div>
-                            <p>At P23 Africa, we offer low-risk market entry and expansion services for all businesses
-                                looking to break into new markets</p>
+                            <div class="service-title">Market Research & Insights</div>
+                            <p>We help you figure out if a market is worth entering and how to approach it.</p>
                         </div>
                         <div id="read">
                             <a href="{{ url('services') }}" class="read-more-btn mt-0">
