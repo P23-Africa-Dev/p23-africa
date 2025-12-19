@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Cache;
 use App\Mail\ContactFormMail;
 use App\Mail\ThankYouMail;
 use App\Models\ContactSubmission;
+use App\Models\Lead;
 use App\Services\AdminNotificationService;
 use Illuminate\Support\Facades\Validator;
 
@@ -138,6 +139,17 @@ class ContactController extends Controller
 
             // Send notification to admins
             AdminNotificationService::notifyNewContactForm($contactSubmission);
+
+            // Auto-create CRM lead from contact submission
+            try {
+                $lead = Lead::convertFromContactSubmission($contactSubmission);
+                AdminNotificationService::notifyNewLead($lead);
+            } catch (\Exception $e) {
+                Log::error('Failed to create lead from contact submission', [
+                    'submission_id' => $contactSubmission->id,
+                    'error' => $e->getMessage()
+                ]);
+            }
 
             // Send emails using centralized method
             $this->sendSubmissionEmails($contactSubmission);
@@ -313,6 +325,21 @@ class ContactController extends Controller
 
                 $submission->update($contactData);
 
+                // Auto-create CRM lead when draft is converted to submission
+                if ($isSubmission) {
+                    AdminNotificationService::notifyNewContactForm($submission);
+
+                    try {
+                        $lead = Lead::convertFromContactSubmission($submission);
+                        AdminNotificationService::notifyNewLead($lead);
+                    } catch (\Exception $e) {
+                        Log::error('Failed to create lead from contact draft submission', [
+                            'submission_id' => $submission->id,
+                            'error' => $e->getMessage()
+                        ]);
+                    }
+                }
+
                 Log::info('Draft updated', [
                     'session_id' => $data['session_id'],
                     'submission_id' => $submission->id,
@@ -353,6 +380,17 @@ class ContactController extends Controller
                 // Send notification to admins if this is a submission
                 if ($isSubmission) {
                     AdminNotificationService::notifyNewContactForm($submission);
+
+                    // Auto-create CRM lead from contact submission
+                    try {
+                        $lead = Lead::convertFromContactSubmission($submission);
+                        AdminNotificationService::notifyNewLead($lead);
+                    } catch (\Exception $e) {
+                        Log::error('Failed to create lead from new contact submission', [
+                            'submission_id' => $submission->id,
+                            'error' => $e->getMessage()
+                        ]);
+                    }
                 }
 
                 Log::info('New draft created', [
