@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ClickTracker;
 use App\Mail\BrnDeclined;
+use App\Mail\BrnSubmitted;
 use App\Models\BrnSubmission;
 use App\Models\Event;
 use App\Services\AdminNotificationService;
@@ -447,6 +448,17 @@ class BrnController extends Controller
                 AdminNotificationService::notifyNewBrnApplication($submission);
             } catch (\Exception $e) {
                 Log::warning('Failed to send BRN notification', ['error' => $e->getMessage()]);
+            }
+
+            // Send confirmation email to user
+            try {
+                Mail::to($submission->email)->send(new BrnSubmitted($submission));
+                Log::info('BRN submission confirmation email sent', ['email' => $submission->email]);
+            } catch (\Exception $e) {
+                Log::warning('Failed to send BRN submission confirmation email', [
+                    'email' => $submission->email,
+                    'error' => $e->getMessage()
+                ]);
             }
 
             // Track submission for analytics
