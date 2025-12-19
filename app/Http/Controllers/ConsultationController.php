@@ -422,7 +422,7 @@ class ConsultationController extends Controller
         $payment = Payment::create([
             'consultation_application_id' => $application->id,
             'payment_method' => $request->payment_method,
-            'amount' => 75.00, // Set your consultation fee
+            'amount' => 100.00, // Set your consultation fee
             'currency' => 'USD',
             'status' => 'pending',
             'payment_reference' => 'REF_' . time() . '_' . $application->id,
@@ -454,7 +454,7 @@ class ConsultationController extends Controller
             $payment = Payment::create([
                 'consultation_application_id' => $application->id,
                 'payment_method' => 'stripe',
-                'amount' => 75.00,
+                'amount' => 100.00,
                 'currency' => 'USD',
                 'status' => 'pending',
                 'payment_reference' => 'stripe_' . time() . '_' . $application->id,
@@ -462,7 +462,7 @@ class ConsultationController extends Controller
 
             // Create PaymentIntent
             $paymentIntent = PaymentIntent::create([
-                'amount' => 7500, // $75.00 in cents (75 * 100)
+                'amount' => 10000, // $100.00 in cents (100 * 100)
                 'currency' => 'usd',
                 'metadata' => [
                     'application_id' => $application->id,
@@ -560,7 +560,7 @@ class ConsultationController extends Controller
             $payment = Payment::create([
                 'consultation_application_id' => $application->id,
                 'payment_method' => $request->gateway,
-                'amount' => 75.00,
+                'amount' => 100.00,
                 'currency' => 'USD',
                 'status' => 'pending',
                 'payment_reference' => $request->transaction_id,

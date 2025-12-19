@@ -9,8 +9,8 @@
     <meta name="author" content="Nurudeen O. Daniju">
     <meta name="generator"
         content="Join an exclusive referral network designed for industry leaders who value trusted relationships and measurable growth | P23 Africa">
-    <!--<meta property="og:image" content="{{ asset('images/brn-form-meta.png') }}">-->
-    <meta property="og:image" content="{{ asset('images/noel-thumbnail.png') }}">
+    {{-- <!--<meta property="og:image" content="{{ asset('images/brn-form-meta.png') }}">--> --}}
+    {{-- <meta property="og:image" content="{{ asset('images/noel-thumbnail.png') }}"> --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
@@ -525,7 +525,7 @@
         border-radius: 3px;
     }
 
-        /* padding: 13px 45px; */
+    /* padding: 13px 45px; */
 
 
     .custom-options-scrollable::-webkit-scrollbar-thumb:hover {
@@ -609,11 +609,10 @@
         height: 130px;
         overflow: hidden;
         overflow-y: auto
-
     }
 
 
-        /* Custom scrollbar for country list */
+    /* Custom scrollbar for country list */
     .interest-form-tags::-webkit-scrollbar {
         width: 3px;
     }
@@ -634,12 +633,12 @@
 
 
 
-#industry-selects-group .industry-message{
-    font-size: 10px;
-    margin-left: 30px;
-    color: #f0f0f0;
-    margin-top: 6px;
-}
+    #industry-selects-group .industry-message {
+        font-size: 10px;
+        margin-left: 30px;
+        color: #f0f0f0;
+        margin-top: 6px;
+    }
 
 
     /* Individual tag wrapper */
@@ -690,26 +689,26 @@
 
 
     /* Applied when an industry is selected */
-.interest-form-tags.industry-selected .interest-form-tag{
-           padding: 5px 10px;
- /* adjust as needed */
-}
+    .interest-form-tags.industry-selected .interest-form-tag {
+        padding: 5px 10px;
+        /* adjust as needed */
+    }
 
-/* Default tags state (before industry selection) */
-.interest-form-tag.is-default {
-    /* filter: blur(2px); */
-    opacity: 0.7;
-    cursor: not-allowed;
-    pointer-events: none;
-}
+    /* Default tags state (before industry selection) */
+    .interest-form-tag.is-default {
+        /* filter: blur(2px); */
+        opacity: 0.7;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
 
-/* When industry is selected, restore default look */
-.interest-form-tags.industry-selected .interest-form-tag.is-default {
-    filter: none;
-    opacity: 1;
-    cursor: pointer;
-    pointer-events: auto;
-}
+    /* When industry is selected, restore default look */
+    .interest-form-tags.industry-selected .interest-form-tag.is-default {
+        filter: none;
+        opacity: 1;
+        cursor: pointer;
+        pointer-events: auto;
+    }
 
 
     .interest-form-group label[for="revenue"] {
@@ -932,12 +931,12 @@
         outline: none;
     }
 
-         .interest-form-return-button,
-        .interest-form-proceed-button,
-        .interest-form-submit-button {
-            /* Uses the slightly transparent input background for its base color */
-            padding: 9px 35px;
-        }
+    .interest-form-return-button,
+    .interest-form-proceed-button,
+    .interest-form-submit-button {
+        /* Uses the slightly transparent input background for its base color */
+        padding: 9px 35px;
+    }
 
     .interest-form-proceed-button:hover {
         background-color: #d6e885;
@@ -1031,9 +1030,11 @@
     .interest-form-footer-contact-item span i {
         color: #fff;
     }
+
     .interest-form-footer-contact-item span.phone i {
         rotate: 90deg;
     }
+
     .interest-form-footer-contact-item span.location img {
         width: 16px;
         height: auto;
@@ -1127,7 +1128,7 @@
         background-color: rgba(255, 255, 255, 0.2) !important;
         border-radius: 30px;
         width: 100%;
-               padding: 18px 10px;
+        padding: 18px 10px;
 
         border: 1px solid #fff;
     }
@@ -1437,38 +1438,40 @@
 
     /* Desktop specific styles */
 
-        @media (min-width: 768px) {
+    @media (min-width: 768px) {
 
-    .interest-form-tag {
-       
+        .interest-form-tag {
+
             padding: 8px 25px;
 
-      
-    }
 
-    .interest-form-tags.industry-selected .interest-form-tag {
-           padding: 9px 13px !important;
+        }
 
-    }
-                  .interest-form-return-button,
+        .interest-form-tags.industry-selected .interest-form-tag {
+            padding: 9px 13px !important;
+
+        }
+
+        .interest-form-return-button,
         .interest-form-proceed-button,
         .interest-form-submit-button {
             /* Uses the slightly transparent input background for its base color */
             padding: 13px 45px;
         }
 
-            .custom-select-trigger img {
-        width: 13px;
-     
-    }
+        .custom-select-trigger img {
+            width: 13px;
 
-
-      .interest-form-option label {
-              padding: 12px 15px;
-
-    
-    }
         }
+
+
+        .interest-form-option label {
+            padding: 12px 15px;
+
+
+        }
+    }
+
     @media (min-width: 992px) {
         .form-layout-container {
             grid-template-columns: repeat(2, 1fr);
@@ -1487,7 +1490,7 @@
         }
 
         .input-with-prefix {
-        padding: 18px 20px;
+            padding: 18px 20px;
 
 
         }
@@ -1683,21 +1686,21 @@
         }
 
 
-            .response-messages p {
-        font-size: 18px;
-        font-weight: light;
-        margin-bottom: 2px;
-        padding: 0px 18px;
-        color: #0D4036;
-    }
+        .response-messages p {
+            font-size: 18px;
+            font-weight: light;
+            margin-bottom: 2px;
+            padding: 0px 18px;
+            color: #0D4036;
+        }
 
-    .response-messages h4 {
-        font-size: 20px;
-        font-weight: 500;
-        padding: 0px 17px;
-        color: #0D4036;
+        .response-messages h4 {
+            font-size: 20px;
+            font-weight: 500;
+            padding: 0px 17px;
+            color: #0D4036;
 
-    }
+        }
 
 
 
@@ -1933,7 +1936,7 @@
                                             <span class="custom-select-text">Title, e.g CEO</span>
                                             <img class="custom-select-arrow" src="{{ asset('img/arrown.png') }}"
                                                 alt="" />
-                                    
+
                                         </div>
                                         <div class="custom-options">
                                             <span class="custom-option" data-value="CEO">CEO</span>
@@ -3082,7 +3085,7 @@
                                             <img class="custom-select-arrow" src="{{ asset('img/arrown.png') }}"
                                                 alt="" />
                                         </div>
-                                      <div class="custom-options">
+                                        <div class="custom-options">
                                             <span class="custom-option" data-value="technologyAndDigitalServices">
                                                 Technology & Digital Services
                                             </span>
@@ -3131,30 +3134,36 @@
                                                 Government & Public Services
                                             </span>
 
-                                            <span class="custom-option" data-value="environmentalAndSpecializedServices">
+                                            <span class="custom-option"
+                                                data-value="environmentalAndSpecializedServices">
                                                 Environmental & Specialized Services
                                             </span>
-                                      </div>
+                                        </div>
 
                                     </div>
 
                                     {{-- <p class="industry-message">kindly select your industry first</p> --}}
 
                                     <select name="industry" id="industry" style="display: none">
-                                        <option value="technologyAndDigitalServices">  Technology & Digital Services</option>
-                                        <option value="financialAndProfessionalServices"> Financial & Professional Services</option>
+                                        <option value="technologyAndDigitalServices"> Technology & Digital Services
+                                        </option>
+                                        <option value="financialAndProfessionalServices"> Financial & Professional
+                                            Services</option>
                                         <option value="manufacturingAndIndustrial"> Manufacturing & Industrial</option>
-                                        <option value="healthcareAndPharmaceuticals"> Healthcare & Pharmaceuticals</option>
+                                        <option value="healthcareAndPharmaceuticals"> Healthcare & Pharmaceuticals
+                                        </option>
                                         <option value="energyAndUtilities"> Energy & Utilities</option>
                                         <option value="retailAndConsumerGoods"> Retail & Consumer Goods</option>
                                         <option value="logisticsAndTransportation"> Logistics & Transportation</option>
-                                        <option value="agricultureAndFoodProcessing"> Agriculture & Food Processing</option>
+                                        <option value="agricultureAndFoodProcessing"> Agriculture & Food Processing
+                                        </option>
                                         <option value="realEstateAndConstruction"> Real Estate & Construction</option>
                                         <option value="mediaAndCommunications"> Media & Communications</option>
                                         <option value="educationAndTraining">Education & Training</option>
                                         <option value="governmentAndPublicServices"> Government & Public Services</option>
-                                        <option value="environmentalAndSpecializedServices"> Environmental & Specialized Services</option>
-                                     
+                                        <option value="environmentalAndSpecializedServices"> Environmental & Specialized
+                                            Services</option>
+
                                     </select>
                                 </div>
 
@@ -3549,7 +3558,8 @@
                         <div class="interest-form-footer-contact-row">
                             <div>
                                 <div class="interest-form-footer-contact-item">
-                                    <span class="interest-form-footer-icon phone"><i class="fas fa-phone-alt"></i></span>
+                                    <span class="interest-form-footer-icon phone"><i
+                                            class="fas fa-phone-alt"></i></span>
                                     <a href="tel:+442080921281" class="phone">+44 7535 659835</a>
                                 </div>
 
@@ -3562,7 +3572,7 @@
                             <div class="interest-form-footer-contact-item">
                                 <span class="interest-form-footer-icon location">
                                     <img class="location-icon" src="{{ asset('img/location_pin_place_map.png') }}"
-                                                alt="" />
+                                        alt="" />
                                 </span>
                                 <span>London UK</span>
                             </div>
@@ -4118,143 +4128,143 @@
          * INDUSTRY → CATEGORY HANDLER
          *************************************/
         const industryCategories = {
-  technologyAndDigitalServices: [
-    "Software and SaaS Solutions",
-    "FinTech and Digital Payment Systems",
-    "Cybersecurity and Data Protection Services",
-    "Cloud Computing and IT Infrastructure",
-    "Artificial Intelligence and Machine Learning",
-    "Telecommunications and Network Services",
-    "E-commerce and Digital Platforms",
-    "Blockchain and Digital Asset Management",
-  ],
+            technologyAndDigitalServices: [
+                "Software and SaaS Solutions",
+                "FinTech and Digital Payment Systems",
+                "Cybersecurity and Data Protection Services",
+                "Cloud Computing and IT Infrastructure",
+                "Artificial Intelligence and Machine Learning",
+                "Telecommunications and Network Services",
+                "E-commerce and Digital Platforms",
+                "Blockchain and Digital Asset Management",
+            ],
 
-  financialAndProfessionalServices: [
-    "Banking and Financial Institutions",
-    "Investment and Asset Management",
-    "Insurance and Risk Advisory Services",
-    "Legal and Regulatory Compliance Services",
-    "Accounting and Tax Advisory Services",
-    "Management Consulting",
-    "Marketing and Advertising Agencies",
-    "Human Resources and Talent Acquisition",
-  ],
+            financialAndProfessionalServices: [
+                "Banking and Financial Institutions",
+                "Investment and Asset Management",
+                "Insurance and Risk Advisory Services",
+                "Legal and Regulatory Compliance Services",
+                "Accounting and Tax Advisory Services",
+                "Management Consulting",
+                "Marketing and Advertising Agencies",
+                "Human Resources and Talent Acquisition",
+            ],
 
-  manufacturingAndIndustrial: [
-    "Industrial Machinery and Equipment",
-    "Automotive and Aerospace Manufacturing",
-    "Electronics and Technology Components",
-    "Chemicals and Raw Materials Production",
-    "Construction Materials and Supplies",
-    "Packaging and Container Manufacturing",
-    "Medical Devices and Equipment Production",
-    "Textiles and Apparel Manufacturing",
-  ],
+            manufacturingAndIndustrial: [
+                "Industrial Machinery and Equipment",
+                "Automotive and Aerospace Manufacturing",
+                "Electronics and Technology Components",
+                "Chemicals and Raw Materials Production",
+                "Construction Materials and Supplies",
+                "Packaging and Container Manufacturing",
+                "Medical Devices and Equipment Production",
+                "Textiles and Apparel Manufacturing",
+            ],
 
-  healthcareAndPharmaceuticals: [
-    "Pharmaceuticals and Biotechnology",
-    "Hospitals and Clinical Healthcare Facilities",
-    "Medical Equipment and Supplies",
-    "Healthcare Technology Systems",
-    "Laboratory and Diagnostic Services",
-    "Senior Care and Rehabilitation Services",
-    "Telemedicine and Digital Health Solutions",
-    "Clinical Research and Trials",
-  ],
+            healthcareAndPharmaceuticals: [
+                "Pharmaceuticals and Biotechnology",
+                "Hospitals and Clinical Healthcare Facilities",
+                "Medical Equipment and Supplies",
+                "Healthcare Technology Systems",
+                "Laboratory and Diagnostic Services",
+                "Senior Care and Rehabilitation Services",
+                "Telemedicine and Digital Health Solutions",
+                "Clinical Research and Trials",
+            ],
 
-  energyAndUtilities: [
-    "Oil, Gas, and Petroleum",
-    "Renewable Energy (Solar, Wind, Hydroelectric)",
-    "Power Generation and Distribution",
-    "Utilities and Water Services Management",
-    "Mining and Natural Resources Extraction",
-    "Energy Storage and Management Systems",
-    "Environmental and Sustainability Services",
-  ],
+            energyAndUtilities: [
+                "Oil, Gas, and Petroleum",
+                "Renewable Energy (Solar, Wind, Hydroelectric)",
+                "Power Generation and Distribution",
+                "Utilities and Water Services Management",
+                "Mining and Natural Resources Extraction",
+                "Energy Storage and Management Systems",
+                "Environmental and Sustainability Services",
+            ],
 
-  retailAndConsumerGoods: [
-    "Wholesale and Distribution Networks",
-    "Retail Chains and Franchising Operations",
-    "Food and Beverage Production",
-    "Consumer Electronics",
-    "Fashion and Luxury Goods",
-    "Home Goods and Appliances",
-    "Sports and Leisure Products",
-  ],
+            retailAndConsumerGoods: [
+                "Wholesale and Distribution Networks",
+                "Retail Chains and Franchising Operations",
+                "Food and Beverage Production",
+                "Consumer Electronics",
+                "Fashion and Luxury Goods",
+                "Home Goods and Appliances",
+                "Sports and Leisure Products",
+            ],
 
-  logisticsAndTransportation: [
-    "Shipping and Freight Forwarding Services",
-    "Air Cargo and Logistics",
-    "Trucking and Ground Transportation",
-    "Warehousing and Storage Facilities",
-    "Supply Chain Management",
-    "Fleet and Vehicle Management",
-    "Ports and Terminal Operations",
-  ],
+            logisticsAndTransportation: [
+                "Shipping and Freight Forwarding Services",
+                "Air Cargo and Logistics",
+                "Trucking and Ground Transportation",
+                "Warehousing and Storage Facilities",
+                "Supply Chain Management",
+                "Fleet and Vehicle Management",
+                "Ports and Terminal Operations",
+            ],
 
-  agricultureAndFoodProcessing: [
-    "Farming and Agricultural Production",
-    "Food Processing and Manufacturing",
-    "Beverage Production",
-    "Agricultural Technology (AgriTech)",
-    "Livestock and Animal Products",
-    "Commodity Trading and Export",
-    "Agricultural Equipment and Supplies",
-  ],
+            agricultureAndFoodProcessing: [
+                "Farming and Agricultural Production",
+                "Food Processing and Manufacturing",
+                "Beverage Production",
+                "Agricultural Technology (AgriTech)",
+                "Livestock and Animal Products",
+                "Commodity Trading and Export",
+                "Agricultural Equipment and Supplies",
+            ],
 
-  realEstateAndConstruction: [
-    "Commercial Real Estate Development",
-    "Property Management Services",
-    "Construction and Engineering Services",
-    "Architecture and Design Services",
-    "Facility Management",
-    "Real Estate Investment",
-    "Building Materials and Supplies",
-  ],
+            realEstateAndConstruction: [
+                "Commercial Real Estate Development",
+                "Property Management Services",
+                "Construction and Engineering Services",
+                "Architecture and Design Services",
+                "Facility Management",
+                "Real Estate Investment",
+                "Building Materials and Supplies",
+            ],
 
-  mediaAndCommunications: [
-    "Broadcasting and Entertainment",
-    "Digital Media and Publishing",
-    "Advertising and Public Relations",
-    "Telecommunications Services",
-    "Content Creation and Production",
-    "Event Management and Production",
-  ],
+            mediaAndCommunications: [
+                "Broadcasting and Entertainment",
+                "Digital Media and Publishing",
+                "Advertising and Public Relations",
+                "Telecommunications Services",
+                "Content Creation and Production",
+                "Event Management and Production",
+            ],
 
-  educationAndTraining: [
-    "Corporate Training and Development",
-    "Educational Technology (EdTech)",
-    "Schools and Educational Institutions",
-    "Professional Certification Programs",
-    "Language and Skills Training",
-    "E-learning and Online Education",
-  ],
+            educationAndTraining: [
+                "Corporate Training and Development",
+                "Educational Technology (EdTech)",
+                "Schools and Educational Institutions",
+                "Professional Certification Programs",
+                "Language and Skills Training",
+                "E-learning and Online Education",
+            ],
 
-  governmentAndPublicServices: [
-    "Government and Public Administration",
-    "Defense and Security Services",
-    "Infrastructure Development",
-    "Municipal and Public Utilities",
-    "Public Health Services",
-    "Government Technology Solutions",
-  ],
+            governmentAndPublicServices: [
+                "Government and Public Administration",
+                "Defense and Security Services",
+                "Infrastructure Development",
+                "Municipal and Public Utilities",
+                "Public Health Services",
+                "Government Technology Solutions",
+            ],
 
-  environmentalAndSpecializedServices: [
-    "Waste Management and Recycling",
-    "Water Treatment and Management",
-    "Environmental Consulting",
-    "Engineering and Technical Services",
-    "Research and Development",
-    "Testing and Quality Assurance",
-  ],
-};
+            environmentalAndSpecializedServices: [
+                "Waste Management and Recycling",
+                "Water Treatment and Management",
+                "Environmental Consulting",
+                "Engineering and Technical Services",
+                "Research and Development",
+                "Testing and Quality Assurance",
+            ],
+        };
 
 
         const defaultTags = [
-           "Software and SaaS Solutions",
-             "Research and Development",
-           "Oil, Gas, and Petroleum",
-             "Public Health Services",
+            "Software and SaaS Solutions",
+            "Research and Development",
+            "Oil, Gas, and Petroleum",
+            "Public Health Services",
             //    "Consumer Electronics",
         ];
 
@@ -4284,44 +4294,44 @@
         // }
 
         function updateCategories(industry) {
-    categoryContainer.innerHTML = "";
-    hiddenCategoryInput.value = "";
+            categoryContainer.innerHTML = "";
+            hiddenCategoryInput.value = "";
 
-    // Remove padding fix by default
-    categoryContainer.classList.remove("industry-selected");
+            // Remove padding fix by default
+            categoryContainer.classList.remove("industry-selected");
 
-    if (!industry || !industryCategories[industry]) {
-        renderTags(defaultTags, true);
-        return;
-    }
+            if (!industry || !industryCategories[industry]) {
+                renderTags(defaultTags, true);
+                return;
+            }
 
-    // Apply padding fix once industry is selected
-    categoryContainer.classList.add("industry-selected");
+            // Apply padding fix once industry is selected
+            categoryContainer.classList.add("industry-selected");
 
-    const categories = industryCategories[industry];
-    const saved = selectedCategories[industry] || [];
+            const categories = industryCategories[industry];
+            const saved = selectedCategories[industry] || [];
 
-    renderTags(categories, false, saved);
-}
+            renderTags(categories, false, saved);
+        }
 
 
         /** Render tags **/
         function renderTags(categories, isDefault = false, saved = []) {
-    categoryContainer.innerHTML = "";
+            categoryContainer.innerHTML = "";
 
-    categories.forEach((category) => {
-        const tag = document.createElement("div");
-        tag.className = "interest-form-tag";
+            categories.forEach((category) => {
+                const tag = document.createElement("div");
+                tag.className = "interest-form-tag";
 
-        if (isDefault) {
-            tag.classList.add("is-default");
-        }
+                if (isDefault) {
+                    tag.classList.add("is-default");
+                }
 
-        if (saved.includes(category)) {
-            tag.classList.add("active");
-        }
+                if (saved.includes(category)) {
+                    tag.classList.add("active");
+                }
 
-        tag.innerHTML = `
+                tag.innerHTML = `
             <span class="check-icon ${saved.includes(category) ? "active" : ""}">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                     viewBox="0 0 24 24" stroke-width="3" stroke="currentColor">
@@ -4332,35 +4342,35 @@
             <span>${category}</span>
         `;
 
-        // Prevent clicks on default tags
-        if (!isDefault) {
-            tag.addEventListener("click", () => {
-                const currentIndustry = industrySelect.value;
+                // Prevent clicks on default tags
+                if (!isDefault) {
+                    tag.addEventListener("click", () => {
+                        const currentIndustry = industrySelect.value;
 
-                tag.classList.toggle("active");
-                tag.querySelector(".check-icon").classList.toggle("active");
+                        tag.classList.toggle("active");
+                        tag.querySelector(".check-icon").classList.toggle("active");
 
-                if (!selectedCategories[currentIndustry]) {
-                    selectedCategories[currentIndustry] = [];
+                        if (!selectedCategories[currentIndustry]) {
+                            selectedCategories[currentIndustry] = [];
+                        }
+
+                        if (tag.classList.contains("active")) {
+                            selectedCategories[currentIndustry].push(category);
+                        } else {
+                            selectedCategories[currentIndustry] =
+                                selectedCategories[currentIndustry].filter(
+                                    (c) => c !== category
+                                );
+                        }
+
+                        updateHiddenInput();
+                        saveFormData();
+                    });
                 }
 
-                if (tag.classList.contains("active")) {
-                    selectedCategories[currentIndustry].push(category);
-                } else {
-                    selectedCategories[currentIndustry] =
-                        selectedCategories[currentIndustry].filter(
-                            (c) => c !== category
-                        );
-                }
-
-                updateHiddenInput();
-                saveFormData();
+                categoryContainer.appendChild(tag);
             });
         }
-
-        categoryContainer.appendChild(tag);
-    });
-}
 
         function renderTags(categories, isDefault = false, saved = []) {
             categoryContainer.innerHTML = "";
@@ -4518,7 +4528,118 @@
             });
         });
 
-        // Validation function for current step
+        // Backend validation function for a specific step
+        async function validateStepWithBackend(stepNumber) {
+            try {
+                const formData = new FormData(form);
+                const csrfToken = getCsrfToken();
+
+                const url = validateStepUrl.replace('__STEP__', stepNumber);
+
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: formData,
+                    credentials: 'same-origin'
+                });
+
+                // Handle CSRF token expiration
+                if (response.status === 419) {
+                    const newToken = await refreshCsrfToken();
+                    if (newToken) {
+                        updateCsrfToken(newToken);
+                        // Retry once with new token
+                        const retryResponse = await fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': newToken,
+                                'Accept': 'application/json',
+                                'X-Requested-With': 'XMLHttpRequest'
+                            },
+                            body: new FormData(form),
+                            credentials: 'same-origin'
+                        });
+                        return await handleValidationResponse(retryResponse, stepNumber);
+                    }
+                }
+
+                return await handleValidationResponse(response, stepNumber);
+
+            } catch (error) {
+                console.warn('Backend validation network error:', error);
+                // Return true to allow proceeding - final submission will validate again
+                return true;
+            }
+        }
+
+        // Handle validation response
+        async function handleValidationResponse(response, stepNumber) {
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                // Update form fields with sanitized data if provided
+                if (data.data) {
+                    Object.keys(data.data).forEach(field => {
+                        const input = form.querySelector(`[name="${field}"]`);
+                        if (input && data.data[field] !== undefined && data.data[field] !== null) {
+                            input.value = data.data[field];
+                        }
+                    });
+                }
+                return true;
+            }
+
+            if (data.errors) {
+                // Show backend validation errors on the current step
+                showBackendErrors(data.errors, stepNumber);
+            }
+
+            return false;
+        }
+
+        // Show backend validation errors on the form
+        function showBackendErrors(errors, stepNumber) {
+            const currentStage = formStages[stepNumber - 1];
+
+            // Clear previous errors in the current stage
+            currentStage.querySelectorAll('.error-message').forEach(msg => msg.remove());
+            currentStage.querySelectorAll('input, select, textarea').forEach(input => {
+                clearError(input);
+            });
+
+            // Show new errors
+            Object.keys(errors).forEach(field => {
+                const input = currentStage.querySelector(`[name="${field}"]`);
+                if (input) {
+                    const errorMessage = Array.isArray(errors[field]) ? errors[field][0] : errors[
+                        field];
+                    showError(input, errorMessage);
+                } else {
+                    // Try to find in the form (might be a custom select)
+                    const formInput = form.querySelector(`[name="${field}"]`);
+                    if (formInput) {
+                        const errorMessage = Array.isArray(errors[field]) ? errors[field][0] : errors[
+                            field];
+                        showError(formInput, errorMessage);
+                    }
+                }
+            });
+
+            // Scroll to first error
+            const firstError = currentStage.querySelector('.error-message');
+            if (firstError) {
+                firstError.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }
+        }
+
+        // Validation function for current step (client-side)
         function validateCurrentStep() {
             const currentStage = formStages[currentStep];
             let isValid = true;
@@ -4663,7 +4784,8 @@
 
                 if (!industry.value.trim()) {
                     const customSelect = currentStage.querySelector('[data-select="industry"]');
-                    showError(customSelect || industry.parentNode, 'Please select your industry, to get updated categories');
+                    showError(customSelect || industry.parentNode,
+                        'Please select your industry, to get updated categories');
                     isValid = false;
                 }
 
@@ -5049,7 +5171,24 @@
                     showRefreshButton = true;
                 } else if (error.status === 422) {
                     if (error.data?.errors) {
-                        showServerErrors(error.data.errors);
+                        // Handle step-based errors from backend
+                        if (error.data?.first_error_step) {
+                            navigateToStep = error.data.first_error_step -
+                                1; // Convert to 0-based index
+                            currentStep = navigateToStep;
+                            showStep(currentStep);
+                        }
+
+                        // Show errors for the specific step
+                        if (error.data?.errors_by_step && navigateToStep !== null) {
+                            const stepErrors = error.data.errors_by_step[navigateToStep + 1];
+                            if (stepErrors) {
+                                showBackendErrors(stepErrors, navigateToStep + 1);
+                            }
+                        } else {
+                            showServerErrors(error.data.errors);
+                        }
+
                         errorMessage = error.data?.message ||
                             'Please correct the errors below and try again.';
                     } else if (error.data?.message) {
@@ -5312,38 +5451,37 @@
 
         // Scroll Back To Top FUnctionality
 
-         (function () {
+        (function() {
 
-  const BUTTON_SELECTOR = ".interest-form-proceed-button, .interest-form-return-button";
-  const SCROLL_OFFSET = 0; // adjust to fit your design
+            const BUTTON_SELECTOR = ".interest-form-proceed-button, .interest-form-return-button";
+            const SCROLL_OFFSET = 0; // adjust to fit your design
 
-  // Handler: delegated click listener
-  document.addEventListener("click", function (e) {
+            // Handler: delegated click listener
+            document.addEventListener("click", function(e) {
 
-    const btn = e.target.closest && e.target.closest(BUTTON_SELECTOR);
-    if (!btn) return;
+                const btn = e.target.closest && e.target.closest(BUTTON_SELECTOR);
+                if (!btn) return;
 
-    // If it's a submit (accidentally matched) or disabled, do nothing
-    if (btn.matches("[type='submit'], .interest-form-submit-button") || btn.disabled) return;
+                // If it's a submit (accidentally matched) or disabled, do nothing
+                if (btn.matches("[type='submit'], .interest-form-submit-button") || btn.disabled)
+                    return;
 
-    requestAnimationFrame(() => {
-  
-      try {
-        window.scrollTo({
-            top: SCROLL_OFFSET,
-          behavior: "smooth"
-        });
-      } catch (err) {
-        // Fallback for older browsers
-        window.scrollTo(0, 0);
-      }
+                requestAnimationFrame(() => {
+
+                    try {
+                        window.scrollTo({
+                            top: SCROLL_OFFSET,
+                            behavior: "smooth"
+                        });
+                    } catch (err) {
+                        // Fallback for older browsers
+                        window.scrollTo(0, 0);
+                    }
+                });
+            }, false);
+        })();
+
+
+
     });
-  }, false);
-})();
-
-   
-
-    });
-
-   
 </script>

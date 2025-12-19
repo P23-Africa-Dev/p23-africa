@@ -83,6 +83,267 @@
             width: 70% !important;
         }
     }
+
+
+    .network-section {
+        position: relative;
+        width: 100%;
+        background-image: url(../img/network-effect-bg.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        /* background-color: #0B1727;
+        background-blend-mode: soft-light; */
+        overflow: hidden;
+        margin-bottom: 90px;
+    }
+
+
+
+    .network-container {
+        position: relative;
+        z-index: 2;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 5rem 0rem;
+
+    }
+
+    .network-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        color: white;
+
+    }
+
+    .network-body {
+        display: flex;
+        flex-direction: column;
+    }
+
+
+    .network-header p {
+
+        font-size: 1rem;
+        letter-spacing: 1.2px;
+        line-height: 0.8;
+        font-family: "GT Walsheim Trial Cn Lt";
+
+        font-weight: 100;
+
+
+    }
+
+    .network-header h2 {
+        line-height: 0.2;
+        font-size: 1.1rem;
+        letter-spacing: 0.8px;
+
+        font-family: "GT Walsheim ProCB";
+
+
+    }
+
+
+    .network-content {
+        display: flex;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+
+        flex-direction: column;
+        gap: 30px;
+        color: #fff;
+    }
+
+
+
+    .network-content .network-content-bottom h3.content-title {
+        font-family: "GT Walsheim ProCB";
+        font-size: 30px;
+    }
+
+    .network-content .network-content-bottom p.content-desc {
+        font-family: "GT Walsheim Trial Cn Lt";
+        padding: 0rem 3rem;
+        letter-spacing: 0.5px;
+        font-weight: 100;
+        font-size: 17px;
+    }
+
+
+    .network-content .network-content-bottom .cta-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 1rem;
+        background-color: #27e6a7;
+        color: #04201a;
+        padding: 0.55rem 1.8rem;
+        border-radius: 10px;
+        text-decoration: none;
+        font-family: "GT Walsheim Trial Cn Lt";
+
+        font-weight: 400;
+        font-size: 0.9rem;
+        letter-spacing: 0.9px;
+        margin-top: 1.4rem;
+        transition: background-color .7s;
+
+
+
+    }
+
+    .network-content .network-content-bottom .cta-button:hover {
+
+        background-color: #fff;
+
+
+
+
+    }
+
+    .network-content .network-content-bottom .cta-button img {
+        width: 15px;
+    }
+
+    .network-content .network-content-top p {
+        display: flex;
+        flex-direction: column;
+        gap: 0px;
+        letter-spacing: 1.5px
+    }
+
+    .network-content .network-content-top p span {
+
+        letter-spacing: 1.5px;
+        line-height: 1;
+        font-size: 1.2rem;
+    }
+
+    .network-content .network-content-top p.match-text {
+        margin-top: 1.6rem;
+        margin-bottom: 3rem;
+        font-size: 1.1rem;
+        color: #27E6A7;
+        font-family: "Montserrat", sans-serif;
+        font-weight: bold;
+
+    }
+
+    /* Cards */
+    .network-cards {
+        display: flex;
+        justify-content: center;
+        margin: 1rem 0rem;
+    }
+
+    .card-wrapper {
+        position: relative;
+        overflow: visible;
+        width: 250px;
+        /* height: 300px; */
+
+    }
+
+    .card-wrapper.left-card-image {
+        left: 50px;
+        top: 40px;
+        /* border:  1px solid red; */
+
+    }
+
+    .card-wrapper.right-card-image {
+        right: 30px;
+        top: -10px;
+    }
+
+    .card-wrapper img {
+        /* height: 250px; */
+        /* width: 100%; */
+        overflow: visible;
+        max-width: 100%;
+        object-fit: cover;
+    }
+
+    @media (min-width: 992px) {
+        .network-body {
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .network-content {
+            text-align: left;
+            align-items: start;
+            justify-content: center;
+
+            flex-direction: column-reverse;
+            gap: 0px;
+            
+            width: 500px;
+
+        }
+
+
+        .network-header p {
+
+            font-size: 3.4rem;
+            letter-spacing: 1.3px;
+            line-height: 1.3;
+
+
+            font-weight: 100;
+
+
+        }
+
+        .network-header h2 {
+            line-height: 0.2;
+            font-size: 3.5rem;
+
+
+
+        }
+
+
+        .network-content .network-content-bottom p.content-desc {
+            padding: 0rem;
+
+            font-size: 19px;
+            line-height: 1;
+            width: 350px;
+        }
+
+        .network-cards {
+            width: 700px;
+            border: 1px solid red;
+        }
+
+        .card-wrapper {
+            position: relative;
+            overflow: visible;
+            width: 100%;
+        }
+
+        .card-wrapper img {
+            width: 100%;
+            height: 430px;
+        }
+
+    .network-content .network-content-bottom .cta-button {
+        /* margin-top: 1.4rem; */
+
+    }
+        .network-content .network-content-top p.match-text {
+        margin-top: 1.5rem;
+        margin-bottom: 0rem;
+        font-size: 3rem !important;
+       
+
+    }
+
+
+    }
 </style>
 
 @section('content')
@@ -102,7 +363,7 @@
                         <br>
                         <div>
                             <a href="{{ url('contact') }}" class="d-flex justify-content-between"><span>Contact Us</span>
-                            <span>→</span></a>
+                                <span>→</span></a>
                         </div>
                     </div>
                     <div class="col-md-5 animated-images mt-5 mt-md-0">
@@ -284,6 +545,61 @@
             </div>
         </div>
     </section>
+
+
+    <section class="network-section">
+        {{-- <div class="network-overlay"></div> --}}
+
+        <div class="network-container">
+            <!-- Section Header -->
+            <div class="network-header">
+                <p class="network-eyebrow">Networking Opportunities For</p>
+                <h2 class="network-title">Executive Leaders</h2>
+            </div>
+
+            <!-- Section Body -->
+            <div class="network-body">
+                <!-- Column / Row 1 : Cards -->
+                <div class="network-cards">
+                    <div class="card-wrapper left-card-image">
+                        <img src="{{ asset('img/bottom-newtwork-bg.png') }}" loading="lazy" alt="" />
+                    </div>
+
+                    <div class="card-wrapper right-card-image">
+
+                        <img src="{{ asset('img/top-newtwork-bg.png') }}" loading="lazy" alt="" />
+                    </div>
+                </div>
+
+                <!-- Column / Row 2 : Content -->
+                <div class="network-content">
+
+                    <div class="network-content-top">
+                        <p class="match-text">
+                            <span>It’s a </span> <span>Business Match</span>
+                        </p>
+                    </div>
+
+                    <div class="network-content-bottom">
+                        <h3 class="content-title">Join NOEL</h3>
+                        <p class="content-desc">
+                            A private network for vetted African CEOs who are matched for
+                            strategic deals and partnerships.
+                        </p>
+
+                        <a href="#" class="cta-button">
+                            Register Your Interest
+                            <img src="{{ asset('img/right-colored-r.png') }}" loading="lazy" alt="" />
+                        </a>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+
 
 
     <section class="testimonial-section content-section animate-on-scroll">
