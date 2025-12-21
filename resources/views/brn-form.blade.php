@@ -550,7 +550,7 @@
     }
 
     input#countrySearchReg {
-        z-index: 40;
+        z-index: 50;
 
     }
 
@@ -1409,27 +1409,28 @@
     }
 
     #responseModal .modal-body button.btn-secondary.btn {
-        background-color: #0D4036 !important;
-        padding: 13px 70px;
+        background-color: #193E47 !important;
+        padding: 12px 70px;
         border-radius: 10px;
-        margin-top: 20px;
+        margin-top: 10px;
         font-family: "GT Walsheim Con" !important;
 
     }
 
-    .response-messages p {
-        font-size: 15px;
-        font-weight: light;
+    .modal.show.fade .modal-content #responseMessage p {
+        font-size: 13px;
+        font-weight: 400;
         margin-bottom: 2px;
         padding: 0px 18px;
-        color: #0D4036;
+        color: #193E47;
     }
 
-    .response-messages h4 {
-        font-size: 17px;
-        font-weight: 500;
-        padding: 0px 17px;
-        color: #0D4036;
+    .modal.show.fade .modal-content #responseMessage h4 {
+        font-size: 13px;
+        font-weight: 900;
+        padding: 0px 40px;
+        color: #193E47;
+        margin: 20px 0px;
 
     }
 
@@ -1470,6 +1471,26 @@
 
 
         }
+
+        #responseModal .modal-dialog {
+            max-width: 600px !important;
+        }
+
+        .modal.show.fade .modal-content #responseMessage p {
+            font-size: 16px;
+
+        }
+
+        .modal.show.fade .modal-content #responseMessage h4 {
+            font-size: 16px;
+            font-weight: 900;
+            padding: 0px 40px;
+            color: #193E47;
+            margin: 20px 0px;
+
+        }
+
+
     }
 
     @media (min-width: 992px) {
@@ -1686,21 +1707,6 @@
         }
 
 
-        .response-messages p {
-            font-size: 18px;
-            font-weight: light;
-            margin-bottom: 2px;
-            padding: 0px 18px;
-            color: #0D4036;
-        }
-
-        .response-messages h4 {
-            font-size: 20px;
-            font-weight: 500;
-            padding: 0px 17px;
-            color: #0D4036;
-
-        }
 
 
 
@@ -1722,6 +1728,20 @@
         .interest-form-option label {
             font-size: 11px;
         }
+
+        .modal.show.fade .modal-content #responseMessage p {
+            font-size: 16px;
+            padding: 0px 40px;
+
+        }
+
+        .modal.show.fade .modal-content #responseMessage h4 {
+            font-size: 16px;
+            padding: 0px 60px;
+
+
+        }
+
 
     }
 </style>
@@ -2001,7 +2021,7 @@
                                             <!-- Dropdown -->
                                             <!-- Dropdown -->
                                             <div class="country-dropdown" id="countryDropdown">
-                                                <input type="text" id="countrySearch" class="country-search"
+                                                <input type="text" id="countrySearch" autofocus class="country-search"
                                                     placeholder="Search country...">
                                                 <ul class="country-list" id="countryList">
                                                     <li data-code="+93" data-flag="af"><img
@@ -2600,14 +2620,14 @@
 
                                 <div class="interest-form-group">
                                     <label for="countryReg">Country Of Registration</label>
-                                    <div class="custom-select" data-select="country">
+                                    <div class="custom-select" id="countryRegSelect" data-select="country">
                                         <div class="custom-select-trigger">
                                             <span class="custom-select-text">Select your country</span>
                                             <img class="custom-select-arrow" src="{{ asset('img/arrown.png') }}"
                                                 alt="" />
                                         </div>
                                         <div class="custom-options countryReg-options" id="countryReg-options">
-                                            <input type="text" class="country-search" id="countrySearchReg"
+                                            <input type="text" autofocus class="country-search" id="countrySearchReg"
                                                 placeholder="Search countries..." autocomplete="off">
                                             <div class="custom-options-scrollable">
                                                 <span class="custom-option" data-value="Afghanistan">Afghanistan</span>
@@ -3353,7 +3373,7 @@
                             <div class="modal-body text-center py-4">
                                 {{-- <p id="responseMessage" class="mb-3"></p> --}}
                                 <div id="responseMessage">
-
+                               
                                 </div>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Done</button>
                             </div>
@@ -3920,17 +3940,35 @@
                 `select[name="${getFieldName(selectName)}"]`
             );
 
+
+
             // Toggle dropdown
             trigger.addEventListener("click", (e) => {
                 e.stopPropagation();
 
+                // Close other open selects
                 document.querySelectorAll(".custom-select.open").forEach((openSelect) => {
                     if (openSelect !== customSelect) openSelect.classList.remove(
                         "open");
                 });
 
+                const willOpen = !customSelect.classList.contains("open");
+
+                // Toggle current dropdown
                 customSelect.classList.toggle("open");
+
+                // ✅ AUTOFOCUS ONLY FOR COUNTRY REGISTRATION
+                if (willOpen && selectName === "country") {
+                    const searchInput = customSelect.querySelector(".country-search");
+
+                    if (searchInput) {
+                        requestAnimationFrame(() => {
+                            searchInput.focus();
+                        });
+                    }
+                }
             });
+
 
             // Handle selecting an option
             options.forEach((option) => {
@@ -4014,16 +4052,26 @@
         // Toggle dropdown
         selectedCountry.addEventListener("click", (e) => {
             e.stopPropagation();
-            if (isDropdownOpen()) {
-                countryDropdown.style.display = "none";
-                countryDropdown.classList.remove("open");
-                arrow.classList.remove("rotate-up");
-            } else {
+
+            const opening = !isDropdownOpen();
+
+            if (opening) {
                 countryDropdown.style.display = "block";
                 countryDropdown.classList.add("open");
                 arrow.classList.add("rotate-up");
+
+                //  Auto-focus search input 
+                requestAnimationFrame(() => {
+                    searchInput.focus();
+                });
+
+            } else {
+                countryDropdown.style.display = "none";
+                countryDropdown.classList.remove("open");
+                arrow.classList.remove("rotate-up");
             }
         });
+
 
         // Prevent closing when clicking inside dropdown
         countryDropdown.addEventListener("click", (e) => {
@@ -4100,6 +4148,7 @@
         noResults.textContent = 'No results found';
         noResults.style.display = 'none';
         noResults.style.color = '#ffff';
+        noResults.style.fontSize = '12px';
         noResults.style.padding = '8px 12px';
         optionsContainer.appendChild(noResults);
 
