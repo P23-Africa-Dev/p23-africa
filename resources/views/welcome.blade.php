@@ -75,7 +75,7 @@
     }
 
     #highlight a {
-        padding: 15px 60px;
+        padding: 15px 40px;
         /* height: 64px;
         width: 351px; */
         border-radius: 10px;
@@ -109,6 +109,10 @@
             border-radius: 10px;
             font-size: 20px;
             width: 70% !important;
+        }
+
+        #how_we_help{
+            margin-bottom: 0rem !important;
         }
     }
 
@@ -152,7 +156,7 @@
 
     .network-header p {
 
-        font-size: 1rem;
+        font-size: 1.3rem;
         letter-spacing: 1.2px;
         line-height: 0.8;
         font-family: "GT Walsheim Trial Cn Lt";
@@ -164,7 +168,7 @@
 
     .network-header h2 {
         line-height: 0.2;
-        font-size: 1.1rem;
+        font-size: 1.3rem;
         letter-spacing: 0.8px;
 
         font-family: "GT Walsheim ProCB";
@@ -193,7 +197,7 @@
 
     .network-content .network-content-bottom p.content-desc {
         font-family: "GT Walsheim Trial Cn Lt";
-        padding: 0rem 3rem;
+        padding: 0rem 4rem;
         letter-spacing: 0.5px;
         font-weight: 100;
         font-size: 17px;
@@ -206,13 +210,13 @@
         gap: 1rem;
         background-color: #27e6a7;
         color: #04201a;
-        padding: 0.55rem 1.8rem;
+        padding: 0.7rem 2.7rem;
         border-radius: 10px;
         text-decoration: none;
         font-family: "GT Walsheim Trial Cn Lt";
 
         font-weight: 400;
-        font-size: 0.9rem;
+        font-size: 1rem;
         letter-spacing: 0.9px;
         margin-top: 1.4rem;
         transition: background-color .7s;
@@ -245,13 +249,12 @@
 
         letter-spacing: 1.5px;
         line-height: 1;
-        font-size: 1.2rem;
+        font-size: 1.3rem;
     }
 
     .network-content .network-content-top p.match-text {
         margin-top: 1.6rem;
         margin-bottom: 3rem;
-        font-size: 1.1rem;
         color: #27E6A7;
         font-family: "Montserrat", sans-serif;
         font-weight: bold;
@@ -262,7 +265,8 @@
     .network-cards {
         display: flex;
         justify-content: center;
-        margin: 1rem 0rem;
+        margin-bottom: 1.4rem;
+
     }
 
     .card-wrapper {
@@ -285,6 +289,10 @@
         top: -10px;
     }
 
+    .card-wrapper.right-card-image img.desktop{
+        display: none
+    }
+
     .card-wrapper img {
         /* height: 250px; */
         /* width: 100%; */
@@ -292,6 +300,21 @@
         max-width: 100%;
         object-fit: cover;
     }
+
+
+    /* Prevent flicker */
+    .left-card-image,
+    .right-card-image,
+    .network-content-top {
+        opacity: 0;
+        will-change: transform, opacity;
+    }
+
+    /* Optional smoother motion */
+    .network-content {
+        overflow: hidden;
+    }
+
 
     @media (min-width: 992px) {
         .network-body {
@@ -315,9 +338,9 @@
 
         .network-header p {
 
-            font-size: 3.4rem;
+            font-size: 3.6rem;
             letter-spacing: 1.3px;
-            line-height: 1.3;
+            line-height: 1.4;
 
 
             font-weight: 100;
@@ -327,23 +350,29 @@
 
         .network-header h2 {
             line-height: 0.2;
-            font-size: 3.5rem;
+            font-size: 3.6rem;
 
 
 
         }
 
+        .network-content {
+            transform: translate(-30px, 20px)
+        }
 
         .network-content .network-content-bottom p.content-desc {
             padding: 0rem;
 
             font-size: 19px;
             line-height: 1.3;
-            width: 350px;
+            letter-spacing: 0.9px;
+            width: 380px;
         }
 
         .network-cards {
-            width: 700px;
+            width: 750px;
+        margin: 1rem 0rem;
+
         }
 
         .card-wrapper {
@@ -354,15 +383,39 @@
 
         .card-wrapper img {
             width: 100%;
-            height: 430px;
+            /* height: 430px; */
         }
 
-           .network-content .network-content-bottom{
-            margin-top: 6rem;
-           }
+        .card-wrapper.left-card-image {
+            left: 75px;
+            top: 80px;
+            /* border:  1px solid red; */
+
+        }
+
+        .card-wrapper.right-card-image {
+            right: 50px;
+            top: -20px;
+        }
+
+            .card-wrapper.right-card-image img.desktop{
+        display: block;
+    }
+            .card-wrapper.right-card-image img.mobile{
+        display: none;
+    }
+
+
+        .network-content .network-content-bottom {
+            margin-top: 12em;
+        }
 
         .network-content .network-content-bottom .cta-button {
             font-size: 20px;
+        }
+
+        .network-content .network-content-top {
+            margin-top: 1rem;
         }
 
         .network-content .network-content-top p {
@@ -373,7 +426,7 @@
 
         }
 
-        .network-content .network-content-top p span{
+        .network-content .network-content-top p span {
             font-size: 2rem;
         }
 
@@ -600,12 +653,16 @@
                 <!-- Column / Row 1 : Cards -->
                 <div class="network-cards">
                     <div class="card-wrapper left-card-image">
-                        <img src="{{ asset('img/bottom-newtwork-bg.png') }}" loading="lazy" alt="" />
+                        <img src="{{ asset('img/left-image.png') }}" loading="lazy" alt="" />
+
+                        {{-- <img src="{{ asset('img/bottom-newtwork-bg.png') }}" loading="lazy" alt="" /> --}}
                     </div>
 
                     <div class="card-wrapper right-card-image">
 
-                        <img src="{{ asset('img/top-newtwork-bg.png') }}" loading="lazy" alt="" />
+                        <img class="desktop" src="{{ asset('img/right-image-interest.png') }}" loading="lazy" alt="" />
+                        <img class="mobile" src="{{ asset('img/top-newtwork-bg.png') }}" loading="lazy" alt="" />
+
                     </div>
                 </div>
 
@@ -970,5 +1027,7 @@
                 }
             });
         });
+
+       
     </script>
 @endsection
