@@ -391,6 +391,18 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-4 mb-3">
+                                        <a href="{{ route('admin.crm.index') }}"
+                                            class="d-flex align-items-center justify-content-between text-decoration-none p-3 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark-transition">
+                                            <div class="d-flex align-items-center">
+                                                <div class="bg-success bg-opacity-10 rounded p-2 me-3">
+                                                    <i class="fa fa-address-book text-success"></i>
+                                                </div>
+                                                <span class="text-dark dark:text-gray-100 fw-medium">CRM / Leads</span>
+                                            </div>
+                                            <i class="fa fa-arrow-right text-muted dark:text-gray-400"></i>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
                                         <a href="{{ route('admin.consultation.index') }}"
                                             class="d-flex align-items-center justify-content-between text-decoration-none p-3 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark-transition">
                                             <div class="d-flex align-items-center">

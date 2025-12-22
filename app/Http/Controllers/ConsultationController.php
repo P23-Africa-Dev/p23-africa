@@ -9,6 +9,7 @@ use App\Models\ScheduledSession;
 use App\Models\ChatMessage;
 use App\Services\GoogleCalendarService;
 use App\Services\AdminNotificationService;
+use App\Models\Lead;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
@@ -113,6 +114,21 @@ class ConsultationController extends Controller
         if ($application) {
             // Update existing draft to submitted status
             $application->update($applicationData);
+
+            // Send notification to admins for draft conversion
+            AdminNotificationService::notifyNewConsultation($application);
+
+            // Auto-create CRM lead from consultation draft submission
+            try {
+                $lead = Lead::convertFromConsultation($application);
+                AdminNotificationService::notifyNewLead($lead);
+            } catch (\Exception $e) {
+                Log::error('Failed to create lead from consultation draft', [
+                    'application_id' => $application->id,
+                    'error' => $e->getMessage()
+                ]);
+            }
+
             Log::info('Consultation draft updated to submitted', [
                 'application_id' => $application->id,
                 'session_id' => $sessionId,
@@ -124,6 +140,17 @@ class ConsultationController extends Controller
 
             // Send notification to admins
             AdminNotificationService::notifyNewConsultation($application);
+
+            // Auto-create CRM lead from new consultation application
+            try {
+                $lead = Lead::convertFromConsultation($application);
+                AdminNotificationService::notifyNewLead($lead);
+            } catch (\Exception $e) {
+                Log::error('Failed to create lead from new consultation', [
+                    'application_id' => $application->id,
+                    'error' => $e->getMessage()
+                ]);
+            }
 
             Log::info('New consultation application created', [
                 'application_id' => $application->id,

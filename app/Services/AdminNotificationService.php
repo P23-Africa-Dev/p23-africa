@@ -218,4 +218,37 @@ class AdminNotificationService
             ]
         );
     }
+
+    /**
+     * Notify about new CRM lead
+     */
+    public static function notifyNewLead($lead): void
+    {
+        $sourceLabel = match ($lead->source) {
+            'contact_form' => 'Contact Form',
+            'consultation' => 'Consultation Request',
+            'website' => 'Website',
+            'referral' => 'Referral',
+            'event' => 'Event',
+            'social_media' => 'Social Media',
+            'cold_outreach' => 'Cold Outreach',
+            default => ucfirst(str_replace('_', ' ', $lead->source ?? 'Unknown')),
+        };
+
+        self::notifyAdmins(
+            'new_lead',
+            'New CRM Lead',
+            'New lead from ' . $sourceLabel . ': ' . $lead->name . ($lead->company ? ' (' . $lead->company . ')' : ''),
+            '/admin/crm/' . $lead->id,
+            'fas fa-user-plus',
+            [
+                'lead_id' => $lead->id,
+                'lead_name' => $lead->name,
+                'email' => $lead->email,
+                'company' => $lead->company,
+                'source' => $lead->source,
+                'status' => $lead->status,
+            ]
+        );
+    }
 }
