@@ -682,7 +682,7 @@
                             strategic deals and partnerships.
                         </p>
 
-                        <a href="#" class="cta-button">
+                        <a href="{{ url('noel54/interest-form') }}" class="cta-button">
                             Register Your Interest
                             <img src="{{ asset('img/right-colored-r.png') }}" loading="lazy" alt="" />
                         </a>
