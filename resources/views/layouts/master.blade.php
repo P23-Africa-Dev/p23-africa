@@ -142,23 +142,20 @@
         });
 
 
-        // INTEREST SECTION ANIMATION
         gsap.registerPlugin(ScrollTrigger);
 
         const networkTimeline = gsap.timeline({
             scrollTrigger: {
                 trigger: ".network-content",
-              start: "top 50%"  ,
-                once: true,
+                start: "top 50%",
+                toggleActions: "restart none restart none",
             }
         });
-
-       
 
         /* LEFT CARD */
         networkTimeline.fromTo(
             ".left-card-image", {
-                x: -220, 
+                x: -220,
                 opacity: 0
             }, {
                 x: 0,
@@ -171,7 +168,7 @@
         /* RIGHT CARD */
         networkTimeline.fromTo(
             ".right-card-image", {
-                x: 220, 
+                x: 220,
                 opacity: 0
             }, {
                 x: 0,
@@ -182,21 +179,17 @@
             "<" 
         );
 
-        /* ===============================
-           NETWORK CONTENT TOP (FADE UP)
-           =============================== */
-
+        /* NETWORK CONTENT TOP (FADE IN WITH CARDS) */
         networkTimeline.fromTo(
             ".network-content-top", {
-                y: 0, 
                 opacity: 0
             }, {
-                y: 0,
                 opacity: 1,
-                duration: 0.2, 
-                ease: "power3.out"
+                duration: 0.4, 
+                delay: 1,
+                ease: "power2.out"
             },
-            ">" 
+            "<" 
         );
 
 

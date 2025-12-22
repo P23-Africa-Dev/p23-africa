@@ -1,16 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 @font-face {
-    font-family: 'IvyOra Text';
-    src: url('../fonts/IvyOraText-Bold.eot');
-    src: local('IvyOra Text Bold'), local('IvyOraText-Bold'),
-        url('../fonts/IvyOraText-Bold.eot?#iefix') format('embedded-opentype'),
-        url('../fonts/IvyOraText-Bold.woff2') format('woff2'),
-        url('../fonts/IvyOraText-Bold.woff') format('woff'),
-        url('../fonts/IvyOraText-Bold.ttf') format('truetype');
-  
+    font-family: "IvyOra Text";
+    src: url("../fonts/IvyOraText-Bold.eot");
+    src: local("IvyOra Text Bold"), local("IvyOraText-Bold"),
+        url("../fonts/IvyOraText-Bold.eot?#iefix") format("embedded-opentype"),
+        url("../fonts/IvyOraText-Bold.woff2") format("woff2"),
+        url("../fonts/IvyOraText-Bold.woff") format("woff"),
+        url("../fonts/IvyOraText-Bold.ttf") format("truetype");
 }
 @font-face {
     font-family: "GT Walsheim Pro"; /* Name your font family */
@@ -28,6 +25,15 @@
             format("woff2"),
         url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff")
             format("woff"); /* Adjust file names and paths as needed */
+}
+
+@font-face {
+    font-family: "GT Walsheim Trial Cn Th";
+    font-style: normal;
+    font-weight: normal;
+    src: local("GT Walsheim Trial Cn Th"),
+        url("../fonts/gt-trials/GT-Walsheim-Condensed-Thin-Trial-BF651b7fc72dc1c.woff")
+            format("woff");
 }
 
 @font-face {
@@ -57,8 +63,7 @@
 @font-face {
     font-family: "IvyOraText BoldItalic"; /* Name your font family */
 
-    src: url("../fonts/ivyora-text/IvyOraText-BoldItalic.woff2")
-            format("woff2"),    
+    src: url("../fonts/ivyora-text/IvyOraText-BoldItalic.woff2") format("woff2"),
         url("../fonts/ivyora-text/IvyOraText-BoldItalic.woff") format("woff"); /* Adjust file names and paths as needed */
 }
 @font-face {
@@ -70,49 +75,49 @@
 }
 
 @font-face {
-  font-family: "GT Walsheim Trial Cn Lt";
-  font-style: normal;
-  font-weight: normal;
-  src: local("GT Walsheim Trial Cn Lt"),
-    url("../fonts/gt-trials/GT-Walsheim-Condensed-Light-Trial-BF651b7fc73810c.woff")
-      format("woff");
+    font-family: "GT Walsheim Trial Cn Lt";
+    font-style: normal;
+    font-weight: normal;
+    src: local("GT Walsheim Trial Cn Lt"),
+        url("../fonts/gt-trials/GT-Walsheim-Condensed-Light-Trial-BF651b7fc73810c.woff")
+            format("woff");
 }
 
 @font-face {
-  font-family: "GT Walsheim Trial Cn Rg";
-  font-style: normal;
-  font-weight: normal;
-  src: local("GT Walsheim Trial Cn Rg"),
-    url("../fonts/gt-trials/GT-Walsheim-Condensed-Regular-Trial-BF651b7fc730eb2.woff")
-      format("woff");
+    font-family: "GT Walsheim Trial Cn Rg";
+    font-style: normal;
+    font-weight: normal;
+    src: local("GT Walsheim Trial Cn Rg"),
+        url("../fonts/gt-trials/GT-Walsheim-Condensed-Regular-Trial-BF651b7fc730eb2.woff")
+            format("woff");
 }
 
 @font-face {
-  font-family: "GT Walsheim ProCB"; /* Name your font family */
+    font-family: "GT Walsheim ProCB"; /* Name your font family */
 
-  src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedBlack.woff2")
-      format("woff2"),
-    url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedBlack.woff")
-      format("woff"); /* Adjust file names and paths as needed */
+    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedBlack.woff2")
+            format("woff2"),
+        url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedBlack.woff")
+            format("woff"); /* Adjust file names and paths as needed */
 }
 
 @font-face {
-  font-family: "GT Walsheim Con"; /* Name your font family */
+    font-family: "GT Walsheim Con"; /* Name your font family */
 
-  src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedRegular.woff2")
-      format("woff2"),
-    url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff") format("woff"); /* Adjust file names and paths as needed */
+    src: url("../fonts/gt-walsheim-pro/GTWalsheimPro-CondensedRegular.woff2")
+            format("woff2"),
+        url("../fonts/gt-walsheim-pro/GTWalsheimPro-Regular.woff")
+            format("woff"); /* Adjust file names and paths as needed */
 }
 
 @font-face {
-  font-family: "GT Walsheim Trial Cn Md";
-  font-style: normal;
-  font-weight: normal;
-  src: local("GT Walsheim Trial Cn Md"),
-    url("../fonts/gt-trials/GT-Walsheim-Condensed-Medium-Trial-BF651b7fc70de01.woff")
-      format("woff");
+    font-family: "GT Walsheim Trial Cn Md";
+    font-style: normal;
+    font-weight: normal;
+    src: local("GT Walsheim Trial Cn Md"),
+        url("../fonts/gt-trials/GT-Walsheim-Condensed-Medium-Trial-BF651b7fc70de01.woff")
+            format("woff");
 }
-
 
 * {
     margin: 0;
@@ -448,15 +453,15 @@ section.visible{
         font-size: 0.7rem;
         margin-right: 20px;
     }
-   .resource-hub #btnresource-btn {
-     background-color: transparent;
+    .resource-hub #btnresource-btn {
+        background-color: transparent;
         color: #fff;
         border-radius: 7px;
         margin-bottom: 0rem;
         padding: 10px 20px;
         font-size: 0.65rem;
         border: 1px solid white;
-   }
+    }
     .social-icons a {
         font-size: 20px;
         margin-left: 10px !important;
@@ -561,6 +566,13 @@ section.visible{
     font-family: "GT Walsheim Con";
     margin-bottom: 2rem;
     color: #ffffff;
+}
+
+.hero-text p.desktop {
+    display: block;
+}
+.hero-text p.mobile {
+    display: none;
 }
 
 .hero-text a {
@@ -694,7 +706,7 @@ section.visible{
         letter-spacing: 0px;
     }
     .hero-text h1 #fonts {
-        font-size: 40px;
+        font-size: 35px;
         letter-spacing: 0px;
     }
     .hero-text h1 #buss {
@@ -704,6 +716,12 @@ section.visible{
         margin-top: 20px;
         width: 100%;
         font-size: 17px;
+    }
+    .hero-text p.desktop {
+        display: none;
+    }
+    .hero-text p.mobile {
+        display: block;
     }
     .hero-text a {
         margin-top: -15px;
@@ -767,8 +785,8 @@ section.visible{
 }
 
 .fade-top {
-        top: 0;
-        background: linear-gradient(to bottom, #003c32, rgba(0, 60, 50, 0));
+    top: 0;
+    background: linear-gradient(to bottom, #003c32, rgba(0, 60, 50, 0));
 }
 
 .fade-bottom {
@@ -1005,6 +1023,10 @@ section.visible{
     line-height: 28px;
 }
 
+#how_we_help #four p {
+    padding-right: 100px;
+}
+
 .service-icon {
     font-size: 2rem;
     margin-bottom: 1.5rem;
@@ -1093,7 +1115,7 @@ section.visible{
         font-family: "GT Walsheim ConB" !important;
     }
     .service-card .box-four {
-        padding-top: 0rem;
+        padding-top: 1.2rem;
     }
     .service-card #read {
         margin-top: 0rem;
@@ -1124,6 +1146,10 @@ section.visible{
     }
     #how_we_help #four {
         border-top-right-radius: 50px;
+    }
+
+    #how_we_help #four p {
+        padding-right: 20px;
     }
 }
 
@@ -3796,12 +3822,10 @@ section.visible{
     }
 }
 
-
-.brn-events{
+.brn-events {
     font-family: "GT Walsheim ConB";
     color: #0d4036;
 }
-
 
 /* EVENT PAGE */
 .upcoming_events {
@@ -4356,7 +4380,7 @@ section.visible{
 .track_events .tab-panel.active {
     display: block;
 }
-.track_events .next-side{
+.track_events .next-side {
     display: none;
 }
 
@@ -4580,8 +4604,6 @@ section.visible{
     left: -16px;
     background: linear-gradient(to right, #003c32, rgba(0, 60, 50, 0));
 } */
-
-
 
 .sales .video-container .play-button {
     background: none;

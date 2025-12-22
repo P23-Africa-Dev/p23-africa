@@ -111,9 +111,13 @@
             width: 70% !important;
         }
 
-        #how_we_help{
+        #how_we_help {
             margin-bottom: 0rem !important;
         }
+
+        /* #how_we_help .service-card {
+            padding-right: 90px !important;
+        } */
     }
 
 
@@ -157,11 +161,12 @@
     .network-header p {
 
         font-size: 1.3rem;
-        letter-spacing: 1.2px;
+        letter-spacing: 0.9px;
         line-height: 0.8;
-        font-family: "GT Walsheim Trial Cn Lt";
+         font-family: 'GT Walsheim Trial Cn Th';
 
-        font-weight: 100;
+
+        /* font-weight: 100; */
 
 
     }
@@ -197,7 +202,7 @@
 
     .network-content .network-content-bottom p.content-desc {
         font-family: "GT Walsheim Trial Cn Lt";
-        padding: 0rem 4rem;
+        padding: 0rem 3.4rem;
         letter-spacing: 0.5px;
         font-weight: 100;
         font-size: 17px;
@@ -242,19 +247,19 @@
         display: flex;
         flex-direction: column;
         gap: 0px;
-        letter-spacing: 1.5px
+        /* letter-spacing: 1.5px */
     }
 
     .network-content .network-content-top p span {
 
-        letter-spacing: 1.5px;
+        /* letter-spacing: 1px; */
         line-height: 1;
         font-size: 1.3rem;
     }
 
     .network-content .network-content-top p.match-text {
-        margin-top: 1.6rem;
-        margin-bottom: 3rem;
+        margin-top: 3rem;
+        /* margin-bottom: 3rem; */
         color: #27E6A7;
         font-family: "Montserrat", sans-serif;
         font-weight: bold;
@@ -272,14 +277,24 @@
     .card-wrapper {
         position: relative;
         overflow: visible;
-        width: 250px;
+      
+        overflow: hidden;
+
         /* height: 300px; */
 
     }
 
+        .card-wrapper img {
+     
+        overflow: visible;
+        max-width: 100%;
+        object-fit: cover;
+    }
+
+
     .card-wrapper.left-card-image {
-        left: 50px;
-        top: 40px;
+        left: 30px;
+        top: 70px;
         /* border:  1px solid red; */
 
     }
@@ -289,17 +304,10 @@
         top: -10px;
     }
 
-    .card-wrapper.right-card-image img.desktop{
+    .card-wrapper.right-card-image img.desktop {
         display: none
     }
 
-    .card-wrapper img {
-        /* height: 250px; */
-        /* width: 100%; */
-        overflow: visible;
-        max-width: 100%;
-        object-fit: cover;
-    }
 
 
     /* Prevent flicker */
@@ -317,6 +325,11 @@
 
 
     @media (min-width: 992px) {
+         .network-container {
+     
+        padding-bottom: 0rem;
+
+    }
         .network-body {
             flex-direction: row;
             align-items: center;
@@ -357,7 +370,7 @@
         }
 
         .network-content {
-            transform: translate(-30px, 20px)
+            transform: translate(-30px, 0px);
         }
 
         .network-content .network-content-bottom p.content-desc {
@@ -370,44 +383,57 @@
         }
 
         .network-cards {
-            width: 750px;
-        margin: 1rem 0rem;
+            width: 700px;
+            height: 600px;
+            margin: 1rem 0rem;
+            transform: translate(-30px, -15px);
+            overflow: hidden;
+            padding-left: 100px;
+            padding-top: 20px;
+      
+
+
 
         }
 
         .card-wrapper {
             position: relative;
             overflow: visible;
-            width: 100%;
+                   width: 600px;
+        height: 600px;
+
         }
 
         .card-wrapper img {
-            width: 100%;
+            /* width: 100%;
+            max-width: 100%; */
+             object-fit: cover;
+          width: 100%;
             /* height: 430px; */
         }
 
         .card-wrapper.left-card-image {
-            left: 75px;
-            top: 80px;
-            /* border:  1px solid red; */
+            left: 95px;
+            top: 145px;
 
         }
 
         .card-wrapper.right-card-image {
-            right: 50px;
+            right: 20px;
             top: -20px;
         }
 
-            .card-wrapper.right-card-image img.desktop{
-        display: block;
-    }
-            .card-wrapper.right-card-image img.mobile{
-        display: none;
-    }
+        .card-wrapper.right-card-image img.desktop {
+            display: block;
+        }
+
+        .card-wrapper.right-card-image img.mobile {
+            display: none;
+        }
 
 
         .network-content .network-content-bottom {
-            margin-top: 12em;
+            margin-top: 6rem;
         }
 
         .network-content .network-content-bottom .cta-button {
@@ -427,8 +453,14 @@
         }
 
         .network-content .network-content-top p span {
-            font-size: 2rem;
+            font-size: 1.8rem;
         }
+
+           .network-content .network-content-top p.match-text {
+        margin-top: 1.6rem;
+    
+
+    }
 
 
     }
@@ -448,8 +480,11 @@
                             We help businesses in Africa, Europe and America grow by providing clear,<span
                                 class="mx-1"></span>practical solutions that fit their needs.
                         </p> --}}
-                        <p>
+                        <p class="desktop">
                             We work with businesses at any stage, helping them <br> grow and solve critical challenges.
+                        </p>
+                        <p class="mobile">
+                            We work with businesses at any stage, helping them  grow and solve critical challenges.
                         </p>
                         <br>
                         <div>
@@ -655,13 +690,13 @@
                     <div class="card-wrapper left-card-image">
                         <img src="{{ asset('img/left-image.png') }}" loading="lazy" alt="" />
 
-                        {{-- <img src="{{ asset('img/bottom-newtwork-bg.png') }}" loading="lazy" alt="" /> --}}
                     </div>
 
                     <div class="card-wrapper right-card-image">
 
-                        <img class="desktop" src="{{ asset('img/right-image-interest.png') }}" loading="lazy" alt="" />
-                        <img class="mobile" src="{{ asset('img/top-newtwork-bg.png') }}" loading="lazy" alt="" />
+                        <img class="" src="{{ asset('img/right-image-interest.png') }}" loading="lazy"
+                            alt="" />
+                       
 
                     </div>
                 </div>
@@ -1027,7 +1062,5 @@
                 }
             });
         });
-
-       
     </script>
 @endsection
