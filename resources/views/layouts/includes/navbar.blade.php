@@ -19,18 +19,18 @@
 
                             <div class="dropdown-menu dropdown-mega">
                                 <div class="container py-4" style="width: 70%;">
-                                    <div class="row justify-content-center">
+                                    <div class="row justify-content-left">
                                         <div class="col-md-3  line">
                                             <a href="{{ url('about') }}" class="d-block mb-3"><b>About Us</b></a>
                                             <p>Accelerating success for businesses across the globe — that’s the P23
                                                 Africa promise.</p>
                                         </div>
                                         <div class="col-md-3 line">
-                                            <a href="{{ route('brn') }}" class="d-block mb-3"><b>Business Referral
+                                            <a href="{{ route('brn') }}" class="d-block mb-3"><b>Business
                                                     Network</b></a>
                                             <p>Where top CEOs meet, connect, and grow through trusted referrals.</p>
                                         </div>
-                                        <div class="col-md-3 line">
+                                        {{-- <div class="col-md-3 line">
                                             <a href="{{ route('student') }}" class="d-block mb-3"><b>University
                                                     Partnership</b></a>
                                             <p>Connecting students with real-world research opportunities</p>
@@ -41,7 +41,7 @@
                                             <p>Helping established businesses secure grant funding through expert pitch
                                                 programs</p>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </li>
@@ -183,13 +183,13 @@
                     <hr>
                     <li>
                         <a class="nav-link">
-                            <h5>Business Referral Network</h5>
+                            <h5>Business Network</h5>
                             <p>
                                 Where top CEOs meet, connect, and grow through trusted referrals.
                             </p>
                         </a>
                     </li>
-                    <hr>
+                    {{-- <hr>
                     <li>
                         <a href="{{ route('student') }}" class="nav-link">
                             <h5>University Partnership</h5>
@@ -206,7 +206,7 @@
                                 Helping established businesses secure grant funding through expert pitch programs
                             </p>
                         </a>
-                    </li>
+                    </li> --}}
                 </ul>
             </div>
         </div>
