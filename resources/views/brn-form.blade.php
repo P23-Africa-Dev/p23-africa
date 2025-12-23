@@ -550,7 +550,7 @@
     }
 
     input#countrySearchReg {
-        z-index: 40;
+        z-index: 50;
 
     }
 
@@ -609,11 +609,10 @@
         height: 130px;
         overflow: hidden;
         overflow-y: auto
-
     }
 
 
-        /* Custom scrollbar for country list */
+    /* Custom scrollbar for country list */
     .interest-form-tags::-webkit-scrollbar {
         width: 3px;
     }
@@ -634,12 +633,12 @@
 
 
 
-#industry-selects-group .industry-message{
-    font-size: 10px;
-    margin-left: 30px;
-    color: #f0f0f0;
-    margin-top: 6px;
-}
+    #industry-selects-group .industry-message {
+        font-size: 10px;
+        margin-left: 30px;
+        color: #f0f0f0;
+        margin-top: 6px;
+    }
 
 
     /* Individual tag wrapper */
@@ -690,26 +689,26 @@
 
 
     /* Applied when an industry is selected */
-.interest-form-tags.industry-selected .interest-form-tag{
-           padding: 5px 10px;
- /* adjust as needed */
-}
+    .interest-form-tags.industry-selected .interest-form-tag {
+        padding: 5px 10px;
+        /* adjust as needed */
+    }
 
-/* Default tags state (before industry selection) */
-.interest-form-tag.is-default {
-    /* filter: blur(2px); */
-    opacity: 0.7;
-    cursor: not-allowed;
-    pointer-events: none;
-}
+    /* Default tags state (before industry selection) */
+    .interest-form-tag.is-default {
+        /* filter: blur(2px); */
+        opacity: 0.7;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
 
-/* When industry is selected, restore default look */
-.interest-form-tags.industry-selected .interest-form-tag.is-default {
-    filter: none;
-    opacity: 1;
-    cursor: pointer;
-    pointer-events: auto;
-}
+    /* When industry is selected, restore default look */
+    .interest-form-tags.industry-selected .interest-form-tag.is-default {
+        filter: none;
+        opacity: 1;
+        cursor: pointer;
+        pointer-events: auto;
+    }
 
 
     .interest-form-group label[for="revenue"] {
@@ -1031,8 +1030,14 @@
     .interest-form-footer-contact-item span i {
         color: #fff;
     }
-    .interest-form-footer-contact-item span i.fa-phone-alt{
-        transform: rotate(90deg);
+
+    .interest-form-footer-contact-item span.phone i {
+        rotate: 90deg;
+    }
+
+    .interest-form-footer-contact-item span.location img {
+        width: 16px;
+        height: auto;
     }
 
 
@@ -1404,27 +1409,28 @@
     }
 
     #responseModal .modal-body button.btn-secondary.btn {
-        background-color: #0D4036 !important;
-        padding: 13px 70px;
+        background-color: #193E47 !important;
+        padding: 12px 70px;
         border-radius: 10px;
-        margin-top: 20px;
+        margin-top: 10px;
         font-family: "GT Walsheim Con" !important;
 
     }
 
-    .response-messages p {
-        font-size: 15px;
-        font-weight: light;
+    .modal.show.fade .modal-content #responseMessage p {
+        font-size: 13px;
+        font-weight: 400;
         margin-bottom: 2px;
         padding: 0px 18px;
-        color: #0D4036;
+        color: #193E47;
     }
 
-    .response-messages h4 {
-        font-size: 17px;
-        font-weight: 500;
-        padding: 0px 17px;
-        color: #0D4036;
+    .modal.show.fade .modal-content #responseMessage h4 {
+        font-size: 13px;
+        font-weight: 900;
+        padding: 0px 40px;
+        color: #193E47;
+        margin: 20px 0px;
 
     }
 
@@ -1439,9 +1445,15 @@
 
             padding: 8px 25px;
 
-      
-    }
-                  .interest-form-return-button,
+
+        }
+
+        .interest-form-tags.industry-selected .interest-form-tag {
+            padding: 9px 13px !important;
+
+        }
+
+        .interest-form-return-button,
         .interest-form-proceed-button,
         .interest-form-submit-button {
             /* Uses the slightly transparent input background for its base color */
@@ -1459,6 +1471,26 @@
 
 
         }
+
+        #responseModal .modal-dialog {
+            max-width: 600px !important;
+        }
+
+        .modal.show.fade .modal-content #responseMessage p {
+            font-size: 16px;
+
+        }
+
+        .modal.show.fade .modal-content #responseMessage h4 {
+            font-size: 16px;
+            font-weight: 900;
+            padding: 0px 40px;
+            color: #193E47;
+            margin: 20px 0px;
+
+        }
+
+
     }
 
     @media (min-width: 992px) {
@@ -1675,21 +1707,6 @@
         }
 
 
-            .response-messages p {
-        font-size: 18px;
-        font-weight: light;
-        margin-bottom: 2px;
-        padding: 0px 18px;
-        color: #0D4036;
-    }
-
-    .response-messages h4 {
-        font-size: 20px;
-        font-weight: 500;
-        padding: 0px 17px;
-        color: #0D4036;
-
-    }
 
 
 
@@ -1711,6 +1728,20 @@
         .interest-form-option label {
             font-size: 11px;
         }
+
+        .modal.show.fade .modal-content #responseMessage p {
+            font-size: 16px;
+            padding: 0px 40px;
+
+        }
+
+        .modal.show.fade .modal-content #responseMessage h4 {
+            font-size: 16px;
+            padding: 0px 60px;
+
+
+        }
+
 
     }
 </style>
@@ -1925,7 +1956,7 @@
                                             <span class="custom-select-text">Title, e.g CEO</span>
                                             <img class="custom-select-arrow" src="{{ asset('img/arrown.png') }}"
                                                 alt="" />
-                                    
+
                                         </div>
                                         <div class="custom-options">
                                             <span class="custom-option" data-value="CEO">CEO</span>
@@ -1990,7 +2021,7 @@
                                             <!-- Dropdown -->
                                             <!-- Dropdown -->
                                             <div class="country-dropdown" id="countryDropdown">
-                                                <input type="text" id="countrySearch" class="country-search"
+                                                <input type="text" id="countrySearch" autofocus class="country-search"
                                                     placeholder="Search country...">
                                                 <ul class="country-list" id="countryList">
                                                     <li data-code="+93" data-flag="af"><img
@@ -2589,14 +2620,14 @@
 
                                 <div class="interest-form-group">
                                     <label for="countryReg">Country Of Registration</label>
-                                    <div class="custom-select" data-select="country">
+                                    <div class="custom-select" id="countryRegSelect" data-select="country">
                                         <div class="custom-select-trigger">
                                             <span class="custom-select-text">Select your country</span>
                                             <img class="custom-select-arrow" src="{{ asset('img/arrown.png') }}"
                                                 alt="" />
                                         </div>
                                         <div class="custom-options countryReg-options" id="countryReg-options">
-                                            <input type="text" class="country-search" id="countrySearchReg"
+                                            <input type="text" autofocus class="country-search" id="countrySearchReg"
                                                 placeholder="Search countries..." autocomplete="off">
                                             <div class="custom-options-scrollable">
                                                 <span class="custom-option" data-value="Afghanistan">Afghanistan</span>
@@ -3074,7 +3105,7 @@
                                             <img class="custom-select-arrow" src="{{ asset('img/arrown.png') }}"
                                                 alt="" />
                                         </div>
-                                      <div class="custom-options">
+                                        <div class="custom-options">
                                             <span class="custom-option" data-value="technologyAndDigitalServices">
                                                 Technology & Digital Services
                                             </span>
@@ -3123,30 +3154,36 @@
                                                 Government & Public Services
                                             </span>
 
-                                            <span class="custom-option" data-value="environmentalAndSpecializedServices">
+                                            <span class="custom-option"
+                                                data-value="environmentalAndSpecializedServices">
                                                 Environmental & Specialized Services
                                             </span>
-                                      </div>
+                                        </div>
 
                                     </div>
 
                                     {{-- <p class="industry-message">kindly select your industry first</p> --}}
 
                                     <select name="industry" id="industry" style="display: none">
-                                        <option value="technologyAndDigitalServices">  Technology & Digital Services</option>
-                                        <option value="financialAndProfessionalServices"> Financial & Professional Services</option>
+                                        <option value="technologyAndDigitalServices"> Technology & Digital Services
+                                        </option>
+                                        <option value="financialAndProfessionalServices"> Financial & Professional
+                                            Services</option>
                                         <option value="manufacturingAndIndustrial"> Manufacturing & Industrial</option>
-                                        <option value="healthcareAndPharmaceuticals"> Healthcare & Pharmaceuticals</option>
+                                        <option value="healthcareAndPharmaceuticals"> Healthcare & Pharmaceuticals
+                                        </option>
                                         <option value="energyAndUtilities"> Energy & Utilities</option>
                                         <option value="retailAndConsumerGoods"> Retail & Consumer Goods</option>
                                         <option value="logisticsAndTransportation"> Logistics & Transportation</option>
-                                        <option value="agricultureAndFoodProcessing"> Agriculture & Food Processing</option>
+                                        <option value="agricultureAndFoodProcessing"> Agriculture & Food Processing
+                                        </option>
                                         <option value="realEstateAndConstruction"> Real Estate & Construction</option>
                                         <option value="mediaAndCommunications"> Media & Communications</option>
                                         <option value="educationAndTraining">Education & Training</option>
                                         <option value="governmentAndPublicServices"> Government & Public Services</option>
-                                        <option value="environmentalAndSpecializedServices"> Environmental & Specialized Services</option>
-                                     
+                                        <option value="environmentalAndSpecializedServices"> Environmental & Specialized
+                                            Services</option>
+
                                     </select>
                                 </div>
 
@@ -3336,7 +3373,7 @@
                             <div class="modal-body text-center py-4">
                                 {{-- <p id="responseMessage" class="mb-3"></p> --}}
                                 <div id="responseMessage">
-
+                               
                                 </div>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Done</button>
                             </div>
@@ -3541,7 +3578,8 @@
                         <div class="interest-form-footer-contact-row">
                             <div>
                                 <div class="interest-form-footer-contact-item">
-                                    <span class="interest-form-footer-icon phone"><i class="fas fa-phone-alt"></i></span>
+                                    <span class="interest-form-footer-icon phone"><i
+                                            class="fas fa-phone-alt"></i></span>
                                     <a href="tel:+442080921281" class="phone">+44 7535 659835</a>
                                 </div>
 
@@ -3554,7 +3592,7 @@
                             <div class="interest-form-footer-contact-item">
                                 <span class="interest-form-footer-icon location">
                                     <img class="location-icon" src="{{ asset('img/location_pin_place_map.png') }}"
-                                                alt="" />
+                                        alt="" />
                                 </span>
                                 <span>London UK</span>
                             </div>
@@ -3902,17 +3940,35 @@
                 `select[name="${getFieldName(selectName)}"]`
             );
 
+
+
             // Toggle dropdown
             trigger.addEventListener("click", (e) => {
                 e.stopPropagation();
 
+                // Close other open selects
                 document.querySelectorAll(".custom-select.open").forEach((openSelect) => {
                     if (openSelect !== customSelect) openSelect.classList.remove(
                         "open");
                 });
 
+                const willOpen = !customSelect.classList.contains("open");
+
+                // Toggle current dropdown
                 customSelect.classList.toggle("open");
+
+                // ✅ AUTOFOCUS ONLY FOR COUNTRY REGISTRATION
+                if (willOpen && selectName === "country") {
+                    const searchInput = customSelect.querySelector(".country-search");
+
+                    if (searchInput) {
+                        requestAnimationFrame(() => {
+                            searchInput.focus();
+                        });
+                    }
+                }
             });
+
 
             // Handle selecting an option
             options.forEach((option) => {
@@ -3996,16 +4052,26 @@
         // Toggle dropdown
         selectedCountry.addEventListener("click", (e) => {
             e.stopPropagation();
-            if (isDropdownOpen()) {
-                countryDropdown.style.display = "none";
-                countryDropdown.classList.remove("open");
-                arrow.classList.remove("rotate-up");
-            } else {
+
+            const opening = !isDropdownOpen();
+
+            if (opening) {
                 countryDropdown.style.display = "block";
                 countryDropdown.classList.add("open");
                 arrow.classList.add("rotate-up");
+
+                //  Auto-focus search input 
+                requestAnimationFrame(() => {
+                    searchInput.focus();
+                });
+
+            } else {
+                countryDropdown.style.display = "none";
+                countryDropdown.classList.remove("open");
+                arrow.classList.remove("rotate-up");
             }
         });
+
 
         // Prevent closing when clicking inside dropdown
         countryDropdown.addEventListener("click", (e) => {
@@ -4082,6 +4148,7 @@
         noResults.textContent = 'No results found';
         noResults.style.display = 'none';
         noResults.style.color = '#ffff';
+        noResults.style.fontSize = '12px';
         noResults.style.padding = '8px 12px';
         optionsContainer.appendChild(noResults);
 
@@ -4110,143 +4177,143 @@
          * INDUSTRY → CATEGORY HANDLER
          *************************************/
         const industryCategories = {
-  technologyAndDigitalServices: [
-    "Software and SaaS Solutions",
-    "FinTech and Digital Payment Systems",
-    "Cybersecurity and Data Protection Services",
-    "Cloud Computing and IT Infrastructure",
-    "Artificial Intelligence and Machine Learning",
-    "Telecommunications and Network Services",
-    "E-commerce and Digital Platforms",
-    "Blockchain and Digital Asset Management",
-  ],
+            technologyAndDigitalServices: [
+                "Software and SaaS Solutions",
+                "FinTech and Digital Payment Systems",
+                "Cybersecurity and Data Protection Services",
+                "Cloud Computing and IT Infrastructure",
+                "Artificial Intelligence and Machine Learning",
+                "Telecommunications and Network Services",
+                "E-commerce and Digital Platforms",
+                "Blockchain and Digital Asset Management",
+            ],
 
-  financialAndProfessionalServices: [
-    "Banking and Financial Institutions",
-    "Investment and Asset Management",
-    "Insurance and Risk Advisory Services",
-    "Legal and Regulatory Compliance Services",
-    "Accounting and Tax Advisory Services",
-    "Management Consulting",
-    "Marketing and Advertising Agencies",
-    "Human Resources and Talent Acquisition",
-  ],
+            financialAndProfessionalServices: [
+                "Banking and Financial Institutions",
+                "Investment and Asset Management",
+                "Insurance and Risk Advisory Services",
+                "Legal and Regulatory Compliance Services",
+                "Accounting and Tax Advisory Services",
+                "Management Consulting",
+                "Marketing and Advertising Agencies",
+                "Human Resources and Talent Acquisition",
+            ],
 
-  manufacturingAndIndustrial: [
-    "Industrial Machinery and Equipment",
-    "Automotive and Aerospace Manufacturing",
-    "Electronics and Technology Components",
-    "Chemicals and Raw Materials Production",
-    "Construction Materials and Supplies",
-    "Packaging and Container Manufacturing",
-    "Medical Devices and Equipment Production",
-    "Textiles and Apparel Manufacturing",
-  ],
+            manufacturingAndIndustrial: [
+                "Industrial Machinery and Equipment",
+                "Automotive and Aerospace Manufacturing",
+                "Electronics and Technology Components",
+                "Chemicals and Raw Materials Production",
+                "Construction Materials and Supplies",
+                "Packaging and Container Manufacturing",
+                "Medical Devices and Equipment Production",
+                "Textiles and Apparel Manufacturing",
+            ],
 
-  healthcareAndPharmaceuticals: [
-    "Pharmaceuticals and Biotechnology",
-    "Hospitals and Clinical Healthcare Facilities",
-    "Medical Equipment and Supplies",
-    "Healthcare Technology Systems",
-    "Laboratory and Diagnostic Services",
-    "Senior Care and Rehabilitation Services",
-    "Telemedicine and Digital Health Solutions",
-    "Clinical Research and Trials",
-  ],
+            healthcareAndPharmaceuticals: [
+                "Pharmaceuticals and Biotechnology",
+                "Hospitals and Clinical Healthcare Facilities",
+                "Medical Equipment and Supplies",
+                "Healthcare Technology Systems",
+                "Laboratory and Diagnostic Services",
+                "Senior Care and Rehabilitation Services",
+                "Telemedicine and Digital Health Solutions",
+                "Clinical Research and Trials",
+            ],
 
-  energyAndUtilities: [
-    "Oil, Gas, and Petroleum",
-    "Renewable Energy (Solar, Wind, Hydroelectric)",
-    "Power Generation and Distribution",
-    "Utilities and Water Services Management",
-    "Mining and Natural Resources Extraction",
-    "Energy Storage and Management Systems",
-    "Environmental and Sustainability Services",
-  ],
+            energyAndUtilities: [
+                "Oil, Gas, and Petroleum",
+                "Renewable Energy (Solar, Wind, Hydroelectric)",
+                "Power Generation and Distribution",
+                "Utilities and Water Services Management",
+                "Mining and Natural Resources Extraction",
+                "Energy Storage and Management Systems",
+                "Environmental and Sustainability Services",
+            ],
 
-  retailAndConsumerGoods: [
-    "Wholesale and Distribution Networks",
-    "Retail Chains and Franchising Operations",
-    "Food and Beverage Production",
-    "Consumer Electronics",
-    "Fashion and Luxury Goods",
-    "Home Goods and Appliances",
-    "Sports and Leisure Products",
-  ],
+            retailAndConsumerGoods: [
+                "Wholesale and Distribution Networks",
+                "Retail Chains and Franchising Operations",
+                "Food and Beverage Production",
+                "Consumer Electronics",
+                "Fashion and Luxury Goods",
+                "Home Goods and Appliances",
+                "Sports and Leisure Products",
+            ],
 
-  logisticsAndTransportation: [
-    "Shipping and Freight Forwarding Services",
-    "Air Cargo and Logistics",
-    "Trucking and Ground Transportation",
-    "Warehousing and Storage Facilities",
-    "Supply Chain Management",
-    "Fleet and Vehicle Management",
-    "Ports and Terminal Operations",
-  ],
+            logisticsAndTransportation: [
+                "Shipping and Freight Forwarding Services",
+                "Air Cargo and Logistics",
+                "Trucking and Ground Transportation",
+                "Warehousing and Storage Facilities",
+                "Supply Chain Management",
+                "Fleet and Vehicle Management",
+                "Ports and Terminal Operations",
+            ],
 
-  agricultureAndFoodProcessing: [
-    "Farming and Agricultural Production",
-    "Food Processing and Manufacturing",
-    "Beverage Production",
-    "Agricultural Technology (AgriTech)",
-    "Livestock and Animal Products",
-    "Commodity Trading and Export",
-    "Agricultural Equipment and Supplies",
-  ],
+            agricultureAndFoodProcessing: [
+                "Farming and Agricultural Production",
+                "Food Processing and Manufacturing",
+                "Beverage Production",
+                "Agricultural Technology (AgriTech)",
+                "Livestock and Animal Products",
+                "Commodity Trading and Export",
+                "Agricultural Equipment and Supplies",
+            ],
 
-  realEstateAndConstruction: [
-    "Commercial Real Estate Development",
-    "Property Management Services",
-    "Construction and Engineering Services",
-    "Architecture and Design Services",
-    "Facility Management",
-    "Real Estate Investment",
-    "Building Materials and Supplies",
-  ],
+            realEstateAndConstruction: [
+                "Commercial Real Estate Development",
+                "Property Management Services",
+                "Construction and Engineering Services",
+                "Architecture and Design Services",
+                "Facility Management",
+                "Real Estate Investment",
+                "Building Materials and Supplies",
+            ],
 
-  mediaAndCommunications: [
-    "Broadcasting and Entertainment",
-    "Digital Media and Publishing",
-    "Advertising and Public Relations",
-    "Telecommunications Services",
-    "Content Creation and Production",
-    "Event Management and Production",
-  ],
+            mediaAndCommunications: [
+                "Broadcasting and Entertainment",
+                "Digital Media and Publishing",
+                "Advertising and Public Relations",
+                "Telecommunications Services",
+                "Content Creation and Production",
+                "Event Management and Production",
+            ],
 
-  educationAndTraining: [
-    "Corporate Training and Development",
-    "Educational Technology (EdTech)",
-    "Schools and Educational Institutions",
-    "Professional Certification Programs",
-    "Language and Skills Training",
-    "E-learning and Online Education",
-  ],
+            educationAndTraining: [
+                "Corporate Training and Development",
+                "Educational Technology (EdTech)",
+                "Schools and Educational Institutions",
+                "Professional Certification Programs",
+                "Language and Skills Training",
+                "E-learning and Online Education",
+            ],
 
-  governmentAndPublicServices: [
-    "Government and Public Administration",
-    "Defense and Security Services",
-    "Infrastructure Development",
-    "Municipal and Public Utilities",
-    "Public Health Services",
-    "Government Technology Solutions",
-  ],
+            governmentAndPublicServices: [
+                "Government and Public Administration",
+                "Defense and Security Services",
+                "Infrastructure Development",
+                "Municipal and Public Utilities",
+                "Public Health Services",
+                "Government Technology Solutions",
+            ],
 
-  environmentalAndSpecializedServices: [
-    "Waste Management and Recycling",
-    "Water Treatment and Management",
-    "Environmental Consulting",
-    "Engineering and Technical Services",
-    "Research and Development",
-    "Testing and Quality Assurance",
-  ],
-};
+            environmentalAndSpecializedServices: [
+                "Waste Management and Recycling",
+                "Water Treatment and Management",
+                "Environmental Consulting",
+                "Engineering and Technical Services",
+                "Research and Development",
+                "Testing and Quality Assurance",
+            ],
+        };
 
 
         const defaultTags = [
-           "Software and SaaS Solutions",
-             "Research and Development",
-           "Oil, Gas, and Petroleum",
-             "Public Health Services",
+            "Software and SaaS Solutions",
+            "Research and Development",
+            "Oil, Gas, and Petroleum",
+            "Public Health Services",
             //    "Consumer Electronics",
         ];
 
@@ -4276,44 +4343,44 @@
         // }
 
         function updateCategories(industry) {
-    categoryContainer.innerHTML = "";
-    hiddenCategoryInput.value = "";
+            categoryContainer.innerHTML = "";
+            hiddenCategoryInput.value = "";
 
-    // Remove padding fix by default
-    categoryContainer.classList.remove("industry-selected");
+            // Remove padding fix by default
+            categoryContainer.classList.remove("industry-selected");
 
-    if (!industry || !industryCategories[industry]) {
-        renderTags(defaultTags, true);
-        return;
-    }
+            if (!industry || !industryCategories[industry]) {
+                renderTags(defaultTags, true);
+                return;
+            }
 
-    // Apply padding fix once industry is selected
-    categoryContainer.classList.add("industry-selected");
+            // Apply padding fix once industry is selected
+            categoryContainer.classList.add("industry-selected");
 
-    const categories = industryCategories[industry];
-    const saved = selectedCategories[industry] || [];
+            const categories = industryCategories[industry];
+            const saved = selectedCategories[industry] || [];
 
-    renderTags(categories, false, saved);
-}
+            renderTags(categories, false, saved);
+        }
 
 
         /** Render tags **/
         function renderTags(categories, isDefault = false, saved = []) {
-    categoryContainer.innerHTML = "";
+            categoryContainer.innerHTML = "";
 
-    categories.forEach((category) => {
-        const tag = document.createElement("div");
-        tag.className = "interest-form-tag";
+            categories.forEach((category) => {
+                const tag = document.createElement("div");
+                tag.className = "interest-form-tag";
 
-        if (isDefault) {
-            tag.classList.add("is-default");
-        }
+                if (isDefault) {
+                    tag.classList.add("is-default");
+                }
 
-        if (saved.includes(category)) {
-            tag.classList.add("active");
-        }
+                if (saved.includes(category)) {
+                    tag.classList.add("active");
+                }
 
-        tag.innerHTML = `
+                tag.innerHTML = `
             <span class="check-icon ${saved.includes(category) ? "active" : ""}">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                     viewBox="0 0 24 24" stroke-width="3" stroke="currentColor">
@@ -4324,87 +4391,87 @@
             <span>${category}</span>
         `;
 
-        // Prevent clicks on default tags
-        if (!isDefault) {
-            tag.addEventListener("click", () => {
-                const currentIndustry = industrySelect.value;
+                // Prevent clicks on default tags
+                if (!isDefault) {
+                    tag.addEventListener("click", () => {
+                        const currentIndustry = industrySelect.value;
 
-                tag.classList.toggle("active");
-                tag.querySelector(".check-icon").classList.toggle("active");
+                        tag.classList.toggle("active");
+                        tag.querySelector(".check-icon").classList.toggle("active");
 
-                if (!selectedCategories[currentIndustry]) {
-                    selectedCategories[currentIndustry] = [];
+                        if (!selectedCategories[currentIndustry]) {
+                            selectedCategories[currentIndustry] = [];
+                        }
+
+                        if (tag.classList.contains("active")) {
+                            selectedCategories[currentIndustry].push(category);
+                        } else {
+                            selectedCategories[currentIndustry] =
+                                selectedCategories[currentIndustry].filter(
+                                    (c) => c !== category
+                                );
+                        }
+
+                        updateHiddenInput();
+                        saveFormData();
+                    });
                 }
 
-                if (tag.classList.contains("active")) {
-                    selectedCategories[currentIndustry].push(category);
-                } else {
-                    selectedCategories[currentIndustry] =
-                        selectedCategories[currentIndustry].filter(
-                            (c) => c !== category
-                        );
-                }
-
-                updateHiddenInput();
-                saveFormData();
+                categoryContainer.appendChild(tag);
             });
         }
 
-        categoryContainer.appendChild(tag);
-    });
-}
+        function renderTags(categories, isDefault = false, saved = []) {
+            categoryContainer.innerHTML = "";
 
-    //     function renderTags(categories, isDefault = false, saved = []) {
-    //         categoryContainer.innerHTML = "";
+            categories.forEach((category) => {
+                const tag = document.createElement("div");
+                tag.className = "interest-form-tag";
+                if (saved.includes(category)) tag.classList.add("active");
 
-    //         categories.forEach((category) => {
-    //             const tag = document.createElement("div");
-    //             tag.className = "interest-form-tag";
-    //             if (saved.includes(category)) tag.classList.add("active");
-
-    //             tag.innerHTML = `
-    //   <span class="check-icon ${saved.includes(category) ? "active" : ""}">
-    //     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-    //       viewBox="0 0 24 24" stroke-width="3" stroke="currentColor">
-    //       <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/>
-    //     </svg>
-    //   </span>
-    //   <span>${category}</span>
-    // `;
+                tag.innerHTML = `
+      <span class="check-icon ${saved.includes(category) ? "active" : ""}">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 24 24" stroke-width="3" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/>
+        </svg>
+      </span>
+      <span>${category}</span>
+    `;
 
 
 
-    //             // Add click event
-    //             tag.addEventListener("click", () => {
-    //                 const currentIndustry = industrySelect.value;
+                // Add click event
+                tag.addEventListener("click", () => {
+                    const currentIndustry = industrySelect.value;
 
-    //                 // Toggle visual state
-    //                 tag.classList.toggle("active");
-    //                 const icon = tag.querySelector(".check-icon");
-    //                 icon.classList.toggle("active");
+                    // Toggle visual state
+                    tag.classList.toggle("active");
+                    const icon = tag.querySelector(".check-icon");
+                    icon.classList.toggle("active");
 
-    //                 // Handle storage
-    //                 if (!isDefault && currentIndustry) {
-    //                     if (!selectedCategories[currentIndustry]) {
-    //                         selectedCategories[currentIndustry] = [];
-    //                     }
+                    // Handle storage
+                    if (!isDefault && currentIndustry) {
+                        if (!selectedCategories[currentIndustry]) {
+                            selectedCategories[currentIndustry] = [];
+                        }
 
-    //                     if (tag.classList.contains("active")) {
-    //                         selectedCategories[currentIndustry].push(category);
-    //                     } else {
-    //                         selectedCategories[currentIndustry] = selectedCategories[
-    //                             currentIndustry
-    //                         ].filter((c) => c !== category);
-    //                     }
-    //                 }
+                        if (tag.classList.contains("active")) {
+                            selectedCategories[currentIndustry].push(category);
+                        } else {
+                            selectedCategories[currentIndustry] = selectedCategories[
+                                currentIndustry
+                            ].filter((c) => c !== category);
+                        }
+                    }
 
-    //                 updateHiddenInput();
-    //                 saveFormData(); // Save after category selection
-    //             });
+                    updateHiddenInput();
+                    saveFormData(); // Save after category selection
+                });
 
-    //             categoryContainer.appendChild(tag);
-    //         });
-    //     }
+                categoryContainer.appendChild(tag);
+            });
+        }
 
         /** Sync hidden field for submission **/
         function updateHiddenInput() {
@@ -4485,50 +4552,17 @@
             });
         }
 
-        // Backend validation endpoint URLs
-        const validateStepUrl = '{{ route('brn.validate-step', ['step' => '__STEP__']) }}';
-        const validateAllUrl = '{{ route('brn.validate-all') }}';
-
-        // Handle navigation with backend validation
+        // Handle navigation
         proceedButtons.forEach((btn) => {
-            btn.addEventListener("click", async (e) => {
+            btn.addEventListener("click", (e) => {
                 e.preventDefault();
 
-                // Disable the button to prevent double-clicks
-                btn.disabled = true;
-                const originalText = btn.textContent;
-                btn.textContent = 'Validating...';
-
-                try {
-                    // First run client-side validation for immediate feedback
-                    if (!validateCurrentStep()) {
-                        btn.disabled = false;
-                        btn.textContent = originalText;
-                        return;
-                    }
-
-                    // Then run backend validation for the current step
-                    const backendValid = await validateStepWithBackend(currentStep + 1);
-
-                    if (backendValid) {
-                        if (currentStep < totalSteps - 1) {
-                            currentStep++;
-                            showStep(currentStep);
-                        }
-                    }
-                } catch (error) {
-                    console.warn(
-                        'Backend validation error, proceeding with client validation:',
-                        error);
-                    // If backend validation fails due to network, allow proceeding
-                    // The final submission will catch any issues
+                // Validate current step before proceeding
+                if (validateCurrentStep()) {
                     if (currentStep < totalSteps - 1) {
                         currentStep++;
                         showStep(currentStep);
                     }
-                } finally {
-                    btn.disabled = false;
-                    btn.textContent = originalText;
                 }
             });
         });
@@ -4799,7 +4833,8 @@
 
                 if (!industry.value.trim()) {
                     const customSelect = currentStage.querySelector('[data-select="industry"]');
-                    showError(customSelect || industry.parentNode, 'Please select your industry, to get updated categories');
+                    showError(customSelect || industry.parentNode,
+                        'Please select your industry, to get updated categories');
                     isValid = false;
                 }
 
@@ -5117,26 +5152,20 @@
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
 
-            // Run client-side validation on all steps first
+            // Validate all steps before submission
             let allValid = true;
-            let firstInvalidStep = -1;
-
             for (let step = 0; step < totalSteps; step++) {
                 const prevStep = currentStep;
                 currentStep = step;
                 if (!validateCurrentStep()) {
                     allValid = false;
-                    if (firstInvalidStep === -1) {
-                        firstInvalidStep = step;
-                    }
+                    showStep(step);
+                    break;
                 }
                 currentStep = prevStep;
             }
 
             if (!allValid) {
-                // Navigate to the first step with errors
-                currentStep = firstInvalidStep;
-                showStep(currentStep);
                 return;
             }
 
@@ -5184,7 +5213,6 @@
             } catch (error) {
                 let errorMessage = 'Something went wrong. Please try again.';
                 let showRefreshButton = false;
-                let navigateToStep = null;
 
                 if (error.status === 419 || error.status === 'NO_TOKEN') {
                     errorMessage =
@@ -5211,7 +5239,7 @@
                         }
 
                         errorMessage = error.data?.message ||
-                            'Please correct the errors and try again.';
+                            'Please correct the errors below and try again.';
                     } else if (error.data?.message) {
                         errorMessage = error.data.message;
                     }
@@ -5225,14 +5253,6 @@
                         'Network error. Please check your internet connection and try again.';
                 } else if (error.message) {
                     errorMessage = error.message;
-                }
-
-                // For validation errors, don't show modal - user can see errors on the form
-                if (navigateToStep !== null) {
-                    submitBtn.disabled = false;
-                    spinner.classList.add('d-none');
-                    btnText.classList.remove('d-none');
-                    return;
                 }
 
                 // Build response message with optional refresh button
