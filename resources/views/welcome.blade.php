@@ -479,6 +479,7 @@
 
     #highlight a{
         font-size: 17px;
+        padding: 17px 43px;
 
     }
 
