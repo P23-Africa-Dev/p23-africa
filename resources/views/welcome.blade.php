@@ -11,6 +11,8 @@
 @endsection
 
 <style>
+
+ 
     /* Resource Report PDF */
     .pdf-popup {
         display: none;
@@ -73,16 +75,21 @@
         font-weight: 400;
         width: 38% !important;
     }
+    .hero.content-section a{
+        font-size: 20px;
+
+    }
 
     #highlight a {
         padding: 15px 40px;
         /* height: 64px;
         width: 351px; */
         border-radius: 10px;
+        margb
         text-align: center background-color: transparent;
         color: #fff;
         border: 1px solid #fff;
-        font-size: 20px;
+        font-size: 13px;
         cursor: pointer;
         text-decoration: none;
         transition: 500ms;
@@ -114,6 +121,11 @@
         #how_we_help {
             margin-bottom: 0rem !important;
         }
+            .hero.content-section a{
+        font-size: 16px;
+
+    }
+
 
         /* #how_we_help .service-card {
             padding-right: 90px !important;
@@ -325,6 +337,8 @@
 
 
     @media (min-width: 992px) {
+
+   
          .network-container {
      
         padding-bottom: 0rem;
@@ -463,6 +477,12 @@
     }
 
 
+    #highlight a{
+        font-size: 17px;
+
+    }
+
+
     }
 </style>
 
@@ -470,22 +490,21 @@
     <header id="body">
         <div id="header">
             <section class="hero content-section animate-on-scroll">
-                <div class="row">
+                <div class="row hero-sec-row">
                     <div class="col-md-7 hero-text my-auto">
                         <h1>Driving <span id="font">Successful</span><br><span id="buss">Businesses
                                 Across</span><br><img src="{{ asset('images/dot.png') }}" loading='lazy' id="dot"
                                 alt=""><span id="fonts"> Global Markets</span></h1>
                         <br>
-                        {{-- <p>
-                            We help businesses in Africa, Europe and America grow by providing clear,<span
-                                class="mx-1"></span>practical solutions that fit their needs.
-                        </p> --}}
-                        <p class="desktop">
+                        <p>
+                          We work with businesses at any stage, helping them grow and solve critical challenges.
+                        </p>
+                        {{-- <p class="">
                             We work with businesses at any stage, helping them <br> grow and solve critical challenges.
-                        </p>
-                        <p class="mobile">
+                        </p> --}}
+                       {{--  <p class="mobile">
                             We work with businesses at any stage, helping them  grow and solve critical challenges.
-                        </p>
+                        </p> --}}
                         <br>
                         <div>
                             <a href="{{ url('contact') }}" class="d-flex justify-content-between"><span>Contact Us</span>
@@ -567,7 +586,8 @@
                 <div>
                     <a href="{{ url('about') }}" class="text-decoration-none learn-more"
                         title="Learn more about P23 Africa">
-                        Learn more about P23 Africa
+                        Learn more
+                        {{-- Learn more about P23 Africa --}}
                         <img src="{{ asset('images/arrow.png') }}" loading='lazy' alt="">
                     </a>
                 </div>

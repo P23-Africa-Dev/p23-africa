@@ -560,9 +560,16 @@ section.visible{
 
 .hero-text p {
     margin-top: 20px;
-    max-width: 90%;
     font-size: 24px;
+ 
+    padding-right: 160px;
+        margin-top: 20px;
+     max-width: 90%;
+    font-size: 22px;
     width: 80%;
+
+
+  
     font-family: "GT Walsheim Con";
     margin-bottom: 2rem;
     color: #ffffff;
@@ -716,6 +723,8 @@ section.visible{
         margin-top: 20px;
         width: 100%;
         font-size: 17px;
+            padding-right: 0px;
+        
     }
     .hero-text p.desktop {
         display: none;
@@ -815,8 +824,9 @@ section.visible{
     position: absolute;
 }
 #highlight h3 {
-    font-size: 32px;
+    font-size: 28px;
     font-weight: 600;
+    padding: 0px 50px;
     font-family: "Montserrat";
 }
 @media screen and (max-width: 580px) {
@@ -824,13 +834,16 @@ section.visible{
         padding: 0rem 0px;
     }
     #highlight h3 {
-        font-size: 16px;
+        font-size: 13px;
         font-weight: 500;
+        padding:0px;
+        margin:0px;
+        /* padding: 0px; */
         line-height: 20px;
         letter-spacing: 1px;
     }
     #highlight {
-        padding: 2rem 0px 4rem 0px;
+        padding: 2rem 0px 2rem 0px;
     }
     #highlight .me-auto {
         width: 70% !important;
@@ -922,6 +935,7 @@ section.visible{
     background-color: #0d2f25;
 }
 @media screen and (max-width: 580px) {
+
     .who-we-are .flex-column .minor {
         display: inline;
     }
@@ -1121,13 +1135,13 @@ section.visible{
         margin-top: 0rem;
     }
     #how_we_help .section-title {
-        font-size: 26px !important;
+        font-size: 22px !important;
         font-weight: 700 !important;
         font-family: "Montserrat" !important;
     }
-    .service-card .box-four p {
+    /* .service-card .box-four p {
         font-size: 20px;
-    }
+    } */
     .custom-underline {
         width: 220px;
         margin-bottom: 3rem;
@@ -1151,12 +1165,20 @@ section.visible{
     #how_we_help #four p {
         padding-right: 20px;
     }
+
+    
+    .service-card p {
+    font-size: 17px;
+  
+    line-height: 26px;
+}
 }
 
 /* GLOBAL REACH */
 .global_reach {
     text-align: center;
     padding: 20px 20px;
+    padding-bottom: 0px;
     /* border-top: 3px dashed #022a4927;
     border-bottom: 3px dashed #022a4927; */
     /* border: 3px solid #022A4933 */
@@ -1686,7 +1708,7 @@ section.visible{
     }
 
     .description {
-        font-size: 20px;
+        font-size: 18px;
     }
 
     .read-more {
