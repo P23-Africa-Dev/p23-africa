@@ -85,8 +85,9 @@
         /* height: 64px;
         width: 351px; */
         border-radius: 10px;
-        margb
-        text-align: center background-color: transparent;
+        background-color: #0D4036;
+        
+        text-align: center;
         color: #fff;
         border: 1px solid #fff;
         font-size: 13px;
@@ -443,6 +444,10 @@
 
         .card-wrapper.right-card-image img.mobile {
             display: none;
+        }
+
+        .network-section{
+            margin-bottom: 0px;
         }
 
 

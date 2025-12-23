@@ -589,7 +589,7 @@ section.visible{
     margin-top: 5px;
     padding: 20px 50px;
     border-radius: 10px;
-    background-color: transparent;
+    background-color: #0D4036;
     color: #fff;
     border: 1px solid #fff;
     font-size: 20px;
@@ -739,7 +739,7 @@ section.visible{
         margin-top: -15px;
         padding: 20px 60px;
         border-radius: 10px;
-        background-color: transparent;
+        background-color: #0D4036;
         color: #fff;
         border: 1px solid #fff;
         font-size: 20px;
@@ -1084,6 +1084,7 @@ section.visible{
     border-top-left-radius: 30px;
     background-color: #2d9378 !important;
     box-shadow: 2px 2px 10px #00000056 !important;
+
 }
 #how_we_help #one p {
     color: #fff !important;
@@ -1099,6 +1100,10 @@ section.visible{
     background-color: #a3c56d !important;
     color: #0d4036 !important;
     box-shadow: 2px 2px 10px #00000056 !important;
+}
+#how_we_help #three p{
+    
+    max-width: 680px !important;
 }
 #how_we_help #four {
     border-top-right-radius: 50px;
@@ -1124,6 +1129,7 @@ section.visible{
     }
     #how_we_help .flex-column {
         padding: 0.1rem 1.2rem;
+        padding-bottom: 1.9rem;
     }
     .service-title {
         font-weight: 1000 !important;
@@ -1173,7 +1179,7 @@ section.visible{
     .service-card p {
     font-size: 17px;
   
-    line-height: 26px;
+    line-height: 22px;
 }
 }
 
@@ -1399,6 +1405,8 @@ section.visible{
     text-align: left;
     position: relative;
     z-index: 1;
+    margin-left: -2px;
+
 }
 
 .testimonial-section h2 {
@@ -1459,7 +1467,8 @@ section.visible{
     font-size: 20px;
     /* color: #0D4036; */
     margin-top: 10px;
-    font-family: "GT Walsheim Con";
+            font-family: 'GT Walsheim Trial Cn Th';
+    font-weight: 100;
 }
 #horiz {
     margin-top: 0rem;
@@ -1482,6 +1491,8 @@ section.visible{
     .testimonial-section {
         padding: 30px 20px 260px;
         margin-top: -6rem !important;
+    margin-left: 0px;
+
     }
     /* .testimonial-section-main{
         overflow: hidden;
@@ -1517,7 +1528,7 @@ section.visible{
     .testimonial-card p {
         font-size: 16px !important;
         /* color: #0D4036; */
-        font-weight: 300;
+        font-weight: 100;
         margin-top: 10px;
         line-height: 24px;
     }
@@ -1644,21 +1655,25 @@ section.visible{
 }
 
 .insight-text h3 {
-    font-size: 45px;
+    font-size: 35px;
+    line-height: 40px;
     font-weight: 800;
     color: #0d4036;
     margin: 0 0 15px;
+    max-width: 450px;
     font-family: "GT Walsheim Black";
 }
 
 .description {
-    font-size: 24px;
-    line-height: 32px;
-    letter-spacing: 3%;
+    font-size: 22px;
+    line-height: 30px;
+    letter-spacing: 3.6%;
     font-weight: 300;
     color: #3b4d4c;
     margin-bottom: 20px;
     font-family: "GT Walsheim Con";
+    max-width: 470px;
+
 }
 
 .read-more {
