@@ -532,6 +532,9 @@ section.visible{
     margin: auto 0px;
     /* font-family: 'Montserrat'; */
 }
+#header .hero .row>*{
+    max-width: none;
+}
 .hero-text #dot {
     width: 74px;
 }
