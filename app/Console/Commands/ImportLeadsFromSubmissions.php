@@ -73,7 +73,7 @@ class ImportLeadsFromSubmissions extends Command
                     }
 
                     if (!$dryRun) {
-                        Lead::convertFromContactSubmission($submission);
+                        Lead::createFromContactSubmission($submission);
                     }
 
                     $imported++;
@@ -124,7 +124,7 @@ class ImportLeadsFromSubmissions extends Command
                     }
 
                     if (!$dryRun) {
-                        Lead::convertFromConsultation($application);
+                        Lead::createFromConsultation($application);
                     }
 
                     $imported++;

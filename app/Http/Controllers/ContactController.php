@@ -142,7 +142,7 @@ class ContactController extends Controller
 
             // Auto-create CRM lead from contact submission
             try {
-                $lead = Lead::convertFromContactSubmission($contactSubmission);
+                $lead = Lead::createFromContactSubmission($contactSubmission);
                 AdminNotificationService::notifyNewLead($lead);
             } catch (\Exception $e) {
                 Log::error('Failed to create lead from contact submission', [
@@ -330,7 +330,7 @@ class ContactController extends Controller
                     AdminNotificationService::notifyNewContactForm($submission);
 
                     try {
-                        $lead = Lead::convertFromContactSubmission($submission);
+                        $lead = Lead::createFromContactSubmission($submission);
                         AdminNotificationService::notifyNewLead($lead);
                     } catch (\Exception $e) {
                         Log::error('Failed to create lead from contact draft submission', [
@@ -383,7 +383,7 @@ class ContactController extends Controller
 
                     // Auto-create CRM lead from contact submission
                     try {
-                        $lead = Lead::convertFromContactSubmission($submission);
+                        $lead = Lead::createFromContactSubmission($submission);
                         AdminNotificationService::notifyNewLead($lead);
                     } catch (\Exception $e) {
                         Log::error('Failed to create lead from new contact submission', [
