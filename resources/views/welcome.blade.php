@@ -488,6 +488,18 @@
 
     }
 
+    .who-we-are h2{
+        font-size: 42px !important;
+        margin-bottom: 13.2px !important;
+    }
+
+    .who-we-are p{
+        line-height: 33px !important;
+        font-size: 21.5px !important;
+        max-width: 480px !important;
+      
+    }
+
 
     }
 </style>

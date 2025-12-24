@@ -363,6 +363,8 @@ section.visible{
     font-family: "GT Walsheim Con";
     line-height: 16px;
     letter-spacing: 0.4px;
+    padding-right: 0px;
+    max-width: 260px;
 }
 
 @media screen and (max-width: 580px) {
@@ -866,7 +868,7 @@ section.visible{
     z-index: 1;
 }
 .who-we-are img {
-    height: 660px;
+    height: 600px;
     width: 514px;
     object-fit: cover;
     display: flex;
@@ -1034,8 +1036,10 @@ section.visible{
 }
 .service-card p {
     font-size: 22px;
-    font-weight: 400;
-    font-family: "GT Walsheim Con";
+    font-weight: 200;
+  font-family: "GT Walsheim Trial Cn Rg";
+
+
     color: #0d4036;
     line-height: 28px;
 }
@@ -1410,7 +1414,7 @@ section.visible{
 }
 
 .testimonial-section h2 {
-    font-size: 53px;
+    font-size: 45px;
     font-weight: 600;
     margin-bottom: 2rem;
     font-family: "Montserrat";
