@@ -20,13 +20,13 @@
                             <div class="dropdown-menu dropdown-mega">
                             <div class="container py-4" style="width: 70%; padding-left: 84px;">
                                     <div class="row justify-content-left">
-                                        <div class="col-md-3  line">
-                                            <a href="{{ url('about') }}" class="d-block mb-3"><b>About Us</b></a>
-                                            <p >Accelerating success for businesses across the globe — that’s the P23 <br>
+                                        <div class="col-md-6  line">
+                                            <a href="{{ url('about') }}" class="d-block mb-3 mt-3"><b>About Us</b></a>
+                                            <p >Accelerating success for businesses across the globe — that’s the P23 
                                                 Africa promise.</p>
                                         </div>
-                                        <div class="col-md-4 " style=" transform: translateX(16px);">
-                                            <a href="{{ route('brn') }}" class="d-block mb-3"><b>Business
+                                        <div class="col-md-6 " style=" transform: translateX(25px);">
+                                            <a href="{{ route('brn') }}" class="d-block mb-3 mt-3"><b>Business
                                                     Network</b></a>
                                             <p>Where top CEOs meet, connect, and grow through trusted referrals.</p>
                                         </div>

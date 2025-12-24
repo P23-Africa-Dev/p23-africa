@@ -364,7 +364,7 @@ section.visible{
     line-height: 16px;
     letter-spacing: 0.4px;
     padding-right: 0px;
-    max-width: 260px;
+    /* max-width: 260px; */
 }
 
 @media screen and (max-width: 580px) {
