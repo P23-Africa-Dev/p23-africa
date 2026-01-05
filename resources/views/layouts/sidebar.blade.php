@@ -39,7 +39,7 @@
 
             <!-- CRM -->
             @if (auth()->user()->hasRole('admin|supervisor'))
-                <a href="{{ route('admin.crm.index') }}"
+                <a href="{{ route('admin.crm.pipeline') }}"
                     class="sidebar-item {{ request()->routeIs('admin.crm.*') ? 'active' : '' }}">
                     <i class="fa fa-address-book sidebar-icon"></i>
                     <span x-show="sidebarOpen" x-transition class="sidebar-text">CRM</span>
