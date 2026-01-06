@@ -487,7 +487,7 @@
                                             <td class="dark:text-gray-100">
                                                 @if ($lead->assignedUser)
                                                     <span
-                                                        class="badge bg-secondary">{{ $lead->assignedUser->name }}</span>
+                                                        class="badge bg-gray-500">{{ $lead->assignedUser->name }}</span>
                                                 @else
                                                     <span class="text-muted">Unassigned</span>
                                                 @endif
@@ -508,7 +508,7 @@
                                             </td>
                                             <td>
                                                 <span
-                                                    class="badge bg-secondary bg-opacity-25 text-dark dark:text-gray-100 border">{{ $lead->source_label }}</span>
+                                                    class="badge bg-gray-500 text-dark dark:text-gray-100 border">{{ $lead->source_label }}</span>
                                             </td>
                                             <td>
                                                 <div class="btn-group" role="group">
