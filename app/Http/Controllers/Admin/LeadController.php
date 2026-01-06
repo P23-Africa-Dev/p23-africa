@@ -133,7 +133,7 @@ class LeadController extends Controller
             'phone' => 'nullable|string|max:20',
             'company' => 'nullable|string|max:255',
             'job_title' => 'nullable|string|max:255',
-            'website' => 'nullable|url|max:255',
+            'website' => 'nullable|url:http,https|max:255',
             'country' => 'nullable|string|max:100',
             'city' => 'nullable|string|max:100',
             'address' => 'nullable|string|max:500',
@@ -141,7 +141,7 @@ class LeadController extends Controller
             'source' => ['required', Rule::in(array_keys(Lead::getSources()))],
             'priority' => ['required', Rule::in(array_keys(Lead::getPriorities()))],
             'estimated_value' => 'nullable|numeric|min:0',
-            'currency' => 'nullable|string|size:3',
+            'currency' => 'nullable|string|max:3',
             'interested_services' => 'nullable|array',
             'requirements' => 'nullable|string|max:5000',
             'notes' => 'nullable|string|max:5000',
@@ -221,7 +221,7 @@ class LeadController extends Controller
             'phone' => 'nullable|string|max:20',
             'company' => 'nullable|string|max:255',
             'job_title' => 'nullable|string|max:255',
-            'website' => 'nullable|url|max:255',
+            'website' => 'nullable|url:http,https|max:255',
             'country' => 'nullable|string|max:100',
             'city' => 'nullable|string|max:100',
             'address' => 'nullable|string|max:500',
@@ -229,7 +229,7 @@ class LeadController extends Controller
             'source' => ['required', Rule::in(array_keys(Lead::getSources()))],
             'priority' => ['required', Rule::in(array_keys(Lead::getPriorities()))],
             'estimated_value' => 'nullable|numeric|min:0',
-            'currency' => 'nullable|string|size:3',
+            'currency' => 'nullable|string|max:3',
             'interested_services' => 'nullable|array',
             'requirements' => 'nullable|string|max:5000',
             'notes' => 'nullable|string|max:5000',
@@ -260,10 +260,19 @@ class LeadController extends Controller
                 ->with('success', 'Lead updated successfully!');
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::error('Failed to update lead: ' . $e->getMessage());
+            Log::error('Failed to update lead: ' . $e->getMessage(), [
+                'lead_id' => $lead->id,
+                'data' => $validated,
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            // In development, show actual error message
+            $errorMessage = config('app.debug')
+                ? 'Failed to update lead: ' . $e->getMessage()
+                : 'Failed to update lead. Please try again.';
 
             return back()->withInput()
-                ->with('error', 'Failed to update lead. Please try again.');
+                ->with('error', $errorMessage);
         }
     }
 

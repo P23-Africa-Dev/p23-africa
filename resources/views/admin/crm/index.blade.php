@@ -48,36 +48,45 @@
                 margin-right: 8px;
             }
 
+            /* Status dot colors - must match Lead model getStatusColorAttribute */
             .status-dot.status-new {
-                background-color: #6c757d;
+                background-color: #0dcaf0;
+                /* info */
             }
 
             .status-dot.status-contacted {
-                background-color: #0dcaf0;
+                background-color: #0d6efd;
+                /* primary */
             }
 
             .status-dot.status-qualified {
-                background-color: #0d6efd;
+                background-color: #ffc107;
+                /* warning */
+            }
+
+            .status-dot.status-unqualified {
+                background-color: #6c757d;
+                /* secondary */
             }
 
             .status-dot.status-proposal {
-                background-color: #6f42c1;
+                background-color: #6c757d;
+                /* secondary */
             }
 
             .status-dot.status-negotiation {
-                background-color: #fd7e14;
+                background-color: #212529;
+                /* dark */
             }
 
             .status-dot.status-won {
                 background-color: #198754;
+                /* success */
             }
 
             .status-dot.status-lost {
                 background-color: #dc3545;
-            }
-
-            .status-dot.status-unqualified {
-                background-color: #ffc107;
+                /* danger */
             }
 
             /* Dark mode support */
@@ -499,7 +508,7 @@
                                             </td>
                                             <td>
                                                 <span
-                                                    class="badge bg-light text-dark">{{ $lead->source_label }}</span>
+                                                    class="badge bg-secondary bg-opacity-25 text-dark dark:text-gray-100 border">{{ $lead->source_label }}</span>
                                             </td>
                                             <td>
                                                 <div class="btn-group" role="group">
@@ -582,28 +591,28 @@
                 const bulkAssign = document.getElementById('bulkAssign');
                 const bulkDeleteBtn = document.getElementById('bulkDeleteBtn');
 
-                // Status color mapping
+                // Status color mapping (must match Lead model getStatusColorAttribute)
                 const statusColors = {
-                    'new': 'secondary',
-                    'contacted': 'info',
-                    'qualified': 'primary',
-                    'proposal': 'purple',
-                    'negotiation': 'warning',
+                    'new': 'info',
+                    'contacted': 'primary',
+                    'qualified': 'warning',
+                    'unqualified': 'secondary',
+                    'proposal': 'secondary',
+                    'negotiation': 'dark',
                     'won': 'success',
-                    'lost': 'danger',
-                    'unqualified': 'warning'
+                    'lost': 'danger'
                 };
 
-                // Status labels mapping
+                // Status labels mapping (must match Lead model getStatuses)
                 const statusLabels = {
                     'new': 'New',
                     'contacted': 'Contacted',
                     'qualified': 'Qualified',
-                    'proposal': 'Proposal',
+                    'unqualified': 'Unqualified',
+                    'proposal': 'Proposal Sent',
                     'negotiation': 'Negotiation',
                     'won': 'Won',
-                    'lost': 'Lost',
-                    'unqualified': 'Unqualified'
+                    'lost': 'Lost'
                 };
 
                 // Lost reason modal

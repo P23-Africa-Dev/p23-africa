@@ -40,37 +40,46 @@
             font-weight: 600;
         }
 
+        /* Pipeline header colors - must match Lead model getStatusColorAttribute */
         .pipeline-header.new {
-            background: #17a2b8;
+            background: #0dcaf0;
+            /* info */
         }
 
         .pipeline-header.contacted {
-            background: #007bff;
+            background: #0d6efd;
+            /* primary */
         }
 
         .pipeline-header.qualified {
             background: #ffc107;
+            /* warning */
             color: #212529;
         }
 
         .pipeline-header.unqualified {
             background: #6c757d;
+            /* secondary */
         }
 
         .pipeline-header.proposal {
-            background: #fd7e14;
+            background: #6c757d;
+            /* secondary */
         }
 
         .pipeline-header.negotiation {
-            background: #343a40;
+            background: #212529;
+            /* dark */
         }
 
         .pipeline-header.won {
-            background: #28a745;
+            background: #198754;
+            /* success */
         }
 
         .pipeline-header.lost {
             background: #dc3545;
+            /* danger */
         }
 
         .pipeline-body {
