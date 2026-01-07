@@ -5,7 +5,6 @@ namespace App\Mail;
 use App\Models\LeadEmail;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
@@ -13,7 +12,7 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Mail\Mailables\Headers;
 use Illuminate\Queue\SerializesModels;
 
-class LeadMail extends Mailable implements ShouldQueue
+class LeadMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -46,14 +45,13 @@ class LeadMail extends Mailable implements ShouldQueue
      */
     public function headers(): Headers
     {
-        $headers = new Headers(
-            messageId: $this->leadEmail->message_id,
-        );
+        // Ensure message_id is properly formatted for email headers
+        $messageId = $this->leadEmail->message_id;
 
         // If this is a reply, add In-Reply-To and References headers
         if ($this->leadEmail->in_reply_to) {
             return new Headers(
-                messageId: $this->leadEmail->message_id,
+                messageId: $messageId,
                 references: [$this->leadEmail->in_reply_to],
                 text: [
                     'In-Reply-To' => '<' . $this->leadEmail->in_reply_to . '>',
@@ -61,7 +59,9 @@ class LeadMail extends Mailable implements ShouldQueue
             );
         }
 
-        return $headers;
+        return new Headers(
+            messageId: $messageId,
+        );
     }
 
     /**

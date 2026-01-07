@@ -49,7 +49,9 @@ class LeadEmail extends Model
         static::creating(function ($email) {
             // Generate a unique message ID if not set
             if (empty($email->message_id)) {
-                $email->message_id = Str::uuid()->toString() . '@' . config('app.url', 'p23africa.com');
+                // Extract domain from APP_URL or use a default
+                $domain = self::getEmailDomain();
+                $email->message_id = Str::uuid()->toString() . '@' . $domain;
             }
 
             // Generate thread ID if not set and this is a new conversation
@@ -57,6 +59,33 @@ class LeadEmail extends Model
                 $email->thread_id = Str::uuid()->toString();
             }
         });
+    }
+
+    /**
+     * Get a valid email domain for Message-ID header
+     */
+    protected static function getEmailDomain(): string
+    {
+        // Try to get domain from MAIL_FROM_ADDRESS first
+        $mailFrom = config('mail.from.address');
+        if ($mailFrom && filter_var($mailFrom, FILTER_VALIDATE_EMAIL)) {
+            $parts = explode('@', $mailFrom);
+            if (isset($parts[1])) {
+                return $parts[1];
+            }
+        }
+
+        // Try to extract domain from APP_URL
+        $appUrl = config('app.url', '');
+        if ($appUrl) {
+            $parsed = parse_url($appUrl);
+            if (isset($parsed['host']) && $parsed['host'] !== 'localhost') {
+                return $parsed['host'];
+            }
+        }
+
+        // Fallback to a default domain
+        return 'p23africa.com';
     }
 
     /**
