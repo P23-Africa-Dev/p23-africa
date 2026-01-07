@@ -153,6 +153,29 @@ class LeadController extends Controller
             'next_follow_up' => 'nullable|date|after:now',
         ]);
 
+        // Convert empty strings to null for nullable fields
+        $nullableFields = [
+            'assigned_to',
+            'last_name',
+            'phone',
+            'company',
+            'job_title',
+            'website',
+            'country',
+            'city',
+            'address',
+            'estimated_value',
+            'currency',
+            'requirements',
+            'notes',
+            'next_follow_up'
+        ];
+        foreach ($nullableFields as $field) {
+            if (array_key_exists($field, $validated) && $validated[$field] === '') {
+                $validated[$field] = null;
+            }
+        }
+
         try {
             DB::beginTransaction();
 
