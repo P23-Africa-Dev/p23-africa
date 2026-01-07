@@ -367,6 +367,12 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
     Route::post('/crm/convert/contact/{contact}', [\App\Http\Controllers\Admin\LeadController::class, 'convertFromContact'])->name('crm.convert-contact');
     Route::post('/crm/convert/consultation/{consultation}', [\App\Http\Controllers\Admin\LeadController::class, 'convertFromConsultation'])->name('crm.convert-consultation');
 
+    // CRM Email functionality
+    Route::get('/crm/{lead}/emails', [\App\Http\Controllers\Admin\LeadController::class, 'getEmails'])->name('crm.get-emails');
+    Route::post('/crm/{lead}/email', [\App\Http\Controllers\Admin\LeadController::class, 'sendEmail'])->name('crm.send-email');
+    Route::get('/crm/{lead}/emails/thread/{threadId}', [\App\Http\Controllers\Admin\LeadController::class, 'getEmailThread'])->name('crm.get-email-thread');
+    Route::get('/crm/{lead}/emails/unread-count', [\App\Http\Controllers\Admin\LeadController::class, 'getUnreadEmailCount'])->name('crm.unread-email-count');
+
     // Route::get('/staff/create', [StaffController::class, 'create'])->name('admin.staff.create');
     // Route::post('/staff/store', [StaffController::class, 'store'])->name('admin.staff.store');
 

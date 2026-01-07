@@ -132,6 +132,25 @@ class Lead extends Model
     }
 
     /**
+     * Get all emails for this lead
+     */
+    public function emails(): HasMany
+    {
+        return $this->hasMany(LeadEmail::class)->orderBy('created_at', 'desc');
+    }
+
+    /**
+     * Get unread incoming emails count
+     */
+    public function getUnreadEmailsCountAttribute(): int
+    {
+        return $this->emails()
+            ->incoming()
+            ->whereNull('read_at')
+            ->count();
+    }
+
+    /**
      * Get the full name attribute
      */
     public function getFullNameAttribute(): string

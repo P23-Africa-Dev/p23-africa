@@ -358,6 +358,112 @@
                             @endforelse
                         </div>
                     </div>
+
+                    <!-- Email Communication -->
+                    <div class="card border-0 shadow-sm dark:bg-gray-800 mt-4">
+                        <div
+                            class="card-header bg-transparent border-0 pt-4 d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0 text-dark dark:text-gray-100">
+                                <i class="fa fa-envelope me-2 text-primary"></i>Email Communication
+                                <span class="badge bg-danger ms-2 d-none" id="unreadEmailBadge">0</span>
+                            </h5>
+                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#composeEmailModal">
+                                <i class="fa fa-paper-plane me-2"></i>Compose Email
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div id="emailList">
+                                <div class="text-center py-4" id="emailLoading">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                    <p class="text-muted mt-2">Loading emails...</p>
+                                </div>
+                                <div id="emailContent" class="d-none">
+                                    <!-- Emails will be loaded here via JavaScript -->
+                                </div>
+                                <div class="text-center py-4 d-none" id="noEmails">
+                                    <i class="fa fa-envelope-open fa-3x text-muted mb-3"></i>
+                                    <p class="text-muted">No emails yet. Send the first email to start a conversation!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Compose Email Modal -->
+    <div class="modal fade" id="composeEmailModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content dark:bg-gray-800">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title text-dark dark:text-gray-100">
+                        <i class="fa fa-paper-plane me-2 text-primary"></i>Compose Email to {{ $lead->full_name }}
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="composeEmailForm">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label text-dark dark:text-gray-100">From</label>
+                            <input type="text"
+                                class="form-control dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                                value="{{ auth()->user()->email }}" readonly>
+                            <small class="text-muted">Email will be sent from your account email address</small>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-dark dark:text-gray-100">To</label>
+                            <input type="text"
+                                class="form-control dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                                value="{{ $lead->email }}" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-dark dark:text-gray-100">Subject <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" name="subject" id="emailSubject"
+                                class="form-control dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                                placeholder="Enter email subject" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-dark dark:text-gray-100">Message <span
+                                    class="text-danger">*</span></label>
+                            <textarea name="body" id="emailBody" rows="8"
+                                class="form-control dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                                placeholder="Type your message here..." required></textarea>
+                        </div>
+                        <input type="hidden" name="reply_to_id" id="replyToId" value="">
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="sendEmailBtn">
+                            <i class="fa fa-paper-plane me-2"></i>Send Email
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Email Modal -->
+    <div class="modal fade" id="viewEmailModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content dark:bg-gray-800">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title text-dark dark:text-gray-100" id="viewEmailSubject">Email Subject</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="viewEmailBody">
+                    <!-- Email content will be loaded here -->
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="replyToEmailBtn">
+                        <i class="fa fa-reply me-2"></i>Reply
+                    </button>
                 </div>
             </div>
         </div>
@@ -563,7 +669,7 @@
                             if (data.success) {
                                 showToast('success', data.message);
                                 bootstrap.Modal.getInstance(document.getElementById('followUpModal'))
-                            .hide();
+                                    .hide();
                                 setTimeout(() => location.reload(), 1000);
                             } else {
                                 showToast('error', data.message);
@@ -571,6 +677,274 @@
                         })
                         .catch(() => showToast('error', 'Failed to schedule follow-up'));
                 });
+
+                // Email functionality
+                let currentEmails = [];
+                let currentViewingEmail = null;
+
+                // Load emails on page load
+                loadEmails();
+
+                function loadEmails() {
+                    fetch(`/admin/crm/${leadId}/emails`, {
+                            method: 'GET',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Accept': 'application/json'
+                            }
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            document.getElementById('emailLoading').classList.add('d-none');
+
+                            if (data.success && data.emails && data.emails.length > 0) {
+                                currentEmails = data.emails;
+                                renderEmails(data.emails);
+                                document.getElementById('emailContent').classList.remove('d-none');
+                                document.getElementById('noEmails').classList.add('d-none');
+                            } else {
+                                document.getElementById('emailContent').classList.add('d-none');
+                                document.getElementById('noEmails').classList.remove('d-none');
+                            }
+                        })
+                        .catch(err => {
+                            console.error('Failed to load emails:', err);
+                            document.getElementById('emailLoading').classList.add('d-none');
+                            document.getElementById('noEmails').classList.remove('d-none');
+                        });
+                }
+
+                function renderEmails(emails) {
+                    const container = document.getElementById('emailContent');
+                    container.innerHTML = '';
+
+                    // Group emails by thread
+                    const threads = {};
+                    emails.forEach(email => {
+                        const threadId = email.thread_id || email.id;
+                        if (!threads[threadId]) {
+                            threads[threadId] = [];
+                        }
+                        threads[threadId].push(email);
+                    });
+
+                    // Sort threads by most recent email
+                    const sortedThreads = Object.values(threads).sort((a, b) => {
+                        const aLatest = new Date(a[0].created_at);
+                        const bLatest = new Date(b[0].created_at);
+                        return bLatest - aLatest;
+                    });
+
+                    sortedThreads.forEach(threadEmails => {
+                        const latestEmail = threadEmails[0];
+                        const hasUnread = threadEmails.some(e => e.direction === 'incoming' && !e.read_at);
+
+                        const emailItem = document.createElement('div');
+                        emailItem.className =
+                            `email-item p-3 border-bottom ${hasUnread ? 'bg-light' : ''} cursor-pointer`;
+                        emailItem.style.cursor = 'pointer';
+                        emailItem.onclick = () => viewEmail(latestEmail);
+
+                        emailItem.innerHTML = `
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <i class="fa ${latestEmail.direction === 'incoming' ? 'fa-inbox text-primary' : 'fa-paper-plane text-success'} me-2"></i>
+                                        <h6 class="mb-0 text-dark dark:text-gray-100 ${hasUnread ? 'fw-bold' : ''}">
+                                            ${escapeHtml(latestEmail.subject)}
+                                        </h6>
+                                        ${hasUnread ? '<span class="badge bg-danger ms-2">New Reply</span>' : ''}
+                                    </div>
+                                    <p class="text-muted mb-1 small">
+                                        ${latestEmail.direction === 'incoming' ? 'From: ' + escapeHtml(latestEmail.from_name || latestEmail.from_email) : 'To: ' + escapeHtml(latestEmail.to_name || latestEmail.to_email)}
+                                    </p>
+                                    <p class="text-muted mb-0 small text-truncate" style="max-width: 400px;">
+                                        ${escapeHtml(latestEmail.body.substring(0, 100))}${latestEmail.body.length > 100 ? '...' : ''}
+                                    </p>
+                                </div>
+                                <div class="text-end">
+                                    <small class="text-muted">${formatDate(latestEmail.created_at)}</small>
+                                    <div class="mt-1">
+                                        <span class="badge bg-${latestEmail.status === 'sent' ? 'success' : latestEmail.status === 'received' ? 'primary' : latestEmail.status === 'failed' ? 'danger' : 'secondary'}">
+                                            ${latestEmail.status}
+                                        </span>
+                                    </div>
+                                    ${threadEmails.length > 1 ? `<small class="text-muted"><i class="fa fa-reply me-1"></i>${threadEmails.length} messages</small>` : ''}
+                                </div>
+                            </div>
+                        `;
+
+                        container.appendChild(emailItem);
+                    });
+                }
+
+                function viewEmail(email) {
+                    currentViewingEmail = email;
+
+                    // Load the full thread
+                    fetch(`/admin/crm/${leadId}/emails/thread/${email.thread_id}`, {
+                            method: 'GET',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Accept': 'application/json'
+                            }
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success && data.emails) {
+                                renderEmailThread(data.emails, email.subject);
+                            } else {
+                                // Show single email if thread fetch fails
+                                renderEmailThread([email], email.subject);
+                            }
+                        })
+                        .catch(() => {
+                            renderEmailThread([email], email.subject);
+                        });
+                }
+
+                function renderEmailThread(emails, subject) {
+                    const modal = document.getElementById('viewEmailModal');
+                    document.getElementById('viewEmailSubject').textContent = subject;
+
+                    let bodyHtml = '<div class="email-thread">';
+
+                    emails.forEach((email, index) => {
+                        const isIncoming = email.direction === 'incoming';
+                        bodyHtml += `
+                            <div class="email-message ${index > 0 ? 'border-top pt-3 mt-3' : ''} ${isIncoming ? 'bg-light p-3 rounded' : ''}">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div>
+                                        <strong class="text-dark dark:text-gray-100">
+                                            <i class="fa ${isIncoming ? 'fa-inbox text-primary' : 'fa-paper-plane text-success'} me-2"></i>
+                                            ${isIncoming ? 'From' : 'To'}: ${escapeHtml(isIncoming ? (email.from_name || email.from_email) : (email.to_name || email.to_email))}
+                                        </strong>
+                                        ${email.user ? `<span class="text-muted ms-2">(${escapeHtml(email.user.name)})</span>` : ''}
+                                    </div>
+                                    <small class="text-muted">${formatDate(email.created_at)}</small>
+                                </div>
+                                <div class="email-body text-dark dark:text-gray-100" style="white-space: pre-wrap;">
+                                    ${escapeHtml(email.body)}
+                                </div>
+                                <div class="mt-2">
+                                    <span class="badge bg-${email.status === 'sent' ? 'success' : email.status === 'received' ? 'primary' : email.status === 'failed' ? 'danger' : 'secondary'}">
+                                        ${email.status}
+                                    </span>
+                                    ${email.sent_at ? `<small class="text-muted ms-2">Sent: ${formatDate(email.sent_at)}</small>` : ''}
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    bodyHtml += '</div>';
+                    document.getElementById('viewEmailBody').innerHTML = bodyHtml;
+
+                    new bootstrap.Modal(modal).show();
+                }
+
+                // Reply to email button
+                document.getElementById('replyToEmailBtn').addEventListener('click', function() {
+                    if (currentViewingEmail) {
+                        // Close view modal
+                        bootstrap.Modal.getInstance(document.getElementById('viewEmailModal')).hide();
+
+                        // Pre-fill compose form for reply
+                        const subject = currentViewingEmail.subject.startsWith('Re:') ?
+                            currentViewingEmail.subject :
+                            'Re: ' + currentViewingEmail.subject;
+                        document.getElementById('emailSubject').value = subject;
+                        document.getElementById('replyToId').value = currentViewingEmail.id;
+                        document.getElementById('emailBody').value = '';
+
+                        // Open compose modal
+                        setTimeout(() => {
+                            new bootstrap.Modal(document.getElementById('composeEmailModal')).show();
+                        }, 300);
+                    }
+                });
+
+                // Compose email form
+                document.getElementById('composeEmailForm').addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const sendBtn = document.getElementById('sendEmailBtn');
+                    sendBtn.disabled = true;
+                    sendBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Sending...';
+
+                    const formData = new FormData(this);
+
+                    fetch(`/admin/crm/${leadId}/email`, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Accept': 'application/json'
+                            },
+                            body: formData
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            sendBtn.disabled = false;
+                            sendBtn.innerHTML = '<i class="fa fa-paper-plane me-2"></i>Send Email';
+
+                            if (data.success) {
+                                showToast('success', data.message);
+                                this.reset();
+                                document.getElementById('replyToId').value = '';
+                                bootstrap.Modal.getInstance(document.getElementById('composeEmailModal'))
+                                    .hide();
+                                loadEmails();
+                            } else {
+                                showToast('error', data.message || 'Failed to send email');
+                            }
+                        })
+                        .catch(err => {
+                            sendBtn.disabled = false;
+                            sendBtn.innerHTML = '<i class="fa fa-paper-plane me-2"></i>Send Email';
+                            showToast('error', 'Failed to send email');
+                        });
+                });
+
+                // Reset compose form when modal is closed
+                document.getElementById('composeEmailModal').addEventListener('hidden.bs.modal', function() {
+                    document.getElementById('composeEmailForm').reset();
+                    document.getElementById('replyToId').value = '';
+                });
+
+                // Helper functions
+                function escapeHtml(text) {
+                    if (!text) return '';
+                    const div = document.createElement('div');
+                    div.textContent = text;
+                    return div.innerHTML;
+                }
+
+                function formatDate(dateString) {
+                    const date = new Date(dateString);
+                    const now = new Date();
+                    const diff = now - date;
+
+                    // Less than 24 hours ago
+                    if (diff < 86400000) {
+                        return date.toLocaleTimeString([], {
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+                    }
+                    // Less than 7 days ago
+                    if (diff < 604800000) {
+                        return date.toLocaleDateString([], {
+                            weekday: 'short',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+                    }
+                    // Default
+                    return date.toLocaleDateString([], {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric'
+                    });
+                }
 
                 function showToast(type, message) {
                     const toast = document.getElementById(type + 'Toast');

@@ -5,12 +5,16 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Lead;
 use App\Models\LeadActivity;
+use App\Models\LeadEmail;
 use App\Models\User;
 use App\Models\ContactSubmission;
 use App\Models\ConsultationApplication;
+use App\Mail\LeadMail;
+use App\Services\LeadEmailService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 
 class LeadController extends Controller
@@ -237,6 +241,30 @@ class LeadController extends Controller
             'next_follow_up' => 'nullable|date',
             'lost_reason' => 'nullable|string|max:500',
         ]);
+
+        // Convert empty strings to null for nullable fields
+        $nullableFields = [
+            'assigned_to',
+            'lost_reason',
+            'address',
+            'last_name',
+            'phone',
+            'company',
+            'job_title',
+            'website',
+            'country',
+            'city',
+            'estimated_value',
+            'currency',
+            'requirements',
+            'notes',
+            'next_follow_up'
+        ];
+        foreach ($nullableFields as $field) {
+            if (array_key_exists($field, $validated) && $validated[$field] === '') {
+                $validated[$field] = null;
+            }
+        }
 
         try {
             DB::beginTransaction();
@@ -741,5 +769,170 @@ class LeadController extends Controller
         }
 
         return view('admin.crm.pipeline', compact('pipeline', 'statuses'));
+    }
+
+    /**
+     * Get emails for a lead
+     */
+    public function getEmails(Lead $lead)
+    {
+        $emails = $lead->emails()
+            ->with('user')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        // Mark incoming emails as read
+        $lead->emails()
+            ->incoming()
+            ->whereNull('read_at')
+            ->update(['read_at' => now()]);
+
+        return response()->json([
+            'success' => true,
+            'emails' => $emails,
+            'unread_count' => 0
+        ]);
+    }
+
+    /**
+     * Send email to a lead
+     */
+    public function sendEmail(Request $request, Lead $lead, LeadEmailService $emailService)
+    {
+        $validated = $request->validate([
+            'subject' => 'required|string|max:255',
+            'body' => 'required|string|max:10000',
+            'reply_to_id' => 'nullable|exists:lead_emails,id',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $user = auth()->user();
+
+            // Validate that user can send emails via Google Workspace
+            if (!$emailService->canUserSendEmail($user)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Your email address is not authorized to send emails. Please contact your administrator.'
+                ], 403);
+            }
+
+            $replyTo = null;
+            $threadId = null;
+            $inReplyTo = null;
+
+            // If this is a reply, get the thread info
+            if ($validated['reply_to_id']) {
+                $replyTo = LeadEmail::find($validated['reply_to_id']);
+                if ($replyTo) {
+                    $threadId = $replyTo->thread_id;
+                    $inReplyTo = $replyTo->message_id;
+                }
+            }
+
+            // Create the email record
+            $leadEmail = LeadEmail::create([
+                'lead_id' => $lead->id,
+                'user_id' => $user->id,
+                'from_email' => $user->email,
+                'from_name' => $user->name,
+                'to_email' => $lead->email,
+                'to_name' => $lead->full_name,
+                'subject' => $validated['subject'],
+                'body' => $validated['body'],
+                'body_html' => nl2br(e($validated['body'])),
+                'direction' => 'outgoing',
+                'thread_id' => $threadId,
+                'in_reply_to' => $inReplyTo,
+                'status' => 'draft',
+            ]);
+
+            // Send the email using the service (handles Google Workspace configuration)
+            $emailService->sendEmail($leadEmail, $user);
+
+            // Update email status
+            $leadEmail->update([
+                'status' => 'sent',
+                'sent_at' => now(),
+            ]);
+
+            // Log activity
+            $lead->logActivity(
+                'email',
+                'Email sent: ' . $validated['subject'],
+                'Email sent to ' . $lead->email . ' from ' . $user->email,
+                ['email_id' => $leadEmail->id]
+            );
+
+            // Update last contacted timestamp
+            $lead->update(['last_contacted_at' => now()]);
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Email sent successfully from ' . $user->email . '!',
+                'email' => $leadEmail->fresh()->load('user')
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Failed to send lead email: ' . $e->getMessage(), [
+                'lead_id' => $lead->id,
+                'user_id' => auth()->id(),
+                'sender_email' => auth()->user()->email ?? 'unknown',
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            // If email record was created, mark as failed
+            if (isset($leadEmail)) {
+                $leadEmail->update(['status' => 'failed']);
+            }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to send email. Please try again.'
+            ], 500);
+        }
+    }
+
+    /**
+     * Get a single email thread
+     */
+    public function getEmailThread(Lead $lead, $threadId)
+    {
+        $emails = $lead->emails()
+            ->where('thread_id', $threadId)
+            ->with('user')
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        // Mark unread incoming emails in this thread as read
+        $lead->emails()
+            ->where('thread_id', $threadId)
+            ->incoming()
+            ->whereNull('read_at')
+            ->update(['read_at' => now()]);
+
+        return response()->json([
+            'success' => true,
+            'emails' => $emails
+        ]);
+    }
+
+    /**
+     * Get unread email count for a lead
+     */
+    public function getUnreadEmailCount(Lead $lead)
+    {
+        $count = $lead->emails()
+            ->incoming()
+            ->whereNull('read_at')
+            ->count();
+
+        return response()->json([
+            'success' => true,
+            'count' => $count
+        ]);
     }
 }
