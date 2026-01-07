@@ -78,7 +78,7 @@ class LeadEmailService
         // 2. The SMTP account has delegated access or "Send As" permission
         Config::set('mail.from.address', $sender->email);
         Config::set('mail.from.name', $sender->name);
-        
+
         // Log the configuration change for debugging
         Log::debug('Mail configuration updated for user', [
             'from_address' => $sender->email,
@@ -110,14 +110,14 @@ class LeadEmailService
 
         // Check if the email belongs to your Google Workspace domain
         $allowedDomains = $this->getAllowedDomains();
-        
+
         // If no domains are configured, allow all (not recommended for production)
         if (empty($allowedDomains)) {
             return true;
         }
 
         $userDomain = $this->getEmailDomain($user->email);
-        
+
         return in_array($userDomain, $allowedDomains);
     }
 
@@ -144,7 +144,7 @@ class LeadEmailService
     public function isDomainAllowed(string $email): bool
     {
         $allowedDomains = $this->getAllowedDomains();
-        
+
         if (empty($allowedDomains)) {
             return true;
         }
