@@ -242,8 +242,21 @@
                                 </div>
                                 <div class="ms-3">
                                     <h6 class="text-muted dark:text-gray-400 mb-1">Total Pipeline Value</h6>
+                                    @php
+                                        $pipelineStatuses = [
+                                            'new',
+                                            'contacted',
+                                            'qualified',
+                                            'proposal',
+                                            'negotiation',
+                                            'won',
+                                        ];
+                                        $totalPipelineValue = collect($pipeline)
+                                            ->filter(fn($data, $status) => in_array($status, $pipelineStatuses))
+                                            ->sum('value');
+                                    @endphp
                                     <h3 class="mb-0 text-dark dark:text-gray-100">
-                                        ${{ number_format(collect($pipeline)->sum('value')) }}
+                                        ${{ number_format($totalPipelineValue) }}
                                     </h3>
                                 </div>
                             </div>
