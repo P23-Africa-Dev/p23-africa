@@ -148,6 +148,9 @@
                 <a href="{{ route('admin.crm.pipeline') }}" class="btn btn-outline-info">
                     <i class="fa fa-columns me-2"></i>Pipeline View
                 </a>
+                <a href="{{ route('admin.crm.import') }}" class="btn btn-outline-success">
+                    <i class="fa fa-file-import me-2"></i>Import Leads
+                </a>
                 <a href="{{ route('admin.crm.export', request()->all()) }}" class="btn btn-outline-secondary">
                     <i class="fa fa-download me-2"></i>Export CSV
                 </a>
@@ -172,6 +175,22 @@
             @if (session('error'))
                 <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
                     <i class="fa fa-exclamation-circle me-2"></i>{{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
+
+            @if (session('import_errors'))
+                <div class="alert alert-warning alert-dismissible fade show mb-4" role="alert">
+                    <h6 class="alert-heading mb-2"><i class="fa fa-exclamation-triangle me-2"></i>Import Warnings (Some
+                        rows were skipped)</h6>
+                    <ul class="mb-0 ps-3">
+                        @foreach (session('import_errors') as $importError)
+                            <li>{{ $importError }}</li>
+                        @endforeach
+                    </ul>
+                    @if (session('more_errors'))
+                        <p class="mt-2 mb-0 text-muted">...and {{ session('more_errors') }} more errors.</p>
+                    @endif
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             @endif

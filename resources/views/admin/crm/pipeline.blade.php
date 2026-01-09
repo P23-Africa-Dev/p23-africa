@@ -11,6 +11,9 @@
                 <a href="{{ route('admin.crm.index') }}" class="btn btn-outline-secondary">
                     <i class="fa fa-list me-2"></i>List View
                 </a>
+                <a href="{{ route('admin.crm.import') }}" class="btn btn-outline-success">
+                    <i class="fa fa-file-import me-2"></i>Import Leads
+                </a>
                 <a href="{{ route('admin.crm.create') }}" class="btn btn-primary">
                     <i class="fa fa-plus me-2"></i>Add New Lead
                 </a>

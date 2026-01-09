@@ -18,8 +18,11 @@ class Lead extends Model
         'email',
         'phone',
         'company',
+        'employee_count',
         'job_title',
         'website',
+        'company_linkedin_profile',
+        'ceo_linkedin_profile',
         'country',
         'city',
         'address',
@@ -78,6 +81,7 @@ class Lead extends Model
             'cold_call' => 'Cold Call',
             'event' => 'Event',
             'advertisement' => 'Advertisement',
+            'noel_waitlist' => 'NOEL Waitlist',
             'other' => 'Other',
         ];
     }
