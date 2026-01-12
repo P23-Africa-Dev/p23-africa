@@ -263,7 +263,7 @@ class ClickReportController extends Controller
                 ->select('route_name', 'page_title', DB::raw('count(*) as total'))
                 ->groupBy('route_name', 'page_title')
                 ->orderByDesc('total')
-                ->limit(5) // Reduced from 10 to 5
+                ->limit(50) // Increased for "See more" functionality
                 ->get();
 
             $topCountries = (clone $baseQuery)
@@ -271,7 +271,7 @@ class ClickReportController extends Controller
                 ->select('country', DB::raw('count(*) as total'))
                 ->groupBy('country')
                 ->orderByDesc('total')
-                ->limit(5) // Reduced from 10 to 5
+                ->limit(50) // Increased for "See more" functionality
                 ->get();
 
             $browserStats = (clone $baseQuery)
@@ -280,6 +280,16 @@ class ClickReportController extends Controller
                 ->groupBy('browser')
                 ->orderByDesc('total')
                 ->limit(5) // Reduced from 10 to 5
+                ->get();
+
+            // Get top cities for analytics
+            $topCities = (clone $baseQuery)
+                ->whereNotNull('city')
+                ->where('city', '!=', 'Unknown')
+                ->select('city', 'country', DB::raw('count(*) as total'))
+                ->groupBy('city', 'country')
+                ->orderByDesc('total')
+                ->limit(50) // Get more for "See more" functionality
                 ->get();
 
             // Optimized daily visits - only last 5 days for better performance
@@ -311,6 +321,7 @@ class ClickReportController extends Controller
                 'device_stats' => $deviceStats,
                 'top_pages' => $topPages,
                 'top_countries' => $topCountries,
+                'top_cities' => $topCities,
                 'browser_stats' => $browserStats,
                 'daily_visits' => $dailyVisits,
             ];

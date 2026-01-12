@@ -407,7 +407,7 @@ class ContactController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => $isSubmission ? 'Form submitted successfully!' : 'Draft saved',
+                // 'message' => $isSubmission ? 'Form submitted successfully!' : 'Draft saved',
                 'submission_id' => $submission->id,
                 'status' => $submission->status
             ]);
@@ -421,7 +421,7 @@ class ContactController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to save draft'
+                // 'message' => 'Failed to save draft'
             ], 500);
         }
     }
