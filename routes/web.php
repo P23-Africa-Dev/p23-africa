@@ -357,6 +357,14 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
     Route::get('/crm/import', [\App\Http\Controllers\Admin\LeadImportController::class, 'showImport'])->name('crm.import');
     Route::post('/crm/import', [\App\Http\Controllers\Admin\LeadImportController::class, 'import'])->name('crm.import.process');
     Route::get('/crm/import/template', [\App\Http\Controllers\Admin\LeadImportController::class, 'downloadTemplate'])->name('crm.import.template');
+
+    // CRM - Lead Drives
+    Route::get('/crm/drives', [\App\Http\Controllers\Admin\LeadDriveController::class, 'index'])->name('crm.drives.index');
+    Route::post('/crm/drives', [\App\Http\Controllers\Admin\LeadDriveController::class, 'store'])->name('crm.drives.store');
+    Route::post('/crm/drives/ajax', [\App\Http\Controllers\Admin\LeadDriveController::class, 'storeAjax'])->name('crm.drives.store-ajax');
+    Route::put('/crm/drives/{drive}', [\App\Http\Controllers\Admin\LeadDriveController::class, 'update'])->name('crm.drives.update');
+    Route::delete('/crm/drives/{drive}', [\App\Http\Controllers\Admin\LeadDriveController::class, 'destroy'])->name('crm.drives.destroy');
+
     Route::get('/crm/{lead}', [\App\Http\Controllers\Admin\LeadController::class, 'show'])->name('crm.show');
     Route::get('/crm/{lead}/edit', [\App\Http\Controllers\Admin\LeadController::class, 'edit'])->name('crm.edit');
     Route::put('/crm/{lead}', [\App\Http\Controllers\Admin\LeadController::class, 'update'])->name('crm.update');

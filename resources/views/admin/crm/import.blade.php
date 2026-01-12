@@ -190,6 +190,51 @@
                         enctype="multipart/form-data" id="importForm">
                         @csrf
 
+                        <!-- Drive Selection -->
+                        <div class="mb-4">
+                            <label class="form-label text-dark dark:text-gray-100">
+                                <i class="fa fa-folder me-2"></i>Select Drive <span class="text-danger">*</span>
+                            </label>
+                            <div class="row g-3">
+                                <div class="col-md-8">
+                                    <select name="drive_id" id="driveSelect"
+                                        class="form-select dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100">
+                                        <option value="">-- Select Existing Drive --</option>
+                                        @foreach ($drives as $drive)
+                                            <option value="{{ $drive->id }}" data-color="{{ $drive->color }}">
+                                                {{ $drive->name }}
+                                                @if ($drive->is_default)
+                                                    (Default)
+                                                @endif
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-outline-primary w-100"
+                                        data-bs-toggle="modal" data-bs-target="#newDriveModal">
+                                        <i class="fa fa-plus me-2"></i>Create New Drive
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="selectedDriveInfo" class="mt-2 d-none">
+                                <small class="text-muted">
+                                    <i class="fa fa-info-circle me-1"></i>
+                                    Leads will be imported into: <strong id="selectedDriveName"></strong>
+                                </small>
+                            </div>
+                            <div id="newDriveInfo" class="mt-2 d-none">
+                                <div class="alert alert-success py-2 mb-0">
+                                    <i class="fa fa-check-circle me-1"></i>
+                                    New drive "<strong id="newDriveNameDisplay"></strong>" will be created
+                                    <button type="button" class="btn-close btn-sm float-end"
+                                        id="cancelNewDrive"></button>
+                                </div>
+                                <input type="hidden" name="new_drive_name" id="newDriveNameInput">
+                                <input type="hidden" name="new_drive_color" id="newDriveColorInput">
+                            </div>
+                        </div>
+
                         <div class="mb-4">
                             <label class="form-label text-dark dark:text-gray-100">
                                 Select CSV or Excel File <span class="text-danger">*</span>
@@ -232,6 +277,65 @@
         </div>
     </div>
 
+    <!-- New Drive Modal -->
+    <div class="modal fade" id="newDriveModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content dark:bg-gray-800">
+                <div class="modal-header">
+                    <h5 class="modal-title dark:text-gray-100">
+                        <i class="fa fa-folder-plus me-2 text-primary"></i>Create New Drive
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label text-dark dark:text-gray-100">Drive Name <span
+                                class="text-danger">*</span></label>
+                        <input type="text" id="modalDriveName"
+                            class="form-control dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                            placeholder="e.g., NOEL Waitlist, Event Leads, etc.">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-dark dark:text-gray-100">Drive Color</label>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <input type="color" id="modalDriveColor" value="#0d6efd"
+                                class="form-control form-control-color" style="width: 50px;">
+                            <div class="drive-color-presets d-flex gap-1">
+                                <button type="button" class="btn btn-sm color-preset"
+                                    style="background: #0d6efd; width: 30px; height: 30px;"
+                                    data-color="#0d6efd"></button>
+                                <button type="button" class="btn btn-sm color-preset"
+                                    style="background: #198754; width: 30px; height: 30px;"
+                                    data-color="#198754"></button>
+                                <button type="button" class="btn btn-sm color-preset"
+                                    style="background: #dc3545; width: 30px; height: 30px;"
+                                    data-color="#dc3545"></button>
+                                <button type="button" class="btn btn-sm color-preset"
+                                    style="background: #ffc107; width: 30px; height: 30px;"
+                                    data-color="#ffc107"></button>
+                                <button type="button" class="btn btn-sm color-preset"
+                                    style="background: #6c757d; width: 30px; height: 30px;"
+                                    data-color="#6c757d"></button>
+                                <button type="button" class="btn btn-sm color-preset"
+                                    style="background: #0dcaf0; width: 30px; height: 30px;"
+                                    data-color="#0dcaf0"></button>
+                                <button type="button" class="btn btn-sm color-preset"
+                                    style="background: #6f42c1; width: 30px; height: 30px;"
+                                    data-color="#6f42c1"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="confirmNewDrive">
+                        <i class="fa fa-check me-2"></i>Use This Drive
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @push('styles')
         <style>
             .upload-area:hover {
@@ -248,6 +352,16 @@
             .table td {
                 vertical-align: middle;
             }
+
+            .color-preset {
+                border: 2px solid transparent;
+                border-radius: 4px;
+            }
+
+            .color-preset:hover,
+            .color-preset.active {
+                border-color: #212529;
+            }
         </style>
     @endpush
 
@@ -263,6 +377,95 @@
                 const removeFile = document.getElementById('removeFile');
                 const importBtn = document.getElementById('importBtn');
                 const importForm = document.getElementById('importForm');
+
+                // Drive selection elements
+                const driveSelect = document.getElementById('driveSelect');
+                const selectedDriveInfo = document.getElementById('selectedDriveInfo');
+                const selectedDriveName = document.getElementById('selectedDriveName');
+                const newDriveInfo = document.getElementById('newDriveInfo');
+                const newDriveNameDisplay = document.getElementById('newDriveNameDisplay');
+                const newDriveNameInput = document.getElementById('newDriveNameInput');
+                const newDriveColorInput = document.getElementById('newDriveColorInput');
+                const cancelNewDrive = document.getElementById('cancelNewDrive');
+
+                // Modal elements
+                const modalDriveName = document.getElementById('modalDriveName');
+                const modalDriveColor = document.getElementById('modalDriveColor');
+                const confirmNewDrive = document.getElementById('confirmNewDrive');
+                const colorPresets = document.querySelectorAll('.color-preset');
+
+                let fileReady = false;
+                let driveReady = false;
+
+                // Update import button state
+                function updateImportButton() {
+                    importBtn.disabled = !(fileReady && driveReady);
+                }
+
+                // Drive selection change
+                driveSelect.addEventListener('change', function() {
+                    if (this.value) {
+                        const selectedOption = this.options[this.selectedIndex];
+                        selectedDriveName.textContent = selectedOption.text;
+                        selectedDriveInfo.classList.remove('d-none');
+                        newDriveInfo.classList.add('d-none');
+                        newDriveNameInput.value = '';
+                        newDriveColorInput.value = '';
+                        driveReady = true;
+                    } else {
+                        selectedDriveInfo.classList.add('d-none');
+                        driveReady = newDriveNameInput.value !== '';
+                    }
+                    updateImportButton();
+                });
+
+                // Color preset clicks
+                colorPresets.forEach(preset => {
+                    preset.addEventListener('click', function() {
+                        modalDriveColor.value = this.dataset.color;
+                        colorPresets.forEach(p => p.classList.remove('active'));
+                        this.classList.add('active');
+                    });
+                });
+
+                // Confirm new drive
+                confirmNewDrive.addEventListener('click', function() {
+                    const name = modalDriveName.value.trim();
+                    if (!name) {
+                        alert('Please enter a drive name');
+                        return;
+                    }
+
+                    // Set hidden inputs
+                    newDriveNameInput.value = name;
+                    newDriveColorInput.value = modalDriveColor.value;
+
+                    // Update UI
+                    newDriveNameDisplay.textContent = name;
+                    newDriveInfo.classList.remove('d-none');
+                    selectedDriveInfo.classList.add('d-none');
+                    driveSelect.value = '';
+
+                    driveReady = true;
+                    updateImportButton();
+
+                    // Close modal
+                    bootstrap.Modal.getInstance(document.getElementById('newDriveModal')).hide();
+
+                    // Reset modal
+                    modalDriveName.value = '';
+                    modalDriveColor.value = '#0d6efd';
+                    colorPresets.forEach(p => p.classList.remove('active'));
+                });
+
+                // Cancel new drive
+                cancelNewDrive.addEventListener('click', function() {
+                    newDriveInfo.classList.add('d-none');
+                    newDriveNameInput.value = '';
+                    newDriveColorInput.value = '';
+                    driveReady = driveSelect.value !== '';
+                    updateImportButton();
+                });
 
                 // Click to upload
                 uploadArea.addEventListener('click', function(e) {
@@ -305,14 +508,12 @@
                     fileInput.value = '';
                     uploadPlaceholder.classList.remove('d-none');
                     fileSelected.classList.add('d-none');
-                    importBtn.disabled = true;
+                    fileReady = false;
+                    updateImportButton();
                 });
 
                 // Handle file selection
                 function handleFile(file) {
-                    const validTypes = ['text/csv', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                        'application/vnd.ms-excel'
-                    ];
                     const validExtensions = ['csv', 'xlsx', 'xls'];
                     const extension = file.name.split('.').pop().toLowerCase();
 
@@ -336,7 +537,8 @@
                     fileSize.textContent = formatFileSize(file.size);
                     uploadPlaceholder.classList.add('d-none');
                     fileSelected.classList.remove('d-none');
-                    importBtn.disabled = false;
+                    fileReady = true;
+                    updateImportButton();
                 }
 
                 // Format file size
@@ -348,8 +550,13 @@
                     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
                 }
 
-                // Form submission
-                importForm.addEventListener('submit', function() {
+                // Form submission validation
+                importForm.addEventListener('submit', function(e) {
+                    if (!driveReady) {
+                        e.preventDefault();
+                        alert('Please select a drive or create a new one.');
+                        return;
+                    }
                     importBtn.disabled = true;
                     importBtn.innerHTML = '<i class="fa fa-spinner fa-spin me-2"></i>Importing...';
                 });

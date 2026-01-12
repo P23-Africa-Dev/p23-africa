@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lead;
+use App\Models\LeadDrive;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
@@ -18,7 +20,8 @@ class LeadImportController extends Controller
      */
     public function showImport()
     {
-        return view('admin.crm.import');
+        $drives = LeadDrive::orderBy('name')->get();
+        return view('admin.crm.import', compact('drives'));
     }
 
     /**
@@ -28,6 +31,8 @@ class LeadImportController extends Controller
     {
         $request->validate([
             'file' => 'required|file|mimes:csv,xlsx,xls|max:10240', // Max 10MB
+            'drive_id' => 'nullable|exists:lead_drives,id',
+            'new_drive_name' => 'nullable|string|max:255',
         ]);
 
         $file = $request->file('file');
@@ -35,6 +40,27 @@ class LeadImportController extends Controller
 
         try {
             DB::beginTransaction();
+
+            // Determine which drive to use
+            $driveId = $request->drive_id;
+
+            // If creating a new drive
+            if ($request->filled('new_drive_name')) {
+                $newDrive = LeadDrive::create([
+                    'name' => $request->new_drive_name,
+                    'slug' => Str::slug($request->new_drive_name),
+                    'description' => 'Created during import',
+                    'color' => $request->new_drive_color ?? '#6c757d',
+                    'is_default' => false,
+                ]);
+                $driveId = $newDrive->id;
+            }
+
+            // If no drive selected and no new drive created, use default
+            if (!$driveId) {
+                $defaultDrive = LeadDrive::getDefault();
+                $driveId = $defaultDrive ? $defaultDrive->id : null;
+            }
 
             $data = $this->parseFile($file, $extension);
 
@@ -101,6 +127,7 @@ class LeadImportController extends Controller
                         // Restore the soft-deleted lead and update it with new data
                         $existingLead->restore();
                         $existingLead->update([
+                            'drive_id' => $driveId,
                             'first_name' => $firstName,
                             'last_name' => $lastName,
                             'company' => trim($row['company'] ?? '') ?: $existingLead->company,
@@ -122,6 +149,7 @@ class LeadImportController extends Controller
 
                 // Create the lead
                 Lead::create([
+                    'drive_id' => $driveId,
                     'first_name' => $firstName,
                     'last_name' => $lastName,
                     'email' => $email,

@@ -4,11 +4,76 @@
             <div>
                 <h2 class="font-semibold text-xl text-dark dark:text-gray-200 leading-tight dark-transition mb-1">
                     {{ __('Lead Pipeline') }}
+                    @if (isset($currentDrive))
+                        <span class="badge ms-2"
+                            style="background-color: {{ $currentDrive->color ?? '#6c757d' }}; font-size: 0.6em; vertical-align: middle;">
+                            {{ $currentDrive->name }}
+                        </span>
+                    @endif
                 </h2>
                 <p class="text-muted dark:text-gray-400 text-sm mb-0">Drag and drop leads to update their status</p>
             </div>
             <div class="d-flex gap-2">
-                <a href="{{ route('admin.crm.index') }}" class="btn btn-outline-secondary">
+                <!-- Drive Switcher -->
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="fa fa-folder me-2"></i>
+                        @if (request('drive') && request('drive') !== 'all')
+                            @if (request('drive') === 'unassigned')
+                                No Drive
+                            @elseif (isset($currentDrive))
+                                {{ $currentDrive->name }}
+                            @else
+                                Select Drive
+                            @endif
+                        @else
+                            All Drives
+                        @endif
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item {{ !request('drive') || request('drive') === 'all' ? 'active' : '' }}"
+                                href="{{ route('admin.crm.pipeline', ['drive' => 'all']) }}">
+                                <i class="fa fa-globe me-2 text-muted"></i>All Drives
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        @forelse ($drives ?? [] as $drive)
+                            <li>
+                                <a class="dropdown-item {{ request('drive') == $drive->id ? 'active' : '' }}"
+                                    href="{{ route('admin.crm.pipeline', ['drive' => $drive->id]) }}">
+                                    <span class="d-inline-block rounded-circle me-2"
+                                        style="width: 12px; height: 12px; background-color: {{ $drive->color ?? '#6c757d' }};"></span>
+                                    {{ $drive->name }}
+                                    <span class="badge bg-secondary ms-2">{{ $drive->leads()->count() }}</span>
+                                </a>
+                            </li>
+                        @empty
+                            <li><span class="dropdown-item text-muted">No drives created</span></li>
+                        @endforelse
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item {{ request('drive') === 'unassigned' ? 'active' : '' }}"
+                                href="{{ route('admin.crm.pipeline', ['drive' => 'unassigned']) }}">
+                                <i class="fa fa-inbox me-2 text-muted"></i>No Drive
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item text-primary" href="{{ route('admin.crm.drives.index') }}">
+                                <i class="fa fa-cog me-2"></i>Manage Drives
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <a href="{{ route('admin.crm.index', request()->only('drive')) }}" class="btn btn-outline-secondary">
                     <i class="fa fa-list me-2"></i>List View
                 </a>
                 <a href="{{ route('admin.crm.import') }}" class="btn btn-outline-success">
@@ -316,15 +381,17 @@
                                     id="count-{{ $statusKey }}">{{ $columnData['count'] }}</span>
                             </div>
                             <div class="pipeline-stats">
-                                <span id="value-{{ $statusKey }}">${{ number_format($columnData['value']) }}</span>
+                                <span
+                                    id="value-{{ $statusKey }}">${{ number_format($columnData['value']) }}</span>
                             </div>
                         </div>
                         <div class="pipeline-body sortable-column" data-status="{{ $statusKey }}">
                             @forelse($columnData['leads'] as $lead)
                                 <div class="lead-card" data-id="{{ $lead->id }}"
                                     data-value="{{ $lead->estimated_value ?? 0 }}">
-                                    <a href="{{ route('admin.crm.show', $lead) }}" class="lead-card-link text-primary"
-                                        title="View Details" onclick="event.stopPropagation();">
+                                    <a href="{{ route('admin.crm.show', $lead) }}"
+                                        class="lead-card-link text-primary" title="View Details"
+                                        onclick="event.stopPropagation();">
                                         <i class="fa fa-external-link-alt"></i>
                                     </a>
                                     <div class="lead-name">{{ $lead->full_name }}</div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Lead;
 use App\Models\LeadActivity;
+use App\Models\LeadDrive;
 use App\Models\LeadEmail;
 use App\Models\User;
 use App\Models\ContactSubmission;
@@ -24,9 +25,20 @@ class LeadController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Lead::with(['assignedUser', 'activities' => function ($q) {
+        $query = Lead::with(['assignedUser', 'drive', 'activities' => function ($q) {
             $q->latest()->limit(1);
         }])->orderBy('created_at', 'desc');
+
+        // Filter by drive
+        if ($request->filled('drive')) {
+            if ($request->drive === 'all') {
+                // Show all leads
+            } elseif ($request->drive === 'unassigned') {
+                $query->whereNull('drive_id');
+            } else {
+                $query->where('drive_id', $request->drive);
+            }
+        }
 
         // Filter by status
         if ($request->filled('status')) {
@@ -80,20 +92,30 @@ class LeadController extends Controller
 
         $leads = $query->paginate(15)->appends($request->all());
 
+        // Build stats query with same drive filter
+        $statsQuery = Lead::query();
+        if ($request->filled('drive') && $request->drive !== 'all') {
+            if ($request->drive === 'unassigned') {
+                $statsQuery->whereNull('drive_id');
+            } else {
+                $statsQuery->where('drive_id', $request->drive);
+            }
+        }
+
         // Get statistics
         $stats = [
-            'total_leads' => Lead::count(),
-            'new_leads' => Lead::new()->count(),
-            'active_leads' => Lead::active()->count(),
-            'won_leads' => Lead::won()->count(),
-            'lost_leads' => Lead::lost()->count(),
-            'overdue_follow_ups' => Lead::overdueFollowUp()->count(),
-            'total_value' => Lead::active()->sum('estimated_value'),
-            'won_value' => Lead::won()->sum('estimated_value'),
-            'this_month_leads' => Lead::whereMonth('created_at', now()->month)
+            'total_leads' => (clone $statsQuery)->count(),
+            'new_leads' => (clone $statsQuery)->new()->count(),
+            'active_leads' => (clone $statsQuery)->active()->count(),
+            'won_leads' => (clone $statsQuery)->won()->count(),
+            'lost_leads' => (clone $statsQuery)->lost()->count(),
+            'overdue_follow_ups' => (clone $statsQuery)->overdueFollowUp()->count(),
+            'total_value' => (clone $statsQuery)->active()->sum('estimated_value'),
+            'won_value' => (clone $statsQuery)->won()->sum('estimated_value'),
+            'this_month_leads' => (clone $statsQuery)->whereMonth('created_at', now()->month)
                 ->whereYear('created_at', now()->year)
                 ->count(),
-            'this_month_won' => Lead::won()
+            'this_month_won' => (clone $statsQuery)->won()
                 ->whereMonth('converted_at', now()->month)
                 ->whereYear('converted_at', now()->year)
                 ->count(),
@@ -104,7 +126,13 @@ class LeadController extends Controller
             $q->whereIn('name', ['admin', 'supervisor', 'staff']);
         })->get();
 
-        return view('admin.crm.index', compact('leads', 'stats', 'users'));
+        // Get drives for filter
+        $drives = LeadDrive::orderBy('name')->get();
+        $currentDrive = $request->filled('drive') && $request->drive !== 'all' && $request->drive !== 'unassigned'
+            ? LeadDrive::find($request->drive)
+            : null;
+
+        return view('admin.crm.index', compact('leads', 'stats', 'users', 'drives', 'currentDrive'));
     }
 
     /**
@@ -773,25 +801,45 @@ class LeadController extends Controller
     /**
      * Get pipeline view data
      */
-    public function pipeline()
+    public function pipeline(Request $request)
     {
         $statuses = Lead::getStatuses();
         $pipeline = [];
 
+        // Get drives for filter
+        $drives = LeadDrive::orderBy('name')->get();
+        $currentDrive = $request->filled('drive') && $request->drive !== 'all' && $request->drive !== 'unassigned'
+            ? LeadDrive::find($request->drive)
+            : null;
+
         foreach ($statuses as $key => $label) {
+            $query = Lead::where('status', $key)
+                ->with(['assignedUser', 'drive']);
+
+            // Apply drive filter
+            if ($request->filled('drive') && $request->drive !== 'all') {
+                if ($request->drive === 'unassigned') {
+                    $query->whereNull('drive_id');
+                } else {
+                    $query->where('drive_id', $request->drive);
+                }
+            }
+
+            $leadsQuery = clone $query;
+            $countQuery = clone $query;
+            $valueQuery = clone $query;
+
             $pipeline[$key] = [
                 'label' => $label,
-                'leads' => Lead::where('status', $key)
-                    ->with('assignedUser')
-                    ->orderBy('priority', 'desc')
+                'leads' => $leadsQuery->orderBy('priority', 'desc')
                     ->orderBy('created_at', 'desc')
                     ->get(),
-                'count' => Lead::where('status', $key)->count(),
-                'value' => Lead::where('status', $key)->sum('estimated_value'),
+                'count' => $countQuery->count(),
+                'value' => $valueQuery->sum('estimated_value'),
             ];
         }
 
-        return view('admin.crm.pipeline', compact('pipeline', 'statuses'));
+        return view('admin.crm.pipeline', compact('pipeline', 'statuses', 'drives', 'currentDrive'));
     }
 
     /**

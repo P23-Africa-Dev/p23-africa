@@ -1,0 +1,144 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\LeadDrive;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
+
+class LeadDriveController extends Controller
+{
+    /**
+     * Display drives management page
+     */
+    public function index()
+    {
+        $drives = LeadDrive::withCount('leads')->orderBy('name')->get();
+
+        return view('admin.crm.drives.index', compact('drives'));
+    }
+
+    /**
+     * Store a new drive (form submission)
+     */
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255|unique:lead_drives,name',
+            'description' => 'nullable|string|max:500',
+            'color' => 'nullable|string|max:7',
+            'is_default' => 'nullable|boolean',
+        ]);
+
+        // If setting as default, remove default from others
+        if (!empty($validated['is_default'])) {
+            LeadDrive::where('is_default', true)->update(['is_default' => false]);
+        }
+
+        LeadDrive::create([
+            'name' => $validated['name'],
+            'slug' => Str::slug($validated['name']),
+            'description' => $validated['description'] ?? null,
+            'color' => $validated['color'] ?? '#0d6efd',
+            'is_default' => !empty($validated['is_default']),
+        ]);
+
+        return redirect()->route('admin.crm.drives.index')
+            ->with('success', 'Drive created successfully!');
+    }
+
+    /**
+     * Store a new drive via AJAX (for import modal)
+     */
+    public function storeAjax(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255|unique:lead_drives,name',
+            'description' => 'nullable|string|max:500',
+            'color' => 'nullable|string|max:7',
+        ]);
+
+        $drive = LeadDrive::create([
+            'name' => $validated['name'],
+            'slug' => Str::slug($validated['name']),
+            'description' => $validated['description'] ?? null,
+            'color' => $validated['color'] ?? '#0d6efd',
+            'is_default' => false,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Drive created successfully!',
+            'drive' => $drive
+        ]);
+    }
+
+    /**
+     * Update a drive
+     */
+    public function update(Request $request, LeadDrive $drive)
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255', Rule::unique('lead_drives')->ignore($drive->id)],
+            'description' => 'nullable|string|max:500',
+            'color' => 'nullable|string|max:7',
+            'is_default' => 'nullable|boolean',
+        ]);
+
+        // If setting as default, remove default from others
+        if (!empty($validated['is_default'])) {
+            LeadDrive::where('is_default', true)->where('id', '!=', $drive->id)->update(['is_default' => false]);
+        }
+
+        $drive->update([
+            'name' => $validated['name'],
+            'slug' => Str::slug($validated['name']),
+            'description' => $validated['description'] ?? $drive->description,
+            'color' => $validated['color'] ?? $drive->color,
+            'is_default' => !empty($validated['is_default']),
+        ]);
+
+        return redirect()->route('admin.crm.drives.index')
+            ->with('success', 'Drive updated successfully!');
+    }
+
+    /**
+     * Delete a drive
+     */
+    public function destroy(LeadDrive $drive)
+    {
+        // Don't allow deleting the default drive
+        if ($drive->is_default) {
+            return redirect()->route('admin.crm.drives.index')
+                ->with('error', 'Cannot delete the default drive.');
+        }
+
+        // Don't allow deleting drives with leads
+        if ($drive->leads()->count() > 0) {
+            return redirect()->route('admin.crm.drives.index')
+                ->with('error', 'Cannot delete a drive that contains leads. Please move or delete the leads first.');
+        }
+
+        $drive->delete();
+
+        return redirect()->route('admin.crm.drives.index')
+            ->with('success', 'Drive deleted successfully!');
+    }
+
+    /**
+     * Set a drive as default
+     */
+    public function setDefault(LeadDrive $drive)
+    {
+        // Remove default from all other drives
+        LeadDrive::where('is_default', true)->update(['is_default' => false]);
+
+        // Set this drive as default
+        $drive->update(['is_default' => true]);
+
+        return redirect()->route('admin.crm.drives.index')
+            ->with('success', 'Default drive updated successfully!');
+    }
+}

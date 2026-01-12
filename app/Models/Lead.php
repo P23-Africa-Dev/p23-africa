@@ -13,6 +13,7 @@ class Lead extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'drive_id',
         'first_name',
         'last_name',
         'email',
@@ -117,6 +118,14 @@ class Lead extends Model
             'SEO & Analytics',
             'Other',
         ];
+    }
+
+    /**
+     * Get the drive this lead belongs to
+     */
+    public function drive(): BelongsTo
+    {
+        return $this->belongsTo(LeadDrive::class, 'drive_id');
     }
 
     /**

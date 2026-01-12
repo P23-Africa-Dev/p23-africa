@@ -141,11 +141,76 @@
             <div>
                 <h2 class="font-semibold text-xl text-dark dark:text-gray-200 leading-tight dark-transition mb-1">
                     {{ __('Lead Management (CRM)') }}
+                    @if (isset($currentDrive))
+                        <span class="badge ms-2"
+                            style="background-color: {{ $currentDrive->color ?? '#6c757d' }}; font-size: 0.6em; vertical-align: middle;">
+                            {{ $currentDrive->name }}
+                        </span>
+                    @endif
                 </h2>
                 <p class="text-muted dark:text-gray-400 text-sm mb-0">Manage and track all your leads</p>
             </div>
             <div class="d-flex gap-2">
-                <a href="{{ route('admin.crm.pipeline') }}" class="btn btn-outline-info">
+                <!-- Drive Switcher -->
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="fa fa-folder me-2"></i>
+                        @if (request('drive') && request('drive') !== 'all')
+                            @if (request('drive') === 'unassigned')
+                                No Drive
+                            @elseif (isset($currentDrive))
+                                {{ $currentDrive->name }}
+                            @else
+                                Select Drive
+                            @endif
+                        @else
+                            All Drives
+                        @endif
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item {{ !request('drive') || request('drive') === 'all' ? 'active' : '' }}"
+                                href="{{ route('admin.crm.index', array_merge(request()->except('drive', 'page'), ['drive' => 'all'])) }}">
+                                <i class="fa fa-globe me-2 text-muted"></i>All Drives
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        @forelse ($drives ?? [] as $drive)
+                            <li>
+                                <a class="dropdown-item {{ request('drive') == $drive->id ? 'active' : '' }}"
+                                    href="{{ route('admin.crm.index', array_merge(request()->except('drive', 'page'), ['drive' => $drive->id])) }}">
+                                    <span class="d-inline-block rounded-circle me-2"
+                                        style="width: 12px; height: 12px; background-color: {{ $drive->color ?? '#6c757d' }};"></span>
+                                    {{ $drive->name }}
+                                    <span class="badge bg-secondary ms-2">{{ $drive->leads()->count() }}</span>
+                                </a>
+                            </li>
+                        @empty
+                            <li><span class="dropdown-item text-muted">No drives created</span></li>
+                        @endforelse
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item {{ request('drive') === 'unassigned' ? 'active' : '' }}"
+                                href="{{ route('admin.crm.index', array_merge(request()->except('drive', 'page'), ['drive' => 'unassigned'])) }}">
+                                <i class="fa fa-inbox me-2 text-muted"></i>No Drive
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item text-primary" href="{{ route('admin.crm.drives.index') }}">
+                                <i class="fa fa-cog me-2"></i>Manage Drives
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <a href="{{ route('admin.crm.pipeline', request()->only('drive')) }}" class="btn btn-outline-info">
                     <i class="fa fa-columns me-2"></i>Pipeline View
                 </a>
                 <a href="{{ route('admin.crm.import') }}" class="btn btn-outline-success">
@@ -319,6 +384,10 @@
             <div class="card border-0 shadow-sm dark:bg-gray-800 mb-4">
                 <div class="card-body">
                     <form method="GET" action="{{ route('admin.crm.index') }}" class="row g-3">
+                        <!-- Preserve drive filter -->
+                        @if (request('drive'))
+                            <input type="hidden" name="drive" value="{{ request('drive') }}">
+                        @endif
                         <div class="col-md-3">
                             <input type="text" name="search"
                                 class="form-control dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
