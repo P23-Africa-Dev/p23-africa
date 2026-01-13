@@ -67,7 +67,7 @@
 
     <!--{{-- Use built assets on production --}}-->
     @env('production')
-        <link rel="stylesheet" href="{{ asset('build/assets/app-D-jcgBiz.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/assets/app-B1LvQkRQ.css') }}">
         <script src="{{ asset('build/assets/app-BGjDqbHR.js') }}" defer></script>
     @endenv
 

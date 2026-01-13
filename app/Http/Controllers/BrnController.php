@@ -320,7 +320,7 @@ class BrnController extends Controller
             'industry' => 'nullable|string|max:100',
             'categories' => 'nullable|string|max:1000',
             'number_of_employees' => 'required|string|max:50',
-            'years_of_operation' => 'required|string|max:50',
+            'annual_revenue' => 'required|string|max:50',
         ];
     }
 
@@ -344,7 +344,7 @@ class BrnController extends Controller
     {
         $step1Fields = ['name', 'email', 'phone', 'country_code', 'position', 'company_name'];
         $step2Fields = ['reg_number', 'website', 'year_established', 'linkedin', 'country'];
-        $step3Fields = ['industry', 'categories', 'number_of_employees', 'years_of_operation'];
+        $step3Fields = ['industry', 'categories', 'number_of_employees', 'annual_revenue'];
         $step4Fields = ['offer_value', 'goals', 'selected_outcome', 'b2b_interest'];
 
         $errorsByStep = [];
@@ -634,7 +634,7 @@ class BrnController extends Controller
 
             // Business Details
             'number_of_employees.required' => 'Please select the number of employees.',
-            'years_of_operation.required' => 'Please select years of operation.',
+            'annual_revenue.required' => 'Please select your approximate annual revenue.',
 
             // Goals
             'goals.required' => 'Please describe your company and goals.',

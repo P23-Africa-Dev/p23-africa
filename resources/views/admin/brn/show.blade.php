@@ -133,19 +133,25 @@
                                     class="form-control bg-theme-tertiary text-theme-primary border-theme dark-transition">
                                     {{ $submission->categories ?? 'N/A' }}</div>
                             </div>
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <label class="form-label text-theme-secondary dark-transition">Years of
                                     Operation</label>
                                 <div
                                     class="form-control bg-theme-tertiary text-theme-primary border-theme dark-transition">
                                     {{ $submission->years_of_operation ?? 'N/A' }}</div>
-                            </div>
+                            </div> --}}
                             <div class="col-md-6">
                                 <label class="form-label text-theme-secondary dark-transition">Number of
                                     Employees</label>
                                 <div
                                     class="form-control bg-theme-tertiary text-theme-primary border-theme dark-transition">
                                     {{ $submission->number_of_employees ?? 'N/A' }}</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-theme-secondary dark-transition">Annual Revenue</label>
+                                <div
+                                    class="form-control bg-theme-tertiary text-theme-primary border-theme dark-transition">
+                                    {{ $submission->annual_revenue ?? 'N/A' }}</div>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label text-theme-secondary dark-transition">Offer Value</label>

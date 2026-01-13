@@ -3106,56 +3106,56 @@
                                                 alt="" />
                                         </div>
                                         <div class="custom-options">
-                                            <span class="custom-option" data-value="technologyAndDigitalServices">
+                                            <span class="custom-option" data-value="Technology & Digital Services">
                                                 Technology & Digital Services
                                             </span>
 
-                                            <span class="custom-option" data-value="financialAndProfessionalServices">
+                                            <span class="custom-option" data-value="Financial & Professional Services">
                                                 Financial & Professional Services
                                             </span>
 
-                                            <span class="custom-option" data-value="manufacturingAndIndustrial">
+                                            <span class="custom-option" data-value="Manufacturing & Industrial">
                                                 Manufacturing & Industrial
                                             </span>
 
-                                            <span class="custom-option" data-value="healthcareAndPharmaceuticals">
+                                            <span class="custom-option" data-value="Healthcare & Pharmaceuticals">
                                                 Healthcare & Pharmaceuticals
                                             </span>
 
-                                            <span class="custom-option" data-value="energyAndUtilities">
+                                            <span class="custom-option" data-value="Energy & Utilities">
                                                 Energy & Utilities
                                             </span>
 
-                                            <span class="custom-option" data-value="retailAndConsumerGoods">
+                                            <span class="custom-option" data-value="Retail & Consumer Goods">
                                                 Retail & Consumer Goods
                                             </span>
 
-                                            <span class="custom-option" data-value="logisticsAndTransportation">
+                                            <span class="custom-option" data-value="Logistics & Transportation">
                                                 Logistics & Transportation
                                             </span>
 
-                                            <span class="custom-option" data-value="agricultureAndFoodProcessing">
+                                            <span class="custom-option" data-value="Agriculture & Food Processing">
                                                 Agriculture & Food Processing
                                             </span>
 
-                                            <span class="custom-option" data-value="realEstateAndConstruction">
+                                            <span class="custom-option" data-value="Real Estate & Construction">
                                                 Real Estate & Construction
                                             </span>
 
-                                            <span class="custom-option" data-value="mediaAndCommunications">
+                                            <span class="custom-option" data-value="Media & Communications">
                                                 Media & Communications
                                             </span>
 
-                                            <span class="custom-option" data-value="educationAndTraining">
+                                            <span class="custom-option" data-value="Education & Training">
                                                 Education & Training
                                             </span>
 
-                                            <span class="custom-option" data-value="governmentAndPublicServices">
+                                            <span class="custom-option" data-value="Government & Public Services">
                                                 Government & Public Services
                                             </span>
 
                                             <span class="custom-option"
-                                                data-value="environmentalAndSpecializedServices">
+                                                data-value="Environmental & Specialized Services">
                                                 Environmental & Specialized Services
                                             </span>
                                         </div>
@@ -3165,23 +3165,24 @@
                                     {{-- <p class="industry-message">kindly select your industry first</p> --}}
 
                                     <select name="industry" id="industry" style="display: none">
-                                        <option value="technologyAndDigitalServices"> Technology & Digital Services
+                                        <option value="Technology & Digital Services"> Technology & Digital Services
                                         </option>
-                                        <option value="financialAndProfessionalServices"> Financial & Professional
+                                        <option value="Financial & Professional Services"> Financial & Professional
                                             Services</option>
-                                        <option value="manufacturingAndIndustrial"> Manufacturing & Industrial</option>
-                                        <option value="healthcareAndPharmaceuticals"> Healthcare & Pharmaceuticals
+                                        <option value="Manufacturing & Industrial"> Manufacturing & Industrial</option>
+                                        <option value="Healthcare & Pharmaceuticals"> Healthcare & Pharmaceuticals
                                         </option>
-                                        <option value="energyAndUtilities"> Energy & Utilities</option>
-                                        <option value="retailAndConsumerGoods"> Retail & Consumer Goods</option>
-                                        <option value="logisticsAndTransportation"> Logistics & Transportation</option>
-                                        <option value="agricultureAndFoodProcessing"> Agriculture & Food Processing
+                                        <option value="Energy & Utilities"> Energy & Utilities</option>
+                                        <option value="Retail & Consumer Goods"> Retail & Consumer Goods</option>
+                                        <option value="Logistics & Transportation"> Logistics & Transportation</option>
+                                        <option value="Agriculture & Food Processing"> Agriculture & Food Processing
                                         </option>
-                                        <option value="realEstateAndConstruction"> Real Estate & Construction</option>
-                                        <option value="mediaAndCommunications"> Media & Communications</option>
-                                        <option value="educationAndTraining">Education & Training</option>
-                                        <option value="governmentAndPublicServices"> Government & Public Services</option>
-                                        <option value="environmentalAndSpecializedServices"> Environmental & Specialized
+                                        <option value="Real Estate & Construction"> Real Estate & Construction</option>
+                                        <option value="Media & Communications"> Media & Communications</option>
+                                        <option value="Education & Training"> Education & Training</option>
+                                        <option value="Government & Public Services"> Government & Public Services
+                                        </option>
+                                        <option value="Environmental & Specialized Services"> Environmental & Specialized
                                             Services</option>
 
                                     </select>
@@ -3241,18 +3242,18 @@
                                         </div>
 
                                         <div class="custom-options">
-                                            <span class="custom-option" data-value="0-5">Below $1M (0-5 years)</span>
-                                            <span class="custom-option" data-value="6-10">$1M - $5M (6-10 years)</span>
-                                            <span class="custom-option" data-value="11-Above">$5M+ (11+ years)</span>
+                                            <span class="custom-option" data-value="Below $1M">Below $1M</span>
+                                            <span class="custom-option" data-value="$1M - $5M">$1M - $5M</span>
+                                            <span class="custom-option" data-value="$5M+">$5M+</span>
                                         </div>
                                     </div>
 
                                     <!-- Hidden native select -->
-                                    <select id="revenue" name="years_of_operation" style="display: none">
+                                    <select id="revenue" name="annual_revenue" style="display: none">
                                         <option value="">Select revenue range</option>
-                                        <option value="0-5">Below $1M (0-5 years)</option>
-                                        <option value="6-10">$1M - $5M (6-10 years)</option>
-                                        <option value="11-Above">$5M+ (11+ years)</option>
+                                        <option value="Below $1M">Below $1M</option>
+                                        <option value="$1M - $5M">$1M - $5M</option>
+                                        <option value="$5M+">$5M+</option>
                                     </select>
                                 </div>
 
@@ -3295,16 +3296,16 @@
                                         </div>
 
                                         <div class="custom-options">
-                                            <div class="custom-option" data-value="networking">
+                                            <div class="custom-option" data-value="Networking">
                                                 Networking
                                             </div>
-                                            <div class="custom-option" data-value="leads">
+                                            <div class="custom-option" data-value="Verified Business Leads">
                                                 Verified Business Leads
                                             </div>
-                                            <div class="custom-option" data-value="tools">
+                                            <div class="custom-option" data-value="Automated Sales Tools">
                                                 Automated Sales Tools
                                             </div>
-                                            <div class="custom-option" data-value="consulting">
+                                            <div class="custom-option" data-value="Consulting Support">
                                                 Consulting Support
                                             </div>
                                         </div>
@@ -3313,10 +3314,10 @@
                                     <!-- hidden select to sync value -->
                                     <select name="selected_outcome" id="selectedOutcome" style="display: none">
                                         <option value="">Select interest</option>
-                                        <option value="networking">Networking</option>
-                                        <option value="leads">Verified Business Leads</option>
-                                        <option value="tools">Automated Sales Tools</option>
-                                        <option value="consulting">Consulting Support</option>
+                                        <option value="Networking">Networking</option>
+                                        <option value="Verified Business Leads">Verified Business Leads</option>
+                                        <option value="Automated Sales Tools">Automated Sales Tools</option>
+                                        <option value="Consulting Support">Consulting Support</option>
                                     </select>
                                 </div>
 
@@ -3373,7 +3374,7 @@
                             <div class="modal-body text-center py-4">
                                 {{-- <p id="responseMessage" class="mb-3"></p> --}}
                                 <div id="responseMessage">
-                               
+
                                 </div>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Done</button>
                             </div>
@@ -3677,8 +3678,8 @@
                     if (formData.number_of_employees) {
                         updateCustomSelect('employees', formData.number_of_employees);
                     }
-                    if (formData.years_of_operation) {
-                        updateCustomSelect('revenue', formData.years_of_operation);
+                    if (formData.annual_revenue) {
+                        updateCustomSelect('revenue', formData.annual_revenue);
                     }
                     if (formData.selected_outcome) {
                         updateCustomSelect('interest', formData.selected_outcome);
@@ -3733,7 +3734,7 @@
                 'title': 'position',
                 'industry': 'industry',
                 'employees': 'number_of_employees',
-                'revenue': 'years_of_operation',
+                'revenue': 'annual_revenue',
                 'interest': 'selected_outcome',
                 'country': 'country'
             };
@@ -4177,7 +4178,7 @@
          * INDUSTRY → CATEGORY HANDLER
          *************************************/
         const industryCategories = {
-            technologyAndDigitalServices: [
+            "Technology & Digital Services": [
                 "Software and SaaS Solutions",
                 "FinTech and Digital Payment Systems",
                 "Cybersecurity and Data Protection Services",
@@ -4188,7 +4189,7 @@
                 "Blockchain and Digital Asset Management",
             ],
 
-            financialAndProfessionalServices: [
+            "Financial & Professional Services": [
                 "Banking and Financial Institutions",
                 "Investment and Asset Management",
                 "Insurance and Risk Advisory Services",
@@ -4199,7 +4200,7 @@
                 "Human Resources and Talent Acquisition",
             ],
 
-            manufacturingAndIndustrial: [
+            "Manufacturing & Industrial": [
                 "Industrial Machinery and Equipment",
                 "Automotive and Aerospace Manufacturing",
                 "Electronics and Technology Components",
@@ -4210,7 +4211,7 @@
                 "Textiles and Apparel Manufacturing",
             ],
 
-            healthcareAndPharmaceuticals: [
+            "Healthcare & Pharmaceuticals": [
                 "Pharmaceuticals and Biotechnology",
                 "Hospitals and Clinical Healthcare Facilities",
                 "Medical Equipment and Supplies",
@@ -4221,7 +4222,7 @@
                 "Clinical Research and Trials",
             ],
 
-            energyAndUtilities: [
+            "Energy & Utilities": [
                 "Oil, Gas, and Petroleum",
                 "Renewable Energy (Solar, Wind, Hydroelectric)",
                 "Power Generation and Distribution",
@@ -4231,7 +4232,7 @@
                 "Environmental and Sustainability Services",
             ],
 
-            retailAndConsumerGoods: [
+            "Retail & Consumer Goods": [
                 "Wholesale and Distribution Networks",
                 "Retail Chains and Franchising Operations",
                 "Food and Beverage Production",
@@ -4241,7 +4242,7 @@
                 "Sports and Leisure Products",
             ],
 
-            logisticsAndTransportation: [
+            "Logistics & Transportation": [
                 "Shipping and Freight Forwarding Services",
                 "Air Cargo and Logistics",
                 "Trucking and Ground Transportation",
@@ -4251,7 +4252,7 @@
                 "Ports and Terminal Operations",
             ],
 
-            agricultureAndFoodProcessing: [
+            "Agriculture & Food Processing": [
                 "Farming and Agricultural Production",
                 "Food Processing and Manufacturing",
                 "Beverage Production",
@@ -4261,7 +4262,7 @@
                 "Agricultural Equipment and Supplies",
             ],
 
-            realEstateAndConstruction: [
+            "Real Estate & Construction": [
                 "Commercial Real Estate Development",
                 "Property Management Services",
                 "Construction and Engineering Services",
@@ -4271,7 +4272,7 @@
                 "Building Materials and Supplies",
             ],
 
-            mediaAndCommunications: [
+            "Media & Communications": [
                 "Broadcasting and Entertainment",
                 "Digital Media and Publishing",
                 "Advertising and Public Relations",
@@ -4280,7 +4281,7 @@
                 "Event Management and Production",
             ],
 
-            educationAndTraining: [
+            "Education & Training": [
                 "Corporate Training and Development",
                 "Educational Technology (EdTech)",
                 "Schools and Educational Institutions",
@@ -4289,7 +4290,7 @@
                 "E-learning and Online Education",
             ],
 
-            governmentAndPublicServices: [
+            "Government & Public Services": [
                 "Government and Public Administration",
                 "Defense and Security Services",
                 "Infrastructure Development",
@@ -4298,7 +4299,7 @@
                 "Government Technology Solutions",
             ],
 
-            environmentalAndSpecializedServices: [
+            "Environmental & Specialized Services": [
                 "Waste Management and Recycling",
                 "Water Treatment and Management",
                 "Environmental Consulting",
@@ -4829,7 +4830,7 @@
                 // Step 3: Industry Preference validation
                 const industry = currentStage.querySelector('select[name="industry"]');
                 const employees = currentStage.querySelector('select[name="number_of_employees"]');
-                const revenue = currentStage.querySelector('select[name="years_of_operation"]');
+                const revenue = currentStage.querySelector('select[name="annual_revenue"]');
 
                 if (!industry.value.trim()) {
                     const customSelect = currentStage.querySelector('[data-select="industry"]');

@@ -25,6 +25,7 @@ class BrnSubmission extends Model
         'categories',
         'years_of_operation',
         'number_of_employees',
+        'annual_revenue',
         'offer_value',
         'goals',
         'selected_outcome',
