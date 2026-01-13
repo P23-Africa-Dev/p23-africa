@@ -5,12 +5,17 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Lead;
 use App\Models\LeadActivity;
+use App\Models\LeadDrive;
+use App\Models\LeadEmail;
 use App\Models\User;
 use App\Models\ContactSubmission;
 use App\Models\ConsultationApplication;
+use App\Mail\LeadMail;
+use App\Services\LeadEmailService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 
 class LeadController extends Controller
@@ -20,9 +25,20 @@ class LeadController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Lead::with(['assignedUser', 'activities' => function ($q) {
+        $query = Lead::with(['assignedUser', 'drive', 'activities' => function ($q) {
             $q->latest()->limit(1);
         }])->orderBy('created_at', 'desc');
+
+        // Filter by drive
+        if ($request->filled('drive')) {
+            if ($request->drive === 'all') {
+                // Show all leads
+            } elseif ($request->drive === 'unassigned') {
+                $query->whereNull('drive_id');
+            } else {
+                $query->where('drive_id', $request->drive);
+            }
+        }
 
         // Filter by status
         if ($request->filled('status')) {
@@ -76,20 +92,30 @@ class LeadController extends Controller
 
         $leads = $query->paginate(15)->appends($request->all());
 
+        // Build stats query with same drive filter
+        $statsQuery = Lead::query();
+        if ($request->filled('drive') && $request->drive !== 'all') {
+            if ($request->drive === 'unassigned') {
+                $statsQuery->whereNull('drive_id');
+            } else {
+                $statsQuery->where('drive_id', $request->drive);
+            }
+        }
+
         // Get statistics
         $stats = [
-            'total_leads' => Lead::count(),
-            'new_leads' => Lead::new()->count(),
-            'active_leads' => Lead::active()->count(),
-            'won_leads' => Lead::won()->count(),
-            'lost_leads' => Lead::lost()->count(),
-            'overdue_follow_ups' => Lead::overdueFollowUp()->count(),
-            'total_value' => Lead::active()->sum('estimated_value'),
-            'won_value' => Lead::won()->sum('estimated_value'),
-            'this_month_leads' => Lead::whereMonth('created_at', now()->month)
+            'total_leads' => (clone $statsQuery)->count(),
+            'new_leads' => (clone $statsQuery)->new()->count(),
+            'active_leads' => (clone $statsQuery)->active()->count(),
+            'won_leads' => (clone $statsQuery)->won()->count(),
+            'lost_leads' => (clone $statsQuery)->lost()->count(),
+            'overdue_follow_ups' => (clone $statsQuery)->overdueFollowUp()->count(),
+            'total_value' => (clone $statsQuery)->active()->sum('estimated_value'),
+            'won_value' => (clone $statsQuery)->won()->sum('estimated_value'),
+            'this_month_leads' => (clone $statsQuery)->whereMonth('created_at', now()->month)
                 ->whereYear('created_at', now()->year)
                 ->count(),
-            'this_month_won' => Lead::won()
+            'this_month_won' => (clone $statsQuery)->won()
                 ->whereMonth('converted_at', now()->month)
                 ->whereYear('converted_at', now()->year)
                 ->count(),
@@ -100,7 +126,13 @@ class LeadController extends Controller
             $q->whereIn('name', ['admin', 'supervisor', 'staff']);
         })->get();
 
-        return view('admin.crm.index', compact('leads', 'stats', 'users'));
+        // Get drives for filter
+        $drives = LeadDrive::orderBy('name')->get();
+        $currentDrive = $request->filled('drive') && $request->drive !== 'all' && $request->drive !== 'unassigned'
+            ? LeadDrive::find($request->drive)
+            : null;
+
+        return view('admin.crm.index', compact('leads', 'stats', 'users', 'drives', 'currentDrive'));
     }
 
     /**
@@ -133,7 +165,7 @@ class LeadController extends Controller
             'phone' => 'nullable|string|max:20',
             'company' => 'nullable|string|max:255',
             'job_title' => 'nullable|string|max:255',
-            'website' => 'nullable|url|max:255',
+            'website' => 'nullable|url:http,https|max:255',
             'country' => 'nullable|string|max:100',
             'city' => 'nullable|string|max:100',
             'address' => 'nullable|string|max:500',
@@ -141,13 +173,36 @@ class LeadController extends Controller
             'source' => ['required', Rule::in(array_keys(Lead::getSources()))],
             'priority' => ['required', Rule::in(array_keys(Lead::getPriorities()))],
             'estimated_value' => 'nullable|numeric|min:0',
-            'currency' => 'nullable|string|size:3',
+            'currency' => 'nullable|string|max:3',
             'interested_services' => 'nullable|array',
             'requirements' => 'nullable|string|max:5000',
             'notes' => 'nullable|string|max:5000',
             'assigned_to' => 'nullable|exists:users,id',
             'next_follow_up' => 'nullable|date|after:now',
         ]);
+
+        // Convert empty strings to null for nullable fields
+        $nullableFields = [
+            'assigned_to',
+            'last_name',
+            'phone',
+            'company',
+            'job_title',
+            'website',
+            'country',
+            'city',
+            'address',
+            'estimated_value',
+            'currency',
+            'requirements',
+            'notes',
+            'next_follow_up'
+        ];
+        foreach ($nullableFields as $field) {
+            if (array_key_exists($field, $validated) && $validated[$field] === '') {
+                $validated[$field] = null;
+            }
+        }
 
         try {
             DB::beginTransaction();
@@ -221,7 +276,7 @@ class LeadController extends Controller
             'phone' => 'nullable|string|max:20',
             'company' => 'nullable|string|max:255',
             'job_title' => 'nullable|string|max:255',
-            'website' => 'nullable|url|max:255',
+            'website' => 'nullable|url:http,https|max:255',
             'country' => 'nullable|string|max:100',
             'city' => 'nullable|string|max:100',
             'address' => 'nullable|string|max:500',
@@ -229,7 +284,7 @@ class LeadController extends Controller
             'source' => ['required', Rule::in(array_keys(Lead::getSources()))],
             'priority' => ['required', Rule::in(array_keys(Lead::getPriorities()))],
             'estimated_value' => 'nullable|numeric|min:0',
-            'currency' => 'nullable|string|size:3',
+            'currency' => 'nullable|string|max:3',
             'interested_services' => 'nullable|array',
             'requirements' => 'nullable|string|max:5000',
             'notes' => 'nullable|string|max:5000',
@@ -237,6 +292,30 @@ class LeadController extends Controller
             'next_follow_up' => 'nullable|date',
             'lost_reason' => 'nullable|string|max:500',
         ]);
+
+        // Convert empty strings to null for nullable fields
+        $nullableFields = [
+            'assigned_to',
+            'lost_reason',
+            'address',
+            'last_name',
+            'phone',
+            'company',
+            'job_title',
+            'website',
+            'country',
+            'city',
+            'estimated_value',
+            'currency',
+            'requirements',
+            'notes',
+            'next_follow_up'
+        ];
+        foreach ($nullableFields as $field) {
+            if (array_key_exists($field, $validated) && $validated[$field] === '') {
+                $validated[$field] = null;
+            }
+        }
 
         try {
             DB::beginTransaction();
@@ -260,10 +339,19 @@ class LeadController extends Controller
                 ->with('success', 'Lead updated successfully!');
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::error('Failed to update lead: ' . $e->getMessage());
+            Log::error('Failed to update lead: ' . $e->getMessage(), [
+                'lead_id' => $lead->id,
+                'data' => $validated,
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            // In development, show actual error message
+            $errorMessage = config('app.debug')
+                ? 'Failed to update lead: ' . $e->getMessage()
+                : 'Failed to update lead. Please try again.';
 
             return back()->withInput()
-                ->with('error', 'Failed to update lead. Please try again.');
+                ->with('error', $errorMessage);
         }
     }
 
@@ -713,24 +801,209 @@ class LeadController extends Controller
     /**
      * Get pipeline view data
      */
-    public function pipeline()
+    public function pipeline(Request $request)
     {
         $statuses = Lead::getStatuses();
         $pipeline = [];
 
+        // Get drives for filter
+        $drives = LeadDrive::orderBy('name')->get();
+        $currentDrive = $request->filled('drive') && $request->drive !== 'all' && $request->drive !== 'unassigned'
+            ? LeadDrive::find($request->drive)
+            : null;
+
         foreach ($statuses as $key => $label) {
+            $query = Lead::where('status', $key)
+                ->with(['assignedUser', 'drive']);
+
+            // Apply drive filter
+            if ($request->filled('drive') && $request->drive !== 'all') {
+                if ($request->drive === 'unassigned') {
+                    $query->whereNull('drive_id');
+                } else {
+                    $query->where('drive_id', $request->drive);
+                }
+            }
+
+            $leadsQuery = clone $query;
+            $countQuery = clone $query;
+            $valueQuery = clone $query;
+
             $pipeline[$key] = [
                 'label' => $label,
-                'leads' => Lead::where('status', $key)
-                    ->with('assignedUser')
-                    ->orderBy('priority', 'desc')
+                'leads' => $leadsQuery->orderBy('priority', 'desc')
                     ->orderBy('created_at', 'desc')
                     ->get(),
-                'count' => Lead::where('status', $key)->count(),
-                'value' => Lead::where('status', $key)->sum('estimated_value'),
+                'count' => $countQuery->count(),
+                'value' => $valueQuery->sum('estimated_value'),
             ];
         }
 
-        return view('admin.crm.pipeline', compact('pipeline', 'statuses'));
+        return view('admin.crm.pipeline', compact('pipeline', 'statuses', 'drives', 'currentDrive'));
+    }
+
+    /**
+     * Get emails for a lead
+     */
+    public function getEmails(Lead $lead)
+    {
+        $emails = $lead->emails()
+            ->with('user')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        // Mark incoming emails as read
+        $lead->emails()
+            ->incoming()
+            ->whereNull('read_at')
+            ->update(['read_at' => now()]);
+
+        return response()->json([
+            'success' => true,
+            'emails' => $emails,
+            'unread_count' => 0
+        ]);
+    }
+
+    /**
+     * Send email to a lead
+     */
+    public function sendEmail(Request $request, Lead $lead, LeadEmailService $emailService)
+    {
+        $validated = $request->validate([
+            'subject' => 'required|string|max:255',
+            'body' => 'required|string|max:10000',
+            'reply_to_id' => 'nullable|exists:lead_emails,id',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $user = auth()->user();
+
+            // Validate that user can send emails via Google Workspace
+            if (!$emailService->canUserSendEmail($user)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Your email address is not authorized to send emails. Please contact your administrator.'
+                ], 403);
+            }
+
+            $replyTo = null;
+            $threadId = null;
+            $inReplyTo = null;
+
+            // If this is a reply, get the thread info
+            if ($validated['reply_to_id']) {
+                $replyTo = LeadEmail::find($validated['reply_to_id']);
+                if ($replyTo) {
+                    $threadId = $replyTo->thread_id;
+                    $inReplyTo = $replyTo->message_id;
+                }
+            }
+
+            // Create the email record
+            $leadEmail = LeadEmail::create([
+                'lead_id' => $lead->id,
+                'user_id' => $user->id,
+                'from_email' => $user->email,
+                'from_name' => $user->name,
+                'to_email' => $lead->email,
+                'to_name' => $lead->full_name,
+                'subject' => $validated['subject'],
+                'body' => $validated['body'],
+                'body_html' => nl2br(e($validated['body'])),
+                'direction' => 'outgoing',
+                'thread_id' => $threadId,
+                'in_reply_to' => $inReplyTo,
+                'status' => 'draft',
+            ]);
+
+            // Send the email using the service (handles Google Workspace configuration)
+            $emailService->sendEmail($leadEmail, $user);
+
+            // Update email status
+            $leadEmail->update([
+                'status' => 'sent',
+                'sent_at' => now(),
+            ]);
+
+            // Log activity
+            $lead->logActivity(
+                'email',
+                'Email sent: ' . $validated['subject'],
+                'Email sent to ' . $lead->email . ' from ' . $user->email,
+                ['email_id' => $leadEmail->id]
+            );
+
+            // Update last contacted timestamp
+            $lead->update(['last_contacted_at' => now()]);
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Email sent successfully from ' . $user->email . '!',
+                'email' => $leadEmail->fresh()->load('user')
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Failed to send lead email: ' . $e->getMessage(), [
+                'lead_id' => $lead->id,
+                'user_id' => auth()->id(),
+                'sender_email' => auth()->user()->email ?? 'unknown',
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            // If email record was created, mark as failed
+            if (isset($leadEmail)) {
+                $leadEmail->update(['status' => 'failed']);
+            }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to send email. Please try again.'
+            ], 500);
+        }
+    }
+
+    /**
+     * Get a single email thread
+     */
+    public function getEmailThread(Lead $lead, $threadId)
+    {
+        $emails = $lead->emails()
+            ->where('thread_id', $threadId)
+            ->with('user')
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        // Mark unread incoming emails in this thread as read
+        $lead->emails()
+            ->where('thread_id', $threadId)
+            ->incoming()
+            ->whereNull('read_at')
+            ->update(['read_at' => now()]);
+
+        return response()->json([
+            'success' => true,
+            'emails' => $emails
+        ]);
+    }
+
+    /**
+     * Get unread email count for a lead
+     */
+    public function getUnreadEmailCount(Lead $lead)
+    {
+        $count = $lead->emails()
+            ->incoming()
+            ->whereNull('read_at')
+            ->count();
+
+        return response()->json([
+            'success' => true,
+            'count' => $count
+        ]);
     }
 }

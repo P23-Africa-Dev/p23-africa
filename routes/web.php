@@ -346,26 +346,43 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
         Route::post('/consultation/chat/mark-read/{messageId}', [\App\Http\Controllers\Admin\ConsultationController::class, 'markMessageAsRead'])->name('consultation.chat.markRead');
         Route::get('/consultation/draft-stats', [\App\Http\Controllers\Admin\ConsultationController::class, 'getDraftStats'])->name('consultation.draft-stats');
         Route::get('/consultation/applications-table', [\App\Http\Controllers\Admin\ConsultationController::class, 'getApplicationsTable'])->name('consultation.applications-table');
-
-        // CRM - Lead Management
-        Route::get('/crm', [\App\Http\Controllers\Admin\LeadController::class, 'index'])->name('crm.index');
-        Route::get('/crm/create', [\App\Http\Controllers\Admin\LeadController::class, 'create'])->name('crm.create');
-        Route::post('/crm', [\App\Http\Controllers\Admin\LeadController::class, 'store'])->name('crm.store');
-        Route::get('/crm/pipeline', [\App\Http\Controllers\Admin\LeadController::class, 'pipeline'])->name('crm.pipeline');
-        Route::get('/crm/export', [\App\Http\Controllers\Admin\LeadController::class, 'export'])->name('crm.export');
-        Route::get('/crm/{lead}', [\App\Http\Controllers\Admin\LeadController::class, 'show'])->name('crm.show');
-        Route::get('/crm/{lead}/edit', [\App\Http\Controllers\Admin\LeadController::class, 'edit'])->name('crm.edit');
-        Route::put('/crm/{lead}', [\App\Http\Controllers\Admin\LeadController::class, 'update'])->name('crm.update');
-        Route::delete('/crm/{lead}', [\App\Http\Controllers\Admin\LeadController::class, 'destroy'])->name('crm.destroy');
-        Route::patch('/crm/{lead}/status', [\App\Http\Controllers\Admin\LeadController::class, 'updateStatus'])->name('crm.update-status');
-        Route::post('/crm/{lead}/assign', [\App\Http\Controllers\Admin\LeadController::class, 'assign'])->name('crm.assign');
-        Route::post('/crm/{lead}/activity', [\App\Http\Controllers\Admin\LeadController::class, 'addActivity'])->name('crm.add-activity');
-        Route::post('/crm/{lead}/follow-up', [\App\Http\Controllers\Admin\LeadController::class, 'setFollowUp'])->name('crm.set-follow-up');
-        Route::post('/crm/activity/{activity}/complete', [\App\Http\Controllers\Admin\LeadController::class, 'completeActivity'])->name('crm.complete-activity');
-        Route::post('/crm/bulk-update', [\App\Http\Controllers\Admin\LeadController::class, 'bulkUpdate'])->name('crm.bulk-update');
-        Route::post('/crm/convert/contact/{contact}', [\App\Http\Controllers\Admin\LeadController::class, 'convertFromContact'])->name('crm.convert-contact');
-        Route::post('/crm/convert/consultation/{consultation}', [\App\Http\Controllers\Admin\LeadController::class, 'convertFromConsultation'])->name('crm.convert-consultation');
     });
+
+    // CRM - Lead Management
+    Route::get('/crm', [\App\Http\Controllers\Admin\LeadController::class, 'index'])->name('crm.index');
+    Route::get('/crm/create', [\App\Http\Controllers\Admin\LeadController::class, 'create'])->name('crm.create');
+    Route::post('/crm', [\App\Http\Controllers\Admin\LeadController::class, 'store'])->name('crm.store');
+    Route::get('/crm/pipeline', [\App\Http\Controllers\Admin\LeadController::class, 'pipeline'])->name('crm.pipeline');
+    Route::get('/crm/export', [\App\Http\Controllers\Admin\LeadController::class, 'export'])->name('crm.export');
+    Route::get('/crm/import', [\App\Http\Controllers\Admin\LeadImportController::class, 'showImport'])->name('crm.import');
+    Route::post('/crm/import', [\App\Http\Controllers\Admin\LeadImportController::class, 'import'])->name('crm.import.process');
+    Route::get('/crm/import/template', [\App\Http\Controllers\Admin\LeadImportController::class, 'downloadTemplate'])->name('crm.import.template');
+
+    // CRM - Lead Drives
+    Route::get('/crm/drives', [\App\Http\Controllers\Admin\LeadDriveController::class, 'index'])->name('crm.drives.index');
+    Route::post('/crm/drives', [\App\Http\Controllers\Admin\LeadDriveController::class, 'store'])->name('crm.drives.store');
+    Route::post('/crm/drives/ajax', [\App\Http\Controllers\Admin\LeadDriveController::class, 'storeAjax'])->name('crm.drives.store-ajax');
+    Route::put('/crm/drives/{drive}', [\App\Http\Controllers\Admin\LeadDriveController::class, 'update'])->name('crm.drives.update');
+    Route::delete('/crm/drives/{drive}', [\App\Http\Controllers\Admin\LeadDriveController::class, 'destroy'])->name('crm.drives.destroy');
+
+    Route::get('/crm/{lead}', [\App\Http\Controllers\Admin\LeadController::class, 'show'])->name('crm.show');
+    Route::get('/crm/{lead}/edit', [\App\Http\Controllers\Admin\LeadController::class, 'edit'])->name('crm.edit');
+    Route::put('/crm/{lead}', [\App\Http\Controllers\Admin\LeadController::class, 'update'])->name('crm.update');
+    Route::delete('/crm/{lead}', [\App\Http\Controllers\Admin\LeadController::class, 'destroy'])->name('crm.destroy');
+    Route::patch('/crm/{lead}/status', [\App\Http\Controllers\Admin\LeadController::class, 'updateStatus'])->name('crm.update-status');
+    Route::post('/crm/{lead}/assign', [\App\Http\Controllers\Admin\LeadController::class, 'assign'])->name('crm.assign');
+    Route::post('/crm/{lead}/activity', [\App\Http\Controllers\Admin\LeadController::class, 'addActivity'])->name('crm.add-activity');
+    Route::post('/crm/{lead}/follow-up', [\App\Http\Controllers\Admin\LeadController::class, 'setFollowUp'])->name('crm.set-follow-up');
+    Route::post('/crm/activity/{activity}/complete', [\App\Http\Controllers\Admin\LeadController::class, 'completeActivity'])->name('crm.complete-activity');
+    Route::post('/crm/bulk-update', [\App\Http\Controllers\Admin\LeadController::class, 'bulkUpdate'])->name('crm.bulk-update');
+    Route::post('/crm/convert/contact/{contact}', [\App\Http\Controllers\Admin\LeadController::class, 'convertFromContact'])->name('crm.convert-contact');
+    Route::post('/crm/convert/consultation/{consultation}', [\App\Http\Controllers\Admin\LeadController::class, 'convertFromConsultation'])->name('crm.convert-consultation');
+
+    // CRM Email functionality
+    Route::get('/crm/{lead}/emails', [\App\Http\Controllers\Admin\LeadController::class, 'getEmails'])->name('crm.get-emails');
+    Route::post('/crm/{lead}/email', [\App\Http\Controllers\Admin\LeadController::class, 'sendEmail'])->name('crm.send-email');
+    Route::get('/crm/{lead}/emails/thread/{threadId}', [\App\Http\Controllers\Admin\LeadController::class, 'getEmailThread'])->name('crm.get-email-thread');
+    Route::get('/crm/{lead}/emails/unread-count', [\App\Http\Controllers\Admin\LeadController::class, 'getUnreadEmailCount'])->name('crm.unread-email-count');
 
     // Route::get('/staff/create', [StaffController::class, 'create'])->name('admin.staff.create');
     // Route::post('/staff/store', [StaffController::class, 'store'])->name('admin.staff.store');

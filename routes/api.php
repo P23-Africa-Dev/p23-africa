@@ -47,3 +47,7 @@ Route::prefix('brn')->group(function () {
     Route::get('/token/{token}/validate', [BrnTokenController::class, 'validateToken'])
         ->name('api.brn.token.validate');
 });
+
+// Lead Email Webhook - for receiving email replies from external email providers
+Route::post('/webhooks/lead-email/inbound', [App\Http\Controllers\Api\LeadEmailWebhookController::class, 'handleInbound'])
+    ->name('api.webhooks.lead-email.inbound');

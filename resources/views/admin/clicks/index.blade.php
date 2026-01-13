@@ -279,7 +279,15 @@
                 <!-- Top Pages -->
                 <div class="bg-white overflow-hidden shadow rounded-lg">
                     <div class="px-4 py-5 sm:p-6">
-                        <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Top Pages</h3>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900">Top Pages</h3>
+                            @if ($analytics['top_pages']->count() > 5)
+                                <button onclick="showTopPagesModal()"
+                                    class="text-sm text-indigo-600 hover:text-indigo-800 font-medium">
+                                    See more <i class="fas fa-arrow-right ml-1"></i>
+                                </button>
+                            @endif
+                        </div>
                         <div class="space-y-3">
                             @foreach ($analytics['top_pages']->take(5) as $page)
                                 <div class="flex justify-between items-center">
@@ -298,8 +306,17 @@
                     <div class="px-4 py-5 sm:p-6">
                         <div class="flex items-center justify-between mb-4">
                             <h3 class="text-lg leading-6 font-medium text-gray-900">Top Countries</h3>
-                            <div class="text-xs text-gray-500">
-                                <i class="fas fa-globe mr-1"></i>{{ $analytics['top_countries']->count() }} countries
+                            <div class="flex items-center space-x-3">
+                                <div class="text-xs text-gray-500">
+                                    <i class="fas fa-globe mr-1"></i>{{ $analytics['top_countries']->count() }}
+                                    countries
+                                </div>
+                                @if ($analytics['top_countries']->count() > 5)
+                                    <button onclick="showTopCountriesModal()"
+                                        class="text-sm text-indigo-600 hover:text-indigo-800 font-medium">
+                                        See more <i class="fas fa-arrow-right ml-1"></i>
+                                    </button>
+                                @endif
                             </div>
                         </div>
                         <div class="space-y-3">
@@ -364,31 +381,44 @@
                                             style="width: {{ min($percentage, 100) }}%"></div>
                                     </div>
                                 @endforeach
-
-                                @if ($analytics['top_countries']->count() > 5)
-                                    <div class="mt-4 pt-3 border-t border-gray-200">
-                                        <div class="text-xs text-gray-500 text-center">
-                                            <i class="fas fa-plus-circle mr-1"></i>
-                                            {{ $analytics['top_countries']->count() - 5 }} more countries
-                                        </div>
-                                    </div>
-                                @endif
                             @endif
                         </div>
                     </div>
                 </div>
 
-                <!-- Browser Stats -->
+                <!-- Top Cities -->
                 <div class="bg-white overflow-hidden shadow rounded-lg">
                     <div class="px-4 py-5 sm:p-6">
-                        <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Top Browsers</h3>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900">Top Cities</h3>
+                            @if (isset($analytics['top_cities']) && $analytics['top_cities']->count() > 5)
+                                <button onclick="showTopCitiesModal()"
+                                    class="text-sm text-indigo-600 hover:text-indigo-800 font-medium">
+                                    See more <i class="fas fa-arrow-right ml-1"></i>
+                                </button>
+                            @endif
+                        </div>
                         <div class="space-y-3">
-                            @foreach ($analytics['browser_stats']->take(5) as $browserData)
-                                <div class="flex justify-between items-center">
-                                    <div class="text-sm font-medium text-gray-900">{{ $browserData->browser }}</div>
-                                    <div class="text-sm text-gray-500">{{ $browserData->total }}</div>
+                            @if (isset($analytics['top_cities']) && $analytics['top_cities']->count() > 0)
+                                @foreach ($analytics['top_cities']->take(5) as $cityData)
+                                    <div class="flex justify-between items-center">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-map-marker-alt text-gray-400 mr-2"></i>
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-900">{{ $cityData->city }}
+                                                </div>
+                                                <div class="text-xs text-gray-500">{{ $cityData->country }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-sm text-gray-500">{{ number_format($cityData->total) }}</div>
+                                    </div>
+                                @endforeach
+                            @else
+                                <div class="text-center py-4">
+                                    <i class="fas fa-city text-gray-300 text-2xl mb-2"></i>
+                                    <p class="text-sm text-gray-500">No city data available yet</p>
                                 </div>
-                            @endforeach
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -806,6 +836,33 @@
                 document.getElementById('backfillModal').classList.add('hidden');
             };
 
+            // Top Pages modal functions
+            window.showTopPagesModal = function() {
+                document.getElementById('topPagesModal').classList.remove('hidden');
+            };
+
+            window.closeTopPagesModal = function() {
+                document.getElementById('topPagesModal').classList.add('hidden');
+            };
+
+            // Top Countries modal functions
+            window.showTopCountriesModal = function() {
+                document.getElementById('topCountriesModal').classList.remove('hidden');
+            };
+
+            window.closeTopCountriesModal = function() {
+                document.getElementById('topCountriesModal').classList.add('hidden');
+            };
+
+            // Top Cities modal functions
+            window.showTopCitiesModal = function() {
+                document.getElementById('topCitiesModal').classList.remove('hidden');
+            };
+
+            window.closeTopCitiesModal = function() {
+                document.getElementById('topCitiesModal').classList.add('hidden');
+            };
+
             window.runBackfill = function() {
                 const button = document.getElementById('runBackfillBtn');
                 const status = document.getElementById('backfillStatus');
@@ -892,6 +949,158 @@
                 <button id="runBackfillBtn" onclick="runBackfill()"
                     class="bg-orange-600 hover:bg-orange-700 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200">
                     <i class="fas fa-play mr-2"></i>Start Update
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Pages Modal -->
+    <div id="topPagesModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
+        <div
+            class="relative top-10 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 max-w-2xl shadow-lg rounded-lg bg-white">
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-gray-200">
+                <h3 class="text-xl font-semibold text-gray-900">
+                    <i class="fas fa-file-alt mr-2 text-purple-500"></i>All Pages
+                </h3>
+                <button onclick="closeTopPagesModal()"
+                    class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="max-h-96 overflow-y-auto">
+                <div class="space-y-3">
+                    @foreach ($analytics['top_pages'] as $index => $page)
+                        <div
+                            class="flex justify-between items-center p-2 {{ $index % 2 === 0 ? 'bg-gray-50' : '' }} rounded">
+                            <div class="flex items-center">
+                                <span class="text-gray-400 text-sm w-8">{{ $index + 1 }}.</span>
+                                <div class="text-sm font-medium text-gray-900 truncate">
+                                    {{ $page->page_title ?: str_replace('_', ' ', $page->route_name) }}
+                                </div>
+                            </div>
+                            <div class="text-sm text-gray-500 font-medium">{{ number_format($page->total) }}</div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-gray-200 flex justify-end">
+                <button onclick="closeTopPagesModal()"
+                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-2 rounded-lg font-medium transition-colors duration-200">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Countries Modal -->
+    <div id="topCountriesModal"
+        class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
+        <div
+            class="relative top-10 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 max-w-2xl shadow-lg rounded-lg bg-white">
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-gray-200">
+                <h3 class="text-xl font-semibold text-gray-900">
+                    <i class="fas fa-globe mr-2 text-blue-500"></i>All Countries
+                </h3>
+                <button onclick="closeTopCountriesModal()"
+                    class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="max-h-96 overflow-y-auto">
+                <div class="space-y-3">
+                    @php
+                        $countryFlags = [
+                            'Nigeria' => '🇳🇬',
+                            'United States' => '🇺🇸',
+                            'United Kingdom' => '🇬🇧',
+                            'Ghana' => '🇬🇭',
+                            'Kenya' => '🇰🇪',
+                            'South Africa' => '🇿🇦',
+                            'Canada' => '🇨🇦',
+                            'Germany' => '🇩🇪',
+                            'France' => '🇫🇷',
+                            'Australia' => '🇦🇺',
+                            'India' => '🇮🇳',
+                            'Brazil' => '🇧🇷',
+                            'Egypt' => '🇪🇬',
+                            'Morocco' => '🇲🇦',
+                            'Rwanda' => '🇷🇼',
+                            'Tanzania' => '🇹🇿',
+                            'Uganda' => '🇺🇬',
+                            'Ethiopia' => '🇪🇹',
+                            'Local' => '🏠',
+                            'Unknown' => '❓',
+                        ];
+                    @endphp
+                    @foreach ($analytics['top_countries'] as $index => $countryData)
+                        <div
+                            class="flex justify-between items-center p-2 {{ $index % 2 === 0 ? 'bg-gray-50' : '' }} rounded">
+                            <div class="flex items-center">
+                                <span class="text-gray-400 text-sm w-8">{{ $index + 1 }}.</span>
+                                <span class="text-base mr-2">{{ $countryFlags[$countryData->country] ?? '🌍' }}</span>
+                                <div class="text-sm font-medium text-gray-900">{{ $countryData->country }}</div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="text-sm text-gray-500 font-medium mr-2">
+                                    {{ number_format($countryData->total) }}</div>
+                                @php
+                                    $totalVisits = $analytics['total_visits'] ?? 1;
+                                    $percentage = ($countryData->total / $totalVisits) * 100;
+                                @endphp
+                                <div class="text-xs text-gray-400">({{ number_format($percentage, 1) }}%)</div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-gray-200 flex justify-end">
+                <button onclick="closeTopCountriesModal()"
+                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-2 rounded-lg font-medium transition-colors duration-200">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Cities Modal -->
+    <div id="topCitiesModal"
+        class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
+        <div
+            class="relative top-10 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 max-w-2xl shadow-lg rounded-lg bg-white">
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-gray-200">
+                <h3 class="text-xl font-semibold text-gray-900">
+                    <i class="fas fa-city mr-2 text-green-500"></i>All Cities
+                </h3>
+                <button onclick="closeTopCitiesModal()"
+                    class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="max-h-96 overflow-y-auto">
+                <div class="space-y-3">
+                    @if (isset($analytics['top_cities']))
+                        @foreach ($analytics['top_cities'] as $index => $cityData)
+                            <div
+                                class="flex justify-between items-center p-2 {{ $index % 2 === 0 ? 'bg-gray-50' : '' }} rounded">
+                                <div class="flex items-center">
+                                    <span class="text-gray-400 text-sm w-8">{{ $index + 1 }}.</span>
+                                    <i class="fas fa-map-marker-alt text-gray-400 mr-2"></i>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900">{{ $cityData->city }}</div>
+                                        <div class="text-xs text-gray-500">{{ $cityData->country }}</div>
+                                    </div>
+                                </div>
+                                <div class="text-sm text-gray-500 font-medium">{{ number_format($cityData->total) }}
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-gray-200 flex justify-end">
+                <button onclick="closeTopCitiesModal()"
+                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-2 rounded-lg font-medium transition-colors duration-200">
+                    Close
                 </button>
             </div>
         </div>

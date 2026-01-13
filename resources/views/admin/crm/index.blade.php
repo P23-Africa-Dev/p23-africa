@@ -1,15 +1,220 @@
 <x-app-layout>
+    @push('styles')
+        <style>
+            /* Status Dropdown Styles */
+            .status-dropdown .status-badge-btn {
+                cursor: pointer;
+                font-size: 0.85rem;
+                padding: 0.35rem 0.75rem;
+                transition: all 0.2s ease;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .status-dropdown .status-badge-btn:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            }
+
+            .status-dropdown .dropdown-menu {
+                min-width: 180px;
+                padding: 0.5rem 0;
+                border-radius: 8px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            }
+
+            .status-dropdown .dropdown-item {
+                padding: 0.5rem 1rem;
+                display: flex;
+                align-items: center;
+                font-size: 0.9rem;
+                transition: all 0.15s ease;
+            }
+
+            .status-dropdown .dropdown-item:hover {
+                background-color: rgba(13, 110, 253, 0.1);
+            }
+
+            .status-dropdown .dropdown-item.active {
+                background-color: rgba(13, 110, 253, 0.15);
+                color: inherit;
+                font-weight: 500;
+            }
+
+            .status-dot {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                display: inline-block;
+                margin-right: 8px;
+            }
+
+            /* Status dot colors - must match Lead model getStatusColorAttribute */
+            .status-dot.status-new {
+                background-color: #0dcaf0;
+                /* info */
+            }
+
+            .status-dot.status-contacted {
+                background-color: #0d6efd;
+                /* primary */
+            }
+
+            .status-dot.status-qualified {
+                background-color: #ffc107;
+                /* warning */
+            }
+
+            .status-dot.status-unqualified {
+                background-color: #6c757d;
+                /* secondary */
+            }
+
+            .status-dot.status-proposal {
+                background-color: #6c757d;
+                /* secondary */
+            }
+
+            .status-dot.status-negotiation {
+                background-color: #212529;
+                /* dark */
+            }
+
+            .status-dot.status-won {
+                background-color: #198754;
+                /* success */
+            }
+
+            .status-dot.status-lost {
+                background-color: #dc3545;
+                /* danger */
+            }
+
+            /* Dark mode support */
+            [data-theme="dark"] .status-dropdown .dropdown-menu,
+            .dark .status-dropdown .dropdown-menu {
+                background-color: #2d3748;
+                border-color: #4a5568;
+            }
+
+            [data-theme="dark"] .status-dropdown .dropdown-item,
+            .dark .status-dropdown .dropdown-item {
+                color: #e2e8f0;
+            }
+
+            [data-theme="dark"] .status-dropdown .dropdown-item:hover,
+            .dark .status-dropdown .dropdown-item:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+
+            /* Status update loading state */
+            .status-badge-btn.loading {
+                opacity: 0.6;
+                pointer-events: none;
+            }
+
+            .status-badge-btn.loading::after {
+                content: '';
+                width: 12px;
+                height: 12px;
+                border: 2px solid transparent;
+                border-top-color: currentColor;
+                border-radius: 50%;
+                display: inline-block;
+                margin-left: 5px;
+                animation: spin 0.8s linear infinite;
+            }
+
+            @keyframes spin {
+                from {
+                    transform: rotate(0deg);
+                }
+
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
+    @endpush
+
     <x-slot name="header">
         <div class="d-flex justify-content-between align-items-center">
             <div>
                 <h2 class="font-semibold text-xl text-dark dark:text-gray-200 leading-tight dark-transition mb-1">
                     {{ __('Lead Management (CRM)') }}
+                    @if (isset($currentDrive))
+                        <span class="badge ms-2"
+                            style="background-color: {{ $currentDrive->color ?? '#6c757d' }}; font-size: 0.6em; vertical-align: middle;">
+                            {{ $currentDrive->name }}
+                        </span>
+                    @endif
                 </h2>
                 <p class="text-muted dark:text-gray-400 text-sm mb-0">Manage and track all your leads</p>
             </div>
             <div class="d-flex gap-2">
-                <a href="{{ route('admin.crm.pipeline') }}" class="btn btn-outline-info">
+                <!-- Drive Switcher -->
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="fa fa-folder me-2"></i>
+                        @if (request('drive') && request('drive') !== 'all')
+                            @if (request('drive') === 'unassigned')
+                                No Drive
+                            @elseif (isset($currentDrive))
+                                {{ $currentDrive->name }}
+                            @else
+                                Select Drive
+                            @endif
+                        @else
+                            All Drives
+                        @endif
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item {{ !request('drive') || request('drive') === 'all' ? 'active' : '' }}"
+                                href="{{ route('admin.crm.index', array_merge(request()->except('drive', 'page'), ['drive' => 'all'])) }}">
+                                <i class="fa fa-globe me-2 text-muted"></i>All Drives
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        @forelse ($drives ?? [] as $drive)
+                            <li>
+                                <a class="dropdown-item {{ request('drive') == $drive->id ? 'active' : '' }}"
+                                    href="{{ route('admin.crm.index', array_merge(request()->except('drive', 'page'), ['drive' => $drive->id])) }}">
+                                    <span class="d-inline-block rounded-circle me-2"
+                                        style="width: 12px; height: 12px; background-color: {{ $drive->color ?? '#6c757d' }};"></span>
+                                    {{ $drive->name }}
+                                    <span class="badge bg-secondary ms-2">{{ $drive->leads()->count() }}</span>
+                                </a>
+                            </li>
+                        @empty
+                            <li><span class="dropdown-item text-muted">No drives created</span></li>
+                        @endforelse
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item {{ request('drive') === 'unassigned' ? 'active' : '' }}"
+                                href="{{ route('admin.crm.index', array_merge(request()->except('drive', 'page'), ['drive' => 'unassigned'])) }}">
+                                <i class="fa fa-inbox me-2 text-muted"></i>No Drive
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item text-primary" href="{{ route('admin.crm.drives.index') }}">
+                                <i class="fa fa-cog me-2"></i>Manage Drives
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <a href="{{ route('admin.crm.pipeline', request()->only('drive')) }}" class="btn btn-outline-info">
                     <i class="fa fa-columns me-2"></i>Pipeline View
+                </a>
+                <a href="{{ route('admin.crm.import') }}" class="btn btn-outline-success">
+                    <i class="fa fa-file-import me-2"></i>Import Leads
                 </a>
                 <a href="{{ route('admin.crm.export', request()->all()) }}" class="btn btn-outline-secondary">
                     <i class="fa fa-download me-2"></i>Export CSV
@@ -35,6 +240,22 @@
             @if (session('error'))
                 <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
                     <i class="fa fa-exclamation-circle me-2"></i>{{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
+
+            @if (session('import_errors'))
+                <div class="alert alert-warning alert-dismissible fade show mb-4" role="alert">
+                    <h6 class="alert-heading mb-2"><i class="fa fa-exclamation-triangle me-2"></i>Import Warnings (Some
+                        rows were skipped)</h6>
+                    <ul class="mb-0 ps-3">
+                        @foreach (session('import_errors') as $importError)
+                            <li>{{ $importError }}</li>
+                        @endforeach
+                    </ul>
+                    @if (session('more_errors'))
+                        <p class="mt-2 mb-0 text-muted">...and {{ session('more_errors') }} more errors.</p>
+                    @endif
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             @endif
@@ -163,6 +384,10 @@
             <div class="card border-0 shadow-sm dark:bg-gray-800 mb-4">
                 <div class="card-body">
                     <form method="GET" action="{{ route('admin.crm.index') }}" class="row g-3">
+                        <!-- Preserve drive filter -->
+                        @if (request('drive'))
+                            <input type="hidden" name="drive" value="{{ request('drive') }}">
+                        @endif
                         <div class="col-md-3">
                             <input type="text" name="search"
                                 class="form-control dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
@@ -264,6 +489,9 @@
 
                 <div class="card-body p-0">
                     @if ($leads->count() > 0)
+                        @php
+                            $hasCountryData = $leads->contains(fn($lead) => !empty($lead->country));
+                        @endphp
                         <div class="table-responsive">
                             <table class="table table-hover mb-0">
                                 <thead class="dark:bg-gray-700">
@@ -272,6 +500,9 @@
                                                 id="selectAllHeader"></th>
                                         <th class="dark:text-gray-100">Lead</th>
                                         <th class="dark:text-gray-100">Company</th>
+                                        @if ($hasCountryData)
+                                            <th class="dark:text-gray-100">Country</th>
+                                        @endif
                                         <th class="dark:text-gray-100">Status</th>
                                         <th class="dark:text-gray-100">Priority</th>
                                         <th class="dark:text-gray-100">Value</th>
@@ -309,9 +540,40 @@
                                                     <span class="text-muted">-</span>
                                                 @endif
                                             </td>
+                                            @if ($hasCountryData)
+                                                <td class="dark:text-gray-100">
+                                                    @if ($lead->country)
+                                                        <span>{{ $lead->country }}</span>
+                                                    @else
+                                                        <span class="text-muted">-</span>
+                                                    @endif
+                                                </td>
+                                            @endif
                                             <td>
-                                                <span
-                                                    class="badge bg-{{ $lead->status_color }}">{{ $lead->status_label }}</span>
+                                                <div class="dropdown status-dropdown">
+                                                    <button
+                                                        class="btn btn-sm btn-{{ $lead->status_color }} dropdown-toggle status-badge-btn"
+                                                        type="button" data-bs-toggle="dropdown"
+                                                        data-id="{{ $lead->id }}" title="Click to change status">
+                                                        {{ $lead->status_label }}
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-end">
+                                                        @foreach (\App\Models\Lead::getStatuses() as $statusKey => $statusLabel)
+                                                            <li>
+                                                                <a class="dropdown-item status-option {{ $lead->status === $statusKey ? 'active' : '' }}"
+                                                                    href="#" data-id="{{ $lead->id }}"
+                                                                    data-status="{{ $statusKey }}">
+                                                                    <span
+                                                                        class="status-dot status-{{ $statusKey }}"></span>
+                                                                    {{ $statusLabel }}
+                                                                    @if ($lead->status === $statusKey)
+                                                                        <i class="fa fa-check ms-2 text-success"></i>
+                                                                    @endif
+                                                                </a>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
                                             </td>
                                             <td>
                                                 <span
@@ -328,7 +590,7 @@
                                             <td class="dark:text-gray-100">
                                                 @if ($lead->assignedUser)
                                                     <span
-                                                        class="badge bg-secondary">{{ $lead->assignedUser->name }}</span>
+                                                        class="badge bg-gray-500">{{ $lead->assignedUser->name }}</span>
                                                 @else
                                                     <span class="text-muted">Unassigned</span>
                                                 @endif
@@ -349,7 +611,7 @@
                                             </td>
                                             <td>
                                                 <span
-                                                    class="badge bg-light text-dark">{{ $lead->source_label }}</span>
+                                                    class="badge bg-gray-500 text-dark dark:text-gray-100 border">{{ $lead->source_label }}</span>
                                             </td>
                                             <td>
                                                 <div class="btn-group" role="group">
@@ -393,6 +655,33 @@
         </div>
     </div>
 
+    <!-- Lost Reason Modal -->
+    <div class="modal fade" id="lostReasonModal" tabindex="-1" aria-labelledby="lostReasonModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content dark:bg-gray-800">
+                <div class="modal-header">
+                    <h5 class="modal-title dark:text-gray-100" id="lostReasonModalLabel">
+                        <i class="fa fa-times-circle text-danger me-2"></i>Lost Reason
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted dark:text-gray-400 mb-3">Please provide a reason why this lead was lost
+                        (optional).</p>
+                    <textarea class="form-control dark:bg-gray-700 dark:text-gray-100" id="lostReasonText" rows="3"
+                        placeholder="Enter reason..."></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmLostBtn">
+                        <i class="fa fa-check me-2"></i>Mark as Lost
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @push('scripts')
         <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -404,6 +693,148 @@
                 const bulkStatus = document.getElementById('bulkStatus');
                 const bulkAssign = document.getElementById('bulkAssign');
                 const bulkDeleteBtn = document.getElementById('bulkDeleteBtn');
+
+                // Status color mapping (must match Lead model getStatusColorAttribute)
+                const statusColors = {
+                    'new': 'info',
+                    'contacted': 'primary',
+                    'qualified': 'warning',
+                    'unqualified': 'secondary',
+                    'proposal': 'secondary',
+                    'negotiation': 'dark',
+                    'won': 'success',
+                    'lost': 'danger'
+                };
+
+                // Status labels mapping (must match Lead model getStatuses)
+                const statusLabels = {
+                    'new': 'New',
+                    'contacted': 'Contacted',
+                    'qualified': 'Qualified',
+                    'unqualified': 'Unqualified',
+                    'proposal': 'Proposal Sent',
+                    'negotiation': 'Negotiation',
+                    'won': 'Won',
+                    'lost': 'Lost'
+                };
+
+                // Lost reason modal
+                const lostReasonModal = new bootstrap.Modal(document.getElementById('lostReasonModal'));
+                let pendingLostUpdate = null;
+
+                // Handle status dropdown click
+                document.querySelectorAll('.status-option').forEach(option => {
+                    option.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const leadId = this.dataset.id;
+                        const newStatus = this.dataset.status;
+                        const btn = document.querySelector(`.status-badge-btn[data-id="${leadId}"]`);
+
+                        // If changing to "lost", show modal for reason
+                        if (newStatus === 'lost') {
+                            pendingLostUpdate = {
+                                leadId,
+                                btn,
+                                dropdown: this.closest('.dropdown')
+                            };
+                            lostReasonModal.show();
+                            return;
+                        }
+
+                        updateLeadStatus(leadId, newStatus, btn, this.closest('.dropdown'));
+                    });
+                });
+
+                // Handle lost confirmation
+                document.getElementById('confirmLostBtn').addEventListener('click', function() {
+                    if (pendingLostUpdate) {
+                        const reason = document.getElementById('lostReasonText').value;
+                        updateLeadStatus(
+                            pendingLostUpdate.leadId,
+                            'lost',
+                            pendingLostUpdate.btn,
+                            pendingLostUpdate.dropdown,
+                            reason
+                        );
+                        lostReasonModal.hide();
+                        document.getElementById('lostReasonText').value = '';
+                        pendingLostUpdate = null;
+                    }
+                });
+
+                // Reset modal when closed
+                document.getElementById('lostReasonModal').addEventListener('hidden.bs.modal', function() {
+                    document.getElementById('lostReasonText').value = '';
+                    pendingLostUpdate = null;
+                });
+
+                function updateLeadStatus(leadId, newStatus, btn, dropdown, lostReason = null) {
+                    // Show loading state
+                    btn.classList.add('loading');
+                    btn.disabled = true;
+
+                    const requestBody = {
+                        status: newStatus
+                    };
+                    if (lostReason) {
+                        requestBody.lost_reason = lostReason;
+                    }
+
+                    fetch(`/admin/crm/${leadId}/status`, {
+                            method: 'PATCH',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Accept': 'application/json'
+                            },
+                            body: JSON.stringify(requestBody)
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            btn.classList.remove('loading');
+                            btn.disabled = false;
+
+                            if (data.success) {
+                                // Update button appearance
+                                const newColor = statusColors[newStatus] || 'secondary';
+                                const newLabel = statusLabels[newStatus] || newStatus;
+
+                                // Remove all existing color classes
+                                Object.values(statusColors).forEach(color => {
+                                    btn.classList.remove(`btn-${color}`);
+                                });
+
+                                // Add new color class
+                                btn.classList.add(`btn-${newColor}`);
+
+                                // Update text (keep dropdown-toggle class)
+                                btn.textContent = newLabel;
+
+                                // Update dropdown active state
+                                dropdown.querySelectorAll('.dropdown-item').forEach(item => {
+                                    item.classList.remove('active');
+                                    item.querySelector('.fa-check')?.remove();
+                                });
+
+                                const activeItem = dropdown.querySelector(`[data-status="${newStatus}"]`);
+                                if (activeItem) {
+                                    activeItem.classList.add('active');
+                                    const checkIcon = document.createElement('i');
+                                    checkIcon.className = 'fa fa-check ms-2 text-success';
+                                    activeItem.appendChild(checkIcon);
+                                }
+
+                                showToast('success', data.message || 'Status updated successfully');
+                            } else {
+                                showToast('error', data.message || 'Failed to update status');
+                            }
+                        })
+                        .catch(err => {
+                            btn.classList.remove('loading');
+                            btn.disabled = false;
+                            showToast('error', 'Failed to update status');
+                        });
+                }
 
                 function updateBulkBar() {
                     const checked = document.querySelectorAll('.lead-checkbox:checked');

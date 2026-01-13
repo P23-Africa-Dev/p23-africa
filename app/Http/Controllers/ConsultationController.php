@@ -120,7 +120,7 @@ class ConsultationController extends Controller
 
             // Auto-create CRM lead from consultation draft submission
             try {
-                $lead = Lead::convertFromConsultation($application);
+                $lead = Lead::createFromConsultation($application);
                 AdminNotificationService::notifyNewLead($lead);
             } catch (\Exception $e) {
                 Log::error('Failed to create lead from consultation draft', [
@@ -143,7 +143,7 @@ class ConsultationController extends Controller
 
             // Auto-create CRM lead from new consultation application
             try {
-                $lead = Lead::convertFromConsultation($application);
+                $lead = Lead::createFromConsultation($application);
                 AdminNotificationService::notifyNewLead($lead);
             } catch (\Exception $e) {
                 Log::error('Failed to create lead from new consultation', [

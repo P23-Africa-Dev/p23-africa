@@ -13,13 +13,17 @@ class Lead extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'drive_id',
         'first_name',
         'last_name',
         'email',
         'phone',
         'company',
+        'employee_count',
         'job_title',
         'website',
+        'company_linkedin_profile',
+        'ceo_linkedin_profile',
         'country',
         'city',
         'address',
@@ -57,6 +61,7 @@ class Lead extends Model
             'new' => 'New',
             'contacted' => 'Contacted',
             'qualified' => 'Qualified',
+            'unqualified' => 'Unqualified',
             'proposal' => 'Proposal Sent',
             'negotiation' => 'Negotiation',
             'won' => 'Won',
@@ -77,6 +82,7 @@ class Lead extends Model
             'cold_call' => 'Cold Call',
             'event' => 'Event',
             'advertisement' => 'Advertisement',
+            'noel_waitlist' => 'NOEL Waitlist',
             'other' => 'Other',
         ];
     }
@@ -115,6 +121,14 @@ class Lead extends Model
     }
 
     /**
+     * Get the drive this lead belongs to
+     */
+    public function drive(): BelongsTo
+    {
+        return $this->belongsTo(LeadDrive::class, 'drive_id');
+    }
+
+    /**
      * Get the user assigned to this lead
      */
     public function assignedUser(): BelongsTo
@@ -128,6 +142,25 @@ class Lead extends Model
     public function activities(): HasMany
     {
         return $this->hasMany(LeadActivity::class)->orderBy('created_at', 'desc');
+    }
+
+    /**
+     * Get all emails for this lead
+     */
+    public function emails(): HasMany
+    {
+        return $this->hasMany(LeadEmail::class)->orderBy('created_at', 'desc');
+    }
+
+    /**
+     * Get unread incoming emails count
+     */
+    public function getUnreadEmailsCountAttribute(): int
+    {
+        return $this->emails()
+            ->incoming()
+            ->whereNull('read_at')
+            ->count();
     }
 
     /**
@@ -171,6 +204,7 @@ class Lead extends Model
             'new' => 'info',
             'contacted' => 'primary',
             'qualified' => 'warning',
+            'unqualified' => 'secondary',
             'proposal' => 'secondary',
             'negotiation' => 'dark',
             'won' => 'success',
