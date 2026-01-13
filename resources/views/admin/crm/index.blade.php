@@ -489,6 +489,9 @@
 
                 <div class="card-body p-0">
                     @if ($leads->count() > 0)
+                        @php
+                            $hasCountryData = $leads->contains(fn($lead) => !empty($lead->country));
+                        @endphp
                         <div class="table-responsive">
                             <table class="table table-hover mb-0">
                                 <thead class="dark:bg-gray-700">
@@ -497,6 +500,9 @@
                                                 id="selectAllHeader"></th>
                                         <th class="dark:text-gray-100">Lead</th>
                                         <th class="dark:text-gray-100">Company</th>
+                                        @if ($hasCountryData)
+                                            <th class="dark:text-gray-100">Country</th>
+                                        @endif
                                         <th class="dark:text-gray-100">Status</th>
                                         <th class="dark:text-gray-100">Priority</th>
                                         <th class="dark:text-gray-100">Value</th>
@@ -534,6 +540,15 @@
                                                     <span class="text-muted">-</span>
                                                 @endif
                                             </td>
+                                            @if ($hasCountryData)
+                                                <td class="dark:text-gray-100">
+                                                    @if ($lead->country)
+                                                        <span>{{ $lead->country }}</span>
+                                                    @else
+                                                        <span class="text-muted">-</span>
+                                                    @endif
+                                                </td>
+                                            @endif
                                             <td>
                                                 <div class="dropdown status-dropdown">
                                                     <button
