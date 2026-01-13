@@ -81,6 +81,10 @@ class LeadImportController extends Controller
             $imported = 0;
             $skipped = 0;
             $errors = [];
+            $warnings = [];
+            $emptyNames = 0;
+            $emptyEmails = 0;
+            $invalidEmails = 0;
 
             foreach ($data as $index => $row) {
                 $rowNumber = $index + 2; // Account for header row and 0-indexing
@@ -88,22 +92,15 @@ class LeadImportController extends Controller
                 // Normalize keys to lowercase
                 $row = array_change_key_case($row, CASE_LOWER);
 
-                // Skip empty rows
-                if (empty(trim($row['full name'] ?? '')) && empty(trim($row['email'] ?? ''))) {
-                    continue;
+                // Skip completely empty rows (all fields empty)
+                $hasAnyData = false;
+                foreach ($row as $value) {
+                    if (!empty(trim($value ?? ''))) {
+                        $hasAnyData = true;
+                        break;
+                    }
                 }
-
-                // Validate email
-                $email = trim($row['email'] ?? '');
-                if (empty($email)) {
-                    $errors[] = "Row {$rowNumber}: Email is required.";
-                    $skipped++;
-                    continue;
-                }
-
-                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                    $errors[] = "Row {$rowNumber}: Invalid email format '{$email}'.";
-                    $skipped++;
+                if (!$hasAnyData) {
                     continue;
                 }
 
@@ -113,37 +110,52 @@ class LeadImportController extends Controller
                 $firstName = $nameParts[0] ?? '';
                 $lastName = $nameParts[1] ?? '';
 
+                // Track empty names (warning only, don't skip)
                 if (empty($firstName)) {
-                    $errors[] = "Row {$rowNumber}: Full name is required.";
-                    $skipped++;
-                    continue;
+                    $emptyNames++;
+                    $firstName = 'Unknown';
                 }
 
-                // Check if lead with this email already exists (including soft-deleted)
-                $existingLead = Lead::withTrashed()->where('email', $email)->first();
+                // Get and validate email
+                $email = trim($row['email'] ?? '');
 
-                if ($existingLead) {
-                    if ($existingLead->trashed()) {
-                        // Restore the soft-deleted lead and update it with new data
-                        $existingLead->restore();
-                        $existingLead->update([
-                            'drive_id' => $driveId,
-                            'first_name' => $firstName,
-                            'last_name' => $lastName,
-                            'company' => trim($row['company'] ?? '') ?: $existingLead->company,
-                            'employee_count' => trim($row['employee count'] ?? '') ?: $existingLead->employee_count,
-                            'country' => trim($row['country'] ?? '') ?: $existingLead->country,
-                            'company_linkedin_profile' => trim($row['company linkedin profile'] ?? '') ?: $existingLead->company_linkedin_profile,
-                            'ceo_linkedin_profile' => trim($row['ceo linkedin profile'] ?? '') ?: $existingLead->ceo_linkedin_profile,
-                            'status' => 'new',
-                            'source' => 'noel_waitlist',
-                        ]);
-                        $imported++;
-                        continue;
-                    } else {
-                        $errors[] = "Row {$rowNumber}: Lead with email '{$email}' already exists.";
-                        $skipped++;
-                        continue;
+                // Track empty emails (warning only, don't skip)
+                if (empty($email)) {
+                    $emptyEmails++;
+                    $email = null; // Allow null email
+                } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    $invalidEmails++;
+                    $warnings[] = "Row {$rowNumber}: Invalid email format '{$email}' : imported without email.";
+                    $email = null; // Set to null if invalid format
+                }
+
+                // Check if lead with this email already exists (only if email is provided)
+                if ($email) {
+                    $existingLead = Lead::withTrashed()->where('email', $email)->first();
+
+                    if ($existingLead) {
+                        if ($existingLead->trashed()) {
+                            // Restore the soft-deleted lead and update it with new data
+                            $existingLead->restore();
+                            $existingLead->update([
+                                'drive_id' => $driveId,
+                                'first_name' => $firstName,
+                                'last_name' => $lastName,
+                                'company' => trim($row['company'] ?? '') ?: $existingLead->company,
+                                'employee_count' => trim($row['employee count'] ?? '') ?: $existingLead->employee_count,
+                                'country' => trim($row['country'] ?? '') ?: $existingLead->country,
+                                'company_linkedin_profile' => trim($row['company linkedin profile'] ?? '') ?: $existingLead->company_linkedin_profile,
+                                'ceo_linkedin_profile' => trim($row['ceo linkedin profile'] ?? '') ?: $existingLead->ceo_linkedin_profile,
+                                'status' => 'new',
+                                'source' => 'noel_waitlist',
+                            ]);
+                            $imported++;
+                            continue;
+                        } else {
+                            $errors[] = "Row {$rowNumber}: Lead with email '{$email}' already exists.";
+                            $skipped++;
+                            continue;
+                        }
                     }
                 }
 
@@ -168,30 +180,44 @@ class LeadImportController extends Controller
 
             DB::commit();
 
+            // Build warnings for empty fields
+            if ($emptyNames > 0) {
+                array_unshift($warnings, "⚠️ {$emptyNames} row(s) had empty 'Full Name' (imported as 'Unknown').");
+            }
+            if ($emptyEmails > 0) {
+                array_unshift($warnings, "⚠️ {$emptyEmails} row(s) had empty 'Email' (imported without email).");
+            }
+            if ($invalidEmails > 0) {
+                array_unshift($warnings, "⚠️ {$invalidEmails} row(s) had invalid email format (imported without email).");
+            }
+
+            // Combine warnings and errors for display
+            $allIssues = array_merge($warnings, $errors);
+
             // Build appropriate message based on results
             if ($imported === 0 && $skipped === 0) {
                 return back()->with('error', 'No leads were imported. The file appears to contain no valid data rows.');
             }
 
             if ($imported === 0 && $skipped > 0) {
-                // All rows were skipped
-                session()->flash('import_errors', array_slice($errors, 0, 10));
-                if (count($errors) > 10) {
-                    session()->flash('more_errors', count($errors) - 10);
+                // All rows were skipped (due to duplicates)
+                session()->flash('import_errors', array_slice($allIssues, 0, 10));
+                if (count($allIssues) > 10) {
+                    session()->flash('more_errors', count($allIssues) - 10);
                 }
-                return back()->with('error', "Import failed: All {$skipped} rows were skipped due to errors. Please check the issues below and fix your file.");
+                return back()->with('error', "Import failed: All {$skipped} rows were skipped due to duplicate emails. Please check the issues below.");
             }
 
             // At least some leads were imported
             $message = "Successfully imported {$imported} lead" . ($imported > 1 ? 's' : '') . ".";
             if ($skipped > 0) {
-                $message .= " {$skipped} row" . ($skipped > 1 ? 's were' : ' was') . " skipped.";
+                $message .= " {$skipped} row" . ($skipped > 1 ? 's were' : ' was') . " skipped (duplicates).";
             }
 
-            if (!empty($errors)) {
-                session()->flash('import_errors', array_slice($errors, 0, 10)); // Show first 10 errors
-                if (count($errors) > 10) {
-                    session()->flash('more_errors', count($errors) - 10);
+            if (!empty($allIssues)) {
+                session()->flash('import_errors', array_slice($allIssues, 0, 10)); // Show first 10 issues
+                if (count($allIssues) > 10) {
+                    session()->flash('more_errors', count($allIssues) - 10);
                 }
             }
 

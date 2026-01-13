@@ -159,9 +159,9 @@ class LeadController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'first_name' => 'nullable|string|max:255',
+            'first_name' => 'required|string|max:255',
             'last_name' => 'nullable|string|max:255',
-            'email' => 'nullable|email|unique:leads,email',
+            'email' => 'required|email|unique:leads,email',
             'phone' => 'nullable|string|max:20',
             'company' => 'nullable|string|max:255',
             'job_title' => 'nullable|string|max:255',

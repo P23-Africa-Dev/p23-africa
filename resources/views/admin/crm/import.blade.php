@@ -55,17 +55,24 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <h6 class="text-dark dark:text-gray-100 mb-3">Required Columns</h6>
+                            <h6 class="text-dark dark:text-gray-100 mb-3">Recommended Columns</h6>
                             <ul class="list-unstyled">
                                 <li class="mb-2">
                                     <i class="fa fa-check-circle text-success me-2"></i>
-                                    <strong>Full Name</strong> <span class="badge bg-danger ms-1">Required</span>
+                                    <strong>Full Name</strong> <span
+                                        class="badge bg-warning text-dark ms-1">Recommended</span>
                                 </li>
                                 <li class="mb-2">
                                     <i class="fa fa-check-circle text-success me-2"></i>
-                                    <strong>Email</strong> <span class="badge bg-danger ms-1">Required</span>
+                                    <strong>Email</strong> <span
+                                        class="badge bg-warning text-dark ms-1">Recommended</span>
                                 </li>
                             </ul>
+                            <small class="text-muted d-block mt-2">
+                                <i class="fa fa-info-circle me-1"></i>
+                                Empty names will be imported as "Unknown". Empty or invalid emails will be imported
+                                without email.
+                            </small>
                         </div>
                         <div class="col-md-6">
                             <h6 class="text-dark dark:text-gray-100 mb-3">Optional Columns</h6>
@@ -97,7 +104,8 @@
                     <div class="alert alert-info mb-0 mt-3">
                         <i class="fa fa-info-circle me-2"></i>
                         <strong>Note:</strong> Column headers are case-insensitive. File must be CSV (.csv) or Excel
-                        (.xlsx, .xls) format. Maximum file size: 10MB.
+                        (.xlsx, .xls) format. Maximum file size: 10MB. All rows will be imported, with warnings shown
+                        for missing data.
                     </div>
                 </div>
             </div>
