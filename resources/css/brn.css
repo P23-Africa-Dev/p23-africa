@@ -1,7 +1,4 @@
-
-
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 @font-face {
     font-family: "GT Walsheim Pro";
@@ -12,30 +9,32 @@
             format("woff");
 }
 @font-face {
-  font-family: "GT Walsheim Trial Md";
-  font-style: normal;
-  font-weight: normal;
-  src: local("GT Walsheim Trial Md"),
-    url("/public/fonts/gt-trials/GT-Walsheim-Medium-Trial-BF651b7fc728fb3.woff")
-      format("woff");
+    font-family: "GT Walsheim Trial Md";
+    font-style: normal;
+    font-weight: normal;
+    src: local("GT Walsheim Trial Md"),
+        url("/public/fonts/gt-trials/GT-Walsheim-Medium-Trial-BF651b7fc728fb3.woff")
+            format("woff");
 }
 
-   @font-face {
-    font-family: 'GT Walsheim Trial Cn Bl';
+@font-face {
+    font-family: "GT Walsheim Trial Cn Bl";
     font-style: normal;
     font-weight: normal;
-    src: local('GT Walsheim Trial Cn Bl'), url('/public/fonts/gt-trials/GT-Walsheim-Condensed-Black-Trial-BF651b7fc6a5bf5.woff') format('woff');
-    }
+    src: local("GT Walsheim Trial Cn Bl"),
+        url("/public/fonts/gt-trials/GT-Walsheim-Condensed-Black-Trial-BF651b7fc6a5bf5.woff")
+            format("woff");
+}
 
-        @font-face {
-    font-family: 'GT Walsheim Trial Cn U Bd';
+@font-face {
+    font-family: "GT Walsheim Trial Cn U Bd";
     font-style: normal;
     font-weight: normal;
-    src: local('GT Walsheim Trial Cn U Bd'), url('/public/fonts/gt-trials/GT-Walsheim-Condensed-Ultra-Bold-Trial-BF651b7fc70e3d4.woff') format('woff');
-    }
-    
-    
-    
+    src: local("GT Walsheim Trial Cn U Bd"),
+        url("/public/fonts/gt-trials/GT-Walsheim-Condensed-Ultra-Bold-Trial-BF651b7fc70e3d4.woff")
+            format("woff");
+}
+
 @font-face {
     font-family: "GT Walsheim Con";
 
@@ -73,15 +72,18 @@
 @font-face {
     font-family: "IvyOraText BoldItalic";
 
-    src: url("/public/fonts/ivyora-text/IvyOraText-BoldItalic.woff2") format("woff2"),
-        url("/public/fonts/ivyora-text/IvyOraText-BoldItalic.woff") format("woff"); /* Adjust file names and paths as needed */
+    src: url("/public/fonts/ivyora-text/IvyOraText-BoldItalic.woff2")
+            format("woff2"),
+        url("/public/fonts/ivyora-text/IvyOraText-BoldItalic.woff")
+            format("woff"); /* Adjust file names and paths as needed */
 }
 @font-face {
     font-family: "IvyOra Text";
 
     src: url("/public/fonts/ivyora-text/IvyOraText-RegularItalic.woff2")
             format("woff2"),
-        url("/public/fonts/ivyora-text/IvyOraText-RegularItalic.woff") format("woff"); /* Adjust file names and paths as needed */
+        url("/public/fonts/ivyora-text/IvyOraText-RegularItalic.woff")
+            format("woff"); /* Adjust file names and paths as needed */
 }
 @font-face {
     font-family: "IvyOra Text Bold";
@@ -92,10 +94,10 @@
 @font-face {
     font-family: "IvyOra Text Medium";
 
-    src: url("/public/fonts/ivyora-text/IvyOraText-Medium.woff2") format("woff2"),
+    src: url("/public/fonts/ivyora-text/IvyOraText-Medium.woff2")
+            format("woff2"),
         url("/public/fonts/ivyora-text/IvyOraText-Medium.woff") format("woff"); /* Adjust file names and paths as needed */
 }
-
 
 html,
 body {
@@ -105,8 +107,6 @@ body {
 body {
     font-family: "GT Walsheim Pro";
 }
-
-
 
 /* Navbar Styling */
 .navbar-full.navbar {
@@ -256,7 +256,8 @@ body {
 }
 
 .whole-brn {
-    background: linear-gradient(#ffffffa9, #ffffffa9), url(/public/images/brn-gb.png);
+    background: linear-gradient(#ffffffa9, #ffffffa9),
+        url(/public/images/brn-gb.png);
 }
 
 /* =====================================================  BRN  START - INTRO SECTION*/
@@ -278,7 +279,7 @@ body {
 }
 
 .brn-intro-section .intro-content h1 {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     font-weight: 700;
     color: #ffffff;
     margin-bottom: 1.5rem;
@@ -465,7 +466,7 @@ body {
         left: -70px;
         bottom: 40px;
     }
-    .image-grid .second .card-image img{
+    .image-grid .second .card-image img {
         width: 200px;
         height: 68px;
     }
@@ -586,7 +587,6 @@ body {
     margin-bottom: 0;
     font-weight: bolder;
     font-family: "GT Walsheim ConB";
-   
 }
 
 .brn-how-we-operate-section .card-wrapper {
@@ -667,21 +667,21 @@ body {
     justify-content: flex-end;
     position: relative;
 }
-.how-we-operate-mobile{
+.how-we-operate-mobile {
     display: none;
 }
 
 @media (max-width: 600px) {
-    .brn-how-we-operate-section .card-wrapper{
+    .brn-how-we-operate-section .card-wrapper {
         /* padding: 0 15px; */
         display: none !important;
     }
-    .how-we-operate-mobile{
+    .how-we-operate-mobile {
         display: flex;
         flex-direction: column;
         gap: 10px;
     }
-    .how-we-operate-mobile img{
+    .how-we-operate-mobile img {
         width: 100%;
         height: auto;
     }
@@ -1549,19 +1549,31 @@ body {
 /* ============================================ BUSINESS MATCH*/
 .buss-match {
     margin: 3rem auto;
+    margin-top: -30px;
 }
 
 .buss-match img {
     width: 100%;
     height: auto;
+    width: 540px;
+    /* margin: 0 auto; */
+
+    margin-left: -57px;
 }
 
 .valuable-leads {
+    margin-top: -100px;
 }
 
 .valuable-leads img {
     width: 100%;
     height: auto;
+}
+.valuable-leads img.mobile {
+    width: 100%;
+    height: auto;
+    width: 710px;
+    transform: translate(-230px);
 }
 
 .networking {
@@ -1882,9 +1894,38 @@ body {
     text-align: left;
 }
 
+@media (min-width: 425px) {
+    .buss-match img {
+        width: 100%;
+        height: auto;
+        width: 540px;
+
+        margin-left: -39px;
+    }
+
+    .valuable-leads img.mobile {
+        transform: translate(-210px);
+    }
+}
 @media (min-width: 576px) {
     .brn-form-icons .brn-form-icons-options {
         justify-content: space-between; /* Distribute items horizontally */
+    }
+
+    .buss-match img {
+        width: 100%;
+        height: auto;
+    }
+
+
+        .buss-match img.mobile-business-match {
+       
+        width: 640px;
+
+    }
+
+    .valuable-leads img.mobile{
+        width: 810px;
     }
 }
 
@@ -1895,6 +1936,20 @@ body {
 
     .brn-form-icons .brn-form-icons-card .brn-form-icons-text {
         font-size: 0.9rem;
+    }
+
+    .buss-match img.desktop-match {
+        width: 100%;
+        height: auto;
+        width: 490px;
+
+        margin-left: 39px;
+    }
+    .buss-match img.dektop-match-text {
+        height: auto;
+        width: 290px;
+
+        margin-left: 39px;
     }
 }
 
@@ -2015,6 +2070,16 @@ body {
     .brn-input-checked {
         max-width: 750px;
     }
+    .buss-match img.dektop-match-text {
+        height: auto;
+        width: 100%;
+    }
+
+    .buss-match img.desktop-match {
+        width: 100%;
+        height: auto;
+        width: 640px;
+    }
 }
 @media (min-width: 1400px) {
     .brn-header h1 {
@@ -2050,6 +2115,36 @@ body {
         right: 0%;
         width: 100%;
         z-index: 1;
+    }
+
+    .buss-match{
+        margin-top: -70px;
+    }
+
+    .buss-match img.desktop-match {
+        width: 100%;
+        height: auto;
+        width: 1035px;
+    }
+
+    .buss-match img.dektop-match-text {
+        transform: translateX(130px);
+    }
+
+    .buss-match {
+        transform: translateX(-120px);
+    }
+
+    .valuable-leads {
+        margin-top: -350px;
+    }
+    .valuable-leads img.desktop {
+        width: 1440px;
+        transform: translateX(-99px);
+    }
+
+    .networking {
+        margin-top: -130px;
     }
 }
 

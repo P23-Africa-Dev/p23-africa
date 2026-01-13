@@ -726,13 +726,13 @@
                 <!-- Column / Row 1 : Cards -->
                 <div class="network-cards">
                     <div class="card-wrapper left-card-image">
-                        <img src="{{ asset('img/left-image.png') }}" loading="lazy" alt="" />
+                        <img src="{{ asset('img/desktop-left.png') }}" loading="lazy" alt="" />
 
                     </div>
 
                     <div class="card-wrapper right-card-image">
 
-                        <img class="" src="{{ asset('img/right-image-interest.png') }}" loading="lazy"
+                        <img class="" src="{{ asset('img/desktop-right.png') }}" loading="lazy"
                             alt="" />
                        
 

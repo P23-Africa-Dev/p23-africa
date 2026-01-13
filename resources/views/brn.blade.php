@@ -152,29 +152,31 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-4 my-auto">
-                        <img src="{{ asset('images/business_match_text.png') }}" loading="lazy" alt="Business Match">
+                        <img src="{{ asset('images/business_match_text.png') }}" class="dektop-match-text" loading="lazy" alt="Business Match">
                     </div>
                     <div class="col-md-8">
-                        <img src="{{ asset('images/business_match.png') }}" loading="lazy" alt="Business Match">
+                        <img class="desktop-match" src="{{ asset('images/business_match_desktop.png') }}" loading="lazy" alt="Business Match">
                     </div>
                 </div>
             </div>
         </section>
         <section class="buss-match d-md-none d-block">
             <div class="container">
-                <img src="{{ asset('images/brn-mobile-one.png') }}" loading="lazy" alt="Valuable Leads">
+                <img class="mobile-business-match" src="{{ asset('images/mobile_business_match.png') }}" loading="lazy" alt="Valuable Leads">
             </div>
         </section>
 
 
         <section class="valuable-leads d-md-block d-none">
             <div class="container">
-                <img src="{{ asset('images/valuable_leads.png') }}" loading="lazy" alt="Valuable Leads">
+                <img class="desktop" src="{{ asset('images/desktop-noel.png') }}" loading="lazy" alt="Valuable Leads">
+                {{-- <img src="{{ asset('images/valuable_leads.png') }}" loading="lazy" alt="Valuable Leads"> --}}
             </div>
         </section>
         <section class="valuable-leads d-md-none d-block mb-5">
             <div class="container">
-                <img src="{{ asset('images/brn-mobile-two.png') }}" loading="lazy" alt="Valuable Leads">
+                {{-- <img src="{{ asset('images/brn-mobile-two.png') }}" loading="lazy" alt="Valuable Leads"> --}}
+                   <img class="mobile" src="{{ asset('images/mobile-noel.png') }}" loading="lazy" alt="Valuable Leads">
             </div>
         </section>
 
