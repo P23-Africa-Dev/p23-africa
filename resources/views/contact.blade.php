@@ -1971,16 +1971,16 @@
                                 </div>
 
                                 <!-- <div class="form-group2 field">
-                                                                    <div class="contact-info-form__group name-field">
-                                                                                                <label class="floating-label">Phone Number</label>
-                                                                                                <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
-                                                                                                    placeholder="+1234567890" value="{{ old('phone') }}" />
-                                                                                                @error('phone')
+                                                                        <div class="contact-info-form__group name-field">
+                                                                                                    <label class="floating-label">Phone Number</label>
+                                                                                                    <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
+                                                                                                        placeholder="+1234567890" value="{{ old('phone') }}" />
+                                                                                                    @error('phone')
         <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
-                                                                                                                                                                        {{ $message }}</div>
+                                                                                                                                                                                {{ $message }}</div>
     @enderror
-                                                                                            </div>
-                                                                                            </div> -->
+                                                                                                </div>
+                                                                                                </div> -->
 
 
 
@@ -2059,8 +2059,8 @@
                                             <span class="range-label">$100</span>
                                             <div class="range-value" id="rangeValue">Please select budget</div>
                                             <input type="range" id="priceRange" name="budget_range" min="100"
-                                                max="5000" value="{{ old('budget_range', 350) }}" step="50"
-                                                data-touched="false" />
+                                                max="5000" value="{{ old('budget_range', 100) }}" step="50"
+                                                data-touched="{{ old('budget_range') ? 'true' : 'false' }}" />
                                             <span class="range-label">$Max</span>
                                         </div>
                                     </div>
@@ -2756,15 +2756,16 @@
                 const value = +rangeInput.value;
                 const min = +rangeInput.min;
                 const max = +rangeInput.max;
-                const percent = ((value - min) / (max - min)) * 100;
+                const isTouched = rangeInput.getAttribute('data-touched') === 'true';
 
-                // If there's no value, show placeholder text
-                if (!value || value < min) {
+                // If slider hasn't been touched, show placeholder text
+                if (!isTouched) {
                     rangeValue.textContent = 'Please select budget';
                     rangeInput.style.background = '#EFF2F1';
                     return;
                 }
 
+                const percent = ((value - min) / (max - min)) * 100;
                 rangeValue.textContent = `$${value.toLocaleString()}`;
                 rangeValue.style.left = `calc(${percent}% + (${8 - percent * 0.15}px))`;
 
@@ -2821,8 +2822,8 @@
                 const rangeInput = document.getElementById("priceRange");
                 const rangeValue = document.getElementById("rangeValue");
                 if (rangeInput && rangeValue) {
-                    rangeInput.value = '';
-                    rangeInput.removeAttribute('data-touched');
+                    rangeInput.value = rangeInput.min;
+                    rangeInput.setAttribute('data-touched', 'false');
                     window.updateSlider();
                 }
 
