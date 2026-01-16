@@ -155,7 +155,27 @@
             border-radius: 0 0 10px 10px;
             padding: 12px;
             min-height: 400px;
+            max-height: calc(100vh - 350px);
+            overflow-y: auto;
             transition: background-color 0.2s;
+        }
+
+        .pipeline-body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .pipeline-body::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 4px;
+        }
+
+        .pipeline-body::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+        }
+
+        .pipeline-body::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.3);
         }
 
         .dark .pipeline-body {

@@ -499,6 +499,36 @@ class LeadController extends Controller
     }
 
     /**
+     * Update an activity
+     */
+    public function updateActivity(Request $request, LeadActivity $activity)
+    {
+        $validated = $request->validate([
+            'type' => ['sometimes', Rule::in(array_keys(LeadActivity::getTypes()))],
+            'title' => 'sometimes|required|string|max:255',
+            'description' => 'nullable|string|max:5000',
+            'scheduled_at' => 'nullable|date',
+        ]);
+
+        try {
+            $activity->update($validated);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Activity updated successfully!',
+                'activity' => $activity->fresh('user')
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Failed to update activity: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to update activity.'
+            ], 500);
+        }
+    }
+
+    /**
      * Complete an activity
      */
     public function completeActivity(LeadActivity $activity)

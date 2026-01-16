@@ -1,4 +1,24 @@
 <x-app-layout>
+    @push('styles')
+        <style>
+            .activity-edit-form {
+                background: #f8f9fa;
+                padding: 12px;
+                border-radius: 8px;
+                margin-top: 8px;
+            }
+
+            .dark .activity-edit-form {
+                background: #374151;
+            }
+
+            .activity-actions .btn {
+                padding: 0.25rem 0.5rem;
+                font-size: 0.875rem;
+            }
+        </style>
+    @endpush
+
     <x-slot name="header">
         <div class="d-flex justify-content-between align-items-center">
             <div>
@@ -312,24 +332,66 @@
                                     </div>
                                     <div class="flex-grow-1">
                                         <div class="d-flex justify-content-between align-items-start">
-                                            <div>
-                                                <h6 class="mb-1 text-dark dark:text-gray-100">{{ $activity->title }}
+                                            <div class="flex-grow-1">
+                                                <h6 class="mb-1 text-dark dark:text-gray-100 activity-title-display">
+                                                    {{ $activity->title }}
                                                 </h6>
+                                                <div class="activity-edit-form d-none">
+                                                    <input type="text"
+                                                        class="form-control form-control-sm mb-2 activity-title-input"
+                                                        value="{{ $activity->title }}" placeholder="Activity title">
+                                                    <textarea class="form-control form-control-sm mb-2 activity-description-input" rows="3"
+                                                        placeholder="Description (optional)">{{ $activity->description }}</textarea>
+                                                    <input type="datetime-local"
+                                                        class="form-control form-control-sm mb-2 activity-scheduled-input"
+                                                        value="{{ $activity->scheduled_at ? $activity->scheduled_at->format('Y-m-d\TH:i') : '' }}"
+                                                        placeholder="Schedule (optional)">
+                                                    <select
+                                                        class="form-select form-select-sm mb-2 activity-type-input">
+                                                        @foreach ($activityTypes as $key => $label)
+                                                            <option value="{{ $key }}"
+                                                                {{ $activity->type === $key ? 'selected' : '' }}>
+                                                                {{ $label }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                                 <span
-                                                    class="badge bg-{{ $activity->type_color }} me-2">{{ $activity->type_label }}</span>
+                                                    class="badge bg-{{ $activity->type_color }} me-2 activity-type-badge">{{ $activity->type_label }}</span>
                                                 @if ($activity->user)
                                                     <small class="text-muted">by {{ $activity->user->name }}</small>
                                                 @endif
                                             </div>
-                                            <small
-                                                class="text-muted">{{ $activity->created_at->diffForHumans() }}</small>
+                                            <div class="d-flex align-items-start gap-2">
+                                                <small
+                                                    class="text-muted">{{ $activity->created_at->diffForHumans() }}</small>
+                                                @if ($activity->type !== 'status_change')
+                                                    <div class="activity-actions">
+                                                        <button class="btn btn-sm btn-outline-primary edit-activity"
+                                                            data-id="{{ $activity->id }}" title="Edit">
+                                                            <i class="fa fa-edit"></i>
+                                                        </button>
+                                                        <button
+                                                            class="btn btn-sm btn-outline-success save-activity d-none"
+                                                            data-id="{{ $activity->id }}" title="Save">
+                                                            <i class="fa fa-check"></i>
+                                                        </button>
+                                                        <button
+                                                            class="btn btn-sm btn-outline-secondary cancel-edit-activity d-none"
+                                                            data-id="{{ $activity->id }}" title="Cancel">
+                                                            <i class="fa fa-times"></i>
+                                                        </button>
+                                                    </div>
+                                                @endif
+                                            </div>
                                         </div>
-                                        @if ($activity->description)
-                                            <p class="text-dark dark:text-gray-300 mt-2 mb-0"
-                                                style="white-space: pre-wrap;">{{ $activity->description }}</p>
-                                        @endif
+                                        <div class="activity-description-display mt-2">
+                                            @if ($activity->description)
+                                                <p class="text-dark dark:text-gray-300 mb-0"
+                                                    style="white-space: pre-wrap;">{{ $activity->description }}</p>
+                                            @endif
+                                        </div>
                                         @if ($activity->scheduled_at && !$activity->is_completed)
-                                            <div class="mt-2">
+                                            <div class="mt-2 activity-scheduled-display">
                                                 <span class="badge bg-warning text-dark">
                                                     <i class="fa fa-clock me-1"></i>Scheduled:
                                                     {{ $activity->scheduled_at->format('M d, Y h:i A') }}
@@ -624,6 +686,92 @@
                             }
                         })
                         .catch(() => showToast('error', 'Failed to add activity'));
+                });
+
+                // Edit activity
+                document.querySelectorAll('.edit-activity').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const activityId = this.dataset.id;
+                        const activityItem = this.closest('[data-activity]');
+
+                        // Show edit form, hide display
+                        activityItem.querySelector('.activity-title-display').classList.add('d-none');
+                        activityItem.querySelector('.activity-description-display').classList.add(
+                            'd-none');
+                        activityItem.querySelector('.activity-scheduled-display')?.classList.add(
+                            'd-none');
+                        activityItem.querySelector('.activity-type-badge').classList.add('d-none');
+                        activityItem.querySelector('.activity-edit-form').classList.remove('d-none');
+
+                        // Show save/cancel buttons, hide edit button
+                        this.classList.add('d-none');
+                        activityItem.querySelector('.save-activity').classList.remove('d-none');
+                        activityItem.querySelector('.cancel-edit-activity').classList.remove('d-none');
+                    });
+                });
+
+                // Cancel edit activity
+                document.querySelectorAll('.cancel-edit-activity').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const activityId = this.dataset.id;
+                        const activityItem = this.closest('[data-activity]');
+
+                        // Hide edit form, show display
+                        activityItem.querySelector('.activity-title-display').classList.remove(
+                            'd-none');
+                        activityItem.querySelector('.activity-description-display').classList.remove(
+                            'd-none');
+                        activityItem.querySelector('.activity-scheduled-display')?.classList.remove(
+                            'd-none');
+                        activityItem.querySelector('.activity-type-badge').classList.remove('d-none');
+                        activityItem.querySelector('.activity-edit-form').classList.add('d-none');
+
+                        // Hide save/cancel buttons, show edit button
+                        this.classList.add('d-none');
+                        activityItem.querySelector('.save-activity').classList.add('d-none');
+                        activityItem.querySelector('.edit-activity').classList.remove('d-none');
+                    });
+                });
+
+                // Save activity
+                document.querySelectorAll('.save-activity').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const activityId = this.dataset.id;
+                        const activityItem = this.closest('[data-activity]');
+
+                        const data = {
+                            title: activityItem.querySelector('.activity-title-input').value,
+                            description: activityItem.querySelector('.activity-description-input')
+                                .value || '',
+                            type: activityItem.querySelector('.activity-type-input').value,
+                        };
+
+                        const scheduledInput = activityItem.querySelector('.activity-scheduled-input')
+                            .value;
+                        if (scheduledInput) {
+                            data.scheduled_at = scheduledInput;
+                        }
+
+                        fetch(`/admin/crm/activity/${activityId}`, {
+                                method: 'PATCH',
+                                headers: {
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(data)
+                            })
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.success) {
+                                    showToast('success', data.message);
+                                    setTimeout(() => location.reload(), 1000);
+                                } else {
+                                    showToast('error', data.message);
+                                }
+                            })
+                            .catch(() => showToast('error', 'Failed to update activity'));
+                    });
                 });
 
                 // Complete activity

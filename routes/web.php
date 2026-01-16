@@ -372,6 +372,7 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
     Route::patch('/crm/{lead}/status', [\App\Http\Controllers\Admin\LeadController::class, 'updateStatus'])->name('crm.update-status');
     Route::post('/crm/{lead}/assign', [\App\Http\Controllers\Admin\LeadController::class, 'assign'])->name('crm.assign');
     Route::post('/crm/{lead}/activity', [\App\Http\Controllers\Admin\LeadController::class, 'addActivity'])->name('crm.add-activity');
+    Route::patch('/crm/activity/{activity}', [\App\Http\Controllers\Admin\LeadController::class, 'updateActivity'])->name('crm.update-activity');
     Route::post('/crm/{lead}/follow-up', [\App\Http\Controllers\Admin\LeadController::class, 'setFollowUp'])->name('crm.set-follow-up');
     Route::post('/crm/activity/{activity}/complete', [\App\Http\Controllers\Admin\LeadController::class, 'completeActivity'])->name('crm.complete-activity');
     Route::post('/crm/bulk-update', [\App\Http\Controllers\Admin\LeadController::class, 'bulkUpdate'])->name('crm.bulk-update');
