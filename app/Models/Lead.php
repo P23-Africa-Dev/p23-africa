@@ -53,6 +53,30 @@ class Lead extends Model
     ];
 
     /**
+     * Boot method to ensure every lead has a drive
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Ensure every lead has a drive_id before saving
+        static::saving(function ($lead) {
+            if (empty($lead->drive_id)) {
+                // Get the default drive (Lead Bank)
+                $defaultDrive = LeadDrive::getDefault();
+                if (!$defaultDrive) {
+                    // Fallback: find Lead Bank by slug
+                    $defaultDrive = LeadDrive::where('slug', 'lead-bank')->first();
+                }
+
+                if ($defaultDrive) {
+                    $lead->drive_id = $defaultDrive->id;
+                }
+            }
+        });
+    }
+
+    /**
      * Status options
      */
     public static function getStatuses(): array
@@ -337,7 +361,15 @@ class Lead extends Model
     {
         $nameParts = explode(' ', $submission->name, 2);
 
+        // Get Lead Bank drive (default drive for website leads)
+        $leadBankDrive = LeadDrive::getDefault();
+        if (!$leadBankDrive) {
+            // Fallback: find Lead Bank by name if default is not set
+            $leadBankDrive = LeadDrive::where('slug', 'lead-bank')->first();
+        }
+
         return self::create([
+            'drive_id' => $leadBankDrive?->id,
             'first_name' => $nameParts[0] ?? $submission->name,
             'last_name' => $nameParts[1] ?? null,
             'email' => $submission->email,
@@ -362,7 +394,15 @@ class Lead extends Model
     {
         $nameParts = explode(' ', $application->name, 2);
 
+        // Get Lead Bank drive (default drive for website leads)
+        $leadBankDrive = LeadDrive::getDefault();
+        if (!$leadBankDrive) {
+            // Fallback: find Lead Bank by name if default is not set
+            $leadBankDrive = LeadDrive::where('slug', 'lead-bank')->first();
+        }
+
         return self::create([
+            'drive_id' => $leadBankDrive?->id,
             'first_name' => $nameParts[0] ?? $application->name,
             'last_name' => $nameParts[1] ?? null,
             'email' => $application->email,

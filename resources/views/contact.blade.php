@@ -2067,7 +2067,7 @@
                                     @error('budget_range')
                                         <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
                                             {{ $message }}
-                                        </div>
+                                        </div>  
                                     @enderror
                                 </div>
 
