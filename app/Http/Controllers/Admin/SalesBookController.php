@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\SalesBookDownload;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Exception;
 
@@ -14,6 +15,41 @@ class SalesBookController extends Controller
         $salesBooks = SalesBookDownload::orderBy('created_at', 'desc')->paginate(20);
 
         return view('admin.salesbooks.index', compact('salesBooks'));
+    }
+
+    public function edit($id)
+    {
+        $salesBook = SalesBookDownload::findOrFail($id);
+        return response()->json($salesBook);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'phone' => 'required|string|max:50',
+        ]);
+
+        try {
+            $salesBook = SalesBookDownload::findOrFail($id);
+            $salesBook->phone = $request->phone;
+            $salesBook->save();
+
+            Log::info('SalesBook phone number updated', [
+                'id' => $salesBook->id,
+                'phone' => $salesBook->phone
+            ]);
+
+            return redirect()->route('admin.salesbooks.index')->with('success', 'Phone number updated successfully.');
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            Log::error('SalesBook record not found for update', ['id' => $id]);
+            return redirect()->route('admin.salesbooks.index')->with('error', 'Record not found.');
+        } catch (Exception $e) {
+            Log::error('Error updating SalesBook phone number', [
+                'id' => $id,
+                'error' => $e->getMessage()
+            ]);
+            return redirect()->route('admin.salesbooks.index')->with('error', 'An error occurred while updating the phone number.');
+        }
     }
 
     public function destroy($id)

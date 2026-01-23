@@ -178,6 +178,16 @@
                                                         </td>
                                                         <td>
                                                             <div class="btn-group" role="group">
+                                                                <button type="button"
+                                                                    class="btn btn-sm btn-outline-primary edit-phone-btn"
+                                                                    data-id="{{ $salesBook->id }}"
+                                                                    data-name="{{ $salesBook->name }}"
+                                                                    data-phone="{{ $salesBook->phone }}"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#editPhoneModal"
+                                                                    title="Edit Phone Number">
+                                                                    <i class="fa fa-edit"></i>
+                                                                </button>
                                                                 <form
                                                                     action="{{ route('admin.salesbooks.destroy', $salesBook->id) }}"
                                                                     method="POST" class="d-inline"
@@ -251,5 +261,62 @@
             font-size: 0.75em;
         }
     </style>
+
+    <!-- Edit Phone Modal -->
+    <div class="modal fade" id="editPhoneModal" tabindex="-1" aria-labelledby="editPhoneModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editPhoneModalLabel">
+                        <i class="fas fa-phone me-2"></i>Edit Phone Number
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="editPhoneForm" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label text-muted">Name</label>
+                            <p class="form-control-plaintext fw-bold" id="editPhoneName"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editPhoneInput" class="form-label">Phone Number <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="editPhoneInput" name="phone" required
+                                maxlength="50">
+                            @error('phone')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-1"></i>Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const editPhoneModal = document.getElementById('editPhoneModal');
+
+            editPhoneModal.addEventListener('show.bs.modal', function(event) {
+                const button = event.relatedTarget;
+                const id = button.getAttribute('data-id');
+                const name = button.getAttribute('data-name');
+                const phone = button.getAttribute('data-phone');
+
+                document.getElementById('editPhoneName').textContent = name;
+                document.getElementById('editPhoneInput').value = phone || '';
+                document.getElementById('editPhoneForm').action = "{{ url('admin/salesbooks') }}/" + id;
+            });
+        });
+    </script>
 
 </x-app-layout>
