@@ -312,8 +312,6 @@ Route::get('/events/{slug}', [UserEventController::class, 'show'])->name('events
 Route::middleware('role:admin')->group(function () {
     Route::delete('/contact/{contact}', [\App\Http\Controllers\Admin\ContactController::class, 'destroy'])->name('contact.destroy');
     Route::post('/contact/bulk-delete', [\App\Http\Controllers\Admin\ContactController::class, 'bulkDestroy'])->name('contact.bulk-delete');
-    Route::get('/contact/export', [\App\Http\Controllers\Admin\ContactController::class, 'export'])->name('contact.export');
-    Route::get('/contact/export-xlsx', [\App\Http\Controllers\Admin\ContactController::class, 'exportXlsx'])->name('contact.export.xlsx');
 });
 
 Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->prefix('admin')->name('admin.')->group(function () {
@@ -329,6 +327,8 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
         // Contact management routes (accessible to admin and supervisor)
         Route::get('/contact', [\App\Http\Controllers\Admin\ContactController::class, 'index'])->name('contact.index');
         Route::get('/contact/{contact}', [\App\Http\Controllers\Admin\ContactController::class, 'show'])->name('contact.show');
+        Route::get('/contact/export', [\App\Http\Controllers\Admin\ContactController::class, 'export'])->name('contact.export');
+        Route::get('/contact/export-xlsx', [\App\Http\Controllers\Admin\ContactController::class, 'exportXlsx'])->name('contact.export.xlsx');
 
 
         // Calendar
