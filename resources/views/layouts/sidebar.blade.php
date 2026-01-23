@@ -121,7 +121,7 @@
                         <i class="fa fa-download"></i>
                         <span>Ebook Downloads</span>
                     </a>
-                    @if (auth()->user() && auth()->user()->hasRole('admin'))
+                    @if (auth()->user() && auth()->user()->hasRole(['admin', 'supervisor']))
                         <a href="{{ route('admin.contact.index') }}"
                             class="sidebar-subitem {{ request()->routeIs('admin.contact.*') ? 'active' : '' }}">
                             <i class="fa fa-envelope"></i>
