@@ -419,10 +419,10 @@ class ContactController extends Controller
                 'input' => $request->all()
             ]);
 
-            return response()->json([
-                'success' => false,
-                // 'message' => 'Failed to save draft'
-            ], 500);
+            // return response()->json([
+            //     'success' => false,
+            //     // 'message' => 'Failed to save draft'
+            // ], 500);
         }
     }
 
