@@ -239,18 +239,54 @@ class EventController extends Controller
     public function sendReminder(Request $request, $eventId)
     {
         $event = Event::with('seats')->findOrFail($eventId);
+        $type = $request->input('type', '24hr'); // Default to 24hr if not specified
 
-        foreach ($event->seats as $seat) {
-            $firstName = explode(' ', $seat->name)[0] ?? 'Guest';
-
-            $link = $event->visibility === 'public'
-                ? $event->link
-                : route('private.access', ['slug' => $event->slug, 'code' => $seat->seat_code]);
-
-            Mail::to($seat->email)->send(new EventReminderMail($seat, $event, $link, $firstName));
+        if ($event->seats->isEmpty()) {
+            return back()->with('error', 'No registered attendees for this event.');
         }
 
-        return back()->with('success', 'Reminder emails sent successfully.');
+        $sentCount = 0;
+        $failedCount = 0;
+
+        foreach ($event->seats as $seat) {
+            if (empty($seat->email)) {
+                continue;
+            }
+
+            try {
+                $firstName = explode(' ', $seat->name)[0] ?? 'Guest';
+
+                $link = $event->visibility === 'public'
+                    ? $event->link
+                    : route('private.access', ['slug' => $event->slug, 'code' => $seat->seat_code]);
+
+                Mail::to($seat->email)->send(new EventReminderMail($seat, $event, $link, $firstName));
+                $sentCount++;
+            } catch (\Exception $e) {
+                $failedCount++;
+                \Log::error("Failed to send {$type} reminder to {$seat->email} for event '{$event->title}': " . $e->getMessage());
+            }
+        }
+
+        // Mark reminder as sent
+        if ($type === '24hr') {
+            $event->reminder_24hr_sent_at = now();
+        } else {
+            $event->reminder_15min_sent_at = now();
+        }
+        $event->save();
+
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($event)
+            ->withProperties(['type' => $type, 'sent' => $sentCount, 'failed' => $failedCount])
+            ->log("Sent {$type} reminder emails manually");
+
+        if ($failedCount > 0) {
+            return back()->with('warning', "Sent {$sentCount} reminder(s), {$failedCount} failed.");
+        }
+
+        return back()->with('success', "Reminder emails sent successfully to {$sentCount} attendee(s).");
     }
 
     public function sendFeedback(Event $event)

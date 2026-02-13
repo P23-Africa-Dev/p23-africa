@@ -146,11 +146,11 @@
                                             Settings</th>
                                         <th
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                            Actions</th>  
-                                        @if (auth()->user()->hasRole('admin|supervisor'))  
-                                        <th
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                            Notifications</th>
+                                            Actions</th>
+                                        @if (auth()->user()->hasRole('admin|supervisor'))
+                                            <th
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                                Notifications</th>
                                         @endif
                                     </tr>
                                 </thead>
@@ -282,51 +282,140 @@
 
                                                     <!-- Delete -->
                                                     @if (auth()->user()->hasRole('admin|supervisor|staff'))
-                                                    <form action="{{ route('admin.events.destroy', $event) }}"
-                                                        method="POST" class="inline"
-                                                        onsubmit="return confirm('Are you sure you want to delete this event? This action cannot be undone.');">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit"
-                                                            class="p-2 text-gray-400 dark:text-gray-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all duration-200"
-                                                            title="Delete Event">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </form>
+                                                        <form action="{{ route('admin.events.destroy', $event) }}"
+                                                            method="POST" class="inline"
+                                                            onsubmit="return confirm('Are you sure you want to delete this event? This action cannot be undone.');">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit"
+                                                                class="p-2 text-gray-400 dark:text-gray-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all duration-200"
+                                                                title="Delete Event">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </form>
                                                     @endif
                                                 </div>
                                             </td>
 
                                             <!-- Notifications -->
                                             @if (auth()->user()->hasRole('admin|supervisor'))
-                                            <td class="px-6 py-4">
-                                                <div class="space-y-2">
-                                                    @if ($hoursUntilEvent <= 24 && $hoursUntilEvent > 0)
-                                                        <form
-                                                            action="{{ route('admin.events.sendReminder', $event->id) }}"
-                                                            method="POST"
-                                                            onsubmit="return confirm('Send reminder emails to all participants?')">
-                                                            @csrf
-                                                            <button type="submit"
-                                                                class="bg-blue-500 hover:bg-blue-600 text-white text-xs px-3 py-1.5 rounded-lg transition-colors duration-200">
-                                                                <i class="fas fa-bell mr-1"></i>Send Reminder
-                                                            </button>
-                                                        </form>
-                                                    @endif
+                                                <td class="px-6 py-4">
+                                                    <div class="space-y-2">
+                                                        @php
+                                                            $eventDateTime = \Carbon\Carbon::parse(
+                                                                $event->event_date . ' ' . $event->event_time,
+                                                            );
+                                                            $now = \Carbon\Carbon::now();
+                                                            $hoursUntil = $now->diffInHours($eventDateTime, false);
+                                                            $minutesUntil = $now->diffInMinutes($eventDateTime, false);
+                                                            $isPast = $eventDateTime < $now;
 
-                                                    @if ($hoursUntilEvent2 <= 24 && $hoursUntilEvent2 > 0)
-                                                        <form
-                                                            action="{{ route('admin.events.sendFeedback', $event->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            <button type="submit"
-                                                                class="bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1.5 rounded-lg transition-colors duration-200">
-                                                                <i class="fas fa-comment mr-1"></i>Send Feedback
-                                                            </button>
-                                                        </form>
-                                                    @endif
-                                                </div>
-                                            </td>
+                                                            // Check if reminders were sent
+                                                            $reminder24Sent = !is_null($event->reminder_24hr_sent_at);
+                                                            $reminder15Sent = !is_null($event->reminder_15min_sent_at);
+
+                                                            // Should have sent 24hr reminder (event is within 24hrs or past)
+                                                            $should24BeSent = $hoursUntil <= 24;
+                                                            // Should have sent 15min reminder (event is within 15mins or past)
+                                                            $should15BeSent = $minutesUntil <= 15;
+                                                        @endphp
+
+                                                        {{-- 24-Hour Reminder Status --}}
+                                                        <div class="flex items-center space-x-2">
+                                                            @if ($reminder24Sent)
+                                                                <span
+                                                                    class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
+                                                                    <i class="fas fa-check-circle mr-1"></i>24hr Sent
+                                                                </span>
+                                                                <span class="text-xs text-gray-500 dark:text-gray-400"
+                                                                    title="{{ $event->reminder_24hr_sent_at->format('M d, Y g:i A') }}">
+                                                                    {{ $event->reminder_24hr_sent_at->diffForHumans() }}
+                                                                </span>
+                                                            @elseif($should24BeSent && !$isPast)
+                                                                {{-- Show manual send button if automation missed it --}}
+                                                                <form
+                                                                    action="{{ route('admin.events.sendReminder', ['id' => $event->id]) }}"
+                                                                    method="POST" class="inline"
+                                                                    onsubmit="return confirm('Send 24-hour reminder emails to all participants?')">
+                                                                    @csrf
+                                                                    <input type="hidden" name="type"
+                                                                        value="24hr">
+                                                                    <button type="submit"
+                                                                        class="inline-flex items-center px-2 py-1 rounded-lg text-xs font-medium bg-amber-100 text-amber-800 hover:bg-amber-200 dark:bg-amber-900 dark:text-amber-300 transition-colors">
+                                                                        <i
+                                                                            class="fas fa-exclamation-triangle mr-1"></i>Send
+                                                                        24hr
+                                                                    </button>
+                                                                </form>
+                                                            @elseif(!$isPast && $hoursUntil > 24)
+                                                                <span
+                                                                    class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400">
+                                                                    <i class="fas fa-clock mr-1"></i>24hr Scheduled
+                                                                </span>
+                                                            @elseif($isPast && !$reminder24Sent)
+                                                                <span
+                                                                    class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300">
+                                                                    <i class="fas fa-times-circle mr-1"></i>24hr Missed
+                                                                </span>
+                                                            @endif
+                                                        </div>
+
+                                                        {{-- 15-Minute Reminder Status --}}
+                                                        <div class="flex items-center space-x-2">
+                                                            @if ($reminder15Sent)
+                                                                <span
+                                                                    class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
+                                                                    <i class="fas fa-check-circle mr-1"></i>15min Sent
+                                                                </span>
+                                                                <span class="text-xs text-gray-500 dark:text-gray-400"
+                                                                    title="{{ $event->reminder_15min_sent_at->format('M d, Y g:i A') }}">
+                                                                    {{ $event->reminder_15min_sent_at->diffForHumans() }}
+                                                                </span>
+                                                            @elseif($should15BeSent && !$isPast)
+                                                                {{-- Show manual send button if automation missed it --}}
+                                                                <form
+                                                                    action="{{ route('admin.events.sendReminder', ['id' => $event->id]) }}"
+                                                                    method="POST" class="inline"
+                                                                    onsubmit="return confirm('Send 15-minute reminder emails to all participants?')">
+                                                                    @csrf
+                                                                    <input type="hidden" name="type"
+                                                                        value="15min">
+                                                                    <button type="submit"
+                                                                        class="inline-flex items-center px-2 py-1 rounded-lg text-xs font-medium bg-amber-100 text-amber-800 hover:bg-amber-200 dark:bg-amber-900 dark:text-amber-300 transition-colors">
+                                                                        <i
+                                                                            class="fas fa-exclamation-triangle mr-1"></i>Send
+                                                                        15min
+                                                                    </button>
+                                                                </form>
+                                                            @elseif(!$isPast && $minutesUntil > 15)
+                                                                <span
+                                                                    class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400">
+                                                                    <i class="fas fa-clock mr-1"></i>15min Scheduled
+                                                                </span>
+                                                            @elseif($isPast && !$reminder15Sent)
+                                                                <span
+                                                                    class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300">
+                                                                    <i class="fas fa-times-circle mr-1"></i>15min
+                                                                    Missed
+                                                                </span>
+                                                            @endif
+                                                        </div>
+
+                                                        {{-- Feedback Button (after event) --}}
+                                                        @if ($isPast)
+                                                            <form
+                                                                action="{{ route('admin.events.sendFeedback', $event->id) }}"
+                                                                method="POST"
+                                                                onsubmit="return confirm('Send feedback request to all participants?')">
+                                                                @csrf
+                                                                <button type="submit"
+                                                                    class="inline-flex items-center px-2 py-1 rounded-lg text-xs font-medium bg-purple-100 text-purple-800 hover:bg-purple-200 dark:bg-purple-900 dark:text-purple-300 transition-colors">
+                                                                    <i class="fas fa-comment mr-1"></i>Send Feedback
+                                                                </button>
+                                                            </form>
+                                                        @endif
+                                                    </div>
+                                                </td>
                                             @endif
                                         </tr>
                                     @empty

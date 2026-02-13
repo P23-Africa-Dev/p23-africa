@@ -22,11 +22,15 @@ class Event extends Model
         'display',
         'image',
         'booking_fields',
-        'visibility'
+        'visibility',
+        'reminder_24hr_sent_at',
+        'reminder_15min_sent_at'
     ];
 
     protected $casts = [
-        'booking_fields' => 'array'
+        'booking_fields' => 'array',
+        'reminder_24hr_sent_at' => 'datetime',
+        'reminder_15min_sent_at' => 'datetime'
     ];
 
     // public function isPublic()
