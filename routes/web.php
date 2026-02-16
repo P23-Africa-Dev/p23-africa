@@ -309,7 +309,7 @@ Route::get('/events/{slug}', [UserEventController::class, 'show'])->name('events
 // });
 
 // Admin-only contact management routes
-Route::middleware('role:admin')->group(function () {
+Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
     Route::delete('/contact/{contact}', [\App\Http\Controllers\Admin\ContactController::class, 'destroy'])->name('contact.destroy');
     Route::post('/contact/bulk-delete', [\App\Http\Controllers\Admin\ContactController::class, 'bulkDestroy'])->name('contact.bulk-delete');
 });

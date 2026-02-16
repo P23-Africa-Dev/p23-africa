@@ -109,6 +109,20 @@
                                     <div class="text-dark dark:text-gray-100">{{ $lead->job_title }}</div>
                                 </div>
                             @endif
+                            @if ($lead->year_founded)
+                                <div class="mb-3">
+                                    <label class="text-muted small">Year Founded</label>
+                                    <div class="text-dark dark:text-gray-100">{{ $lead->year_founded }}</div>
+                                </div>
+                            @endif
+                            @if ($lead->industry)
+                                <div class="mb-3">
+                                    <label class="text-muted small">Industry</label>
+                                    <div class="text-dark dark:text-gray-100">
+                                        {{ \App\Models\Lead::getIndustries()[$lead->industry] ?? $lead->industry }}
+                                    </div>
+                                </div>
+                            @endif
                             @if ($lead->website)
                                 <div class="mb-3">
                                     <label class="text-muted small">Website</label>

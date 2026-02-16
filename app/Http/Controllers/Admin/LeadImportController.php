@@ -143,6 +143,8 @@ class LeadImportController extends Controller
                                 'last_name' => $lastName,
                                 'company' => trim($row['company'] ?? '') ?: $existingLead->company,
                                 'employee_count' => trim($row['employee count'] ?? '') ?: $existingLead->employee_count,
+                                'year_founded' => !empty(trim($row['year founded'] ?? '')) ? (int) trim($row['year founded']) : $existingLead->year_founded,
+                                'industry' => trim($row['industry'] ?? '') ?: $existingLead->industry,
                                 'country' => trim($row['country'] ?? '') ?: $existingLead->country,
                                 'company_linkedin_profile' => trim($row['company linkedin profile'] ?? '') ?: $existingLead->company_linkedin_profile,
                                 'ceo_linkedin_profile' => trim($row['ceo linkedin profile'] ?? '') ?: $existingLead->ceo_linkedin_profile,
@@ -167,6 +169,8 @@ class LeadImportController extends Controller
                     'email' => $email,
                     'company' => trim($row['company'] ?? ''),
                     'employee_count' => trim($row['employee count'] ?? ''),
+                    'year_founded' => !empty(trim($row['year founded'] ?? '')) ? (int) trim($row['year founded']) : null,
+                    'industry' => trim($row['industry'] ?? '') ?: null,
                     'country' => trim($row['country'] ?? ''),
                     'company_linkedin_profile' => trim($row['company linkedin profile'] ?? ''),
                     'ceo_linkedin_profile' => trim($row['ceo linkedin profile'] ?? ''),
@@ -315,6 +319,8 @@ class LeadImportController extends Controller
             'Full Name',
             'Company',
             'Employee Count',
+            'Year Founded',
+            'Industry',
             'Country',
             'Company LinkedIn Profile',
             'CEO LinkedIn Profile',
@@ -322,8 +328,8 @@ class LeadImportController extends Controller
         ];
 
         $sampleData = [
-            ['John Doe', 'Acme Corp', '50-100', 'Nigeria', 'https://linkedin.com/company/acme', 'https://linkedin.com/in/johndoe', 'john@acme.com'],
-            ['Jane Smith', 'Tech Solutions', '10-50', 'Kenya', 'https://linkedin.com/company/techsol', 'https://linkedin.com/in/janesmith', 'jane@techsol.com'],
+            ['John Doe', 'Acme Corp', '50-100', '2015', 'Technology', 'Nigeria', 'https://linkedin.com/company/acme', 'https://linkedin.com/in/johndoe', 'john@acme.com'],
+            ['Jane Smith', 'Tech Solutions', '10-50', '2020', 'Finance', 'Kenya', 'https://linkedin.com/company/techsol', 'https://linkedin.com/in/janesmith', 'jane@techsol.com'],
         ];
 
         if ($format === 'csv') {
@@ -360,10 +366,10 @@ class LeadImportController extends Controller
                     'startColor' => ['argb' => 'FFE0E0E0']
                 ]
             ];
-            $sheet->getStyle('A1:G1')->applyFromArray($headerStyle);
+            $sheet->getStyle('A1:I1')->applyFromArray($headerStyle);
 
             // Auto-size columns
-            foreach (range('A', 'G') as $col) {
+            foreach (range('A', 'I') as $col) {
                 $sheet->getColumnDimension($col)->setAutoSize(true);
             }
 

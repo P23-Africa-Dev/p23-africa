@@ -150,6 +150,7 @@ class LeadController extends Controller
             'sources' => Lead::getSources(),
             'priorities' => Lead::getPriorities(),
             'services' => Lead::getServices(),
+            'industries' => Lead::getIndustries(),
         ]);
     }
 
@@ -164,6 +165,8 @@ class LeadController extends Controller
             'email' => 'required|email|unique:leads,email',
             'phone' => 'nullable|string|max:20',
             'company' => 'nullable|string|max:255',
+            'year_founded' => 'nullable|integer|min:1800|max:' . date('Y'),
+            'industry' => 'nullable|string|max:100',
             'job_title' => 'nullable|string|max:255',
             'website' => 'nullable|url:http,https|max:255',
             'country' => 'nullable|string|max:100',
@@ -187,6 +190,8 @@ class LeadController extends Controller
             'last_name',
             'phone',
             'company',
+            'year_founded',
+            'industry',
             'job_title',
             'website',
             'country',
@@ -261,6 +266,7 @@ class LeadController extends Controller
             'sources' => Lead::getSources(),
             'priorities' => Lead::getPriorities(),
             'services' => Lead::getServices(),
+            'industries' => Lead::getIndustries(),
         ]);
     }
 
@@ -275,6 +281,8 @@ class LeadController extends Controller
             'email' => ['required', 'email', Rule::unique('leads')->ignore($lead->id)],
             'phone' => 'nullable|string|max:20',
             'company' => 'nullable|string|max:255',
+            'year_founded' => 'nullable|integer|min:1800|max:' . date('Y'),
+            'industry' => 'nullable|string|max:100',
             'job_title' => 'nullable|string|max:255',
             'website' => 'nullable|url:http,https|max:255',
             'country' => 'nullable|string|max:100',
@@ -301,6 +309,8 @@ class LeadController extends Controller
             'last_name',
             'phone',
             'company',
+            'year_founded',
+            'industry',
             'job_title',
             'website',
             'country',
@@ -786,6 +796,8 @@ class LeadController extends Controller
                 'Email',
                 'Phone',
                 'Company',
+                'Year Founded',
+                'Industry',
                 'Job Title',
                 'Status',
                 'Source',
@@ -807,6 +819,8 @@ class LeadController extends Controller
                     $lead->email,
                     $lead->phone,
                     $lead->company,
+                    $lead->year_founded,
+                    $lead->industry,
                     $lead->job_title,
                     $lead->status_label,
                     $lead->source_label,

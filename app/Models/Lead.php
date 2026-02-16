@@ -20,6 +20,8 @@ class Lead extends Model
         'phone',
         'company',
         'employee_count',
+        'year_founded',
+        'industry',
         'job_title',
         'website',
         'company_linkedin_profile',
@@ -141,6 +143,33 @@ class Lead extends Model
             'Content Creation',
             'SEO & Analytics',
             'Other',
+        ];
+    }
+
+    /**
+     * Industry options
+     */
+    public static function getIndustries(): array
+    {
+        return [
+            'Technology' => 'Technology',
+            'Healthcare' => 'Healthcare',
+            'Finance' => 'Finance & Banking',
+            'Education' => 'Education',
+            'Retail' => 'Retail & E-commerce',
+            'Manufacturing' => 'Manufacturing',
+            'Real Estate' => 'Real Estate',
+            'Agriculture' => 'Agriculture',
+            'Energy' => 'Energy & Utilities',
+            'Hospitality' => 'Hospitality & Tourism',
+            'Media' => 'Media & Entertainment',
+            'Transportation' => 'Transportation & Logistics',
+            'Construction' => 'Construction',
+            'Telecommunications' => 'Telecommunications',
+            'Professional Services' => 'Professional Services',
+            'Non-Profit' => 'Non-Profit',
+            'Government' => 'Government',
+            'Other' => 'Other',
         ];
     }
 

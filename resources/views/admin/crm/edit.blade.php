@@ -127,6 +127,30 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+                            <div class="col-md-4">
+                                <label class="form-label text-dark dark:text-gray-100">Year Founded</label>
+                                <input type="number" name="year_founded" min="1800" max="{{ date('Y') }}"
+                                    class="form-control dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 @error('year_founded') is-invalid @enderror"
+                                    value="{{ old('year_founded', $lead->year_founded) }}" placeholder="e.g., 2015">
+                                @error('year_founded')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-8">
+                                <label class="form-label text-dark dark:text-gray-100">Industry</label>
+                                <select name="industry"
+                                    class="form-select dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 @error('industry') is-invalid @enderror">
+                                    <option value="">Select Industry</option>
+                                    @foreach ($industries as $key => $label)
+                                        <option value="{{ $key }}"
+                                            {{ old('industry', $lead->industry) === $key ? 'selected' : '' }}>
+                                            {{ $label }}</option>
+                                    @endforeach
+                                </select>
+                                @error('industry')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
                             <div class="col-md-12">
                                 <label class="form-label text-dark dark:text-gray-100">Website</label>
                                 <input type="url" name="website"

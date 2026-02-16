@@ -87,6 +87,14 @@
                                 </li>
                                 <li class="mb-2">
                                     <i class="fa fa-circle text-secondary me-2" style="font-size: 8px;"></i>
+                                    Year Founded
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fa fa-circle text-secondary me-2" style="font-size: 8px;"></i>
+                                    Industry
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fa fa-circle text-secondary me-2" style="font-size: 8px;"></i>
                                     Country
                                 </li>
                                 <li class="mb-2">
@@ -140,6 +148,8 @@
                                     <th class="text-nowrap">Full Name</th>
                                     <th class="text-nowrap">Company</th>
                                     <th class="text-nowrap">Employee Count</th>
+                                    <th class="text-nowrap">Year Founded</th>
+                                    <th class="text-nowrap">Industry</th>
                                     <th class="text-nowrap">Country</th>
                                     <th class="text-nowrap">Company LinkedIn Profile</th>
                                     <th class="text-nowrap">CEO LinkedIn Profile</th>
@@ -151,10 +161,13 @@
                                     <td>John Doe</td>
                                     <td>Acme Corporation</td>
                                     <td>50-100</td>
+                                    <td>2015</td>
+                                    <td>Technology</td>
                                     <td>Nigeria</td>
                                     <td class="text-truncate" style="max-width: 150px;">
                                         https://linkedin.com/company/acme</td>
-                                    <td class="text-truncate" style="max-width: 150px;">https://linkedin.com/in/johndoe
+                                    <td class="text-truncate" style="max-width: 150px;">
+                                        https://linkedin.com/in/johndoe
                                     </td>
                                     <td>john@acme.com</td>
                                 </tr>
@@ -162,6 +175,8 @@
                                     <td>Jane Smith</td>
                                     <td>Tech Solutions Ltd</td>
                                     <td>10-50</td>
+                                    <td>2020</td>
+                                    <td>Finance</td>
                                     <td>Kenya</td>
                                     <td class="text-truncate" style="max-width: 150px;">
                                         https://linkedin.com/company/techsol</td>
@@ -173,6 +188,8 @@
                                     <td>Michael Johnson</td>
                                     <td>African Ventures</td>
                                     <td>100-500</td>
+                                    <td>2010</td>
+                                    <td>Real Estate</td>
                                     <td>South Africa</td>
                                     <td class="text-truncate" style="max-width: 150px;">
                                         https://linkedin.com/company/africanventures</td>
