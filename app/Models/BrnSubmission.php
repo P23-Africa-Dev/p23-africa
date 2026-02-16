@@ -30,8 +30,22 @@ class BrnSubmission extends Model
         'goals',
         'selected_outcome',
         'b2b_interest',
-        'status' // approved, declined, pending
+        'status', // approved, declined, pending
+        'tier' // silver, gold, platinum
     ];
+
+    /**
+     * Valid tier values
+     */
+    public const TIERS = ['silver', 'gold', 'platinum'];
+
+    /**
+     * Get tier display name with proper casing
+     */
+    public function getTierDisplayAttribute()
+    {
+        return $this->tier ? ucfirst($this->tier) : null;
+    }
 
     /**
      * Get the name attribute (alias for full_name for backward compatibility)

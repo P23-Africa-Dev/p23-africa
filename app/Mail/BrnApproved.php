@@ -47,6 +47,7 @@ class BrnApproved extends Mailable
             'categories' => $submission->categories,
             'offer_value' => $submission->offer_value,
             'b2b_interest' => $submission->b2b_interest,
+            'tier' => $submission->tier, // silver, gold, or platinum
         ];
 
         // Encrypt the data

@@ -26,6 +26,18 @@
                             @else bg-warning text-dark dark:bg-yellow-600 dark:text-yellow-100 @endif dark-transition">
                             {{ ucfirst($submission->status) }}
                         </span>
+
+                        @if ($submission->tier)
+                            <span class="text-sm font-medium text-theme-secondary dark-transition ms-4">Membership
+                                Tier:</span>
+                            <span
+                                class="ms-2 px-3 py-1 rounded-pill text-sm font-medium
+                                @if ($submission->tier === 'platinum') bg-dark text-white dark:bg-gray-700
+                                @elseif ($submission->tier === 'gold') bg-warning text-dark
+                                @else bg-secondary text-white @endif dark-transition">
+                                {{ ucfirst($submission->tier) }}
+                            </span>
+                        @endif
                     </div>
 
                     <!-- Personal Information -->
@@ -219,11 +231,19 @@
 
                     <!-- Action Buttons -->
                     <div class="border-top pt-4 border-theme dark-transition">
-                        <div class="d-flex flex-wrap gap-3">
+                        <div class="d-flex flex-wrap gap-3 align-items-center">
                             @if ($submission->status === 'pending')
                                 <form action="{{ route('admin.brn.approve', $submission->id) }}" method="POST"
-                                    class="d-inline">
+                                    class="d-inline d-flex gap-2 align-items-center">
                                     @csrf
+                                    <select name="tier"
+                                        class="form-select dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600 dark-transition"
+                                        style="width: auto; min-width: 140px;" required>
+                                        <option value="">Select Tier</option>
+                                        <option value="silver">Silver</option>
+                                        <option value="gold">Gold</option>
+                                        <option value="platinum">Platinum</option>
+                                    </select>
                                     <button type="submit"
                                         class="btn btn-success dark:bg-green-600 dark:border-green-600 dark:hover:bg-green-700 dark-transition">
                                         <i class="fas fa-check me-2"></i>Approve Application

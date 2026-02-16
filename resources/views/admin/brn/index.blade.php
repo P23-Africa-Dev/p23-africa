@@ -34,17 +34,21 @@
                                     <th class="text-theme-primary dark-transition">Email</th>
                                     <th class="text-theme-primary dark-transition">Company</th>
                                     <th class="text-theme-primary dark-transition">Status</th>
+                                    <th class="text-theme-primary dark-transition">Tier</th>
                                     <th class="text-theme-primary dark-transition">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($submissions as $submission)
                                     <tr class="hover-theme dark-transition">
-                                        <td class="text-theme-primary dark-transition">{{ $submission->name }}</td>
-                                        <td class="text-theme-primary dark-transition">{{ $submission->email }}</td>
-                                        <td class="text-theme-primary dark-transition">{{ $submission->company_name }}
+                                        <td class="text-theme-primary dark-transition align-middle">
+                                            {{ $submission->name }}</td>
+                                        <td class="text-theme-primary dark-transition align-middle">
+                                            {{ $submission->email }}</td>
+                                        <td class="text-theme-primary dark-transition align-middle">
+                                            {{ $submission->company_name }}
                                         </td>
-                                        <td class="text-theme-primary dark-transition">
+                                        <td class="text-theme-primary dark-transition align-middle">
                                             @if ($submission->status === 'pending')
                                                 <span
                                                     class="badge bg-warning text-dark dark:bg-yellow-600 dark:text-yellow-100 dark-transition">{{ ucfirst($submission->status) }}</span>
@@ -56,8 +60,24 @@
                                                     class="badge bg-danger dark:bg-red-600 dark-transition">{{ ucfirst($submission->status) }}</span>
                                             @endif
                                         </td>
-                                        <td class="text-theme-primary dark-transition">
-                                            <div class="d-flex gap-2">
+                                        <td class="text-theme-primary dark-transition align-middle">
+                                            @if ($submission->tier)
+                                                @if ($submission->tier === 'platinum')
+                                                    <span
+                                                        class="badge bg-dark dark:bg-gray-700 dark-transition">{{ ucfirst($submission->tier) }}</span>
+                                                @elseif ($submission->tier === 'gold')
+                                                    <span
+                                                        class="badge bg-warning text-dark dark-transition">{{ ucfirst($submission->tier) }}</span>
+                                                @else
+                                                    <span
+                                                        class="badge bg-secondary dark-transition">{{ ucfirst($submission->tier) }}</span>
+                                                @endif
+                                            @else
+                                                <span class="text-muted">-</span>
+                                            @endif
+                                        </td>
+                                        <td class="text-theme-primary dark-transition align-middle">
+                                            <div class="d-flex flex-wrap gap-2 align-items-center">
                                                 <!-- View Button -->
                                                 <a href="{{ route('admin.brn.show', $submission->id) }}"
                                                     class="btn btn-sm btn-primary dark:bg-blue-600 dark:border-blue-600 dark:hover:bg-blue-700 dark-transition"
@@ -67,7 +87,7 @@
 
                                                 <!-- Delete Button -->
                                                 <form action="{{ route('admin.brn.destroy', $submission->id) }}"
-                                                    method="POST" class="d-inline"
+                                                    method="POST" class="d-inline m-0"
                                                     onsubmit="return confirm('Are you sure you want to delete this application?')">
                                                     @csrf
                                                     @method('DELETE')
@@ -79,19 +99,31 @@
                                                 </form>
 
                                                 @if ($submission->status === 'pending')
+                                                    <!-- Tier Selection -->
+                                                    <select name="tier" form="approve-form-{{ $submission->id }}"
+                                                        class="form-select form-select-sm dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600 dark-transition"
+                                                        style="width: auto; min-width: 110px;" required>
+                                                        <option value="">Select Tier</option>
+                                                        <option value="silver">Silver</option>
+                                                        <option value="gold">Gold</option>
+                                                        <option value="platinum">Platinum</option>
+                                                    </select>
+
                                                     <!-- Approve Button -->
-                                                    <form action="{{ route('admin.brn.approve', $submission->id) }}"
-                                                        method="POST" class="d-inline">
+                                                    <form id="approve-form-{{ $submission->id }}"
+                                                        action="{{ route('admin.brn.approve', $submission->id) }}"
+                                                        method="POST" class="d-inline m-0">
                                                         @csrf
-                                                        <button
+                                                        <button type="submit"
                                                             class="btn btn-sm btn-success dark:bg-green-600 dark:border-green-600 dark:hover:bg-green-700 dark-transition"
                                                             title="Approve Application">Approve</button>
                                                     </form>
+
                                                     <!-- Decline Button -->
                                                     <form action="{{ route('admin.brn.decline', $submission->id) }}"
-                                                        method="POST" class="d-inline">
+                                                        method="POST" class="d-inline m-0">
                                                         @csrf
-                                                        <button
+                                                        <button type="submit"
                                                             class="btn btn-sm btn-warning dark:bg-yellow-600 dark:border-yellow-600 dark:hover:bg-yellow-700 dark-transition"
                                                             title="Decline Application">Decline</button>
                                                     </form>

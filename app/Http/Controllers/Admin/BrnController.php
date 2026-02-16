@@ -17,15 +17,22 @@ class BrnController extends Controller
         return view('admin.brn.index', compact('submissions'));
     }
 
-    public function approve($id)
+    public function approve(Request $request, $id)
     {
+        $request->validate([
+            'tier' => 'required|in:silver,gold,platinum',
+        ]);
+
         $submission = BrnSubmission::findOrFail($id);
-        $submission->update(['status' => 'approved']);
+        $submission->update([
+            'status' => 'approved',
+            'tier' => $request->tier,
+        ]);
 
         Mail::to($submission->email)->send(new BrnApproved($submission));
 
         // return back()->with('success', 'Approved and email sent.');
-        return redirect()->route('admin.brn.index')->with('success', 'Approved and email sent.');
+        return redirect()->route('admin.brn.index')->with('success', 'Approved as ' . ucfirst($request->tier) . ' member and email sent.');
     }
 
     public function decline($id)
