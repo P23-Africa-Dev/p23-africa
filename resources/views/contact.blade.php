@@ -1971,16 +1971,16 @@
                                 </div>
 
                                 <!-- <div class="form-group2 field">
-                                                                        <div class="contact-info-form__group name-field">
-                                                                                                    <label class="floating-label">Phone Number</label>
-                                                                                                    <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
-                                                                                                        placeholder="+1234567890" value="{{ old('phone') }}" />
-                                                                                                    @error('phone')
+                                                                            <div class="contact-info-form__group name-field">
+                                                                                                        <label class="floating-label">Phone Number</label>
+                                                                                                        <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
+                                                                                                            placeholder="+1234567890" value="{{ old('phone') }}" />
+                                                                                                        @error('phone')
         <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
-                                                                                                                                                                                {{ $message }}</div>
+                                                                                                                                                                                        {{ $message }}</div>
     @enderror
-                                                                                                </div>
-                                                                                                </div> -->
+                                                                                                    </div>
+                                                                                                    </div> -->
 
 
 
@@ -2067,7 +2067,7 @@
                                     @error('budget_range')
                                         <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
                                             {{ $message }}
-                                        </div>  
+                                        </div>
                                     @enderror
                                 </div>
 
@@ -2178,6 +2178,195 @@
             let isSubmitting = false;
             let submissionComplete = false;
 
+            // reCAPTCHA state management
+            let recaptchaReady = false;
+            let recaptchaToken = null;
+            let recaptchaTokenTimestamp = null;
+            const RECAPTCHA_TOKEN_LIFETIME = 90000; // 90 seconds (tokens expire after ~2 minutes)
+            const RECAPTCHA_SITE_KEY = '6LeSUwwsAAAAALMaU35MsAv8ffsAxFRAbE6xz1Ur';
+
+            // Retry configuration
+            const MAX_RETRIES = 3;
+            const RETRY_DELAY = 1000; // 1 second
+
+            // Initialize reCAPTCHA readiness check with error boundary
+            function initRecaptcha() {
+                try {
+                    if (typeof grecaptcha !== 'undefined' && grecaptcha.ready) {
+                        grecaptcha.ready(function() {
+                            recaptchaReady = true;
+                            console.log('reCAPTCHA initialized successfully');
+                            // Pre-fetch a token
+                            refreshRecaptchaToken();
+                        });
+                    } else {
+                        console.warn('reCAPTCHA not loaded yet, retrying...');
+                        setTimeout(initRecaptcha, 500);
+                    }
+                } catch (error) {
+                    console.error('reCAPTCHA initialization error:', error);
+                    recaptchaReady = false;
+                }
+            }
+
+            // Refresh reCAPTCHA token with error boundary
+            async function refreshRecaptchaToken() {
+                try {
+                    if (!recaptchaReady) {
+                        console.warn('reCAPTCHA not ready, cannot refresh token');
+                        return null;
+                    }
+
+                    const token = await new Promise((resolve, reject) => {
+                        const timeout = setTimeout(() => {
+                            reject(new Error('reCAPTCHA token request timeout'));
+                        }, 10000); // 10 second timeout
+
+                        grecaptcha.execute(RECAPTCHA_SITE_KEY, {
+                                action: 'submit'
+                            })
+                            .then(token => {
+                                clearTimeout(timeout);
+                                resolve(token);
+                            })
+                            .catch(error => {
+                                clearTimeout(timeout);
+                                reject(error);
+                            });
+                    });
+
+                    recaptchaToken = token;
+                    recaptchaTokenTimestamp = Date.now();
+                    document.getElementById('recaptchaToken').value = token;
+                    console.log('reCAPTCHA token refreshed');
+                    return token;
+                } catch (error) {
+                    console.error('Failed to refresh reCAPTCHA token:', error);
+                    recaptchaToken = null;
+                    recaptchaTokenTimestamp = null;
+                    return null;
+                }
+            }
+
+            // Check if token needs refresh
+            function isTokenExpired() {
+                if (!recaptchaToken || !recaptchaTokenTimestamp) {
+                    return true;
+                }
+                return (Date.now() - recaptchaTokenTimestamp) > RECAPTCHA_TOKEN_LIFETIME;
+            }
+
+            // Auto-refresh token periodically when form is in focus
+            let tokenRefreshInterval = null;
+
+            function startTokenRefresh() {
+                if (tokenRefreshInterval) return;
+
+                tokenRefreshInterval = setInterval(() => {
+                    if (isTokenExpired() && !isSubmitting) {
+                        console.log('Token expired, refreshing...');
+                        refreshRecaptchaToken();
+                    }
+                }, 60000); // Check every 60 seconds
+            }
+
+            function stopTokenRefresh() {
+                if (tokenRefreshInterval) {
+                    clearInterval(tokenRefreshInterval);
+                    tokenRefreshInterval = null;
+                }
+            }
+
+            // Start token refresh when user interacts with form
+            form.addEventListener('focusin', startTokenRefresh);
+
+            // Initialize reCAPTCHA
+            initRecaptcha();
+
+            // Utility function for delay
+            const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+            // Retry wrapper for fetch requests
+            async function fetchWithRetry(url, options, retries = MAX_RETRIES) {
+                let lastError;
+
+                for (let attempt = 1; attempt <= retries; attempt++) {
+                    try {
+                        console.log(`Fetch attempt ${attempt}/${retries}`);
+                        const response = await fetch(url, options);
+
+                        // Don't retry on client errors (4xx) except for specific cases
+                        if (response.status >= 400 && response.status < 500) {
+                            if (response.status === 419) {
+                                // CSRF token expired - can't retry, need page refresh
+                                throw {
+                                    response,
+                                    retryable: false,
+                                    reason: 'csrf_expired'
+                                };
+                            }
+                            if (response.status === 429) {
+                                // Rate limited - wait longer before retry
+                                if (attempt < retries) {
+                                    console.log('Rate limited, waiting before retry...');
+                                    await delay(RETRY_DELAY * attempt * 2);
+                                    continue;
+                                }
+                            }
+                            // Other 4xx errors - don't retry
+                            return response;
+                        }
+
+                        // Don't retry on success (2xx)
+                        if (response.ok) {
+                            return response;
+                        }
+
+                        // Server error (5xx) - retry
+                        if (attempt < retries) {
+                            console.log(
+                                `Server error ${response.status}, retrying in ${RETRY_DELAY * attempt}ms...`
+                                );
+                            await delay(RETRY_DELAY * attempt);
+
+                            // Refresh reCAPTCHA token before retry
+                            if (isTokenExpired()) {
+                                await refreshRecaptchaToken();
+                                // Update form data with new token
+                                options.body.set('g-recaptcha-response', recaptchaToken);
+                            }
+                            continue;
+                        }
+
+                        return response;
+                    } catch (error) {
+                        lastError = error;
+
+                        // Check if this is a non-retryable error
+                        if (error.retryable === false) {
+                            throw error;
+                        }
+
+                        // Network error - retry
+                        if (attempt < retries) {
+                            console.log(`Network error, retrying in ${RETRY_DELAY * attempt}ms...`, error);
+                            await delay(RETRY_DELAY * attempt);
+
+                            // Refresh reCAPTCHA token before retry
+                            if (isTokenExpired()) {
+                                await refreshRecaptchaToken();
+                                if (options.body instanceof FormData) {
+                                    options.body.set('g-recaptcha-response', recaptchaToken);
+                                }
+                            }
+                            continue;
+                        }
+                    }
+                }
+
+                throw lastError || new Error('All retry attempts failed');
+            }
+
             // Initialize with old values if present
             const oldServices = hiddenInput.value;
             if (oldServices) {
@@ -2250,7 +2439,7 @@
             });
 
             // Form submission
-            form.addEventListener('submit', function(e) {
+            form.addEventListener('submit', async function(e) {
                 e.preventDefault();
 
                 // Prevent multiple submissions
@@ -2386,147 +2575,135 @@
                     window.notifyLiveFormCapture('validationPassed');
                 }
 
-                // Execute reCAPTCHA v3
-                grecaptcha.ready(function() {
-                    grecaptcha.execute('6LeSUwwsAAAAALMaU35MsAv8ffsAxFRAbE6xz1Ur', {
-                            action: 'submit'
-                        })
-                        .then(function(token) {
-                            document.getElementById('recaptchaToken').value = token;
+                try {
+                    // Check if reCAPTCHA is ready
+                    if (!recaptchaReady) {
+                        throw new Error('reCAPTCHA is not ready. Please wait a moment and try again.');
+                    }
 
-                            const formData = new FormData(form);
+                    // Refresh token if expired or not present
+                    if (isTokenExpired()) {
+                        console.log('Token expired or missing, refreshing before submit...');
+                        const newToken = await refreshRecaptchaToken();
+                        if (!newToken) {
+                            throw new Error(
+                                'Failed to get reCAPTCHA token. Please refresh the page and try again.'
+                                );
+                        }
+                    }
 
-                            fetch(form.action, {
-                                    method: 'POST',
-                                    body: formData,
-                                    headers: {
-                                        'X-Requested-With': 'XMLHttpRequest',
-                                        'Accept': 'application/json',
-                                        'X-CSRF-TOKEN': document.querySelector(
-                                            'meta[name="csrf-token"]').getAttribute(
-                                            'content')
-                                    }
-                                })
-                                .then(response => {
-                                    // Parse JSON first, then handle status
-                                    return response.json().then(data => {
-                                        console.log('Response Status:', response
-                                            .status);
-                                        console.log('Response Data:', data);
-                                        return {
-                                            status: response.status,
-                                            ok: response.ok,
-                                            data: data
-                                        };
+                    const formData = new FormData(form);
+
+                    // Ensure we have the latest token in form data
+                    formData.set('g-recaptcha-response', recaptchaToken);
+
+                    console.log('Submitting form with reCAPTCHA token...');
+
+                    const response = await fetchWithRetry(form.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                                .getAttribute('content')
+                        }
+                    });
+
+                    const data = await response.json();
+                    console.log('Response Status:', response.status);
+                    console.log('Response Data:', data);
+
+                    resetButtonState();
+
+                    if (response.ok && data.success) {
+                        submissionComplete = true;
+                        // Check if live form capture is handling this
+                        if (typeof window.notifyLiveFormCapture === 'function') {
+                            // Let live form capture handle everything
+                            window.notifyLiveFormCapture('submissionSuccess', data);
+                        } else {
+                            // No live capture, handle success normally
+                            showPopup('success', 'Message Sent!', data.message ||
+                                'Thank you for contacting us. We will get back to you soon!');
+                            resetForm();
+                        }
+                    } else if (response.status === 419) {
+                        // CSRF token mismatch - refresh page to get new token
+                        console.log('CSRF token expired, refreshing...');
+                        showPopup('error', 'Session Expired',
+                            'Your session has expired. The page will refresh automatically. Please try again.'
+                            );
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+                    } else if (response.status === 429) {
+                        // Too many requests
+                        showPopup('error', 'Please Wait',
+                            'Too many requests. Please wait a moment and try again.');
+                    } else if (response.status === 422) {
+                        // Validation errors
+                        console.log('Validation Errors:', data.errors);
+
+                        if (data.errors) {
+                            displayValidationErrors(data.errors);
+
+                            // Scroll to first error
+                            setTimeout(() => {
+                                const firstError = document.querySelector('.error');
+                                if (firstError) {
+                                    firstError.scrollIntoView({
+                                        behavior: 'smooth',
+                                        block: 'center'
                                     });
-                                })
-                                .then(result => {
-                                    resetButtonState();
+                                }
+                            }, 100);
+                        }
 
-                                    if (result.ok && result.data.success) {
-                                        submissionComplete = true;
-                                        // Check if live form capture is handling this
-                                        if (typeof window.notifyLiveFormCapture ===
-                                            'function') {
-                                            // Let live form capture handle everything
-                                            window.notifyLiveFormCapture(
-                                                'submissionSuccess', result.data);
-                                        } else {
-                                            // No live capture, handle success normally
-                                            showPopup('success', 'Message Sent!', result
-                                                .data
-                                                .message ||
-                                                'Thank you for contacting us. We will get back to you soon!'
-                                            );
+                        showPopup('error', 'Validation Error', data.message ||
+                            'Please check the form and correct the errors.');
+                    } else {
+                        // Other errors
+                        const errorMessage = data.message ||
+                            'There was an error sending your message. Please try again.';
 
-                                            resetForm();
-                                        }
-                                    } else if (result.status === 419) {
-                                        // CSRF token mismatch - refresh page to get new token
-                                        console.log('CSRF token expired, refreshing...');
-                                        showPopup('error', 'Session Expired',
-                                            'Your session has expired. The page will refresh automatically. Please try again.'
-                                        );
-                                        setTimeout(() => {
-                                            window.location.reload();
-                                        }, 2000);
-                                    } else if (result.status === 429) {
-                                        // Too many requests
-                                        showPopup('error', 'Please Wait',
-                                            'Too many requests. Please wait a moment and try again.'
-                                        );
-                                    } else if (result.status === 422) {
-                                        // Validation errors
-                                        console.log('Validation Errors:', result.data
-                                            .errors);
+                        // Notify live form capture of error
+                        if (typeof window.notifyLiveFormCapture === 'function') {
+                            window.notifyLiveFormCapture('submissionError', data);
+                        }
 
-                                        if (result.data.errors) {
-                                            displayValidationErrors(result.data.errors);
+                        showPopup('error', 'Error', errorMessage);
+                    }
+                } catch (error) {
+                    console.error('Submission Error:', error);
+                    resetButtonState();
 
-                                            // Scroll to first error
-                                            setTimeout(() => {
-                                                const firstError = document
-                                                    .querySelector('.error');
-                                                if (firstError) {
-                                                    firstError.scrollIntoView({
-                                                        behavior: 'smooth',
-                                                        block: 'center'
-                                                    });
-                                                }
-                                            }, 100);
-                                        }
+                    // Handle specific error types
+                    if (error.reason === 'csrf_expired') {
+                        showPopup('error', 'Session Expired',
+                            'Your session has expired. The page will refresh automatically. Please try again.'
+                            );
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+                        return;
+                    }
 
-                                        showPopup('error', 'Validation Error', result.data
-                                            .message ||
-                                            'Please check the form and correct the errors.'
-                                        );
-                                    } else {
-                                        // Other errors
-                                        const errorMessage = result.data.message ||
-                                            'There was an error sending your message. Please try again.';
-
-                                        // Notify live form capture of error
-                                        if (typeof window.notifyLiveFormCapture ===
-                                            'function') {
-                                            window.notifyLiveFormCapture('submissionError',
-                                                result.data);
-                                        }
-
-                                        showPopup('error', 'Error', errorMessage);
-                                    }
-                                })
-                                .catch(error => {
-                                    console.error('Fetch Error:', error);
-                                    resetButtonState();
-
-                                    // Notify live form capture of error
-                                    if (typeof window.notifyLiveFormCapture ===
-                                        'function') {
-                                        window.notifyLiveFormCapture('submissionError', {
-                                            message: 'Network error'
-                                        });
-                                    }
-
-                                    showPopup('error', 'Error',
-                                        'There was an error sending your message. Please try again.'
-                                    );
-                                });
-                        })
-                        .catch(function(error) {
-                            console.error('reCAPTCHA error:', error);
-                            resetButtonState();
-
-                            // Notify live form capture of error
-                            if (typeof window.notifyLiveFormCapture === 'function') {
-                                window.notifyLiveFormCapture('submissionError', {
-                                    message: 'reCAPTCHA error'
-                                });
-                            }
-
-                            showPopup('error', 'Error',
-                                'reCAPTCHA verification failed. Please try again.');
+                    // Notify live form capture of error
+                    if (typeof window.notifyLiveFormCapture === 'function') {
+                        window.notifyLiveFormCapture('submissionError', {
+                            message: error.message || 'Network error'
                         });
-                });
+                    }
+
+                    // Show user-friendly error message
+                    let errorMessage = 'There was an error sending your message. Please try again.';
+                    if (error.message && error.message.includes('reCAPTCHA')) {
+                        errorMessage = error.message;
+                    }
+
+                    showPopup('error', 'Error', errorMessage);
+                }
             });
 
             // Clear all errors

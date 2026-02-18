@@ -15,17 +15,117 @@ use Illuminate\Support\Facades\Validator;
 
 class ContactController extends Controller
 {
+    /**
+     * Unified validation rules for contact form submissions
+     * Used by both submitForm() and saveDraft() for consistency
+     */
+    private function getSubmissionValidationRules(): array
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'company_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:20',
+            'country_code' => 'required|string|max:10',
+            'services' => 'required|string',
+            'message' => 'required|string|max:2000',
+            'budget_range' => 'required|numeric|min:100|max:5000',
+            'g-recaptcha-response' => 'required|captcha',
+        ];
+    }
+
+    /**
+     * Unified validation messages for contact form
+     */
+    private function getValidationMessages(): array
+    {
+        return [
+            'name.required' => 'Name is required.',
+            'company_name.required' => 'Company name is required.',
+            'company_name.max' => 'Company name must not exceed 255 characters.',
+            'email.required' => 'Email address is required.',
+            'email.email' => 'Please enter a valid email address.',
+            'phone.required' => 'Phone number is required.',
+            'phone.max' => 'Phone number must not exceed 20 characters.',
+            'country_code.required' => 'Country code is required.',
+            'country_code.max' => 'Invalid country code.',
+            'services.required' => 'Please select at least one service.',
+            'message.required' => 'Message is required.',
+            'budget_range.required' => 'Please select your budget range.',
+            'budget_range.numeric' => 'Budget must be a valid number.',
+            'budget_range.min' => 'Budget must be at least $100.',
+            'budget_range.max' => 'Budget must not exceed $5000.',
+            'g-recaptcha-response.required' => 'Please complete the reCAPTCHA verification.',
+            'g-recaptcha-response.captcha' => 'reCAPTCHA verification failed. Please try again.',
+        ];
+    }
+
+    /**
+     * Check if cache driver is healthy and working
+     */
+    private function isCacheHealthy(): bool
+    {
+        try {
+            $testKey = 'cache_health_check_' . uniqid();
+            $testValue = 'test_' . time();
+
+            Cache::put($testKey, $testValue, 10);
+            $retrieved = Cache::get($testKey);
+            Cache::forget($testKey);
+
+            $isHealthy = $retrieved === $testValue;
+
+            if (!$isHealthy) {
+                Log::warning('Cache health check failed - retrieved value does not match', [
+                    'expected' => $testValue,
+                    'retrieved' => $retrieved
+                ]);
+            }
+
+            return $isHealthy;
+        } catch (\Exception $e) {
+            Log::error('Cache health check failed with exception', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            return false;
+        }
+    }
+
     public function submitForm(Request $request)
     {
+        $requestId = uniqid('contact_');
+
+        Log::info('Contact form submission started', [
+            'request_id' => $requestId,
+            'ip' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'has_session_id' => $request->has('session_id'),
+            'email' => $request->input('email'),
+            'timestamp' => now()->toIso8601String()
+        ]);
+
         try {
             // Check if this is from live capture (has session_id)
             $sessionId = $request->input('session_id');
             if ($sessionId) {
+                Log::info('Redirecting to saveDraft for live capture submission', [
+                    'request_id' => $requestId,
+                    'session_id' => $sessionId
+                ]);
                 // If live capture is enabled, let saveDraft handle everything
                 // This prevents duplicate submissions
                 $request->merge(['is_submission' => true]);
                 return $this->saveDraft($request);
             }
+
+            // Check cache health before relying on it for deduplication
+            $cacheHealthy = $this->isCacheHealthy();
+
+            Log::info('Cache health check completed', [
+                'request_id' => $requestId,
+                'cache_healthy' => $cacheHealthy
+            ]);
 
             // Generate a unique submission key for deduplication
             $submissionKey = 'contact_submission_' . md5(
@@ -34,25 +134,39 @@ class ContactController extends Controller
                     $request->ip()
             );
 
-            // Check if we're already processing this submission (prevents double-click)
-            if (Cache::has($submissionKey)) {
-                Log::info('Duplicate submission prevented by cache lock', [
-                    'email' => $request->input('email'),
-                    'ip' => $request->ip()
-                ]);
-
-                if ($request->expectsJson()) {
-                    return response()->json([
-                        'success' => true,
-                        'message' => 'Your message has already been sent successfully! We will get back to you soon.'
+            // Only use cache-based deduplication if cache is healthy
+            if ($cacheHealthy) {
+                // Check if we're already processing this submission (prevents double-click)
+                if (Cache::has($submissionKey)) {
+                    Log::info('Duplicate submission prevented by cache lock', [
+                        'request_id' => $requestId,
+                        'email' => $request->input('email'),
+                        'ip' => $request->ip()
                     ]);
+
+                    if ($request->expectsJson()) {
+                        return response()->json([
+                            'success' => true,
+                            'message' => 'Your message has already been sent successfully! We will get back to you soon.'
+                        ]);
+                    }
+
+                    return redirect()->back()->with('success', 'Your message has already been sent successfully! We will get back to you soon.');
                 }
 
-                return redirect()->back()->with('success', 'Your message has already been sent successfully! We will get back to you soon.');
-            }
+                // Set a lock to prevent duplicate processing (expires in 60 seconds)
+                Cache::put($submissionKey, true, 60);
 
-            // Set a lock to prevent duplicate processing (expires in 60 seconds)
-            Cache::put($submissionKey, true, 60);
+                Log::info('Cache lock set for submission', [
+                    'request_id' => $requestId,
+                    'submission_key' => $submissionKey
+                ]);
+            } else {
+                Log::warning('Cache unhealthy - proceeding without cache-based deduplication', [
+                    'request_id' => $requestId,
+                    'email' => $request->input('email')
+                ]);
+            }
 
             // Check for duplicate submission in database
             $duplicateCheck = ContactSubmission::where('email', $request->input('email'))
@@ -63,12 +177,15 @@ class ContactController extends Controller
 
             if ($duplicateCheck) {
                 Log::warning('Duplicate submission attempt detected in DB', [
+                    'request_id' => $requestId,
                     'email' => $request->input('email'),
                     'ip' => $request->ip(),
                     'existing_id' => $duplicateCheck->id
                 ]);
 
-                Cache::forget($submissionKey);
+                if ($cacheHealthy) {
+                    Cache::forget($submissionKey);
+                }
 
                 if ($request->expectsJson()) {
                     return response()->json([
@@ -80,35 +197,20 @@ class ContactController extends Controller
                 return redirect()->back()->with('success', 'Your message has already been sent successfully! We will get back to you soon.');
             }
 
-            // Validate the request for regular submission
-            $validated = $request->validate([
-                'name' => 'required|string|max:255',
-                'company_name' => 'required|string|max:255',
-                'email' => 'required|email|max:255',
-                'phone' => 'required|string|max:20',
-                'country_code' => 'required|string|max:10',
-                'services' => 'required|string',
-                'message' => 'required|string|max:2000',
-                'budget_range' => 'required|numeric|min:100|max:5000',
-                'g-recaptcha-response' => 'required|captcha', // reCAPTCHA validation
-            ], [
-                'name.required' => 'Name is required.',
-                'company_name.required' => 'Company name is required.',
-                'company_name.max' => 'Company name must not exceed 255 characters.',
-                'email.required' => 'Email address is required.',
-                'email.email' => 'Please enter a valid email address.',
-                'phone.required' => 'Phone number is required.',
-                'phone.max' => 'Phone number must not exceed 20 characters.',
-                'country_code.required' => 'Country code is required.',
-                'country_code.max' => 'Invalid country code.',
-                'services.required' => 'Please select at least one service.',
-                'message.required' => 'Message is required.',
-                'budget_range.required' => 'Please select your budget range.',
-                'budget_range.numeric' => 'Budget must be a valid number.',
-                'budget_range.min' => 'Budget must be at least $100.',
-                'budget_range.max' => 'Budget must not exceed $5000.',
-                'g-recaptcha-response.required' => 'Please complete the reCAPTCHA verification.',
-                'g-recaptcha-response.captcha' => 'reCAPTCHA verification failed. Please try again.',
+            Log::info('Starting validation', [
+                'request_id' => $requestId,
+                'fields_present' => array_keys($request->all())
+            ]);
+
+            // Validate the request using unified validation rules
+            $validated = $request->validate(
+                $this->getSubmissionValidationRules(),
+                $this->getValidationMessages()
+            );
+
+            Log::info('Validation passed', [
+                'request_id' => $requestId,
+                'email' => $validated['email']
             ]);
 
             // Parse services from comma-separated string to array
@@ -197,33 +299,79 @@ class ContactController extends Controller
      */
     public function saveDraft(Request $request)
     {
+        $requestId = uniqid('draft_');
+
+        Log::info('Draft save/submission started', [
+            'request_id' => $requestId,
+            'session_id' => $request->input('session_id'),
+            'is_submission' => $request->input('is_submission'),
+            'ip' => $request->ip()
+        ]);
+
         try {
-            // Basic validation for draft saves - more lenient than final submission
-            $validator = Validator::make($request->all(), [
-                'session_id' => 'required|string|max:255',
-                'name' => 'nullable|string|max:255',
-                'company_name' => 'nullable|string|max:255',
-                'email' => 'nullable|email|max:255',
-                'phone' => 'nullable|string|max:20',
-                'country_code' => 'nullable|string|max:10',
-                'services' => 'nullable|string',
-                'message' => 'nullable|string|max:2000',
-                'budget_range' => 'nullable|numeric|min:0|max:10000',
-                'keystroke_count' => 'nullable|integer|min:0',
-                'field_interactions' => 'nullable|array',
-                'is_submission' => 'nullable|boolean'
-            ]);
+            $isSubmission = $request->input('is_submission', false);
 
-            if ($validator->fails()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Invalid data provided',
-                    'errors' => $validator->errors()
-                ], 422);
+            // For final submissions, use strict validation rules (same as submitForm)
+            if ($isSubmission) {
+                Log::info('Processing as final submission - using strict validation', [
+                    'request_id' => $requestId,
+                    'session_id' => $request->input('session_id')
+                ]);
+
+                // Get unified validation rules but make session_id required and skip recaptcha here
+                // (recaptcha was already validated in the frontend JavaScript)
+                $submissionRules = $this->getSubmissionValidationRules();
+                unset($submissionRules['g-recaptcha-response']); // Skip recaptcha for live capture submissions
+                $submissionRules['session_id'] = 'required|string|max:255';
+
+                $validator = Validator::make($request->all(), $submissionRules, $this->getValidationMessages());
+
+                if ($validator->fails()) {
+                    Log::warning('Submission validation failed', [
+                        'request_id' => $requestId,
+                        'errors' => $validator->errors()->toArray()
+                    ]);
+
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Please check your input and try again.',
+                        'errors' => $validator->errors()
+                    ], 422);
+                }
+
+                $data = $validator->validated();
+            } else {
+                // Basic validation for draft saves - more lenient than final submission
+                $validator = Validator::make($request->all(), [
+                    'session_id' => 'required|string|max:255',
+                    'name' => 'nullable|string|max:255',
+                    'company_name' => 'nullable|string|max:255',
+                    'email' => 'nullable|email|max:255',
+                    'phone' => 'nullable|string|max:20',
+                    'country_code' => 'nullable|string|max:10',
+                    'services' => 'nullable|string',
+                    'message' => 'nullable|string|max:2000',
+                    'budget_range' => 'nullable|numeric|min:0|max:10000',
+                    'keystroke_count' => 'nullable|integer|min:0',
+                    'field_interactions' => 'nullable|array',
+                    'is_submission' => 'nullable|boolean'
+                ]);
+
+                if ($validator->fails()) {
+                    Log::warning('Draft validation failed', [
+                        'request_id' => $requestId,
+                        'errors' => $validator->errors()->toArray()
+                    ]);
+
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Invalid data provided',
+                        'errors' => $validator->errors()
+                    ], 422);
+                }
+
+                $data = $validator->validated();
             }
-
-            $data = $validator->validated();
-            $isSubmission = $data['is_submission'] ?? false;
 
             // Require at least name OR email before saving draft (avoid empty rows)
             $hasName = !empty($data['name']) && trim($data['name']) !== '';
@@ -231,7 +379,8 @@ class ContactController extends Controller
 
             if (!$isSubmission && !$hasName && !$hasEmail) {
                 // Don't save draft without at least name or email
-                Log::info('Skipping draft save - no name or email provided', [
+                Log::debug('Skipping draft save - no name or email provided', [
+                    'request_id' => $requestId,
                     'session_id' => $data['session_id']
                 ]);
 
@@ -242,13 +391,17 @@ class ContactController extends Controller
                 ]);
             }
 
+            // Check cache health for lock operations
+            $cacheHealthy = $this->isCacheHealthy();
+
             // For submissions, use a lock to prevent race conditions
-            if ($isSubmission) {
+            if ($isSubmission && $cacheHealthy) {
                 $submissionLockKey = 'submission_lock_' . $data['session_id'];
 
                 // Check if submission is already in progress
                 if (Cache::has($submissionLockKey)) {
                     Log::info('Submission already in progress for session', [
+                        'request_id' => $requestId,
                         'session_id' => $data['session_id']
                     ]);
 
@@ -269,6 +422,16 @@ class ContactController extends Controller
 
                 // Set lock for 60 seconds
                 Cache::put($submissionLockKey, true, 60);
+
+                Log::info('Submission lock acquired', [
+                    'request_id' => $requestId,
+                    'session_id' => $data['session_id']
+                ]);
+            } elseif ($isSubmission && !$cacheHealthy) {
+                Log::warning('Cache unhealthy during submission - proceeding without cache lock', [
+                    'request_id' => $requestId,
+                    'session_id' => $data['session_id']
+                ]);
             }
 
             // Parse services if provided
