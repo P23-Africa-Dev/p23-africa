@@ -296,8 +296,6 @@ Route::get('/email-test', function () {
 
 // Contact form - increased throttle to 15 requests per minute for better UX with retries
 Route::post('/contact', [ContactController::class, 'submitForm'])->middleware('throttle:15,1')->name('contact.submit');
-// Save draft - increased throttle to 60 requests per minute for live form capture
-Route::post('/contact/save-draft', [ContactController::class, 'saveDraft'])->middleware('throttle:60,1')->name('contact.save-draft');
 
 // Advanced tracking endpoint
 Route::post('/track-advanced', [\App\Http\Controllers\AdvancedTrackingController::class, 'track'])->name('track.advanced');

@@ -121,57 +121,12 @@
                     <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0 bg-warning bg-opacity-10 rounded p-3">
-                                    <i class="fa fa-edit text-warning fa-2x"></i>
-                                </div>
-                                <div class="ms-3">
-                                    <h6 class="text-muted dark:text-gray-400 mb-1">Drafts</h6>
-                                    <h3 class="mb-0 text-dark dark:text-gray-100">{{ $stats['total_drafts'] }}</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 mb-3">
-                    <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0 bg-info bg-opacity-10 rounded p-3">
-                                    <i class="fa fa-clock text-info fa-2x"></i>
-                                </div>
-                                <div class="ms-3">
-                                    <h6 class="text-muted dark:text-gray-400 mb-1">Active (24h)</h6>
-                                    <h3 class="mb-0 text-dark dark:text-gray-100">{{ $stats['active_drafts'] }}</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 mb-3">
-                    <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0 bg-secondary bg-opacity-10 rounded p-3">
                                     <i class="fa fa-calendar-day text-secondary fa-2x"></i>
                                 </div>
                                 <div class="ms-3">
                                     <h6 class="text-muted dark:text-gray-400 mb-1">Today</h6>
                                     <h3 class="mb-0 text-dark dark:text-gray-100">{{ $stats['today_contacts'] }}</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 mb-3">
-                    <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0 bg-danger bg-opacity-10 rounded p-3">
-                                    <i class="fa fa-pencil-alt text-danger fa-2x"></i>
-                                </div>
-                                <div class="ms-3">
-                                    <h6 class="text-muted dark:text-gray-400 mb-1">Drafts Today</h6>
-                                    <h3 class="mb-0 text-dark dark:text-gray-100">{{ $stats['today_drafts'] }}</h3>
                                 </div>
                             </div>
                         </div>
@@ -194,8 +149,6 @@
                                 <option value="">All Status</option>
                                 <option value="submitted" {{ request('status') === 'submitted' ? 'selected' : '' }}>
                                     Submitted</option>
-                                <option value="draft" {{ request('status') === 'draft' ? 'selected' : '' }}>Draft
-                                </option>
                             </select>
                         </div>
                         <div class="col-md-2">
@@ -269,28 +222,11 @@
                                                 </td>
                                             @endif
                                             <td class="dark:text-gray-100">
-                                                @if ($contact->isDraft())
-                                                    <span class="badge bg-warning text-dark d-flex align-items-center"
-                                                        style="width: fit-content;">
-                                                        <i class="fa fa-edit me-1"></i>
-                                                        Draft
-                                                        @if ($contact->getCompletionPercentage() > 0)
-                                                            <small
-                                                                class="ms-1">({{ $contact->getCompletionPercentage() }}%)</small>
-                                                        @endif
-                                                    </span>
-                                                    @if ($contact->keystroke_count > 0)
-                                                        <small
-                                                            class="text-muted d-block mt-1">{{ $contact->keystroke_count }}
-                                                            keystrokes</small>
-                                                    @endif
-                                                @else
-                                                    <span class="badge bg-success d-flex align-items-center"
-                                                        style="width: fit-content;">
-                                                        <i class="fa fa-check-circle me-1"></i>
-                                                        Submitted
-                                                    </span>
-                                                @endif
+                                                <span class="badge bg-success d-flex align-items-center"
+                                                    style="width: fit-content;">
+                                                    <i class="fa fa-check-circle me-1"></i>
+                                                    Submitted
+                                                </span>
                                             </td>
                                             <td class="dark:text-gray-100">
                                                 <div class="fw-medium">{{ $contact->name ?: 'Not provided' }}</div>

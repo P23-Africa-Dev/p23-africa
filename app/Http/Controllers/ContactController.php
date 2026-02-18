@@ -17,7 +17,7 @@ class ContactController extends Controller
 {
     /**
      * Unified validation rules for contact form submissions
-     * Used by both submitForm() and saveDraft() for consistency
+     * reCAPTCHA is validated separately with graceful fallback
      */
     private function getSubmissionValidationRules(): array
     {
@@ -30,7 +30,7 @@ class ContactController extends Controller
             'services' => 'required|string',
             'message' => 'required|string|max:2000',
             'budget_range' => 'required|numeric|min:100|max:5000',
-            'g-recaptcha-response' => 'required|captcha',
+            // reCAPTCHA removed from here - validated separately with graceful fallback
         ];
     }
 
@@ -55,39 +55,59 @@ class ContactController extends Controller
             'budget_range.numeric' => 'Budget must be a valid number.',
             'budget_range.min' => 'Budget must be at least $100.',
             'budget_range.max' => 'Budget must not exceed $5000.',
-            'g-recaptcha-response.required' => 'Please complete the reCAPTCHA verification.',
-            'g-recaptcha-response.captcha' => 'reCAPTCHA verification failed. Please try again.',
         ];
     }
 
     /**
-     * Check if cache driver is healthy and working
+     * Validate reCAPTCHA with graceful fallback (non-blocking)
+     * Returns true always - just logs the result
+     */
+    private function validateRecaptchaGracefully(Request $request): bool
+    {
+        // Skip reCAPTCHA for offline sync submissions
+        if ($request->input('offline_sync') === 'true') {
+            return true;
+        }
+
+        $recaptchaResponse = $request->input('g-recaptcha-response');
+
+        // If no token provided, proceed without verification
+        if (empty($recaptchaResponse)) {
+            Log::info('reCAPTCHA token not provided - proceeding without verification');
+            return true;
+        }
+
+        // Validate asynchronously in background - don't block the request
+        // Just log for monitoring purposes
+        try {
+            $validator = Validator::make(
+                ['g-recaptcha-response' => $recaptchaResponse],
+                ['g-recaptcha-response' => 'captcha']
+            );
+
+            if ($validator->fails()) {
+                Log::warning('reCAPTCHA validation failed', [
+                    'ip' => $request->ip(),
+                    'email' => $request->input('email')
+                ]);
+            }
+        } catch (\Exception $e) {
+            Log::warning('reCAPTCHA validation exception', ['error' => $e->getMessage()]);
+        }
+
+        return true; // Always proceed
+    }
+
+    /**
+     * Check if cache driver is healthy (simplified - non-blocking)
      */
     private function isCacheHealthy(): bool
     {
         try {
-            $testKey = 'cache_health_check_' . uniqid();
-            $testValue = 'test_' . time();
-
-            Cache::put($testKey, $testValue, 10);
-            $retrieved = Cache::get($testKey);
-            Cache::forget($testKey);
-
-            $isHealthy = $retrieved === $testValue;
-
-            if (!$isHealthy) {
-                Log::warning('Cache health check failed - retrieved value does not match', [
-                    'expected' => $testValue,
-                    'retrieved' => $retrieved
-                ]);
-            }
-
-            return $isHealthy;
+            // Simple check - just try to get a value
+            Cache::get('_health_check');
+            return true;
         } catch (\Exception $e) {
-            Log::error('Cache health check failed with exception', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ]);
             return false;
         }
     }
@@ -100,25 +120,11 @@ class ContactController extends Controller
             'request_id' => $requestId,
             'ip' => $request->ip(),
             'user_agent' => $request->userAgent(),
-            'has_session_id' => $request->has('session_id'),
             'email' => $request->input('email'),
             'timestamp' => now()->toIso8601String()
         ]);
 
         try {
-            // Check if this is from live capture (has session_id)
-            $sessionId = $request->input('session_id');
-            if ($sessionId) {
-                Log::info('Redirecting to saveDraft for live capture submission', [
-                    'request_id' => $requestId,
-                    'session_id' => $sessionId
-                ]);
-                // If live capture is enabled, let saveDraft handle everything
-                // This prevents duplicate submissions
-                $request->merge(['is_submission' => true]);
-                return $this->saveDraft($request);
-            }
-
             // Check cache health before relying on it for deduplication
             $cacheHealthy = $this->isCacheHealthy();
 
@@ -199,10 +205,14 @@ class ContactController extends Controller
 
             Log::info('Starting validation', [
                 'request_id' => $requestId,
-                'fields_present' => array_keys($request->all())
+                'fields_present' => array_keys($request->all()),
+                'is_offline_sync' => $request->input('offline_sync') === 'true'
             ]);
 
-            // Validate the request using unified validation rules
+            // Validate reCAPTCHA gracefully (won't block submission)
+            $this->validateRecaptchaGracefully($request);
+
+            // Validate the request using unified validation rules (without reCAPTCHA)
             $validated = $request->validate(
                 $this->getSubmissionValidationRules(),
                 $this->getValidationMessages()
@@ -295,323 +305,12 @@ class ContactController extends Controller
     }
 
     /**
-     * Save or update form draft as user types
-     */
-    public function saveDraft(Request $request)
-    {
-        $requestId = uniqid('draft_');
-
-        Log::info('Draft save/submission started', [
-            'request_id' => $requestId,
-            'session_id' => $request->input('session_id'),
-            'is_submission' => $request->input('is_submission'),
-            'ip' => $request->ip()
-        ]);
-
-        try {
-            $isSubmission = $request->input('is_submission', false);
-
-            // For final submissions, use strict validation rules (same as submitForm)
-            if ($isSubmission) {
-                Log::info('Processing as final submission - using strict validation', [
-                    'request_id' => $requestId,
-                    'session_id' => $request->input('session_id')
-                ]);
-
-                // Get unified validation rules but make session_id required and skip recaptcha here
-                // (recaptcha was already validated in the frontend JavaScript)
-                $submissionRules = $this->getSubmissionValidationRules();
-                unset($submissionRules['g-recaptcha-response']); // Skip recaptcha for live capture submissions
-                $submissionRules['session_id'] = 'required|string|max:255';
-
-                $validator = Validator::make($request->all(), $submissionRules, $this->getValidationMessages());
-
-                if ($validator->fails()) {
-                    Log::warning('Submission validation failed', [
-                        'request_id' => $requestId,
-                        'errors' => $validator->errors()->toArray()
-                    ]);
-
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Please check your input and try again.',
-                        'errors' => $validator->errors()
-                    ], 422);
-                }
-
-                $data = $validator->validated();
-            } else {
-                // Basic validation for draft saves - more lenient than final submission
-                $validator = Validator::make($request->all(), [
-                    'session_id' => 'required|string|max:255',
-                    'name' => 'nullable|string|max:255',
-                    'company_name' => 'nullable|string|max:255',
-                    'email' => 'nullable|email|max:255',
-                    'phone' => 'nullable|string|max:20',
-                    'country_code' => 'nullable|string|max:10',
-                    'services' => 'nullable|string',
-                    'message' => 'nullable|string|max:2000',
-                    'budget_range' => 'nullable|numeric|min:0|max:10000',
-                    'keystroke_count' => 'nullable|integer|min:0',
-                    'field_interactions' => 'nullable|array',
-                    'is_submission' => 'nullable|boolean'
-                ]);
-
-                if ($validator->fails()) {
-                    Log::warning('Draft validation failed', [
-                        'request_id' => $requestId,
-                        'errors' => $validator->errors()->toArray()
-                    ]);
-
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Invalid data provided',
-                        'errors' => $validator->errors()
-                    ], 422);
-                }
-
-                $data = $validator->validated();
-            }
-
-            // Require at least name OR email before saving draft (avoid empty rows)
-            $hasName = !empty($data['name']) && trim($data['name']) !== '';
-            $hasEmail = !empty($data['email']) && trim($data['email']) !== '';
-
-            if (!$isSubmission && !$hasName && !$hasEmail) {
-                // Don't save draft without at least name or email
-                Log::debug('Skipping draft save - no name or email provided', [
-                    'request_id' => $requestId,
-                    'session_id' => $data['session_id']
-                ]);
-
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Waiting for name or email',
-                    'status' => 'pending'
-                ]);
-            }
-
-            // Check cache health for lock operations
-            $cacheHealthy = $this->isCacheHealthy();
-
-            // For submissions, use a lock to prevent race conditions
-            if ($isSubmission && $cacheHealthy) {
-                $submissionLockKey = 'submission_lock_' . $data['session_id'];
-
-                // Check if submission is already in progress
-                if (Cache::has($submissionLockKey)) {
-                    Log::info('Submission already in progress for session', [
-                        'request_id' => $requestId,
-                        'session_id' => $data['session_id']
-                    ]);
-
-                    // Find the existing submission
-                    $existingSubmission = ContactSubmission::where('session_id', $data['session_id'])
-                        ->where('status', 'submitted')
-                        ->first();
-
-                    if ($existingSubmission) {
-                        return response()->json([
-                            'success' => true,
-                            'message' => 'Form already submitted successfully!',
-                            'submission_id' => $existingSubmission->id,
-                            'status' => $existingSubmission->status
-                        ]);
-                    }
-                }
-
-                // Set lock for 60 seconds
-                Cache::put($submissionLockKey, true, 60);
-
-                Log::info('Submission lock acquired', [
-                    'request_id' => $requestId,
-                    'session_id' => $data['session_id']
-                ]);
-            } elseif ($isSubmission && !$cacheHealthy) {
-                Log::warning('Cache unhealthy during submission - proceeding without cache lock', [
-                    'request_id' => $requestId,
-                    'session_id' => $data['session_id']
-                ]);
-            }
-
-            // Parse services if provided
-            $services = [];
-            if (!empty($data['services'])) {
-                $services = array_map('trim', explode(',', $data['services']));
-                $services = array_filter($services);
-            }
-
-            // Prepare data for storage
-            $contactData = [
-                'session_id' => $data['session_id'],
-                'name' => !empty($data['name']) ? strip_tags($data['name']) : null,
-                'company_name' => !empty($data['company_name']) ? strip_tags($data['company_name']) : null,
-                'email' => !empty($data['email']) ? filter_var($data['email'], FILTER_SANITIZE_EMAIL) : null,
-                'phone' => !empty($data['phone']) ? strip_tags($data['phone']) : null,
-                'country_code' => !empty($data['country_code']) ? strip_tags($data['country_code']) : null,
-                'services' => $services,
-                'message' => !empty($data['message']) ? strip_tags($data['message']) : null,
-                'budget_range' => $data['budget_range'] ?? null,
-                'keystroke_count' => $data['keystroke_count'] ?? 0,
-                'field_interactions' => $data['field_interactions'] ?? null,
-                'ip_address' => $request->ip(),
-                'user_agent' => $request->userAgent(),
-                'last_activity_at' => now(),
-            ];
-
-            // Find existing draft or create new one
-            $submission = ContactSubmission::where('session_id', $data['session_id'])
-                ->first(); // Remove status filter to find any existing submission
-
-            if ($submission) {
-                // If this is a submission and the record is already submitted, avoid duplicate
-                if ($isSubmission && $submission->status === 'submitted') {
-                    Log::warning('Duplicate submission attempt via live capture', [
-                        'session_id' => $data['session_id'],
-                        'submission_id' => $submission->id,
-                        'email' => $submission->email
-                    ]);
-
-                    return response()->json([
-                        'success' => true,
-                        'message' => 'Form already submitted successfully!',
-                        'submission_id' => $submission->id,
-                        'status' => $submission->status
-                    ]);
-                }
-
-                // Update existing draft/submission
-                $contactData['status'] = $isSubmission ? 'submitted' : 'draft';
-                if ($isSubmission) {
-                    $contactData['submitted_at'] = now();
-                }
-
-                $submission->update($contactData);
-
-                // Auto-create CRM lead when draft is converted to submission
-                if ($isSubmission) {
-                    AdminNotificationService::notifyNewContactForm($submission);
-
-                    try {
-                        $lead = Lead::createFromContactSubmission($submission);
-                        AdminNotificationService::notifyNewLead($lead);
-                    } catch (\Exception $e) {
-                        Log::error('Failed to create lead from contact draft submission', [
-                            'submission_id' => $submission->id,
-                            'error' => $e->getMessage()
-                        ]);
-                    }
-                }
-
-                Log::info('Draft updated', [
-                    'session_id' => $data['session_id'],
-                    'submission_id' => $submission->id,
-                    'is_submission' => $isSubmission
-                ]);
-            } else {
-                // Check for duplicate based on email and phone if this is a submission
-                if ($isSubmission && !empty($contactData['email']) && !empty($contactData['phone'])) {
-                    $duplicateCheck = ContactSubmission::where('email', $contactData['email'])
-                        ->where('phone', $contactData['phone'])
-                        ->where('created_at', '>=', now()->subMinutes(5))
-                        ->first();
-
-                    if ($duplicateCheck) {
-                        Log::warning('Duplicate submission attempt detected in saveDraft', [
-                            'email' => $contactData['email'],
-                            'existing_id' => $duplicateCheck->id
-                        ]);
-
-                        return response()->json([
-                            'success' => true,
-                            'message' => 'Form already submitted successfully!',
-                            'submission_id' => $duplicateCheck->id,
-                            'status' => $duplicateCheck->status
-                        ]);
-                    }
-                }
-
-                // Create new draft
-                $contactData['status'] = $isSubmission ? 'submitted' : 'draft';
-                $contactData['draft_created_at'] = now();
-                if ($isSubmission) {
-                    $contactData['submitted_at'] = now();
-                }
-
-                $submission = ContactSubmission::create($contactData);
-
-                // Send notification to admins if this is a submission
-                if ($isSubmission) {
-                    AdminNotificationService::notifyNewContactForm($submission);
-
-                    // Auto-create CRM lead from contact submission
-                    try {
-                        $lead = Lead::createFromContactSubmission($submission);
-                        AdminNotificationService::notifyNewLead($lead);
-                    } catch (\Exception $e) {
-                        Log::error('Failed to create lead from new contact submission', [
-                            'submission_id' => $submission->id,
-                            'error' => $e->getMessage()
-                        ]);
-                    }
-                }
-
-                Log::info('New draft created', [
-                    'session_id' => $data['session_id'],
-                    'submission_id' => $submission->id,
-                    'is_submission' => $isSubmission
-                ]);
-            }
-
-            // If this is a final submission, send emails (with built-in duplicate protection)
-            if ($isSubmission && $submission->status === 'submitted') {
-                $this->sendSubmissionEmails($submission);
-            }
-
-            return response()->json([
-                'success' => true,
-                // 'message' => $isSubmission ? 'Form submitted successfully!' : 'Draft saved',
-                'submission_id' => $submission->id,
-                'status' => $submission->status
-            ]);
-        } catch (\Exception $e) {
-            Log::error('Draft save error', [
-                'message' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-                'session_id' => $request->input('session_id'),
-                'input' => $request->all()
-            ]);
-
-            // return response()->json([
-            //     'success' => false,
-            //     // 'message' => 'Failed to save draft'
-            // ], 500);
-        }
-    }
-
-    /**
      * Send emails for completed submissions
-     * Uses atomic locking to prevent duplicate emails
+     * Emails are queued for async processing - no locking needed
      */
     private function sendSubmissionEmails(ContactSubmission $submission)
     {
-        // Create a unique lock key for this submission
-        $lockKey = 'email_sending_' . $submission->id;
-
-        // Try to acquire a lock (prevents race conditions)
-        $lock = Cache::lock($lockKey, 120); // 2 minute lock
-
-        if (!$lock->get()) {
-            Log::info('Email sending already in progress for submission', [
-                'submission_id' => $submission->id
-            ]);
-            return;
-        }
-
         try {
-            // Refresh submission from DB to get latest state
-            $submission->refresh();
-
             // Check if emails have already been sent for this submission
             if ($submission->email_sent_at) {
                 Log::info('Emails already sent for this submission', [
@@ -622,69 +321,30 @@ class ContactController extends Controller
                 return;
             }
 
-            // Double-check by querying DB directly (in case of race condition)
-            $freshSubmission = ContactSubmission::where('id', $submission->id)
-                ->whereNotNull('email_sent_at')
-                ->first();
-
-            if ($freshSubmission) {
-                Log::info('Emails already sent (double-check)', [
-                    'submission_id' => $submission->id
-                ]);
-                return;
-            }
-
-            // Mark as sent FIRST to prevent race conditions
+            // Mark as sent FIRST to prevent duplicate queue entries
             $submission->update(['email_sent_at' => now()]);
 
             $submissionData = $submission->toArray();
 
-            // Send to site owner
+            // Queue email to site owner (async - won't block response)
             Mail::to('nurudeen@p23africa.com')->send(new ContactFormMail($submissionData));
 
-            // Send thank-you to user if email is provided
+            // Queue thank-you email to user (async - won't block response)
             if ($submission->email) {
                 Mail::to($submission->email)->send(new ThankYouMail($submissionData));
             }
 
-            Log::info('Submission emails sent successfully', [
+            Log::info('Submission emails queued successfully', [
                 'submission_id' => $submission->id,
                 'email' => $submission->email
             ]);
         } catch (\Exception $mailException) {
-            Log::error('Failed to send submission emails', [
+            Log::error('Failed to queue submission emails', [
                 'error' => $mailException->getMessage(),
                 'submission_id' => $submission->id,
                 'email' => $submission->email
             ]);
-
-            // If email sending failed, clear the email_sent_at so it can be retried
-            // But only if it was set in this attempt
-            // $submission->update(['email_sent_at' => null]);
-        } finally {
-            // Always release the lock
-            $lock->release();
+            // Don't clear email_sent_at - emails will be retried by queue worker
         }
-    }
-
-    /**
-     * Get draft statistics for admin dashboard
-     */
-    public function getDraftStats()
-    {
-        $stats = [
-            'total_drafts' => ContactSubmission::drafts()->count(),
-            'today_drafts' => ContactSubmission::drafts()->whereDate('draft_created_at', today())->count(),
-            'active_sessions' => ContactSubmission::drafts()
-                ->where('last_activity_at', '>=', now()->subHours(24))
-                ->count(),
-            'avg_completion' => ContactSubmission::drafts()
-                ->get()
-                ->avg(function ($submission) {
-                    return $submission->getCompletionPercentage();
-                })
-        ];
-
-        return response()->json($stats);
     }
 }

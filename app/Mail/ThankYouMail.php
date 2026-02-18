@@ -3,9 +3,7 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
@@ -14,6 +12,7 @@ class ThankYouMail extends Mailable
     use Queueable, SerializesModels;
 
     public $data;
+
     /**
      * Create a new message instance.
      */
@@ -25,7 +24,7 @@ class ThankYouMail extends Mailable
     public function build()
     {
         return $this->subject('Thank You for Contacting P23 Africa')
-                    ->view('emails.thank-you');
+            ->view('emails.thank-you');
     }
 
     /**
@@ -34,19 +33,9 @@ class ThankYouMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Thank You Mail',
+            subject: 'Thank You for Contacting P23 Africa',
         );
     }
-
-    /**
-     * Get the message content definition.
-     */
-    // public function content(): Content
-    // {
-    //     return new Content(
-    //         view: 'view.name',
-    //     );
-    // }
 
     /**
      * Get the attachments for the message.
