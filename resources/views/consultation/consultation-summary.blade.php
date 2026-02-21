@@ -15,7 +15,7 @@
     <meta property="og:image" content="{{ asset('img/mobile.png') }}">
     <meta property="og:type" content="website">
 
-    {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
 
@@ -534,7 +534,7 @@
                         <span class="bold">Consultation Summary</span>
                     </h1>
 
-                
+
                     <p>
                         Thank You <span id="userName">{{ $application->name }}</span>, We've Captured Your
                         Key Goals And Challenges.
@@ -544,7 +544,7 @@
                 <div class="overview">
                     <h3>Business Overview:</h3>
                     <p>
-                     
+
                         {{-- (<strong>{{ $application->company }}</strong>)  --}}
                         {{ $application->business_description }}
                         {{-- <br><br> --}}
@@ -625,6 +625,77 @@
         if (challengeCards.length === 3) {
             const lastCard = challengeCards[challengeCards.length - 1];
             lastCard.style.marginTop = "-1.5rem";
+        }
+
+        // Handle payment form submission with CSRF error handling
+        const paymentForm = document.querySelector('.payment-btn form');
+        if (paymentForm) {
+            paymentForm.addEventListener('submit', function(e) {
+                const submitBtn = paymentForm.querySelector('button[type="submit"]');
+
+                // Show loading state
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+                }
+
+                // Use fetch to check for 419 before actual submit
+                fetch(paymentForm.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                            ?.content || '',
+                        'Accept': 'text/html',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: new FormData(paymentForm)
+                }).then(response => {
+                    if (response.status === 419) {
+                        e.preventDefault();
+                        // CSRF expired - show refresh prompt
+                        if (typeof Swal !== 'undefined') {
+                            Swal.fire({
+                                title: 'Session Expired',
+                                text: 'Your session has expired for security reasons. The page will refresh to continue.',
+                                icon: 'warning',
+                                confirmButtonText: 'Refresh Page',
+                                confirmButtonColor: '#591044',
+                                allowOutsideClick: false,
+                                allowEscapeKey: false
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        } else {
+                            alert('Your session has expired. The page will refresh.');
+                            window.location.reload();
+                        }
+                        return;
+                    }
+
+                    // If response is OK, redirect to the response URL
+                    if (response.redirected) {
+                        window.location.href = response.url;
+                    } else if (response.ok) {
+                        // For non-redirect responses, let the original form submission happen
+                        return response.text().then(html => {
+                            document.open();
+                            document.write(html);
+                            document.close();
+                        });
+                    }
+                }).catch(error => {
+                    console.error('Form submission error:', error);
+                    // Reset button on error
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML =
+                            'Proceed to Payment <i class="fa-solid fa-arrow-right"></i>';
+                    }
+                });
+
+                // Prevent default form submission - we handle it via fetch
+                e.preventDefault();
+            });
         }
     });
 </script>

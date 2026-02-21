@@ -54,6 +54,79 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
     </script>
 
+    {{-- CSRF Token Expiry Handler --}}
+    <script>
+        (function() {
+            // Handle 419 errors on form submissions
+            document.addEventListener('DOMContentLoaded', function() {
+                // Intercept all form submissions
+                document.querySelectorAll('form').forEach(function(form) {
+                    form.addEventListener('submit', function(e) {
+                        const submitBtn = form.querySelector(
+                            'button[type="submit"], input[type="submit"]');
+
+                        // Store original button state
+                        if (submitBtn) {
+                            submitBtn.dataset.originalText = submitBtn.innerHTML;
+                            submitBtn.disabled = true;
+                            submitBtn.innerHTML =
+                                '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+                        }
+                    });
+                });
+
+                // Setup AJAX error handling for jQuery
+                if (typeof $ !== 'undefined') {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        error: function(xhr, status, error) {
+                            if (xhr.status === 419) {
+                                handleCsrfExpiry();
+                            }
+                        }
+                    });
+                }
+
+                // Setup fetch interceptor for 419 errors
+                const originalFetch = window.fetch;
+                window.fetch = function(...args) {
+                    return originalFetch.apply(this, args).then(response => {
+                        if (response.status === 419) {
+                            handleCsrfExpiry();
+                        }
+                        return response;
+                    });
+                };
+            });
+
+            // Function to handle CSRF expiry
+            function handleCsrfExpiry() {
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        title: 'Session Expired',
+                        text: 'Your session has expired for security reasons. The page will refresh to continue.',
+                        icon: 'warning',
+                        confirmButtonText: 'Refresh Page',
+                        confirmButtonColor: '#591044',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
+                    }).then((result) => {
+                        window.location.reload();
+                    });
+                } else {
+                    if (confirm('Your session has expired. Click OK to refresh the page and continue.')) {
+                        window.location.reload();
+                    }
+                }
+            }
+
+            // Expose globally for custom use
+            window.handleCsrfExpiry = handleCsrfExpiry;
+        })();
+    </script>
+
 </body>
 
 </html>

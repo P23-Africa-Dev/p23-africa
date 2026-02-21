@@ -1,15 +1,15 @@
 @foreach ($applications as $application)
-    <tr>
+    <tr data-id="{{ $application->id }}">
+        @if (auth()->user()->hasRole('admin'))
+            <td>
+                <input type="checkbox" class="form-check-input application-checkbox" value="{{ $application->id }}">
+            </td>
+        @endif
         <td>
             <div>
                 <div class="fw-medium text-dark dark:text-gray-100">
                     {{ $application->name ?? 'Anonymous' }}</div>
                 <small class="text-muted dark:text-gray-400">{{ $application->email ?? 'No email provided' }}</small>
-                @if ($application->session_id)
-                    <div><small class="badge badge-light">Session:
-                            {{ substr($application->session_id, 0, 8) }}...</small>
-                    </div>
-                @endif
             </div>
         </td>
         <td class="text-dark dark:text-gray-200">
@@ -17,14 +17,7 @@
         <td class="text-dark dark:text-gray-200">
             {{ $application->industry ?? 'N/A' }}</td>
         <td>
-            @if ($application->isDraft())
-                <span class="badge bg-secondary">
-                    <i class="fa fa-edit me-1"></i>Draft
-                </span>
-                @if ($application->hasRecentActivity())
-                    <small class="d-block text-success">Active</small>
-                @endif
-            @elseif ($application->scheduledSessions->count() > 0)
+            @if ($application->scheduledSessions->count() > 0)
                 <span class="badge bg-info">
                     <i class="fa fa-calendar-check me-1"></i>Scheduled
                 </span>
@@ -38,38 +31,22 @@
                 </span>
             @endif
         </td>
-        <td>
-            @if ($application->isDraft())
-                <div class="progress" style="height: 6px;">
-                    <div class="progress-bar" role="progressbar"
-                        style="width: {{ $application->getCompletionPercentage() }}%"
-                        aria-valuenow="{{ $application->getCompletionPercentage() }}" aria-valuemin="0"
-                        aria-valuemax="100"></div>
-                </div>
-                <small class="text-muted">{{ $application->getCompletionPercentage() }}% complete</small>
-                @if ($application->keystroke_count > 0)
-                    <div><small class="text-info">{{ $application->keystroke_count }} keystrokes</small></div>
-                @endif
-                @if ($application->last_activity_at)
-                    <div><small class="text-muted">Last activity:
-                            {{ $application->last_activity_at->diffForHumans() }}</small></div>
-                @endif
-            @else
-                <span class="text-muted">{{ $application->created_at->format('M d, Y H:i') }}</span>
-            @endif
+        <td class="text-dark dark:text-gray-200">
+            <div><strong>Submitted:</strong>
+                {{ $application->created_at->format('M d, Y') }}</div>
+            <small class="text-muted dark:text-gray-400">{{ $application->created_at->format('h:i A') }}</small>
         </td>
         <td>
-            <div class="btn-group" role="group">
+            <div class="d-flex gap-1">
                 <a href="{{ route('admin.consultation.show', $application->id) }}"
                     class="btn btn-sm btn-outline-primary">
-                    <i class="fa fa-eye"></i> View
+                    <i class="fa fa-eye me-1"></i>View
                 </a>
-                @if (!$application->isDraft())
-                    <button class="btn btn-sm btn-outline-secondary" onclick="openChatModal({{ $application->id }})">
-                        <i class="fa fa-comments"></i> Chat
-                        @if ($application->unreadChatMessages->count() > 0)
-                            <span class="badge bg-danger ms-1">{{ $application->unreadChatMessages->count() }}</span>
-                        @endif
+                @if (auth()->user()->hasRole('admin'))
+                    <button type="button" class="btn btn-sm btn-outline-danger delete-application"
+                        data-id="{{ $application->id }}" data-name="{{ $application->name ?? 'this application' }}"
+                        title="Delete">
+                        <i class="fa fa-trash"></i>
                     </button>
                 @endif
             </div>

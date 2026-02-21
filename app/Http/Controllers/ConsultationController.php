@@ -73,25 +73,6 @@ class ConsultationController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        // Check if there's an existing draft for this session
-        $sessionId = $request->input('session_id');
-        $application = null;
-
-        if ($sessionId) {
-            // Try to find existing draft by session_id
-            $application = ConsultationApplication::where('session_id', $sessionId)
-                ->where('status', 'draft')
-                ->first();
-        }
-
-        // If no draft found by session, check by email to avoid duplicates
-        if (!$application && $request->email) {
-            $application = ConsultationApplication::where('email', $request->email)
-                ->where('status', 'draft')
-                ->where('created_at', '>=', now()->subHours(24))
-                ->first();
-        }
-
         // Prepare the application data
         $applicationData = [
             'name' => $request->full_name,
@@ -111,252 +92,32 @@ class ConsultationController extends Controller
             'submitted_at' => now()
         ];
 
-        if ($application) {
-            // Update existing draft to submitted status
-            $application->update($applicationData);
+        // Create new consultation application
+        $application = ConsultationApplication::create($applicationData);
 
-            // Send notification to admins for draft conversion
-            AdminNotificationService::notifyNewConsultation($application);
+        // Send notification to admins
+        AdminNotificationService::notifyNewConsultation($application);
 
-            // Auto-create CRM lead from consultation draft submission
-            try {
-                $lead = Lead::createFromConsultation($application);
-                AdminNotificationService::notifyNewLead($lead);
-            } catch (\Exception $e) {
-                Log::error('Failed to create lead from consultation draft', [
-                    'application_id' => $application->id,
-                    'error' => $e->getMessage()
-                ]);
-            }
-
-            Log::info('Consultation draft updated to submitted', [
+        // Auto-create CRM lead from consultation application
+        try {
+            $lead = Lead::createFromConsultation($application);
+            AdminNotificationService::notifyNewLead($lead);
+        } catch (\Exception $e) {
+            Log::error('Failed to create lead from consultation', [
                 'application_id' => $application->id,
-                'session_id' => $sessionId,
-                'email' => $request->email
-            ]);
-        } else {
-            // Create new consultation application if no draft exists
-            $application = ConsultationApplication::create($applicationData);
-
-            // Send notification to admins
-            AdminNotificationService::notifyNewConsultation($application);
-
-            // Auto-create CRM lead from new consultation application
-            try {
-                $lead = Lead::createFromConsultation($application);
-                AdminNotificationService::notifyNewLead($lead);
-            } catch (\Exception $e) {
-                Log::error('Failed to create lead from new consultation', [
-                    'application_id' => $application->id,
-                    'error' => $e->getMessage()
-                ]);
-            }
-
-            Log::info('New consultation application created', [
-                'application_id' => $application->id,
-                'email' => $request->email
+                'error' => $e->getMessage()
             ]);
         }
+
+        Log::info('New consultation application created', [
+            'application_id' => $application->id,
+            'email' => $request->email
+        ]);
 
         // Store application ID in session for next steps
         Session::put('consultation_application_id', $application->id);
 
         return redirect()->route('consultation.consultation-summary');
-    }
-
-    /**
-     * Save or update consultation form draft as user types
-     */
-    public function saveDraft(Request $request)
-    {
-        try {
-            // Basic validation for draft saves - more lenient than final submission
-            $validator = Validator::make($request->all(), [
-                'session_id' => 'required|string|max:255',
-                'full_name' => 'nullable|string|max:255',
-                'email' => 'nullable|email|max:255',
-                'phone' => 'nullable|string|max:20',
-                'company_brand_name' => 'nullable|string|max:255',
-                'website_or_handle' => 'nullable|string|max:255',
-                'industry' => 'nullable|string|max:255',
-                'business_description' => 'nullable|string|max:1000',
-                'business_goals' => 'nullable|array|max:2',
-                'business_goals.*' => 'string|max:255',
-                'key_challenges' => 'nullable|array|max:3',
-                'key_challenges.*' => 'string|max:255',
-                'motivation' => 'nullable|string|max:1000',
-                'success_definition' => 'nullable|string|max:1000',
-                'keystroke_count' => 'nullable|integer|min:0',
-                'field_interactions' => 'nullable|array',
-                'is_submission' => 'nullable|boolean'
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Invalid data provided',
-                    'errors' => $validator->errors()
-                ], 422);
-            }
-
-            $data = $validator->validated();
-            $isSubmission = $data['is_submission'] ?? false;
-
-            // Check if user has provided a valid name or email
-            $hasValidName = !empty($data['full_name']) && strlen(trim($data['full_name'])) >= 2;
-            $hasValidEmail = !empty($data['email']) && filter_var($data['email'], FILTER_VALIDATE_EMAIL);
-
-            // If this is not a submission and user hasn't provided valid name or email, don't save draft
-            if (!$isSubmission && !$hasValidName && !$hasValidEmail) {
-                // Check if there's an existing draft to delete
-                $existingDraft = ConsultationApplication::where('session_id', $data['session_id'])
-                    ->where('status', 'draft')
-                    ->first();
-
-                if ($existingDraft) {
-                    // Delete the draft since user cleared their identifying info
-                    $existingDraft->delete();
-                    Log::info('Consultation draft deleted - no valid name or email', [
-                        'session_id' => $data['session_id'],
-                        'application_id' => $existingDraft->id
-                    ]);
-
-                    return response()->json([
-                        'success' => true,
-                        'message' => 'Draft cleared - please provide a name or email to save progress',
-                        'draft_deleted' => true
-                    ]);
-                }
-
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Please provide a valid name or email to save your progress',
-                    'draft_saved' => false
-                ]);
-            }
-
-            // Prepare data for storage
-            $consultationData = [
-                'session_id' => $data['session_id'],
-                'name' => !empty($data['full_name']) ? strip_tags($data['full_name']) : null,
-                'email' => !empty($data['email']) ? filter_var($data['email'], FILTER_SANITIZE_EMAIL) : null,
-                'phone' => !empty($data['phone']) ? strip_tags($data['phone']) : null,
-                'company' => !empty($data['company_brand_name']) ? strip_tags($data['company_brand_name']) : null,
-                'website_or_handle' => !empty($data['website_or_handle']) ? strip_tags($data['website_or_handle']) : null,
-                'industry' => !empty($data['industry']) ? strip_tags($data['industry']) : null,
-                'business_description' => !empty($data['business_description']) ? strip_tags($data['business_description']) : null,
-                'selected_goals' => $data['business_goals'] ?? null,
-                'selected_challenges' => $data['key_challenges'] ?? null,
-                'desired_outcomes' => !empty($data['motivation']) || !empty($data['success_definition']) ? json_encode([
-                    'motivation' => $data['motivation'] ?? null,
-                    'success_definition' => $data['success_definition'] ?? null
-                ]) : null,
-                'keystroke_count' => $data['keystroke_count'] ?? 0,
-                'field_interactions' => $data['field_interactions'] ?? null,
-                'ip_address' => $request->ip(),
-                'user_agent' => $request->userAgent(),
-                'last_activity_at' => now(),
-                'status' => $isSubmission ? 'pending' : 'draft'
-            ];
-
-            // Add draft-specific fields
-            if (!$isSubmission) {
-                $consultationData['draft_created_at'] = now();
-                $consultationData['draft_data'] = json_encode($data);
-            } else {
-                $consultationData['submitted_at'] = now();
-            }
-
-            // Find existing draft or create new one
-            $application = ConsultationApplication::where('session_id', $data['session_id'])
-                ->first();
-
-            if ($application) {
-                // If this is a submission and the record is already submitted, avoid duplicate
-                if ($isSubmission && $application->status !== 'draft') {
-                    Log::warning('Duplicate consultation submission attempt via live capture', [
-                        'session_id' => $data['session_id'],
-                        'application_id' => $application->id,
-                        'email' => $application->email
-                    ]);
-
-                    return response()->json([
-                        'success' => true,
-                        'message' => 'Form already submitted successfully!',
-                        'application_id' => $application->id,
-                        'status' => $application->status
-                    ]);
-                }
-
-                // Update existing draft/submission
-                if ($isSubmission) {
-                    $consultationData['submitted_at'] = now();
-                }
-
-                $application->update($consultationData);
-
-                Log::info('Consultation draft updated', [
-                    'session_id' => $data['session_id'],
-                    'application_id' => $application->id,
-                    'is_submission' => $isSubmission
-                ]);
-            } else {
-                // Check for duplicate based on email if this is a submission
-                if ($isSubmission && !empty($consultationData['email'])) {
-                    $duplicateCheck = ConsultationApplication::where('email', $consultationData['email'])
-                        ->where('created_at', '>=', now()->subMinutes(5))
-                        ->first();
-
-                    if ($duplicateCheck) {
-                        Log::warning('Duplicate consultation submission attempt detected in saveDraft', [
-                            'email' => $consultationData['email'],
-                            'existing_id' => $duplicateCheck->id
-                        ]);
-
-                        return response()->json([
-                            'success' => true,
-                            'message' => 'Application already submitted recently!',
-                            'application_id' => $duplicateCheck->id,
-                            'status' => $duplicateCheck->status
-                        ]);
-                    }
-                }
-
-                // Create new draft/submission
-                $application = ConsultationApplication::create($consultationData);
-
-                Log::info('New consultation draft created', [
-                    'session_id' => $data['session_id'],
-                    'application_id' => $application->id,
-                    'is_submission' => $isSubmission
-                ]);
-            }
-
-            // If this is a final submission, handle additional processing
-            if ($isSubmission && $application->status === 'pending') {
-                // Store application ID in session for next steps
-                Session::put('consultation_application_id', $application->id);
-            }
-
-            return response()->json([
-                'success' => true,
-                'message' => $isSubmission ? 'Application submitted successfully!' : 'Draft saved',
-                'application_id' => $application->id,
-                'status' => $application->status
-            ]);
-        } catch (\Exception $e) {
-            Log::error('Consultation draft save error', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-                'session_id' => $request->input('session_id'),
-                'input' => $request->all()
-            ]);
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to save draft'
-            ], 500);
-        }
     }
 
     public function showSummary()
