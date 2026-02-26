@@ -129,6 +129,22 @@ class LeadImportController extends Controller
                     $email = null; // Set to null if invalid format
                 }
 
+                // Sanitize year_founded: strip commas, validate as integer within MySQL YEAR range (1901-2155)
+                $yearFounded = null;
+                $rawYear = trim($row['year founded'] ?? '');
+                if (!empty($rawYear)) {
+                    // Remove commas and non-numeric characters (except digits)
+                    $cleanedYear = (int) str_replace([',', ' '], '', $rawYear);
+                    if ($cleanedYear >= 1901 && $cleanedYear <= 2155) {
+                        $yearFounded = $cleanedYear;
+                    } else {
+                        $warnings[] = "Row {$rowNumber}: Year founded '{$rawYear}' is out of valid range (1901-2155), imported without year.";
+                    }
+                }
+
+                // Sanitize employee_count: keep as string but trim whitespace
+                $employeeCount = trim($row['employee count'] ?? '') ?: null;
+
                 // Check if lead with this email already exists (only if email is provided)
                 if ($email) {
                     $existingLead = Lead::withTrashed()->where('email', $email)->first();
@@ -136,22 +152,28 @@ class LeadImportController extends Controller
                     if ($existingLead) {
                         if ($existingLead->trashed()) {
                             // Restore the soft-deleted lead and update it with new data
-                            $existingLead->restore();
-                            $existingLead->update([
-                                'drive_id' => $driveId,
-                                'first_name' => $firstName,
-                                'last_name' => $lastName,
-                                'company' => trim($row['company'] ?? '') ?: $existingLead->company,
-                                'employee_count' => trim($row['employee count'] ?? '') ?: $existingLead->employee_count,
-                                'year_founded' => !empty(trim($row['year founded'] ?? '')) ? (int) trim($row['year founded']) : $existingLead->year_founded,
-                                'industry' => trim($row['industry'] ?? '') ?: $existingLead->industry,
-                                'country' => trim($row['country'] ?? '') ?: $existingLead->country,
-                                'company_linkedin_profile' => trim($row['company linkedin profile'] ?? '') ?: $existingLead->company_linkedin_profile,
-                                'ceo_linkedin_profile' => trim($row['ceo linkedin profile'] ?? '') ?: $existingLead->ceo_linkedin_profile,
-                                'status' => 'new',
-                                'source' => 'noel_waitlist',
-                            ]);
-                            $imported++;
+                            try {
+                                $existingLead->restore();
+                                $existingLead->update([
+                                    'drive_id' => $driveId,
+                                    'first_name' => $firstName,
+                                    'last_name' => $lastName,
+                                    'company' => trim($row['company'] ?? '') ?: $existingLead->company,
+                                    'employee_count' => $employeeCount ?: $existingLead->employee_count,
+                                    'year_founded' => $yearFounded ?? $existingLead->year_founded,
+                                    'industry' => trim($row['industry'] ?? '') ?: $existingLead->industry,
+                                    'country' => trim($row['country'] ?? '') ?: $existingLead->country,
+                                    'company_linkedin_profile' => trim($row['company linkedin profile'] ?? '') ?: $existingLead->company_linkedin_profile,
+                                    'ceo_linkedin_profile' => trim($row['ceo linkedin profile'] ?? '') ?: $existingLead->ceo_linkedin_profile,
+                                    'status' => 'new',
+                                    'source' => 'noel_waitlist',
+                                ]);
+                                $imported++;
+                            } catch (\Exception $e) {
+                                Log::warning("Row {$rowNumber}: Failed to restore/update lead: " . $e->getMessage());
+                                $errors[] = "Row {$rowNumber}: Failed to restore lead with email '{$email}'.";
+                                $skipped++;
+                            }
                             continue;
                         } else {
                             $errors[] = "Row {$rowNumber}: Lead with email '{$email}' already exists.";
@@ -161,25 +183,31 @@ class LeadImportController extends Controller
                     }
                 }
 
-                // Create the lead
-                Lead::create([
-                    'drive_id' => $driveId,
-                    'first_name' => $firstName,
-                    'last_name' => $lastName,
-                    'email' => $email,
-                    'company' => trim($row['company'] ?? ''),
-                    'employee_count' => trim($row['employee count'] ?? ''),
-                    'year_founded' => !empty(trim($row['year founded'] ?? '')) ? (int) trim($row['year founded']) : null,
-                    'industry' => trim($row['industry'] ?? '') ?: null,
-                    'country' => trim($row['country'] ?? ''),
-                    'company_linkedin_profile' => trim($row['company linkedin profile'] ?? ''),
-                    'ceo_linkedin_profile' => trim($row['ceo linkedin profile'] ?? ''),
-                    'status' => 'new',
-                    'source' => 'noel_waitlist',
-                    'priority' => 'medium',
-                ]);
+                // Create the lead (wrapped in try-catch so one bad row doesn't kill the entire import)
+                try {
+                    Lead::create([
+                        'drive_id' => $driveId,
+                        'first_name' => $firstName,
+                        'last_name' => $lastName,
+                        'email' => $email,
+                        'company' => trim($row['company'] ?? ''),
+                        'employee_count' => $employeeCount,
+                        'year_founded' => $yearFounded,
+                        'industry' => trim($row['industry'] ?? '') ?: null,
+                        'country' => trim($row['country'] ?? ''),
+                        'company_linkedin_profile' => trim($row['company linkedin profile'] ?? ''),
+                        'ceo_linkedin_profile' => trim($row['ceo linkedin profile'] ?? ''),
+                        'status' => 'new',
+                        'source' => 'noel_waitlist',
+                        'priority' => 'medium',
+                    ]);
 
-                $imported++;
+                    $imported++;
+                } catch (\Exception $e) {
+                    Log::warning("Row {$rowNumber}: Failed to create lead: " . $e->getMessage());
+                    $errors[] = "Row {$rowNumber}: Failed to import — " . Str::limit($e->getMessage(), 100);
+                    $skipped++;
+                }
             }
 
             DB::commit();
