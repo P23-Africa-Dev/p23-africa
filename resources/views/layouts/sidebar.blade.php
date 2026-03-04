@@ -1,247 +1,214 @@
-<!-- Sidebar Component -->
+{{-- =====================================================================
+    Sidebar - P23 Africa Admin
+    Uses admin-ui.css classes; all org-visibility guards preserved.
+    ===================================================================== --}}
 <div x-data="{
-    sidebarOpen: localStorage.getItem('sidebarOpen') === 'true' || localStorage.getItem('sidebarOpen') === null,
-    activeMenu: null,
+    sidebarOpen: localStorage.getItem('sidebarOpen') !== 'false',
+    mobileSidebarOpen: false,
     init() {
-        this.$watch('sidebarOpen', value => {
-            localStorage.setItem('sidebarOpen', value);
+        this.$watch('sidebarOpen', v => {
+            localStorage.setItem('sidebarOpen', v);
+            this.$dispatch('sidebar-toggle', { open: v });
+        });
+        window.addEventListener('sidebar-mobile-toggle', () => {
+            this.mobileSidebarOpen = !this.mobileSidebarOpen;
         });
     }
 }" class="sidebar-wrapper">
-    <!-- Sidebar -->
-    <aside :class="sidebarOpen ? 'sidebar-expanded' : 'sidebar-collapsed'" class="sidebar dark-transition"
-        style="position: fixed; top: 64px; left: 0; height: calc(100vh - 64px); z-index: 40; overflow-y: auto; overflow-x: hidden;">
 
-        <!-- Sidebar Header -->
-        <div class="sidebar-header" style="padding: 1rem;">
-            <div class="d-flex align-items-center justify-content-between">
-                <h6 x-show="sidebarOpen" x-transition class="mb-0 text-dark dark:text-gray-100 fw-bold"
-                    style="font-size: 0.875rem; letter-spacing: 0.05em;">
-                    NAVIGATION
-                </h6>
-                <button @click="sidebarOpen = !sidebarOpen"
-                    class="btn btn-sm btn-light dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
-                    style="border-radius: 0.375rem;">
-                    <i :class="sidebarOpen ? 'fa fa-chevron-left' : 'fa fa-chevron-right'"></i>
-                </button>
-            </div>
+    {{-- Overlay (mobile) --}}
+    <div class="sidebar-overlay" :class="mobileSidebarOpen ? 'visible' : ''" @click="mobileSidebarOpen=false"></div>
+
+    {{-- Sidebar panel --}}
+    <aside class="sidebar" :class="[sidebarOpen ? '' : 'collapsed', mobileSidebarOpen ? 'mobile-open' : '']">
+
+        {{-- Header --}}
+        <div class="sidebar-header">
+            <span class="sidebar-header-label">Navigation</span>
+            <button class="sidebar-collapse-btn d-none d-lg-flex" @click="sidebarOpen=!sidebarOpen"
+                :title="sidebarOpen ? 'Collapse' : 'Expand'">
+                <i :class="sidebarOpen ? 'bi bi-chevron-left' : 'bi bi-chevron-right'"></i>
+            </button>
         </div>
 
-        <!-- Sidebar Menu -->
-        <nav class="sidebar-nav" style="padding: 0 0.75rem 1rem 0.75rem;">
+        {{-- Nav --}}
+        <nav class="sidebar-nav">
 
-            <!-- Dashboard -->
-            <a href="{{ route('admin.dashboard') }}"
+            {{-- Dashboard --}}
+            <a href="{{ route('admin.dashboard') }}" data-tooltip="Dashboard"
                 class="sidebar-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                <i class="fa fa-home sidebar-icon"></i>
-                <span x-show="sidebarOpen" x-transition class="sidebar-text">Dashboard</span>
+                <span class="sidebar-icon"><i class="bi bi-speedometer2"></i></span>
+                <span class="sidebar-text">Dashboard</span>
             </a>
 
-            <!-- CRM -->
-            {{-- @if (auth()->user()->hasRole('admin|supervisor')) --}}
-            <a href="{{ route('admin.crm.pipeline') }}"
+            {{-- CRM --}}
+            <a href="{{ route('admin.crm.pipeline') }}" data-tooltip="CRM"
                 class="sidebar-item {{ request()->routeIs('admin.crm.*') ? 'active' : '' }}">
-                <i class="fa fa-address-book sidebar-icon"></i>
-                <span x-show="sidebarOpen" x-transition class="sidebar-text">CRM</span>
+                <span class="sidebar-icon"><i class="bi bi-kanban"></i></span>
+                <span class="sidebar-text">CRM</span>
             </a>
-            {{-- @endif --}}
 
-            <!-- Calendar -->
+            {{-- Calendar (admin / non-org users only) --}}
             @if (auth()->user() && (auth()->user()->hasRole('admin') || !auth()->user()->organization_id))
-                <a href="{{ route('admin.calendar.index') }}"
+                <a href="{{ route('admin.calendar.index') }}" data-tooltip="Calendar"
                     class="sidebar-item {{ request()->routeIs('admin.calendar.*') ? 'active' : '' }}">
-                    <i class="fa fa-calendar-alt sidebar-icon"></i>
-                    <span x-show="sidebarOpen" x-transition class="sidebar-text">Calendar</span>
+                    <span class="sidebar-icon"><i class="bi bi-calendar3"></i></span>
+                    <span class="sidebar-text">Calendar</span>
                 </a>
             @endif
 
-            <!-- Project Management Section -->
+            {{-- Projects dropdown --}}
             <div class="sidebar-section" x-data="{ open: {{ request()->routeIs('admin.projects.*', 'admin.tasks.*') ? 'true' : 'false' }} }">
-                <button @click="open = !open" class="sidebar-item sidebar-dropdown-toggle">
-                    <div class="d-flex align-items-center flex-grow-1">
-                        <i class="fa fa-project-diagram sidebar-icon"></i>
-                        <span x-show="sidebarOpen" x-transition class="sidebar-text">Projects</span>
-                    </div>
-                    <i x-show="sidebarOpen" :class="open ? 'fa fa-chevron-down' : 'fa fa-chevron-right'"
-                        class="sidebar-dropdown-icon" x-transition></i>
+                <button @click="open=!open" data-tooltip="Projects" class="sidebar-dropdown-toggle">
+                    <span class="sidebar-icon"><i class="bi bi-folder2-open"></i></span>
+                    <span class="sidebar-text">Projects</span>
+                    <i class="sidebar-chevron bi bi-chevron-down" :class="open ? 'open' : ''"></i>
                 </button>
-
-                <div x-show="open && sidebarOpen" x-transition class="sidebar-submenu">
+                <div class="sidebar-submenu" x-show="open && sidebarOpen" x-transition>
                     <a href="{{ route('admin.projects.index') }}"
                         class="sidebar-subitem {{ request()->routeIs('admin.projects.*') ? 'active' : '' }}">
-                        <i class="fa fa-folder-open"></i>
-                        <span>All Projects</span>
+                        <i class="bi bi-folder-open"></i><span>All Projects</span>
                     </a>
                     <a href="{{ route('admin.tasks.kanban') }}"
                         class="sidebar-subitem {{ request()->routeIs('admin.tasks.kanban') ? 'active' : '' }}"
-                        style="position: relative;">
-                        <i class="fa fa-columns"></i>
-                        <span>Kanban Board</span>
+                        style="position:relative;">
+                        <i class="bi bi-view-stacked"></i><span>Kanban Board</span>
                         <span id="task-notification-badge"
-                            style="display: none; position: absolute; top: 50%; right: 8px; transform: translateY(-50%); min-width: 18px; height: 18px; font-size: 10px; font-weight: bold; color: white; background-color: #dc3545; border-radius: 50%; padding: 0 4px;">
-                        </span>
+                            style="display:none;position:absolute;top:50%;right:8px;transform:translateY(-50%);
+                                     min-width:18px;height:18px;font-size:10px;font-weight:700;color:#fff;
+                                     background:var(--p-danger);border-radius:999px;padding:0 4px;"></span>
                     </a>
                     <a href="{{ route('admin.tasks.index') }}"
                         class="sidebar-subitem {{ request()->routeIs('admin.tasks.index') ? 'active' : '' }}">
-                        <i class="fa fa-tasks"></i>
-                        <span>Task List</span>
+                        <i class="bi bi-list-task"></i><span>Task List</span>
                     </a>
                     <a href="{{ route('admin.projects.gantt') }}"
                         class="sidebar-subitem {{ request()->routeIs('admin.projects.gantt') ? 'active' : '' }}">
-                        <i class="fa fa-chart-gantt"></i>
-                        <span>Gantt Chart</span>
+                        <i class="bi bi-bar-chart-steps"></i><span>Gantt Chart</span>
                     </a>
                 </div>
             </div>
 
-            <!-- Content Management Section -->
+            {{-- Content (admin / non-org users only) --}}
             @if (auth()->user() && (auth()->user()->hasRole('admin') || !auth()->user()->organization_id))
                 <div class="sidebar-section" x-data="{ open: {{ request()->routeIs('admin.events.*', 'admin.blogs.*', 'admin.playbooks.*', 'admin.contact.*') ? 'true' : 'false' }} }">
-                    <button @click="open = !open" class="sidebar-item sidebar-dropdown-toggle">
-                        <div class="d-flex align-items-center flex-grow-1">
-                            <i class="fa fa-edit sidebar-icon"></i>
-                            <span x-show="sidebarOpen" x-transition class="sidebar-text">Content</span>
-                        </div>
-                        <i x-show="sidebarOpen" :class="open ? 'fa fa-chevron-down' : 'fa fa-chevron-right'"
-                            class="sidebar-dropdown-icon" x-transition></i>
+                    <button @click="open=!open" data-tooltip="Content" class="sidebar-dropdown-toggle">
+                        <span class="sidebar-icon"><i class="bi bi-pencil-square"></i></span>
+                        <span class="sidebar-text">Content</span>
+                        <i class="sidebar-chevron bi bi-chevron-down" :class="open ? 'open' : ''"></i>
                     </button>
-
-                    <div x-show="open && sidebarOpen" x-transition class="sidebar-submenu">
+                    <div class="sidebar-submenu" x-show="open && sidebarOpen" x-transition>
                         <a href="{{ route('admin.events.index') }}"
                             class="sidebar-subitem {{ request()->routeIs('admin.events.*') ? 'active' : '' }}">
-                            <i class="fa fa-calendar"></i>
-                            <span>Events</span>
+                            <i class="bi bi-calendar-event"></i><span>Events</span>
                         </a>
                         <a href="{{ route('admin.blogs.index') }}"
                             class="sidebar-subitem {{ request()->routeIs('admin.blogs.*') ? 'active' : '' }}">
-                            <i class="fa fa-book"></i>
-                            <span>Resource Hub</span>
+                            <i class="bi bi-book"></i><span>Resource Hub</span>
                         </a>
                         <a href="{{ route('admin.playbooks.dashboard') }}"
                             class="sidebar-subitem {{ request()->routeIs('admin.playbooks.*') ? 'active' : '' }}">
-                            <i class="fa fa-download"></i>
-                            <span>Ebook Downloads</span>
+                            <i class="bi bi-download"></i><span>Ebook Downloads</span>
                         </a>
                         @if (auth()->user() &&
                                 auth()->user()->hasRole(['admin', 'supervisor']))
                             <a href="{{ route('admin.contact.index') }}"
                                 class="sidebar-subitem {{ request()->routeIs('admin.contact.*') ? 'active' : '' }}">
-                                <i class="fa fa-envelope"></i>
-                                <span>Contact Submissions</span>
+                                <i class="bi bi-envelope"></i><span>Contact Submissions</span>
                             </a>
                         @endif
                     </div>
                 </div>
             @endif
 
-            <!-- User Management Section -->
+            {{-- Users (admin / non-org users only) --}}
             @if (auth()->user() && (auth()->user()->hasRole('admin') || !auth()->user()->organization_id))
                 <div class="sidebar-section" x-data="{ open: {{ request()->routeIs('admin.students.*', 'admin.staff.*') ? 'true' : 'false' }} }">
-                    <button @click="open = !open" class="sidebar-item sidebar-dropdown-toggle">
-                        <div class="d-flex align-items-center flex-grow-1">
-                            <i class="fa fa-users sidebar-icon"></i>
-                            <span x-show="sidebarOpen" x-transition class="sidebar-text">Users</span>
-                        </div>
-                        <i x-show="sidebarOpen" :class="open ? 'fa fa-chevron-down' : 'fa fa-chevron-right'"
-                            class="sidebar-dropdown-icon" x-transition></i>
+                    <button @click="open=!open" data-tooltip="Users" class="sidebar-dropdown-toggle">
+                        <span class="sidebar-icon"><i class="bi bi-people"></i></span>
+                        <span class="sidebar-text">Users</span>
+                        <i class="sidebar-chevron bi bi-chevron-down" :class="open ? 'open' : ''"></i>
                     </button>
-
-                    <div x-show="open && sidebarOpen" x-transition class="sidebar-submenu">
+                    <div class="sidebar-submenu" x-show="open && sidebarOpen" x-transition>
                         <a href="{{ route('admin.students.index') }}"
                             class="sidebar-subitem {{ request()->routeIs('admin.students.*') ? 'active' : '' }}">
-                            <i class="fa fa-user-graduate"></i>
-                            <span>Students</span>
+                            <i class="bi bi-mortarboard"></i><span>Students</span>
                         </a>
                         @if (auth()->user() && auth()->user()->hasRole('admin'))
                             <a href="{{ route('admin.staff.index') }}"
                                 class="sidebar-subitem {{ request()->routeIs('admin.staff.*') ? 'active' : '' }}">
-                                <i class="fa fa-user-tie"></i>
-                                <span>Staff</span>
+                                <i class="bi bi-person-badge"></i><span>Staff</span>
                             </a>
                             <a href="{{ route('admin.organizations.index') }}"
                                 class="sidebar-subitem {{ request()->routeIs('admin.organizations.*') ? 'active' : '' }}">
-                                <i class="fa fa-building"></i>
-                                <span>Organizations</span>
+                                <i class="bi bi-building"></i><span>Organizations</span>
                             </a>
                         @endif
                     </div>
                 </div>
             @endif
 
+            {{-- Applications & Reports (admin only) --}}
             @if (auth()->user() && auth()->user()->hasRole('admin'))
-                <!-- Applications & Reports Section -->
                 <div class="sidebar-section" x-data="{ open: {{ request()->routeIs('admin.consultation.*', 'admin.brn.*', 'admin.clicks.*') ? 'true' : 'false' }} }">
-                    <button @click="open = !open" class="sidebar-item sidebar-dropdown-toggle">
-                        <div class="d-flex align-items-center flex-grow-1">
-                            <i class="fa fa-chart-line sidebar-icon"></i>
-                            <span x-show="sidebarOpen" x-transition class="sidebar-text">Applications</span>
-                        </div>
-                        <i x-show="sidebarOpen" :class="open ? 'fa fa-chevron-down' : 'fa fa-chevron-right'"
-                            class="sidebar-dropdown-icon" x-transition></i>
+                    <button @click="open=!open" data-tooltip="Applications" class="sidebar-dropdown-toggle">
+                        <span class="sidebar-icon"><i class="bi bi-graph-up-arrow"></i></span>
+                        <span class="sidebar-text">Applications</span>
+                        <i class="sidebar-chevron bi bi-chevron-down" :class="open ? 'open' : ''"></i>
                     </button>
-
-                    <div x-show="open && sidebarOpen" x-transition class="sidebar-submenu">
+                    <div class="sidebar-submenu" x-show="open && sidebarOpen" x-transition>
                         <a href="{{ route('admin.consultation.index') }}"
                             class="sidebar-subitem {{ request()->routeIs('admin.consultation.*') ? 'active' : '' }}">
-                            <i class="fa fa-handshake"></i>
-                            <span>Consultations</span>
+                            <i class="bi bi-handshake"></i><span>Consultations</span>
                         </a>
                         <a href="{{ route('admin.brn.index') }}"
                             class="sidebar-subitem {{ request()->routeIs('admin.brn.*') ? 'active' : '' }}">
-                            <i class="fa fa-briefcase"></i>
-                            <span>BRN Applications</span>
+                            <i class="bi bi-briefcase"></i><span>BRN Applications</span>
                         </a>
                         <a href="{{ route('admin.clicks.report') }}"
                             class="sidebar-subitem {{ request()->routeIs('admin.clicks.*') ? 'active' : '' }}">
-                            <i class="fa fa-mouse-pointer"></i>
-                            <span>Click Reports</span>
+                            <i class="bi bi-cursor"></i><span>Click Reports</span>
                         </a>
                     </div>
                 </div>
             @endif
 
-            <!-- Divider -->
+            {{-- Divider --}}
             <div class="sidebar-divider"></div>
 
-            <!-- Settings -->
-            <a href="{{ route('profile.edit') }}"
+            {{-- Settings --}}
+            <a href="{{ route('profile.edit') }}" data-tooltip="Settings"
                 class="sidebar-item {{ request()->routeIs('profile.*') ? 'active' : '' }}">
-                <i class="fa fa-cog sidebar-icon"></i>
-                <span x-show="sidebarOpen" x-transition class="sidebar-text">Settings</span>
+                <span class="sidebar-icon"><i class="bi bi-gear"></i></span>
+                <span class="sidebar-text">Settings</span>
             </a>
 
-            <!-- Activity Logs (Admin Only) -->
+            {{-- Activity Logs (admin only) --}}
             @if (auth()->user() && auth()->user()->hasRole('admin'))
-                <a href="{{ route('admin.activity.logs') }}"
+                <a href="{{ route('admin.activity.logs') }}" data-tooltip="Activity Logs"
                     class="sidebar-item {{ request()->routeIs('admin.activity.logs') ? 'active' : '' }}"
-                    id="activity-logs-link">
-                    <div class="d-flex align-items-center flex-grow-1 position-relative">
-                        <i class="fa fa-history sidebar-icon"></i>
-                        <span x-show="sidebarOpen" x-transition class="sidebar-text">Activity Logs</span>
-                        <span id="activity-unseen-badge" class="position-absolute badge rounded-pill bg-danger"
-                            style="display: none; font-size: 0.65rem; min-width: 18px; height: 18px; line-height: 12px; top: -8px; right: -8px;">
-                            0
-                        </span>
-                    </div>
+                    style="position:relative;">
+                    <span class="sidebar-icon"><i class="bi bi-clock-history"></i></span>
+                    <span class="sidebar-text">Activity Logs</span>
+                    <span id="activity-unseen-badge"
+                        style="display:none;position:absolute;top:6px;right:8px;
+                             min-width:18px;height:18px;font-size:.65rem;font-weight:700;
+                             color:#fff;background:var(--p-danger);border-radius:999px;
+                             padding:0 4px;text-align:center;line-height:18px;"></span>
                 </a>
             @endif
 
         </nav>
 
-        <!-- Sidebar Footer -->
-        <div x-show="sidebarOpen" x-transition class="sidebar-footer"
-            style="padding: 1rem; border-top: 1px solid var(--border-color); margin-top: auto;">
-            <div class="d-flex align-items-center">
-                <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center"
-                    style="width: 40px; height: 40px;">
-                    <i class="fa fa-user text-primary"></i>
+        {{-- User footer --}}
+        <div class="sidebar-footer">
+            <div class="sidebar-user-row">
+                <div class="sidebar-user-avatar">
+                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                 </div>
-                <div class="ms-3 flex-grow-1" style="min-width: 0;">
-                    <p class="mb-0 fw-medium text-dark dark:text-gray-100"
-                        style="font-size: 0.875rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                        {{ auth()->user()->name }}
-                    </p>
-                    <p class="mb-0 text-muted dark:text-gray-400" style="font-size: 0.75rem;">
+                <div style="min-width:0;">
+                    <div class="sidebar-user-name">{{ auth()->user()->name }}</div>
+                    <div class="sidebar-user-role">
                         @if (auth()->user()->hasRole('admin'))
                             Administrator
                         @elseif(auth()->user()->hasRole('supervisor'))
@@ -249,209 +216,10 @@
                         @else
                             Staff
                         @endif
-                    </p>
+                    </div>
                 </div>
             </div>
         </div>
+
     </aside>
-
-    <!-- Overlay for mobile -->
-    <div x-show="sidebarOpen" @click="sidebarOpen = false"
-        x-transition:enter="transition-opacity ease-linear duration-300" x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity ease-linear duration-300"
-        x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="sidebar-overlay d-lg-none"
-        style="display: none;">
-    </div>
 </div>
-
-<style>
-    /* Sidebar Base Styles */
-    .sidebar {
-        background-color: var(--bg-primary);
-        border-right: 1px solid var(--border-color);
-        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
-        transition: width 0.3s ease, transform 0.3s ease;
-    }
-
-    .sidebar-expanded {
-        width: 260px;
-    }
-
-    .sidebar-collapsed {
-        width: 70px;
-    }
-
-    .sidebar::-webkit-scrollbar {
-        width: 6px;
-    }
-
-    .sidebar::-webkit-scrollbar-track {
-        background: transparent;
-    }
-
-    .sidebar::-webkit-scrollbar-thumb {
-        background: var(--border-color);
-        border-radius: 3px;
-    }
-
-    .sidebar::-webkit-scrollbar-thumb:hover {
-        background: var(--text-secondary);
-    }
-
-    /* Sidebar Header */
-    .sidebar-header {
-        border-bottom: 1px solid var(--border-color);
-    }
-
-    /* Sidebar Items */
-    .sidebar-item {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0.75rem 1rem;
-        margin-bottom: 0.25rem;
-        color: var(--text-primary);
-        text-decoration: none;
-        border-radius: 0.5rem;
-        transition: all 0.2s ease;
-        cursor: pointer;
-        border: none;
-        background: transparent;
-        width: 100%;
-        text-align: left;
-    }
-
-    .sidebar-item:hover {
-        background-color: var(--bg-tertiary);
-        color: var(--text-primary);
-    }
-
-    .sidebar-item.active {
-        background-color: #667eea;
-        color: #ffffff !important;
-    }
-
-    .sidebar-item.active .sidebar-icon,
-    .sidebar-item.active .sidebar-text {
-        color: #ffffff !important;
-    }
-
-    .sidebar-icon {
-        width: 20px;
-        text-align: center;
-        margin-right: 0.75rem;
-        font-size: 1rem;
-        color: var(--text-secondary);
-    }
-
-    .sidebar-text {
-        font-size: 0.875rem;
-        font-weight: 500;
-        white-space: nowrap;
-    }
-
-    /* Dropdown Toggle */
-    .sidebar-dropdown-toggle {
-        font-weight: 500;
-    }
-
-    .sidebar-dropdown-icon {
-        font-size: 0.75rem;
-        margin-left: auto;
-        color: var(--text-secondary);
-        transition: transform 0.2s ease;
-    }
-
-    /* Submenu */
-    .sidebar-submenu {
-        margin-left: 0;
-        padding-left: 0;
-        margin-top: 0.25rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .sidebar-subitem {
-        display: flex;
-        align-items: center;
-        padding: 0.625rem 1rem 0.625rem 2.75rem;
-        margin-bottom: 0.125rem;
-        color: var(--text-secondary);
-        text-decoration: none;
-        border-radius: 0.5rem;
-        font-size: 0.875rem;
-        transition: all 0.2s ease;
-    }
-
-    .sidebar-subitem:hover {
-        background-color: var(--bg-tertiary);
-        color: var(--text-primary);
-    }
-
-    .sidebar-subitem.active {
-        background-color: rgba(102, 126, 234, 0.1);
-        color: #667eea;
-        font-weight: 500;
-    }
-
-    .sidebar-subitem i {
-        width: 16px;
-        text-align: center;
-        margin-right: 0.75rem;
-        font-size: 0.875rem;
-    }
-
-    /* Divider */
-    .sidebar-divider {
-        height: 1px;
-        background-color: var(--border-color);
-        margin: 1rem 0;
-    }
-
-    /* Sidebar Footer */
-    .sidebar-footer {
-        position: sticky;
-        bottom: 0;
-        background-color: var(--bg-primary);
-    }
-
-    /* Mobile Overlay */
-    .sidebar-overlay {
-        position: fixed;
-        top: 64px;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 35;
-    }
-
-    /* Dark Mode Specific */
-    .dark .sidebar-item:hover {
-        background-color: rgba(75, 85, 99, 0.5);
-    }
-
-    .dark .sidebar-subitem:hover {
-        background-color: rgba(75, 85, 99, 0.5);
-    }
-
-    /* Responsive Adjustments */
-    @media (max-width: 991px) {
-        .sidebar-expanded {
-            transform: translateX(0);
-        }
-
-        .sidebar-collapsed {
-            transform: translateX(-100%);
-        }
-
-        .sidebar {
-            width: 260px !important;
-        }
-    }
-
-    @media (min-width: 992px) {
-        .sidebar-overlay {
-            display: none !important;
-        }
-    }
-</style>
