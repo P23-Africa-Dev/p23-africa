@@ -315,6 +315,9 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
 
     Route::middleware('role:admin|supervisor')->group(function () {
         Route::resource('staff', StaffController::class);
+        // Organization management (admins can create/select orgs when creating staff)
+        Route::resource('organizations', \App\Http\Controllers\Admin\OrganizationController::class);
+        Route::post('/organizations/ajax', [\App\Http\Controllers\Admin\OrganizationController::class, 'storeAjax'])->name('organizations.store-ajax');
 
         // Contact management routes (accessible to admin and supervisor)
         Route::get('/contact', [\App\Http\Controllers\Admin\ContactController::class, 'index'])->name('contact.index');

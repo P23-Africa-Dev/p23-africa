@@ -39,15 +39,15 @@
 
             <!-- CRM -->
             {{-- @if (auth()->user()->hasRole('admin|supervisor')) --}}
-                <a href="{{ route('admin.crm.pipeline') }}"
-                    class="sidebar-item {{ request()->routeIs('admin.crm.*') ? 'active' : '' }}">
-                    <i class="fa fa-address-book sidebar-icon"></i>
-                    <span x-show="sidebarOpen" x-transition class="sidebar-text">CRM</span>
-                </a>
+            <a href="{{ route('admin.crm.pipeline') }}"
+                class="sidebar-item {{ request()->routeIs('admin.crm.*') ? 'active' : '' }}">
+                <i class="fa fa-address-book sidebar-icon"></i>
+                <span x-show="sidebarOpen" x-transition class="sidebar-text">CRM</span>
+            </a>
             {{-- @endif --}}
 
             <!-- Calendar -->
-            @if (auth()->user()->hasRole('admin|supervisor'))
+            @if (auth()->user() && (auth()->user()->hasRole('admin') || !auth()->user()->organization_id))
                 <a href="{{ route('admin.calendar.index') }}"
                     class="sidebar-item {{ request()->routeIs('admin.calendar.*') ? 'active' : '' }}">
                     <i class="fa fa-calendar-alt sidebar-icon"></i>
@@ -95,68 +95,78 @@
             </div>
 
             <!-- Content Management Section -->
-            <div class="sidebar-section" x-data="{ open: {{ request()->routeIs('admin.events.*', 'admin.blogs.*', 'admin.playbooks.*', 'admin.contact.*') ? 'true' : 'false' }} }">
-                <button @click="open = !open" class="sidebar-item sidebar-dropdown-toggle">
-                    <div class="d-flex align-items-center flex-grow-1">
-                        <i class="fa fa-edit sidebar-icon"></i>
-                        <span x-show="sidebarOpen" x-transition class="sidebar-text">Content</span>
-                    </div>
-                    <i x-show="sidebarOpen" :class="open ? 'fa fa-chevron-down' : 'fa fa-chevron-right'"
-                        class="sidebar-dropdown-icon" x-transition></i>
-                </button>
+            @if (auth()->user() && (auth()->user()->hasRole('admin') || !auth()->user()->organization_id))
+                <div class="sidebar-section" x-data="{ open: {{ request()->routeIs('admin.events.*', 'admin.blogs.*', 'admin.playbooks.*', 'admin.contact.*') ? 'true' : 'false' }} }">
+                    <button @click="open = !open" class="sidebar-item sidebar-dropdown-toggle">
+                        <div class="d-flex align-items-center flex-grow-1">
+                            <i class="fa fa-edit sidebar-icon"></i>
+                            <span x-show="sidebarOpen" x-transition class="sidebar-text">Content</span>
+                        </div>
+                        <i x-show="sidebarOpen" :class="open ? 'fa fa-chevron-down' : 'fa fa-chevron-right'"
+                            class="sidebar-dropdown-icon" x-transition></i>
+                    </button>
 
-                <div x-show="open && sidebarOpen" x-transition class="sidebar-submenu">
-                    <a href="{{ route('admin.events.index') }}"
-                        class="sidebar-subitem {{ request()->routeIs('admin.events.*') ? 'active' : '' }}">
-                        <i class="fa fa-calendar"></i>
-                        <span>Events</span>
-                    </a>
-                    <a href="{{ route('admin.blogs.index') }}"
-                        class="sidebar-subitem {{ request()->routeIs('admin.blogs.*') ? 'active' : '' }}">
-                        <i class="fa fa-book"></i>
-                        <span>Resource Hub</span>
-                    </a>
-                    <a href="{{ route('admin.playbooks.dashboard') }}"
-                        class="sidebar-subitem {{ request()->routeIs('admin.playbooks.*') ? 'active' : '' }}">
-                        <i class="fa fa-download"></i>
-                        <span>Ebook Downloads</span>
-                    </a>
-                    @if (auth()->user() && auth()->user()->hasRole(['admin', 'supervisor']))
-                        <a href="{{ route('admin.contact.index') }}"
-                            class="sidebar-subitem {{ request()->routeIs('admin.contact.*') ? 'active' : '' }}">
-                            <i class="fa fa-envelope"></i>
-                            <span>Contact Submissions</span>
+                    <div x-show="open && sidebarOpen" x-transition class="sidebar-submenu">
+                        <a href="{{ route('admin.events.index') }}"
+                            class="sidebar-subitem {{ request()->routeIs('admin.events.*') ? 'active' : '' }}">
+                            <i class="fa fa-calendar"></i>
+                            <span>Events</span>
                         </a>
-                    @endif
+                        <a href="{{ route('admin.blogs.index') }}"
+                            class="sidebar-subitem {{ request()->routeIs('admin.blogs.*') ? 'active' : '' }}">
+                            <i class="fa fa-book"></i>
+                            <span>Resource Hub</span>
+                        </a>
+                        <a href="{{ route('admin.playbooks.dashboard') }}"
+                            class="sidebar-subitem {{ request()->routeIs('admin.playbooks.*') ? 'active' : '' }}">
+                            <i class="fa fa-download"></i>
+                            <span>Ebook Downloads</span>
+                        </a>
+                        @if (auth()->user() &&
+                                auth()->user()->hasRole(['admin', 'supervisor']))
+                            <a href="{{ route('admin.contact.index') }}"
+                                class="sidebar-subitem {{ request()->routeIs('admin.contact.*') ? 'active' : '' }}">
+                                <i class="fa fa-envelope"></i>
+                                <span>Contact Submissions</span>
+                            </a>
+                        @endif
+                    </div>
                 </div>
-            </div>
+            @endif
 
             <!-- User Management Section -->
-            <div class="sidebar-section" x-data="{ open: {{ request()->routeIs('admin.students.*', 'admin.staff.*') ? 'true' : 'false' }} }">
-                <button @click="open = !open" class="sidebar-item sidebar-dropdown-toggle">
-                    <div class="d-flex align-items-center flex-grow-1">
-                        <i class="fa fa-users sidebar-icon"></i>
-                        <span x-show="sidebarOpen" x-transition class="sidebar-text">Users</span>
-                    </div>
-                    <i x-show="sidebarOpen" :class="open ? 'fa fa-chevron-down' : 'fa fa-chevron-right'"
-                        class="sidebar-dropdown-icon" x-transition></i>
-                </button>
+            @if (auth()->user() && (auth()->user()->hasRole('admin') || !auth()->user()->organization_id))
+                <div class="sidebar-section" x-data="{ open: {{ request()->routeIs('admin.students.*', 'admin.staff.*') ? 'true' : 'false' }} }">
+                    <button @click="open = !open" class="sidebar-item sidebar-dropdown-toggle">
+                        <div class="d-flex align-items-center flex-grow-1">
+                            <i class="fa fa-users sidebar-icon"></i>
+                            <span x-show="sidebarOpen" x-transition class="sidebar-text">Users</span>
+                        </div>
+                        <i x-show="sidebarOpen" :class="open ? 'fa fa-chevron-down' : 'fa fa-chevron-right'"
+                            class="sidebar-dropdown-icon" x-transition></i>
+                    </button>
 
-                <div x-show="open && sidebarOpen" x-transition class="sidebar-submenu">
-                    <a href="{{ route('admin.students.index') }}"
-                        class="sidebar-subitem {{ request()->routeIs('admin.students.*') ? 'active' : '' }}">
-                        <i class="fa fa-user-graduate"></i>
-                        <span>Students</span>
-                    </a>
-                    @if (auth()->user() && auth()->user()->hasRole('admin'))
-                        <a href="{{ route('admin.staff.index') }}"
-                            class="sidebar-subitem {{ request()->routeIs('admin.staff.*') ? 'active' : '' }}">
-                            <i class="fa fa-user-tie"></i>
-                            <span>Staff</span>
+                    <div x-show="open && sidebarOpen" x-transition class="sidebar-submenu">
+                        <a href="{{ route('admin.students.index') }}"
+                            class="sidebar-subitem {{ request()->routeIs('admin.students.*') ? 'active' : '' }}">
+                            <i class="fa fa-user-graduate"></i>
+                            <span>Students</span>
                         </a>
-                    @endif
+                        @if (auth()->user() && auth()->user()->hasRole('admin'))
+                            <a href="{{ route('admin.staff.index') }}"
+                                class="sidebar-subitem {{ request()->routeIs('admin.staff.*') ? 'active' : '' }}">
+                                <i class="fa fa-user-tie"></i>
+                                <span>Staff</span>
+                            </a>
+                            <a href="{{ route('admin.organizations.index') }}"
+                                class="sidebar-subitem {{ request()->routeIs('admin.organizations.*') ? 'active' : '' }}">
+                                <i class="fa fa-building"></i>
+                                <span>Organizations</span>
+                            </a>
+                        @endif
+                    </div>
                 </div>
-            </div>
+            @endif
 
             @if (auth()->user() && auth()->user()->hasRole('admin'))
                 <!-- Applications & Reports Section -->

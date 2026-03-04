@@ -25,7 +25,8 @@ class User extends Authenticatable
         'password',
         'suspended_at',
         'role',
-        'permissions'
+        'permissions',
+        'organization_id'
     ];
 
     /**
@@ -68,6 +69,14 @@ class User extends Authenticatable
     public function isSuspended()
     {
         return !is_null($this->suspended_at);
+    }
+
+    /**
+     * Organization relation
+     */
+    public function organization()
+    {
+        return $this->belongsTo(Organization::class);
     }
 
 

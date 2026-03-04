@@ -21,7 +21,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
             <!-- Quick Stats Section -->
-            @if (auth()->user() && auth()->user()->hasRole('admin|supervisor'))
+            @if (auth()->user() && (auth()->user()->hasRole('admin') || !auth()->user()->organization_id))
                 <div class="row mb-4">
                     <div class="col-md-3 mb-3">
                         <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition">
@@ -94,7 +94,7 @@
             @endif
 
             <!-- Contact Stats Row -->
-            @if (auth()->user() && auth()->user()->hasRole('admin|supervisor'))
+            @if (auth()->user() && (auth()->user()->hasRole('admin') || !auth()->user()->organization_id))
                 <div class="row mb-4">
                     <div class="col-md-4 mb-3">
                         <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition">
@@ -151,7 +151,7 @@
             @endif
 
             <!-- Consultation Stats Row -->
-            @if (auth()->user() && auth()->user()->hasRole('admin'))
+            @if (auth()->user() && (auth()->user()->hasRole('admin') || !auth()->user()->organization_id))
                 <div class="row mb-4">
                     <div class="col-md-3 mb-3">
                         <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition">
@@ -227,98 +227,103 @@
             <!-- Main Dashboard Cards -->
             <div class="row">
                 <!-- Content Management Section -->
-                <div class="col-lg-6 mb-4">
-                    <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition h-100">
-                        <div class="card-header bg-transparent border-0 pt-4 pb-3">
-                            <h5 class="mb-0 text-dark dark:text-gray-100 dark-transition">
-                                <i class="fa fa-edit me-2 text-primary"></i>Content Management
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            <a href="{{ route('admin.events.index') }}"
-                                class="d-flex align-items-center justify-content-between text-decoration-none p-3 mb-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark-transition">
-                                <div class="d-flex align-items-center">
-                                    <div class="bg-primary bg-opacity-10 rounded p-2 me-3">
-                                        <i class="fa fa-calendar text-primary"></i>
-                                    </div>
-                                    <span class="text-dark dark:text-gray-100 fw-medium">Manage Events</span>
-                                </div>
-                                <i class="fa fa-arrow-right text-muted dark:text-gray-400"></i>
-                            </a>
-
-                            <a href="{{ route('admin.blogs.index') }}"
-                                class="d-flex align-items-center justify-content-between text-decoration-none p-3 mb-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark-transition">
-                                <div class="d-flex align-items-center">
-                                    <div class="bg-success bg-opacity-10 rounded p-2 me-3">
-                                        <i class="fa fa-book text-success"></i>
-                                    </div>
-                                    <span class="text-dark dark:text-gray-100 fw-medium">Resource Hub</span>
-                                </div>
-                                <i class="fa fa-arrow-right text-muted dark:text-gray-400"></i>
-                            </a>
-
-                            <a href="{{ route('admin.playbooks.dashboard') }}"
-                                class="d-flex align-items-center justify-content-between text-decoration-none p-3 mb-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark-transition">
-                                <div class="d-flex align-items-center">
-                                    <div class="bg-info bg-opacity-10 rounded p-2 me-3">
-                                        <i class="fa fa-download text-info"></i>
-                                    </div>
-                                    <span class="text-dark dark:text-gray-100 fw-medium">Ebook Downloads</span>
-                                </div>
-                                <i class="fa fa-arrow-right text-muted dark:text-gray-400"></i>
-                            </a>
-
-                            @if (auth()->user() && auth()->user()->hasRole('admin'))
-                                <a href="{{ route('admin.contact.index') }}"
-                                    class="d-flex align-items-center justify-content-between text-decoration-none p-3 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark-transition">
+                @if (auth()->user() && (auth()->user()->hasRole('admin') || !auth()->user()->organization_id))
+                    <div class="col-lg-6 mb-4">
+                        <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition h-100">
+                            <div class="card-header bg-transparent border-0 pt-4 pb-3">
+                                <h5 class="mb-0 text-dark dark:text-gray-100 dark-transition">
+                                    <i class="fa fa-edit me-2 text-primary"></i>Content Management
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <a href="{{ route('admin.events.index') }}"
+                                    class="d-flex align-items-center justify-content-between text-decoration-none p-3 mb-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark-transition">
                                     <div class="d-flex align-items-center">
-                                        <div class="bg-warning bg-opacity-10 rounded p-2 me-3">
-                                            <i class="fa fa-envelope text-warning"></i>
+                                        <div class="bg-primary bg-opacity-10 rounded p-2 me-3">
+                                            <i class="fa fa-calendar text-primary"></i>
                                         </div>
-                                        <span class="text-dark dark:text-gray-100 fw-medium">Contact Submissions</span>
+                                        <span class="text-dark dark:text-gray-100 fw-medium">Manage Events</span>
                                     </div>
                                     <i class="fa fa-arrow-right text-muted dark:text-gray-400"></i>
                                 </a>
-                            @endif
+
+                                <a href="{{ route('admin.blogs.index') }}"
+                                    class="d-flex align-items-center justify-content-between text-decoration-none p-3 mb-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark-transition">
+                                    <div class="d-flex align-items-center">
+                                        <div class="bg-success bg-opacity-10 rounded p-2 me-3">
+                                            <i class="fa fa-book text-success"></i>
+                                        </div>
+                                        <span class="text-dark dark:text-gray-100 fw-medium">Resource Hub</span>
+                                    </div>
+                                    <i class="fa fa-arrow-right text-muted dark:text-gray-400"></i>
+                                </a>
+
+                                <a href="{{ route('admin.playbooks.dashboard') }}"
+                                    class="d-flex align-items-center justify-content-between text-decoration-none p-3 mb-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark-transition">
+                                    <div class="d-flex align-items-center">
+                                        <div class="bg-info bg-opacity-10 rounded p-2 me-3">
+                                            <i class="fa fa-download text-info"></i>
+                                        </div>
+                                        <span class="text-dark dark:text-gray-100 fw-medium">Ebook Downloads</span>
+                                    </div>
+                                    <i class="fa fa-arrow-right text-muted dark:text-gray-400"></i>
+                                </a>
+
+                                @if (auth()->user() && auth()->user()->hasRole('admin'))
+                                    <a href="{{ route('admin.contact.index') }}"
+                                        class="d-flex align-items-center justify-content-between text-decoration-none p-3 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark-transition">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-warning bg-opacity-10 rounded p-2 me-3">
+                                                <i class="fa fa-envelope text-warning"></i>
+                                            </div>
+                                            <span class="text-dark dark:text-gray-100 fw-medium">Contact
+                                                Submissions</span>
+                                        </div>
+                                        <i class="fa fa-arrow-right text-muted dark:text-gray-400"></i>
+                                    </a>
+                                @endif
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
 
                 <!-- User Management Section -->
-                <div class="col-lg-6 mb-4">
-                    <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition h-100">
-                        <div class="card-header bg-transparent border-0 pt-4 pb-3">
-                            <h5 class="mb-0 text-dark dark:text-gray-100 dark-transition">
-                                <i class="fa fa-users me-2 text-success"></i>User Management
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            <a href="{{ route('admin.students.index') }}"
-                                class="d-flex align-items-center justify-content-between text-decoration-none p-3 mb-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark-transition">
-                                <div class="d-flex align-items-center">
-                                    <div class="bg-success bg-opacity-10 rounded p-2 me-3">
-                                        <i class="fa fa-user-graduate text-success"></i>
-                                    </div>
-                                    <span class="text-dark dark:text-gray-100 fw-medium">View Students</span>
-                                </div>
-                                <i class="fa fa-arrow-right text-muted dark:text-gray-400"></i>
-                            </a>
-
-                            @if (auth()->user() && auth()->user()->hasRole('admin'))
-                                <a href="{{ route('admin.staff.index') }}"
-                                    class="d-flex align-items-center justify-content-between text-decoration-none p-3 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark-transition">
+                @if (auth()->user() && (auth()->user()->hasRole('admin') || !auth()->user()->organization_id))
+                    <div class="col-lg-6 mb-4">
+                        <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition h-100">
+                            <div class="card-header bg-transparent border-0 pt-4 pb-3">
+                                <h5 class="mb-0 text-dark dark:text-gray-100 dark-transition">
+                                    <i class="fa fa-users me-2 text-success"></i>User Management
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <a href="{{ route('admin.students.index') }}"
+                                    class="d-flex align-items-center justify-content-between text-decoration-none p-3 mb-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark-transition">
                                     <div class="d-flex align-items-center">
-                                        <div class="bg-warning bg-opacity-10 rounded p-2 me-3">
-                                            <i class="fa fa-user-tie text-warning"></i>
+                                        <div class="bg-success bg-opacity-10 rounded p-2 me-3">
+                                            <i class="fa fa-user-graduate text-success"></i>
                                         </div>
-                                        <span class="text-dark dark:text-gray-100 fw-medium">Manage Staff</span>
+                                        <span class="text-dark dark:text-gray-100 fw-medium">View Students</span>
                                     </div>
                                     <i class="fa fa-arrow-right text-muted dark:text-gray-400"></i>
                                 </a>
-                            @endif
+
+                                @if (auth()->user() && auth()->user()->hasRole('admin'))
+                                    <a href="{{ route('admin.staff.index') }}"
+                                        class="d-flex align-items-center justify-content-between text-decoration-none p-3 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark-transition">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-warning bg-opacity-10 rounded p-2 me-3">
+                                                <i class="fa fa-user-tie text-warning"></i>
+                                            </div>
+                                            <span class="text-dark dark:text-gray-100 fw-medium">Manage Staff</span>
+                                        </div>
+                                        <i class="fa fa-arrow-right text-muted dark:text-gray-400"></i>
+                                    </a>
+                                @endif
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
 
                 <!-- Project Management Section -->
                 @if (auth()->user() && auth()->user()->hasRole('admin|supervisor|staff'))
@@ -379,7 +384,7 @@
                     </div>
                 @endif
 
-                @if (auth()->user() && auth()->user()->hasRole('admin'))
+                @if (auth()->user() && (auth()->user()->hasRole('admin') || !auth()->user()->organization_id))
                     <!-- Applications & Reports Section -->
                     <div class="col-lg-12 mb-4">
                         <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition">

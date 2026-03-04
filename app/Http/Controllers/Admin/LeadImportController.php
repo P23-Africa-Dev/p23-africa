@@ -167,6 +167,7 @@ class LeadImportController extends Controller
                                     'ceo_linkedin_profile' => trim($row['ceo linkedin profile'] ?? '') ?: $existingLead->ceo_linkedin_profile,
                                     'status' => 'new',
                                     'source' => 'noel_waitlist',
+                                    'organization_id' => auth()->user()->organization_id ?? null,
                                 ]);
                                 $imported++;
                             } catch (\Exception $e) {
@@ -200,6 +201,7 @@ class LeadImportController extends Controller
                         'status' => 'new',
                         'source' => 'noel_waitlist',
                         'priority' => 'medium',
+                        'organization_id' => auth()->user()->organization_id ?? null,
                     ]);
 
                     $imported++;

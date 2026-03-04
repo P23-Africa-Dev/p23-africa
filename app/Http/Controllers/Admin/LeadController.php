@@ -21,13 +21,49 @@ use Illuminate\Validation\Rule;
 class LeadController extends Controller
 {
     /**
+     * Ensure the current user can access the given lead based on organization.
+     */
+    protected function ensureLeadOrgAccess(Lead $lead, $user)
+    {
+        if ($user && $user->hasRole('admin')) {
+            return;
+        }
+
+        if ($user) {
+            if ($user->organization_id) {
+                if ($lead->organization_id !== $user->organization_id) {
+                    abort(403, 'You are not authorized to access this lead.');
+                }
+            } else {
+                if (!is_null($lead->organization_id)) {
+                    abort(403, 'You are not authorized to access this lead.');
+                }
+            }
+        } else {
+            // Unauthenticated users cannot access leads
+            abort(403, 'You are not authorized to access this lead.');
+        }
+    }
+
+    /**
      * Display a listing of leads.
      */
     public function index(Request $request)
     {
+        $user = auth()->user();
         $query = Lead::with(['assignedUser', 'drive', 'activities' => function ($q) {
             $q->latest()->limit(1);
         }])->orderBy('created_at', 'desc');
+
+        // If not a global admin, scope leads to user's organization
+        if ($user && !$user->hasRole('admin')) {
+            if ($user->organization_id) {
+                $query->where('organization_id', $user->organization_id);
+            } else {
+                // users without org should see none
+                $query->whereNull('organization_id');
+            }
+        }
 
         // Filter by drive
         if ($request->filled('drive')) {
@@ -122,9 +158,13 @@ class LeadController extends Controller
         ];
 
         // Get users for assignment filter
-        $users = User::whereHas('roles', function ($q) {
+        $usersQuery = User::whereHas('roles', function ($q) {
             $q->whereIn('name', ['admin', 'supervisor', 'staff']);
-        })->get();
+        });
+        if ($user && !$user->hasRole('admin')) {
+            $usersQuery->where('organization_id', $user->organization_id);
+        }
+        $users = $usersQuery->get();
 
         // Get drives for filter
         $drives = LeadDrive::orderBy('name')->get();
@@ -181,6 +221,7 @@ class LeadController extends Controller
             'requirements' => 'nullable|string|max:5000',
             'notes' => 'nullable|string|max:5000',
             'assigned_to' => 'nullable|exists:users,id',
+            'organization_id' => 'nullable|exists:organizations,id',
             'next_follow_up' => 'nullable|date|after:now',
         ]);
 
@@ -212,6 +253,11 @@ class LeadController extends Controller
         try {
             DB::beginTransaction();
 
+            // Ensure organization is set: prefer passed org (admin), fallback to creator's org
+            if (empty($validated['organization_id'])) {
+                $validated['organization_id'] = auth()->user()->organization_id ?? null;
+            }
+
             $lead = Lead::create($validated);
 
             // Log lead creation
@@ -235,6 +281,9 @@ class LeadController extends Controller
      */
     public function show(Lead $lead)
     {
+        $user = auth()->user();
+        $this->ensureLeadOrgAccess($lead, $user);
+
         $lead->load(['assignedUser', 'activities.user']);
 
         $users = User::whereHas('roles', function ($q) {
@@ -255,6 +304,9 @@ class LeadController extends Controller
      */
     public function edit(Lead $lead)
     {
+        $user = auth()->user();
+        $this->ensureLeadOrgAccess($lead, $user);
+
         $users = User::whereHas('roles', function ($q) {
             $q->whereIn('name', ['admin', 'supervisor', 'staff']);
         })->get();
@@ -275,6 +327,9 @@ class LeadController extends Controller
      */
     public function update(Request $request, Lead $lead)
     {
+        $user = auth()->user();
+        $this->ensureLeadOrgAccess($lead, $user);
+
         $validated = $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'nullable|string|max:255',
@@ -370,6 +425,9 @@ class LeadController extends Controller
      */
     public function destroy(Lead $lead)
     {
+        $user = auth()->user();
+        $this->ensureLeadOrgAccess($lead, $user);
+
         try {
             $lead->delete();
 
@@ -401,6 +459,9 @@ class LeadController extends Controller
      */
     public function updateStatus(Request $request, Lead $lead)
     {
+        $user = auth()->user();
+        $this->ensureLeadOrgAccess($lead, $user);
+
         $validated = $request->validate([
             'status' => ['required', Rule::in(array_keys(Lead::getStatuses()))],
             'lost_reason' => 'nullable|required_if:status,lost|string|max:500',
@@ -437,6 +498,9 @@ class LeadController extends Controller
      */
     public function assign(Request $request, Lead $lead)
     {
+        $user = auth()->user();
+        $this->ensureLeadOrgAccess($lead, $user);
+
         $validated = $request->validate([
             'assigned_to' => 'nullable|exists:users,id',
         ]);
@@ -472,6 +536,9 @@ class LeadController extends Controller
      */
     public function addActivity(Request $request, Lead $lead)
     {
+        $user = auth()->user();
+        $this->ensureLeadOrgAccess($lead, $user);
+
         $validated = $request->validate([
             'type' => ['required', Rule::in(array_keys(LeadActivity::getTypes()))],
             'title' => 'required|string|max:255',
@@ -566,6 +633,9 @@ class LeadController extends Controller
      */
     public function setFollowUp(Request $request, Lead $lead)
     {
+        $user = auth()->user();
+        $this->ensureLeadOrgAccess($lead, $user);
+
         $validated = $request->validate([
             'next_follow_up' => 'required|date|after:now',
             'note' => 'nullable|string|max:500',
@@ -628,6 +698,10 @@ class LeadController extends Controller
             DB::beginTransaction();
 
             $lead = Lead::createFromContactSubmission($contact);
+            // Associate with current user's organization if available
+            if (auth()->check() && auth()->user()->organization_id) {
+                $lead->update(['organization_id' => auth()->user()->organization_id]);
+            }
             $lead->logActivity('note', 'Lead created from contact submission', 'Converted from contact form submission #' . $contact->id);
 
             DB::commit();
@@ -681,6 +755,9 @@ class LeadController extends Controller
             DB::beginTransaction();
 
             $lead = Lead::createFromConsultation($consultation);
+            if (auth()->check() && auth()->user()->organization_id) {
+                $lead->update(['organization_id' => auth()->user()->organization_id]);
+            }
             $lead->logActivity('note', 'Lead created from consultation', 'Converted from consultation application #' . $consultation->id);
 
             DB::commit();
@@ -715,7 +792,19 @@ class LeadController extends Controller
         ]);
 
         try {
+            $user = auth()->user();
+
             $leads = Lead::whereIn('id', $validated['ids']);
+
+            // Scope bulk actions to user's organization for non-admins
+            if ($user && !$user->hasRole('admin')) {
+                if ($user->organization_id) {
+                    $leads->where('organization_id', $user->organization_id);
+                } else {
+                    $leads->whereNull('organization_id');
+                }
+            }
+
             $count = $leads->count();
 
             switch ($validated['action']) {
@@ -762,7 +851,18 @@ class LeadController extends Controller
      */
     public function export(Request $request)
     {
+        $user = auth()->user();
+
         $query = Lead::with('assignedUser');
+
+        // Scope to user's organization for non-admin users
+        if ($user && !$user->hasRole('admin')) {
+            if ($user->organization_id) {
+                $query->where('organization_id', $user->organization_id);
+            } else {
+                $query->whereNull('organization_id');
+            }
+        }
 
         // Apply same filters as index
         if ($request->filled('status')) {
@@ -856,6 +956,8 @@ class LeadController extends Controller
             ? LeadDrive::find($request->drive)
             : null;
 
+        $user = auth()->user();
+
         foreach ($statuses as $key => $label) {
             $query = Lead::where('status', $key)
                 ->with(['assignedUser', 'drive']);
@@ -866,6 +968,15 @@ class LeadController extends Controller
                     $query->whereNull('drive_id');
                 } else {
                     $query->where('drive_id', $request->drive);
+                }
+            }
+
+            // Scope to user's organization
+            if ($user && !$user->hasRole('admin')) {
+                if ($user->organization_id) {
+                    $query->where('organization_id', $user->organization_id);
+                } else {
+                    $query->whereNull('organization_id');
                 }
             }
 
@@ -891,6 +1002,9 @@ class LeadController extends Controller
      */
     public function getEmails(Lead $lead)
     {
+        $user = auth()->user();
+        $this->ensureLeadOrgAccess($lead, $user);
+
         $emails = $lead->emails()
             ->with('user')
             ->orderBy('created_at', 'desc')
@@ -914,6 +1028,9 @@ class LeadController extends Controller
      */
     public function sendEmail(Request $request, Lead $lead, LeadEmailService $emailService)
     {
+        $user = auth()->user();
+        $this->ensureLeadOrgAccess($lead, $user);
+
         $validated = $request->validate([
             'subject' => 'required|string|max:255',
             'body' => 'required|string|max:10000',
@@ -1016,6 +1133,9 @@ class LeadController extends Controller
      */
     public function getEmailThread(Lead $lead, $threadId)
     {
+        $user = auth()->user();
+        $this->ensureLeadOrgAccess($lead, $user);
+
         $emails = $lead->emails()
             ->where('thread_id', $threadId)
             ->with('user')
@@ -1040,6 +1160,9 @@ class LeadController extends Controller
      */
     public function getUnreadEmailCount(Lead $lead)
     {
+        $user = auth()->user();
+        $this->ensureLeadOrgAccess($lead, $user);
+
         $count = $lead->emails()
             ->incoming()
             ->whereNull('read_at')

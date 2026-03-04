@@ -15,6 +15,28 @@ use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
 {
+    /**
+     * Ensure the current user can access the given task based on organization.
+     */
+    protected function ensureTaskOrgAccess(Task $task, $user)
+    {
+        if ($user->hasRole('admin')) {
+            return;
+        }
+
+        // If user belongs to an organization, require task to belong to same org.
+        if ($user->organization_id) {
+            if ($task->organization_id !== $user->organization_id) {
+                abort(403, 'You are not authorized to access this task.');
+            }
+        } else {
+            // If user has no org, require task to be global (null org)
+            if (!is_null($task->organization_id)) {
+                abort(403, 'You are not authorized to access this task.');
+            }
+        }
+    }
+
     public function index(Request $request)
     {
         $user = Auth::user();
@@ -34,8 +56,27 @@ class TaskController extends Controller
             });
         }
 
+        // Scope to user's organization for non-admin users
+        if (!$user->hasRole('admin')) {
+            if ($user->organization_id) {
+                $query->where('organization_id', $user->organization_id);
+            } else {
+                $query->whereNull('organization_id');
+            }
+        }
+
         $tasks = $query->orderBy('order')->latest()->paginate(15);
-        $projects = Project::all();
+
+        // Scope projects for dropdowns to user's organization (admins see all)
+        $projectsQuery = Project::query();
+        if (!$user->hasRole('admin')) {
+            if ($user->organization_id) {
+                $projectsQuery->where('organization_id', $user->organization_id);
+            } else {
+                $projectsQuery->whereNull('organization_id');
+            }
+        }
+        $projects = $projectsQuery->get();
 
         return view('admin.tasks.index', compact('tasks', 'projects', 'projectId'));
     }
@@ -59,6 +100,15 @@ class TaskController extends Controller
             });
         }
 
+        // Scope to organization for non-admins
+        if (!$user->hasRole('admin')) {
+            if ($user->organization_id) {
+                $query->where('organization_id', $user->organization_id);
+            } else {
+                $query->whereNull('organization_id');
+            }
+        }
+
         $tasks = $query->orderBy('order')->get();
 
         $tasksByStatus = [
@@ -68,7 +118,16 @@ class TaskController extends Controller
             'completed' => $tasks->where('status', 'completed')->values(),
         ];
 
-        $projects = Project::all();
+        // Scope projects for kanban view
+        $projectsQuery = Project::query();
+        if (!$user->hasRole('admin')) {
+            if ($user->organization_id) {
+                $projectsQuery->where('organization_id', $user->organization_id);
+            } else {
+                $projectsQuery->whereNull('organization_id');
+            }
+        }
+        $projects = $projectsQuery->get();
         $statuses = Task::getStatuses();
 
         // Get assignable users based on current user's role
@@ -80,12 +139,20 @@ class TaskController extends Controller
             $assignableUsers = collect();
         }
 
+        // Limit assignable users to same organization for non-admins
+        if (!$user->hasRole('admin') && $user->organization_id) {
+            $assignableUsers = $assignableUsers->where('organization_id', $user->organization_id)->values();
+        }
+
         return view('admin.tasks.kanban', compact('tasksByStatus', 'projects', 'projectId', 'statuses', 'assignableUsers'));
     }
 
     public function show(Task $task)
     {
         $user = Auth::user();
+
+        // Ensure organization-level access
+        $this->ensureTaskOrgAccess($task, $user);
 
         // Check if user can view this task (assigned to them or admin/supervisor)
         $canView = $user->hasRole(['admin', 'supervisor']) ||
@@ -112,7 +179,16 @@ class TaskController extends Controller
             abort(403, 'Only admins and supervisors can create tasks.');
         }
 
-        $projects = Project::all();
+        // Scope projects for create form
+        $projectsQuery = Project::query();
+        if (!$user->hasRole('admin')) {
+            if ($user->organization_id) {
+                $projectsQuery->where('organization_id', $user->organization_id);
+            } else {
+                $projectsQuery->whereNull('organization_id');
+            }
+        }
+        $projects = $projectsQuery->get();
         $statuses = Task::getStatuses();
         $priorities = Task::getPriorities();
 
@@ -154,6 +230,9 @@ class TaskController extends Controller
 
         $data['created_by'] = Auth::id();
         $data['order'] = Task::where('project_id', $data['project_id'])->max('order') + 1;
+
+        // Set organization for the task based on creator
+        $data['organization_id'] = Auth::user()->organization_id ?? null;
 
         $task = Task::create($data);
 
@@ -200,11 +279,23 @@ class TaskController extends Controller
     {
         $user = Auth::user();
 
+        // Ensure organization-level access
+        $this->ensureTaskOrgAccess($task, $user);
+
         if (!$user->hasRole(['admin', 'supervisor'])) {
             abort(403, 'Only admins and supervisors can edit tasks.');
         }
 
-        $projects = Project::all();
+        // Scope projects for edit form
+        $projectsQuery = Project::query();
+        if (!$user->hasRole('admin')) {
+            if ($user->organization_id) {
+                $projectsQuery->where('organization_id', $user->organization_id);
+            } else {
+                $projectsQuery->whereNull('organization_id');
+            }
+        }
+        $projects = $projectsQuery->get();
         $statuses = Task::getStatuses();
         $priorities = Task::getPriorities();
 
@@ -222,6 +313,9 @@ class TaskController extends Controller
     public function update(Request $request, Task $task)
     {
         $user = Auth::user();
+
+        // Ensure organization-level access
+        $this->ensureTaskOrgAccess($task, $user);
 
         if (!$user->hasRole(['admin', 'supervisor'])) {
             abort(403, 'Only admins and supervisors can edit tasks.');
@@ -291,6 +385,9 @@ class TaskController extends Controller
     {
         $user = Auth::user();
 
+        // Ensure organization-level access
+        $this->ensureTaskOrgAccess($task, $user);
+
         if (!$user->hasRole(['admin', 'supervisor'])) {
             abort(403, 'Only admins and supervisors can delete tasks.');
         }
@@ -324,6 +421,9 @@ class TaskController extends Controller
     public function updateStatus(Request $request, Task $task)
     {
         $user = Auth::user();
+
+        // Ensure organization-level access
+        $this->ensureTaskOrgAccess($task, $user);
 
         // Check if user can update this task (assigned to them or admin/supervisor)
         $canUpdate = $user->hasRole(['admin', 'supervisor']) ||
@@ -363,7 +463,24 @@ class TaskController extends Controller
         $user = Auth::user();
 
         foreach ($request->tasks as $taskData) {
-            $task = Task::find($taskData['id']);
+            // Respect organization scope when finding the task for update
+            if ($user->hasRole('admin')) {
+                $task = Task::find($taskData['id']);
+            } else {
+                $task = Task::where('id', $taskData['id'])
+                    ->where(function ($q) use ($user) {
+                        if ($user->organization_id) {
+                            $q->where('organization_id', $user->organization_id);
+                        } else {
+                            $q->whereNull('organization_id');
+                        }
+                    })->first();
+            }
+
+            if (!$task) {
+                // Skip tasks that are not accessible in this organization
+                continue;
+            }
 
             // Check if user can update this task
             $canUpdate = $user->hasRole(['admin', 'supervisor']) ||
@@ -386,6 +503,9 @@ class TaskController extends Controller
     public function assign(Request $request, Task $task)
     {
         $user = Auth::user();
+
+        // Ensure organization-level access
+        $this->ensureTaskOrgAccess($task, $user);
 
         if (!$user->hasRole(['admin', 'supervisor'])) {
             return response()->json([
@@ -432,6 +552,13 @@ class TaskController extends Controller
                 continue;
             }
 
+            // Prevent assigning users from other organizations for non-admins
+            if (!$user->hasRole('admin') && $user->organization_id) {
+                if ($assignee->organization_id !== $user->organization_id) {
+                    abort(403, 'You cannot assign tasks to users outside your organization.');
+                }
+            }
+
             // Admin can assign to supervisors and staff
             if ($user->hasRole('admin')) {
                 if (!$assignee->hasRole(['supervisor', 'staff'])) {
@@ -472,6 +599,9 @@ class TaskController extends Controller
     public function getComments(Task $task)
     {
         $user = Auth::user();
+
+        // Ensure organization-level access
+        $this->ensureTaskOrgAccess($task, $user);
 
         // Check if user can view this task (assigned to them or admin/supervisor)
         $canView = $user->hasRole(['admin', 'supervisor']) ||
@@ -539,6 +669,9 @@ class TaskController extends Controller
     {
         $user = Auth::user();
 
+        // Ensure organization-level access
+        $this->ensureTaskOrgAccess($task, $user);
+
         // Check if user can view this task
         $canView = $user->hasRole(['admin', 'supervisor']) ||
             $task->assignees->contains('id', $user->id);
@@ -587,6 +720,9 @@ class TaskController extends Controller
     public function addComment(Request $request, Task $task)
     {
         $user = Auth::user();
+
+        // Ensure organization-level access
+        $this->ensureTaskOrgAccess($task, $user);
 
         // Check if user can comment on this task (assigned to them or admin/supervisor)
         $canComment = $user->hasRole(['admin', 'supervisor']) ||
@@ -681,6 +817,9 @@ class TaskController extends Controller
     public function deleteComment(Task $task, TaskComment $comment)
     {
         $user = Auth::user();
+
+        // Ensure organization-level access
+        $this->ensureTaskOrgAccess($task, $user);
 
         // Only the comment author or admin can delete
         if ($comment->user_id !== $user->id && !$user->hasRole('admin')) {

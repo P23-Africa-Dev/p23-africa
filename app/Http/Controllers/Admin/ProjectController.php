@@ -32,6 +32,15 @@ class ProjectController extends Controller
             }, 'tasks.assignees', 'creator']);
         }
 
+        // Scope to user's organization if not an admin (multi-tenant)
+        if (!$user->hasRole('admin')) {
+            if ($user->organization_id) {
+                $query->where('organization_id', $user->organization_id);
+            } else {
+                $query->whereNull('organization_id');
+            }
+        }
+
         // Filter by status if provided
         if ($request->filled('status')) {
             $query->where('status', $request->status);
@@ -80,6 +89,17 @@ class ProjectController extends Controller
             })->with(['creator', 'tasks'])->latest()->paginate(10);
         }
 
+        // Ensure non-admins only see their organization's projects
+        if (!$user->hasRole('admin')) {
+            if ($user->organization_id) {
+                $projects = Project::where('organization_id', $user->organization_id)
+                    ->with(['creator', 'tasks'])->latest()->paginate(10);
+            } else {
+                $projects = Project::whereNull('organization_id')
+                    ->with(['creator', 'tasks'])->latest()->paginate(10);
+            }
+        }
+
         return view('admin.projects.index', compact('projects'));
     }
 
@@ -107,6 +127,8 @@ class ProjectController extends Controller
         ]);
 
         $data['created_by'] = Auth::id();
+        // Set organization for the project (creator's org)
+        $data['organization_id'] = Auth::user()->organization_id ?? null;
 
         $project = Project::create($data);
 
@@ -139,6 +161,11 @@ class ProjectController extends Controller
             $assignableUsers = User::role('staff')->get();
         } else {
             $assignableUsers = collect();
+        }
+
+        // For non-admins, limit assignable users to same organization
+        if (!$user->hasRole('admin') && $user->organization_id) {
+            $assignableUsers = $assignableUsers->where('organization_id', $user->organization_id)->values();
         }
 
         return view('admin.projects.show', compact('project', 'statuses', 'priorities', 'assignableUsers'));

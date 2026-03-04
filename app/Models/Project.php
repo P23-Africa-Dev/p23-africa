@@ -10,6 +10,7 @@ class Project extends Model
     use HasFactory;
 
     protected $fillable = [
+        'organization_id',
         'name',
         'description',
         'status',
@@ -59,6 +60,14 @@ class Project extends Model
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    /**
+     * Organization relation
+     */
+    public function organization()
+    {
+        return $this->belongsTo(Organization::class);
     }
 
     public function tasks()

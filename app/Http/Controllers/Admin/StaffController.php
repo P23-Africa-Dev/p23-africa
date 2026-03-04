@@ -26,7 +26,9 @@ class StaffController extends Controller
     public function create()
     {
         $permissions = \Spatie\Permission\Models\Permission::all();
-        return view('admin.staff.create', compact('permissions'));
+        $organizations = \App\Models\Organization::orderBy('name')->get();
+        $defaultOrg = \App\Models\Organization::where('slug', 'default-org')->first();
+        return view('admin.staff.create', compact('permissions', 'organizations', 'defaultOrg'));
     }
 
     public function store(Request $request)
@@ -34,6 +36,8 @@ class StaffController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
+            'role' => 'nullable|in:staff,supervisor',
+            'organization_id' => 'nullable|exists:organizations,id',
             // 'permissions' => 'nullable|array',
         ]);
 
@@ -43,11 +47,14 @@ class StaffController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($password),
+            // Ensure empty string is converted to null to avoid SQL errors for integer column
+            'organization_id' => !empty($data['organization_id']) ? $data['organization_id'] : null,
         ]);
 
 
-        // Assign staff role to new users
-        $role = Role::firstOrCreate(['name' => 'staff']);
+        // Assign requested role (default to staff)
+        $assignedRole = $data['role'] ?? 'staff';
+        $role = Role::firstOrCreate(['name' => $assignedRole]);
         $user->assignRole($role);
 
         // $user->syncPermissions($data['permissions'] ?? []);
@@ -70,12 +77,14 @@ class StaffController extends Controller
         // Get all available permissions
         $permissions = \Spatie\Permission\Models\Permission::all();
 
+        $organizations = \App\Models\Organization::orderBy('name')->get();
+
         // Ensure Spatie roles and permissions are available
         // $staffPermissions = $staff->getPermissionNames()->toArray();
         // $staffPermissions = $staff->permissions->pluck('name')->toArray();
 
 
-        return view('admin.staff.edit', compact('staff', 'permissions'));
+        return view('admin.staff.edit', compact('staff', 'permissions', 'organizations'));
     }
 
     public function update(Request $request, User $staff)
@@ -83,12 +92,15 @@ class StaffController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $staff->id,
+            'organization_id' => 'nullable|exists:organizations,id',
             // 'permissions' => 'nullable|array',
         ]);
 
         $staff->update([
             'name' => $data['name'],
             'email' => $data['email'],
+            // Convert empty string to null
+            'organization_id' => !empty($data['organization_id']) ? $data['organization_id'] : null,
         ]);
 
         // $staff->syncPermissions($data['permissions'] ?? []);
@@ -110,7 +122,7 @@ class StaffController extends Controller
     public function suspend(User $staff)
     {
         if ($staff->hasRole('admin')) {
-            return redirect()->back()->with('error', 'Cannot suspend admin accounts.');
+            return redirect()->route('admin.staff.index')->with('error', 'Cannot suspend admin accounts.');
         }
 
         $staff->update(['suspended_at' => now()]);
@@ -120,8 +132,7 @@ class StaffController extends Controller
             ->performedOn($staff)
             ->withProperties(['action' => 'suspend'])
             ->log('Suspended staff account');
-
-        return redirect()->back()->with('success', 'Staff account suspended successfully.');
+        return redirect()->route('admin.staff.index')->with('success', 'Staff account suspended successfully.');
     }
 
     public function reactivate(User $staff)
@@ -133,19 +144,18 @@ class StaffController extends Controller
             ->performedOn($staff)
             ->withProperties(['action' => 'reactivate'])
             ->log('Reactivated staff account');
-
-        return redirect()->back()->with('success', 'Staff account reactivated successfully.');
+        return redirect()->route('admin.staff.index')->with('success', 'Staff account reactivated successfully.');
     }
 
     public function promote(User $staff)
     {
         // Ensure only staff can be promoted to supervisor
         if ($staff->hasRole('supervisor')) {
-            return back()->with('error', 'User is already a supervisor.');
+            return redirect()->route('admin.staff.index')->with('error', 'User is already a supervisor.');
         }
 
         if ($staff->hasRole('admin')) {
-            return back()->with('error', 'User is already an admin.');
+            return redirect()->route('admin.staff.index')->with('error', 'User is already an admin.');
         }
 
         $staff->syncRoles('supervisor'); // Promote staff to supervisor
@@ -157,7 +167,6 @@ class StaffController extends Controller
             ->performedOn($staff)
             ->withProperties(['promoted_to' => 'supervisor'])
             ->log('Promoted staff to supervisor');
-
-        return redirect()->back()->with('success', 'Staff promoted to supervisor successfully.');
+        return redirect()->route('admin.staff.index')->with('success', 'Staff promoted to supervisor successfully.');
     }
 }

@@ -13,6 +13,7 @@ class Lead extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'organization_id',
         'drive_id',
         'first_name',
         'last_name',
@@ -179,6 +180,14 @@ class Lead extends Model
     public function drive(): BelongsTo
     {
         return $this->belongsTo(LeadDrive::class, 'drive_id');
+    }
+
+    /**
+     * Organization relation
+     */
+    public function organization(): BelongsTo
+    {
+        return $this->belongsTo(Organization::class);
     }
 
     /**

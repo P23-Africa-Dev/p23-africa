@@ -41,6 +41,18 @@
                                     class="form-control" required>
                             </div>
 
+                            <div class="mb-3">
+                                <label>Organization</label>
+                                <select name="organization_id" class="form-control">
+                                    <option value="">-- None --</option>
+                                    @foreach ($organizations ?? [] as $org)
+                                        <option value="{{ $org->id }}"
+                                            {{ $staff->organization_id == $org->id ? 'selected' : '' }}>
+                                            {{ $org->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
                             {{-- <input type="text" name="name" value="{{ old('name', $staff->name) }}" required>
                             <input type="email" name="email" value="{{ old('email', $staff->email) }}" required> --}}
 
