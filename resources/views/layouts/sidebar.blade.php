@@ -64,7 +64,7 @@
                     <span class="sidebar-text">Projects</span>
                     <i class="sidebar-chevron bi bi-chevron-down" :class="open ? 'open' : ''"></i>
                 </button>
-                <div class="sidebar-submenu" x-show="open && sidebarOpen" x-transition>
+                <div class="sidebar-submenu" x-show="open && (sidebarOpen || mobileSidebarOpen)" x-transition>
                     <a href="{{ route('admin.projects.index') }}"
                         class="sidebar-subitem {{ request()->routeIs('admin.projects.*') ? 'active' : '' }}">
                         <i class="bi bi-folder-open"></i><span>All Projects</span>
@@ -97,7 +97,7 @@
                         <span class="sidebar-text">Content</span>
                         <i class="sidebar-chevron bi bi-chevron-down" :class="open ? 'open' : ''"></i>
                     </button>
-                    <div class="sidebar-submenu" x-show="open && sidebarOpen" x-transition>
+                    <div class="sidebar-submenu" x-show="open && (sidebarOpen || mobileSidebarOpen)" x-transition>
                         <a href="{{ route('admin.events.index') }}"
                             class="sidebar-subitem {{ request()->routeIs('admin.events.*') ? 'active' : '' }}">
                             <i class="bi bi-calendar-event"></i><span>Events</span>
@@ -129,7 +129,7 @@
                         <span class="sidebar-text">Users</span>
                         <i class="sidebar-chevron bi bi-chevron-down" :class="open ? 'open' : ''"></i>
                     </button>
-                    <div class="sidebar-submenu" x-show="open && sidebarOpen" x-transition>
+                    <div class="sidebar-submenu" x-show="open && (sidebarOpen || mobileSidebarOpen)" x-transition>
                         <a href="{{ route('admin.students.index') }}"
                             class="sidebar-subitem {{ request()->routeIs('admin.students.*') ? 'active' : '' }}">
                             <i class="bi bi-mortarboard"></i><span>Students</span>
@@ -156,7 +156,7 @@
                         <span class="sidebar-text">Applications</span>
                         <i class="sidebar-chevron bi bi-chevron-down" :class="open ? 'open' : ''"></i>
                     </button>
-                    <div class="sidebar-submenu" x-show="open && sidebarOpen" x-transition>
+                    <div class="sidebar-submenu" x-show="open && (sidebarOpen || mobileSidebarOpen)" x-transition>
                         <a href="{{ route('admin.consultation.index') }}"
                             class="sidebar-subitem {{ request()->routeIs('admin.consultation.*') ? 'active' : '' }}">
                             <i class="bi bi-handshake"></i><span>Consultations</span>

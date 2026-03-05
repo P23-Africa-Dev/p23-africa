@@ -1,47 +1,108 @@
 <x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <form method="POST" action="{{ route('login') }}">
+    {{-- ── Heading ── --}}
+    <div class="form-heading">
+        <h1>Welcome back</h1>
+        <p>Sign in to your account to continue</p>
+    </div>
+
+    {{-- ── Session Status ── --}}
+    @if (session('status'))
+        <div class="auth-alert success">
+            <i class="bi bi-check-circle-fill"></i>
+            {{ session('status') }}
+        </div>
+    @endif
+
+    {{-- ── Global validation error banner ── --}}
+    @if ($errors->any())
+        <div class="auth-alert error">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            {{ $errors->first() }}
+        </div>
+    @endif
+
+    <form method="POST" action="{{ route('login') }}" id="loginForm" novalidate>
         @csrf
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        {{-- Email ── --}}
+        <div class="field-group">
+            <label class="field-label" for="email">Email address</label>
+            <div class="field-wrap">
+                <i class="bi bi-envelope field-icon"></i>
+                <input id="email" class="field-input" type="email" name="email" value="{{ old('email') }}"
+                    placeholder="you@example.com" required autofocus autocomplete="username">
+            </div>
+            @error('email')
+                <div class="field-error">
+                    <i class="bi bi-x-circle-fill"></i> {{ $message }}
+                </div>
+            @enderror
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        {{-- Password ── --}}
+        <div class="field-group">
+            <label class="field-label" for="password">Password</label>
+            <div class="field-wrap">
+                <i class="bi bi-lock field-icon"></i>
+                <input id="password" class="field-input has-toggle" type="password" name="password"
+                    placeholder="••••••••" required autocomplete="current-password">
+                <button type="button" class="field-toggle" onclick="togglePwd()"
+                    aria-label="Toggle password visibility" id="pwdToggleBtn">
+                    <i class="bi bi-eye" id="pwdToggleIcon"></i>
+                </button>
+            </div>
+            @error('password')
+                <div class="field-error">
+                    <i class="bi bi-x-circle-fill"></i> {{ $message }}
+                </div>
+            @enderror
         </div>
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+        {{-- Remember / Forgot ── --}}
+        <div class="form-row">
+            <label class="remember-label">
+                <input type="checkbox" name="remember" id="remember_me">
+                <span>Remember me</span>
             </label>
-        </div>
 
-        <div class="flex items-center justify-end mt-4">
             @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
+                <a class="forgot-link" href="{{ route('password.request') }}">
+                    Forgot password?
                 </a>
             @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
         </div>
+
+        {{-- Submit ── --}}
+        <button type="submit" class="btn-login" id="loginBtn">
+            <span id="btnText">Sign In</span>
+            <i class="bi bi-arrow-right" id="btnArrow"></i>
+            <span class="btn-spinner" id="btnSpinner"></span>
+        </button>
+
     </form>
+
+    <script>
+        /* Password visibility toggle */
+        function togglePwd() {
+            const input = document.getElementById('password');
+            const icon = document.getElementById('pwdToggleIcon');
+            const show = input.type === 'password';
+            input.type = show ? 'text' : 'password';
+            icon.className = show ? 'bi bi-eye-slash' : 'bi bi-eye';
+        }
+
+        /* Loading state on submit */
+        document.getElementById('loginForm').addEventListener('submit', function() {
+            const btn = document.getElementById('loginBtn');
+            const text = document.getElementById('btnText');
+            const arrow = document.getElementById('btnArrow');
+            const spinner = document.getElementById('btnSpinner');
+            btn.disabled = true;
+            text.textContent = 'Signing in…';
+            arrow.style.display = 'none';
+            spinner.style.display = 'block';
+        });
+    </script>
+
 </x-guest-layout>

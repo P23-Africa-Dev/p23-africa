@@ -646,6 +646,36 @@ button {
     .sidebar.mobile-open {
         transform: translateX(0);
     }
+
+    /* Force full expanded appearance on mobile regardless of collapsed state */
+    .sidebar.mobile-open .sidebar-text,
+    .sidebar.mobile-open .sidebar-header-label,
+    .sidebar.mobile-open .sidebar-chevron,
+    .sidebar.mobile-open .sidebar-footer .sidebar-user-name,
+    .sidebar.mobile-open .sidebar-footer .sidebar-user-role {
+        display: block !important;
+    }
+    .sidebar.mobile-open .sidebar-item,
+    .sidebar.mobile-open .sidebar-dropdown-toggle {
+        justify-content: flex-start !important;
+        padding: 0.625rem 0.875rem !important;
+        gap: 0.75rem !important;
+    }
+    .sidebar.mobile-open .sidebar-icon {
+        width: auto !important;
+        height: auto !important;
+        font-size: 1rem !important;
+    }
+    .sidebar.mobile-open .sidebar-footer {
+        display: block !important;
+    }
+    .sidebar.mobile-open .sidebar-header {
+        justify-content: space-between !important;
+    }
+    .sidebar.mobile-open .sidebar-item.active::before {
+        display: block !important;
+    }
+
     .sidebar-overlay {
         position: fixed;
         inset: 0;
@@ -1376,9 +1406,11 @@ h6 {
 
 /* ─── 21. Logo inversion ──────────────────────────────────────────────── */
 .logo-theme-invert {
-    filter: none;
+    /* Light mode: invert to black */
+    filter: brightness(0);
 }
 .dark .logo-theme-invert {
+    /* Dark mode: invert to white */
     filter: brightness(0) invert(1);
 }
 
