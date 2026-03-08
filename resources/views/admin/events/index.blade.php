@@ -37,50 +37,61 @@
                             $privateEvents = $events->where('visibility', 'private')->count();
                         @endphp
 
-                        <div class="bg-gradient-to-r from-green-500 to-green-600 p-6 rounded-xl text-white shadow-lg">
+                        <div class="bg-gradient-to-r from-green-500 to-green-600 p-6 rounded-xl shadow-lg"
+                            style="color: #fff !important;">
                             <div class="flex items-center">
-                                <div class="p-3 bg-white bg-opacity-20 rounded-lg">
-                                    <i class="fas fa-calendar-check fa-2x"></i>
+                                <div class="p-3 rounded-lg" style="background: rgba(255,255,255,0.2);">
+                                    <i class="fas fa-calendar-check fa-2x" style="color: #fff !important;"></i>
                                 </div>
                                 <div class="ml-4">
-                                    <p class="text-green-100 text-sm">Upcoming Events</p>
-                                    <p class="text-2xl font-bold">{{ $upcomingEvents }}</p>
+                                    <p class="text-sm" style="color: rgba(255,255,255,0.8) !important;">Upcoming Events
+                                    </p>
+                                    <p class="text-2xl font-bold" style="color: #fff !important;">{{ $upcomingEvents }}
+                                    </p>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="bg-gradient-to-r from-blue-500 to-blue-600 p-6 rounded-xl text-white shadow-lg">
+                        <div class="bg-gradient-to-r from-blue-500 to-blue-600 p-6 rounded-xl shadow-lg"
+                            style="color: #fff !important;">
                             <div class="flex items-center">
-                                <div class="p-3 bg-white bg-opacity-20 rounded-lg">
-                                    <i class="fas fa-history fa-2x"></i>
+                                <div class="p-3 rounded-lg" style="background: rgba(255,255,255,0.2);">
+                                    <i class="fas fa-history fa-2x" style="color: #fff !important;"></i>
                                 </div>
                                 <div class="ml-4">
-                                    <p class="text-blue-100 text-sm">Past Events</p>
-                                    <p class="text-2xl font-bold">{{ $pastEvents }}</p>
+                                    <p class="text-sm" style="color: rgba(255,255,255,0.8) !important;">Past Events</p>
+                                    <p class="text-2xl font-bold" style="color: #fff !important;">{{ $pastEvents }}
+                                    </p>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="bg-gradient-to-r from-purple-500 to-purple-600 p-6 rounded-xl text-white shadow-lg">
+                        <div class="bg-gradient-to-r from-purple-500 to-purple-600 p-6 rounded-xl shadow-lg"
+                            style="color: #fff !important;">
                             <div class="flex items-center">
-                                <div class="p-3 bg-white bg-opacity-20 rounded-lg">
-                                    <i class="fas fa-globe fa-2x"></i>
+                                <div class="p-3 rounded-lg" style="background: rgba(255,255,255,0.2);">
+                                    <i class="fas fa-globe fa-2x" style="color: #fff !important;"></i>
                                 </div>
                                 <div class="ml-4">
-                                    <p class="text-purple-100 text-sm">Public Events</p>
-                                    <p class="text-2xl font-bold">{{ $publicEvents }}</p>
+                                    <p class="text-sm" style="color: rgba(255,255,255,0.8) !important;">Public Events
+                                    </p>
+                                    <p class="text-2xl font-bold" style="color: #fff !important;">{{ $publicEvents }}
+                                    </p>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="bg-gradient-to-r from-orange-500 to-orange-600 p-6 rounded-xl text-white shadow-lg">
+                        <div class="bg-gradient-to-r from-orange-500 to-orange-600 p-6 rounded-xl shadow-lg"
+                            style="color: #fff !important;">
                             <div class="flex items-center">
-                                <div class="p-3 bg-white bg-opacity-20 rounded-lg">
-                                    <i class="fas fa-lock fa-2x"></i>
+                                <div class="p-3 rounded-lg" style="background: rgba(255,255,255,0.2);">
+                                    <i class="fas fa-lock fa-2x" style="color: #fff !important;"></i>
                                 </div>
                                 <div class="ml-4">
-                                    <p class="text-orange-100 text-sm">Private Events</p>
-                                    <p class="text-2xl font-bold">{{ $privateEvents }}</p>
+                                    <p class="text-sm" style="color: rgba(255,255,255,0.8) !important;">Private Events
+                                    </p>
+                                    <p class="text-2xl font-bold" style="color: #fff !important;">{{ $privateEvents }}
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -167,7 +178,7 @@
                                         @endphp
 
                                         <tr
-                                            class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
+                                            class="hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
                                             <!-- Event Details -->
                                             <td class="px-6 py-4">
                                                 <div class="flex items-center">
@@ -180,16 +191,19 @@
                                                         @else
                                                             <div
                                                                 class="h-12 w-12 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center border border-gray-200 dark:border-gray-600">
-                                                                <i class="fas fa-calendar-alt text-white text-lg"></i>
+                                                                <i class="fas fa-calendar-alt text-lg"
+                                                                    style="color: #fff !important;"></i>
                                                             </div>
                                                         @endif
                                                     </div>
                                                     <div class="ml-4">
-                                                        <div class="text-sm font-medium text-gray-900 dark:text-white">
+                                                        <div class="text-sm font-medium"
+                                                            style="color: var(--text-primary);">
                                                             {{ Str::limit($event->title, 40) }}
                                                         </div>
                                                         @if ($event->subtitle)
-                                                            <div class="text-sm text-gray-500 dark:text-gray-400">
+                                                            <div class="text-sm"
+                                                                style="color: var(--text-secondary);">
                                                                 {{ Str::limit($event->subtitle, 50) }}
                                                             </div>
                                                         @endif
@@ -205,17 +219,20 @@
 
                                             <!-- Schedule -->
                                             <td class="px-6 py-4">
-                                                <div class="text-sm text-gray-900 dark:text-white">
+                                                <div class="text-sm" style="color: var(--text-primary);">
                                                     <div class="flex items-center mb-1">
-                                                        <i class="fas fa-calendar mr-2 text-blue-500"></i>
+                                                        <i class="fas fa-calendar mr-2"
+                                                            style="color: #3b82f6 !important;"></i>
                                                         {{ \Carbon\Carbon::parse($event->event_date)->format('M d, Y') }}
                                                     </div>
                                                     <div class="flex items-center mb-1">
-                                                        <i class="fas fa-clock mr-2 text-green-500"></i>
+                                                        <i class="fas fa-clock mr-2"
+                                                            style="color: #22c55e !important;"></i>
                                                         {{ \Carbon\Carbon::parse($event->event_time)->format('g:i A') }}
                                                     </div>
                                                     <div class="flex items-center">
-                                                        <i class="fas fa-map-marker-alt mr-2 text-red-500"></i>
+                                                        <i class="fas fa-map-marker-alt mr-2"
+                                                            style="color: #ef4444 !important;"></i>
                                                         <span
                                                             class="text-xs">{{ Str::limit($event->venue, 20) }}</span>
                                                     </div>
@@ -227,11 +244,11 @@
                                                 <div class="space-y-2">
                                                     <span
                                                         class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $event->visibility === 'public' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800' }}">
-                                                        <i
-                                                            class="fas {{ $event->visibility === 'public' ? 'fa-globe' : 'fa-lock' }} mr-1"></i>
+                                                        <i class="fas {{ $event->visibility === 'public' ? 'fa-globe' : 'fa-lock' }} mr-1"
+                                                            style="color: inherit !important;"></i>
                                                         {{ ucfirst($event->visibility) }}
                                                     </span>
-                                                    <div class="text-xs text-gray-500 dark:text-gray-400">
+                                                    <div class="text-xs" style="color: var(--text-secondary);">
                                                         {{ str_replace('_', ' ', $event->display) }}
                                                     </div>
                                                 </div>

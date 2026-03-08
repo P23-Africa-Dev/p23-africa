@@ -23,15 +23,20 @@
                         @method('PUT')
 
                         <!-- Form Header -->
-                        <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 rounded-lg">
-                            <h3 class="text-lg font-semibold mb-2">Edit Event Information</h3>
-                            <p class="text-blue-100">Update the details below to modify your event</p>
+                        <div class="bg-gradient-to-r from-blue-600 to-purple-600 p-6 rounded-lg"
+                            style="color: #fff !important;">
+                            <h3 class="text-lg font-semibold mb-2" style="color: #fff !important;">Edit Event
+                                Information</h3>
+                            <p style="color: rgba(191, 219, 254, 1) !important;">Update the details below to modify your
+                                event</p>
                         </div>
 
                         <!-- Basic Information Section -->
-                        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                                <i class="fas fa-info-circle mr-2 text-blue-600"></i>Basic Information
+                        <div style="background-color: #f9fafb; padding: 1.5rem; border-radius: 0.5rem;"
+                            class="dark:bg-gray-700">
+                            <h4 class="text-lg font-semibold mb-4" style="color: var(--text-primary);">
+                                <i class="fas fa-info-circle mr-2" style="color: #2563eb !important;"></i>Basic
+                                Information
                             </h4>
 
                             <div class="grid grid-cols-1 gap-6">
@@ -72,9 +77,11 @@
                         </div>
 
                         <!-- Schedule & Location Section -->
-                        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                                <i class="fas fa-calendar-alt mr-2 text-green-600"></i>Schedule & Location
+                        <div style="background-color: #f9fafb; padding: 1.5rem; border-radius: 0.5rem;"
+                            class="dark:bg-gray-700">
+                            <h4 class="text-lg font-semibold mb-4" style="color: var(--text-primary);">
+                                <i class="fas fa-calendar-alt mr-2" style="color: #16a34a !important;"></i>Schedule &
+                                Location
                             </h4>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -114,9 +121,10 @@
                         </div>
 
                         <!-- Display Settings Section -->
-                        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                                <i class="fas fa-cog mr-2 text-purple-600"></i>Display Settings
+                        <div style="background-color: #f9fafb; padding: 1.5rem; border-radius: 0.5rem;"
+                            class="dark:bg-gray-700">
+                            <h4 class="text-lg font-semibold mb-4" style="color: var(--text-primary);">
+                                <i class="fas fa-cog mr-2" style="color: #9333ea !important;"></i>Display Settings
                             </h4>
 
                             <div>
@@ -135,9 +143,10 @@
                         </div>
 
                         <!-- Visibility & Access Section -->
-                        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                                <i class="fas fa-eye mr-2 text-indigo-600"></i>Event Link
+                        <div style="background-color: #f9fafb; padding: 1.5rem; border-radius: 0.5rem;"
+                            class="dark:bg-gray-700">
+                            <h4 class="text-lg font-semibold mb-4" style="color: var(--text-primary);">
+                                <i class="fas fa-eye mr-2" style="color: #4f46e5 !important;"></i>Event Link
                             </h4>
 
                             @if ($event->visibility === 'public')
@@ -211,9 +220,11 @@
                         </div> --}}
 
                         <!-- Booking Fields Selection -->
-                        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                                <i class="fas fa-clipboard-list mr-2 text-orange-600"></i>Booking Form Fields
+                        <div style="background-color: #f9fafb; padding: 1.5rem; border-radius: 0.5rem;"
+                            class="dark:bg-gray-700">
+                            <h4 class="text-lg font-semibold mb-4" style="color: var(--text-primary);">
+                                <i class="fas fa-clipboard-list mr-2" style="color: #ea580c !important;"></i>Booking
+                                Form Fields
                             </h4>
                             <p class="text-gray-600 dark:text-gray-400 mb-6">Select which information you'd like to
                                 collect from attendees when they book a seat</p>
@@ -229,7 +240,8 @@
                                         class="flex items-center p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-blue-300 dark:hover:border-blue-500 transition-colors duration-200">
                                         <input
                                             class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded"
-                                            type="checkbox" name="booking_fields[]" value="name" id="field_name_edit"
+                                            type="checkbox" name="booking_fields[]" value="name"
+                                            id="field_name_edit"
                                             {{ in_array('name', $selectedFields) ? 'checked' : '' }}>
                                         <label
                                             class="ml-3 text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer"
@@ -372,9 +384,10 @@
                         </div>
 
                         <!-- Event Image Section -->
-                        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                                <i class="fas fa-image mr-2 text-pink-600"></i>Event Image
+                        <div style="background-color: #f9fafb; padding: 1.5rem; border-radius: 0.5rem;"
+                            class="dark:bg-gray-700">
+                            <h4 class="text-lg font-semibold mb-4" style="color: var(--text-primary);">
+                                <i class="fas fa-image mr-2" style="color: #db2777 !important;"></i>Event Image
                             </h4>
 
                             <div class="space-y-4">

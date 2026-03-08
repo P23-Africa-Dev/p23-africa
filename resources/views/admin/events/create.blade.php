@@ -23,15 +23,20 @@
                         @csrf
 
                         <!-- Form Header -->
-                        <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 rounded-lg mb-8">
-                            <h3 class="text-lg font-semibold mb-2">Event Information</h3>
-                            <p class="text-blue-100">Fill in the details below to create your event</p>
+                        <div class="bg-gradient-to-r from-blue-600 to-purple-600 p-6 rounded-lg mb-8"
+                            style="color: #fff !important;">
+                            <h3 class="text-lg font-semibold mb-2" style="color: #fff !important;">Event Information
+                            </h3>
+                            <p style="color: rgba(191, 219, 254, 1) !important;">Fill in the details below to create
+                                your event</p>
                         </div>
 
                         <!-- Basic Information Section -->
-                        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                                <i class="fas fa-info-circle mr-2 text-blue-600"></i>Basic Information
+                        <div style="background-color: #f9fafb; padding: 1.5rem; border-radius: 0.5rem;"
+                            class="dark:bg-gray-700">
+                            <h4 class="text-lg font-semibold mb-4" style="color: var(--text-primary);">
+                                <i class="fas fa-info-circle mr-2" style="color: #2563eb !important;"></i>Basic
+                                Information
                             </h4>
 
                             <div class="grid grid-cols-1 gap-6">
@@ -73,9 +78,11 @@
                         </div>
 
                         <!-- Schedule & Location Section -->
-                        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                                <i class="fas fa-calendar-alt mr-2 text-green-600"></i>Schedule & Location
+                        <div style="background-color: #f9fafb; padding: 1.5rem; border-radius: 0.5rem;"
+                            class="dark:bg-gray-700">
+                            <h4 class="text-lg font-semibold mb-4" style="color: var(--text-primary);">
+                                <i class="fas fa-calendar-alt mr-2" style="color: #16a34a !important;"></i>Schedule &
+                                Location
                             </h4>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -116,9 +123,10 @@
                         </div>
 
                         <!-- Display Settings Section -->
-                        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                                <i class="fas fa-cog mr-2 text-purple-600"></i>Display Settings
+                        <div style="background-color: #f9fafb; padding: 1.5rem; border-radius: 0.5rem;"
+                            class="dark:bg-gray-700">
+                            <h4 class="text-lg font-semibold mb-4" style="color: var(--text-primary);">
+                                <i class="fas fa-cog mr-2" style="color: #9333ea !important;"></i>Display Settings
                             </h4>
 
                             <div>
@@ -143,9 +151,10 @@
                         </div>
 
                         <!-- Visibility & Access Section -->
-                        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                                <i class="fas fa-eye mr-2 text-indigo-600"></i>Visibility & Access
+                        <div style="background-color: #f9fafb; padding: 1.5rem; border-radius: 0.5rem;"
+                            class="dark:bg-gray-700">
+                            <h4 class="text-lg font-semibold mb-4" style="color: var(--text-primary);">
+                                <i class="fas fa-eye mr-2" style="color: #4f46e5 !important;"></i>Visibility & Access
                             </h4>
 
                             <div class="grid grid-cols-1 gap-6">
@@ -159,7 +168,8 @@
                                         <option value="public"
                                             {{ old('visibility') == 'public' || old('visibility') == null ? 'selected' : '' }}>
                                             🌐 Public - Anyone can access</option>
-                                        <option value="private" {{ old('visibility') == 'private' ? 'selected' : '' }}>
+                                        <option value="private"
+                                            {{ old('visibility') == 'private' ? 'selected' : '' }}>
                                             🔒 Private - Invitation only</option>
                                     </select>
                                     @error('visibility')
@@ -186,9 +196,11 @@
                         </div>
 
                         <!-- Booking Fields Selection -->
-                        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                                <i class="fas fa-clipboard-list mr-2 text-orange-600"></i>Booking Form Fields
+                        <div style="background-color: #f9fafb; padding: 1.5rem; border-radius: 0.5rem;"
+                            class="dark:bg-gray-700">
+                            <h4 class="text-lg font-semibold mb-4" style="color: var(--text-primary);">
+                                <i class="fas fa-clipboard-list mr-2" style="color: #ea580c !important;"></i>Booking
+                                Form Fields
                             </h4>
                             <p class="text-gray-600 dark:text-gray-400 mb-6">Select which information you'd like to
                                 collect from attendees
@@ -347,9 +359,10 @@
                         </div>
 
                         <!-- Event Image Section -->
-                        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                                <i class="fas fa-image mr-2 text-pink-600"></i>Event Image
+                        <div style="background-color: #f9fafb; padding: 1.5rem; border-radius: 0.5rem;"
+                            class="dark:bg-gray-700">
+                            <h4 class="text-lg font-semibold mb-4" style="color: var(--text-primary);">
+                                <i class="fas fa-image mr-2" style="color: #db2777 !important;"></i>Event Image
                             </h4>
 
                             <div class="space-y-4">

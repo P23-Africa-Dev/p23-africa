@@ -44,134 +44,24 @@
         .auth-shell {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            min-height: 100vh;
+            height: 100vh;
         }
 
         /* ── LEFT PANEL ──────────────────────────────── */
         .auth-panel {
             position: relative;
-            background: linear-gradient(150deg, #0a3d32 0%, #1d6154 45%, #22c58b 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 3rem;
             overflow: hidden;
+            padding: 1.5rem;
+            background: #e8f5f0;
         }
 
-        /* floating blobs */
-        .auth-panel::before {
-            content: '';
-            position: absolute;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(34, 197, 139, .25) 0%, transparent 70%);
-            top: -120px;
-            right: -120px;
-            border-radius: 50%;
-            animation: blobDrift 12s ease-in-out infinite alternate;
-        }
-
-        .auth-panel::after {
-            content: '';
-            position: absolute;
-            width: 380px;
-            height: 380px;
-            background: radial-gradient(circle, rgba(255, 255, 255, .07) 0%, transparent 70%);
-            bottom: -80px;
-            left: -80px;
-            border-radius: 50%;
-            animation: blobDrift 16s ease-in-out infinite alternate-reverse;
-        }
-
-        @keyframes blobDrift {
-            from {
-                transform: translate(0, 0) scale(1);
-            }
-
-            to {
-                transform: translate(30px, 20px) scale(1.08);
-            }
-        }
-
-        /* grid pattern overlay */
-        .panel-grid {
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(255, 255, 255, .04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, .04) 1px, transparent 1px);
-            background-size: 48px 48px;
-            pointer-events: none;
-        }
-
-        .panel-brand {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            align-items: center;
-            gap: .875rem;
-        }
-
-        .panel-brand img {
-            height: 42px;
-            width: auto;
-            filter: brightness(0) invert(1);
-        }
-
-        .panel-brand-name {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #fff;
-            letter-spacing: -.3px;
-        }
-
-        .panel-hero {
-            position: relative;
-            z-index: 2;
-        }
-
-        .panel-hero h2 {
-            font-size: 2.6rem;
-            font-weight: 800;
-            color: #fff;
-            line-height: 1.2;
-            letter-spacing: -.5px;
-            margin-bottom: 1.1rem;
-        }
-
-        .panel-hero h2 span {
-            color: var(--brand-mid);
-        }
-
-        .panel-hero p {
-            font-size: 1rem;
-            color: var(--text-on-dark);
-            line-height: 1.7;
-            max-width: 380px;
-        }
-
-        .panel-stats {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            gap: 2rem;
-        }
-
-        .stat-item {
-            color: var(--text-on-dark);
-        }
-
-        .stat-number {
-            font-size: 1.75rem;
-            font-weight: 800;
-            color: #fff;
-            line-height: 1;
-        }
-
-        .stat-label {
-            font-size: .78rem;
-            margin-top: .2rem;
-            color: var(--text-muted-d);
+        .auth-panel img.panel-bg {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: right;
+            display: block;
+            border-radius: 16px;
         }
 
         /* ── RIGHT PANEL (form) ──────────────────────── */
@@ -179,7 +69,7 @@
             background: #f8fafc;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: left;
             padding: 2.5rem;
         }
 
@@ -448,33 +338,7 @@
 
         {{-- ── LEFT: Branded panel ── --}}
         <aside class="auth-panel">
-            <div class="panel-grid"></div>
-
-            <div class="panel-brand">
-                <img src="{{ asset('images/logo.png') }}" alt="{{ config('app.name') }}">
-                {{-- <span class="panel-brand-name">{{ config('app.name') }}</span> --}}
-            </div>
-
-            <div class="panel-hero">
-                <h2>Powering <span>Africa's</span><br>Tomorrow</h2>
-                <p>A unified platform to manage programmes, staff, applications and community impact, all in one place.
-                </p>
-            </div>
-
-            <div class="panel-stats">
-                <div class="stat-item">
-                    <div class="stat-number">50+</div>
-                    <div class="stat-label">Active Programmes</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">12k+</div>
-                    <div class="stat-label">Beneficiaries</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">30+</div>
-                    <div class="stat-label">Partner Orgs</div>
-                </div>
-            </div>
+            <img class="panel-bg" src="{{ asset('images/auth/login-bg.png') }}" alt="{{ config('app.name') }} Login">
         </aside>
 
         {{-- ── RIGHT: Form slot ── --}}
