@@ -8,6 +8,25 @@ use App\Models\User;
 class ProjectPolicy
 {
     /**
+     * Check if user can access the project based on organization.
+     */
+    protected function isInSameOrg(User $user, Project $project): bool
+    {
+        // Admin bypasses org checks
+        if ($user->hasRole('admin')) {
+            return true;
+        }
+
+        // Org user can only access their org's projects
+        if ($user->organization_id) {
+            return $project->organization_id === $user->organization_id;
+        }
+
+        // Non-org user can only access global (null org) projects
+        return is_null($project->organization_id);
+    }
+
+    /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
@@ -20,7 +39,11 @@ class ProjectPolicy
      */
     public function view(User $user, Project $project): bool
     {
-        // Admin and Supervisor can view all projects
+        if (!$this->isInSameOrg($user, $project)) {
+            return false;
+        }
+
+        // Admin and Supervisor can view all projects in their org
         if ($user->hasRole(['admin', 'supervisor'])) {
             return true;
         }
@@ -44,6 +67,10 @@ class ProjectPolicy
      */
     public function update(User $user, Project $project): bool
     {
+        if (!$this->isInSameOrg($user, $project)) {
+            return false;
+        }
+
         return $user->hasRole(['admin', 'supervisor']);
     }
 
@@ -52,6 +79,10 @@ class ProjectPolicy
      */
     public function delete(User $user, Project $project): bool
     {
+        if (!$this->isInSameOrg($user, $project)) {
+            return false;
+        }
+
         return $user->hasRole('admin');
     }
 }

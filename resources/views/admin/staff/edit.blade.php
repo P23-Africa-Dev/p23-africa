@@ -43,14 +43,20 @@
 
                             <div class="mb-3">
                                 <label>Organization</label>
-                                <select name="organization_id" class="form-control">
-                                    <option value="">-- None --</option>
-                                    @foreach ($organizations ?? [] as $org)
-                                        <option value="{{ $org->id }}"
-                                            {{ $staff->organization_id == $org->id ? 'selected' : '' }}>
-                                            {{ $org->name }}</option>
-                                    @endforeach
-                                </select>
+                                @if (auth()->user()->hasRole('admin'))
+                                    <select name="organization_id" class="form-control">
+                                        <option value="">-- None --</option>
+                                        @foreach ($organizations ?? [] as $org)
+                                            <option value="{{ $org->id }}"
+                                                {{ $staff->organization_id == $org->id ? 'selected' : '' }}>
+                                                {{ $org->name }}</option>
+                                        @endforeach
+                                    </select>
+                                @else
+                                    {{-- Supervisors see their org name (read-only) --}}
+                                    <input type="text" class="form-control"
+                                        value="{{ $staff->organization->name ?? 'N/A' }}" disabled>
+                                @endif
                             </div>
 
                             {{-- <input type="text" name="name" value="{{ old('name', $staff->name) }}" required>

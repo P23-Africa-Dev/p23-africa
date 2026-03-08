@@ -31,6 +31,14 @@
                             </div>
                         @endif
 
+                        @if (session('warning'))
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                {{ session('warning') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                        @endif
+
                         <table class="table table-hover">
                             <thead>
                                 <tr>
@@ -82,18 +90,26 @@
                                         </td>
 
                                         <td>
-                                            @if ($staffs->hasRole('staff'))
-                                                <form method="POST"
-                                                    action="{{ route('admin.staff.promote', $staffs->id) }}"
-                                                    onsubmit="return confirm('Are you sure you want to promote this staff to supervisor?');">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-sm btn-success">Promote to
-                                                        Supervisor</button>
-                                                </form>
-                                            @elseif ($staffs->hasRole('supervisor'))
-                                                <span class="badge bg-info">Supervisor</span>
+                                            @if (auth()->user()->hasRole('admin'))
+                                                @if ($staffs->hasRole('staff'))
+                                                    <form method="POST"
+                                                        action="{{ route('admin.staff.promote', $staffs->id) }}"
+                                                        onsubmit="return confirm('Are you sure you want to promote this staff to supervisor?');">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-sm btn-success">Promote to
+                                                            Supervisor</button>
+                                                    </form>
+                                                @elseif ($staffs->hasRole('supervisor'))
+                                                    <span class="badge bg-info">Supervisor</span>
+                                                @else
+                                                    <span class="badge bg-primary">Staff</span>
+                                                @endif
                                             @else
-                                                <span class="badge bg-primary">Staff</span>
+                                                @if ($staffs->hasRole('supervisor'))
+                                                    <span class="badge bg-info">Supervisor</span>
+                                                @else
+                                                    <span class="badge bg-primary">Staff</span>
+                                                @endif
                                             @endif
                                         </td>
 

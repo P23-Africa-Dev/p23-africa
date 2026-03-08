@@ -24,6 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
 
             'check.suspended' => \App\Http\Middleware\CheckSuspended::class,
+            'resolve.org' => \App\Http\Middleware\ResolveOrganization::class,
         ]);
 
         // $middleware->append(CheckSuspended::class);

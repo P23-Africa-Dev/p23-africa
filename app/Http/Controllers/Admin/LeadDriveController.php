@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\LeadDrive;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
@@ -15,7 +16,26 @@ class LeadDriveController extends Controller
      */
     public function index()
     {
-        $drives = LeadDrive::withCount('leads')->orderBy('name')->get();
+        $user = Auth::user();
+
+        // Drives are shared, but lead counts should be scoped to the user's organization
+        $drivesQuery = LeadDrive::query()->orderBy('name');
+
+        if (!$user->hasRole('admin')) {
+            if ($user->organization_id) {
+                $drivesQuery->withCount(['leads' => function ($q) use ($user) {
+                    $q->where('organization_id', $user->organization_id);
+                }]);
+            } else {
+                $drivesQuery->withCount(['leads' => function ($q) {
+                    $q->whereNull('organization_id');
+                }]);
+            }
+        } else {
+            $drivesQuery->withCount('leads');
+        }
+
+        $drives = $drivesQuery->get();
 
         return view('admin.crm.drives.index', compact('drives'));
     }
@@ -115,8 +135,14 @@ class LeadDriveController extends Controller
                 ->with('error', 'Cannot delete the default drive.');
         }
 
-        // Don't allow deleting drives with leads
-        if ($drive->leads()->count() > 0) {
+        // Don't allow deleting drives that have leads (scoped to org for non-admin)
+        $user = Auth::user();
+        $leadsQuery = $drive->leads();
+        if (!$user->hasRole('admin') && $user->organization_id) {
+            $leadsQuery->where('organization_id', $user->organization_id);
+        }
+
+        if ($leadsQuery->count() > 0) {
             return redirect()->route('admin.crm.drives.index')
                 ->with('error', 'Cannot delete a drive that contains leads. Please move or delete the leads first.');
         }

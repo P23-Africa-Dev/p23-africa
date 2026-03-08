@@ -79,26 +79,25 @@ class ProjectController extends Controller
     {
         $user = Auth::user();
 
-        // Admin and Supervisor see all projects, Staff sees projects they're assigned to
-        if ($user->hasRole(['admin', 'supervisor'])) {
-            $projects = Project::with(['creator', 'tasks'])->latest()->paginate(10);
-        } else {
-            // Staff sees projects where they have assigned tasks
-            $projects = Project::whereHas('tasks.assignees', function ($query) use ($user) {
-                $query->where('user_id', $user->id);
-            })->with(['creator', 'tasks'])->latest()->paginate(10);
-        }
+        $query = Project::with(['creator', 'tasks'])->latest();
 
-        // Ensure non-admins only see their organization's projects
+        // Scope to organization
         if (!$user->hasRole('admin')) {
             if ($user->organization_id) {
-                $projects = Project::where('organization_id', $user->organization_id)
-                    ->with(['creator', 'tasks'])->latest()->paginate(10);
+                $query->where('organization_id', $user->organization_id);
             } else {
-                $projects = Project::whereNull('organization_id')
-                    ->with(['creator', 'tasks'])->latest()->paginate(10);
+                $query->whereNull('organization_id');
+            }
+
+            // Staff only sees projects they're assigned to
+            if (!$user->hasRole('supervisor')) {
+                $query->whereHas('tasks.assignees', function ($q) use ($user) {
+                    $q->where('user_id', $user->id);
+                });
             }
         }
+
+        $projects = $query->paginate(10);
 
         return view('admin.projects.index', compact('projects'));
     }
@@ -146,6 +145,8 @@ class ProjectController extends Controller
 
     public function show(Project $project)
     {
+        $this->authorize('view', $project);
+
         $project->load(['creator', 'tasks.assignees', 'tasks.creator']);
 
         $statuses = \App\Models\Task::getStatuses();
@@ -224,6 +225,8 @@ class ProjectController extends Controller
 
     public function updateStatus(Request $request, Project $project)
     {
+        $this->authorize('update', $project);
+
         $request->validate([
             'status' => 'required|in:planning,in_progress,on_hold,completed,cancelled',
         ]);

@@ -6,16 +6,52 @@ use App\Http\Controllers\Controller;
 use App\Models\ActivityLogView;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use Spatie\Activitylog\Models\Activity;
 
 class ActivityLogController extends Controller
 {
+    /**
+     * Get the IDs of users in the same organization (for scoping activity logs).
+     * Returns null for admins (no filtering needed).
+     */
+    protected function getOrgUserIds(): ?array
+    {
+        $user = Auth::user();
+
+        if ($user->hasRole('admin')) {
+            return null; // Admin sees everything
+        }
+
+        if ($user->organization_id) {
+            return User::where('organization_id', $user->organization_id)->pluck('id')->toArray();
+        }
+
+        // Non-org user: only see activities by non-org users
+        return User::whereNull('organization_id')->pluck('id')->toArray();
+    }
+
+    /**
+     * Apply org scoping to an activity query.
+     */
+    protected function scopeToOrg($query): void
+    {
+        $orgUserIds = $this->getOrgUserIds();
+
+        if ($orgUserIds !== null) {
+            $query->whereIn('causer_id', $orgUserIds);
+        }
+    }
+
     /**
      * Display the activity logs
      */
     public function index(Request $request)
     {
         $query = Activity::with('causer')->latest();
+
+        // Scope to organization
+        $this->scopeToOrg($query);
 
         // Filter by user
         if ($request->filled('user_id')) {
@@ -56,10 +92,11 @@ class ActivityLogController extends Controller
         $logs = $query->paginate(30)->withQueryString();
 
         // Get unique users who have activities for filter dropdown
-        $users = Activity::select('causer_id')
+        $usersQuery = Activity::select('causer_id')
             ->with('causer')
-            ->whereNotNull('causer_id')
-            ->distinct()
+            ->whereNotNull('causer_id');
+        $this->scopeToOrg($usersQuery);
+        $users = $usersQuery->distinct()
             ->get()
             ->pluck('causer')
             ->filter()
@@ -67,17 +104,19 @@ class ActivityLogController extends Controller
             ->values();
 
         // Get unique subject types for filter dropdown
-        $subjectTypes = Activity::select('subject_type')
-            ->whereNotNull('subject_type')
-            ->distinct()
+        $subjectTypesQuery = Activity::select('subject_type')
+            ->whereNotNull('subject_type');
+        $this->scopeToOrg($subjectTypesQuery);
+        $subjectTypes = $subjectTypesQuery->distinct()
             ->pluck('subject_type')
             ->map(fn($type) => class_basename($type))
             ->unique()
             ->values();
 
         // Get unique actions for filter dropdown
-        $actions = Activity::select('description')
-            ->distinct()
+        $actionsQuery = Activity::select('description');
+        $this->scopeToOrg($actionsQuery);
+        $actions = $actionsQuery->distinct()
             ->pluck('description')
             ->unique()
             ->values();
@@ -93,10 +132,21 @@ class ActivityLogController extends Controller
      */
     public function stats()
     {
-        $today = Activity::whereDate('created_at', today())->count();
-        $thisWeek = Activity::where('created_at', '>=', now()->startOfWeek())->count();
-        $thisMonth = Activity::where('created_at', '>=', now()->startOfMonth())->count();
-        $total = Activity::count();
+        $todayQ = Activity::whereDate('created_at', today());
+        $this->scopeToOrg($todayQ);
+        $today = $todayQ->count();
+
+        $weekQ = Activity::where('created_at', '>=', now()->startOfWeek());
+        $this->scopeToOrg($weekQ);
+        $thisWeek = $weekQ->count();
+
+        $monthQ = Activity::where('created_at', '>=', now()->startOfMonth());
+        $this->scopeToOrg($monthQ);
+        $thisMonth = $monthQ->count();
+
+        $totalQ = Activity::query();
+        $this->scopeToOrg($totalQ);
+        $total = $totalQ->count();
 
         return response()->json([
             'today' => $today,
@@ -116,6 +166,9 @@ class ActivityLogController extends Controller
         $view = ActivityLogView::where('user_id', $user->id)->first();
 
         $query = Activity::query();
+
+        // Scope to organization
+        $this->scopeToOrg($query);
 
         if ($view && $view->last_seen_activity_id) {
             $query->where('id', '>', $view->last_seen_activity_id);
@@ -145,6 +198,9 @@ class ActivityLogController extends Controller
         $view = ActivityLogView::where('user_id', $user->id)->first();
 
         $query = Activity::with('causer')->latest();
+
+        // Scope to organization
+        $this->scopeToOrg($query);
 
         if ($view && $view->last_seen_activity_id) {
             $query->where('id', '>', $view->last_seen_activity_id);

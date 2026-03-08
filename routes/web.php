@@ -48,6 +48,17 @@ Route::get('/login', function () {
     return redirect('/admin/login');
 });
 
+/*
+|--------------------------------------------------------------------------
+| Organization-Prefixed Login Routes
+|--------------------------------------------------------------------------
+| e.g. /acme-corp/admin/login — branded login for org users.
+*/
+Route::middleware('resolve.org')->prefix('{orgSlug}')->group(function () {
+    Route::get('/admin/login', [LoginController::class, 'viewLogin'])->name('org.login');
+    Route::post('/admin/login', [LoginController::class, 'login'])->name('org.login_user');
+});
+
 /**
  * This route increments the click counter and redirects to the target route.
  */
@@ -200,6 +211,10 @@ Route::get('/test-email', function () {
 });
 
 
+Route::get('/staff_welcome', function () {
+    return view('emails.staff_welcome');
+});
+
 // Route::post('/submit-challenge', function (Request $request) {
 //     $data = $request->only(['challenge1', 'challenge2', 'challenge3', 'label']);
 
@@ -305,6 +320,148 @@ Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function
     Route::delete('/contact/{contact}', [\App\Http\Controllers\Admin\ContactController::class, 'destroy'])->name('contact.destroy');
     Route::post('/contact/bulk-delete', [\App\Http\Controllers\Admin\ContactController::class, 'bulkDestroy'])->name('contact.bulk-delete');
 });
+
+/*
+|--------------------------------------------------------------------------
+| Organization-Prefixed Admin Routes
+|--------------------------------------------------------------------------
+| e.g. /acme-corp/admin/dashboard — all admin panel routes with org slug prefix.
+| These mirror the standard /admin routes but with an {orgSlug} prefix.
+| The resolve.org middleware loads the Organization model from the slug.
+*/
+Route::middleware(['auth', 'check.suspended', 'resolve.org', 'role:admin|supervisor|staff'])
+    ->prefix('{orgSlug}/admin')
+    ->name('org.admin.')
+    ->group(function () {
+
+        Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+
+        Route::middleware('role:admin|supervisor')->group(function () {
+            Route::resource('staff', StaffController::class);
+            Route::resource('organizations', \App\Http\Controllers\Admin\OrganizationController::class);
+            Route::post('/organizations/ajax', [\App\Http\Controllers\Admin\OrganizationController::class, 'storeAjax'])->name('organizations.store-ajax');
+
+            Route::get('/contact', [\App\Http\Controllers\Admin\ContactController::class, 'index'])->name('contact.index');
+            Route::get('/contact/{contact}', [\App\Http\Controllers\Admin\ContactController::class, 'show'])->name('contact.show');
+            Route::get('/contact/export', [\App\Http\Controllers\Admin\ContactController::class, 'export'])->name('contact.export');
+            Route::get('/contact/export-xlsx', [\App\Http\Controllers\Admin\ContactController::class, 'exportXlsx'])->name('contact.export.xlsx');
+
+            Route::get('/calendar', [\App\Http\Controllers\Admin\CalendarController::class, 'index'])->name('calendar.index');
+
+            Route::post('/staff/{staff}/suspend', [StaffController::class, 'suspend'])->name('staff.suspend');
+            Route::post('/staff/{staff}/reactivate', [StaffController::class, 'reactivate'])->name('staff.reactivate');
+            Route::post('/staff/{staff}/promote', [StaffController::class, 'promote'])->name('staff.promote');
+
+            Route::get('/brn', [\App\Http\Controllers\Admin\BrnController::class, 'adminView'])->name('brn.index');
+            Route::get('/brn/{id}', [\App\Http\Controllers\Admin\BrnController::class, 'show'])->name('brn.show');
+            Route::delete('/brn/{id}', [\App\Http\Controllers\Admin\BrnController::class, 'destroy'])->name('brn.destroy');
+            Route::post('/brn/{id}/approve', [\App\Http\Controllers\Admin\BrnController::class, 'approve'])->name('brn.approve');
+            Route::post('/brn/{id}/decline', [\App\Http\Controllers\Admin\BrnController::class, 'decline'])->name('brn.decline');
+
+            Route::resource('/ultimatefunding', \App\Http\Controllers\Admin\UltimateFundingController::class);
+
+            Route::get('/consultations', [\App\Http\Controllers\Admin\ConsultationController::class, 'index'])->name('consultation.index');
+            Route::get('/consultations/{id}', [\App\Http\Controllers\Admin\ConsultationController::class, 'show'])->name('consultation.show');
+            Route::delete('/consultation/{id}', [\App\Http\Controllers\Admin\ConsultationController::class, 'destroy'])->name('consultation.destroy');
+            Route::post('/consultation/bulk-delete', [\App\Http\Controllers\Admin\ConsultationController::class, 'bulkDelete'])->name('consultation.bulk-delete');
+            Route::post('/consultations/{id}/update-status', [\App\Http\Controllers\Admin\ConsultationController::class, 'updateStatus'])->name('consultation.updateStatus');
+            Route::post('/consultations/{id}/reply', [\App\Http\Controllers\Admin\ConsultationController::class, 'sendReply'])->name('consultation.reply');
+            Route::post('/consultation/chat/mark-read/{messageId}', [\App\Http\Controllers\Admin\ConsultationController::class, 'markMessageAsRead'])->name('consultation.chat.markRead');
+        });
+
+        // CRM
+        Route::get('/crm', [\App\Http\Controllers\Admin\LeadController::class, 'index'])->name('crm.index');
+        Route::get('/crm/create', [\App\Http\Controllers\Admin\LeadController::class, 'create'])->name('crm.create');
+        Route::post('/crm', [\App\Http\Controllers\Admin\LeadController::class, 'store'])->name('crm.store');
+        Route::get('/crm/pipeline', [\App\Http\Controllers\Admin\LeadController::class, 'pipeline'])->name('crm.pipeline');
+        Route::get('/crm/export', [\App\Http\Controllers\Admin\LeadController::class, 'export'])->name('crm.export');
+        Route::get('/crm/import', [\App\Http\Controllers\Admin\LeadImportController::class, 'showImport'])->name('crm.import');
+        Route::post('/crm/import', [\App\Http\Controllers\Admin\LeadImportController::class, 'import'])->name('crm.import.process');
+        Route::get('/crm/import/template', [\App\Http\Controllers\Admin\LeadImportController::class, 'downloadTemplate'])->name('crm.import.template');
+
+        Route::get('/crm/drives', [\App\Http\Controllers\Admin\LeadDriveController::class, 'index'])->name('crm.drives.index');
+        Route::post('/crm/drives', [\App\Http\Controllers\Admin\LeadDriveController::class, 'store'])->name('crm.drives.store');
+        Route::post('/crm/drives/ajax', [\App\Http\Controllers\Admin\LeadDriveController::class, 'storeAjax'])->name('crm.drives.store-ajax');
+        Route::put('/crm/drives/{drive}', [\App\Http\Controllers\Admin\LeadDriveController::class, 'update'])->name('crm.drives.update');
+        Route::delete('/crm/drives/{drive}', [\App\Http\Controllers\Admin\LeadDriveController::class, 'destroy'])->name('crm.drives.destroy');
+
+        Route::get('/crm/{lead}', [\App\Http\Controllers\Admin\LeadController::class, 'show'])->name('crm.show');
+        Route::get('/crm/{lead}/edit', [\App\Http\Controllers\Admin\LeadController::class, 'edit'])->name('crm.edit');
+        Route::put('/crm/{lead}', [\App\Http\Controllers\Admin\LeadController::class, 'update'])->name('crm.update');
+        Route::delete('/crm/{lead}', [\App\Http\Controllers\Admin\LeadController::class, 'destroy'])->name('crm.destroy');
+        Route::patch('/crm/{lead}/status', [\App\Http\Controllers\Admin\LeadController::class, 'updateStatus'])->name('crm.update-status');
+        Route::post('/crm/{lead}/assign', [\App\Http\Controllers\Admin\LeadController::class, 'assign'])->name('crm.assign');
+        Route::post('/crm/{lead}/activity', [\App\Http\Controllers\Admin\LeadController::class, 'addActivity'])->name('crm.add-activity');
+        Route::patch('/crm/activity/{activity}', [\App\Http\Controllers\Admin\LeadController::class, 'updateActivity'])->name('crm.update-activity');
+        Route::post('/crm/{lead}/follow-up', [\App\Http\Controllers\Admin\LeadController::class, 'setFollowUp'])->name('crm.set-follow-up');
+        Route::post('/crm/activity/{activity}/complete', [\App\Http\Controllers\Admin\LeadController::class, 'completeActivity'])->name('crm.complete-activity');
+        Route::post('/crm/bulk-update', [\App\Http\Controllers\Admin\LeadController::class, 'bulkUpdate'])->name('crm.bulk-update');
+        Route::post('/crm/convert/contact/{contact}', [\App\Http\Controllers\Admin\LeadController::class, 'convertFromContact'])->name('crm.convert-contact');
+        Route::post('/crm/convert/consultation/{consultation}', [\App\Http\Controllers\Admin\LeadController::class, 'convertFromConsultation'])->name('crm.convert-consultation');
+
+        Route::get('/crm/{lead}/emails', [\App\Http\Controllers\Admin\LeadController::class, 'getEmails'])->name('crm.get-emails');
+        Route::post('/crm/{lead}/email', [\App\Http\Controllers\Admin\LeadController::class, 'sendEmail'])->name('crm.send-email');
+        Route::get('/crm/{lead}/emails/thread/{threadId}', [\App\Http\Controllers\Admin\LeadController::class, 'getEmailThread'])->name('crm.get-email-thread');
+        Route::get('/crm/{lead}/emails/unread-count', [\App\Http\Controllers\Admin\LeadController::class, 'getUnreadEmailCount'])->name('crm.unread-email-count');
+
+        Route::post('/events/{id}/send-reminder', [EventController::class, 'sendReminder'])->name('events.sendReminder');
+        Route::post('/events/{event}/send-feedback', [EventController::class, 'sendFeedback'])->name('events.sendFeedback');
+        Route::get('/events/{event}/feedbacks', [EventController::class, 'viewFeedbacks'])->name('events.feedbacks');
+        Route::get('/seats', [\App\Http\Controllers\Admin\SeatController::class, 'index'])->name('admin.seats.index');
+        Route::resource('/events', EventController::class);
+        Route::get('/events/{event}/bookings', [EventController::class, 'showBookings'])->name('events.bookings');
+        Route::get('/events/booking-fields', [EventController::class, 'getBookingFields'])->name('events.booking-fields');
+        Route::get('/events/{event}/clicks', [EventController::class, 'viewClicks'])->name('events.clicks');
+
+        Route::resource('blogs', BlogController::class);
+        Route::resource('/blogs/categories', CategoryController::class);
+        Route::resource('/playbooks', PlaybookController::class);
+        Route::get('/playbooks-dashboard', [PlaybookController::class, 'dashboard'])->name('playbooks.dashboard');
+        Route::resource('/salesbooks', \App\Http\Controllers\Admin\SalesBookController::class);
+        Route::resource('students', StudentController::class);
+
+        Route::get('/clicks/report', [ClickReportController::class, 'index'])->name('clicks.report');
+        Route::get('/clicks/export', [ClickReportController::class, 'export'])->name('clicks.export');
+        Route::post('/clicks/backfill-countries', [ClickReportController::class, 'backfillCountries'])->name('clicks.backfill-countries');
+
+        Route::post('/playbooks/resend-funding', [\App\Http\Controllers\PlaybookController::class, 'resendFundingReadinessPending'])->name('playbooks.resend-funding');
+
+        // Projects
+        Route::get('/projects/gantt', [\App\Http\Controllers\Admin\ProjectController::class, 'gantt'])->name('projects.gantt');
+        Route::resource('projects', \App\Http\Controllers\Admin\ProjectController::class);
+        Route::patch('/projects/{project}/status', [\App\Http\Controllers\Admin\ProjectController::class, 'updateStatus'])->name('projects.update-status');
+
+        // Tasks
+        Route::get('/tasks', [\App\Http\Controllers\Admin\TaskController::class, 'index'])->name('tasks.index');
+        Route::get('/tasks/kanban', [\App\Http\Controllers\Admin\TaskController::class, 'kanban'])->name('tasks.kanban');
+        Route::get('/tasks/create', [\App\Http\Controllers\Admin\TaskController::class, 'create'])->name('tasks.create');
+        Route::post('/tasks', [\App\Http\Controllers\Admin\TaskController::class, 'store'])->name('tasks.store');
+        Route::get('/tasks/{task}', [\App\Http\Controllers\Admin\TaskController::class, 'show'])->name('tasks.show');
+        Route::get('/tasks/{task}/edit', [\App\Http\Controllers\Admin\TaskController::class, 'edit'])->name('tasks.edit');
+        Route::put('/tasks/{task}', [\App\Http\Controllers\Admin\TaskController::class, 'update'])->name('tasks.update');
+        Route::delete('/tasks/{task}', [\App\Http\Controllers\Admin\TaskController::class, 'destroy'])->name('tasks.destroy');
+        Route::patch('/tasks/{task}/status', [\App\Http\Controllers\Admin\TaskController::class, 'updateStatus'])->name('tasks.update-status');
+        Route::post('/tasks/update-order', [\App\Http\Controllers\Admin\TaskController::class, 'updateOrder'])->name('tasks.update-order');
+        Route::post('/tasks/{task}/assign', [\App\Http\Controllers\Admin\TaskController::class, 'assign'])->name('tasks.assign');
+
+        Route::get('/tasks/{task}/comments', [\App\Http\Controllers\Admin\TaskController::class, 'getComments'])->name('tasks.comments');
+        Route::post('/tasks/{task}/comments', [\App\Http\Controllers\Admin\TaskController::class, 'addComment'])->name('tasks.add-comment');
+        Route::delete('/tasks/{task}/comments/{comment}', [\App\Http\Controllers\Admin\TaskController::class, 'deleteComment'])->name('tasks.delete-comment');
+        Route::get('/tasks/{task}/mentionable-users', [\App\Http\Controllers\Admin\TaskController::class, 'getAssigneesForMention'])->name('tasks.mentionable-users');
+    });
+
+// Org-prefixed notification routes
+Route::middleware(['auth', 'check.suspended', 'resolve.org'])->prefix('{orgSlug}/admin/notifications')->name('org.admin.notifications.')->group(function () {
+    Route::get('/all', [\App\Http\Controllers\Admin\NotificationController::class, 'getAllNotifications'])->name('all');
+    Route::get('/all-unread-count', [\App\Http\Controllers\Admin\NotificationController::class, 'getAllUnreadCount'])->name('all-unread-count');
+    Route::get('/latest-unread', [\App\Http\Controllers\Admin\NotificationController::class, 'getLatestUnread'])->name('latest-unread');
+    Route::get('/tasks', [\App\Http\Controllers\Admin\NotificationController::class, 'getTaskNotifications'])->name('tasks');
+    Route::get('/unread-count', [\App\Http\Controllers\Admin\NotificationController::class, 'getUnreadCount'])->name('unread-count');
+    Route::post('/{id}/mark-read', [\App\Http\Controllers\Admin\NotificationController::class, 'markAsRead'])->name('mark-read');
+    Route::post('/mark-all-read', [\App\Http\Controllers\Admin\NotificationController::class, 'markAllAsRead'])->name('mark-all-read');
+});
+
+Route::middleware(['auth', 'check.suspended', 'resolve.org', 'role:admin|supervisor|staff'])->prefix('{orgSlug}/admin')->name('org.admin.')->group(function () {});
 
 Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->prefix('admin')->name('admin.')->group(function () {
     // Route::get('/dashboard', function () {

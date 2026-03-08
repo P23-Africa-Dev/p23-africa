@@ -175,6 +175,68 @@
         </div>
     @endif
 
+    {{-- ─── Project / Task / Lead Quick Stats ─────────────────────────── --}}
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-lg-3 anim-in">
+            <div class="card">
+                <div class="stat-card-inner">
+                    <div class="stat-icon-wrap" style="background:rgba(139,92,246,.12);color:#8b5cf6;">
+                        <i class="bi bi-folder2-open"></i>
+                    </div>
+                    <div>
+                        <div class="stat-label">Projects</div>
+                        <div class="stat-value">{{ $stats['total_projects'] ?? 0 }}</div>
+                        <div class="stat-sub text-muted" style="font-size:.75rem;">
+                            {{ $stats['active_projects'] ?? 0 }} active</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3 anim-in">
+            <div class="card">
+                <div class="stat-card-inner">
+                    <div class="stat-icon-wrap" style="background:rgba(59,130,246,.12);color:var(--p-info);">
+                        <i class="bi bi-list-task"></i>
+                    </div>
+                    <div>
+                        <div class="stat-label">Tasks</div>
+                        <div class="stat-value">{{ $stats['total_tasks'] ?? 0 }}</div>
+                        <div class="stat-sub text-muted" style="font-size:.75rem;">
+                            {{ $stats['completed_tasks'] ?? 0 }} completed</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3 anim-in">
+            <div class="card">
+                <div class="stat-card-inner">
+                    <div class="stat-icon-wrap" style="background:rgba(245,158,11,.12);color:var(--p-warning);">
+                        <i class="bi bi-clock"></i>
+                    </div>
+                    <div>
+                        <div class="stat-label">Pending Tasks</div>
+                        <div class="stat-value">{{ $stats['pending_tasks'] ?? 0 }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3 anim-in">
+            <div class="card">
+                <div class="stat-card-inner">
+                    <div class="stat-icon-wrap" style="background:rgba(16,185,129,.12);color:var(--p-success);">
+                        <i class="bi bi-funnel"></i>
+                    </div>
+                    <div>
+                        <div class="stat-label">Leads</div>
+                        <div class="stat-value">{{ $stats['total_leads'] ?? 0 }}</div>
+                        <div class="stat-sub text-muted" style="font-size:.75rem;">{{ $stats['new_leads'] ?? 0 }} new
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {{-- ─── Main cards row ──────────────────────────────────────────────── --}}
     <div class="row g-4">
 

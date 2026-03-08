@@ -2,6 +2,17 @@
     Sidebar - P23 Africa Admin
     Uses admin-ui.css classes; all org-visibility guards preserved.
     ===================================================================== --}}
+@php
+    // Determine org URL prefix for all sidebar links
+    $sidebarOrgPrefix = '';
+    $sidebarUser = auth()->user();
+    if ($sidebarUser && $sidebarUser->organization_id && !$sidebarUser->hasRole('admin')) {
+        $org = $sidebarUser->organization;
+        if ($org && $org->slug) {
+            $sidebarOrgPrefix = '/' . $org->slug;
+        }
+    }
+@endphp
 <div x-data="{
     sidebarOpen: localStorage.getItem('sidebarOpen') !== 'false',
     mobileSidebarOpen: false,
@@ -35,42 +46,42 @@
         <nav class="sidebar-nav">
 
             {{-- Dashboard --}}
-            <a href="{{ route('admin.dashboard') }}" data-tooltip="Dashboard"
-                class="sidebar-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+            <a href="{{ url($sidebarOrgPrefix . '/admin/dashboard') }}" data-tooltip="Dashboard"
+                class="sidebar-item {{ request()->routeIs('admin.dashboard', 'org.admin.dashboard') ? 'active' : '' }}">
                 <span class="sidebar-icon"><i class="bi bi-speedometer2"></i></span>
                 <span class="sidebar-text">Dashboard</span>
             </a>
 
             {{-- CRM --}}
-            <a href="{{ route('admin.crm.pipeline') }}" data-tooltip="CRM"
-                class="sidebar-item {{ request()->routeIs('admin.crm.*') ? 'active' : '' }}">
+            <a href="{{ url($sidebarOrgPrefix . '/admin/crm/pipeline') }}" data-tooltip="CRM"
+                class="sidebar-item {{ request()->routeIs('admin.crm.*', 'org.admin.crm.*') ? 'active' : '' }}">
                 <span class="sidebar-icon"><i class="bi bi-kanban"></i></span>
                 <span class="sidebar-text">CRM</span>
             </a>
 
             {{-- Calendar (admin / non-org users only) --}}
             @if (auth()->user() && (auth()->user()->hasRole('admin') || !auth()->user()->organization_id))
-                <a href="{{ route('admin.calendar.index') }}" data-tooltip="Calendar"
-                    class="sidebar-item {{ request()->routeIs('admin.calendar.*') ? 'active' : '' }}">
+                <a href="{{ url($sidebarOrgPrefix . '/admin/calendar') }}" data-tooltip="Calendar"
+                    class="sidebar-item {{ request()->routeIs('admin.calendar.*', 'org.admin.calendar.*') ? 'active' : '' }}">
                     <span class="sidebar-icon"><i class="bi bi-calendar3"></i></span>
                     <span class="sidebar-text">Calendar</span>
                 </a>
             @endif
 
             {{-- Projects dropdown --}}
-            <div class="sidebar-section" x-data="{ open: {{ request()->routeIs('admin.projects.*', 'admin.tasks.*') ? 'true' : 'false' }} }">
+            <div class="sidebar-section" x-data="{ open: {{ request()->routeIs('admin.projects.*', 'admin.tasks.*', 'org.admin.projects.*', 'org.admin.tasks.*') ? 'true' : 'false' }} }">
                 <button @click="open=!open" data-tooltip="Projects" class="sidebar-dropdown-toggle">
                     <span class="sidebar-icon"><i class="bi bi-folder2-open"></i></span>
                     <span class="sidebar-text">Projects</span>
                     <i class="sidebar-chevron bi bi-chevron-down" :class="open ? 'open' : ''"></i>
                 </button>
                 <div class="sidebar-submenu" x-show="open && (sidebarOpen || mobileSidebarOpen)" x-transition>
-                    <a href="{{ route('admin.projects.index') }}"
-                        class="sidebar-subitem {{ request()->routeIs('admin.projects.*') ? 'active' : '' }}">
+                    <a href="{{ url($sidebarOrgPrefix . '/admin/projects') }}"
+                        class="sidebar-subitem {{ request()->routeIs('admin.projects.*', 'org.admin.projects.*') ? 'active' : '' }}">
                         <i class="bi bi-folder-open"></i><span>All Projects</span>
                     </a>
-                    <a href="{{ route('admin.tasks.kanban') }}"
-                        class="sidebar-subitem {{ request()->routeIs('admin.tasks.kanban') ? 'active' : '' }}"
+                    <a href="{{ url($sidebarOrgPrefix . '/admin/tasks/kanban') }}"
+                        class="sidebar-subitem {{ request()->routeIs('admin.tasks.kanban', 'org.admin.tasks.kanban') ? 'active' : '' }}"
                         style="position:relative;">
                         <i class="bi bi-view-stacked"></i><span>Kanban Board</span>
                         <span id="task-notification-badge"
@@ -78,12 +89,12 @@
                                      min-width:18px;height:18px;font-size:10px;font-weight:700;color:#fff;
                                      background:var(--p-danger);border-radius:999px;padding:0 4px;"></span>
                     </a>
-                    <a href="{{ route('admin.tasks.index') }}"
-                        class="sidebar-subitem {{ request()->routeIs('admin.tasks.index') ? 'active' : '' }}">
+                    <a href="{{ url($sidebarOrgPrefix . '/admin/tasks') }}"
+                        class="sidebar-subitem {{ request()->routeIs('admin.tasks.index', 'org.admin.tasks.index') ? 'active' : '' }}">
                         <i class="bi bi-list-task"></i><span>Task List</span>
                     </a>
-                    <a href="{{ route('admin.projects.gantt') }}"
-                        class="sidebar-subitem {{ request()->routeIs('admin.projects.gantt') ? 'active' : '' }}">
+                    <a href="{{ url($sidebarOrgPrefix . '/admin/projects/gantt') }}"
+                        class="sidebar-subitem {{ request()->routeIs('admin.projects.gantt', 'org.admin.projects.gantt') ? 'active' : '' }}">
                         <i class="bi bi-bar-chart-steps"></i><span>Gantt Chart</span>
                     </a>
                 </div>
@@ -91,29 +102,29 @@
 
             {{-- Content (admin / non-org users only) --}}
             @if (auth()->user() && (auth()->user()->hasRole('admin') || !auth()->user()->organization_id))
-                <div class="sidebar-section" x-data="{ open: {{ request()->routeIs('admin.events.*', 'admin.blogs.*', 'admin.playbooks.*', 'admin.contact.*') ? 'true' : 'false' }} }">
+                <div class="sidebar-section" x-data="{ open: {{ request()->routeIs('admin.events.*', 'admin.blogs.*', 'admin.playbooks.*', 'admin.contact.*', 'org.admin.events.*', 'org.admin.blogs.*', 'org.admin.playbooks.*', 'org.admin.contact.*') ? 'true' : 'false' }} }">
                     <button @click="open=!open" data-tooltip="Content" class="sidebar-dropdown-toggle">
                         <span class="sidebar-icon"><i class="bi bi-pencil-square"></i></span>
                         <span class="sidebar-text">Content</span>
                         <i class="sidebar-chevron bi bi-chevron-down" :class="open ? 'open' : ''"></i>
                     </button>
                     <div class="sidebar-submenu" x-show="open && (sidebarOpen || mobileSidebarOpen)" x-transition>
-                        <a href="{{ route('admin.events.index') }}"
-                            class="sidebar-subitem {{ request()->routeIs('admin.events.*') ? 'active' : '' }}">
+                        <a href="{{ url($sidebarOrgPrefix . '/admin/events') }}"
+                            class="sidebar-subitem {{ request()->routeIs('admin.events.*', 'org.admin.events.*') ? 'active' : '' }}">
                             <i class="bi bi-calendar-event"></i><span>Events</span>
                         </a>
-                        <a href="{{ route('admin.blogs.index') }}"
-                            class="sidebar-subitem {{ request()->routeIs('admin.blogs.*') ? 'active' : '' }}">
+                        <a href="{{ url($sidebarOrgPrefix . '/admin/blogs') }}"
+                            class="sidebar-subitem {{ request()->routeIs('admin.blogs.*', 'org.admin.blogs.*') ? 'active' : '' }}">
                             <i class="bi bi-book"></i><span>Resource Hub</span>
                         </a>
-                        <a href="{{ route('admin.playbooks.dashboard') }}"
-                            class="sidebar-subitem {{ request()->routeIs('admin.playbooks.*') ? 'active' : '' }}">
+                        <a href="{{ url($sidebarOrgPrefix . '/admin/playbooks-dashboard') }}"
+                            class="sidebar-subitem {{ request()->routeIs('admin.playbooks.*', 'org.admin.playbooks.*') ? 'active' : '' }}">
                             <i class="bi bi-download"></i><span>Ebook Downloads</span>
                         </a>
                         @if (auth()->user() &&
                                 auth()->user()->hasRole(['admin', 'supervisor']))
-                            <a href="{{ route('admin.contact.index') }}"
-                                class="sidebar-subitem {{ request()->routeIs('admin.contact.*') ? 'active' : '' }}">
+                            <a href="{{ url($sidebarOrgPrefix . '/admin/contact') }}"
+                                class="sidebar-subitem {{ request()->routeIs('admin.contact.*', 'org.admin.contact.*') ? 'active' : '' }}">
                                 <i class="bi bi-envelope"></i><span>Contact Submissions</span>
                             </a>
                         @endif
@@ -121,26 +132,36 @@
                 </div>
             @endif
 
-            {{-- Users (admin / non-org users only) --}}
-            @if (auth()->user() && (auth()->user()->hasRole('admin') || !auth()->user()->organization_id))
-                <div class="sidebar-section" x-data="{ open: {{ request()->routeIs('admin.students.*', 'admin.staff.*') ? 'true' : 'false' }} }">
+            {{-- Users --}}
+            @php
+                $authUser = auth()->user();
+                $isAdmin = $authUser && $authUser->hasRole('admin');
+                $isSupervisorWithOrg = $authUser && $authUser->hasRole('supervisor') && $authUser->organization_id;
+                $showUsersSection = $isAdmin || $isSupervisorWithOrg || ($authUser && !$authUser->organization_id);
+            @endphp
+            @if ($showUsersSection)
+                <div class="sidebar-section" x-data="{ open: {{ request()->routeIs('admin.students.*', 'admin.staff.*', 'org.admin.students.*', 'org.admin.staff.*') ? 'true' : 'false' }} }">
                     <button @click="open=!open" data-tooltip="Users" class="sidebar-dropdown-toggle">
                         <span class="sidebar-icon"><i class="bi bi-people"></i></span>
                         <span class="sidebar-text">Users</span>
                         <i class="sidebar-chevron bi bi-chevron-down" :class="open ? 'open' : ''"></i>
                     </button>
                     <div class="sidebar-submenu" x-show="open && (sidebarOpen || mobileSidebarOpen)" x-transition>
-                        <a href="{{ route('admin.students.index') }}"
-                            class="sidebar-subitem {{ request()->routeIs('admin.students.*') ? 'active' : '' }}">
-                            <i class="bi bi-mortarboard"></i><span>Students</span>
-                        </a>
-                        @if (auth()->user() && auth()->user()->hasRole('admin'))
-                            <a href="{{ route('admin.staff.index') }}"
-                                class="sidebar-subitem {{ request()->routeIs('admin.staff.*') ? 'active' : '' }}">
+                        @if ($isAdmin || !$authUser->organization_id)
+                            <a href="{{ url($sidebarOrgPrefix . '/admin/students') }}"
+                                class="sidebar-subitem {{ request()->routeIs('admin.students.*', 'org.admin.students.*') ? 'active' : '' }}">
+                                <i class="bi bi-mortarboard"></i><span>Students</span>
+                            </a>
+                        @endif
+                        @if ($isAdmin || $isSupervisorWithOrg)
+                            <a href="{{ url($sidebarOrgPrefix . '/admin/staff') }}"
+                                class="sidebar-subitem {{ request()->routeIs('admin.staff.*', 'org.admin.staff.*') ? 'active' : '' }}">
                                 <i class="bi bi-person-badge"></i><span>Staff</span>
                             </a>
-                            <a href="{{ route('admin.organizations.index') }}"
-                                class="sidebar-subitem {{ request()->routeIs('admin.organizations.*') ? 'active' : '' }}">
+                        @endif
+                        @if ($isAdmin)
+                            <a href="{{ url($sidebarOrgPrefix . '/admin/organizations') }}"
+                                class="sidebar-subitem {{ request()->routeIs('admin.organizations.*', 'org.admin.organizations.*') ? 'active' : '' }}">
                                 <i class="bi bi-building"></i><span>Organizations</span>
                             </a>
                         @endif
@@ -150,23 +171,23 @@
 
             {{-- Applications & Reports (admin only) --}}
             @if (auth()->user() && auth()->user()->hasRole('admin'))
-                <div class="sidebar-section" x-data="{ open: {{ request()->routeIs('admin.consultation.*', 'admin.brn.*', 'admin.clicks.*') ? 'true' : 'false' }} }">
+                <div class="sidebar-section" x-data="{ open: {{ request()->routeIs('admin.consultation.*', 'admin.brn.*', 'admin.clicks.*', 'org.admin.consultation.*', 'org.admin.brn.*', 'org.admin.clicks.*') ? 'true' : 'false' }} }">
                     <button @click="open=!open" data-tooltip="Applications" class="sidebar-dropdown-toggle">
                         <span class="sidebar-icon"><i class="bi bi-graph-up-arrow"></i></span>
                         <span class="sidebar-text">Applications</span>
                         <i class="sidebar-chevron bi bi-chevron-down" :class="open ? 'open' : ''"></i>
                     </button>
                     <div class="sidebar-submenu" x-show="open && (sidebarOpen || mobileSidebarOpen)" x-transition>
-                        <a href="{{ route('admin.consultation.index') }}"
-                            class="sidebar-subitem {{ request()->routeIs('admin.consultation.*') ? 'active' : '' }}">
+                        <a href="{{ url($sidebarOrgPrefix . '/admin/consultations') }}"
+                            class="sidebar-subitem {{ request()->routeIs('admin.consultation.*', 'org.admin.consultation.*') ? 'active' : '' }}">
                             <i class="bi bi-handshake"></i><span>Consultations</span>
                         </a>
-                        <a href="{{ route('admin.brn.index') }}"
-                            class="sidebar-subitem {{ request()->routeIs('admin.brn.*') ? 'active' : '' }}">
+                        <a href="{{ url($sidebarOrgPrefix . '/admin/brn') }}"
+                            class="sidebar-subitem {{ request()->routeIs('admin.brn.*', 'org.admin.brn.*') ? 'active' : '' }}">
                             <i class="bi bi-briefcase"></i><span>BRN Applications</span>
                         </a>
-                        <a href="{{ route('admin.clicks.report') }}"
-                            class="sidebar-subitem {{ request()->routeIs('admin.clicks.*') ? 'active' : '' }}">
+                        <a href="{{ url($sidebarOrgPrefix . '/admin/clicks/report') }}"
+                            class="sidebar-subitem {{ request()->routeIs('admin.clicks.*', 'org.admin.clicks.*') ? 'active' : '' }}">
                             <i class="bi bi-cursor"></i><span>Click Reports</span>
                         </a>
                     </div>

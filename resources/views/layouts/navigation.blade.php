@@ -2,6 +2,16 @@
     Topbar / Navigation - P23 Africa Admin
     Uses admin-ui.css design tokens
     ===================================================================== --}}
+@php
+    $navOrgPrefix = '';
+    $navUser = auth()->user();
+    if ($navUser && $navUser->organization_id && !$navUser->hasRole('admin')) {
+        $navOrg = $navUser->organization;
+        if ($navOrg && $navOrg->slug) {
+            $navOrgPrefix = '/' . $navOrg->slug;
+        }
+    }
+@endphp
 <nav class="topbar" x-data="{ userMenu: false }">
 
     {{-- Hamburger (mobile sidebar toggle) --}}
@@ -10,10 +20,22 @@
     </button>
 
     {{-- Brand logo --}}
-    <a href="{{ route('admin.dashboard') }}" class="topbar-brand">
-        <img src="{{ asset('images/logo.png') }}" alt="P23 Africa" class="logo-theme-invert"
-            style="height:36px;width:auto;">
-        {{-- <span class="topbar-brand-name d-none d-md-inline">P23 Africa</span> --}}
+    <a href="{{ url($navOrgPrefix . '/admin/dashboard') }}" class="topbar-brand">
+        @if (empty($currentOrg))
+            <img src="{{ asset('images/logo.png') }}" alt="{{ !empty($currentOrg) ? $currentOrg->name : 'P23 Africa' }}"
+                class="logo-theme-invert" style="height:36px;width:auto;">
+        @endif
+        @if (!empty($currentOrg))
+            <div style="display:flex;align-items:center;gap:8px;margin-left:8px;">
+                <div style="width:36px;height:36px;border-radius:var(--radius-md);background:linear-gradient(135deg,var(--p-primary),var(--p-accent));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;color:white;text-shadow:0 1px 2px rgba(0,0,0,0.2);">
+                    {{ strtoupper(substr($currentOrg->name, 0, 1)) }}
+                </div>
+                <span class="topbar-brand-name d-none d-md-inline"
+                    style="font-weight:700;font-size:1.125rem;background:linear-gradient(135deg,var(--p-primary),var(--p-accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.02em;">
+                    {{ $currentOrg->name }}
+                </span>
+            </div>
+        @endif
     </a>
 
     <span class="topbar-spacer"></span>

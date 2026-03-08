@@ -180,9 +180,16 @@ class LeadController extends Controller
      */
     public function create()
     {
-        $users = User::whereHas('roles', function ($q) {
+        $user = auth()->user();
+
+        $usersQuery = User::whereHas('roles', function ($q) {
             $q->whereIn('name', ['admin', 'supervisor', 'staff']);
-        })->get();
+        });
+        // Scope to same organization for non-admins
+        if ($user && !$user->hasRole('admin') && $user->organization_id) {
+            $usersQuery->where('organization_id', $user->organization_id);
+        }
+        $users = $usersQuery->get();
 
         return view('admin.crm.create', [
             'users' => $users,
@@ -286,9 +293,14 @@ class LeadController extends Controller
 
         $lead->load(['assignedUser', 'activities.user']);
 
-        $users = User::whereHas('roles', function ($q) {
+        $usersQuery = User::whereHas('roles', function ($q) {
             $q->whereIn('name', ['admin', 'supervisor', 'staff']);
-        })->get();
+        });
+        // Scope to same organization for non-admins
+        if ($user && !$user->hasRole('admin') && $user->organization_id) {
+            $usersQuery->where('organization_id', $user->organization_id);
+        }
+        $users = $usersQuery->get();
 
         return view('admin.crm.show', [
             'lead' => $lead,
@@ -307,9 +319,14 @@ class LeadController extends Controller
         $user = auth()->user();
         $this->ensureLeadOrgAccess($lead, $user);
 
-        $users = User::whereHas('roles', function ($q) {
+        $usersQuery = User::whereHas('roles', function ($q) {
             $q->whereIn('name', ['admin', 'supervisor', 'staff']);
-        })->get();
+        });
+        // Scope to same organization for non-admins
+        if ($user && !$user->hasRole('admin') && $user->organization_id) {
+            $usersQuery->where('organization_id', $user->organization_id);
+        }
+        $users = $usersQuery->get();
 
         return view('admin.crm.edit', [
             'lead' => $lead,
@@ -504,6 +521,17 @@ class LeadController extends Controller
         $validated = $request->validate([
             'assigned_to' => 'nullable|exists:users,id',
         ]);
+
+        // Prevent assigning to a user from a different organization
+        if (!empty($validated['assigned_to']) && $user && !$user->hasRole('admin') && $user->organization_id) {
+            $assignee = User::find($validated['assigned_to']);
+            if ($assignee && $assignee->organization_id !== $user->organization_id) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Cannot assign lead to a user outside your organization.'
+                ], 403);
+            }
+        }
 
         try {
             $oldAssignee = $lead->assignedUser;

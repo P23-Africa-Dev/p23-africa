@@ -2,8 +2,13 @@
 
     {{-- ── Heading ── --}}
     <div class="form-heading">
-        <h1>Welcome back</h1>
-        <p>Sign in to your account to continue</p>
+        @if (!empty($organization))
+            <h1>Welcome to {{ $organization->name }}</h1>
+            <p>Sign in to your organization account</p>
+        @else
+            <h1>Welcome back</h1>
+            <p>Sign in to your account to continue</p>
+        @endif
     </div>
 
     {{-- ── Session Status ── --}}
@@ -22,7 +27,8 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('login') }}" id="loginForm" novalidate>
+    <form method="POST" action="{{ !empty($orgSlug) ? url('/' . $orgSlug . '/admin/login') : route('login_user') }}"
+        id="loginForm" novalidate>
         @csrf
 
         {{-- Email ── --}}

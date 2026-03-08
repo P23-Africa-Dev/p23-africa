@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="{{ asset('images/Logo2.png') }}" type="image/x-icon">
-    <title>P23 Africa | Admin Dashboard</title>
+    <title>{{ !empty($currentOrg) ? $currentOrg->name . ' | Admin Dashboard' : 'P23 Africa | Admin Dashboard' }}</title>
     <script>
         (function() {
             var t = localStorage.getItem('theme') || 'light';
@@ -105,12 +105,38 @@
     @endif
 
     @auth
+        @php
+            $layoutOrgPrefix = '';
+            $layoutUser = auth()->user();
+            if ($layoutUser && $layoutUser->organization_id && !$layoutUser->hasRole('admin')) {
+                $layoutOrg = $layoutUser->organization;
+                if ($layoutOrg && $layoutOrg->slug) {
+                    $layoutOrgPrefix = '/' . $layoutOrg->slug;
+                }
+            }
+            // Use org-prefixed notification URLs if user has an org
+            $notifUnreadCountUrl = $layoutOrgPrefix
+                ? url($layoutOrgPrefix . '/admin/notifications/unread-count')
+                : route('admin.notifications.unread-count');
+            $notifAllUnreadCountUrl = $layoutOrgPrefix
+                ? url($layoutOrgPrefix . '/admin/notifications/all-unread-count')
+                : route('admin.notifications.all-unread-count');
+            $notifAllUrl = $layoutOrgPrefix
+                ? url($layoutOrgPrefix . '/admin/notifications/all')
+                : route('admin.notifications.all');
+            $notifMarkAllReadUrl = $layoutOrgPrefix
+                ? url($layoutOrgPrefix . '/admin/notifications/mark-all-read')
+                : route('admin.notifications.mark-all-read');
+            $notifMarkReadBase = $layoutOrgPrefix
+                ? url($layoutOrgPrefix . '/admin/notifications')
+                : '/admin/notifications';
+        @endphp
         <script>
             (function() {
                 let last = 0;
                 async function poll() {
                     try {
-                        const r = await fetch("{{ route('admin.notifications.unread-count') }}", {
+                        const r = await fetch("{{ $notifUnreadCountUrl }}", {
                             headers: {
                                 "Accept": "application/json",
                                 "X-Requested-With": "XMLHttpRequest"
@@ -159,7 +185,7 @@
                 }
                 async function updateCount() {
                     try {
-                        const r = await fetch("{{ route('admin.notifications.all-unread-count') }}", {
+                        const r = await fetch("{{ $notifAllUnreadCountUrl }}", {
                             headers: {
                                 "Accept": "application/json",
                                 "X-Requested-With": "XMLHttpRequest"
@@ -176,7 +202,7 @@
                     const list = document.getElementById("notif-list");
                     if (!list) return;
                     try {
-                        const r = await fetch("{{ route('admin.notifications.all') }}", {
+                        const r = await fetch("{{ $notifAllUrl }}", {
                             headers: {
                                 "Accept": "application/json",
                                 "X-Requested-With": "XMLHttpRequest"
@@ -218,7 +244,7 @@
                             "' onclick=\"NotifSystem.clickItem('" + esc(n.id) + "','" + esc(n.url || "") +
                             "')\">" +
                             "<div class='notif-icon-wrap notif-type-" + esc(n.type) + "'><i class='" + esc(
-                            icon) + "'></i></div>" +
+                                icon) + "'></i></div>" +
                             "<div class='notif-content'>" +
                             "<div class='notif-title-row'><span class='notif-title'>" + esc(n.title) +
                             "</span>" + (u ? "<span class='notif-new-dot'></span>" : "") + "</div>" +
@@ -230,7 +256,7 @@
                 }
                 async function clickItem(id, url) {
                     try {
-                        await fetch("/admin/notifications/" + id + "/mark-read", {
+                        await fetch("{{ $notifMarkReadBase }}/" + id + "/mark-read", {
                             method: "POST",
                             headers: {
                                 "X-CSRF-TOKEN": "{{ csrf_token() }}",
@@ -246,7 +272,7 @@
                 }
                 async function markAllRead() {
                     try {
-                        await fetch("{{ route('admin.notifications.mark-all-read') }}", {
+                        await fetch("{{ $notifMarkAllReadUrl }}", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json",

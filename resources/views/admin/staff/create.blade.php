@@ -24,27 +24,40 @@
                                 <input type="text" name="name" class="form-control" required>
                             </div>
 
-                            <div class="mb-3">
-                                <label>Role</label>
-                                <select name="role" class="form-control">
-                                    <option value="staff" selected>Staff</option>
-                                    <option value="supervisor">Supervisor</option>
-                                </select>
-                            </div>
+                            @if (auth()->user()->hasRole('admin'))
+                                <div class="mb-3">
+                                    <label>Role</label>
+                                    <select name="role" class="form-control">
+                                        <option value="staff" selected>Staff</option>
+                                        <option value="supervisor">Supervisor</option>
+                                    </select>
+                                </div>
 
-                            <div class="mb-3">
-                                <label>Organization</label>
-                                <select name="organization_id" class="form-control">
-                                    <option value="">-- None --</option>
-                                    @foreach ($organizations as $org)
-                                        <option value="{{ $org->id }}"
-                                            @if (old('organization_id')) {{ old('organization_id') == $org->id ? 'selected' : '' }}
-                                            @elseif(!empty($defaultOrg))
-                                                {{ $defaultOrg->id == $org->id ? 'selected' : '' }} @endif>
-                                            {{ $org->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                                <div class="mb-3">
+                                    <label>Organization</label>
+                                    <select name="organization_id" class="form-control">
+                                        <option value="">-- None --</option>
+                                        @foreach ($organizations as $org)
+                                            <option value="{{ $org->id }}"
+                                                @if (old('organization_id')) {{ old('organization_id') == $org->id ? 'selected' : '' }}
+                                                @elseif(!empty($defaultOrg))
+                                                    {{ $defaultOrg->id == $org->id ? 'selected' : '' }} @endif>
+                                                {{ $org->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            @else
+                                {{-- Supervisors can only add staff role, org is auto-set --}}
+                                <input type="hidden" name="role" value="staff">
+                                @if (auth()->user()->organization_id)
+                                    <div class="mb-3">
+                                        <label>Organization</label>
+                                        <input type="text" class="form-control"
+                                            value="{{ auth()->user()->organization->name ?? 'Your Organization' }}"
+                                            disabled>
+                                    </div>
+                                @endif
+                            @endif
 
                             {{-- <div class="mb-3">
                                 <label>Permissions</label><br>

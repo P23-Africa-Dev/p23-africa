@@ -199,6 +199,11 @@ class TaskController extends Controller
             $assignableUsers = User::role('staff')->get();
         }
 
+        // Limit assignable users to same organization for non-admins
+        if (!$user->hasRole('admin') && $user->organization_id) {
+            $assignableUsers = $assignableUsers->where('organization_id', $user->organization_id)->values();
+        }
+
         $selectedProjectId = $request->get('project_id');
 
         return view('admin.tasks.create', compact('projects', 'statuses', 'priorities', 'assignableUsers', 'selectedProjectId'));
@@ -303,6 +308,11 @@ class TaskController extends Controller
             $assignableUsers = User::role(['supervisor', 'staff'])->get();
         } else {
             $assignableUsers = User::role('staff')->get();
+        }
+
+        // Limit assignable users to same organization for non-admins
+        if (!$user->hasRole('admin') && $user->organization_id) {
+            $assignableUsers = $assignableUsers->where('organization_id', $user->organization_id)->values();
         }
 
         $task->load('assignees');
@@ -697,6 +707,11 @@ class TaskController extends Controller
         // Add project members if available
         if ($task->project && $task->project->members) {
             $mentionableUsers = $mentionableUsers->merge($task->project->members);
+        }
+
+        // Filter to same organization for non-admin users
+        if (!$user->hasRole('admin') && $user->organization_id) {
+            $mentionableUsers = $mentionableUsers->where('organization_id', $user->organization_id);
         }
 
         // Get unique users

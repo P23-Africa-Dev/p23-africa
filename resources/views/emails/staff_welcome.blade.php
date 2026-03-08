@@ -1,19 +1,28 @@
+@php
+    $firstName = explode(' ', trim($user->name))[0];
+    $initials = collect(explode(' ', trim($user->name)))
+        ->map(fn($w) => strtoupper($w[0]))
+        ->take(2)
+        ->implode('');
+    $loginUrl = $organization && $organization->slug ? url('/' . $organization->slug . '/admin/login') : route('login');
+@endphp
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
+    xmlns:o="urn:schemas-microsoft-com:office:office">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Welcome to {{ config('app.name') }}</title>
+    <meta name="x-apple-disable-message-reformatting">
+    <meta name="format-detection" content="telephone=no,address=no,email=no,date=no,url=no">
+    <title>Welcome to {{ $orgName }}</title>
     <!--[if mso]>
     <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
     <![endif]-->
     <style>
-        /* ── Reset ────────────────────────────────── */
-        *,
-        *::before,
-        *::after {
+        /* ── Reset ─────────────────────────────────────────── */
+        * {
             box-sizing: border-box;
         }
 
@@ -29,338 +38,389 @@
         td {
             mso-table-lspace: 0pt;
             mso-table-rspace: 0pt;
+            border-collapse: collapse;
         }
 
         img {
             -ms-interpolation-mode: bicubic;
             border: 0;
             display: block;
-        }
-
-        a {
-            color: inherit;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
         }
 
         body {
             margin: 0;
             padding: 0;
+            background-color: #e8edf5;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background-color: #eef2f7;
             color: #1e293b;
+            width: 100% !important;
+            min-width: 100%;
         }
 
-        /* ── Wrapper ──────────────────────────────── */
-        .email-wrapper {
+        /* ── Outer wrapper ──────────────────────────────────── */
+        .outer-table {
             width: 100%;
-            background-color: #eef2f7;
-            padding: 40px 16px;
+            background-color: #e8edf5;
         }
 
-        .email-container {
+        /* ── Card ───────────────────────────────────────────── */
+        .card {
+            width: 600px;
             max-width: 600px;
             margin: 0 auto;
             background: #ffffff;
-            border-radius: 16px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 4px 32px rgba(0, 0, 0, .09);
         }
 
-        /* ── Header ───────────────────────────────── */
-        .header {
-            background: linear-gradient(135deg, #0a3d32 0%, #1d6154 50%, #1a9e6e 100%);
-            padding: 48px 40px 36px;
+        /* ── Header ─────────────────────────────────────────── */
+        .hdr-cell {
+            background: #0e4035;
+            background: linear-gradient(150deg, #0a2e24 0%, #0e4035 40%, #16684f 75%, #1b8c68 100%);
+            padding: 52px 48px 0;
             text-align: center;
-            position: relative;
-            overflow: hidden;
         }
 
-        .header-pattern {
-            position: absolute;
-            inset: 0;
-            background-image:
-                radial-gradient(circle at 20% 30%, rgba(255, 255, 255, .07) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(34, 197, 139, .15) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        .header-logo {
+        /* org pill / logo badge */
+        .org-pill {
             display: inline-block;
-            background: rgba(255, 255, 255, .12);
-            border: 1px solid rgba(255, 255, 255, .2);
-            border-radius: 14px;
-            padding: 12px 20px;
-            margin-bottom: 24px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .header-logo span {
-            font-size: 15px;
-            font-weight: 700;
-            color: #fff;
-            letter-spacing: .3px;
-        }
-
-        .header-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(34, 197, 139, .18);
-            border: 1px solid rgba(34, 197, 139, .4);
+            background: rgba(255, 255, 255, .10);
+            border: 1px solid rgba(255, 255, 255, .22);
             border-radius: 999px;
-            padding: 4px 14px;
-            font-size: 12px;
-            font-weight: 600;
-            color: #a7f3d0;
-            letter-spacing: .5px;
-            text-transform: uppercase;
-            margin-bottom: 16px;
-            position: relative;
-            z-index: 1;
+            padding: 6px 18px 6px 8px;
+            margin-bottom: 28px;
         }
 
-        .header h1 {
-            font-size: 28px;
+        .org-pill-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #34d399;
+            border-radius: 50%;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .org-pill span {
+            font-size: 12px;
+            font-weight: 700;
+            color: #d1fae5;
+            letter-spacing: .6px;
+            text-transform: uppercase;
+            vertical-align: middle;
+        }
+
+        /* avatar circle */
+        .avatar-ring {
+            display: inline-block;
+            background: rgba(255, 255, 255, .08);
+            border: 3px solid rgba(52, 211, 153, .4);
+            border-radius: 50%;
+            padding: 5px;
+            margin-bottom: 22px;
+        }
+
+        .avatar-inner {
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #22c58b 0%, #0f9e71 100%);
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .avatar-initials {
+            font-size: 24px;
             font-weight: 800;
             color: #fff;
-            margin: 0 0 8px;
-            letter-spacing: -.3px;
-            line-height: 1.25;
-            position: relative;
-            z-index: 1;
+            letter-spacing: .5px;
+            line-height: 1;
         }
 
-        .header h1 .name {
+        .hdr-headline {
+            font-size: 30px;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 10px;
+            letter-spacing: -.4px;
+            line-height: 1.22;
+        }
+
+        .hdr-headline .highlight {
             color: #6ee7b7;
         }
 
-        .header p {
+        .hdr-sub {
             font-size: 15px;
-            color: rgba(255, 255, 255, .75);
+            color: rgba(255, 255, 255, .70);
+            margin: 0 0 0;
+        }
+
+        /* wave separator */
+        .wave-cell {
+            background: #0e4035;
+            line-height: 0;
+            font-size: 0;
+        }
+
+        /* ── Accent bar ─────────────────────────────────────── */
+        .accent-bar-cell {
+            background: linear-gradient(90deg, #0e4035 0%, #22c58b 50%, #0e4035 100%);
+            height: 3px;
+        }
+
+        /* ── Body ───────────────────────────────────────────── */
+        .body-cell {
+            padding: 44px 48px 8px;
+        }
+
+        /* greeting block */
+        .greeting-block {
+            border-left: 4px solid #22c58b;
+            background: #f0fdf7;
+            border-radius: 0 10px 10px 0;
+            padding: 16px 20px;
+            margin-bottom: 32px;
+        }
+
+        .greeting-block p {
+            font-size: 15px;
+            color: #2d4a3e;
+            line-height: 1.75;
             margin: 0;
-            position: relative;
-            z-index: 1;
         }
 
-        /* ── Divider bar ──────────────────────────── */
-        .accent-bar {
-            height: 4px;
-            background: linear-gradient(90deg, #1d6154, #22c58b, #1d6154);
+        .greeting-block strong {
+            color: #0e4035;
         }
 
-        /* ── Body content ─────────────────────────── */
-        .body-content {
-            padding: 40px;
+        /* ── Section label ──────────────────────────────────── */
+        .section-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #94a3b8;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            margin: 0 0 12px;
         }
 
-        .greeting {
-            font-size: 16px;
-            color: #334155;
-            line-height: 1.7;
-            margin-bottom: 28px;
-        }
-
-        .greeting strong {
-            color: #1d6154;
-        }
-
-        /* ── Credentials card ─────────────────────── */
-        .credentials-card {
-            border: 1px solid #e2e8f0;
+        /* ── Credentials card ───────────────────────────────── */
+        .cred-card {
+            border: 1.5px solid #e2e8f0;
             border-radius: 14px;
             overflow: hidden;
             margin-bottom: 28px;
         }
 
-        .credentials-header {
-            background: linear-gradient(135deg, #f0fdf9, #e6f7f3);
+        .cred-head-cell {
+            background: linear-gradient(135deg, #f0fdf9 0%, #e8f9f3 100%);
             border-bottom: 1px solid #d1fae5;
-            padding: 16px 24px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            padding: 14px 22px;
         }
 
-        .credentials-header .icon-wrap {
-            width: 36px;
-            height: 36px;
-            background: #1d6154;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
+        .cred-head-icon {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #0e4035;
+            border-radius: 7px;
+            text-align: center;
+            vertical-align: middle;
+            margin-right: 10px;
+            line-height: 30px;
         }
 
-        .credentials-header .icon-wrap svg {
-            width: 18px;
-            height: 18px;
-            fill: #fff;
-        }
-
-        .credentials-header h3 {
-            font-size: 14px;
+        .cred-head-title {
+            font-size: 13px;
             font-weight: 700;
-            color: #0f4c38;
-            margin: 0;
-            letter-spacing: .3px;
+            color: #0a3028;
+            letter-spacing: .4px;
             text-transform: uppercase;
+            vertical-align: middle;
         }
 
-        .credential-row {
-            display: flex;
-            align-items: center;
-            padding: 14px 24px;
+        .cred-row-cell {
+            padding: 13px 22px;
             border-bottom: 1px solid #f1f5f9;
         }
 
-        .credential-row:last-child {
+        .cred-row-cell.last {
             border-bottom: none;
         }
 
-        .credential-label {
-            font-size: 13px;
+        .cred-label {
+            font-size: 12px;
             font-weight: 600;
             color: #64748b;
-            width: 140px;
-            flex-shrink: 0;
+            padding-bottom: 3px;
+            display: inline;
         }
 
-        .credential-value {
+        .cred-value {
             font-family: 'Courier New', Courier, monospace;
-            font-size: 13.5px;
+            font-size: 14px;
             font-weight: 700;
             color: #0f172a;
             background: #f8fafc;
             border: 1px solid #e2e8f0;
             border-radius: 6px;
-            padding: 5px 12px;
+            padding: 6px 12px;
+            display: inline-block;
             word-break: break-all;
         }
 
-        /* ── Security notice ──────────────────────── */
-        .security-notice {
-            display: flex;
-            gap: 14px;
-            align-items: flex-start;
+        /* ── Security notice ────────────────────────────────── */
+        .notice-cell {
             background: #fffbeb;
             border: 1px solid #fde68a;
             border-left: 4px solid #f59e0b;
             border-radius: 10px;
-            padding: 16px 18px;
-            margin-bottom: 28px;
+            padding: 14px 18px;
+            margin-bottom: 32px;
         }
 
-        .security-notice .notice-icon {
+        .notice-icon-cell {
             font-size: 20px;
             line-height: 1;
-            flex-shrink: 0;
-            margin-top: 1px;
+            vertical-align: top;
+            padding-top: 2px;
+            padding-right: 12px;
+            width: 28px;
         }
 
-        .security-notice p {
-            font-size: 13.5px;
+        .notice-text {
+            font-size: 13px;
             color: #78350f;
-            line-height: 1.6;
-            margin: 0;
+            line-height: 1.65;
         }
 
-        .security-notice p strong {
+        .notice-text strong {
             color: #92400e;
         }
 
-        /* ── Steps ────────────────────────────────── */
-        .steps-section {
-            margin-bottom: 32px;
+        /* ── Steps ──────────────────────────────────────────── */
+        .steps-heading-cell {
+            padding-bottom: 14px;
         }
 
-        .steps-section h3 {
+        .step-outer-cell {
+            padding-bottom: 10px;
+        }
+
+        .step-num-cell {
+            width: 30px;
+            vertical-align: top;
+            padding-top: 1px;
+            padding-right: 14px;
+        }
+
+        .step-num-circle {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0e4035 0%, #22c58b 100%);
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .step-text-cell {
             font-size: 14px;
-            font-weight: 700;
             color: #475569;
-            letter-spacing: .5px;
-            text-transform: uppercase;
-            margin-bottom: 14px;
-        }
-
-        .step-row {
-            display: flex;
-            align-items: flex-start;
-            gap: 14px;
-            padding: 10px 0;
+            line-height: 1.6;
+            padding-top: 4px;
             border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 10px;
         }
 
-        .step-row:last-child {
+        .step-text-cell.last {
             border-bottom: none;
         }
 
-        .step-num {
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #1d6154, #22c58b);
-            color: #fff;
-            font-size: 12px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            margin-top: 1px;
+        .step-text-cell strong {
+            color: #1e293b;
         }
 
-        .step-text {
-            font-size: 13.5px;
-            color: #475569;
-            line-height: 1.55;
-            padding-top: 3px;
-        }
-
-        /* ── CTA button ───────────────────────────── */
-        .cta-wrap {
+        /* ── CTA button ─────────────────────────────────────── */
+        .cta-outer-cell {
+            padding: 8px 48px 44px;
             text-align: center;
-            margin-bottom: 32px;
         }
 
-        .cta-button {
+        .cta-link {
             display: inline-block;
-            padding: 14px 40px;
-            background: linear-gradient(135deg, #1d6154 0%, #22c58b 100%);
-            color: #fff !important;
+            padding: 15px 44px;
+            background: #1d6154;
+            background: linear-gradient(135deg, #0e4035 0%, #1d6154 45%, #22c58b 100%);
+            color: #ffffff !important;
             text-decoration: none !important;
             border-radius: 999px;
             font-size: 15px;
             font-weight: 700;
             letter-spacing: .3px;
-            box-shadow: 0 4px 18px rgba(29, 97, 84, .3);
+            mso-padding-alt: 0;
         }
 
-        /* ── Footer ───────────────────────────────── */
-        .email-footer {
-            background: #f8fafc;
+        .cta-subtext {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 12px;
+        }
+
+        .cta-subtext a {
+            color: #1d6154;
+            text-decoration: none;
+        }
+
+        /* ── Divider ────────────────────────────────────────── */
+        .divider-cell {
+            padding: 0 48px;
+        }
+
+        .divider-line {
+            border: none;
             border-top: 1px solid #e2e8f0;
-            padding: 28px 40px;
+            margin: 0;
+        }
+
+        /* ── Footer ─────────────────────────────────────────── */
+        .footer-cell {
+            background: #f8fafc;
+            padding: 28px 48px 32px;
             text-align: center;
         }
 
         .footer-brand {
-            font-size: 15px;
-            font-weight: 700;
-            color: #1d6154;
-            margin-bottom: 6px;
+            font-size: 16px;
+            font-weight: 800;
+            color: #0e4035;
+            margin-bottom: 4px;
         }
 
         .footer-tagline {
             font-size: 12px;
             color: #94a3b8;
+            margin-bottom: 20px;
+        }
+
+        .footer-dots {
+            font-size: 12px;
+            color: #cbd5e1;
             margin-bottom: 16px;
+            letter-spacing: 4px;
         }
 
         .footer-note {
             font-size: 11.5px;
             color: #94a3b8;
-            line-height: 1.6;
+            line-height: 1.65;
         }
 
         .footer-note a {
@@ -368,486 +428,257 @@
             text-decoration: none;
         }
 
-        /* ── Responsive ───────────────────────────── */
-        @media only screen and (max-width: 600px) {
-            .body-content {
-                padding: 28px 20px;
+        /* ── Responsive ─────────────────────────────────────── */
+        @media only screen and (max-width: 620px) {
+            .card {
+                width: 100% !important;
+                border-radius: 0 !important;
             }
 
-            .header {
-                padding: 36px 20px 28px;
+            .hdr-cell {
+                padding: 36px 24px 0 !important;
             }
 
-            .header h1 {
-                font-size: 22px;
+            .hdr-headline {
+                font-size: 24px !important;
             }
 
-            .credential-row {
-                flex-direction: column;
-                gap: 6px;
+            .body-cell {
+                padding: 30px 24px 8px !important;
             }
 
-            .credential-label {
-                width: auto;
+            .cta-outer-cell {
+                padding: 8px 24px 36px !important;
             }
 
-            .email-footer {
-                padding: 24px 20px;
+            .footer-cell {
+                padding: 24px !important;
+            }
+
+            .divider-cell {
+                padding: 0 24px !important;
             }
         }
     </style>
 </head>
 
 <body>
-    <div class="email-wrapper">
-        <div class="email-container">
+    <!-- Outer wrapper table -->
+    <table class="outer-table" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+        <tr>
+            <td align="center" style="padding: 40px 16px;">
 
-            {{-- ── HEADER ──────────────────────────────────── --}}
-            <div class="header">
-                <div class="header-pattern"></div>
-                <div class="header-logo">
-                    <span>🌍 {{ config('app.name') }}</span>
-                </div>
-                <div style="display:block;"></div>
-                <div class="header-badge">✦ New Team Member</div>
-                <h1>Welcome, <span class="name">{{ $user->name }}</span>!</h1>
-                <p>Your account has been created successfully.</p>
-            </div>
+                <!-- Card table -->
+                <table class="card" cellpadding="0" cellspacing="0" role="presentation" width="600">
 
-            <div class="accent-bar"></div>
+                    {{-- ══════════════ HEADER ══════════════ --}}
+                    <tr>
+                        <td class="hdr-cell" align="center">
 
-            {{-- ── BODY ─────────────────────────────────────── --}}
-            <div class="body-content">
+                            {{-- Org pill --}}
+                            {{-- <table cellpadding="0" cellspacing="0" role="presentation">
+                                <tr>
+                                    <td>
+                                        <div class="org-pill">
+                                            <span class="org-pill-dot"></span>
+                                            <span>{{ $orgName }}</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table> --}}
 
-                <p class="greeting">
-                    Hi <strong>{{ explode(' ', $user->name)[0] }}</strong>, we're delighted to have you on board!
-                    Your staff account on <strong>{{ config('app.name') }}</strong> is ready.
-                    Below are your login credentials — please keep them safe and confidential.
-                </p>
+                            {{-- Avatar with initials --}}
+                            {{-- <div class="avatar-ring">
+                                <table cellpadding="0" cellspacing="0" role="presentation">
+                                    <tr>
+                                        <td class="avatar-inner">
+                                            <span class="avatar-initials">{{ $initials }}</span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div> --}}
 
-                {{-- Credentials card --}}
-                <div class="credentials-card">
-                    <div class="credentials-header">
-                        <div class="icon-wrap">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" />
-                            </svg>
-                        </div>
-                        <h3>Your Login Credentials</h3>
-                    </div>
+                            {{-- Headline --}}
+                            <h1 class="hdr-headline">
+                                Welcome, <span class="highlight">{{ $firstName }}</span>!
+                            </h1>
+                            <p class="hdr-sub">Your account has been set up and is ready to use.</p>
 
-                    <div class="credential-row">
-                        <span class="credential-label">Login Email</span>
-                        <span class="credential-value">{{ $user->email }}</span>
-                    </div>
-                    <div class="credential-row">
-                        <span class="credential-label">Temporary Password</span>
-                        <span class="credential-value">{{ $password }}</span>
-                    </div>
-                </div>
+                            {{-- Wave SVG separator --}}
+                            <div class="wave-cell" style="margin-top: 36px; line-height: 0; font-size: 0;">
+                                <svg viewBox="0 0 600 40" xmlns="http://www.w3.org/2000/svg"
+                                    style="display:block; width:100%; height:40px;" preserveAspectRatio="none">
+                                    <path d="M0,20 C150,40 450,0 600,20 L600,40 L0,40 Z" fill="#ffffff" />
+                                </svg>
+                            </div>
 
-                {{-- Security notice --}}
-                <div class="security-notice">
-                    <span class="notice-icon">⚠️</span>
-                    <p>
-                        <strong>Security Notice:</strong> This is a temporary password.
-                        Please change it immediately after your first login.
-                        Never share your credentials with anyone.
-                    </p>
-                </div>
+                        </td>
+                    </tr>
 
-                {{-- Next steps --}}
-                <div class="steps-section">
-                    <h3>Getting Started</h3>
-                    <div class="step-row">
-                        <div class="step-num">1</div>
-                        <div class="step-text">Click <strong>Login Now</strong> below and enter your email and temporary
-                            password.</div>
-                    </div>
-                    <div class="step-row">
-                        <div class="step-num">2</div>
-                        <div class="step-text">Go to <strong>Profile &amp; Settings</strong> and set a new secure
-                            password.</div>
-                    </div>
-                    <div class="step-row">
-                        <div class="step-num">3</div>
-                        <div class="step-text">Complete your profile — add your photo and contact details.</div>
-                    </div>
-                    <div class="step-row">
-                        <div class="step-num">4</div>
-                        <div class="step-text">Explore your dashboard and familiarise yourself with your assigned tasks.
-                        </div>
-                    </div>
-                </div>
+                    {{-- Accent bar --}}
+                    <tr>
+                        <td class="accent-bar-cell" height="3">&nbsp;</td>
+                    </tr>
 
-                {{-- CTA --}}
-                <div class="cta-wrap">
-                    <a href="{{ route('login') }}" class="cta-button">Login Now &rarr;</a>
-                </div>
+                    {{-- ══════════════ BODY ══════════════ --}}
+                    <tr>
+                        <td class="body-cell">
 
-            </div>{{-- /body-content --}}
+                            {{-- Greeting block --}}
+                            <div class="greeting-block">
+                                <p>
+                                    Hi <strong>{{ $firstName }}</strong>, we're delighted to have you on board!
+                                    Your staff account on <strong>{{ $orgName }}</strong> is ready.
+                                    Below are your login credentials, please keep them safe and confidential.
+                                </p>
+                            </div>
 
-            {{-- ── FOOTER ────────────────────────────────────── --}}
-            <div class="email-footer">
-                <div class="footer-brand">{{ config('app.name') }}</div>
-                <div class="footer-tagline">Powering Africa's Tomorrow</div>
-                <p class="footer-note">
-                    This email was sent to {{ $user->email }} because a staff account was created for you.<br>
-                    If you believe this was a mistake, please contact <a
-                        href="mailto:support@p23africa.org">support@p23africa.org</a>.
-                </p>
-            </div>
+                            {{-- Section label &nbsp; 🔑 --}}
+                            <p class="section-label"><span>Login Credentials</span></p>
 
-        </div>{{-- /email-container --}}
-    </div>{{-- /email-wrapper --}}
-</body>
+                            {{-- Credentials card --}}
+                            <div class="cred-card">
 
-</html>
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+                                {{-- Card header --}}
+                                <table cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                                    <tr>
+                                        <td class="cred-head-cell">
+                                            {{-- <span class="cred-head-icon">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="#6ee7b7"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    style="display:inline-block; vertical-align:middle; margin-top:-2px;">
+                                                    <path
+                                                        d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" />
+                                                </svg>
+                                            </span> --}}
+                                            <span class="cred-head-title">Your Login Details</span>
+                                        </td>
+                                    </tr>
 
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        line-height: 1.6;
-        color: #333;
-        background-color: #f8f9fa;
-    }
+                                    {{-- Email row --}}
+                                    <tr>
+                                        <td class="cred-row-cell">
+                                            <span class="cred-label">Login Email</span>
+                                            <span class="cred-value">{{ $user->email }}</span>
+                                        </td>
+                                    </tr>
 
-    .email-container {
-        max-width: 600px;
-        margin: 20px auto;
-        background: #ffffff;
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-    }
+                                    {{-- Password row --}}
+                                    <tr>
+                                        <td class="cred-row-cell last">
+                                            <span class="cred-label">Temporary Password</span>
+                                            <span class="cred-value">{{ $password }}</span>
+                                        </td>
+                                    </tr>
+                                </table>
 
-    .header {
-        background: linear-gradient(135deg, #1d6154 0%, #22c58b 100%);
-        padding: 40px 30px;
-        text-align: center !important;
-        color: white !important;
-        position: relative;
-    }
+                            </div>{{-- /cred-card --}}
 
-    .header::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="rgba(255,255,255,0.1)"><polygon points="0,0 1000,0 1000,80 0,100"/></svg>');
-        background-size: cover;
-    }
+                            {{-- Security notice --}}
+                            <table cellpadding="0" cellspacing="0" role="presentation" width="100%"
+                                style="border:1px solid #fde68a; border-left:4px solid #f59e0b; border-radius:10px; background:#fffbeb; margin-bottom:32px;">
+                                <tr>
+                                    <td class="notice-icon-cell">⚠️</td>
+                                    <td class="notice-text">
+                                        <strong>Security Notice:</strong> This is a temporary password.
+                                        Please change it immediately after your first login.
+                                        Never share your credentials with anyone.
+                                    </td>
+                                </tr>
+                            </table>
 
-    .welcome-icon {
-        font-size: 48px;
-        margin-bottom: 15px;
-        display: block;
-        position: relative;
-        z-index: 1;
-    }
+                            {{-- Getting started steps --}}
+                            <p class="section-label">Getting Started</p>
+                            <table cellpadding="0" cellspacing="0" role="presentation" width="100%"
+                                style="margin-bottom:32px;">
 
-    .header h1 {
-        font-size: 28px;
-        font-weight: 700;
-        margin-bottom: 10px;
-        position: relative;
-        z-index: 1;
-    }
+                                @foreach ([['Click <strong>Login to Dashboard</strong> below and sign in with the credentials above.', false], ['Navigate to <strong>Profile &amp; Settings</strong> and set a new secure password right away.', false], ['Complete your profile — add your photo and contact details so your team can reach you.', false], ['Explore your dashboard and familiarise yourself with your tasks and projects.', true]] as [$text, $isLast])
+                                    <tr>
+                                        <td class="step-num-cell">
+                                            <table cellpadding="0" cellspacing="0" role="presentation">
+                                                <tr>
+                                                    <td class="step-num-circle">{{ $loop->iteration }}</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td class="step-text-cell {{ $isLast ? 'last' : '' }}">{!! $text !!}
+                                        </td>
+                                    </tr>
+                                @endforeach
 
-    .header p {
-        font-size: 16px;
-        opacity: 0.9;
-        position: relative;
-        z-index: 1;
-    }
+                            </table>
 
-    .content {
-        padding: 40px 30px;
-    }
+                        </td>
+                    </tr>
 
-    .welcome-text {
-        font-size: 18px;
-        color: #2c3e50;
-        margin-bottom: 30px;
-        text-align: center;
-        line-height: 1.7;
-    }
+                    {{-- ══════════════ CTA ══════════════ --}}
+                    <tr>
+                        <td class="cta-outer-cell">
 
-    .highlight {
-        color: #1d6154;
-        font-weight: 600;
-    }
+                            {{-- MSO VML button fallback for Outlook --}}
+                            <!--[if mso]>
+                <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word"
+                    href="{{ $loginUrl }}"
+                    style="height:50px; v-text-anchor:middle; width:220px;" arcsize="50%"
+                    fillcolor="#1d6154" strokecolor="#1d6154">
+                    <w:anchorlock/>
+                    <center style="color:#ffffff;font-family:sans-serif;font-size:15px;font-weight:bold;">
+                        Login to Dashboard &rarr;
+                    </center>
+                </v:roundrect>
+                <![endif]-->
+                            <!--[if !mso]><!-->
+                            <a href="{{ $loginUrl }}" class="cta-link">
+                                Login to Dashboard &rarr;
+                            </a>
+                            <!--<![endif]-->
 
-    .credentials-section {
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        border: 2px solid #22c58b;
-        border-radius: 12px;
-        padding: 25px;
-        margin: 30px 0;
-        position: relative;
-    }
+                            <p class="cta-subtext">
+                                Or copy this link: <a href="{{ $loginUrl }}">{{ $loginUrl }}</a>
+                            </p>
 
-    .credentials-section::before {
-        content: "🔐";
-        position: absolute;
-        top: -15px;
-        left: 25px;
-        background: white;
-        padding: 5px 10px;
-        border-radius: 20px;
-        font-size: 18px;
-    }
+                        </td>
+                    </tr>
 
-    .credentials-title {
-        font-size: 18px;
-        font-weight: 600;
-        color: #2c3e50;
-        margin-bottom: 20px;
-        text-align: center;
-    }
+                    {{-- Divider --}}
+                    <tr>
+                        <td class="divider-cell">
+                            <hr class="divider-line">
+                        </td>
+                    </tr>
 
-    .credential-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: 15px 0;
-        padding: 12px 15px;
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
+                    {{-- ══════════════ FOOTER ══════════════ --}}
+                    <tr>
+                        <td class="footer-cell">
 
-    .credential-label {
-        font-weight: 600;
-        color: #5a6c7d;
-        font-size: 14px;
-    }
+                            <div class="footer-brand">{{ $orgName }}</div>
 
-    .credential-value {
-        font-family: 'Courier New', monospace;
-        background: #f1f3f4;
-        padding: 6px 12px;
-        border-radius: 6px;
-        font-size: 14px;
-        color: #2c3e50;
-        border: 1px solid #dee2e6;
-    }
+                            @if ($organization)
+                                <div class="footer-tagline">Powered by {{ config('app.name', 'P23 Africa') }}</div>
+                            @else
+                                <div class="footer-tagline">Powering Africa's Tomorrow</div>
+                            @endif
 
-    .security-notice {
-        background: #fff3cd;
-        border: 1px solid #ffeaa7;
-        border-radius: 8px;
-        padding: 15px;
-        margin: 25px 0;
-        font-size: 14px;
-        color: #856404;
-    }
+                            <div class="footer-dots">• • •</div>
 
-    .security-icon {
-        margin-right: 8px;
-    }
+                            <p class="footer-note">
+                                This email was sent to <strong>{{ $user->email }}</strong> because a staff account was
+                                created for you on {{ $orgName }}.<br>
+                                If you believe this was a mistake, please contact&nbsp;<a
+                                    href="mailto:support@p23africa.org">support@p23africa.org</a>.
+                            </p>
 
-    .cta-button {
-        display: block;
-        width: 200px;
-        margin: 30px auto;
-        padding: 15px 30px;
-        background: linear-gradient(135deg, #1d6154 0%, #22c58b 100%);
-        color: white;
-        text-decoration: none;
-        border-radius: 50px;
-        text-align: center;
-        font-weight: 600;
-        font-size: 16px;
-        box-shadow: 0 4px 15px rgba(29, 97, 84, 0.3);
-        transition: all 0.3s ease;
-    }
+                        </td>
+                    </tr>
 
-    .cta-button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(29, 97, 84, 0.4);
-    }
+                </table>
+                {{-- /card --}}
 
-    .next-steps {
-        background: #f8f9fa;
-        border-radius: 8px;
-        padding: 25px;
-        margin: 30px 0;
-    }
+            </td>
+        </tr>
+    </table>
+    {{-- /outer wrapper --}}
 
-    .next-steps h3 {
-        font-size: 16px;
-        color: #2c3e50;
-        margin-bottom: 15px;
-        text-align: center;
-    }
-
-    .steps-list {
-        list-style: none;
-        counter-reset: step-counter;
-    }
-
-    .steps-list li {
-        padding: 10px 0;
-        font-size: 14px;
-        color: #5a6c7d;
-        position: relative;
-        padding-left: 40px;
-        counter-increment: step-counter;
-    }
-
-    .steps-list li:before {
-        content: counter(step-counter);
-        position: absolute;
-        left: 0;
-        top: 10px;
-        background: #22c58b;
-        color: white;
-        width: 25px;
-        height: 25px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        font-size: 12px;
-    }
-
-    .footer {
-        background: #2c3e50;
-        color: #ecf0f1;
-        padding: 30px;
-        text-align: center;
-    }
-
-    .footer-text {
-        font-size: 14px;
-        margin-bottom: 15px;
-    }
-
-    .company-name {
-        font-weight: 600;
-        color: #22c58b;
-    }
-
-    .divider {
-        height: 2px;
-        background: linear-gradient(135deg, #1d6154 0%, #22c58b 100%);
-        margin: 0;
-        border: none;
-    }
-
-    @media only screen and (max-width: 600px) {
-        .email-container {
-            margin: 10px;
-            border-radius: 8px;
-        }
-
-        .header {
-            padding: 30px 20px;
-        }
-
-        .header h1 {
-            font-size: 24px;
-        }
-
-        .content {
-            padding: 30px 20px;
-        }
-
-        .welcome-text {
-            font-size: 16px;
-        }
-
-        .credential-row {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 8px;
-        }
-
-        .credential-value {
-            width: 100%;
-            text-align: center;
-        }
-
-        .cta-button {
-            width: 180px;
-            padding: 12px 25px;
-            font-size: 15px;
-        }
-    }
-</style>
-</head>
-
-<body>
-    <div class="email-container">
-        <div class="header">
-            <div class="welcome-icon">🎉</div>
-            <h1>Welcome {{ $user->name }}!</h1>
-            <p>You're now part of our amazing team</p>
-        </div>
-
-        <hr class="divider">
-
-        <div class="content">
-            <p class="welcome-text">
-                Your staff account has been successfully created on
-                <span class="highlight">{{ config('app.name') }}</span>.
-                We're excited to have you join our team!
-            </p>
-
-            <div class="credentials-section">
-                <h3 class="credentials-title">Your Login Credentials</h3>
-
-                <div class="credential-row">
-                    <span class="credential-label">Login Email:</span>
-                    <span class="credential-value">{{ $user->email }}</span>
-                </div>
-
-                <div class="credential-row">
-                    <span class="credential-label">Temporary Password:</span>
-                    <span class="credential-value">{{ $password }}</span>
-                </div>
-            </div>
-
-            <div class="security-notice">
-                <strong>🛡️ Security Notice:</strong>
-                Please change your password immediately after your first login for security purposes.
-                Keep your credentials confidential and never share them with others.
-            </div>
-
-            <div class="next-steps">
-                <h3>Getting Started - Next Steps:</h3>
-                <ol class="steps-list">
-                    <li>Click the "Login Now" button below</li>
-                    <li>Use your email and temporary password to log in</li>
-                    <li>Change your password to something secure</li>
-                    <li>Complete your profile information</li>
-                    <li>Explore your dashboard and available features</li>
-                </ol>
-            </div>
-
-            <a href="{{ route('login') }}" class="cta-button">
-                Login Now
-            </a>
-        </div>
-
-        <div class="footer">
-            <p class="footer-text">
-                Welcome aboard!<br>
-                If you have any questions, don't hesitate to reach out.<br>
-                <span class="company-name">{{ config('app.name') }} Team</span>
-            </p>
-        </div>
-    </div>
 </body>
 
 </html>
