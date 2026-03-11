@@ -18,15 +18,17 @@ class LeadDriveController extends Controller
     {
         $user = Auth::user();
 
-        // Drives are shared, but lead counts should be scoped to the user's organization
+        // Scope drives to user's organization (admins see all)
         $drivesQuery = LeadDrive::query()->orderBy('name');
 
         if (!$user->hasRole('admin')) {
             if ($user->organization_id) {
+                $drivesQuery->where('organization_id', $user->organization_id);
                 $drivesQuery->withCount(['leads' => function ($q) use ($user) {
                     $q->where('organization_id', $user->organization_id);
                 }]);
             } else {
+                $drivesQuery->whereNull('organization_id');
                 $drivesQuery->withCount(['leads' => function ($q) {
                     $q->whereNull('organization_id');
                 }]);
@@ -63,6 +65,7 @@ class LeadDriveController extends Controller
             'description' => $validated['description'] ?? null,
             'color' => $validated['color'] ?? '#0d6efd',
             'is_default' => !empty($validated['is_default']),
+            'organization_id' => Auth::user()->organization_id ?? null,
         ]);
 
         return redirect()->route('admin.crm.drives.index')
@@ -86,6 +89,7 @@ class LeadDriveController extends Controller
             'description' => $validated['description'] ?? null,
             'color' => $validated['color'] ?? '#0d6efd',
             'is_default' => false,
+            'organization_id' => Auth::user()->organization_id ?? null,
         ]);
 
         return response()->json([

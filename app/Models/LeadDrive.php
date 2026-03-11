@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
@@ -14,6 +15,7 @@ class LeadDrive extends Model
         'description',
         'color',
         'is_default',
+        'organization_id',
     ];
 
     protected $casts = [
@@ -40,6 +42,14 @@ class LeadDrive extends Model
     public function leads(): HasMany
     {
         return $this->hasMany(Lead::class, 'drive_id');
+    }
+
+    /**
+     * Get the organization that owns this drive
+     */
+    public function organization(): BelongsTo
+    {
+        return $this->belongsTo(Organization::class);
     }
 
     /**

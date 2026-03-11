@@ -1,5 +1,148 @@
 <x-app-layout>
 
+    @php
+        $signInUrl = '';
+        $sidebarUser = auth()->user();
+        if ($sidebarUser && $sidebarUser->organization_id && !$sidebarUser->hasRole('admin')) {
+            $org = $sidebarUser->organization;
+            if ($org && $org->slug) {
+                $signInUrl = '/' . $org->slug . '/admin/attendance/sign-in';
+            }
+        }
+        if (!$signInUrl) {
+            $signInUrl = '/admin/attendance/sign-in';
+        }
+    @endphp
+
+    {{-- ─── Quick Sign-In Popup (first daily login) ─────────────────────── --}}
+    @if (!($hasSignedInToday ?? true))
+        {{-- Toast container for sign-in success --}}
+        <div id="signInToastContainer" style="position:fixed;top:24px;right:24px;z-index:1080;">
+            <div id="signInToast" class="toast align-items-center text-bg-success border-0" role="alert"
+                aria-live="assertive" aria-atomic="true" data-bs-delay="4000">
+                <div class="d-flex">
+                    <div class="toast-body d-flex align-items-center gap-2" style="font-size:.875rem;">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>You've been signed in for today. Have a great day!</span>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+
+        <div x-data="signInPopup()" x-show="visible" x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 transform translate-y-2"
+            x-transition:enter-end="opacity-100 transform translate-y-0"
+            x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            style="position:fixed;bottom:74px;right:24px;z-index:1060;max-width:340px;width:100%;"
+            @click.away="dismiss()">
+            <div class="card"
+                style="border:2px solid var(--p-primary);box-shadow:0 12px 40px rgba(99,102,241,.25);overflow:hidden;">
+                {{-- Animated gradient top bar --}}
+                <div
+                    style="height:4px;background:linear-gradient(90deg,var(--p-primary),var(--p-accent),var(--p-success),var(--p-primary));background-size:300% 100%;animation:signInGradient 3s ease infinite;">
+                </div>
+                <div class="card-body p-3">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <div
+                                style="width:36px;height:36px;border-radius:10px;background:rgba(99,102,241,.12);color:var(--p-primary);display:flex;align-items:center;justify-content:center;">
+                                <i class="bi bi-clock" style="font-size:1.1rem;"></i>
+                            </div>
+                            <div>
+                                <div style="font-weight:700;font-size:.9375rem;">Good
+                                    {{ now()->hour < 12 ? 'Morning' : (now()->hour < 17 ? 'Afternoon' : 'Evening') }}!
+                                </div>
+                                <div style="font-size:.75rem;color:var(--text-muted);">{{ now()->format('l, M d') }}
+                                </div>
+                            </div>
+                        </div>
+                        <button @click="dismiss()" class="btn btn-sm p-0" style="opacity:.5;line-height:1;">
+                            <i class="bi bi-x-lg" style="font-size:.75rem;"></i>
+                        </button>
+                    </div>
+                    <p style="font-size:.8125rem;color:var(--text-muted);margin-bottom:.75rem;">
+                        You haven't signed in for today yet. Mark your attendance?
+                    </p>
+                    <div class="d-flex gap-2">
+                        <button @click="signIn()" :disabled="loading"
+                            class="btn btn-primary btn-sm flex-fill d-flex align-items-center justify-content-center gap-1"
+                            style="position:relative;overflow:hidden;">
+                            <span x-show="!loading"><i class="bi bi-box-arrow-in-right me-1"></i>Sign In</span>
+                            <span x-show="loading" style="display:none;">
+                                <span class="spinner-border spinner-border-sm" role="status"></span> Signing In...
+                            </span>
+                        </button>
+                        <button @click="dismiss()" class="btn btn-outline-secondary btn-sm"
+                            style="font-size:.8125rem;">Later</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            @keyframes signInGradient {
+                0% {
+                    background-position: 0% 50%;
+                }
+
+                50% {
+                    background-position: 100% 50%;
+                }
+
+                100% {
+                    background-position: 0% 50%;
+                }
+            }
+        </style>
+
+        <script>
+            function signInPopup() {
+                return {
+                    visible: true,
+                    loading: false,
+                    signIn() {
+                        this.loading = true;
+                        fetch('{{ url($signInUrl) }}', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
+                                        'content'),
+                                    'Accept': 'application/json'
+                                }
+                            })
+                            .then(r => r.json())
+                            .then(data => {
+                                this.loading = false;
+                                if (data.signed_in || data.already_signed_in) {
+                                    this.visible = false;
+                                    // Show Bootstrap toast after card has animated out
+                                    setTimeout(() => {
+                                        const toastEl = document.getElementById('signInToast');
+                                        if (toastEl) {
+                                            const toast = new bootstrap.Toast(toastEl);
+                                            toast.show();
+                                        }
+                                    }, 250);
+                                }
+                            })
+                            .catch(() => {
+                                this.loading = false;
+                                alert('Could not sign in. Please try from the Attendance page.');
+                                this.visible = false;
+                            });
+                    },
+                    dismiss() {
+                        this.visible = false;
+                    }
+                }
+            }
+        </script>
+    @endif
+
     <x-slot name="header">
         <div class="d-flex justify-content-between align-items-center">
             <div>

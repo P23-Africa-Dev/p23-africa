@@ -20,7 +20,16 @@ class LeadImportController extends Controller
      */
     public function showImport()
     {
-        $drives = LeadDrive::orderBy('name')->get();
+        $user = auth()->user();
+        $drivesQuery = LeadDrive::orderBy('name');
+        if ($user && !$user->hasRole('admin')) {
+            if ($user->organization_id) {
+                $drivesQuery->where('organization_id', $user->organization_id);
+            } else {
+                $drivesQuery->whereNull('organization_id');
+            }
+        }
+        $drives = $drivesQuery->get();
         return view('admin.crm.import', compact('drives'));
     }
 
@@ -52,6 +61,7 @@ class LeadImportController extends Controller
                     'description' => 'Created during import',
                     'color' => $request->new_drive_color ?? '#6c757d',
                     'is_default' => false,
+                    'organization_id' => auth()->user()->organization_id ?? null,
                 ]);
                 $driveId = $newDrive->id;
             }

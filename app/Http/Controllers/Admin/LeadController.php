@@ -166,8 +166,16 @@ class LeadController extends Controller
         }
         $users = $usersQuery->get();
 
-        // Get drives for filter
-        $drives = LeadDrive::orderBy('name')->get();
+        // Get drives for filter (scoped to user's organization)
+        $drivesQuery = LeadDrive::orderBy('name');
+        if ($user && !$user->hasRole('admin')) {
+            if ($user->organization_id) {
+                $drivesQuery->where('organization_id', $user->organization_id);
+            } else {
+                $drivesQuery->whereNull('organization_id');
+            }
+        }
+        $drives = $drivesQuery->get();
         $currentDrive = $request->filled('drive') && $request->drive !== 'all' && $request->drive !== 'unassigned'
             ? LeadDrive::find($request->drive)
             : null;
@@ -977,14 +985,21 @@ class LeadController extends Controller
     {
         $statuses = Lead::getStatuses();
         $pipeline = [];
+        $user = auth()->user();
 
-        // Get drives for filter
-        $drives = LeadDrive::orderBy('name')->get();
+        // Get drives for filter (scoped to user's organization)
+        $drivesQuery = LeadDrive::orderBy('name');
+        if ($user && !$user->hasRole('admin')) {
+            if ($user->organization_id) {
+                $drivesQuery->where('organization_id', $user->organization_id);
+            } else {
+                $drivesQuery->whereNull('organization_id');
+            }
+        }
+        $drives = $drivesQuery->get();
         $currentDrive = $request->filled('drive') && $request->drive !== 'all' && $request->drive !== 'unassigned'
             ? LeadDrive::find($request->drive)
             : null;
-
-        $user = auth()->user();
 
         foreach ($statuses as $key => $label) {
             $query = Lead::where('status', $key)

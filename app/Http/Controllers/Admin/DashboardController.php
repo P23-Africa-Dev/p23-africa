@@ -14,6 +14,7 @@ use App\Models\ConsultationApplication;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\Lead;
+use App\Models\Attendance;
 use App\Http\Controllers\Admin\ConsultationController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -85,7 +86,9 @@ class DashboardController extends Controller
             $stats['total_leads'] = $orgScope(Lead::query())->count();
             $stats['new_leads'] = $orgScope(Lead::where('status', 'new'))->count();
 
-            return view('admin.dashboard', compact('stats'));
+            $hasSignedInToday = Attendance::hasSignedInToday($user->id);
+
+            return view('admin.dashboard', compact('stats', 'hasSignedInToday'));
         } catch (\Exception $e) {
             Log::error('Dashboard stats error: ' . $e->getMessage());
 
@@ -113,7 +116,13 @@ class DashboardController extends Controller
                 'new_leads' => 0,
             ];
 
-            return view('admin.dashboard', compact('stats'));
+            $hasSignedInToday = false;
+            try {
+                $hasSignedInToday = Attendance::hasSignedInToday(Auth::id());
+            } catch (\Exception $ex) {
+            }
+
+            return view('admin.dashboard', compact('stats', 'hasSignedInToday'));
         }
     }
 }

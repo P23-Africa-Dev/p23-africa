@@ -210,11 +210,6 @@ Route::get('/test-email', function () {
     return view('emails.challenge_result', ['label' => 'Hidden Powerhouse']);
 });
 
-
-Route::get('/staff_welcome', function () {
-    return view('emails.staff_welcome');
-});
-
 // Route::post('/submit-challenge', function (Request $request) {
 //     $data = $request->only(['challenge1', 'challenge2', 'challenge3', 'label']);
 
@@ -448,6 +443,24 @@ Route::middleware(['auth', 'check.suspended', 'resolve.org', 'role:admin|supervi
         Route::post('/tasks/{task}/comments', [\App\Http\Controllers\Admin\TaskController::class, 'addComment'])->name('tasks.add-comment');
         Route::delete('/tasks/{task}/comments/{comment}', [\App\Http\Controllers\Admin\TaskController::class, 'deleteComment'])->name('tasks.delete-comment');
         Route::get('/tasks/{task}/mentionable-users', [\App\Http\Controllers\Admin\TaskController::class, 'getAssigneesForMention'])->name('tasks.mentionable-users');
+
+        // Attendance & Leave Management
+        Route::get('/attendance', [\App\Http\Controllers\Admin\AttendanceController::class, 'index'])->name('attendance.index');
+        Route::post('/attendance/sign-in', [\App\Http\Controllers\Admin\AttendanceController::class, 'signIn'])->name('attendance.sign-in');
+        Route::post('/attendance/sign-out', [\App\Http\Controllers\Admin\AttendanceController::class, 'signOut'])->name('attendance.sign-out');
+        Route::get('/attendance/today-status', [\App\Http\Controllers\Admin\AttendanceController::class, 'todayStatus'])->name('attendance.today-status');
+        Route::get('/attendance/calendar-data', [\App\Http\Controllers\Admin\AttendanceController::class, 'calendarData'])->name('attendance.calendar-data');
+
+        Route::get('/leave-requests', [\App\Http\Controllers\Admin\LeaveRequestController::class, 'index'])->name('leave-requests.index');
+        Route::get('/leave-requests/create', [\App\Http\Controllers\Admin\LeaveRequestController::class, 'create'])->name('leave-requests.create');
+        Route::post('/leave-requests', [\App\Http\Controllers\Admin\LeaveRequestController::class, 'store'])->name('leave-requests.store');
+        Route::get('/leave-requests/calendar', [\App\Http\Controllers\Admin\LeaveRequestController::class, 'calendar'])->name('leave-requests.calendar');
+        Route::get('/leave-requests/calendar-data', [\App\Http\Controllers\Admin\LeaveRequestController::class, 'calendarData'])->name('leave-requests.calendar-data');
+        Route::get('/leave-requests/{leaveRequest}', [\App\Http\Controllers\Admin\LeaveRequestController::class, 'show'])->name('leave-requests.show');
+        Route::post('/leave-requests/{leaveRequest}/modify', [\App\Http\Controllers\Admin\LeaveRequestController::class, 'modify'])->name('leave-requests.modify');
+        Route::post('/leave-requests/{leaveRequest}/respond', [\App\Http\Controllers\Admin\LeaveRequestController::class, 'senderRespond'])->name('leave-requests.respond');
+        Route::post('/leave-requests/{leaveRequest}/approve', [\App\Http\Controllers\Admin\LeaveRequestController::class, 'approve'])->name('leave-requests.approve');
+        Route::post('/leave-requests/{leaveRequest}/reject', [\App\Http\Controllers\Admin\LeaveRequestController::class, 'reject'])->name('leave-requests.reject');
     });
 
 // Org-prefixed notification routes
@@ -619,6 +632,24 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
     Route::post('/tasks/{task}/comments', [\App\Http\Controllers\Admin\TaskController::class, 'addComment'])->name('tasks.add-comment');
     Route::delete('/tasks/{task}/comments/{comment}', [\App\Http\Controllers\Admin\TaskController::class, 'deleteComment'])->name('tasks.delete-comment');
     Route::get('/tasks/{task}/mentionable-users', [\App\Http\Controllers\Admin\TaskController::class, 'getAssigneesForMention'])->name('tasks.mentionable-users');
+
+    // Attendance & Leave Management
+    Route::get('/attendance', [\App\Http\Controllers\Admin\AttendanceController::class, 'index'])->name('attendance.index');
+    Route::post('/attendance/sign-in', [\App\Http\Controllers\Admin\AttendanceController::class, 'signIn'])->name('attendance.sign-in');
+    Route::post('/attendance/sign-out', [\App\Http\Controllers\Admin\AttendanceController::class, 'signOut'])->name('attendance.sign-out');
+    Route::get('/attendance/today-status', [\App\Http\Controllers\Admin\AttendanceController::class, 'todayStatus'])->name('attendance.today-status');
+    Route::get('/attendance/calendar-data', [\App\Http\Controllers\Admin\AttendanceController::class, 'calendarData'])->name('attendance.calendar-data');
+
+    Route::get('/leave-requests', [\App\Http\Controllers\Admin\LeaveRequestController::class, 'index'])->name('leave-requests.index');
+    Route::get('/leave-requests/create', [\App\Http\Controllers\Admin\LeaveRequestController::class, 'create'])->name('leave-requests.create');
+    Route::post('/leave-requests', [\App\Http\Controllers\Admin\LeaveRequestController::class, 'store'])->name('leave-requests.store');
+    Route::get('/leave-requests/calendar', [\App\Http\Controllers\Admin\LeaveRequestController::class, 'calendar'])->name('leave-requests.calendar');
+    Route::get('/leave-requests/calendar-data', [\App\Http\Controllers\Admin\LeaveRequestController::class, 'calendarData'])->name('leave-requests.calendar-data');
+    Route::get('/leave-requests/{leaveRequest}', [\App\Http\Controllers\Admin\LeaveRequestController::class, 'show'])->name('leave-requests.show');
+    Route::post('/leave-requests/{leaveRequest}/modify', [\App\Http\Controllers\Admin\LeaveRequestController::class, 'modify'])->name('leave-requests.modify');
+    Route::post('/leave-requests/{leaveRequest}/respond', [\App\Http\Controllers\Admin\LeaveRequestController::class, 'senderRespond'])->name('leave-requests.respond');
+    Route::post('/leave-requests/{leaveRequest}/approve', [\App\Http\Controllers\Admin\LeaveRequestController::class, 'approve'])->name('leave-requests.approve');
+    Route::post('/leave-requests/{leaveRequest}/reject', [\App\Http\Controllers\Admin\LeaveRequestController::class, 'reject'])->name('leave-requests.reject');
 });
 
 

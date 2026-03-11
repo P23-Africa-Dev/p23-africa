@@ -1,4 +1,4 @@
-<?php
+    <?php
 
 use App\Http\Middleware\CheckSuspended;
 use Illuminate\Foundation\Application;

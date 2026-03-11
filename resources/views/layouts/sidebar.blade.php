@@ -100,6 +100,29 @@
                 </div>
             </div>
 
+            {{-- Attendance & Leave --}}
+            <div class="sidebar-section" x-data="{ open: {{ request()->routeIs('admin.attendance.*', 'admin.leave-requests.*', 'org.admin.attendance.*', 'org.admin.leave-requests.*') ? 'true' : 'false' }} }">
+                <button @click="open=!open" data-tooltip="Attendance" class="sidebar-dropdown-toggle">
+                    <span class="sidebar-icon"><i class="bi bi-person-check"></i></span>
+                    <span class="sidebar-text">Attendance</span>
+                    <i class="sidebar-chevron bi bi-chevron-down" :class="open ? 'open' : ''"></i>
+                </button>
+                <div class="sidebar-submenu" x-show="open && (sidebarOpen || mobileSidebarOpen)" x-transition>
+                    <a href="{{ url($sidebarOrgPrefix . '/admin/attendance') }}"
+                        class="sidebar-subitem {{ request()->routeIs('admin.attendance.index', 'org.admin.attendance.index') ? 'active' : '' }}">
+                        <i class="bi bi-clock-history"></i><span>Attendance Log</span>
+                    </a>
+                    <a href="{{ url($sidebarOrgPrefix . '/admin/leave-requests') }}"
+                        class="sidebar-subitem {{ request()->routeIs('admin.leave-requests.index', 'org.admin.leave-requests.index') ? 'active' : '' }}">
+                        <i class="bi bi-envelope-paper"></i><span>Leave Requests</span>
+                    </a>
+                    <a href="{{ url($sidebarOrgPrefix . '/admin/leave-requests/calendar') }}"
+                        class="sidebar-subitem {{ request()->routeIs('admin.leave-requests.calendar', 'org.admin.leave-requests.calendar') ? 'active' : '' }}">
+                        <i class="bi bi-calendar-week"></i><span>Calendar</span>
+                    </a>
+                </div>
+            </div>
+
             {{-- Content (admin / non-org users only) --}}
             @if (auth()->user() && (auth()->user()->hasRole('admin') || !auth()->user()->organization_id))
                 <div class="sidebar-section" x-data="{ open: {{ request()->routeIs('admin.events.*', 'admin.blogs.*', 'admin.playbooks.*', 'admin.contact.*', 'org.admin.events.*', 'org.admin.blogs.*', 'org.admin.playbooks.*', 'org.admin.contact.*') ? 'true' : 'false' }} }">
