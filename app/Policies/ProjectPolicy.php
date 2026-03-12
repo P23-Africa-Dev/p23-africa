@@ -83,6 +83,6 @@ class ProjectPolicy
             return false;
         }
 
-        return $user->hasRole('admin');
+        return $user->hasRole(['admin', 'supervisor']);
     }
 }

@@ -8,7 +8,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white shadow-sm sm:rounded-lg" style="overflow: visible;">
                 <div class="p-6 text-gray-900">
 
                     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -49,14 +49,15 @@
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-start mb-3">
                                             <h5 class="card-title mb-0 fw-bold">{{ $project->name }}</h5>
-                                            <div class="dropdown" x-data="{ open: false }">
-                                                <button @click="open = !open"
+                                            <div class="dropdown position-relative" x-data="{ open: false }">
+                                                <button @click.stop="open = !open"
                                                     class="btn btn-sm btn-light rounded-circle"
                                                     style="width: 32px; height: 32px; padding: 0;">
                                                     <i class="fas fa-ellipsis-v"></i>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-end" :class="{ 'show': open }"
-                                                    @click.away="open = false">
+                                                    @click.away="open = false"
+                                                    style="position: absolute; right: 0; top: 100%; z-index: 1050;">
                                                     <li><a class="dropdown-item"
                                                             href="{{ route('admin.projects.show', $project) }}"><i
                                                                 class="fas fa-eye me-2"></i>View</a></li>
@@ -65,7 +66,7 @@
                                                                 href="{{ route('admin.projects.edit', $project) }}"><i
                                                                     class="fas fa-edit me-2"></i>Edit</a></li>
                                                     @endif
-                                                    @if (auth()->user()->hasRole('admin'))
+                                                    @if (auth()->user()->hasRole(['admin', 'supervisor']))
                                                         <li>
                                                             <hr class="dropdown-divider">
                                                         </li>
@@ -93,13 +94,13 @@
 
                                         <div class="d-flex gap-2 mb-3 flex-wrap">
                                             <!-- Status Dropdown -->
-                                            <div x-data="{
+                                            <div class="position-relative" x-data="{
                                                 open: false,
                                                 status: '{{ $project->status }}',
                                                 statusLabel: '{{ \App\Models\Project::getStatuses()[$project->status] }}',
                                                 badgeClass: '{{ $project->status_badge_class }}'
                                             }">
-                                                <button @click="open = !open" class="badge border-0 cursor-pointer"
+                                                <button @click.stop="open = !open" class="badge border-0 cursor-pointer"
                                                     :class="badgeClass" style="cursor: pointer; font-size: 0.75rem;">
                                                     <span x-text="statusLabel"></span>
                                                     <i class="fas fa-chevron-down ms-1" style="font-size: 0.6rem;"></i>

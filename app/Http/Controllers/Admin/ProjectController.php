@@ -116,14 +116,22 @@ class ProjectController extends Controller
     {
         $this->authorize('create', Project::class);
 
-        $data = $request->validate([
+        $rules = [
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'status' => 'required|in:planning,in_progress,on_hold,completed,cancelled',
             'priority' => 'required|in:low,medium,high,urgent',
             'start_date' => 'nullable|date',
-            'due_date' => 'nullable|date|after_or_equal:start_date',
-        ]);
+            'due_date' => $request->filled('start_date')
+                ? 'nullable|date|after_or_equal:start_date'
+                : 'nullable|date',
+        ];
+
+        $data = $request->validate($rules);
+
+        // Convert empty date strings to null for MySQL compatibility
+        $data['start_date'] = $data['start_date'] ?: null;
+        $data['due_date'] = $data['due_date'] ?: null;
 
         $data['created_by'] = Auth::id();
         // Set organization for the project (creator's org)
@@ -186,14 +194,22 @@ class ProjectController extends Controller
     {
         $this->authorize('update', $project);
 
-        $data = $request->validate([
+        $rules = [
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'status' => 'required|in:planning,in_progress,on_hold,completed,cancelled',
             'priority' => 'required|in:low,medium,high,urgent',
             'start_date' => 'nullable|date',
-            'due_date' => 'nullable|date|after_or_equal:start_date',
-        ]);
+            'due_date' => $request->filled('start_date')
+                ? 'nullable|date|after_or_equal:start_date'
+                : 'nullable|date',
+        ];
+
+        $data = $request->validate($rules);
+
+        // Convert empty date strings to null for MySQL compatibility
+        $data['start_date'] = $data['start_date'] ?: null;
+        $data['due_date'] = $data['due_date'] ?: null;
 
         $project->update($data);
 

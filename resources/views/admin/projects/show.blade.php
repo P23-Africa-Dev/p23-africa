@@ -22,7 +22,8 @@
                                     class="badge {{ $project->priority_badge_class }}">{{ ucfirst($project->priority) }}
                                     Priority</span>
                             </div>
-                            <p class="text-muted mb-0">{{ strip_tags($project->description ?? 'No description available') }}</p>
+                            <p class="text-muted mb-0">
+                                {{ strip_tags($project->description ?? 'No description available') }}</p>
                         </div>
                         <div class="d-flex gap-2">
                             <a href="{{ route('admin.projects.index') }}" class="btn btn-outline-secondary">
@@ -132,7 +133,7 @@
             @endif
 
             <!-- Tasks List -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white shadow-sm sm:rounded-lg" style="overflow: visible;">
                 <div class="p-6">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h5 class="fw-bold mb-0"><i class="fas fa-list-check me-2"></i>Tasks</h5>
