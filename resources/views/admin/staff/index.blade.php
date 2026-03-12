@@ -11,8 +11,8 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 table-responsive">
 
-                    <a href="{{ route('admin.staff.create') }}" class="btn btn-dark">Add Staff</a>
-                    {{-- <a href="{{ route('admin.categories.index') }}" class="btn btn-primary">Create New Category</a> --}}
+                    <a href="{{ orgRoute('admin.staff.create') }}" class="btn btn-dark">Add Staff</a>
+                    {{-- <a href="{{ orgRoute('admin.categories.index') }}" class="btn btn-primary">Create New Category</a> --}}
 
                     <div class="my-5">
                         @if (session('success'))
@@ -75,10 +75,10 @@
                                                         class="fa fa-eye link-dark"></a></button> --}}
 
                                                 <button class="btn"><a
-                                                        href="{{ route('admin.staff.edit', $staffs) }}"
+                                                        href="{{ orgRoute('admin.staff.edit', $staffs) }}"
                                                         class="fa fa-edit link-primary"></a></button>
 
-                                                <form action="{{ route('admin.staff.destroy', $staffs) }}"
+                                                <form action="{{ orgRoute('admin.staff.destroy', $staffs) }}"
                                                     method="POST" class="d-inline"
                                                     onsubmit="return confirm('Are you sure you want to delete this event? This action cannot be undone.');">
                                                     @csrf
@@ -93,7 +93,7 @@
                                             @if (auth()->user()->hasRole('admin'))
                                                 @if ($staffs->hasRole('staff'))
                                                     <form method="POST"
-                                                        action="{{ route('admin.staff.promote', $staffs->id) }}"
+                                                        action="{{ orgRoute('admin.staff.promote', $staffs->id) }}"
                                                         onsubmit="return confirm('Are you sure you want to promote this staff to supervisor?');">
                                                         @csrf
                                                         <button type="submit" class="btn btn-sm btn-success">Promote to
@@ -115,14 +115,14 @@
 
                                         <td>
                                             @if ($staffs->isSuspended())
-                                                <form action="{{ route('admin.staff.reactivate', $staffs->id) }}"
+                                                <form action="{{ orgRoute('admin.staff.reactivate', $staffs->id) }}"
                                                     method="POST" style="display:inline;">
                                                     @csrf
                                                     <button type="submit"
                                                         class="btn btn-success btn-sm">Reactivate</button>
                                                 </form>
                                             @else
-                                                <form action="{{ route('admin.staff.suspend', $staffs->id) }}"
+                                                <form action="{{ orgRoute('admin.staff.suspend', $staffs->id) }}"
                                                     method="POST" style="display:inline;">
                                                     @csrf
                                                     <button type="submit"

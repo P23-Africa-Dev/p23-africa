@@ -13,12 +13,12 @@
 
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h4 class="mb-0">Edit: {{ $project->name }}</h4>
-                        <a href="{{ route('admin.projects.index') }}" class="btn btn-outline-secondary">
+                        <a href="{{ orgRoute('admin.projects.index') }}" class="btn btn-outline-secondary">
                             <i class="fas fa-arrow-left me-2"></i>Back to Projects
                         </a>
                     </div>
 
-                    <form action="{{ route('admin.projects.update', $project) }}" method="POST">
+                    <form action="{{ orgRoute('admin.projects.update', $project) }}" method="POST">
                         @csrf
                         @method('PUT')
 
@@ -101,7 +101,7 @@
                             <button type="submit" class="btn btn-primary btn-lg">
                                 <i class="fas fa-save me-2"></i>Update Project
                             </button>
-                            <a href="{{ route('admin.projects.index') }}"
+                            <a href="{{ orgRoute('admin.projects.index') }}"
                                 class="btn btn-outline-secondary btn-lg">Cancel</a>
                         </div>
                     </form>

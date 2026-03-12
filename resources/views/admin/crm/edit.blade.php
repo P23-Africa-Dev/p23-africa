@@ -8,7 +8,7 @@
                 <p class="text-muted dark:text-gray-400 text-sm mb-0">{{ $lead->full_name }}</p>
             </div>
             <div class="d-flex gap-2">
-                <a href="{{ route('admin.crm.show', $lead) }}" class="btn btn-outline-secondary">
+                <a href="{{ orgRoute('admin.crm.show', $lead) }}" class="btn btn-outline-secondary">
                     <i class="fa fa-arrow-left me-2"></i>Back to Lead
                 </a>
             </div>
@@ -45,7 +45,7 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('admin.crm.update', $lead) }}">
+            <form method="POST" action="{{ orgRoute('admin.crm.update', $lead) }}">
                 @csrf
                 @method('PUT')
 
@@ -382,7 +382,7 @@
                         <i class="fa fa-trash me-2"></i>Delete Lead
                     </button>
                     <div class="d-flex gap-2">
-                        <a href="{{ route('admin.crm.show', $lead) }}" class="btn btn-outline-secondary">Cancel</a>
+                        <a href="{{ orgRoute('admin.crm.show', $lead) }}" class="btn btn-outline-secondary">Cancel</a>
                         <button type="submit" class="btn btn-primary">
                             <i class="fa fa-save me-2"></i>Update Lead
                         </button>
@@ -406,7 +406,7 @@
 
             function deleteLead() {
                 if (confirm('Are you sure you want to delete this lead? This action cannot be undone.')) {
-                    fetch('{{ route('admin.crm.destroy', $lead) }}', {
+                    fetch('{{ orgRoute('admin.crm.destroy', $lead) }}', {
                             method: 'DELETE',
                             headers: {
                                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -416,7 +416,7 @@
                         .then(res => res.json())
                         .then(data => {
                             if (data.success) {
-                                window.location.href = '{{ route('admin.crm.index') }}';
+                                window.location.href = '{{ orgRoute('admin.crm.index') }}';
                             } else {
                                 alert(data.message || 'Failed to delete lead');
                             }

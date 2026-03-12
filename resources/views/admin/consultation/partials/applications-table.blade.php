@@ -38,7 +38,7 @@
         </td>
         <td>
             <div class="d-flex gap-1">
-                <a href="{{ route('admin.consultation.show', $application->id) }}"
+                <a href="{{ orgRoute('admin.consultation.show', $application->id) }}"
                     class="btn btn-sm btn-outline-primary">
                     <i class="fa fa-eye me-1"></i>View
                 </a>

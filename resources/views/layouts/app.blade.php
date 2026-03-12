@@ -81,7 +81,7 @@
             (function() {
                 async function pollActivity() {
                     try {
-                        const r = await fetch("{{ route('admin.activity.unseen-count') }}", {
+                        const r = await fetch("{{ orgRoute('admin.activity.unseen-count') }}", {
                             headers: {
                                 "Accept": "application/json",
                                 "X-Requested-With": "XMLHttpRequest"
@@ -106,6 +106,11 @@
 
     @auth
         @php
+            $notifUnreadCountUrl = orgRoute('admin.notifications.unread-count');
+            $notifAllUnreadCountUrl = orgRoute('admin.notifications.all-unread-count');
+            $notifAllUrl = orgRoute('admin.notifications.all');
+            $notifMarkAllReadUrl = orgRoute('admin.notifications.mark-all-read');
+
             $layoutOrgPrefix = '';
             $layoutUser = auth()->user();
             if ($layoutUser && $layoutUser->organization_id && !$layoutUser->hasRole('admin')) {
@@ -114,19 +119,6 @@
                     $layoutOrgPrefix = '/' . $layoutOrg->slug;
                 }
             }
-            // Use org-prefixed notification URLs if user has an org
-            $notifUnreadCountUrl = $layoutOrgPrefix
-                ? url($layoutOrgPrefix . '/admin/notifications/unread-count')
-                : route('admin.notifications.unread-count');
-            $notifAllUnreadCountUrl = $layoutOrgPrefix
-                ? url($layoutOrgPrefix . '/admin/notifications/all-unread-count')
-                : route('admin.notifications.all-unread-count');
-            $notifAllUrl = $layoutOrgPrefix
-                ? url($layoutOrgPrefix . '/admin/notifications/all')
-                : route('admin.notifications.all');
-            $notifMarkAllReadUrl = $layoutOrgPrefix
-                ? url($layoutOrgPrefix . '/admin/notifications/mark-all-read')
-                : route('admin.notifications.mark-all-read');
             $notifMarkReadBase = $layoutOrgPrefix
                 ? url($layoutOrgPrefix . '/admin/notifications')
                 : '/admin/notifications';

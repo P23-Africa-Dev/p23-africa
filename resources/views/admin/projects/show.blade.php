@@ -26,15 +26,15 @@
                                 {{ strip_tags($project->description ?? 'No description available') }}</p>
                         </div>
                         <div class="d-flex gap-2">
-                            <a href="{{ route('admin.projects.index') }}" class="btn btn-outline-secondary">
+                            <a href="{{ orgRoute('admin.projects.index') }}" class="btn btn-outline-secondary">
                                 <i class="fas fa-arrow-left me-1"></i> Back
                             </a>
                             @if (auth()->user()->hasRole(['admin', 'supervisor']))
-                                <a href="{{ route('admin.tasks.kanban', ['project_id' => $project->id]) }}"
+                                <a href="{{ orgRoute('admin.tasks.kanban', ['project_id' => $project->id]) }}"
                                     class="btn btn-primary">
                                     <i class="fas fa-columns me-1"></i> Kanban Board
                                 </a>
-                                <a href="{{ route('admin.projects.edit', $project) }}" class="btn btn-outline-primary">
+                                <a href="{{ orgRoute('admin.projects.edit', $project) }}" class="btn btn-outline-primary">
                                     <i class="fas fa-edit me-1"></i> Edit
                                 </a>
                             @endif
@@ -88,7 +88,7 @@
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-4">
                     <div class="p-6">
                         <h5 class="fw-bold mb-3"><i class="fas fa-plus-circle me-2"></i>Quick Add Task</h5>
-                        <form action="{{ route('admin.tasks.store') }}" method="POST" class="row g-3">
+                        <form action="{{ orgRoute('admin.tasks.store') }}" method="POST" class="row g-3">
                             @csrf
                             <input type="hidden" name="project_id" value="{{ $project->id }}">
                             <input type="hidden" name="status" value="todo">
@@ -138,7 +138,7 @@
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h5 class="fw-bold mb-0"><i class="fas fa-list-check me-2"></i>Tasks</h5>
                         @if (auth()->user()->hasRole(['admin', 'supervisor']))
-                            <a href="{{ route('admin.tasks.create', ['project_id' => $project->id]) }}"
+                            <a href="{{ orgRoute('admin.tasks.create', ['project_id' => $project->id]) }}"
                                 class="btn btn-sm btn-outline-primary">
                                 <i class="fas fa-plus me-1"></i> Add Task
                             </a>
@@ -188,7 +188,7 @@
                                                         @foreach (\App\Models\Task::getStatuses() as $key => $label)
                                                             <button
                                                                 @click="
-                                                                fetch('{{ route('admin.tasks.update-status', $task) }}', {
+                                                                fetch('{{ orgRoute('admin.tasks.update-status', $task) }}', {
                                                                     method: 'PATCH',
                                                                     headers: {
                                                                         'Content-Type': 'application/json',
@@ -249,11 +249,11 @@
                                             <td>
                                                 @if (auth()->user()->hasRole(['admin', 'supervisor']))
                                                     <div class="btn-group btn-group-sm">
-                                                        <a href="{{ route('admin.tasks.edit', $task) }}"
+                                                        <a href="{{ orgRoute('admin.tasks.edit', $task) }}"
                                                             class="btn btn-outline-primary" title="Edit">
                                                             <i class="fas fa-edit"></i>
                                                         </a>
-                                                        <form action="{{ route('admin.tasks.destroy', $task) }}"
+                                                        <form action="{{ orgRoute('admin.tasks.destroy', $task) }}"
                                                             method="POST" class="d-inline"
                                                             onsubmit="return confirm('Delete this task?');">
                                                             @csrf

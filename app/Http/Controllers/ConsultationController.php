@@ -700,7 +700,7 @@ class ConsultationController extends Controller
     public function googleCalendarCallback(Request $request)
     {
         if (!$request->has('code')) {
-            return redirect()->route('admin.dashboard')
+            return orgRedirect('admin.dashboard')
                 ->with('error', 'Google Calendar authorization failed.');
         }
 
@@ -708,11 +708,11 @@ class ConsultationController extends Controller
         $success = $calendarService->handleAuthCallback($request->code);
 
         if ($success) {
-            return redirect()->route('admin.dashboard')
+            return orgRedirect('admin.dashboard')
                 ->with('success', 'Google Calendar connected successfully!');
         }
 
-        return redirect()->route('admin.dashboard')
+        return orgRedirect('admin.dashboard')
             ->with('error', 'Failed to connect Google Calendar. Please try again.');
     }
 

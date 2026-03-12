@@ -148,7 +148,7 @@ class ProjectController extends Controller
             ->withProperties(['name' => $project->name, 'status' => $project->status])
             ->log('Created project');
 
-        return redirect()->route('admin.projects.index')->with('success', 'Project created successfully.');
+        return orgRedirect('admin.projects.index')->with('success', 'Project created successfully.');
     }
 
     public function show(Project $project)
@@ -219,7 +219,7 @@ class ProjectController extends Controller
             ->withProperties(['name' => $project->name])
             ->log('Updated project');
 
-        return redirect()->route('admin.projects.index')->with('success', 'Project updated successfully.');
+        return orgRedirect('admin.projects.index')->with('success', 'Project updated successfully.');
     }
 
     public function destroy(Project $project)
@@ -236,7 +236,7 @@ class ProjectController extends Controller
             ->withProperties(['name' => $projectName, 'project_id' => $projectId])
             ->log('Deleted project');
 
-        return redirect()->route('admin.projects.index')->with('success', 'Project deleted successfully.');
+        return orgRedirect('admin.projects.index')->with('success', 'Project deleted successfully.');
     }
 
     public function updateStatus(Request $request, Project $project)

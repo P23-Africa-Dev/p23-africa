@@ -229,7 +229,7 @@
 
             {{-- Activity Logs (admin only) --}}
             @if (auth()->user() && auth()->user()->hasRole('admin'))
-                <a href="{{ route('admin.activity.logs') }}" data-tooltip="Activity Logs"
+                <a href="{{ orgRoute('admin.activity.logs') }}" data-tooltip="Activity Logs"
                     class="sidebar-item {{ request()->routeIs('admin.activity.logs') ? 'active' : '' }}"
                     style="position:relative;">
                     <span class="sidebar-icon"><i class="bi bi-clock-history"></i></span>

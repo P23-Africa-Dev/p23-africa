@@ -40,11 +40,11 @@
                             <button onclick="scrollToToday()" class="btn btn-outline-primary btn-sm">
                                 <i class="fas fa-calendar-day me-1"></i>Today
                             </button>
-                            <a href="{{ route('admin.projects.index') }}" class="btn btn-outline-secondary btn-sm">
+                            <a href="{{ orgRoute('admin.projects.index') }}" class="btn btn-outline-secondary btn-sm">
                                 <i class="fas fa-list me-1"></i>List View
                             </a>
                             @if (auth()->user()->hasRole(['admin', 'supervisor']))
-                                <a href="{{ route('admin.projects.create') }}" class="btn btn-dark btn-sm">
+                                <a href="{{ orgRoute('admin.projects.create') }}" class="btn btn-dark btn-sm">
                                     <i class="fas fa-plus me-1"></i>New Project
                                 </a>
                             @endif
@@ -87,7 +87,7 @@
                             <h5 class="text-muted">No projects found</h5>
                             <p class="text-muted">Create your first project to see it on the Gantt chart.</p>
                             @if (auth()->user()->hasRole(['admin', 'supervisor']))
-                                <a href="{{ route('admin.projects.create') }}" class="btn btn-primary mt-3">
+                                <a href="{{ orgRoute('admin.projects.create') }}" class="btn btn-primary mt-3">
                                     <i class="fas fa-plus me-1"></i>Create Project
                                 </a>
                             @endif
@@ -111,7 +111,7 @@
                                                         <i class="fas fa-chevron-down"
                                                             id="chevron-{{ $project->id }}"></i>
                                                     </button>
-                                                    <a href="{{ route('admin.projects.show', $project) }}"
+                                                    <a href="{{ orgRoute('admin.projects.show', $project) }}"
                                                         class="text-decoration-none fw-semibold text-truncate"
                                                         title="{{ $project->name }}">
                                                         {{ $project->name }}

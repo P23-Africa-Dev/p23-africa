@@ -86,7 +86,7 @@ class ConsultationController extends Controller
         // Update application status (you might want to add a status field to the table)
         // For now, we'll use notes or create a separate status tracking system
 
-        return redirect()->route('admin.consultation.show', $id)
+        return orgRedirect('admin.consultation.show', $id)
             ->with('success', 'Application status updated successfully.');
     }
 

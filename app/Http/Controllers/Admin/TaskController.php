@@ -276,7 +276,7 @@ class TaskController extends Controller
             ]);
         }
 
-        return redirect()->route('admin.tasks.index', ['project_id' => $task->project_id])
+        return orgRedirect('admin.tasks.index', ['project_id' => $task->project_id])
             ->with('success', 'Task created successfully.');
     }
 
@@ -387,7 +387,7 @@ class TaskController extends Controller
             ]);
         }
 
-        return redirect()->route('admin.tasks.index', ['project_id' => $task->project_id])
+        return orgRedirect('admin.tasks.index', ['project_id' => $task->project_id])
             ->with('success', 'Task updated successfully.');
     }
 
@@ -424,7 +424,7 @@ class TaskController extends Controller
             ]);
         }
 
-        return redirect()->route('admin.tasks.kanban', ['project_id' => $projectId])
+        return orgRedirect('admin.tasks.kanban', ['project_id' => $projectId])
             ->with('success', 'Task deleted successfully.');
     }
 

@@ -5,7 +5,7 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('P23 Africa\'s Founders Ebook Downloads') }}
             </h2>
-            <a href="{{ route('admin.playbooks.dashboard') }}" class="btn btn-secondary">
+            <a href="{{ orgRoute('admin.playbooks.dashboard') }}" class="btn btn-secondary">
                 <i class="fas fa-arrow-left me-2"></i>Back to Ebooks Dashboard
             </a>
         </div>
@@ -53,7 +53,7 @@
                                         </td>
                                         <td>
                                             <span class="d-flex justify-content-center">
-                                                <form action="{{ route('admin.playbooks.destroy', $playbook) }}"
+                                                <form action="{{ orgRoute('admin.playbooks.destroy', $playbook) }}"
                                                     method="POST" class="d-inline"
                                                     onsubmit="return confirm('Are you sure you want to delete this download? This action cannot be undone.');">
                                                     @csrf

@@ -13,12 +13,12 @@
 
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h4 class="mb-0">New Task</h4>
-                        <a href="{{ route('admin.tasks.kanban') }}" class="btn btn-outline-secondary">
+                        <a href="{{ orgRoute('admin.tasks.kanban') }}" class="btn btn-outline-secondary">
                             <i class="fas fa-arrow-left me-2"></i>Back to Board
                         </a>
                     </div>
 
-                    <form action="{{ route('admin.tasks.store') }}" method="POST">
+                    <form action="{{ orgRoute('admin.tasks.store') }}" method="POST">
                         @csrf
 
                         <div class="mb-4">
@@ -123,7 +123,7 @@
                             <button type="submit" class="btn btn-primary btn-lg">
                                 <i class="fas fa-save me-2"></i>Create Task
                             </button>
-                            <a href="{{ route('admin.tasks.kanban') }}"
+                            <a href="{{ orgRoute('admin.tasks.kanban') }}"
                                 class="btn btn-outline-secondary btn-lg">Cancel</a>
                         </div>
                     </form>

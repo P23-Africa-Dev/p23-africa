@@ -107,11 +107,11 @@
                         <i class="fa fa-bolt me-2 text-primary"></i>Quick Actions
                     </h6>
                     <div class="d-flex flex-wrap gap-2">
-                        <a href="{{ route('admin.consultation.index') }}"
+                        <a href="{{ orgRoute('admin.consultation.index') }}"
                             class="btn btn-outline-primary dark-transition">
                             <i class="fa fa-handshake me-2"></i>View Consultations
                         </a>
-                        <a href="{{ route('admin.events.index') }}" class="btn btn-outline-success dark-transition">
+                        <a href="{{ orgRoute('admin.events.index') }}" class="btn btn-outline-success dark-transition">
                             <i class="fa fa-calendar me-2"></i>Manage Events
                         </a>
                         <a href="https://calendar.google.com/calendar/u/0/r/settings" target="_blank"

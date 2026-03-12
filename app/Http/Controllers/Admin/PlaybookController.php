@@ -63,6 +63,6 @@ class PlaybookController extends Controller
     {
         if ($playbook->image_path) Storage::disk('public')->delete($playbook->image_path);
         $playbook->delete();
-        return redirect()->route('admin.playbooks.index')->with('success', 'Playbook download record deleted successfully.');
+        return orgRedirect('admin.playbooks.index')->with('success', 'Playbook download record deleted successfully.');
     }
 }

@@ -14,11 +14,11 @@
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h4 class="mb-0">All Projects</h4>
                         <div class="d-flex gap-2">
-                            <a href="{{ route('admin.projects.gantt') }}" class="btn btn-outline-primary">
+                            <a href="{{ orgRoute('admin.projects.gantt') }}" class="btn btn-outline-primary">
                                 <i class="fas fa-chart-gantt me-2"></i>Gantt Chart
                             </a>
                             @if (auth()->user()->hasRole(['admin', 'supervisor']))
-                                <a href="{{ route('admin.projects.create') }}" class="btn btn-dark">
+                                <a href="{{ orgRoute('admin.projects.create') }}" class="btn btn-dark">
                                     <i class="fas fa-plus me-2"></i>New Project
                                 </a>
                             @endif
@@ -59,11 +59,11 @@
                                                     @click.away="open = false"
                                                     style="position: absolute; right: 0; top: 100%; z-index: 1050;">
                                                     <li><a class="dropdown-item"
-                                                            href="{{ route('admin.projects.show', $project) }}"><i
+                                                            href="{{ orgRoute('admin.projects.show', $project) }}"><i
                                                                 class="fas fa-eye me-2"></i>View</a></li>
                                                     @if (auth()->user()->hasRole(['admin', 'supervisor']))
                                                         <li><a class="dropdown-item"
-                                                                href="{{ route('admin.projects.edit', $project) }}"><i
+                                                                href="{{ orgRoute('admin.projects.edit', $project) }}"><i
                                                                     class="fas fa-edit me-2"></i>Edit</a></li>
                                                     @endif
                                                     @if (auth()->user()->hasRole(['admin', 'supervisor']))
@@ -72,7 +72,7 @@
                                                         </li>
                                                         <li>
                                                             <form
-                                                                action="{{ route('admin.projects.destroy', $project) }}"
+                                                                action="{{ orgRoute('admin.projects.destroy', $project) }}"
                                                                 method="POST"
                                                                 onsubmit="return confirm('Are you sure you want to delete this project?');">
                                                                 @csrf
@@ -111,7 +111,7 @@
                                                     @foreach (\App\Models\Project::getStatuses() as $key => $label)
                                                         <button
                                                             @click="
-                                                            fetch('{{ route('admin.projects.update-status', $project) }}', {
+                                                            fetch('{{ orgRoute('admin.projects.update-status', $project) }}', {
                                                                 method: 'PATCH',
                                                                 headers: {
                                                                     'Content-Type': 'application/json',
@@ -162,7 +162,7 @@
                                         </div>
                                     </div>
                                     <div class="card-footer bg-transparent border-0 pt-0">
-                                        <a href="{{ route('admin.projects.show', $project) }}"
+                                        <a href="{{ orgRoute('admin.projects.show', $project) }}"
                                             class="btn btn-outline-primary btn-sm w-100">
                                             View Project <i class="fas fa-arrow-right ms-1"></i>
                                         </a>
@@ -176,7 +176,7 @@
                                     <h5 class="text-muted">No projects found</h5>
                                     <p class="text-muted">Get started by creating your first project.</p>
                                     @if (auth()->user()->hasRole(['admin', 'supervisor']))
-                                        <a href="{{ route('admin.projects.create') }}" class="btn btn-primary">
+                                        <a href="{{ orgRoute('admin.projects.create') }}" class="btn btn-primary">
                                             <i class="fas fa-plus me-2"></i>Create Project
                                         </a>
                                     @endif

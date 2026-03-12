@@ -30,7 +30,7 @@
                         </div>
 
                         <div class="d-flex gap-2">
-                            <a href="{{ route('admin.tasks.index') }}" class="btn btn-outline-secondary btn-sm">
+                            <a href="{{ orgRoute('admin.tasks.index') }}" class="btn btn-outline-secondary btn-sm">
                                 <i class="fas fa-list me-1"></i> List View
                             </a>
                             @if (auth()->user()->hasRole(['admin', 'supervisor']))
@@ -81,7 +81,7 @@
                                         </div>
 
                                         <h6 class="kanban-card-title">
-                                            <a href="{{ route('admin.tasks.show', $task) }}"
+                                            <a href="{{ orgRoute('admin.tasks.show', $task) }}"
                                                 class="text-decoration-none text-dark">
                                                 {{ $task->title }}
                                             </a>
@@ -134,15 +134,15 @@
                                                         </button>
                                                         <ul class="dropdown-menu dropdown-menu-end">
                                                             <li><a class="dropdown-item"
-                                                                    href="{{ route('admin.tasks.show', $task) }}"><i
+                                                                    href="{{ orgRoute('admin.tasks.show', $task) }}"><i
                                                                         class="fas fa-eye me-2"></i>View Details</a>
                                                             </li>
                                                             <li><a class="dropdown-item"
-                                                                    href="{{ route('admin.tasks.edit', $task) }}"><i
+                                                                    href="{{ orgRoute('admin.tasks.edit', $task) }}"><i
                                                                         class="fas fa-edit me-2"></i>Edit</a></li>
                                                             <li>
                                                                 <form
-                                                                    action="{{ route('admin.tasks.destroy', $task) }}"
+                                                                    action="{{ orgRoute('admin.tasks.destroy', $task) }}"
                                                                     method="POST"
                                                                     onsubmit="return confirm('Delete this task?');">
                                                                     @csrf
@@ -155,7 +155,7 @@
                                                         </ul>
                                                     </div>
                                                 @else
-                                                    <a href="{{ route('admin.tasks.show', $task) }}"
+                                                    <a href="{{ orgRoute('admin.tasks.show', $task) }}"
                                                         class="btn btn-link btn-sm p-0 text-muted" title="View Details">
                                                         <i class="fas fa-eye"></i>
                                                     </a>
@@ -192,7 +192,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                     </div>
-                    <form action="{{ route('admin.tasks.store') }}" method="POST">
+                    <form action="{{ orgRoute('admin.tasks.store') }}" method="POST">
                         @csrf
                         <div class="modal-body">
                             <div class="mb-3">
@@ -661,7 +661,7 @@
                 });
             });
 
-            fetch('{{ route('admin.tasks.update-order') }}', {
+            fetch('{{ orgRoute('admin.tasks.update-order') }}', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

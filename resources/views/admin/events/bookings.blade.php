@@ -3,7 +3,7 @@
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <div class="flex items-center">
-                <a href="{{ route('admin.events.index') }}"
+                <a href="{{ orgRoute('admin.events.index') }}"
                     class="mr-4 text-gray-600 hover:text-gray-900 transition-colors duration-200">
                     <i class="fas fa-arrow-left text-lg"></i>
                 </a>

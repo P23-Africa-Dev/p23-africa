@@ -10,7 +10,7 @@
                 </p>
             </div>
             <div class="d-flex gap-2">
-                <a href="{{ route('admin.contact.index') }}" class="btn btn-outline-secondary">
+                <a href="{{ orgRoute('admin.contact.index') }}" class="btn btn-outline-secondary">
                     <i class="fa fa-arrow-left me-2"></i>Back to List
                 </a>
                 @if (auth()->user()->hasRole('admin'))
@@ -354,7 +354,7 @@
                             .then(data => {
                                 if (data.success) {
                                     // Redirect to contact list with success message
-                                    window.location.href = '{{ route('admin.contact.index') }}';
+                                    window.location.href = '{{ orgRoute('admin.contact.index') }}';
                                 } else {
                                     alert(data.message || 'Failed to delete contact submission.');
                                     // Reset button state

@@ -265,7 +265,7 @@ class LeadImportController extends Controller
                 }
             }
 
-            return redirect()->route('admin.crm.index')->with('success', $message);
+            return orgRedirect('admin.crm.index')->with('success', $message);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Lead import failed: ' . $e->getMessage(), [

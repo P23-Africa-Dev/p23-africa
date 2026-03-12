@@ -280,7 +280,7 @@ class LeadController extends Controller
 
             DB::commit();
 
-            return redirect()->route('admin.crm.show', $lead)
+            return orgRedirect('admin.crm.show', $lead)
                 ->with('success', 'Lead created successfully!');
         } catch (\Exception $e) {
             DB::rollBack();
@@ -425,7 +425,7 @@ class LeadController extends Controller
 
             DB::commit();
 
-            return redirect()->route('admin.crm.show', $lead)
+            return orgRedirect('admin.crm.show', $lead)
                 ->with('success', 'Lead updated successfully!');
         } catch (\Exception $e) {
             DB::rollBack();
@@ -463,7 +463,7 @@ class LeadController extends Controller
                 ]);
             }
 
-            return redirect()->route('admin.crm.index')
+            return orgRedirect('admin.crm.index')
                 ->with('success', 'Lead deleted successfully!');
         } catch (\Exception $e) {
             Log::error('Failed to delete lead: ' . $e->getMessage());
@@ -746,7 +746,7 @@ class LeadController extends Controller
                 'success' => true,
                 'message' => 'Contact converted to lead successfully!',
                 'lead' => $lead,
-                'redirect' => route('admin.crm.show', $lead)
+                'redirect' => orgRoute('admin.crm.show', $lead)
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -802,7 +802,7 @@ class LeadController extends Controller
                 'success' => true,
                 'message' => 'Consultation converted to lead successfully!',
                 'lead' => $lead,
-                'redirect' => route('admin.crm.show', $lead)
+                'redirect' => orgRoute('admin.crm.show', $lead)
             ]);
         } catch (\Exception $e) {
             DB::rollBack();

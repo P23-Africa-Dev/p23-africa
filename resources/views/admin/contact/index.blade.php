@@ -21,14 +21,14 @@
                     <ul class="dropdown-menu">
                         <li>
                             <a class="dropdown-item export-btn"
-                                href="{{ route('admin.contact.export', request()->all()) }}" data-format="CSV"
+                                href="{{ orgRoute('admin.contact.export', request()->all()) }}" data-format="CSV"
                                 title="Export to CSV format">
                                 <i class="fa fa-file-csv me-2 text-success"></i>Export as CSV
                             </a>
                         </li>
                         <li>
                             <a class="dropdown-item export-btn"
-                                href="{{ route('admin.contact.export.xlsx', request()->all()) }}" data-format="XLSX"
+                                href="{{ orgRoute('admin.contact.export.xlsx', request()->all()) }}" data-format="XLSX"
                                 title="Export to Excel format">
                                 <i class="fa fa-file-excel me-2 text-primary"></i>Export as XLSX
                             </a>
@@ -137,7 +137,7 @@
             <!-- Search and Filters -->
             <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition mb-4">
                 <div class="card-body">
-                    <form method="GET" action="{{ route('admin.contact.index') }}" class="row g-3">
+                    <form method="GET" action="{{ orgRoute('admin.contact.index') }}" class="row g-3">
                         <div class="col-md-4">
                             <input type="text" name="search"
                                 class="form-control dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
@@ -293,7 +293,7 @@
                                                         title="Quick Preview">
                                                         <i class="fa fa-search"></i>
                                                     </button>
-                                                    <a href="{{ route('admin.contact.show', $contact) }}"
+                                                    <a href="{{ orgRoute('admin.contact.show', $contact) }}"
                                                         class="btn btn-sm btn-outline-info" title="View Full Details">
                                                         <i class="fa fa-eye"></i>
                                                     </a>
@@ -400,7 +400,7 @@
                                                     <div class="modal-footer border-0">
                                                         <button type="button" class="btn btn-secondary"
                                                             data-bs-dismiss="modal">Close</button>
-                                                        <a href="{{ route('admin.contact.show', $contact) }}"
+                                                        <a href="{{ orgRoute('admin.contact.show', $contact) }}"
                                                             class="btn btn-primary">
                                                             <i class="fa fa-eye me-2"></i>View Full Details
                                                         </a>

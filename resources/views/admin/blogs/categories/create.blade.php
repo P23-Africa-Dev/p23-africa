@@ -11,7 +11,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg dark-transition">
                 <div class="p-6 text-dark dark:text-gray-100 table-responsive dark-transition">
                     <div class="my-5">
-                        <form action="{{ route('admin.categories.store') }}" method="POST">
+                        <form action="{{ orgRoute('admin.categories.store') }}" method="POST">
                             @csrf
 
                             <div class="form-group mb-3">

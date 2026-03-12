@@ -101,7 +101,7 @@
                                     </div>
 
                                     <div class="d-grid">
-                                        <a href="{{ route('admin.playbooks.index') }}" class="btn btn-primary"
+                                        <a href="{{ orgRoute('admin.playbooks.index') }}" class="btn btn-primary"
                                             style="color: #fff !important;">
                                             <i class="fas fa-eye me-2"></i>View Download Records
                                         </a>
@@ -147,7 +147,7 @@
                                     </div>
 
                                     <div class="d-grid gap-2">
-                                        <a href="{{ route('admin.salesbooks.index') }}" class="btn btn-success"
+                                        <a href="{{ orgRoute('admin.salesbooks.index') }}" class="btn btn-success"
                                             style="color: #fff !important;">
                                             <i class="fas fa-eye me-2"></i>View Download Records
                                         </a>
@@ -212,7 +212,7 @@
                                         </div>
 
                                         <div class="d-grid">
-                                            <a href="{{ route('admin.ultimatefunding.index') }}"
+                                            <a href="{{ orgRoute('admin.ultimatefunding.index') }}"
                                                 class="btn btn-warning" style="color: #fff !important;">
                                                 <i class="fas fa-eye me-2"></i>View Premium Records
                                             </a>
@@ -431,7 +431,7 @@
                     resendBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
 
                     // Make AJAX request
-                    fetch('{{ route('admin.playbooks.resend-funding') }}', {
+                    fetch('{{ orgRoute('admin.playbooks.resend-funding') }}', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',

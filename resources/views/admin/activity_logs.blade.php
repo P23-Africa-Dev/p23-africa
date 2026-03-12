@@ -8,7 +8,7 @@
                 </h2>
                 <p class="text-muted dark:text-gray-400 text-sm mb-0">Track all admin dashboard activities</p>
             </div>
-            <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-secondary btn-sm">
+            <a href="{{ orgRoute('admin.dashboard') }}" class="btn btn-outline-secondary btn-sm">
                 <i class="fa fa-arrow-left me-1"></i> Back to Dashboard
             </a>
         </div>
@@ -86,7 +86,7 @@
             <!-- Filters -->
             <div class="card border-0 shadow-sm dark:bg-gray-800 mb-4">
                 <div class="card-body">
-                    <form method="GET" action="{{ route('admin.activity.logs') }}" class="row g-3">
+                    <form method="GET" action="{{ orgRoute('admin.activity.logs') }}" class="row g-3">
                         <div class="col-md-3">
                             <label class="form-label small text-muted dark:text-gray-400">Search</label>
                             <input type="text" name="search"
@@ -135,7 +135,7 @@
                             <button type="submit" class="btn btn-primary">
                                 <i class="fa fa-search"></i>
                             </button>
-                            <a href="{{ route('admin.activity.logs') }}" class="btn btn-outline-secondary">
+                            <a href="{{ orgRoute('admin.activity.logs') }}" class="btn btn-outline-secondary">
                                 <i class="fa fa-times"></i>
                             </a>
                         </div>

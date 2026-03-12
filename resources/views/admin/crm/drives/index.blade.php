@@ -8,7 +8,7 @@
                 <p class="text-muted dark:text-gray-400 text-sm mb-0">Organize your leads into different drives</p>
             </div>
             <div class="d-flex gap-2">
-                <a href="{{ route('admin.crm.index') }}" class="btn btn-outline-secondary">
+                <a href="{{ orgRoute('admin.crm.index') }}" class="btn btn-outline-secondary">
                     <i class="fa fa-arrow-left me-2"></i>Back to Leads
                 </a>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createDriveModal">
@@ -60,7 +60,7 @@
                                     <span class="text-muted dark:text-gray-400">
                                         <i class="fa fa-users me-1"></i>{{ $drive->leads_count }} leads
                                     </span>
-                                    <a href="{{ route('admin.crm.index', ['drive' => $drive->id]) }}"
+                                    <a href="{{ orgRoute('admin.crm.index', ['drive' => $drive->id]) }}"
                                         class="text-primary">
                                         View Leads <i class="fa fa-arrow-right ms-1"></i>
                                     </a>
@@ -75,7 +75,7 @@
                                         <i class="fa fa-edit me-1"></i>Edit
                                     </button>
                                     @if (!$drive->is_default && $drive->leads_count === 0)
-                                        <form action="{{ route('admin.crm.drives.destroy', $drive) }}" method="POST"
+                                        <form action="{{ orgRoute('admin.crm.drives.destroy', $drive) }}" method="POST"
                                             class="d-inline"
                                             onsubmit="return confirm('Are you sure you want to delete this drive?');">
                                             @csrf
@@ -118,7 +118,7 @@
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content dark:bg-gray-800">
-                <form action="{{ route('admin.crm.drives.store') }}" method="POST">
+                <form action="{{ orgRoute('admin.crm.drives.store') }}" method="POST">
                     @csrf
                     <div class="modal-header">
                         <h5 class="modal-title dark:text-gray-100" id="createDriveModalLabel">

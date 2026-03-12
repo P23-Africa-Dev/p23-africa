@@ -118,10 +118,10 @@ class StaffController extends Controller
         }
 
         if ($emailSent) {
-            return redirect()->route('admin.staff.index')->with('success', 'Staff created and welcome email sent successfully.');
+            return orgRedirect('admin.staff.index')->with('success', 'Staff created and welcome email sent successfully.');
         }
 
-        return redirect()->route('admin.staff.index')->with('warning', 'Staff created but the welcome email could not be sent. Please check the email configuration.');
+        return orgRedirect('admin.staff.index')->with('warning', 'Staff created but the welcome email could not be sent. Please check the email configuration.');
     }
 
     public function edit(User $staff)
@@ -170,7 +170,7 @@ class StaffController extends Controller
 
         activity()->causedBy(Auth::user())->performedOn($staff)->log('Updated staff account');
 
-        return redirect()->route('admin.staff.index')->with('success', 'Staff updated successfully.');
+        return orgRedirect('admin.staff.index')->with('success', 'Staff updated successfully.');
     }
 
     public function destroy(User $staff)
@@ -181,7 +181,7 @@ class StaffController extends Controller
 
         activity()->causedBy(Auth::user())->performedOn($staff)->log('Deleted staff account');
 
-        return redirect()->route('admin.staff.index')->with('success', 'Staff deleted.');
+        return orgRedirect('admin.staff.index')->with('success', 'Staff deleted.');
     }
 
     public function suspend(User $staff)
@@ -189,7 +189,7 @@ class StaffController extends Controller
         $this->ensureStaffOrgAccess($staff);
 
         if ($staff->hasRole('admin')) {
-            return redirect()->route('admin.staff.index')->with('error', 'Cannot suspend admin accounts.');
+            return orgRedirect('admin.staff.index')->with('error', 'Cannot suspend admin accounts.');
         }
 
         $staff->update(['suspended_at' => now()]);
@@ -199,7 +199,7 @@ class StaffController extends Controller
             ->performedOn($staff)
             ->withProperties(['action' => 'suspend'])
             ->log('Suspended staff account');
-        return redirect()->route('admin.staff.index')->with('success', 'Staff account suspended successfully.');
+        return orgRedirect('admin.staff.index')->with('success', 'Staff account suspended successfully.');
     }
 
     public function reactivate(User $staff)
@@ -213,7 +213,7 @@ class StaffController extends Controller
             ->performedOn($staff)
             ->withProperties(['action' => 'reactivate'])
             ->log('Reactivated staff account');
-        return redirect()->route('admin.staff.index')->with('success', 'Staff account reactivated successfully.');
+        return orgRedirect('admin.staff.index')->with('success', 'Staff account reactivated successfully.');
     }
 
     public function promote(User $staff)
@@ -228,11 +228,11 @@ class StaffController extends Controller
 
         // Ensure only staff can be promoted to supervisor
         if ($staff->hasRole('supervisor')) {
-            return redirect()->route('admin.staff.index')->with('error', 'User is already a supervisor.');
+            return orgRedirect('admin.staff.index')->with('error', 'User is already a supervisor.');
         }
 
         if ($staff->hasRole('admin')) {
-            return redirect()->route('admin.staff.index')->with('error', 'User is already an admin.');
+            return orgRedirect('admin.staff.index')->with('error', 'User is already an admin.');
         }
 
         $staff->syncRoles('supervisor'); // Promote staff to supervisor
@@ -244,6 +244,6 @@ class StaffController extends Controller
             ->performedOn($staff)
             ->withProperties(['promoted_to' => 'supervisor'])
             ->log('Promoted staff to supervisor');
-        return redirect()->route('admin.staff.index')->with('success', 'Staff promoted to supervisor successfully.');
+        return orgRedirect('admin.staff.index')->with('success', 'Staff promoted to supervisor successfully.');
     }
 }

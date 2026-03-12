@@ -25,6 +25,6 @@ class UltimateFundingController extends Controller
     public function destroy(UltimateFundingDownload $ultimatefunding)
     {
         $ultimatefunding->delete();
-        return redirect()->route('admin.ultimatefunding.index')->with('success', 'Ultimate Funding download record deleted successfully.');
+        return orgRedirect('admin.ultimatefunding.index')->with('success', 'Ultimate Funding download record deleted successfully.');
     }
 }

@@ -129,7 +129,7 @@
             <!-- Filters and Search -->
             <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition mb-4">
                 <div class="card-body">
-                    <form method="GET" action="{{ route('admin.consultation.index') }}">
+                    <form method="GET" action="{{ orgRoute('admin.consultation.index') }}">
                         <div class="row align-items-end">
                             <div class="col-md-4 mb-3">
                                 <label for="search" class="form-label text-dark dark:text-gray-200">Search</label>
@@ -156,7 +156,7 @@
                                 <button type="submit" class="btn btn-primary me-2">
                                     <i class="fa fa-search me-1"></i>Filter
                                 </button>
-                                <a href="{{ route('admin.consultation.index') }}" class="btn btn-outline-secondary">
+                                <a href="{{ orgRoute('admin.consultation.index') }}" class="btn btn-outline-secondary">
                                     <i class="fa fa-times me-1"></i>Clear
                                 </a>
                             </div>
@@ -237,7 +237,7 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex gap-1">
-                                                    <a href="{{ route('admin.consultation.show', $application->id) }}"
+                                                    <a href="{{ orgRoute('admin.consultation.show', $application->id) }}"
                                                         class="btn btn-sm btn-outline-primary">
                                                         <i class="fa fa-eye me-1"></i>View
                                                     </a>

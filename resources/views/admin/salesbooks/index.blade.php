@@ -5,7 +5,7 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Funding Readiness Guidebook Downloads') }}
             </h2>
-            <a href="{{ route('admin.playbooks.dashboard') }}" class="btn btn-secondary">
+            <a href="{{ orgRoute('admin.playbooks.dashboard') }}" class="btn btn-secondary">
                 <i class="fas fa-arrow-left me-2"></i>Back to Playbooks Dashboard
             </a>
         </div>
@@ -189,7 +189,7 @@
                                                                     <i class="fa fa-edit"></i>
                                                                 </button>
                                                                 <form
-                                                                    action="{{ route('admin.salesbooks.destroy', $salesBook->id) }}"
+                                                                    action="{{ orgRoute('admin.salesbooks.destroy', $salesBook->id) }}"
                                                                     method="POST" class="d-inline"
                                                                     onsubmit="return confirm('Are you sure you want to delete this download record? This action cannot be undone.');">
                                                                     @csrf

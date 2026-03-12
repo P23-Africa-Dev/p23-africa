@@ -27,7 +27,8 @@
         @endif
         @if (!empty($currentOrg))
             <div style="display:flex;align-items:center;gap:8px;margin-left:8px;">
-                <div style="width:36px;height:36px;border-radius:var(--radius-md);background:linear-gradient(135deg,var(--p-primary),var(--p-accent));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;color:white;text-shadow:0 1px 2px rgba(0,0,0,0.2);">
+                <div
+                    style="width:36px;height:36px;border-radius:var(--radius-md);background:linear-gradient(135deg,var(--p-primary),var(--p-accent));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;color:white;text-shadow:0 1px 2px rgba(0,0,0,0.2);">
                     {{ strtoupper(substr($currentOrg->name, 0, 1)) }}
                 </div>
                 <span class="topbar-brand-name d-none d-md-inline"
@@ -119,7 +120,7 @@
                 </a>
 
                 @if (Auth::user()->hasRole('admin'))
-                    <a href="{{ route('admin.activity.logs') }}"
+                    <a href="{{ orgRoute('admin.activity.logs') }}"
                         style="display:flex;align-items:center;gap:.625rem;padding:.5rem .75rem;border-radius:var(--radius-sm);color:var(--text-primary);font-size:.875rem;text-decoration:none;"
                         onmouseenter="this.style.background='var(--bg-hover)'"
                         onmouseleave="this.style.background='transparent'">

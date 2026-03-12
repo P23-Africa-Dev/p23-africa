@@ -171,7 +171,7 @@
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
                             <a class="dropdown-item {{ !request('drive') || request('drive') === 'all' ? 'active' : '' }}"
-                                href="{{ route('admin.crm.index', array_merge(request()->except('drive', 'page'), ['drive' => 'all'])) }}">
+                                href="{{ orgRoute('admin.crm.index', array_merge(request()->except('drive', 'page'), ['drive' => 'all'])) }}">
                                 <i class="fa fa-globe me-2 text-muted"></i>All Drives
                             </a>
                         </li>
@@ -181,7 +181,7 @@
                         @forelse ($drives ?? [] as $drive)
                             <li>
                                 <a class="dropdown-item {{ request('drive') == $drive->id ? 'active' : '' }}"
-                                    href="{{ route('admin.crm.index', array_merge(request()->except('drive', 'page'), ['drive' => $drive->id])) }}">
+                                    href="{{ orgRoute('admin.crm.index', array_merge(request()->except('drive', 'page'), ['drive' => $drive->id])) }}">
                                     <span class="d-inline-block rounded-circle me-2"
                                         style="width: 12px; height: 12px; background-color: {{ $drive->color ?? '#6c757d' }};"></span>
                                     {{ $drive->name }}
@@ -196,7 +196,7 @@
                         </li>
                         <li>
                             <a class="dropdown-item {{ request('drive') === 'unassigned' ? 'active' : '' }}"
-                                href="{{ route('admin.crm.index', array_merge(request()->except('drive', 'page'), ['drive' => 'unassigned'])) }}">
+                                href="{{ orgRoute('admin.crm.index', array_merge(request()->except('drive', 'page'), ['drive' => 'unassigned'])) }}">
                                 <i class="fa fa-inbox me-2 text-muted"></i>No Drive
                             </a>
                         </li>
@@ -204,22 +204,22 @@
                             <hr class="dropdown-divider">
                         </li>
                         <li>
-                            <a class="dropdown-item text-primary" href="{{ route('admin.crm.drives.index') }}">
+                            <a class="dropdown-item text-primary" href="{{ orgRoute('admin.crm.drives.index') }}">
                                 <i class="fa fa-cog me-2"></i>Manage Drives
                             </a>
                         </li>
                     </ul>
                 </div>
-                <a href="{{ route('admin.crm.pipeline', request()->only('drive')) }}" class="btn btn-outline-info">
+                <a href="{{ orgRoute('admin.crm.pipeline', request()->only('drive')) }}" class="btn btn-outline-info">
                     <i class="fa fa-columns me-2"></i>Pipeline View
                 </a>
-                <a href="{{ route('admin.crm.import') }}" class="btn btn-outline-success">
+                <a href="{{ orgRoute('admin.crm.import') }}" class="btn btn-outline-success">
                     <i class="fa fa-file-import me-2"></i>Import Leads
                 </a>
-                <a href="{{ route('admin.crm.export', request()->all()) }}" class="btn btn-outline-secondary">
+                <a href="{{ orgRoute('admin.crm.export', request()->all()) }}" class="btn btn-outline-secondary">
                     <i class="fa fa-download me-2"></i>Export CSV
                 </a>
-                <a href="{{ route('admin.crm.create') }}" class="btn btn-primary">
+                <a href="{{ orgRoute('admin.crm.create') }}" class="btn btn-primary">
                     <i class="fa fa-plus me-2"></i>Add New Lead
                 </a>
             </div>
@@ -383,7 +383,7 @@
             <!-- Search and Filters -->
             <div class="card border-0 shadow-sm dark:bg-gray-800 mb-4">
                 <div class="card-body">
-                    <form method="GET" action="{{ route('admin.crm.index') }}" class="row g-3">
+                    <form method="GET" action="{{ orgRoute('admin.crm.index') }}" class="row g-3">
                         <!-- Preserve drive filter -->
                         @if (request('drive'))
                             <input type="hidden" name="drive" value="{{ request('drive') }}">
@@ -615,11 +615,11 @@
                                             </td>
                                             <td>
                                                 <div class="btn-group" role="group">
-                                                    <a href="{{ route('admin.crm.show', $lead) }}"
+                                                    <a href="{{ orgRoute('admin.crm.show', $lead) }}"
                                                         class="btn btn-sm btn-outline-info" title="View">
                                                         <i class="fa fa-eye"></i>
                                                     </a>
-                                                    <a href="{{ route('admin.crm.edit', $lead) }}"
+                                                    <a href="{{ orgRoute('admin.crm.edit', $lead) }}"
                                                         class="btn btn-sm btn-outline-primary" title="Edit">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
@@ -645,7 +645,7 @@
                             <i class="fa fa-users fa-3x text-muted mb-3"></i>
                             <h5 class="text-muted">No leads found</h5>
                             <p class="text-muted">Create your first lead to get started with your CRM.</p>
-                            <a href="{{ route('admin.crm.create') }}" class="btn btn-primary">
+                            <a href="{{ orgRoute('admin.crm.create') }}" class="btn btn-primary">
                                 <i class="fa fa-plus me-2"></i>Add New Lead
                             </a>
                         </div>
@@ -888,7 +888,7 @@
                 });
 
                 function bulkAction(action, value, ids) {
-                    fetch('{{ route('admin.crm.bulk-update') }}', {
+                    fetch('{{ orgRoute('admin.crm.bulk-update') }}', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',

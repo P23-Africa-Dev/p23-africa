@@ -34,7 +34,7 @@
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
                             <a class="dropdown-item {{ !request('drive') || request('drive') === 'all' ? 'active' : '' }}"
-                                href="{{ route('admin.crm.pipeline', ['drive' => 'all']) }}">
+                                href="{{ orgRoute('admin.crm.pipeline', ['drive' => 'all']) }}">
                                 <i class="fa fa-globe me-2 text-muted"></i>All Drives
                             </a>
                         </li>
@@ -44,7 +44,7 @@
                         @forelse ($drives ?? [] as $drive)
                             <li>
                                 <a class="dropdown-item {{ request('drive') == $drive->id ? 'active' : '' }}"
-                                    href="{{ route('admin.crm.pipeline', ['drive' => $drive->id]) }}">
+                                    href="{{ orgRoute('admin.crm.pipeline', ['drive' => $drive->id]) }}">
                                     <span class="d-inline-block rounded-circle me-2"
                                         style="width: 12px; height: 12px; background-color: {{ $drive->color ?? '#6c757d' }};"></span>
                                     {{ $drive->name }}
@@ -59,7 +59,7 @@
                         </li>
                         <li>
                             <a class="dropdown-item {{ request('drive') === 'unassigned' ? 'active' : '' }}"
-                                href="{{ route('admin.crm.pipeline', ['drive' => 'unassigned']) }}">
+                                href="{{ orgRoute('admin.crm.pipeline', ['drive' => 'unassigned']) }}">
                                 <i class="fa fa-inbox me-2 text-muted"></i>No Drive
                             </a>
                         </li>
@@ -67,19 +67,19 @@
                             <hr class="dropdown-divider">
                         </li>
                         <li>
-                            <a class="dropdown-item text-primary" href="{{ route('admin.crm.drives.index') }}">
+                            <a class="dropdown-item text-primary" href="{{ orgRoute('admin.crm.drives.index') }}">
                                 <i class="fa fa-cog me-2"></i>Manage Drives
                             </a>
                         </li>
                     </ul>
                 </div>
-                <a href="{{ route('admin.crm.index', request()->only('drive')) }}" class="btn btn-outline-secondary">
+                <a href="{{ orgRoute('admin.crm.index', request()->only('drive')) }}" class="btn btn-outline-secondary">
                     <i class="fa fa-list me-2"></i>List View
                 </a>
-                <a href="{{ route('admin.crm.import') }}" class="btn btn-outline-success">
+                <a href="{{ orgRoute('admin.crm.import') }}" class="btn btn-outline-success">
                     <i class="fa fa-file-import me-2"></i>Import Leads
                 </a>
-                <a href="{{ route('admin.crm.create') }}" class="btn btn-primary">
+                <a href="{{ orgRoute('admin.crm.create') }}" class="btn btn-primary">
                     <i class="fa fa-plus me-2"></i>Add New Lead
                 </a>
             </div>
@@ -409,7 +409,7 @@
                             @forelse($columnData['leads'] as $lead)
                                 <div class="lead-card" data-id="{{ $lead->id }}"
                                     data-value="{{ $lead->estimated_value ?? 0 }}">
-                                    <a href="{{ route('admin.crm.show', $lead) }}"
+                                    <a href="{{ orgRoute('admin.crm.show', $lead) }}"
                                         class="lead-card-link text-primary" title="View Details"
                                         onclick="event.stopPropagation();">
                                         <i class="fa fa-external-link-alt"></i>

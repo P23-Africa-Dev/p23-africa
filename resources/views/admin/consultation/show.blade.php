@@ -8,7 +8,7 @@
                 <p class="text-muted dark:text-gray-400 text-sm mb-0">{{ $application->name }} -
                     {{ $application->company }}</p>
             </div>
-            <a href="{{ route('admin.consultation.index') }}" class="btn btn-outline-secondary">
+            <a href="{{ orgRoute('admin.consultation.index') }}" class="btn btn-outline-secondary">
                 <i class="fa fa-arrow-left me-2"></i>Back to Applications
             </a>
         </div>

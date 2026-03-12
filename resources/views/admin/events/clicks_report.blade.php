@@ -3,7 +3,7 @@
 
     <x-slot name="header">
         <div class="flex items-center">
-            <a href="{{ route('admin.events.index') }}" class="mr-4 transition-colors duration-200"
+            <a href="{{ orgRoute('admin.events.index') }}" class="mr-4 transition-colors duration-200"
                 style="color: var(--text-secondary);">
                 <i class="fas fa-arrow-left text-lg"></i>
             </a>
@@ -34,7 +34,7 @@
                     <!-- Filter Buttons -->
                     <div class="flex flex-wrap gap-2 mb-8">
                         @foreach (['today' => 'Today', '7days' => 'Last 7 Days', '30days' => 'Last 30 Days', 'all' => 'All Time'] as $key => $label)
-                            <a href="{{ route('admin.events.clicks', ['event' => $event->id, 'filter' => $key]) }}"
+                            <a href="{{ orgRoute('admin.events.clicks', ['event' => $event->id, 'filter' => $key]) }}"
                                 class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-sm"
                                 style="{{ $currentFilter == $key
                                     ? 'background: linear-gradient(135deg, #6366f1, #4f46e5); color: #fff !important; box-shadow: 0 2px 8px rgba(99,102,241,0.3);'

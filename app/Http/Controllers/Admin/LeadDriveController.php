@@ -68,7 +68,7 @@ class LeadDriveController extends Controller
             'organization_id' => Auth::user()->organization_id ?? null,
         ]);
 
-        return redirect()->route('admin.crm.drives.index')
+        return orgRedirect('admin.crm.drives.index')
             ->with('success', 'Drive created successfully!');
     }
 
@@ -124,7 +124,7 @@ class LeadDriveController extends Controller
             'is_default' => !empty($validated['is_default']),
         ]);
 
-        return redirect()->route('admin.crm.drives.index')
+        return orgRedirect('admin.crm.drives.index')
             ->with('success', 'Drive updated successfully!');
     }
 
@@ -135,7 +135,7 @@ class LeadDriveController extends Controller
     {
         // Don't allow deleting the default drive
         if ($drive->is_default) {
-            return redirect()->route('admin.crm.drives.index')
+            return orgRedirect('admin.crm.drives.index')
                 ->with('error', 'Cannot delete the default drive.');
         }
 
@@ -147,13 +147,13 @@ class LeadDriveController extends Controller
         }
 
         if ($leadsQuery->count() > 0) {
-            return redirect()->route('admin.crm.drives.index')
+            return orgRedirect('admin.crm.drives.index')
                 ->with('error', 'Cannot delete a drive that contains leads. Please move or delete the leads first.');
         }
 
         $drive->delete();
 
-        return redirect()->route('admin.crm.drives.index')
+        return orgRedirect('admin.crm.drives.index')
             ->with('success', 'Drive deleted successfully!');
     }
 
@@ -168,7 +168,7 @@ class LeadDriveController extends Controller
         // Set this drive as default
         $drive->update(['is_default' => true]);
 
-        return redirect()->route('admin.crm.drives.index')
+        return orgRedirect('admin.crm.drives.index')
             ->with('success', 'Default drive updated successfully!');
     }
 }

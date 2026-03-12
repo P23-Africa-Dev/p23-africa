@@ -329,7 +329,7 @@
                         <div class="d-block float-end">
                             @auth
                                 @if (auth()->user()->is_admin)
-                                    <a href="{{ route('admin.events.edit', $event->id) }}" target="_blank"
+                                    <a href="{{ orgRoute('admin.events.edit', $event->id) }}" target="_blank"
                                         class="btn btn-warning">
                                         Edit Event
                                     </a>

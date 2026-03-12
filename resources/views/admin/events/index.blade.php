@@ -10,7 +10,7 @@
                 <span class="text-sm text-gray-600 dark:text-gray-400">
                     Total Events: <span class="font-semibold text-blue-600">{{ count($events) }}</span>
                 </span>
-                <a href="{{ route('admin.events.create') }}"
+                <a href="{{ orgRoute('admin.events.create') }}"
                     class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-2.5 rounded-lg font-medium transition-all duration-200 shadow-md hover:shadow-lg">
                     <i class="fas fa-plus mr-2"></i>Create Event
                 </a>
@@ -258,7 +258,7 @@
                                             <td class="px-6 py-4">
                                                 <div class="flex items-center space-x-2">
                                                     <!-- Bookings -->
-                                                    <a href="{{ route('admin.events.bookings', $event->id) }}"
+                                                    <a href="{{ orgRoute('admin.events.bookings', $event->id) }}"
                                                         target="_blank"
                                                         class="p-2 text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-all duration-200"
                                                         title="View Bookings ({{ $event->seats->count() }})">
@@ -275,14 +275,14 @@
                                                     </a>
 
                                                     <!-- Edit -->
-                                                    <a href="{{ route('admin.events.edit', $event) }}"
+                                                    <a href="{{ orgRoute('admin.events.edit', $event) }}"
                                                         class="p-2 text-gray-400 dark:text-gray-500 hover:text-yellow-600 dark:hover:text-yellow-400 hover:bg-yellow-50 dark:hover:bg-yellow-900/20 rounded-lg transition-all duration-200"
                                                         title="Edit Event">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
 
                                                     <!-- Feedback -->
-                                                    <a href="{{ route('admin.events.feedbacks', $event->id) }}"
+                                                    <a href="{{ orgRoute('admin.events.feedbacks', $event->id) }}"
                                                         target="_blank"
                                                         class="p-2 text-gray-400 dark:text-gray-500 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 rounded-lg transition-all duration-200"
                                                         title="View Feedback">
@@ -290,7 +290,7 @@
                                                     </a>
 
                                                     <!-- Analytics -->
-                                                    <a href="{{ route('admin.events.clicks', $event->id) }}"
+                                                    <a href="{{ orgRoute('admin.events.clicks', $event->id) }}"
                                                         target="_blank"
                                                         class="p-2 text-gray-400 dark:text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-all duration-200"
                                                         title="View Analytics">
@@ -299,7 +299,7 @@
 
                                                     <!-- Delete -->
                                                     @if (auth()->user()->hasRole('admin|supervisor|staff'))
-                                                        <form action="{{ route('admin.events.destroy', $event) }}"
+                                                        <form action="{{ orgRoute('admin.events.destroy', $event) }}"
                                                             method="POST" class="inline"
                                                             onsubmit="return confirm('Are you sure you want to delete this event? This action cannot be undone.');">
                                                             @csrf
@@ -351,7 +351,7 @@
                                                             @elseif($should24BeSent && !$isPast)
                                                                 {{-- Show manual send button if automation missed it --}}
                                                                 <form
-                                                                    action="{{ route('admin.events.sendReminder', ['id' => $event->id]) }}"
+                                                                    action="{{ orgRoute('admin.events.sendReminder', ['id' => $event->id]) }}"
                                                                     method="POST" class="inline"
                                                                     onsubmit="return confirm('Send 24-hour reminder emails to all participants?')">
                                                                     @csrf
@@ -391,7 +391,7 @@
                                                             @elseif($should15BeSent && !$isPast)
                                                                 {{-- Show manual send button if automation missed it --}}
                                                                 <form
-                                                                    action="{{ route('admin.events.sendReminder', ['id' => $event->id]) }}"
+                                                                    action="{{ orgRoute('admin.events.sendReminder', ['id' => $event->id]) }}"
                                                                     method="POST" class="inline"
                                                                     onsubmit="return confirm('Send 15-minute reminder emails to all participants?')">
                                                                     @csrf
@@ -421,7 +421,7 @@
                                                         {{-- Feedback Button (after event) --}}
                                                         @if ($isPast)
                                                             <form
-                                                                action="{{ route('admin.events.sendFeedback', $event->id) }}"
+                                                                action="{{ orgRoute('admin.events.sendFeedback', $event->id) }}"
                                                                 method="POST"
                                                                 onsubmit="return confirm('Send feedback request to all participants?')">
                                                                 @csrf
@@ -444,7 +444,7 @@
                                                         No events found</h3>
                                                     <p class="text-gray-500 dark:text-gray-400 mb-4">Get started by
                                                         creating your first event.</p>
-                                                    <a href="{{ route('admin.events.create') }}"
+                                                    <a href="{{ orgRoute('admin.events.create') }}"
                                                         class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors duration-200">
                                                         Create Event
                                                     </a>

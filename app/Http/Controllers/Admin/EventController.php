@@ -119,7 +119,7 @@ class EventController extends Controller
             ->withProperties(['title' => $event->title, 'event_date' => $event->event_date])
             ->log('Created event');
 
-        return redirect()->route('admin.events.index')->with('success', 'Event created successfully.');
+        return orgRedirect('admin.events.index')->with('success', 'Event created successfully.');
     }
 
     /**
@@ -215,7 +215,7 @@ class EventController extends Controller
             ->withProperties(['title' => $event->title])
             ->log('Updated event');
 
-        return redirect()->route('admin.events.index')->with('success', 'Event updated successfully.');
+        return orgRedirect('admin.events.index')->with('success', 'Event updated successfully.');
     }
 
     /**
@@ -233,7 +233,7 @@ class EventController extends Controller
             ->withProperties(['title' => $eventTitle, 'event_id' => $eventId])
             ->log('Deleted event');
 
-        return redirect()->route('admin.events.index')->with('success', 'Event deleted');
+        return orgRedirect('admin.events.index')->with('success', 'Event deleted');
     }
 
     public function sendReminder(Request $request, $eventId)

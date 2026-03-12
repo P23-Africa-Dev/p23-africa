@@ -15,7 +15,7 @@
                         <div class="alert alert-danger">{{ session('error') }}</div>
                     @endif
 
-                    <a href="{{ route('admin.organizations.create') }}" class="btn btn-primary mb-3">Create
+                    <a href="{{ orgRoute('admin.organizations.create') }}" class="btn btn-primary mb-3">Create
                         Organization</a>
 
                     <table class="table table-striped">
@@ -38,10 +38,10 @@
                                     <td>{{ $org->description }}</td>
                                     <td>{{ $org->created_at->format('Y-m-d') }}</td>
                                     <td>
-                                        <a href="{{ route('admin.organizations.edit', $org->id) }}"
+                                        <a href="{{ orgRoute('admin.organizations.edit', $org->id) }}"
                                             class="btn btn-sm btn-secondary">Edit</a>
 
-                                        <form action="{{ route('admin.organizations.destroy', $org->id) }}"
+                                        <form action="{{ orgRoute('admin.organizations.destroy', $org->id) }}"
                                             method="POST" style="display:inline-block"
                                             onsubmit="return confirm('Delete this organization? This cannot be undone.')">
                                             @csrf

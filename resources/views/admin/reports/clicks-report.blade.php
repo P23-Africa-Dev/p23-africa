@@ -32,15 +32,15 @@
                     <h2 class="mb-4">Click Count Report</h2>
 
                     <div style="margin-bottom: 20px;">
-                        <a href="{{ route('admin.clicks.report', ['filter' => 'all']) }}"
+                        <a href="{{ orgRoute('admin.clicks.report', ['filter' => 'all']) }}"
                             class="filter-btn {{ $filter === 'all' ? 'active' : '' }}">
                             All
                         </a>
-                        <a href="{{ route('admin.clicks.report', ['filter' => 'today']) }}"
+                        <a href="{{ orgRoute('admin.clicks.report', ['filter' => 'today']) }}"
                             class="filter-btn {{ $filter === 'today' ? 'active' : '' }}">
                             Today
                         </a>
-                        <a href="{{ route('admin.clicks.report', ['filter' => '7days']) }}"
+                        <a href="{{ orgRoute('admin.clicks.report', ['filter' => '7days']) }}"
                             class="filter-btn {{ $filter === '7days' ? 'active' : '' }}">
                             Last 7 Days
                         </a>

@@ -130,7 +130,7 @@ class ContactController extends Controller
                 ]);
             }
 
-            return redirect()->route('admin.contact.index')
+            return orgRedirect('admin.contact.index')
                 ->with('success', 'Contact submission deleted successfully.');
         } catch (\Exception $e) {
             if (request()->wantsJson()) {
@@ -140,7 +140,7 @@ class ContactController extends Controller
                 ], 500);
             }
 
-            return redirect()->route('admin.contact.index')
+            return orgRedirect('admin.contact.index')
                 ->with('error', 'Failed to delete contact submission.');
         }
     }

@@ -4,7 +4,7 @@
             <h2 class="font-semibold text-xl text-dark dark:text-gray-200 leading-tight dark-transition">
                 {{ __('NOEL Application Details') }}
             </h2>
-            <a href="{{ route('admin.brn.index') }}"
+            <a href="{{ orgRoute('admin.brn.index') }}"
                 class="btn btn-secondary dark:bg-gray-600 dark:border-gray-600 dark:hover:bg-gray-700 dark-transition">
                 <i class="fas fa-arrow-left me-2"></i>Back to List
             </a>
@@ -233,7 +233,7 @@
                     <div class="border-top pt-4 border-theme dark-transition">
                         <div class="d-flex flex-wrap gap-3 align-items-center">
                             @if ($submission->status === 'pending')
-                                <form action="{{ route('admin.brn.approve', $submission->id) }}" method="POST"
+                                <form action="{{ orgRoute('admin.brn.approve', $submission->id) }}" method="POST"
                                     class="d-inline d-flex gap-2 align-items-center">
                                     @csrf
                                     <select name="tier"
@@ -249,7 +249,7 @@
                                         <i class="fas fa-check me-2"></i>Approve Application
                                     </button>
                                 </form>
-                                <form action="{{ route('admin.brn.decline', $submission->id) }}" method="POST"
+                                <form action="{{ orgRoute('admin.brn.decline', $submission->id) }}" method="POST"
                                     class="d-inline">
                                     @csrf
                                     <button type="submit"
@@ -259,7 +259,7 @@
                                 </form>
                             @endif
 
-                            <form action="{{ route('admin.brn.destroy', $submission->id) }}" method="POST"
+                            <form action="{{ orgRoute('admin.brn.destroy', $submission->id) }}" method="POST"
                                 class="d-inline"
                                 onsubmit="return confirm('Are you sure you want to delete this application? This action cannot be undone.')">
                                 @csrf

@@ -29,12 +29,12 @@
                         </div>
 
                         <div class="d-flex gap-2">
-                            <a href="{{ route('admin.tasks.kanban', request()->query()) }}"
+                            <a href="{{ orgRoute('admin.tasks.kanban', request()->query()) }}"
                                 class="btn btn-outline-primary">
                                 <i class="fas fa-columns me-1"></i> Kanban Board
                             </a>
                             @if (auth()->user()->hasRole(['admin', 'supervisor']))
-                                <a href="{{ route('admin.tasks.create', request()->query()) }}" class="btn btn-dark">
+                                <a href="{{ orgRoute('admin.tasks.create', request()->query()) }}" class="btn btn-dark">
                                     <i class="fas fa-plus me-1"></i> Add Task
                                 </a>
                             @endif
@@ -82,7 +82,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route('admin.projects.show', $task->project) }}"
+                                            <a href="{{ orgRoute('admin.projects.show', $task->project) }}"
                                                 class="text-decoration-none">
                                                 {{ $task->project->name }}
                                             </a>
@@ -106,7 +106,7 @@
                                                     @foreach (\App\Models\Task::getStatuses() as $key => $label)
                                                         <button
                                                             @click="
-                                                            fetch('{{ route('admin.tasks.update-status', $task) }}', {
+                                                            fetch('{{ orgRoute('admin.tasks.update-status', $task) }}', {
                                                                 method: 'PATCH',
                                                                 headers: {
                                                                     'Content-Type': 'application/json',
@@ -166,7 +166,7 @@
                                         <td>
                                             <div class="btn-group btn-group-sm">
                                                 <!-- View Button -->
-                                                <a href="{{ route('admin.tasks.show', $task) }}"
+                                                <a href="{{ orgRoute('admin.tasks.show', $task) }}"
                                                     class="btn btn-outline-info mx-1" title="View Details">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
@@ -187,11 +187,11 @@
                                                 </button>
 
                                                 @if (auth()->user()->hasRole(['admin', 'supervisor']))
-                                                    <a href="{{ route('admin.tasks.edit', $task) }}"
+                                                    <a href="{{ orgRoute('admin.tasks.edit', $task) }}"
                                                         class="btn btn-outline-primary mx-1" title="Edit">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
-                                                    <form action="{{ route('admin.tasks.destroy', $task) }}"
+                                                    <form action="{{ orgRoute('admin.tasks.destroy', $task) }}"
                                                         method="POST" class="d-inline"
                                                         onsubmit="return confirm('Delete this task?');">
                                                         @csrf

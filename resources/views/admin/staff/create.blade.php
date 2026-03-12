@@ -11,7 +11,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 table-responsive">
                     <div class="my-5">
-                        <form action="{{ route('admin.staff.store') }}" method="POST">
+                        <form action="{{ orgRoute('admin.staff.store') }}" method="POST">
                             @csrf
 
                             <div class="mb-3">

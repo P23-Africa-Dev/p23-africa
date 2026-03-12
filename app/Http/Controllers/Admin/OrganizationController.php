@@ -33,7 +33,7 @@ class OrganizationController extends Controller
             'description' => $data['description'] ?? null,
         ]);
 
-        return redirect()->route('admin.organizations.index')->with('success', 'Organization created successfully.');
+        return orgRedirect('admin.organizations.index')->with('success', 'Organization created successfully.');
     }
 
     public function storeAjax(Request $request)
@@ -74,7 +74,7 @@ class OrganizationController extends Controller
             'description' => $data['description'] ?? $organization->description,
         ]);
 
-        return redirect()->route('admin.organizations.index')->with('success', 'Organization updated successfully.');
+        return orgRedirect('admin.organizations.index')->with('success', 'Organization updated successfully.');
     }
 
     /**
@@ -84,11 +84,11 @@ class OrganizationController extends Controller
     {
         // Prevent deletion if organization has related data
         if ($organization->users()->count() > 0 || $organization->projects()->count() > 0 || $organization->leads()->count() > 0) {
-            return redirect()->route('admin.organizations.index')->with('error', 'Cannot delete organization that has users, projects or leads.');
+            return orgRedirect('admin.organizations.index')->with('error', 'Cannot delete organization that has users, projects or leads.');
         }
 
         $organization->delete();
 
-        return redirect()->route('admin.organizations.index')->with('success', 'Organization deleted successfully.');
+        return orgRedirect('admin.organizations.index')->with('success', 'Organization deleted successfully.');
     }
 }

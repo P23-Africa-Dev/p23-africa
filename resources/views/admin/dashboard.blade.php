@@ -31,7 +31,8 @@
             </div>
         </div>
 
-        <div x-data="signInPopup()" x-show="visible" x-transition:enter="transition ease-out duration-300"
+        
+        {{-- <div x-data="signInPopup()" x-show="visible" x-transition:enter="transition ease-out duration-300"
             x-transition:enter-start="opacity-0 transform translate-y-2"
             x-transition:enter-end="opacity-100 transform translate-y-0"
             x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100"
@@ -40,7 +41,7 @@
             @click.away="dismiss()">
             <div class="card"
                 style="border:2px solid var(--p-primary);box-shadow:0 12px 40px rgba(99,102,241,.25);overflow:hidden;">
-                {{-- Animated gradient top bar --}}
+                
                 <div
                     style="height:4px;background:linear-gradient(90deg,var(--p-primary),var(--p-accent),var(--p-success),var(--p-primary));background-size:300% 100%;animation:signInGradient 3s ease infinite;">
                 </div>
@@ -80,7 +81,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <style>
             @keyframes signInGradient {
@@ -152,7 +153,7 @@
                 </p>
             </div>
             @if (auth()->user() && auth()->user()->hasRole('admin'))
-                <a href="{{ route('admin.staff.index') }}" class="btn btn-primary d-flex align-items-center gap-2">
+                <a href="{{ orgRoute('admin.staff.index') }}" class="btn btn-primary d-flex align-items-center gap-2">
                     <i class="bi bi-people"></i>
                     <span class="d-none d-sm-inline">Manage Staff</span>
                 </a>
@@ -398,7 +399,7 @@
                         </h5>
                     </div>
                     <div class="card-body" style="padding:.5rem;">
-                        <a href="{{ route('admin.events.index') }}" class="action-item">
+                        <a href="{{ orgRoute('admin.events.index') }}" class="action-item">
                             <div class="d-flex align-items-center">
                                 <div class="action-icon-wrap"
                                     style="background:rgba(99,102,241,.1);color:var(--p-primary);"><i
@@ -407,7 +408,7 @@
                             </div>
                             <i class="bi bi-chevron-right" style="color:var(--text-muted);font-size:.75rem;"></i>
                         </a>
-                        <a href="{{ route('admin.blogs.index') }}" class="action-item">
+                        <a href="{{ orgRoute('admin.blogs.index') }}" class="action-item">
                             <div class="d-flex align-items-center">
                                 <div class="action-icon-wrap"
                                     style="background:rgba(16,185,129,.1);color:var(--p-success);"><i
@@ -416,7 +417,7 @@
                             </div>
                             <i class="bi bi-chevron-right" style="color:var(--text-muted);font-size:.75rem;"></i>
                         </a>
-                        <a href="{{ route('admin.playbooks.dashboard') }}" class="action-item">
+                        <a href="{{ orgRoute('admin.playbooks.dashboard') }}" class="action-item">
                             <div class="d-flex align-items-center">
                                 <div class="action-icon-wrap"
                                     style="background:rgba(59,130,246,.1);color:var(--p-info);"><i
@@ -426,7 +427,7 @@
                             <i class="bi bi-chevron-right" style="color:var(--text-muted);font-size:.75rem;"></i>
                         </a>
                         @if (auth()->user() && auth()->user()->hasRole('admin'))
-                            <a href="{{ route('admin.contact.index') }}" class="action-item">
+                            <a href="{{ orgRoute('admin.contact.index') }}" class="action-item">
                                 <div class="d-flex align-items-center">
                                     <div class="action-icon-wrap"
                                         style="background:rgba(245,158,11,.1);color:var(--p-warning);"><i
@@ -454,7 +455,7 @@
                         </h5>
                     </div>
                     <div class="card-body" style="padding:.5rem;">
-                        <a href="{{ route('admin.students.index') }}" class="action-item">
+                        <a href="{{ orgRoute('admin.students.index') }}" class="action-item">
                             <div class="d-flex align-items-center">
                                 <div class="action-icon-wrap"
                                     style="background:rgba(16,185,129,.1);color:var(--p-success);"><i
@@ -464,7 +465,7 @@
                             <i class="bi bi-chevron-right" style="color:var(--text-muted);font-size:.75rem;"></i>
                         </a>
                         @if (auth()->user() && auth()->user()->hasRole('admin'))
-                            <a href="{{ route('admin.staff.index') }}" class="action-item">
+                            <a href="{{ orgRoute('admin.staff.index') }}" class="action-item">
                                 <div class="d-flex align-items-center">
                                     <div class="action-icon-wrap"
                                         style="background:rgba(245,158,11,.1);color:var(--p-warning);"><i
@@ -473,7 +474,7 @@
                                 </div>
                                 <i class="bi bi-chevron-right" style="color:var(--text-muted);font-size:.75rem;"></i>
                             </a>
-                            <a href="{{ route('admin.organizations.index') }}" class="action-item">
+                            <a href="{{ orgRoute('admin.organizations.index') }}" class="action-item">
                                 <div class="d-flex align-items-center">
                                     <div class="action-icon-wrap"
                                         style="background:rgba(99,102,241,.1);color:var(--p-primary);"><i
@@ -504,7 +505,7 @@
                 <div class="card-body">
                     <div class="row g-2">
                         <div class="col-6 col-md-4 col-lg-3">
-                            <a href="{{ route('admin.projects.index') }}" class="action-item"
+                            <a href="{{ orgRoute('admin.projects.index') }}" class="action-item"
                                 style="border:1px solid var(--border);border-radius:var(--radius-md);">
                                 <div class="d-flex align-items-center">
                                     <div class="action-icon-wrap"
@@ -516,7 +517,7 @@
                         </div>
                         @if (auth()->user() && auth()->user()->hasRole('admin|supervisor'))
                             <div class="col-6 col-md-4 col-lg-3">
-                                <a href="{{ route('admin.projects.create') }}" class="action-item"
+                                <a href="{{ orgRoute('admin.projects.create') }}" class="action-item"
                                     style="border:1px solid var(--border);border-radius:var(--radius-md);">
                                     <div class="d-flex align-items-center">
                                         <div class="action-icon-wrap"
@@ -528,7 +529,7 @@
                             </div>
                         @endif
                         <div class="col-6 col-md-4 col-lg-3">
-                            <a href="{{ route('admin.tasks.kanban') }}" class="action-item"
+                            <a href="{{ orgRoute('admin.tasks.kanban') }}" class="action-item"
                                 style="border:1px solid var(--border);border-radius:var(--radius-md);">
                                 <div class="d-flex align-items-center">
                                     <div class="action-icon-wrap"
@@ -539,7 +540,7 @@
                             </a>
                         </div>
                         <div class="col-6 col-md-4 col-lg-3">
-                            <a href="{{ route('admin.tasks.index') }}" class="action-item"
+                            <a href="{{ orgRoute('admin.tasks.index') }}" class="action-item"
                                 style="border:1px solid var(--border);border-radius:var(--radius-md);">
                                 <div class="d-flex align-items-center">
                                     <div class="action-icon-wrap"
@@ -550,7 +551,7 @@
                             </a>
                         </div>
                         <div class="col-6 col-md-4 col-lg-3">
-                            <a href="{{ route('admin.projects.gantt') }}" class="action-item"
+                            <a href="{{ orgRoute('admin.projects.gantt') }}" class="action-item"
                                 style="border:1px solid var(--border);border-radius:var(--radius-md);">
                                 <div class="d-flex align-items-center">
                                     <div class="action-icon-wrap"
@@ -561,7 +562,7 @@
                             </a>
                         </div>
                         <div class="col-6 col-md-4 col-lg-3">
-                            <a href="{{ route('admin.crm.pipeline') }}" class="action-item"
+                            <a href="{{ orgRoute('admin.crm.pipeline') }}" class="action-item"
                                 style="border:1px solid var(--border);border-radius:var(--radius-md);">
                                 <div class="d-flex align-items-center">
                                     <div class="action-icon-wrap"
@@ -593,7 +594,7 @@
                     <div class="card-body">
                         <div class="row g-2">
                             <div class="col-6 col-md-4 col-lg-3">
-                                <a href="{{ route('admin.crm.index') }}" class="action-item"
+                                <a href="{{ orgRoute('admin.crm.index') }}" class="action-item"
                                     style="border:1px solid var(--border);border-radius:var(--radius-md);">
                                     <div class="d-flex align-items-center">
                                         <div class="action-icon-wrap"
@@ -604,7 +605,7 @@
                                 </a>
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
-                                <a href="{{ route('admin.consultation.index') }}" class="action-item"
+                                <a href="{{ orgRoute('admin.consultation.index') }}" class="action-item"
                                     style="border:1px solid var(--border);border-radius:var(--radius-md);">
                                     <div class="d-flex align-items-center">
                                         <div class="action-icon-wrap"
@@ -615,7 +616,7 @@
                                 </a>
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
-                                <a href="{{ route('admin.brn.index') }}" class="action-item"
+                                <a href="{{ orgRoute('admin.brn.index') }}" class="action-item"
                                     style="border:1px solid var(--border);border-radius:var(--radius-md);">
                                     <div class="d-flex align-items-center">
                                         <div class="action-icon-wrap"
@@ -626,7 +627,7 @@
                                 </a>
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
-                                <a href="{{ route('admin.clicks.report') }}" class="action-item"
+                                <a href="{{ orgRoute('admin.clicks.report') }}" class="action-item"
                                     style="border:1px solid var(--border);border-radius:var(--radius-md);">
                                     <div class="d-flex align-items-center">
                                         <div class="action-icon-wrap"
@@ -637,7 +638,7 @@
                                 </a>
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
-                                <a href="{{ route('admin.activity.logs') }}" class="action-item"
+                                <a href="{{ orgRoute('admin.activity.logs') }}" class="action-item"
                                     style="border:1px solid var(--border);border-radius:var(--radius-md);">
                                     <div class="d-flex align-items-center">
                                         <div class="action-icon-wrap"

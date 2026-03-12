@@ -22,7 +22,7 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('admin.organizations.store') }}" method="POST">
+                    <form action="{{ orgRoute('admin.organizations.store') }}" method="POST">
                         @csrf
 
                         <div class="mb-3">

@@ -22,7 +22,7 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('admin.organizations.update', $organization->id) }}" method="POST">
+                    <form action="{{ orgRoute('admin.organizations.update', $organization->id) }}" method="POST">
                         @csrf
                         @method('PUT')
 
@@ -38,7 +38,7 @@
                         </div>
 
                         <button class="btn btn-primary">Update Organization</button>
-                        <a href="{{ route('admin.organizations.index') }}" class="btn btn-secondary">Cancel</a>
+                        <a href="{{ orgRoute('admin.organizations.index') }}" class="btn btn-secondary">Cancel</a>
                     </form>
                 </div>
             </div>

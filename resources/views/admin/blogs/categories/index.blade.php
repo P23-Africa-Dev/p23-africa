@@ -11,7 +11,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg dark-transition">
                 <div class="p-6 text-dark dark:text-gray-100 table-responsive dark-transition">
 
-                    <a href="{{ route('admin.categories.create') }}"
+                    <a href="{{ orgRoute('admin.categories.create') }}"
                         class="btn btn-dark dark:bg-gray-600 dark:border-gray-600 dark:hover:bg-gray-700 dark-transition">Add
                         New Category</a>
 
@@ -33,9 +33,9 @@
                                         <td class="text-theme-primary dark-transition">{{ $category->blogs->count() }}
                                         </td>
                                         <td>
-                                            <a href="{{ route('admin.categories.edit', $category->id) }}"
+                                            <a href="{{ orgRoute('admin.categories.edit', $category->id) }}"
                                                 class="btn btn-sm btn-warning dark:bg-yellow-600 dark:border-yellow-600 dark:hover:bg-yellow-700 dark-transition">Edit</a>
-                                            <form action="{{ route('admin.categories.destroy', $category->id) }}"
+                                            <form action="{{ orgRoute('admin.categories.destroy', $category->id) }}"
                                                 method="POST" style="display:inline-block;">
                                                 @csrf @method('DELETE')
                                                 <button

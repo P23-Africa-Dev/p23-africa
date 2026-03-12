@@ -33,10 +33,10 @@
                 </p>
             </div>
             <div class="d-flex gap-2">
-                <a href="{{ route('admin.crm.index') }}" class="btn btn-outline-secondary">
+                <a href="{{ orgRoute('admin.crm.index') }}" class="btn btn-outline-secondary">
                     <i class="fa fa-arrow-left me-2"></i>Back
                 </a>
-                <a href="{{ route('admin.crm.edit', $lead) }}" class="btn btn-primary">
+                <a href="{{ orgRoute('admin.crm.edit', $lead) }}" class="btn btn-primary">
                     <i class="fa fa-edit me-2"></i>Edit Lead
                 </a>
             </div>

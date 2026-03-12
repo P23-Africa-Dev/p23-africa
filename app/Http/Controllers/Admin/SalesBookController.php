@@ -39,16 +39,16 @@ class SalesBookController extends Controller
                 'phone' => $salesBook->phone
             ]);
 
-            return redirect()->route('admin.salesbooks.index')->with('success', 'Phone number updated successfully.');
+            return orgRedirect('admin.salesbooks.index')->with('success', 'Phone number updated successfully.');
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             Log::error('SalesBook record not found for update', ['id' => $id]);
-            return redirect()->route('admin.salesbooks.index')->with('error', 'Record not found.');
+            return orgRedirect('admin.salesbooks.index')->with('error', 'Record not found.');
         } catch (Exception $e) {
             Log::error('Error updating SalesBook phone number', [
                 'id' => $id,
                 'error' => $e->getMessage()
             ]);
-            return redirect()->route('admin.salesbooks.index')->with('error', 'An error occurred while updating the phone number.');
+            return orgRedirect('admin.salesbooks.index')->with('error', 'An error occurred while updating the phone number.');
         }
     }
 
@@ -85,14 +85,14 @@ class SalesBookController extends Controller
 
             if ($stillExists) {
                 Log::error('Record still exists after deletion attempt', ['id' => $id]);
-                return redirect()->route('admin.salesbooks.index')->with('error', 'Failed to delete the record. Please try again.');
+                return orgRedirect('admin.salesbooks.index')->with('error', 'Failed to delete the record. Please try again.');
             }
 
             Log::info('SalesBook record deleted successfully', ['id' => $id]);
-            return redirect()->route('admin.salesbooks.index')->with('success', 'Sales book download record deleted successfully.');
+            return orgRedirect('admin.salesbooks.index')->with('success', 'Sales book download record deleted successfully.');
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             Log::error('SalesBook record not found', ['id' => $id]);
-            return redirect()->route('admin.salesbooks.index')->with('error', 'Record not found.');
+            return orgRedirect('admin.salesbooks.index')->with('error', 'Record not found.');
         } catch (Exception $e) {
             Log::error('Error deleting SalesBook record', [
                 'id' => $id,
@@ -101,7 +101,7 @@ class SalesBookController extends Controller
                 'line' => $e->getLine()
             ]);
 
-            return redirect()->route('admin.salesbooks.index')->with('error', 'An error occurred while deleting the record: ' . $e->getMessage());
+            return orgRedirect('admin.salesbooks.index')->with('error', 'An error occurred while deleting the record: ' . $e->getMessage());
         }
     }
 }

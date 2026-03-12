@@ -11,11 +11,11 @@
 
             <!-- Back Navigation -->
             <div class="mb-4">
-                <a href="{{ route('admin.tasks.index', ['project_id' => $task->project_id]) }}"
+                <a href="{{ orgRoute('admin.tasks.index', ['project_id' => $task->project_id]) }}"
                     class="btn btn-outline-secondary">
                     <i class="fas fa-arrow-left me-2"></i>Back to Tasks
                 </a>
-                <a href="{{ route('admin.tasks.kanban', ['project_id' => $task->project_id]) }}"
+                <a href="{{ orgRoute('admin.tasks.kanban', ['project_id' => $task->project_id]) }}"
                     class="btn btn-outline-secondary ms-2"> 
                     <i class="fas fa-columns me-2"></i>Kanban Board
                 </a>
@@ -44,10 +44,10 @@
                         </div>
                         @if (auth()->user()->hasRole(['admin', 'supervisor']))
                             <div class="d-flex gap-2">
-                                <a href="{{ route('admin.tasks.edit', $task) }}" class="btn btn-outline-primary">
+                                <a href="{{ orgRoute('admin.tasks.edit', $task) }}" class="btn btn-outline-primary">
                                     <i class="fas fa-edit me-1"></i> Edit Task
                                 </a>
-                                <form action="{{ route('admin.tasks.destroy', $task) }}" method="POST" class="d-inline"
+                                <form action="{{ orgRoute('admin.tasks.destroy', $task) }}" method="POST" class="d-inline"
                                     onsubmit="return confirm('Are you sure you want to delete this task?');">
                                     @csrf
                                     @method('DELETE')
@@ -71,7 +71,7 @@
                                         <tr>
                                             <th style="width: 120px;" class="text-muted">Project</th>
                                             <td>
-                                                <a href="{{ route('admin.projects.show', $task->project) }}"
+                                                <a href="{{ orgRoute('admin.projects.show', $task->project) }}"
                                                     class="text-decoration-none">
                                                     {{ $task->project->name }}
                                                 </a>
@@ -172,7 +172,7 @@
                                         @click="
                                             if(status === '{{ $key }}') return;
                                             updating = true;
-                                            fetch('{{ route('admin.tasks.update-status', $task) }}', {
+                                            fetch('{{ orgRoute('admin.tasks.update-status', $task) }}', {
                                                 method: 'PATCH',
                                                 headers: {
                                                     'Content-Type': 'application/json',

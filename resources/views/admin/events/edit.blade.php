@@ -3,7 +3,7 @@
 
     <x-slot name="header">
         <div class="flex items-center">
-            <a href="{{ route('admin.events.index') }}"
+            <a href="{{ orgRoute('admin.events.index') }}"
                 class="mr-4 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-200">
                 <i class="fas fa-arrow-left text-lg"></i>
             </a>
@@ -17,7 +17,7 @@
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-8">
-                    <form action="{{ route('admin.events.update', $event->id) }}" method="POST"
+                    <form action="{{ orgRoute('admin.events.update', $event->id) }}" method="POST"
                         enctype="multipart/form-data" class="space-y-6">
                         @csrf
                         @method('PUT')
@@ -461,7 +461,7 @@
 
                         <!-- Submit Button -->
                         <div class="flex items-center justify-between pt-6">
-                            <a href="{{ route('admin.events.index') }}"
+                            <a href="{{ orgRoute('admin.events.index') }}"
                                 class="bg-gray-300 hover:bg-gray-400 dark:bg-gray-600 dark:hover:bg-gray-500 text-gray-800 dark:text-gray-200 px-6 py-3 rounded-lg font-medium transition-colors duration-200">
                                 <i class="fas fa-arrow-left mr-2"></i>Cancel
                             </a>

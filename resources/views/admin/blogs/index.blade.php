@@ -11,10 +11,10 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg dark-transition">
                 <div class="p-6 text-dark dark:text-gray-100 table-responsive dark-transition">
 
-                    <a href="{{ route('admin.blogs.create') }}"
+                    <a href="{{ orgRoute('admin.blogs.create') }}"
                         class="btn btn-dark dark:bg-gray-600 dark:border-gray-600 dark:hover:bg-gray-700 dark-transition">Create
                         Resource Blogs</a>
-                    <a href="{{ route('admin.categories.index') }}"
+                    <a href="{{ orgRoute('admin.categories.index') }}"
                         class="btn btn-primary dark:bg-blue-600 dark:border-blue-600 dark:hover:bg-blue-700 dark-transition">Create
                         New Category</a>
 
@@ -62,10 +62,10 @@
                                                         href="{{ route('events.show', $event->slug) }}" target="_blank"
                                                         class="fa fa-eye link-dark"></a></button> --}}
 
-                                                <button class="btn"><a href="{{ route('admin.blogs.edit', $blog) }}"
+                                                <button class="btn"><a href="{{ orgRoute('admin.blogs.edit', $blog) }}"
                                                         class="fa fa-edit text-primary dark:text-blue-400 dark-transition"></a></button>
 
-                                                <form action="{{ route('admin.blogs.destroy', $blog) }}" method="POST"
+                                                <form action="{{ orgRoute('admin.blogs.destroy', $blog) }}" method="POST"
                                                     class="d-inline"
                                                     onsubmit="return confirm('Are you sure you want to delete this blog? This action cannot be undone.');">
                                                     @csrf

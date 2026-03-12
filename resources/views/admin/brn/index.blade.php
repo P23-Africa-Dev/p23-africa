@@ -79,14 +79,14 @@
                                         <td class="text-theme-primary dark-transition align-middle">
                                             <div class="d-flex flex-wrap gap-2 align-items-center">
                                                 <!-- View Button -->
-                                                <a href="{{ route('admin.brn.show', $submission->id) }}"
+                                                <a href="{{ orgRoute('admin.brn.show', $submission->id) }}"
                                                     class="btn btn-sm btn-primary dark:bg-blue-600 dark:border-blue-600 dark:hover:bg-blue-700 dark-transition"
                                                     title="View Details">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
 
                                                 <!-- Delete Button -->
-                                                <form action="{{ route('admin.brn.destroy', $submission->id) }}"
+                                                <form action="{{ orgRoute('admin.brn.destroy', $submission->id) }}"
                                                     method="POST" class="d-inline m-0"
                                                     onsubmit="return confirm('Are you sure you want to delete this application?')">
                                                     @csrf
@@ -111,7 +111,7 @@
 
                                                     <!-- Approve Button -->
                                                     <form id="approve-form-{{ $submission->id }}"
-                                                        action="{{ route('admin.brn.approve', $submission->id) }}"
+                                                        action="{{ orgRoute('admin.brn.approve', $submission->id) }}"
                                                         method="POST" class="d-inline m-0">
                                                         @csrf
                                                         <button type="submit"
@@ -120,7 +120,7 @@
                                                     </form>
 
                                                     <!-- Decline Button -->
-                                                    <form action="{{ route('admin.brn.decline', $submission->id) }}"
+                                                    <form action="{{ orgRoute('admin.brn.decline', $submission->id) }}"
                                                         method="POST" class="d-inline m-0">
                                                         @csrf
                                                         <button type="submit"

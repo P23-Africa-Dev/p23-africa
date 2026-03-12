@@ -7,7 +7,7 @@
                 </h2>
                 <p class="text-muted dark:text-gray-400 text-sm mb-0">Create a new lead in your CRM</p>
             </div>
-            <a href="{{ route('admin.crm.index') }}" class="btn btn-outline-secondary">
+            <a href="{{ orgRoute('admin.crm.index') }}" class="btn btn-outline-secondary">
                 <i class="fa fa-arrow-left me-2"></i>Back to Leads
             </a>
         </div>
@@ -22,7 +22,7 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('admin.crm.store') }}">
+            <form method="POST" action="{{ orgRoute('admin.crm.store') }}">
                 @csrf
 
                 <!-- Basic Information -->
@@ -336,7 +336,7 @@
 
                 <!-- Submit -->
                 <div class="d-flex justify-content-end gap-2">
-                    <a href="{{ route('admin.crm.index') }}" class="btn btn-outline-secondary">Cancel</a>
+                    <a href="{{ orgRoute('admin.crm.index') }}" class="btn btn-outline-secondary">Cancel</a>
                     <button type="submit" class="btn btn-primary">
                         <i class="fa fa-save me-2"></i>Create Lead
                     </button>

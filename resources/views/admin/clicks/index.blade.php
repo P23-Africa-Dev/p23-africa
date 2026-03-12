@@ -5,7 +5,7 @@
                 {{ __('Advanced Analytics Dashboard') }}
             </h2>
             <div class="flex space-x-2 flex-wrap items-center">
-                <a href="{{ route('admin.clicks.export', request()->query()) }}"
+                <a href="{{ orgRoute('admin.clicks.export', request()->query()) }}"
                     class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                     <i class="fas fa-download mr-2"></i>Export CSV
                 </a>
@@ -138,7 +138,7 @@
                 <div class="px-4 py-5 sm:p-6">
                     <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Filters</h3>
 
-                    <form method="GET" action="{{ route('admin.clicks.report') }}"
+                    <form method="GET" action="{{ orgRoute('admin.clicks.report') }}"
                         class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
 
                         <!-- Date Filter -->
@@ -264,7 +264,7 @@
                                     class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-r-md">
                                     <i class="fas fa-search"></i>
                                 </button>
-                                <a href="{{ route('admin.clicks.report') }}"
+                                <a href="{{ orgRoute('admin.clicks.report') }}"
                                     class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-md ml-2">
                                     Clear
                                 </a>

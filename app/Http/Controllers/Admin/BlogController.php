@@ -88,7 +88,7 @@ class BlogController extends Controller
                 ->withProperties(['title' => $blog->title])
                 ->log('Created blog/resource');
 
-            return redirect()->route('admin.blogs.index')->with('success', 'Blog created successfully.');
+            return orgRedirect('admin.blogs.index')->with('success', 'Blog created successfully.');
         } catch (\Illuminate\Validation\ValidationException $e) {
             return redirect()->back()
                 ->withErrors($e->validator)
@@ -184,7 +184,7 @@ class BlogController extends Controller
 
                 $this->logActivity('Updated blog/resource', $blog, ['title' => $blog->title]);
 
-                return redirect()->route('admin.blogs.index')
+                return orgRedirect('admin.blogs.index')
                     ->with('success', 'Blog updated successfully.');
             } catch (\Exception $e) {
                 // Rollback file changes if something went wrong
@@ -230,6 +230,6 @@ class BlogController extends Controller
             ->withProperties(['title' => $blogTitle, 'blog_id' => $blogId])
             ->log('Deleted blog/resource');
 
-        return redirect()->route('admin.blogs.index')->with('success', 'Blog deleted.');
+        return orgRedirect('admin.blogs.index')->with('success', 'Blog deleted.');
     }
 }

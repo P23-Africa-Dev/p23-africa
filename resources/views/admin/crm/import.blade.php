@@ -7,7 +7,7 @@
                 </h2>
                 <p class="text-muted dark:text-gray-400 text-sm mb-0">Import leads from CSV or Excel files</p>
             </div>
-            <a href="{{ route('admin.crm.index') }}" class="btn btn-outline-secondary">
+            <a href="{{ orgRoute('admin.crm.index') }}" class="btn btn-outline-secondary">
                 <i class="fa fa-arrow-left me-2"></i>Back to Leads
             </a>
         </div>
@@ -126,11 +126,11 @@
                             <i class="fa fa-table me-2 text-primary"></i>Template Preview
                         </h5>
                         <div class="btn-group">
-                            <a href="{{ route('admin.crm.import.template', ['format' => 'csv']) }}"
+                            <a href="{{ orgRoute('admin.crm.import.template', ['format' => 'csv']) }}"
                                 class="btn btn-sm btn-outline-primary">
                                 <i class="fa fa-download me-1"></i>Download CSV Template
                             </a>
-                            <a href="{{ route('admin.crm.import.template', ['format' => 'xlsx']) }}"
+                            <a href="{{ orgRoute('admin.crm.import.template', ['format' => 'xlsx']) }}"
                                 class="btn btn-sm btn-outline-success">
                                 <i class="fa fa-download me-1"></i>Download Excel Template
                             </a>
@@ -211,7 +211,7 @@
                     </h5>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('admin.crm.import.process') }}"
+                    <form method="POST" action="{{ orgRoute('admin.crm.import.process') }}"
                         enctype="multipart/form-data" id="importForm">
                         @csrf
 
@@ -291,7 +291,7 @@
                         </div>
 
                         <div class="d-flex justify-content-end gap-2">
-                            <a href="{{ route('admin.crm.index') }}" class="btn btn-outline-secondary">Cancel</a>
+                            <a href="{{ orgRoute('admin.crm.index') }}" class="btn btn-outline-secondary">Cancel</a>
                             <button type="submit" class="btn btn-primary" id="importBtn" disabled>
                                 <i class="fa fa-upload me-2"></i>Import Leads
                             </button>

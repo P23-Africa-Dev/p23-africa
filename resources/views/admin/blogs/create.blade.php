@@ -50,7 +50,7 @@
                         </li>
                     </ul>
 
-                    <form action="{{ isset($blog) ? route('admin.blogs.update', $blog) : route('admin.blogs.store') }}"
+                    <form action="{{ isset($blog) ? orgRoute('admin.blogs.update', $blog) : orgRoute('admin.blogs.store') }}"
                         method="POST" enctype="multipart/form-data">
                         @csrf
                         @if (isset($blog))
