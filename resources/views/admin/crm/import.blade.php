@@ -218,13 +218,13 @@
                         <!-- Drive Selection -->
                         <div class="mb-4">
                             <label class="form-label text-dark dark:text-gray-100">
-                                <i class="fa fa-folder me-2"></i>Select Drive <span class="text-danger">*</span>
+                                <i class="fa fa-folder me-2"></i>Select Pipeline <span class="text-danger">*</span>
                             </label>
                             <div class="row g-3">
                                 <div class="col-md-8">
                                     <select name="drive_id" id="driveSelect"
                                         class="form-select dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100">
-                                        <option value="">-- Select Existing Drive --</option>
+                                        <option value="">-- Select Existing Pipeline --</option>
                                         @foreach ($drives as $drive)
                                             <option value="{{ $drive->id }}" data-color="{{ $drive->color }}">
                                                 {{ $drive->name }}
@@ -238,7 +238,7 @@
                                 <div class="col-md-4">
                                     <button type="button" class="btn btn-outline-primary w-100"
                                         data-bs-toggle="modal" data-bs-target="#newDriveModal">
-                                        <i class="fa fa-plus me-2"></i>Create New Drive
+                                        <i class="fa fa-plus me-2"></i>Create New Pipeline
                                     </button>
                                 </div>
                             </div>
@@ -251,7 +251,7 @@
                             <div id="newDriveInfo" class="mt-2 d-none">
                                 <div class="alert alert-success py-2 mb-0">
                                     <i class="fa fa-check-circle me-1"></i>
-                                    New drive "<strong id="newDriveNameDisplay"></strong>" will be created
+                                    New pipeline "<strong id="newDriveNameDisplay"></strong>" will be created
                                     <button type="button" class="btn-close btn-sm float-end"
                                         id="cancelNewDrive"></button>
                                 </div>
@@ -308,20 +308,20 @@
             <div class="modal-content dark:bg-gray-800">
                 <div class="modal-header">
                     <h5 class="modal-title dark:text-gray-100">
-                        <i class="fa fa-folder-plus me-2 text-primary"></i>Create New Drive
+                        <i class="fa fa-folder-plus me-2 text-primary"></i>Create New Pipeline
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="form-label text-dark dark:text-gray-100">Drive Name <span
+                        <label class="form-label text-dark dark:text-gray-100">Pipeline Name <span
                                 class="text-danger">*</span></label>
                         <input type="text" id="modalDriveName"
                             class="form-control dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
                             placeholder="e.g., NOEL Waitlist, Event Leads, etc.">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label text-dark dark:text-gray-100">Drive Color</label>
+                        <label class="form-label text-dark dark:text-gray-100">Pipeline Color</label>
                         <div class="d-flex gap-2 flex-wrap">
                             <input type="color" id="modalDriveColor" value="#0d6efd"
                                 class="form-control form-control-color" style="width: 50px;">
@@ -354,7 +354,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-primary" id="confirmNewDrive">
-                        <i class="fa fa-check me-2"></i>Use This Drive
+                        <i class="fa fa-check me-2"></i>Use This Pipeline
                     </button>
                 </div>
             </div>

@@ -1,17 +1,7 @@
 <x-app-layout>
 
     @php
-        $signInUrl = '';
-        $sidebarUser = auth()->user();
-        if ($sidebarUser && $sidebarUser->organization_id && !$sidebarUser->hasRole('admin')) {
-            $org = $sidebarUser->organization;
-            if ($org && $org->slug) {
-                $signInUrl = '/' . $org->slug . '/admin/attendance/sign-in';
-            }
-        }
-        if (!$signInUrl) {
-            $signInUrl = '/admin/attendance/sign-in';
-        }
+        $signInUrl = orgRoute('admin.attendance.sign-in');
     @endphp
 
     {{-- ─── Quick Sign-In Popup (first daily login) ─────────────────────── --}}
@@ -31,7 +21,7 @@
             </div>
         </div>
 
-        
+
         {{-- <div x-data="signInPopup()" x-show="visible" x-transition:enter="transition ease-out duration-300"
             x-transition:enter-start="opacity-0 transform translate-y-2"
             x-transition:enter-end="opacity-100 transform translate-y-0"

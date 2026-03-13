@@ -8,7 +8,7 @@
                     Submit a new leave request to your supervisor
                 </p>
             </div>
-            <a href="{{ url($orgSlug ?? '' ? '/' . ($orgSlug ?? '') . '/admin/leave-requests' : '/admin/leave-requests') }}"
+            <a href="{{ orgRoute('admin.leave-requests.index') }}"
                 class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1">
                 <i class="bi bi-arrow-left"></i> Back
             </a>
@@ -30,8 +30,7 @@
                         </div>
                     @endif
 
-                    <form method="POST"
-                        action="{{ url($orgSlug ?? '' ? '/' . ($orgSlug ?? '') . '/admin/leave-requests' : '/admin/leave-requests') }}">
+                    <form method="POST" action="{{ orgRoute('admin.leave-requests.store') }}">
                         @csrf
 
                         {{-- Leave Type --}}
@@ -110,7 +109,7 @@
 
                         {{-- Submit --}}
                         <div class="d-flex justify-content-end gap-2" x-data="{ submitting: false }">
-                            <a href="{{ url($orgSlug ?? '' ? '/' . ($orgSlug ?? '') . '/admin/leave-requests' : '/admin/leave-requests') }}"
+                            <a href="{{ orgRoute('admin.leave-requests.index') }}"
                                 class="btn btn-outline-secondary">Cancel</a>
                             <button type="submit" class="btn btn-primary d-flex align-items-center gap-1"
                                 :disabled="submitting"

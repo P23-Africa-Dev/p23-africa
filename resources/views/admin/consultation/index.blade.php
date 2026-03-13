@@ -156,7 +156,8 @@
                                 <button type="submit" class="btn btn-primary me-2">
                                     <i class="fa fa-search me-1"></i>Filter
                                 </button>
-                                <a href="{{ orgRoute('admin.consultation.index') }}" class="btn btn-outline-secondary">
+                                <a href="{{ orgRoute('admin.consultation.index') }}"
+                                    class="btn btn-outline-secondary">
                                     <i class="fa fa-times me-1"></i>Clear
                                 </a>
                             </div>
@@ -346,7 +347,7 @@
                 deleteBtn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
                 deleteBtn.disabled = true;
 
-                fetch(`/admin/consultation/${id}`, {
+                fetch(`${window.adminBasePath}/consultation/${id}`, {
                         method: 'DELETE',
                         headers: {
                             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute(
@@ -386,7 +387,7 @@
                 bulkBtn.innerHTML = '<i class="fa fa-spinner fa-spin me-2"></i>Deleting...';
                 bulkBtn.disabled = true;
 
-                fetch('/admin/consultation/bulk-delete', {
+                fetch(`${window.adminBasePath}/consultation/bulk-delete`, {
                         method: 'POST',
                         headers: {
                             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute(

@@ -17,9 +17,10 @@ class LoginController extends Controller
         }
 
         // If accessing via org-prefixed route, resolve the org for branding
-        $orgSlug = $request->route('orgSlug');
-        $organization = null;
-        if ($orgSlug) {
+        // orgSlug is stored on request attributes by ResolveOrganization middleware
+        $orgSlug = $request->attributes->get('orgSlug') ?? $request->route('orgSlug');
+        $organization = $request->attributes->get('organization');
+        if ($orgSlug && !$organization) {
             $organization = Organization::where('slug', $orgSlug)->first();
         }
 
@@ -53,7 +54,8 @@ class LoginController extends Controller
     protected function getDashboardUrl($user, Request $request): string
     {
         // If the login was via an org-prefixed URL, use that slug
-        $orgSlug = $request->route('orgSlug');
+        // orgSlug is stored on request attributes by ResolveOrganization middleware
+        $orgSlug = $request->attributes->get('orgSlug') ?? $request->route('orgSlug');
 
         // If not from an org URL, check if the user belongs to an org
         if (!$orgSlug && $user->organization_id && !$user->hasRole('admin')) {

@@ -4,7 +4,7 @@
         $user = auth()->user();
         $isRequester = $leaveRequest->user_id === $user->id;
         $isSupervisor = $leaveRequest->supervisor_id === $user->id || $user->hasRole('admin');
-        $baseUrl = $orgSlug ?? '' ? '/' . ($orgSlug ?? '') . '/admin/leave-requests' : '/admin/leave-requests';
+        $baseUrl = orgRoute('admin.leave-requests.index');
         $badgeColors = [
             'pending' => 'background:rgba(245,158,11,.12);color:#92400e;',
             'approved' => 'background:rgba(16,185,129,.12);color:#065f46;',
@@ -25,7 +25,7 @@
                     &middot; Submitted {{ $leaveRequest->created_at->diffForHumans() }}
                 </p>
             </div>
-            <a href="{{ url($baseUrl) }}" class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1">
+            <a href="{{ $baseUrl }}" class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1">
                 <i class="bi bi-arrow-left"></i> Back
             </a>
         </div>
@@ -241,7 +241,7 @@
                         <p style="font-size:.875rem;color:var(--text-muted);margin-bottom:1rem;">
                             Your supervisor has modified this leave request. Review the changes above and respond:
                         </p>
-                        <form method="POST" action="{{ url($baseUrl . '/' . $leaveRequest->id . '/respond') }}"
+                        <form method="POST" action="{{ orgRoute('admin.leave-requests.respond', $leaveRequest) }}"
                             x-data="{ response: '' }">
                             @csrf
                             <div class="mb-3">
@@ -280,7 +280,8 @@
                             <p style="font-size:.8125rem;color:var(--text-muted);margin-bottom:1rem;">
                                 Suggest different dates. The employee will be notified and can agree or disagree.
                             </p>
-                            <form method="POST" action="{{ url($baseUrl . '/' . $leaveRequest->id . '/modify') }}">
+                            <form method="POST"
+                                action="{{ orgRoute('admin.leave-requests.modify', $leaveRequest) }}">
                                 @csrf
                                 <div class="row g-2 mb-3">
                                     <div class="col-6">
@@ -337,7 +338,8 @@
                                 placeholder="Add a note about your decision..."></textarea>
                         </div>
                         <div class="d-flex gap-2">
-                            <form method="POST" action="{{ url($baseUrl . '/' . $leaveRequest->id . '/approve') }}"
+                            <form method="POST"
+                                action="{{ orgRoute('admin.leave-requests.approve', $leaveRequest) }}"
                                 class="flex-fill"
                                 onsubmit="this.querySelector('[name=decision_note]').value = document.getElementById('decision_note').value">
                                 @csrf
@@ -346,7 +348,8 @@
                                     <i class="bi bi-check-lg me-1"></i>Approve
                                 </button>
                             </form>
-                            <form method="POST" action="{{ url($baseUrl . '/' . $leaveRequest->id . '/reject') }}"
+                            <form method="POST"
+                                action="{{ orgRoute('admin.leave-requests.reject', $leaveRequest) }}"
                                 class="flex-fill"
                                 onsubmit="this.querySelector('[name=decision_note]').value = document.getElementById('decision_note').value">
                                 @csrf

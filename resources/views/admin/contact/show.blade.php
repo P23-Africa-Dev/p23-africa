@@ -341,7 +341,7 @@
                         confirmDeleteBtn.disabled = true;
                         confirmDeleteBtn.innerHTML = '<i class="fa fa-spinner fa-spin me-2"></i>Deleting...';
 
-                        fetch(`/admin/contact/${contactId}`, {
+                        fetch(`${window.adminBasePath}/contact/${contactId}`, {
                                 method: 'DELETE',
                                 headers: {
                                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')

@@ -505,7 +505,7 @@
                     deleteBtn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
                     deleteBtn.disabled = true;
 
-                    fetch(`/admin/contact/${id}`, {
+                    fetch(`${window.adminBasePath}/contact/${id}`, {
                             method: 'DELETE',
                             headers: {
                                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
@@ -549,7 +549,7 @@
                     bulkBtn.innerHTML = '<i class="fa fa-spinner fa-spin me-2"></i>Deleting...';
                     bulkBtn.disabled = true;
 
-                    fetch('/admin/contact/bulk-delete', {
+                    fetch(`${window.adminBasePath}/contact/bulk-delete`, {
                             method: 'POST',
                             headers: {
                                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(

@@ -359,7 +359,7 @@
                     btn.disabled = true;
                     btn.innerHTML = '<i class="fa fa-spinner fa-spin me-1"></i>Marking...';
 
-                    fetch(`/admin/consultation/chat/mark-read/${messageId}`, {
+                    fetch(`${window.adminBasePath}/consultation/chat/mark-read/${messageId}`, {
                             method: 'POST',
                             headers: {
                                 'X-CSRF-TOKEN': document.querySelector(
@@ -415,7 +415,7 @@
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin me-1"></i>Sending...';
 
-                fetch(`/admin/consultations/{{ $application->id }}/reply`, {
+                fetch(`${window.adminBasePath}/consultations/{{ $application->id }}/reply`, {
                         method: 'POST',
                         headers: {
                             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')

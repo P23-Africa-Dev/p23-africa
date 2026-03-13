@@ -3,16 +3,16 @@
         <div class="d-flex justify-content-between align-items-center">
             <div>
                 <h2 class="font-semibold text-xl text-dark dark:text-gray-200 leading-tight dark-transition mb-1">
-                    {{ __('Lead Drives') }}
+                    {{ __('Lead Pipelines') }}
                 </h2>
-                <p class="text-muted dark:text-gray-400 text-sm mb-0">Organize your leads into different drives</p>
+                <p class="text-muted dark:text-gray-400 text-sm mb-0">Organize your leads into different pipelines</p>
             </div>
             <div class="d-flex gap-2">
                 <a href="{{ orgRoute('admin.crm.index') }}" class="btn btn-outline-secondary">
                     <i class="fa fa-arrow-left me-2"></i>Back to Leads
                 </a>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createDriveModal">
-                    <i class="fa fa-plus me-2"></i>Create Drive
+                    <i class="fa fa-plus me-2"></i>Create Pipeline
                 </button>
             </div>
         </div>
@@ -75,8 +75,8 @@
                                         <i class="fa fa-edit me-1"></i>Edit
                                     </button>
                                     @if (!$drive->is_default && $drive->leads_count === 0)
-                                        <form action="{{ orgRoute('admin.crm.drives.destroy', $drive) }}" method="POST"
-                                            class="d-inline"
+                                        <form action="{{ orgRoute('admin.crm.drives.destroy', $drive) }}"
+                                            method="POST" class="d-inline"
                                             onsubmit="return confirm('Are you sure you want to delete this drive?');">
                                             @csrf
                                             @method('DELETE')
@@ -99,11 +99,11 @@
                         <div class="card border-0 shadow-sm dark:bg-gray-800">
                             <div class="card-body text-center py-5">
                                 <i class="fa fa-folder-open fa-3x text-muted mb-3"></i>
-                                <h5 class="text-muted">No drives created yet</h5>
-                                <p class="text-muted">Create your first drive to organize your leads.</p>
+                                <h5 class="text-muted">No pipelines created yet</h5>
+                                <p class="text-muted">Create your first pipeline to organize your leads.</p>
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#createDriveModal">
-                                    <i class="fa fa-plus me-2"></i>Create Drive
+                                    <i class="fa fa-plus me-2"></i>Create Pipeline
                                 </button>
                             </div>
                         </div>
@@ -122,13 +122,13 @@
                     @csrf
                     <div class="modal-header">
                         <h5 class="modal-title dark:text-gray-100" id="createDriveModalLabel">
-                            <i class="fa fa-folder-plus me-2 text-primary"></i>Create New Drive
+                            <i class="fa fa-folder-plus me-2 text-primary"></i>Create New Pipeline
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="createName" class="form-label dark:text-gray-100">Drive Name <span
+                            <label for="createName" class="form-label dark:text-gray-100">Pipeline Name <span
                                     class="text-danger">*</span></label>
                             <input type="text" class="form-control dark:bg-gray-700 dark:text-gray-100"
                                 id="createName" name="name" required placeholder="e.g., NOEL Waitlist, Hot Leads">
@@ -177,7 +177,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-primary">
-                            <i class="fa fa-plus me-2"></i>Create Drive
+                            <i class="fa fa-plus me-2"></i>Create Pipeline
                         </button>
                     </div>
                 </form>
@@ -195,14 +195,14 @@
                     @method('PUT')
                     <div class="modal-header">
                         <h5 class="modal-title dark:text-gray-100" id="editDriveModalLabel">
-                            <i class="fa fa-edit me-2 text-primary"></i>Edit Drive
+                            <i class="fa fa-edit me-2 text-primary"></i>Edit Pipeline
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="editName" class="form-label dark:text-gray-100">Drive Name <span
+                            <label for="editName" class="form-label dark:text-gray-100">Pipeline Name <span
                                     class="text-danger">*</span></label>
                             <input type="text" class="form-control dark:bg-gray-700 dark:text-gray-100"
                                 id="editName" name="name" required>
@@ -273,7 +273,7 @@
                         const isDefault = this.dataset.isDefault === '1';
 
                         // Update form action
-                        editForm.action = `/admin/crm/drives/${id}`;
+                        editForm.action = `${window.adminBasePath}/crm/drives/${id}`;
 
                         // Fill form fields
                         document.getElementById('editName').value = name;

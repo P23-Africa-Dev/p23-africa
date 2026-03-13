@@ -158,21 +158,21 @@
                         <i class="fa fa-folder me-2"></i>
                         @if (request('drive') && request('drive') !== 'all')
                             @if (request('drive') === 'unassigned')
-                                No Drive
+                                No Pipeline
                             @elseif (isset($currentDrive))
                                 {{ $currentDrive->name }}
                             @else
-                                Select Drive
+                                Select Pipeline
                             @endif
                         @else
-                            All Drives
+                            All Pipelines
                         @endif
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
                             <a class="dropdown-item {{ !request('drive') || request('drive') === 'all' ? 'active' : '' }}"
                                 href="{{ orgRoute('admin.crm.index', array_merge(request()->except('drive', 'page'), ['drive' => 'all'])) }}">
-                                <i class="fa fa-globe me-2 text-muted"></i>All Drives
+                                <i class="fa fa-globe me-2 text-muted"></i>All Pipelines
                             </a>
                         </li>
                         <li>
@@ -197,7 +197,7 @@
                         <li>
                             <a class="dropdown-item {{ request('drive') === 'unassigned' ? 'active' : '' }}"
                                 href="{{ orgRoute('admin.crm.index', array_merge(request()->except('drive', 'page'), ['drive' => 'unassigned'])) }}">
-                                <i class="fa fa-inbox me-2 text-muted"></i>No Drive
+                                <i class="fa fa-inbox me-2 text-muted"></i>No Pipeline
                             </a>
                         </li>
                         <li>
@@ -205,7 +205,7 @@
                         </li>
                         <li>
                             <a class="dropdown-item text-primary" href="{{ orgRoute('admin.crm.drives.index') }}">
-                                <i class="fa fa-cog me-2"></i>Manage Drives
+                                <i class="fa fa-cog me-2"></i>Manage Pipelines
                             </a>
                         </li>
                     </ul>
@@ -780,7 +780,7 @@
                         requestBody.lost_reason = lostReason;
                     }
 
-                    fetch(`/admin/crm/${leadId}/status`, {
+                    fetch(`${window.adminBasePath}/crm/${leadId}/status`, {
                             method: 'PATCH',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -920,7 +920,7 @@
                         const name = this.dataset.name;
 
                         if (confirm(`Are you sure you want to delete "${name}"?`)) {
-                            fetch(`/admin/crm/${id}`, {
+                            fetch(`${window.adminBasePath}/crm/${id}`, {
                                     method: 'DELETE',
                                     headers: {
                                         'X-CSRF-TOKEN': '{{ csrf_token() }}',

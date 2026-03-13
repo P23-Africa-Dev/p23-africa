@@ -1,9 +1,5 @@
 <x-app-layout>
 
-    @php
-        $baseUrl = $orgSlug ?? '' ? '/' . ($orgSlug ?? '') . '/admin' : '/admin';
-    @endphp
-
     <x-slot name="header">
         <div class="d-flex justify-content-between align-items-center">
             <div>
@@ -13,11 +9,11 @@
                 </p>
             </div>
             <div class="d-flex gap-2">
-                <a href="{{ url($baseUrl . '/attendance') }}"
+                <a href="{{ orgRoute('admin.attendance.index') }}"
                     class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1">
                     <i class="bi bi-list-ul"></i> Attendance
                 </a>
-                <a href="{{ url($baseUrl . '/leave-requests') }}"
+                <a href="{{ orgRoute('admin.leave-requests.index') }}"
                     class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1">
                     <i class="bi bi-envelope-paper"></i> Leave Requests
                 </a>
@@ -117,8 +113,8 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const calendarEl = document.getElementById('attendance-calendar');
-            const attendanceUrl = '{{ url($baseUrl . '/attendance/calendar-data') }}';
-            const leaveUrl = '{{ url($baseUrl . '/leave-requests/calendar-data') }}';
+            const attendanceUrl = '{{ orgRoute('admin.attendance.calendar-data') }}';
+            const leaveUrl = '{{ orgRoute('admin.leave-requests.calendar-data') }}';
 
             const leaveTypeColors = {
                 annual: '#3b82f6',

@@ -21,21 +21,21 @@
                         <i class="fa fa-folder me-2"></i>
                         @if (request('drive') && request('drive') !== 'all')
                             @if (request('drive') === 'unassigned')
-                                No Drive
+                                No Pipeline
                             @elseif (isset($currentDrive))
                                 {{ $currentDrive->name }}
                             @else
-                                Select Drive
+                                Select Pipeline
                             @endif
                         @else
-                            All Drives
+                            All Pipelines
                         @endif
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
                             <a class="dropdown-item {{ !request('drive') || request('drive') === 'all' ? 'active' : '' }}"
                                 href="{{ orgRoute('admin.crm.pipeline', ['drive' => 'all']) }}">
-                                <i class="fa fa-globe me-2 text-muted"></i>All Drives
+                                <i class="fa fa-globe me-2 text-muted"></i>All Pipelines
                             </a>
                         </li>
                         <li>
@@ -60,7 +60,7 @@
                         <li>
                             <a class="dropdown-item {{ request('drive') === 'unassigned' ? 'active' : '' }}"
                                 href="{{ orgRoute('admin.crm.pipeline', ['drive' => 'unassigned']) }}">
-                                <i class="fa fa-inbox me-2 text-muted"></i>No Drive
+                                <i class="fa fa-inbox me-2 text-muted"></i>No Pipeline
                             </a>
                         </li>
                         <li>
@@ -68,7 +68,7 @@
                         </li>
                         <li>
                             <a class="dropdown-item text-primary" href="{{ orgRoute('admin.crm.drives.index') }}">
-                                <i class="fa fa-cog me-2"></i>Manage Drives
+                                <i class="fa fa-cog me-2"></i>Manage Pipelines
                             </a>
                         </li>
                     </ul>
@@ -373,7 +373,7 @@
                                     <i class="fa fa-percentage text-info fa-2x"></i>
                                 </div>
                                 <div class="ms-3">
-                                    <h6 class="text-muted dark:text-gray-400 mb-1">Win Rate</h6>
+                                    <h6 class="text-muted dark:text-gray-400 mb-1">Onboarding  Rate</h6>
                                     @php
                                         $total = ($pipeline['won']['count'] ?? 0) + ($pipeline['lost']['count'] ?? 0);
                                         $winRate =
@@ -566,7 +566,7 @@
                 });
 
                 function updateLeadStatus(leadId, status, lostReason, element, sourceColumn) {
-                    fetch(`/admin/crm/${leadId}/status`, {
+                    fetch(`${window.adminBasePath}/crm/${leadId}/status`, {
                             method: 'PATCH',
                             headers: {
                                 'Content-Type': 'application/json',

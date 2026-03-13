@@ -8,7 +8,7 @@
                     Manage leave requests and approvals
                 </p>
             </div>
-            <a href="{{ url($orgSlug ?? '' ? '/' . ($orgSlug ?? '') . '/admin/leave-requests/create' : '/admin/leave-requests/create') }}"
+            <a href="{{ orgRoute('admin.leave-requests.create') }}"
                 class="btn btn-primary d-flex align-items-center gap-2">
                 <i class="bi bi-plus-circle"></i>
                 <span>Request Leave</span>
@@ -66,13 +66,7 @@
     <div class="row g-3">
         @forelse($leaveRequests as $lr)
             <div class="col-12 anim-in">
-                @php
-                    $showUrl =
-                        $orgSlug ?? ''
-                            ? '/' . ($orgSlug ?? '') . '/admin/leave-requests/' . $lr->id
-                            : '/admin/leave-requests/' . $lr->id;
-                @endphp
-                <a href="{{ url($showUrl) }}" class="card"
+                <a href="{{ orgRoute('admin.leave-requests.show', $lr) }}" class="card"
                     style="text-decoration:none;color:inherit;display:block;transition:box-shadow .15s;">
                     <div class="card-body" style="padding:1rem 1.25rem;">
                         <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
@@ -121,8 +115,7 @@
                     <div class="card-body text-center py-5">
                         <i class="bi bi-calendar-x" style="font-size:3rem;opacity:.2;"></i>
                         <p class="mb-2 mt-3 text-muted">No leave requests found.</p>
-                        <a href="{{ url($orgSlug ?? '' ? '/' . ($orgSlug ?? '') . '/admin/leave-requests/create' : '/admin/leave-requests/create') }}"
-                            class="btn btn-primary btn-sm">
+                        <a href="{{ orgRoute('admin.leave-requests.create') }}" class="btn btn-primary btn-sm">
                             <i class="bi bi-plus-circle me-1"></i>Submit a Leave Request
                         </a>
                     </div>

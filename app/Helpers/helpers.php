@@ -35,9 +35,28 @@ if (!function_exists('orgRoute')) {
                 $slug = $user->organization?->slug;
 
                 if ($slug) {
-                    // Normalise parameters to an array so we can inject orgSlug
+                    // Normalise parameters to a named array so we can inject orgSlug
+                    // without conflicting with positional parameter resolution.
                     if (!is_array($parameters)) {
-                        $parameters = [$parameters];
+                        // When a single non-array value is passed (e.g. a Model or ID),
+                        // we need to assign it to the correct named route parameter.
+                        // The org route has {orgSlug} plus the original route's params.
+                        // Find the first parameter that is NOT orgSlug and assign to it.
+                        $orgRoute = Route::getRoutes()->getByName($orgName);
+                        if ($orgRoute) {
+                            $paramNames = array_filter(
+                                $orgRoute->parameterNames(),
+                                fn($p) => $p !== 'orgSlug'
+                            );
+                            $firstParam = reset($paramNames);
+                            if ($firstParam) {
+                                $parameters = [$firstParam => $parameters];
+                            } else {
+                                $parameters = [$parameters];
+                            }
+                        } else {
+                            $parameters = [$parameters];
+                        }
                     }
 
                     $parameters['orgSlug'] = $slug;

@@ -123,6 +123,10 @@
                 ? url($layoutOrgPrefix . '/admin/notifications')
                 : '/admin/notifications';
         @endphp
+        {{-- Expose admin base path to JS so fetch() calls use the org prefix when needed --}}
+        <script>
+            window.adminBasePath = "{{ $layoutOrgPrefix }}/admin";
+        </script>
         <script>
             (function() {
                 let last = 0;

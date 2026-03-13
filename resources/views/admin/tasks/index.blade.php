@@ -437,7 +437,7 @@
         }
 
         function loadMentionableUsers(taskId) {
-            fetch(`/admin/tasks/${taskId}/mentionable-users`)
+            fetch(`${window.adminBasePath}/tasks/${taskId}/mentionable-users`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
@@ -607,7 +607,7 @@
                 </div>
             `;
 
-            fetch(`/admin/tasks/${taskId}/comments`)
+            fetch(`${window.adminBasePath}/tasks/${taskId}/comments`)
                 .then(response => response.json())
                 .then(data => {
                     displayComments(data.comments);
@@ -734,7 +734,7 @@
                 mentionedUserIds.forEach(id => formData.append('mentioned_users[]', id));
             }
 
-            fetch(`/admin/tasks/${currentTaskId}/comments`, {
+            fetch(`${window.adminBasePath}/tasks/${currentTaskId}/comments`, {
                     method: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': csrfToken
@@ -783,7 +783,7 @@
         function deleteComment(taskId, commentId) {
             if (!confirm('Delete this comment?')) return;
 
-            fetch(`/admin/tasks/${taskId}/comments/${commentId}`, {
+            fetch(`${window.adminBasePath}/tasks/${taskId}/comments/${commentId}`, {
                     method: 'DELETE',
                     headers: {
                         'X-CSRF-TOKEN': csrfToken

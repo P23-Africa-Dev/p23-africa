@@ -620,7 +620,7 @@
                 });
 
                 function updateStatus(status, lostReason = null) {
-                    fetch(`/admin/crm/${leadId}/status`, {
+                    fetch(`${window.adminBasePath}/crm/${leadId}/status`, {
                             method: 'PATCH',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -654,7 +654,7 @@
 
                 // Assignment change
                 document.getElementById('assignSelect').addEventListener('change', function() {
-                    fetch(`/admin/crm/${leadId}/assign`, {
+                    fetch(`${window.adminBasePath}/crm/${leadId}/assign`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -681,7 +681,7 @@
                     e.preventDefault();
                     const formData = new FormData(this);
 
-                    fetch(`/admin/crm/${leadId}/activity`, {
+                    fetch(`${window.adminBasePath}/crm/${leadId}/activity`, {
                             method: 'POST',
                             headers: {
                                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -766,7 +766,7 @@
                             data.scheduled_at = scheduledInput;
                         }
 
-                        fetch(`/admin/crm/activity/${activityId}`, {
+                        fetch(`${window.adminBasePath}/crm/activity/${activityId}`, {
                                 method: 'PATCH',
                                 headers: {
                                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -793,7 +793,7 @@
                     btn.addEventListener('click', function() {
                         const activityId = this.dataset.id;
 
-                        fetch(`/admin/crm/activity/${activityId}/complete`, {
+                        fetch(`${window.adminBasePath}/crm/activity/${activityId}/complete`, {
                                 method: 'POST',
                                 headers: {
                                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -818,7 +818,7 @@
                     e.preventDefault();
                     const formData = new FormData(this);
 
-                    fetch(`/admin/crm/${leadId}/follow-up`, {
+                    fetch(`${window.adminBasePath}/crm/${leadId}/follow-up`, {
                             method: 'POST',
                             headers: {
                                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -848,7 +848,7 @@
                 loadEmails();
 
                 function loadEmails() {
-                    fetch(`/admin/crm/${leadId}/emails`, {
+                    fetch(`${window.adminBasePath}/crm/${leadId}/emails`, {
                             method: 'GET',
                             headers: {
                                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -944,7 +944,7 @@
                     currentViewingEmail = email;
 
                     // Load the full thread
-                    fetch(`/admin/crm/${leadId}/emails/thread/${email.thread_id}`, {
+                    fetch(`${window.adminBasePath}/crm/${leadId}/emails/thread/${email.thread_id}`, {
                             method: 'GET',
                             headers: {
                                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -1035,7 +1035,7 @@
 
                     const formData = new FormData(this);
 
-                    fetch(`/admin/crm/${leadId}/email`, {
+                    fetch(`${window.adminBasePath}/crm/${leadId}/email`, {
                             method: 'POST',
                             headers: {
                                 'X-CSRF-TOKEN': '{{ csrf_token() }}',

@@ -32,6 +32,12 @@ class ResolveOrganization
             View::share('currentOrg', $organization);
             View::share('orgSlug', $orgSlug);
             View::share('orgPrefix', '/' . $orgSlug);
+
+            // Remove orgSlug from route parameters so it won't be passed
+            // as a positional argument to controller methods.
+            // Without this, controller methods like show(Task $task)
+            // would receive show('org-slug', Task) causing a TypeError.
+            $request->route()->forgetParameter('orgSlug');
         } else {
             View::share('currentOrg', null);
             View::share('orgSlug', null);

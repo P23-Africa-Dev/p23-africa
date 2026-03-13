@@ -215,10 +215,9 @@
         <script>
             function attendanceActions() {
                 @php
-                    $routePrefix = request()->route() && str_starts_with(request()->route()->getName(), 'org.admin.') ? 'org.admin.' : 'admin.';
-                    $signInUrl = $routePrefix === 'org.admin.' ? url(($orgSlug ?? '') . '/admin/attendance/sign-in') : orgRoute('admin.attendance.sign-in');
-                    $signOutUrl = $routePrefix === 'org.admin.' ? url(($orgSlug ?? '') . '/admin/attendance/sign-out') : orgRoute('admin.attendance.sign-out');
-                    $statusUrl = $routePrefix === 'org.admin.' ? url(($orgSlug ?? '') . '/admin/attendance/today-status') : orgRoute('admin.attendance.today-status');
+                    $signInUrl = orgRoute('admin.attendance.sign-in');
+                    $signOutUrl = orgRoute('admin.attendance.sign-out');
+                    $statusUrl = orgRoute('admin.attendance.today-status');
                 @endphp
                 return {
                     hasSignedIn: false,
