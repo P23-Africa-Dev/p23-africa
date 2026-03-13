@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Lead;
 use App\Models\LeadDrive;
+use App\Models\LeadStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -175,7 +176,7 @@ class LeadImportController extends Controller
                                     'country' => trim($row['country'] ?? '') ?: $existingLead->country,
                                     'company_linkedin_profile' => trim($row['company linkedin profile'] ?? '') ?: $existingLead->company_linkedin_profile,
                                     'ceo_linkedin_profile' => trim($row['ceo linkedin profile'] ?? '') ?: $existingLead->ceo_linkedin_profile,
-                                    'status' => 'new',
+                                    'status' => LeadStatus::getDefaultSlug(auth()->user()->organization_id ?? null),
                                     'source' => 'noel_waitlist',
                                     'organization_id' => auth()->user()->organization_id ?? null,
                                 ]);
@@ -208,7 +209,7 @@ class LeadImportController extends Controller
                         'country' => trim($row['country'] ?? ''),
                         'company_linkedin_profile' => trim($row['company linkedin profile'] ?? ''),
                         'ceo_linkedin_profile' => trim($row['ceo linkedin profile'] ?? ''),
-                        'status' => 'new',
+                        'status' => LeadStatus::getDefaultSlug(auth()->user()->organization_id ?? null),
                         'source' => 'noel_waitlist',
                         'priority' => 'medium',
                         'organization_id' => auth()->user()->organization_id ?? null,

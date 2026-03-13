@@ -80,20 +80,34 @@ class Lead extends Model
     }
 
     /**
-     * Status options
+     * Status options — dynamic per organization.
+     * Returns [ slug => name ] ordered by position.
      */
-    public static function getStatuses(): array
+    public static function getStatuses(?int $orgId = null): array
     {
-        return [
-            'new' => 'New',
-            'contacted' => 'Contacted',
-            'qualified' => 'Qualified',
-            'unqualified' => 'Unqualified',
-            'proposal' => 'Proposal Sent',
-            'negotiation' => 'Negotiation',
-            'won' => 'Won',
-            'lost' => 'Lost',
-        ];
+        // If no org specified, attempt to infer from the authenticated user
+        if (is_null($orgId) && auth()->check()) {
+            $user = auth()->user();
+            $orgId = ($user && !$user->hasRole('admin')) ? $user->organization_id : null;
+        }
+
+        $map = LeadStatus::getMapForOrg($orgId);
+
+        // Fallback to hardcoded if table is empty (e.g. before seeding)
+        if (empty($map)) {
+            return [
+                'new' => 'New',
+                'contacted' => 'Contacted',
+                'qualified' => 'Qualified',
+                'unqualified' => 'Unqualified',
+                'proposal' => 'Proposal Sent',
+                'negotiation' => 'Negotiation',
+                'won' => 'Won',
+                'lost' => 'Lost',
+            ];
+        }
+
+        return $map;
     }
 
     /**
@@ -234,11 +248,12 @@ class Lead extends Model
     }
 
     /**
-     * Get the status label attribute
+     * Get the status label attribute (dynamic from LeadStatus table)
      */
     public function getStatusLabelAttribute(): string
     {
-        return self::getStatuses()[$this->status] ?? $this->status;
+        $statuses = self::getStatuses($this->organization_id);
+        return $statuses[$this->status] ?? ucfirst(str_replace('_', ' ', $this->status));
     }
 
     /**
@@ -258,21 +273,13 @@ class Lead extends Model
     }
 
     /**
-     * Get status color for UI
+     * Get status color for UI (dynamic from LeadStatus table)
      */
     public function getStatusColorAttribute(): string
     {
-        return match ($this->status) {
-            'new' => 'info',
-            'contacted' => 'primary',
-            'qualified' => 'warning',
-            'unqualified' => 'secondary',
-            'proposal' => 'secondary',
-            'negotiation' => 'dark',
-            'won' => 'success',
-            'lost' => 'danger',
-            default => 'secondary',
-        };
+        $colorMap = LeadStatus::getColorMapForOrg($this->organization_id);
+
+        return $colorMap[$this->status] ?? 'secondary';
     }
 
     /**
@@ -290,11 +297,11 @@ class Lead extends Model
     }
 
     /**
-     * Check if lead is active (not won or lost)
+     * Check if lead is active (not in a terminal state — won or lost)
      */
     public function isActive(): bool
     {
-        return !in_array($this->status, ['won', 'lost']);
+        return !LeadStatus::isTerminal($this->status, $this->organization_id);
     }
 
     /**
@@ -306,7 +313,7 @@ class Lead extends Model
     }
 
     /**
-     * Scope for new leads
+     * Scope for new leads (leads with the default status)
      */
     public function scopeNew($query)
     {
@@ -314,11 +321,24 @@ class Lead extends Model
     }
 
     /**
-     * Scope for active leads (not won or lost)
+     * Scope for active leads (not in terminal states)
      */
     public function scopeActive($query)
     {
-        return $query->whereNotIn('status', ['won', 'lost']);
+        // Get terminal slugs based on all orgs in the query context.
+        // For simplicity, we collect all terminal slugs across all orgs
+        // (won/lost statuses). This is safe because non-matching slugs
+        // simply won't match any rows.
+        $terminalSlugs = LeadStatus::where(function ($q) {
+            $q->where('is_won', true)->orWhere('is_lost', true);
+        })->pluck('slug')->unique()->toArray();
+
+        if (empty($terminalSlugs)) {
+            // Fallback
+            $terminalSlugs = ['won', 'lost'];
+        }
+
+        return $query->whereNotIn('status', $terminalSlugs);
     }
 
     /**
@@ -326,7 +346,14 @@ class Lead extends Model
      */
     public function scopeWon($query)
     {
-        return $query->where('status', 'won');
+        $wonSlugs = LeadStatus::where('is_won', true)
+            ->pluck('slug')->unique()->toArray();
+
+        if (empty($wonSlugs)) {
+            $wonSlugs = ['won'];
+        }
+
+        return $query->whereIn('status', $wonSlugs);
     }
 
     /**
@@ -334,7 +361,14 @@ class Lead extends Model
      */
     public function scopeLost($query)
     {
-        return $query->where('status', 'lost');
+        $lostSlugs = LeadStatus::where('is_lost', true)
+            ->pluck('slug')->unique()->toArray();
+
+        if (empty($lostSlugs)) {
+            $lostSlugs = ['lost'];
+        }
+
+        return $query->whereIn('status', $lostSlugs);
     }
 
     /**
@@ -414,7 +448,7 @@ class Lead extends Model
             'phone' => $submission->phone,
             'company' => $submission->company_name,
             'country' => $submission->country_code,
-            'status' => 'new',
+            'status' => LeadStatus::getDefaultSlug(null),
             'source' => 'website',
             'priority' => 'medium',
             'interested_services' => $submission->services,
@@ -447,7 +481,7 @@ class Lead extends Model
             'phone' => $application->phone,
             'company' => $application->company,
             'website' => $application->website_or_handle,
-            'status' => 'qualified',
+            'status' => LeadStatus::getDefaultSlug(null),
             'source' => 'website',
             'priority' => 'high',
             'interested_services' => $application->selected_goals,

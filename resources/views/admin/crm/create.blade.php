@@ -196,7 +196,8 @@
                                     required>
                                     @foreach ($statuses as $key => $label)
                                         <option value="{{ $key }}"
-                                            {{ old('status', 'new') === $key ? 'selected' : '' }}>{{ $label }}
+                                            {{ old('status', $leadStatuses->firstWhere('is_default', true)?->slug ?? 'new') === $key ? 'selected' : '' }}>
+                                            {{ $label }}
                                         </option>
                                     @endforeach
                                 </select>

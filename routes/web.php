@@ -380,6 +380,15 @@ Route::middleware(['auth', 'check.suspended', 'resolve.org', 'role:admin|supervi
         Route::put('/crm/drives/{drive}', [\App\Http\Controllers\Admin\LeadDriveController::class, 'update'])->name('crm.drives.update');
         Route::delete('/crm/drives/{drive}', [\App\Http\Controllers\Admin\LeadDriveController::class, 'destroy'])->name('crm.drives.destroy');
 
+        // CRM - Lead Statuses (admin & supervisor only)
+        Route::middleware('role:admin|supervisor')->group(function () {
+            Route::get('/crm/statuses', [\App\Http\Controllers\Admin\LeadStatusController::class, 'index'])->name('crm.statuses.index');
+            Route::post('/crm/statuses', [\App\Http\Controllers\Admin\LeadStatusController::class, 'store'])->name('crm.statuses.store');
+            Route::put('/crm/statuses/{leadStatus}', [\App\Http\Controllers\Admin\LeadStatusController::class, 'update'])->name('crm.statuses.update');
+            Route::delete('/crm/statuses/{leadStatus}', [\App\Http\Controllers\Admin\LeadStatusController::class, 'destroy'])->name('crm.statuses.destroy');
+            Route::post('/crm/statuses/reorder', [\App\Http\Controllers\Admin\LeadStatusController::class, 'reorder'])->name('crm.statuses.reorder');
+        });
+
         Route::get('/crm/{lead}', [\App\Http\Controllers\Admin\LeadController::class, 'show'])->name('crm.show');
         Route::get('/crm/{lead}/edit', [\App\Http\Controllers\Admin\LeadController::class, 'edit'])->name('crm.edit');
         Route::put('/crm/{lead}', [\App\Http\Controllers\Admin\LeadController::class, 'update'])->name('crm.update');
@@ -539,6 +548,15 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
     Route::post('/crm/drives/ajax', [\App\Http\Controllers\Admin\LeadDriveController::class, 'storeAjax'])->name('crm.drives.store-ajax');
     Route::put('/crm/drives/{drive}', [\App\Http\Controllers\Admin\LeadDriveController::class, 'update'])->name('crm.drives.update');
     Route::delete('/crm/drives/{drive}', [\App\Http\Controllers\Admin\LeadDriveController::class, 'destroy'])->name('crm.drives.destroy');
+
+    // CRM - Lead Statuses (admin & supervisor only)
+    Route::middleware('role:admin|supervisor')->group(function () {
+        Route::get('/crm/statuses', [\App\Http\Controllers\Admin\LeadStatusController::class, 'index'])->name('crm.statuses.index');
+        Route::post('/crm/statuses', [\App\Http\Controllers\Admin\LeadStatusController::class, 'store'])->name('crm.statuses.store');
+        Route::put('/crm/statuses/{leadStatus}', [\App\Http\Controllers\Admin\LeadStatusController::class, 'update'])->name('crm.statuses.update');
+        Route::delete('/crm/statuses/{leadStatus}', [\App\Http\Controllers\Admin\LeadStatusController::class, 'destroy'])->name('crm.statuses.destroy');
+        Route::post('/crm/statuses/reorder', [\App\Http\Controllers\Admin\LeadStatusController::class, 'reorder'])->name('crm.statuses.reorder');
+    });
 
     Route::get('/crm/{lead}', [\App\Http\Controllers\Admin\LeadController::class, 'show'])->name('crm.show');
     Route::get('/crm/{lead}/edit', [\App\Http\Controllers\Admin\LeadController::class, 'edit'])->name('crm.edit');

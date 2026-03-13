@@ -48,46 +48,12 @@
                 margin-right: 8px;
             }
 
-            /* Status dot colors - must match Lead model getStatusColorAttribute */
-            .status-dot.status-new {
-                background-color: #0dcaf0;
-                /* info */
-            }
-
-            .status-dot.status-contacted {
-                background-color: #0d6efd;
-                /* primary */
-            }
-
-            .status-dot.status-qualified {
-                background-color: #ffc107;
-                /* warning */
-            }
-
-            .status-dot.status-unqualified {
-                background-color: #6c757d;
-                /* secondary */
-            }
-
-            .status-dot.status-proposal {
-                background-color: #6c757d;
-                /* secondary */
-            }
-
-            .status-dot.status-negotiation {
-                background-color: #212529;
-                /* dark */
-            }
-
-            .status-dot.status-won {
-                background-color: #198754;
-                /* success */
-            }
-
-            .status-dot.status-lost {
-                background-color: #dc3545;
-                /* danger */
-            }
+            /* Status dot colors - dynamically generated from lead statuses */
+            @foreach ($leadStatuses as $ls)
+                .status-dot.status-{{ $ls->slug }} {
+                    background-color: {{ str_starts_with($ls->color, '#') ? $ls->color : 'var(--bs-' . $ls->color . ')' }};
+                }
+            @endforeach
 
             /* Dark mode support */
             [data-theme="dark"] .status-dropdown .dropdown-menu,
@@ -213,6 +179,11 @@
                 <a href="{{ orgRoute('admin.crm.pipeline', request()->only('drive')) }}" class="btn btn-outline-info">
                     <i class="fa fa-columns me-2"></i>Pipeline View
                 </a>
+                @hasanyrole('admin|supervisor')
+                    <a href="{{ orgRoute('admin.crm.statuses.index') }}" class="btn btn-outline-dark">
+                        <i class="fa fa-tags me-2"></i>Manage Statuses
+                    </a>
+                @endhasanyrole
                 <a href="{{ orgRoute('admin.crm.import') }}" class="btn btn-outline-success">
                     <i class="fa fa-file-import me-2"></i>Import Leads
                 </a>
@@ -397,9 +368,9 @@
                             <select name="status"
                                 class="form-select dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100">
                                 <option value="">All Statuses</option>
-                                @foreach (\App\Models\Lead::getStatuses() as $key => $label)
-                                    <option value="{{ $key }}"
-                                        {{ request('status') === $key ? 'selected' : '' }}>{{ $label }}
+                                @foreach ($leadStatuses as $ls)
+                                    <option value="{{ $ls->slug }}"
+                                        {{ request('status') === $ls->slug ? 'selected' : '' }}>{{ $ls->name }}
                                     </option>
                                 @endforeach
                             </select>
@@ -455,8 +426,8 @@
                         <span class="text-muted"><span id="selectedCount">0</span> leads selected</span>
                         <select class="form-select form-select-sm w-auto" id="bulkStatus">
                             <option value="">Change Status</option>
-                            @foreach (\App\Models\Lead::getStatuses() as $key => $label)
-                                <option value="{{ $key }}">{{ $label }}</option>
+                            @foreach ($leadStatuses as $ls)
+                                <option value="{{ $ls->slug }}">{{ $ls->name }}</option>
                             @endforeach
                         </select>
                         <select class="form-select form-select-sm w-auto" id="bulkAssign">
@@ -558,15 +529,16 @@
                                                         {{ $lead->status_label }}
                                                     </button>
                                                     <ul class="dropdown-menu dropdown-menu-end">
-                                                        @foreach (\App\Models\Lead::getStatuses() as $statusKey => $statusLabel)
+                                                        @foreach ($leadStatuses as $ls)
                                                             <li>
-                                                                <a class="dropdown-item status-option {{ $lead->status === $statusKey ? 'active' : '' }}"
+                                                                <a class="dropdown-item status-option {{ $lead->status === $ls->slug ? 'active' : '' }}"
                                                                     href="#" data-id="{{ $lead->id }}"
-                                                                    data-status="{{ $statusKey }}">
+                                                                    data-status="{{ $ls->slug }}"
+                                                                    data-is-lost="{{ $ls->is_lost ? '1' : '0' }}">
                                                                     <span
-                                                                        class="status-dot status-{{ $statusKey }}"></span>
-                                                                    {{ $statusLabel }}
-                                                                    @if ($lead->status === $statusKey)
+                                                                        class="status-dot status-{{ $ls->slug }}"></span>
+                                                                    {{ $ls->name }}
+                                                                    @if ($lead->status === $ls->slug)
                                                                         <i class="fa fa-check ms-2 text-success"></i>
                                                                     @endif
                                                                 </a>
@@ -694,29 +666,14 @@
                 const bulkAssign = document.getElementById('bulkAssign');
                 const bulkDeleteBtn = document.getElementById('bulkDeleteBtn');
 
-                // Status color mapping (must match Lead model getStatusColorAttribute)
-                const statusColors = {
-                    'new': 'info',
-                    'contacted': 'primary',
-                    'qualified': 'warning',
-                    'unqualified': 'secondary',
-                    'proposal': 'secondary',
-                    'negotiation': 'dark',
-                    'won': 'success',
-                    'lost': 'danger'
-                };
+                // Status color mapping (dynamic from database)
+                const statusColors = @json($leadStatuses->pluck('color', 'slug'));
 
-                // Status labels mapping (must match Lead model getStatuses)
-                const statusLabels = {
-                    'new': 'New',
-                    'contacted': 'Contacted',
-                    'qualified': 'Qualified',
-                    'unqualified': 'Unqualified',
-                    'proposal': 'Proposal Sent',
-                    'negotiation': 'Negotiation',
-                    'won': 'Won',
-                    'lost': 'Lost'
-                };
+                // Status labels mapping (dynamic from database)
+                const statusLabels = @json($leadStatuses->pluck('name', 'slug'));
+
+                // Lost status slugs
+                const lostSlugs = @json($leadStatuses->where('is_lost', true)->pluck('slug')->values());
 
                 // Lost reason modal
                 const lostReasonModal = new bootstrap.Modal(document.getElementById('lostReasonModal'));
@@ -730,10 +687,11 @@
                         const newStatus = this.dataset.status;
                         const btn = document.querySelector(`.status-badge-btn[data-id="${leadId}"]`);
 
-                        // If changing to "lost", show modal for reason
-                        if (newStatus === 'lost') {
+                        // If changing to a "lost" status, show modal for reason
+                        if (lostSlugs.includes(newStatus)) {
                             pendingLostUpdate = {
                                 leadId,
+                                status: newStatus,
                                 btn,
                                 dropdown: this.closest('.dropdown')
                             };
@@ -751,7 +709,7 @@
                         const reason = document.getElementById('lostReasonText').value;
                         updateLeadStatus(
                             pendingLostUpdate.leadId,
-                            'lost',
+                            pendingLostUpdate.status,
                             pendingLostUpdate.btn,
                             pendingLostUpdate.dropdown,
                             reason

@@ -7,6 +7,7 @@ use App\Models\Lead;
 use App\Models\LeadActivity;
 use App\Models\LeadDrive;
 use App\Models\LeadEmail;
+use App\Models\LeadStatus;
 use App\Models\User;
 use App\Models\ContactSubmission;
 use App\Models\ConsultationApplication;
@@ -20,6 +21,18 @@ use Illuminate\Validation\Rule;
 
 class LeadController extends Controller
 {
+    /**
+     * Resolve the organization_id for the current user (for status scoping).
+     */
+    protected function currentOrgId(): ?int
+    {
+        $user = auth()->user();
+        if ($user && !$user->hasRole('admin') && $user->organization_id) {
+            return $user->organization_id;
+        }
+        return null;
+    }
+
     /**
      * Ensure the current user can access the given lead based on organization.
      */
@@ -180,7 +193,10 @@ class LeadController extends Controller
             ? LeadDrive::find($request->drive)
             : null;
 
-        return view('admin.crm.index', compact('leads', 'stats', 'users', 'drives', 'currentDrive'));
+        $orgId = $this->currentOrgId();
+        $leadStatuses = LeadStatus::getForOrg($orgId);
+
+        return view('admin.crm.index', compact('leads', 'stats', 'users', 'drives', 'currentDrive', 'leadStatuses'));
     }
 
     /**
@@ -189,6 +205,7 @@ class LeadController extends Controller
     public function create()
     {
         $user = auth()->user();
+        $orgId = $this->currentOrgId();
 
         $usersQuery = User::whereHas('roles', function ($q) {
             $q->whereIn('name', ['admin', 'supervisor', 'staff']);
@@ -199,9 +216,12 @@ class LeadController extends Controller
         }
         $users = $usersQuery->get();
 
+        $leadStatuses = LeadStatus::getForOrg($orgId);
+
         return view('admin.crm.create', [
             'users' => $users,
-            'statuses' => Lead::getStatuses(),
+            'statuses' => Lead::getStatuses($orgId),
+            'leadStatuses' => $leadStatuses,
             'sources' => Lead::getSources(),
             'priorities' => Lead::getPriorities(),
             'services' => Lead::getServices(),
@@ -214,6 +234,9 @@ class LeadController extends Controller
      */
     public function store(Request $request)
     {
+        $orgId = $this->currentOrgId();
+        $validSlugs = array_keys(Lead::getStatuses($orgId));
+
         $validated = $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'nullable|string|max:255',
@@ -227,7 +250,7 @@ class LeadController extends Controller
             'country' => 'nullable|string|max:100',
             'city' => 'nullable|string|max:100',
             'address' => 'nullable|string|max:500',
-            'status' => ['required', Rule::in(array_keys(Lead::getStatuses()))],
+            'status' => ['required', Rule::in($validSlugs)],
             'source' => ['required', Rule::in(array_keys(Lead::getSources()))],
             'priority' => ['required', Rule::in(array_keys(Lead::getPriorities()))],
             'estimated_value' => 'nullable|numeric|min:0',
@@ -301,6 +324,9 @@ class LeadController extends Controller
 
         $lead->load(['assignedUser', 'activities.user']);
 
+        $orgId = $this->currentOrgId();
+        $leadStatuses = LeadStatus::getForOrg($orgId);
+
         $usersQuery = User::whereHas('roles', function ($q) {
             $q->whereIn('name', ['admin', 'supervisor', 'staff']);
         });
@@ -313,7 +339,8 @@ class LeadController extends Controller
         return view('admin.crm.show', [
             'lead' => $lead,
             'users' => $users,
-            'statuses' => Lead::getStatuses(),
+            'statuses' => Lead::getStatuses($orgId),
+            'leadStatuses' => $leadStatuses,
             'priorities' => Lead::getPriorities(),
             'activityTypes' => LeadActivity::getTypes(),
         ]);
@@ -327,6 +354,9 @@ class LeadController extends Controller
         $user = auth()->user();
         $this->ensureLeadOrgAccess($lead, $user);
 
+        $orgId = $this->currentOrgId();
+        $leadStatuses = LeadStatus::getForOrg($orgId);
+
         $usersQuery = User::whereHas('roles', function ($q) {
             $q->whereIn('name', ['admin', 'supervisor', 'staff']);
         });
@@ -339,7 +369,8 @@ class LeadController extends Controller
         return view('admin.crm.edit', [
             'lead' => $lead,
             'users' => $users,
-            'statuses' => Lead::getStatuses(),
+            'statuses' => Lead::getStatuses($orgId),
+            'leadStatuses' => $leadStatuses,
             'sources' => Lead::getSources(),
             'priorities' => Lead::getPriorities(),
             'services' => Lead::getServices(),
@@ -355,6 +386,9 @@ class LeadController extends Controller
         $user = auth()->user();
         $this->ensureLeadOrgAccess($lead, $user);
 
+        $orgId = $this->currentOrgId();
+        $validSlugs = array_keys(Lead::getStatuses($orgId));
+
         $validated = $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'nullable|string|max:255',
@@ -368,7 +402,7 @@ class LeadController extends Controller
             'country' => 'nullable|string|max:100',
             'city' => 'nullable|string|max:100',
             'address' => 'nullable|string|max:500',
-            'status' => ['required', Rule::in(array_keys(Lead::getStatuses()))],
+            'status' => ['required', Rule::in($validSlugs)],
             'source' => ['required', Rule::in(array_keys(Lead::getSources()))],
             'priority' => ['required', Rule::in(array_keys(Lead::getPriorities()))],
             'estimated_value' => 'nullable|numeric|min:0',
@@ -417,8 +451,8 @@ class LeadController extends Controller
             if ($oldStatus !== $lead->status) {
                 $lead->logStatusChange($oldStatus, $lead->status);
 
-                // Update converted_at if won
-                if ($lead->status === 'won' && !$lead->converted_at) {
+                // Update converted_at if status is now a "won" terminal state
+                if (LeadStatus::isWonStatus($lead->status, $orgId) && !$lead->converted_at) {
                     $lead->update(['converted_at' => now()]);
                 }
             }
@@ -487,17 +521,28 @@ class LeadController extends Controller
         $user = auth()->user();
         $this->ensureLeadOrgAccess($lead, $user);
 
+        $orgId = $this->currentOrgId();
+        $validSlugs = array_keys(Lead::getStatuses($orgId));
+        $lostSlugs = LeadStatus::getLostSlugs($orgId);
+
         $validated = $request->validate([
-            'status' => ['required', Rule::in(array_keys(Lead::getStatuses()))],
-            'lost_reason' => 'nullable|required_if:status,lost|string|max:500',
+            'status' => ['required', Rule::in($validSlugs)],
+            'lost_reason' => [
+                'nullable',
+                'string',
+                'max:500',
+                Rule::requiredIf(in_array($request->input('status'), $lostSlugs)),
+            ],
         ]);
 
         try {
             $oldStatus = $lead->status;
+            $isWon = LeadStatus::isWonStatus($validated['status'], $orgId);
+
             $lead->update([
                 'status' => $validated['status'],
                 'lost_reason' => $validated['lost_reason'] ?? null,
-                'converted_at' => $validated['status'] === 'won' ? now() : $lead->converted_at,
+                'converted_at' => $isWon ? now() : $lead->converted_at,
             ]);
 
             // Log the status change
@@ -850,6 +895,11 @@ class LeadController extends Controller
                     break;
 
                 case 'status':
+                    $orgId = $this->currentOrgId();
+                    $validSlugs = array_keys(Lead::getStatuses($orgId));
+                    if (!in_array($validated['value'], $validSlugs)) {
+                        return response()->json(['success' => false, 'message' => 'Invalid status value.'], 422);
+                    }
                     $leads->update(['status' => $validated['value']]);
                     $message = "{$count} leads status updated!";
                     break;
@@ -983,9 +1033,11 @@ class LeadController extends Controller
      */
     public function pipeline(Request $request)
     {
-        $statuses = Lead::getStatuses();
-        $pipeline = [];
         $user = auth()->user();
+        $orgId = $this->currentOrgId();
+        $leadStatuses = LeadStatus::getForOrg($orgId);
+        $statuses = Lead::getStatuses($orgId);
+        $pipeline = [];
 
         // Get drives for filter (scoped to user's organization)
         $drivesQuery = LeadDrive::orderBy('name');
@@ -1037,7 +1089,7 @@ class LeadController extends Controller
             ];
         }
 
-        return view('admin.crm.pipeline', compact('pipeline', 'statuses', 'drives', 'currentDrive'));
+        return view('admin.crm.pipeline', compact('pipeline', 'statuses', 'leadStatuses', 'drives', 'currentDrive'));
     }
 
     /**

@@ -73,9 +73,15 @@
                         </li>
                     </ul>
                 </div>
-                <a href="{{ orgRoute('admin.crm.index', request()->only('drive')) }}" class="btn btn-outline-secondary">
+                <a href="{{ orgRoute('admin.crm.index', request()->only('drive')) }}"
+                    class="btn btn-outline-secondary">
                     <i class="fa fa-list me-2"></i>List View
                 </a>
+                @hasanyrole('admin|supervisor')
+                    <a href="{{ orgRoute('admin.crm.statuses.index') }}" class="btn btn-outline-dark">
+                        <i class="fa fa-tags me-2"></i>Manage Statuses
+                    </a>
+                @endhasanyrole
                 <a href="{{ orgRoute('admin.crm.import') }}" class="btn btn-outline-success">
                     <i class="fa fa-file-import me-2"></i>Import Leads
                 </a>
@@ -108,47 +114,16 @@
             font-weight: 600;
         }
 
-        /* Pipeline header colors - must match Lead model getStatusColorAttribute */
-        .pipeline-header.new {
-            background: #0dcaf0;
-            /* info */
-        }
+        /* Pipeline header colors - dynamically generated from lead statuses */
+        @foreach ($leadStatuses as $ls)
+            .pipeline-header.{{ $ls->slug }} {
+                background: {{ str_starts_with($ls->color, '#') ? $ls->color : 'var(--bs-' . $ls->color . ')' }};
 
-        .pipeline-header.contacted {
-            background: #0d6efd;
-            /* primary */
-        }
-
-        .pipeline-header.qualified {
-            background: #ffc107;
-            /* warning */
-            color: #212529;
-        }
-
-        .pipeline-header.unqualified {
-            background: #6c757d;
-            /* secondary */
-        }
-
-        .pipeline-header.proposal {
-            background: #6c757d;
-            /* secondary */
-        }
-
-        .pipeline-header.negotiation {
-            background: #212529;
-            /* dark */
-        }
-
-        .pipeline-header.won {
-            background: #198754;
-            /* success */
-        }
-
-        .pipeline-header.lost {
-            background: #dc3545;
-            /* danger */
-        }
+                @if (in_array($ls->color, ['warning', '#ffc107', 'light']))
+                    color: #212529;
+                @endif
+            }
+        @endforeach
 
         .pipeline-body {
             background: #f8f9fa;
@@ -328,16 +303,12 @@
                                 <div class="ms-3">
                                     <h6 class="text-muted dark:text-gray-400 mb-1">Total Pipeline Value</h6>
                                     @php
-                                        $pipelineStatuses = [
-                                            'new',
-                                            'contacted',
-                                            'qualified',
-                                            'proposal',
-                                            'negotiation',
-                                            'won',
-                                        ];
+                                        $nonLostStatuses = $leadStatuses
+                                            ->where('is_lost', false)
+                                            ->pluck('slug')
+                                            ->toArray();
                                         $totalPipelineValue = collect($pipeline)
-                                            ->filter(fn($data, $status) => in_array($status, $pipelineStatuses))
+                                            ->filter(fn($data, $status) => in_array($status, $nonLostStatuses))
                                             ->sum('value');
                                     @endphp
                                     <h3 class="mb-0 text-dark dark:text-gray-100">
@@ -357,8 +328,14 @@
                                 </div>
                                 <div class="ms-3">
                                     <h6 class="text-muted dark:text-gray-400 mb-1">Won Value</h6>
+                                    @php
+                                        $wonSlugs = $leadStatuses->where('is_won', true)->pluck('slug')->toArray();
+                                        $wonValue = collect($pipeline)
+                                            ->filter(fn($data, $status) => in_array($status, $wonSlugs))
+                                            ->sum('value');
+                                    @endphp
                                     <h3 class="mb-0 text-dark dark:text-gray-100">
-                                        ${{ number_format($pipeline['won']['value'] ?? 0) }}
+                                        ${{ number_format($wonValue) }}
                                     </h3>
                                 </div>
                             </div>
@@ -373,11 +350,17 @@
                                     <i class="fa fa-percentage text-info fa-2x"></i>
                                 </div>
                                 <div class="ms-3">
-                                    <h6 class="text-muted dark:text-gray-400 mb-1">Onboarding  Rate</h6>
+                                    <h6 class="text-muted dark:text-gray-400 mb-1">Onboarding Rate</h6>
                                     @php
-                                        $total = ($pipeline['won']['count'] ?? 0) + ($pipeline['lost']['count'] ?? 0);
-                                        $winRate =
-                                            $total > 0 ? round((($pipeline['won']['count'] ?? 0) / $total) * 100) : 0;
+                                        $wonCount = collect($pipeline)
+                                            ->filter(fn($data, $status) => in_array($status, $wonSlugs))
+                                            ->sum('count');
+                                        $lostSlugs = $leadStatuses->where('is_lost', true)->pluck('slug')->toArray();
+                                        $lostCount = collect($pipeline)
+                                            ->filter(fn($data, $status) => in_array($status, $lostSlugs))
+                                            ->sum('count');
+                                        $total = $wonCount + $lostCount;
+                                        $winRate = $total > 0 ? round(($wonCount / $total) * 100) : 0;
                                     @endphp
                                     <h3 class="mb-0 text-dark dark:text-gray-100">{{ $winRate }}%</h3>
                                 </div>
@@ -492,6 +475,8 @@
                 const csrfToken = '{{ csrf_token() }}';
                 let pendingLostLead = null;
                 let pendingLostSourceColumn = null;
+                let pendingLostStatus = null;
+                const lostSlugs = @json($leadStatuses->where('is_lost', true)->pluck('slug')->values());
 
                 // Initialize SortableJS for each column
                 columns.forEach(column => {
@@ -517,13 +502,14 @@
 
                             if (newStatus === oldStatus) return;
 
-                            // If moving to "lost", show reason modal
-                            if (newStatus === 'lost') {
+                            // If moving to a "lost" status, show reason modal
+                            if (lostSlugs.includes(newStatus)) {
                                 pendingLostLead = {
                                     id: leadId,
                                     element: evt.item
                                 };
                                 pendingLostSourceColumn = evt.from;
+                                pendingLostStatus = newStatus;
                                 const modal = new bootstrap.Modal(document.getElementById(
                                     'lostReasonModal'));
                                 modal.show();
@@ -544,7 +530,8 @@
                         return;
                     }
 
-                    updateLeadStatus(pendingLostLead.id, 'lost', reason, pendingLostLead.element,
+                    updateLeadStatus(pendingLostLead.id, pendingLostStatus || 'lost', reason, pendingLostLead
+                        .element,
                         pendingLostSourceColumn);
                     bootstrap.Modal.getInstance(document.getElementById('lostReasonModal')).hide();
                     document.getElementById('lostReasonText').value = '';
@@ -553,9 +540,10 @@
                 // Cancel lost modal - move card back
                 document.getElementById('lostReasonModal').addEventListener('hidden.bs.modal', function() {
                     if (pendingLostLead && pendingLostSourceColumn) {
-                        // Check if the lead is still in the lost column
-                        const lostColumn = document.querySelector('.sortable-column[data-status="lost"]');
-                        if (lostColumn.contains(pendingLostLead.element)) {
+                        // Check if the lead is still in the target (lost) column
+                        const targetColumn = document.querySelector(
+                            `.sortable-column[data-status="${pendingLostStatus}"]`);
+                        if (targetColumn && targetColumn.contains(pendingLostLead.element)) {
                             pendingLostSourceColumn.appendChild(pendingLostLead.element);
                             updateEmptyPlaceholders();
                             updateColumnCounts();
@@ -563,6 +551,7 @@
                     }
                     pendingLostLead = null;
                     pendingLostSourceColumn = null;
+                    pendingLostStatus = null;
                 });
 
                 function updateLeadStatus(leadId, status, lostReason, element, sourceColumn) {

@@ -14,6 +14,7 @@ use App\Models\ConsultationApplication;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\Lead;
+use App\Models\LeadStatus;
 use App\Models\Attendance;
 use App\Http\Controllers\Admin\ConsultationController;
 use Illuminate\Support\Facades\Auth;
@@ -84,7 +85,9 @@ class DashboardController extends Controller
             $stats['completed_tasks'] = $orgScope(Task::where('status', 'completed'))->count();
             $stats['pending_tasks'] = $orgScope(Task::whereIn('status', ['todo', 'in_progress']))->count();
             $stats['total_leads'] = $orgScope(Lead::query())->count();
-            $stats['new_leads'] = $orgScope(Lead::where('status', 'new'))->count();
+            $leadOrgId = $isAdmin ? null : ($user->organization_id ?? null);
+            $defaultSlug = LeadStatus::getDefaultSlug($leadOrgId);
+            $stats['new_leads'] = $orgScope(Lead::where('status', $defaultSlug))->count();
 
             $hasSignedInToday = Attendance::hasSignedInToday($user->id);
 

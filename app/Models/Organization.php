@@ -15,6 +15,16 @@ class Organization extends Model
         'description',
     ];
 
+    /**
+     * Auto-seed default lead statuses when a new organization is created.
+     */
+    protected static function booted(): void
+    {
+        static::created(function (Organization $organization) {
+            LeadStatus::seedDefaults($organization->id);
+        });
+    }
+
     public function users()
     {
         return $this->hasMany(User::class);
@@ -28,5 +38,10 @@ class Organization extends Model
     public function leads()
     {
         return $this->hasMany(Lead::class);
+    }
+
+    public function leadStatuses()
+    {
+        return $this->hasMany(LeadStatus::class);
     }
 }

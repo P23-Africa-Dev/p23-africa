@@ -303,7 +303,7 @@
 
                 <!-- Lost Reason (show only if status is lost) -->
                 <div class="card border-0 shadow-sm dark:bg-gray-800 mb-4" id="lostReasonCard"
-                    style="{{ $lead->status === 'lost' ? '' : 'display: none;' }}">
+                    style="{{ $leadStatuses->where('is_lost', true)->pluck('slug')->contains($lead->status) ? '' : 'display: none;' }}">
                     <div class="card-header bg-transparent border-0 pt-4">
                         <h5 class="mb-0 text-dark dark:text-gray-100">
                             <i class="fa fa-times-circle me-2 text-danger"></i>Lost Reason
@@ -382,7 +382,8 @@
                         <i class="fa fa-trash me-2"></i>Delete Lead
                     </button>
                     <div class="d-flex gap-2">
-                        <a href="{{ orgRoute('admin.crm.show', $lead) }}" class="btn btn-outline-secondary">Cancel</a>
+                        <a href="{{ orgRoute('admin.crm.show', $lead) }}"
+                            class="btn btn-outline-secondary">Cancel</a>
                         <button type="submit" class="btn btn-primary">
                             <i class="fa fa-save me-2"></i>Update Lead
                         </button>
@@ -395,9 +396,10 @@
     @push('scripts')
         <script>
             // Show/hide lost reason card based on status
+            const lostSlugs = @json($leadStatuses->where('is_lost', true)->pluck('slug')->values());
             document.querySelector('[name="status"]').addEventListener('change', function() {
                 const lostReasonCard = document.getElementById('lostReasonCard');
-                if (this.value === 'lost') {
+                if (lostSlugs.includes(this.value)) {
                     lostReasonCard.style.display = 'block';
                 } else {
                     lostReasonCard.style.display = 'none';

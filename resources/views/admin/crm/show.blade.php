@@ -605,12 +605,13 @@
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const leadId = {{ $lead->id }};
+                const lostSlugs = @json($leadStatuses->where('is_lost', true)->pluck('slug')->values());
 
                 // Status change
                 document.getElementById('statusSelect').addEventListener('change', function() {
                     const newStatus = this.value;
 
-                    if (newStatus === 'lost') {
+                    if (lostSlugs.includes(newStatus)) {
                         const modal = new bootstrap.Modal(document.getElementById('lostReasonModal'));
                         modal.show();
                         return;
@@ -648,7 +649,8 @@
                 document.getElementById('lostReasonForm').addEventListener('submit', function(e) {
                     e.preventDefault();
                     const reason = this.querySelector('[name="lost_reason"]').value;
-                    updateStatus('lost', reason);
+                    const statusSelect = document.getElementById('statusSelect');
+                    updateStatus(statusSelect.value, reason);
                     bootstrap.Modal.getInstance(document.getElementById('lostReasonModal')).hide();
                 });
 
