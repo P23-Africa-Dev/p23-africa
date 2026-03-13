@@ -177,7 +177,7 @@ class LeadImportController extends Controller
                                     'company_linkedin_profile' => trim($row['company linkedin profile'] ?? '') ?: $existingLead->company_linkedin_profile,
                                     'ceo_linkedin_profile' => trim($row['ceo linkedin profile'] ?? '') ?: $existingLead->ceo_linkedin_profile,
                                     'status' => LeadStatus::getDefaultSlug(auth()->user()->organization_id ?? null),
-                                    'source' => 'noel_waitlist',
+                                    'source' => auth()->user()->organization_id ? 'other' : 'noel_waitlist',
                                     'organization_id' => auth()->user()->organization_id ?? null,
                                 ]);
                                 $imported++;
@@ -210,7 +210,7 @@ class LeadImportController extends Controller
                         'company_linkedin_profile' => trim($row['company linkedin profile'] ?? ''),
                         'ceo_linkedin_profile' => trim($row['ceo linkedin profile'] ?? ''),
                         'status' => LeadStatus::getDefaultSlug(auth()->user()->organization_id ?? null),
-                        'source' => 'noel_waitlist',
+                        'source' => auth()->user()->organization_id ? 'other' : 'noel_waitlist',
                         'priority' => 'medium',
                         'organization_id' => auth()->user()->organization_id ?? null,
                     ]);

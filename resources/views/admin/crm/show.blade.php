@@ -233,20 +233,22 @@
                     </div>
 
                     <!-- Interested Services -->
-                    @if ($lead->interested_services && count($lead->interested_services) > 0)
-                        <div class="card border-0 shadow-sm dark:bg-gray-800 mb-4">
-                            <div class="card-header bg-transparent border-0 pt-4">
-                                <h5 class="mb-0 text-dark dark:text-gray-100">
-                                    <i class="fa fa-briefcase me-2 text-primary"></i>Interested Services
-                                </h5>
+                    @unless (auth()->user()->organization_id)
+                        @if ($lead->interested_services && count($lead->interested_services) > 0)
+                            <div class="card border-0 shadow-sm dark:bg-gray-800 mb-4">
+                                <div class="card-header bg-transparent border-0 pt-4">
+                                    <h5 class="mb-0 text-dark dark:text-gray-100">
+                                        <i class="fa fa-briefcase me-2 text-primary"></i>Interested Services
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    @foreach ($lead->interested_services as $service)
+                                        <span class="badge bg-primary me-1 mb-1">{{ $service }}</span>
+                                    @endforeach
+                                </div>
                             </div>
-                            <div class="card-body">
-                                @foreach ($lead->interested_services as $service)
-                                    <span class="badge bg-primary me-1 mb-1">{{ $service }}</span>
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
+                        @endif
+                    @endunless
 
                     <!-- Requirements -->
                     @if ($lead->requirements)

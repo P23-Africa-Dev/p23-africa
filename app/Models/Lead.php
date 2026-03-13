@@ -111,21 +111,30 @@ class Lead extends Model
     }
 
     /**
-     * Source options
+     * Source options.
+     * When $orgId is provided (organisation context), NOEL Waitlist is excluded
+     * because that source is only relevant in the super-admin / global context.
      */
-    public static function getSources(): array
+    public static function getSources(?int $orgId = null): array
     {
-        return [
-            'website' => 'Website',
-            'referral' => 'Referral',
-            'social_media' => 'Social Media',
+        $all = [
+            'website'        => 'Website',
+            'referral'       => 'Referral',
+            'social_media'   => 'Social Media',
             'email_campaign' => 'Email Campaign',
-            'cold_call' => 'Cold Call',
-            'event' => 'Event',
-            'advertisement' => 'Advertisement',
-            'noel_waitlist' => 'NOEL Waitlist',
-            'other' => 'Other',
+            'cold_call'      => 'Cold Call',
+            'event'          => 'Event',
+            'advertisement'  => 'Advertisement',
+            'noel_waitlist'  => 'NOEL Waitlist',
+            'other'          => 'Other',
         ];
+
+        // Organisation accounts do not use the NOEL Waitlist source
+        if ($orgId !== null) {
+            unset($all['noel_waitlist']);
+        }
+
+        return $all;
     }
 
     /**

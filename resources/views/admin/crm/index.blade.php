@@ -379,7 +379,7 @@
                             <select name="source"
                                 class="form-select dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100">
                                 <option value="">All Sources</option>
-                                @foreach (\App\Models\Lead::getSources() as $key => $label)
+                                @foreach ($sources as $key => $label)
                                     <option value="{{ $key }}"
                                         {{ request('source') === $key ? 'selected' : '' }}>{{ $label }}
                                     </option>

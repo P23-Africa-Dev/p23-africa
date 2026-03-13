@@ -279,30 +279,32 @@
                 </div>
 
                 <!-- Interested Services -->
-                <div class="card border-0 shadow-sm dark:bg-gray-800 mb-4">
-                    <div class="card-header bg-transparent border-0 pt-4">
-                        <h5 class="mb-0 text-dark dark:text-gray-100">
-                            <i class="fa fa-briefcase me-2 text-primary"></i>Interested Services
-                        </h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row g-3">
-                            @foreach ($services as $service)
-                                <div class="col-md-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="interested_services[]"
-                                            value="{{ $service }}" id="service_{{ Str::slug($service) }}"
-                                            {{ in_array($service, old('interested_services', [])) ? 'checked' : '' }}>
-                                        <label class="form-check-label text-dark dark:text-gray-100"
-                                            for="service_{{ Str::slug($service) }}">
-                                            {{ $service }}
-                                        </label>
+                @unless (auth()->user()->organization_id)
+                    <div class="card border-0 shadow-sm dark:bg-gray-800 mb-4">
+                        <div class="card-header bg-transparent border-0 pt-4">
+                            <h5 class="mb-0 text-dark dark:text-gray-100">
+                                <i class="fa fa-briefcase me-2 text-primary"></i>Interested Services
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                @foreach ($services as $service)
+                                    <div class="col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="interested_services[]"
+                                                value="{{ $service }}" id="service_{{ Str::slug($service) }}"
+                                                {{ in_array($service, old('interested_services', [])) ? 'checked' : '' }}>
+                                            <label class="form-check-label text-dark dark:text-gray-100"
+                                                for="service_{{ Str::slug($service) }}">
+                                                {{ $service }}
+                                            </label>
+                                        </div>
                                     </div>
-                                </div>
-                            @endforeach
+                                @endforeach
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endunless
 
                 <!-- Requirements & Notes -->
                 <div class="card border-0 shadow-sm dark:bg-gray-800 mb-4">

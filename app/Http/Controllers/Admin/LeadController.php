@@ -195,8 +195,9 @@ class LeadController extends Controller
 
         $orgId = $this->currentOrgId();
         $leadStatuses = LeadStatus::getForOrg($orgId);
+        $sources = Lead::getSources($orgId);
 
-        return view('admin.crm.index', compact('leads', 'stats', 'users', 'drives', 'currentDrive', 'leadStatuses'));
+        return view('admin.crm.index', compact('leads', 'stats', 'users', 'drives', 'currentDrive', 'leadStatuses', 'sources'));
     }
 
     /**
@@ -222,9 +223,9 @@ class LeadController extends Controller
             'users' => $users,
             'statuses' => Lead::getStatuses($orgId),
             'leadStatuses' => $leadStatuses,
-            'sources' => Lead::getSources(),
+            'sources' => Lead::getSources($orgId),
             'priorities' => Lead::getPriorities(),
-            'services' => Lead::getServices(),
+            'services' => $orgId ? [] : Lead::getServices(),
             'industries' => Lead::getIndustries(),
         ]);
     }
@@ -251,11 +252,11 @@ class LeadController extends Controller
             'city' => 'nullable|string|max:100',
             'address' => 'nullable|string|max:500',
             'status' => ['required', Rule::in($validSlugs)],
-            'source' => ['required', Rule::in(array_keys(Lead::getSources()))],
+            'source' => ['required', Rule::in(array_keys(Lead::getSources($orgId)))],
             'priority' => ['required', Rule::in(array_keys(Lead::getPriorities()))],
             'estimated_value' => 'nullable|numeric|min:0',
             'currency' => 'nullable|string|max:3',
-            'interested_services' => 'nullable|array',
+            ...($orgId ? [] : ['interested_services' => 'nullable|array']),
             'requirements' => 'nullable|string|max:5000',
             'notes' => 'nullable|string|max:5000',
             'assigned_to' => 'nullable|exists:users,id',
@@ -371,9 +372,9 @@ class LeadController extends Controller
             'users' => $users,
             'statuses' => Lead::getStatuses($orgId),
             'leadStatuses' => $leadStatuses,
-            'sources' => Lead::getSources(),
+            'sources' => Lead::getSources($orgId),
             'priorities' => Lead::getPriorities(),
-            'services' => Lead::getServices(),
+            'services' => $orgId ? [] : Lead::getServices(),
             'industries' => Lead::getIndustries(),
         ]);
     }
@@ -403,11 +404,11 @@ class LeadController extends Controller
             'city' => 'nullable|string|max:100',
             'address' => 'nullable|string|max:500',
             'status' => ['required', Rule::in($validSlugs)],
-            'source' => ['required', Rule::in(array_keys(Lead::getSources()))],
+            'source' => ['required', Rule::in(array_keys(Lead::getSources($orgId)))],
             'priority' => ['required', Rule::in(array_keys(Lead::getPriorities()))],
             'estimated_value' => 'nullable|numeric|min:0',
             'currency' => 'nullable|string|max:3',
-            'interested_services' => 'nullable|array',
+            ...($orgId ? [] : ['interested_services' => 'nullable|array']),
             'requirements' => 'nullable|string|max:5000',
             'notes' => 'nullable|string|max:5000',
             'assigned_to' => 'nullable|exists:users,id',
