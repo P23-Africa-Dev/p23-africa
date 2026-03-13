@@ -81,6 +81,9 @@
                     <a href="{{ orgRoute('admin.crm.statuses.index') }}" class="btn btn-outline-dark">
                         <i class="fa fa-tags me-2"></i>Manage Statuses
                     </a>
+                    <a href="{{ orgRoute('admin.crm.settings') }}" class="btn btn-outline-secondary">
+                        <i class="fa fa-cog me-2"></i>CRM Settings
+                    </a>
                 @endhasanyrole
                 <a href="{{ orgRoute('admin.crm.import') }}" class="btn btn-outline-success">
                     <i class="fa fa-file-import me-2"></i>Import Leads
@@ -312,7 +315,7 @@
                                             ->sum('value');
                                     @endphp
                                     <h3 class="mb-0 text-dark dark:text-gray-100">
-                                        ${{ number_format($totalPipelineValue) }}
+                                        {{ $crmCurrency }}{{ number_format($totalPipelineValue) }}
                                     </h3>
                                 </div>
                             </div>
@@ -335,7 +338,7 @@
                                             ->sum('value');
                                     @endphp
                                     <h3 class="mb-0 text-dark dark:text-gray-100">
-                                        ${{ number_format($wonValue) }}
+                                        {{ $crmCurrency }}{{ number_format($wonValue) }}
                                     </h3>
                                 </div>
                             </div>
@@ -385,7 +388,7 @@
                             </div>
                             <div class="pipeline-stats">
                                 <span
-                                    id="value-{{ $statusKey }}">${{ number_format($columnData['value']) }}</span>
+                                    id="value-{{ $statusKey }}">{{ $crmCurrency }}{{ number_format($columnData['value']) }}</span>
                             </div>
                         </div>
                         <div class="pipeline-body sortable-column" data-status="{{ $statusKey }}">
@@ -404,7 +407,7 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         @if ($lead->estimated_value)
                                             <span
-                                                class="lead-value">${{ number_format($lead->estimated_value) }}</span>
+                                                class="lead-value">{{ $crmCurrency }}{{ number_format($lead->estimated_value) }}</span>
                                         @else
                                             <span class="text-muted">-</span>
                                         @endif
@@ -632,7 +635,7 @@
                             cards.forEach(card => {
                                 total += parseFloat(card.dataset.value) || 0;
                             });
-                            valueEl.textContent = '$' + total.toLocaleString();
+                            valueEl.textContent = '{{ $crmCurrency }}' + total.toLocaleString();
                         }
                     });
                 }

@@ -183,6 +183,9 @@
                     <a href="{{ orgRoute('admin.crm.statuses.index') }}" class="btn btn-outline-dark">
                         <i class="fa fa-tags me-2"></i>Manage Statuses
                     </a>
+                    <a href="{{ orgRoute('admin.crm.settings') }}" class="btn btn-outline-secondary">
+                        <i class="fa fa-cog me-2"></i>CRM Settings
+                    </a>
                 @endhasanyrole
                 <a href="{{ orgRoute('admin.crm.import') }}" class="btn btn-outline-success">
                     <i class="fa fa-file-import me-2"></i>Import Leads
@@ -343,7 +346,7 @@
                                 <div class="ms-3">
                                     <h6 class="text-muted dark:text-gray-400 mb-1">Pipeline</h6>
                                     <h3 class="mb-0 text-dark dark:text-gray-100">
-                                        ${{ number_format($stats['total_value']) }}</h3>
+                                        {{ $crmCurrency }}{{ number_format($stats['total_value']) }}</h3>
                                 </div>
                             </div>
                         </div>
@@ -554,7 +557,7 @@
                                             <td class="dark:text-gray-100">
                                                 @if ($lead->estimated_value)
                                                     <span
-                                                        class="text-success fw-medium">${{ number_format($lead->estimated_value) }}</span>
+                                                        class="text-success fw-medium">{{ $crmCurrency }}{{ number_format($lead->estimated_value) }}</span>
                                                 @else
                                                     <span class="text-muted">-</span>
                                                 @endif

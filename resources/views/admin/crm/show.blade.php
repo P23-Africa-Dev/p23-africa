@@ -178,7 +178,7 @@
                                 <div class="mb-3">
                                     <label class="text-muted small">Estimated Value</label>
                                     <div class="text-success fw-bold fs-5">
-                                        ${{ number_format($lead->estimated_value, 2) }}</div>
+                                        {{ $crmCurrency }}{{ number_format($lead->estimated_value, 2) }}</div>
                                 </div>
                             @endif
                             <div class="mb-3">

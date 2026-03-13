@@ -387,6 +387,9 @@ Route::middleware(['auth', 'check.suspended', 'resolve.org', 'role:admin|supervi
             Route::put('/crm/statuses/{leadStatus}', [\App\Http\Controllers\Admin\LeadStatusController::class, 'update'])->name('crm.statuses.update');
             Route::delete('/crm/statuses/{leadStatus}', [\App\Http\Controllers\Admin\LeadStatusController::class, 'destroy'])->name('crm.statuses.destroy');
             Route::post('/crm/statuses/reorder', [\App\Http\Controllers\Admin\LeadStatusController::class, 'reorder'])->name('crm.statuses.reorder');
+            // CRM Settings (currency, etc.)
+            Route::get('/crm/settings', [\App\Http\Controllers\Admin\CrmSettingsController::class, 'index'])->name('crm.settings');
+            Route::post('/crm/settings', [\App\Http\Controllers\Admin\CrmSettingsController::class, 'update'])->name('crm.settings.update');
         });
 
         Route::get('/crm/{lead}', [\App\Http\Controllers\Admin\LeadController::class, 'show'])->name('crm.show');
@@ -556,6 +559,9 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
         Route::put('/crm/statuses/{leadStatus}', [\App\Http\Controllers\Admin\LeadStatusController::class, 'update'])->name('crm.statuses.update');
         Route::delete('/crm/statuses/{leadStatus}', [\App\Http\Controllers\Admin\LeadStatusController::class, 'destroy'])->name('crm.statuses.destroy');
         Route::post('/crm/statuses/reorder', [\App\Http\Controllers\Admin\LeadStatusController::class, 'reorder'])->name('crm.statuses.reorder');
+        // CRM Settings (currency, etc.)
+        Route::get('/crm/settings', [\App\Http\Controllers\Admin\CrmSettingsController::class, 'index'])->name('crm.settings');
+        Route::post('/crm/settings', [\App\Http\Controllers\Admin\CrmSettingsController::class, 'update'])->name('crm.settings.update');
     });
 
     Route::get('/crm/{lead}', [\App\Http\Controllers\Admin\LeadController::class, 'show'])->name('crm.show');

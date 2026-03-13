@@ -264,7 +264,7 @@
                                 <label class="form-label text-dark dark:text-gray-100">Estimated Value</label>
                                 <div class="input-group">
                                     <span
-                                        class="input-group-text dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100">$</span>
+                                        class="input-group-text dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100">{{ $crmCurrency }}</span>
                                     <input type="number" step="0.01" min="0" name="estimated_value"
                                         class="form-control dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 @error('estimated_value') is-invalid @enderror"
                                         value="{{ old('estimated_value', $lead->estimated_value) }}">

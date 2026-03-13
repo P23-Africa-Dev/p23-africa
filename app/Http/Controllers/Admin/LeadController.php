@@ -8,6 +8,7 @@ use App\Models\LeadActivity;
 use App\Models\LeadDrive;
 use App\Models\LeadEmail;
 use App\Models\LeadStatus;
+use App\Models\Organization;
 use App\Models\User;
 use App\Models\ContactSubmission;
 use App\Models\ConsultationApplication;
@@ -31,6 +32,20 @@ class LeadController extends Controller
             return $user->organization_id;
         }
         return null;
+    }
+
+    /**
+     * Returns the CRM display currency symbol for the current context.
+     * Org users get their org's configured currency; super-admin defaults to '$'.
+     */
+    protected function crmCurrencySymbol(): string
+    {
+        $orgId = $this->currentOrgId();
+        if ($orgId) {
+            $org = Organization::find($orgId);
+            return $org ? $org->getCrmCurrencySymbol() : '$';
+        }
+        return '$';
     }
 
     /**
@@ -197,7 +212,9 @@ class LeadController extends Controller
         $leadStatuses = LeadStatus::getForOrg($orgId);
         $sources = Lead::getSources($orgId);
 
-        return view('admin.crm.index', compact('leads', 'stats', 'users', 'drives', 'currentDrive', 'leadStatuses', 'sources'));
+        $crmCurrency = $this->crmCurrencySymbol();
+
+        return view('admin.crm.index', compact('leads', 'stats', 'users', 'drives', 'currentDrive', 'leadStatuses', 'sources', 'crmCurrency'));
     }
 
     /**
@@ -227,6 +244,7 @@ class LeadController extends Controller
             'priorities' => Lead::getPriorities(),
             'services' => $orgId ? [] : Lead::getServices(),
             'industries' => Lead::getIndustries(),
+            'crmCurrency' => $this->crmCurrencySymbol(),
         ]);
     }
 
@@ -344,6 +362,7 @@ class LeadController extends Controller
             'leadStatuses' => $leadStatuses,
             'priorities' => Lead::getPriorities(),
             'activityTypes' => LeadActivity::getTypes(),
+            'crmCurrency' => $this->crmCurrencySymbol(),
         ]);
     }
 
@@ -376,6 +395,7 @@ class LeadController extends Controller
             'priorities' => Lead::getPriorities(),
             'services' => $orgId ? [] : Lead::getServices(),
             'industries' => Lead::getIndustries(),
+            'crmCurrency' => $this->crmCurrencySymbol(),
         ]);
     }
 
@@ -1090,7 +1110,9 @@ class LeadController extends Controller
             ];
         }
 
-        return view('admin.crm.pipeline', compact('pipeline', 'statuses', 'leadStatuses', 'drives', 'currentDrive'));
+        $crmCurrency = $this->crmCurrencySymbol();
+
+        return view('admin.crm.pipeline', compact('pipeline', 'statuses', 'leadStatuses', 'drives', 'currentDrive', 'crmCurrency'));
     }
 
     /**
