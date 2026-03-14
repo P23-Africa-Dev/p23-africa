@@ -371,7 +371,12 @@ Route::middleware(['auth', 'check.suspended', 'resolve.org', 'role:admin|supervi
         Route::get('/crm/pipeline', [\App\Http\Controllers\Admin\LeadController::class, 'pipeline'])->name('crm.pipeline');
         Route::get('/crm/export', [\App\Http\Controllers\Admin\LeadController::class, 'export'])->name('crm.export');
         Route::get('/crm/import', [\App\Http\Controllers\Admin\LeadImportController::class, 'showImport'])->name('crm.import');
+        Route::post('/crm/import/preview', [\App\Http\Controllers\Admin\LeadImportController::class, 'preview'])->name('crm.import.preview');
         Route::post('/crm/import', [\App\Http\Controllers\Admin\LeadImportController::class, 'import'])->name('crm.import.process');
+        Route::get('/crm/import/review', [\App\Http\Controllers\Admin\LeadImportController::class, 'showReview'])->name('crm.import.review');
+        Route::post('/crm/import/retry', [\App\Http\Controllers\Admin\LeadImportController::class, 'retry'])->name('crm.import.retry');
+        Route::post('/crm/import/retry-single', [\App\Http\Controllers\Admin\LeadImportController::class, 'retrySingle'])->name('crm.import.retry-single');
+        Route::post('/crm/import/skip-all', [\App\Http\Controllers\Admin\LeadImportController::class, 'skipAll'])->name('crm.import.skip-all');
         Route::get('/crm/import/template', [\App\Http\Controllers\Admin\LeadImportController::class, 'downloadTemplate'])->name('crm.import.template');
 
         Route::get('/crm/drives', [\App\Http\Controllers\Admin\LeadDriveController::class, 'index'])->name('crm.drives.index');
@@ -542,7 +547,12 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
     Route::get('/crm/pipeline', [\App\Http\Controllers\Admin\LeadController::class, 'pipeline'])->name('crm.pipeline');
     Route::get('/crm/export', [\App\Http\Controllers\Admin\LeadController::class, 'export'])->name('crm.export');
     Route::get('/crm/import', [\App\Http\Controllers\Admin\LeadImportController::class, 'showImport'])->name('crm.import');
+    Route::post('/crm/import/preview', [\App\Http\Controllers\Admin\LeadImportController::class, 'preview'])->name('crm.import.preview');
     Route::post('/crm/import', [\App\Http\Controllers\Admin\LeadImportController::class, 'import'])->name('crm.import.process');
+    Route::get('/crm/import/review', [\App\Http\Controllers\Admin\LeadImportController::class, 'showReview'])->name('crm.import.review');
+    Route::post('/crm/import/retry', [\App\Http\Controllers\Admin\LeadImportController::class, 'retry'])->name('crm.import.retry');
+    Route::post('/crm/import/retry-single', [\App\Http\Controllers\Admin\LeadImportController::class, 'retrySingle'])->name('crm.import.retry-single');
+    Route::post('/crm/import/skip-all', [\App\Http\Controllers\Admin\LeadImportController::class, 'skipAll'])->name('crm.import.skip-all');
     Route::get('/crm/import/template', [\App\Http\Controllers\Admin\LeadImportController::class, 'downloadTemplate'])->name('crm.import.template');
 
     // CRM - Lead Drives

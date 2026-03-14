@@ -156,8 +156,18 @@ class LeadController extends Controller
 
         $leads = $query->paginate(15)->appends($request->all());
 
-        // Build stats query with same drive filter
+        // Build stats query with same org + drive filter
         $statsQuery = Lead::query();
+
+        // Apply same org scoping as the main query
+        if ($user && !$user->hasRole('admin')) {
+            if ($user->organization_id) {
+                $statsQuery->where('organization_id', $user->organization_id);
+            } else {
+                $statsQuery->whereNull('organization_id');
+            }
+        }
+
         if ($request->filled('drive') && $request->drive !== 'all') {
             if ($request->drive === 'unassigned') {
                 $statsQuery->whereNull('drive_id');
@@ -259,7 +269,14 @@ class LeadController extends Controller
         $validated = $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'nullable|string|max:255',
-            'email' => 'required|email|unique:leads,email',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('leads')->where(function ($q) use ($orgId) {
+                    $q->whereNull('deleted_at'); // allow re-using emails from soft-deleted leads
+                    return $orgId ? $q->where('organization_id', $orgId) : $q->whereNull('organization_id');
+                }),
+            ],
             'phone' => 'nullable|string|max:20',
             'company' => 'nullable|string|max:255',
             'year_founded' => 'nullable|integer|min:1901|max:' . date('Y'),
@@ -413,7 +430,14 @@ class LeadController extends Controller
         $validated = $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'nullable|string|max:255',
-            'email' => ['required', 'email', Rule::unique('leads')->ignore($lead->id)],
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('leads')->ignore($lead->id)->where(function ($q) use ($orgId) {
+                    $q->whereNull('deleted_at'); // allow re-using emails from soft-deleted leads
+                    return $orgId ? $q->where('organization_id', $orgId) : $q->whereNull('organization_id');
+                }),
+            ],
             'phone' => 'nullable|string|max:20',
             'company' => 'nullable|string|max:255',
             'year_founded' => 'nullable|integer|min:1901|max:' . date('Y'),
@@ -786,12 +810,19 @@ class LeadController extends Controller
             ], 422);
         }
 
-        // Check if lead with same email exists
-        $emailLead = Lead::where('email', $contact->email)->first();
+        // Check if lead with same email exists within this organisation (include soft-deleted)
+        $orgId = $this->currentOrgId();
+        $emailQuery = Lead::withTrashed()->where('email', $contact->email);
+        $orgId ? $emailQuery->where('organization_id', $orgId) : $emailQuery->whereNull('organization_id');
+        $emailLead = $emailQuery->first();
+
         if ($emailLead) {
+            $msg = $emailLead->trashed()
+                ? 'A previously deleted lead with this email exists. Restore it first or permanently delete it.'
+                : 'A lead with this email already exists in your organisation.';
             return response()->json([
                 'success' => false,
-                'message' => 'A lead with this email already exists.',
+                'message' => $msg,
                 'lead_id' => $emailLead->id
             ], 422);
         }
@@ -843,12 +874,19 @@ class LeadController extends Controller
             ], 422);
         }
 
-        // Check if lead with same email exists
-        $emailLead = Lead::where('email', $consultation->email)->first();
+        // Check if lead with same email exists within this organisation (include soft-deleted)
+        $orgId = $this->currentOrgId();
+        $emailQuery = Lead::withTrashed()->where('email', $consultation->email);
+        $orgId ? $emailQuery->where('organization_id', $orgId) : $emailQuery->whereNull('organization_id');
+        $emailLead = $emailQuery->first();
+
         if ($emailLead) {
+            $msg = $emailLead->trashed()
+                ? 'A previously deleted lead with this email exists. Restore it first or permanently delete it.'
+                : 'A lead with this email already exists in your organisation.';
             return response()->json([
                 'success' => false,
-                'message' => 'A lead with this email already exists.',
+                'message' => $msg,
                 'lead_id' => $emailLead->id
             ], 422);
         }

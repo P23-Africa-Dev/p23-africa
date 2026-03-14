@@ -3,7 +3,7 @@
         <div class="d-flex justify-content-between align-items-center">
             <div>
                 <h2 class="font-semibold text-xl text-dark dark:text-gray-200 leading-tight dark-transition mb-1">
-                    {{ __('Import NOEL Waitlist Leads') }}
+                    {{ __('Import Leads') }}
                 </h2>
                 <p class="text-muted dark:text-gray-400 text-sm mb-0">Import leads from CSV or Excel files</p>
             </div>
@@ -32,174 +32,98 @@
 
             @if (session('import_errors'))
                 <div class="alert alert-warning alert-dismissible fade show mb-4" role="alert">
-                    <h6 class="alert-heading mb-2"><i class="fa fa-exclamation-triangle me-2"></i>Import Warnings</h6>
-                    <ul class="mb-0 ps-3">
-                        @foreach (session('import_errors') as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
+                    <h6 class="alert-heading mb-2">
+                        <i class="fa fa-exclamation-triangle me-2"></i>Import completed with some issues
+                    </h6>
+                    <p class="mb-2 small text-muted">
+                        Some rows were skipped. You can adjust your file and re-import to include them.
+                    </p>
+                    <div style="max-height: 200px; overflow-y: auto;">
+                        <ul class="mb-0 ps-3 small">
+                            @foreach (session('import_errors') as $error)
+                                <li>{!! e($error) !!}</li>
+                            @endforeach
+                        </ul>
+                    </div>
                     @if (session('more_errors'))
-                        <p class="mt-2 mb-0 text-muted">...and {{ session('more_errors') }} more errors.</p>
+                        <p class="mt-2 mb-0 text-muted small">...and {{ session('more_errors') }} more issue(s) not
+                            shown.</p>
                     @endif
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             @endif
 
-            <!-- File Format Requirements Card -->
+            <!-- How It Works Card -->
             <div class="card border-0 shadow-sm dark:bg-gray-800 mb-4">
                 <div class="card-header bg-transparent border-0 pt-4">
                     <h5 class="mb-0 text-dark dark:text-gray-100">
-                        <i class="fa fa-file-alt me-2 text-primary"></i>File Format Requirements
+                        <i class="fa fa-magic me-2 text-primary"></i>How It Works
                     </h5>
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h6 class="text-dark dark:text-gray-100 mb-3">Recommended Columns</h6>
-                            <ul class="list-unstyled">
-                                <li class="mb-2">
-                                    <i class="fa fa-check-circle text-success me-2"></i>
-                                    <strong>Full Name</strong> <span
-                                        class="badge bg-warning text-dark ms-1">Recommended</span>
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fa fa-check-circle text-success me-2"></i>
-                                    <strong>Email</strong> <span
-                                        class="badge bg-warning text-dark ms-1">Recommended</span>
-                                </li>
-                            </ul>
-                            <small class="text-muted d-block mt-2">
-                                <i class="fa fa-info-circle me-1"></i>
-                                Empty names will be imported as "Unknown". Empty or invalid emails will be imported
-                                without email.
-                            </small>
+                    <div class="row text-center">
+                        <div class="col-md-4 mb-3 mb-md-0">
+                            <div class="rounded-circle bg-primary bg-opacity-10 d-inline-flex align-items-center justify-content-center mb-3"
+                                style="width: 60px; height: 60px;">
+                                <i class="fa fa-upload text-primary fa-lg"></i>
+                            </div>
+                            <h6 class="text-dark dark:text-gray-100">1. Upload File</h6>
+                            <p class="text-muted small mb-0">Upload any CSV or Excel file. No specific column names
+                                required.</p>
                         </div>
-                        <div class="col-md-6">
-                            <h6 class="text-dark dark:text-gray-100 mb-3">Optional Columns</h6>
-                            <ul class="list-unstyled">
-                                <li class="mb-2">
-                                    <i class="fa fa-circle text-secondary me-2" style="font-size: 8px;"></i>
-                                    Company
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fa fa-circle text-secondary me-2" style="font-size: 8px;"></i>
-                                    Employee Count
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fa fa-circle text-secondary me-2" style="font-size: 8px;"></i>
-                                    Year Founded
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fa fa-circle text-secondary me-2" style="font-size: 8px;"></i>
-                                    Industry
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fa fa-circle text-secondary me-2" style="font-size: 8px;"></i>
-                                    Country
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fa fa-circle text-secondary me-2" style="font-size: 8px;"></i>
-                                    Company LinkedIn Profile
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fa fa-circle text-secondary me-2" style="font-size: 8px;"></i>
-                                    CEO LinkedIn Profile
-                                </li>
-                            </ul>
+                        <div class="col-md-4 mb-3 mb-md-0">
+                            <div class="rounded-circle bg-success bg-opacity-10 d-inline-flex align-items-center justify-content-center mb-3"
+                                style="width: 60px; height: 60px;">
+                                <i class="fa fa-columns text-success fa-lg"></i>
+                            </div>
+                            <h6 class="text-dark dark:text-gray-100">2. Map Columns</h6>
+                            <p class="text-muted small mb-0">We auto-detect your columns. Review, adjust, and preview
+                                your data before importing.</p>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="rounded-circle bg-info bg-opacity-10 d-inline-flex align-items-center justify-content-center mb-3"
+                                style="width: 60px; height: 60px;">
+                                <i class="fa fa-check-double text-info fa-lg"></i>
+                            </div>
+                            <h6 class="text-dark dark:text-gray-100">3. Import</h6>
+                            <p class="text-muted small mb-0">Leads are imported with duplicate detection and validation.
+                            </p>
                         </div>
                     </div>
-
-                    <div class="alert alert-info mb-0 mt-3">
+                    <div class="alert alert-info mb-0 mt-4">
                         <i class="fa fa-info-circle me-2"></i>
-                        <strong>Note:</strong> Column headers are case-insensitive. File must be CSV (.csv) or Excel
-                        (.xlsx, .xls) format. Maximum file size: 10MB. All rows will be imported, with warnings shown
-                        for missing data.
+                        <strong>Flexible Import:</strong> Your file can have any column names. We'll automatically
+                        suggest mappings and let you customize them.
+                        File must be CSV (.csv) or Excel (.xlsx, .xls). Max size: 10MB.
                     </div>
                 </div>
             </div>
 
-            <!-- Template Preview Card -->
+            <!-- Template Download Card -->
             <div class="card border-0 shadow-sm dark:bg-gray-800 mb-4">
                 <div class="card-header bg-transparent border-0 pt-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <h5 class="mb-0 text-dark dark:text-gray-100">
-                            <i class="fa fa-table me-2 text-primary"></i>Template Preview
+                            <i class="fa fa-table me-2 text-primary"></i>Need a Template?
                         </h5>
                         <div class="btn-group">
                             <a href="{{ orgRoute('admin.crm.import.template', ['format' => 'csv']) }}"
                                 class="btn btn-sm btn-outline-primary">
-                                <i class="fa fa-download me-1"></i>Download CSV Template
+                                <i class="fa fa-download me-1"></i>CSV Template
                             </a>
                             <a href="{{ orgRoute('admin.crm.import.template', ['format' => 'xlsx']) }}"
                                 class="btn btn-sm btn-outline-success">
-                                <i class="fa fa-download me-1"></i>Download Excel Template
+                                <i class="fa fa-download me-1"></i>Excel Template
                             </a>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                    <p class="text-muted dark:text-gray-400 mb-3">
-                        Your file should look like this example. The first row must contain the column headers.
+                    <p class="text-muted dark:text-gray-400 mb-0">
+                        <i class="fa fa-lightbulb text-warning me-1"></i>
+                        Optional: Download a pre-formatted template to get started quickly. You can also import your own
+                        files with any column layout.
                     </p>
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped mb-0" style="font-size: 0.85rem;">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th class="text-nowrap">Full Name</th>
-                                    <th class="text-nowrap">Company</th>
-                                    <th class="text-nowrap">Employee Count</th>
-                                    <th class="text-nowrap">Year Founded</th>
-                                    <th class="text-nowrap">Industry</th>
-                                    <th class="text-nowrap">Country</th>
-                                    <th class="text-nowrap">Company LinkedIn Profile</th>
-                                    <th class="text-nowrap">CEO LinkedIn Profile</th>
-                                    <th class="text-nowrap">Email</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>John Doe</td>
-                                    <td>Acme Corporation</td>
-                                    <td>50-100</td>
-                                    <td>2015</td>
-                                    <td>Technology</td>
-                                    <td>Nigeria</td>
-                                    <td class="text-truncate" style="max-width: 150px;">
-                                        https://linkedin.com/company/acme</td>
-                                    <td class="text-truncate" style="max-width: 150px;">
-                                        https://linkedin.com/in/johndoe
-                                    </td>
-                                    <td>john@acme.com</td>
-                                </tr>
-                                <tr>
-                                    <td>Jane Smith</td>
-                                    <td>Tech Solutions Ltd</td>
-                                    <td>10-50</td>
-                                    <td>2020</td>
-                                    <td>Finance</td>
-                                    <td>Kenya</td>
-                                    <td class="text-truncate" style="max-width: 150px;">
-                                        https://linkedin.com/company/techsol</td>
-                                    <td class="text-truncate" style="max-width: 150px;">
-                                        https://linkedin.com/in/janesmith</td>
-                                    <td>jane@techsolutions.co.ke</td>
-                                </tr>
-                                <tr>
-                                    <td>Michael Johnson</td>
-                                    <td>African Ventures</td>
-                                    <td>100-500</td>
-                                    <td>2010</td>
-                                    <td>Real Estate</td>
-                                    <td>South Africa</td>
-                                    <td class="text-truncate" style="max-width: 150px;">
-                                        https://linkedin.com/company/africanventures</td>
-                                    <td class="text-truncate" style="max-width: 150px;">
-                                        https://linkedin.com/in/michaelj</td>
-                                    <td>michael@africanventures.za</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
             </div>
 
@@ -211,7 +135,7 @@
                     </h5>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ orgRoute('admin.crm.import.process') }}"
+                    <form method="POST" action="{{ orgRoute('admin.crm.import.preview') }}"
                         enctype="multipart/form-data" id="importForm">
                         @csrf
 
@@ -236,8 +160,8 @@
                                     </select>
                                 </div>
                                 <div class="col-md-4">
-                                    <button type="button" class="btn btn-outline-primary w-100"
-                                        data-bs-toggle="modal" data-bs-target="#newDriveModal">
+                                    <button type="button" class="btn btn-outline-primary w-100" data-bs-toggle="modal"
+                                        data-bs-target="#newDriveModal">
                                         <i class="fa fa-plus me-2"></i>Create New Pipeline
                                     </button>
                                 </div>
@@ -293,7 +217,7 @@
                         <div class="d-flex justify-content-end gap-2">
                             <a href="{{ orgRoute('admin.crm.index') }}" class="btn btn-outline-secondary">Cancel</a>
                             <button type="submit" class="btn btn-primary" id="importBtn" disabled>
-                                <i class="fa fa-upload me-2"></i>Import Leads
+                                <i class="fa fa-columns me-2"></i>Preview & Map Columns
                             </button>
                         </div>
                     </form>
@@ -583,7 +507,7 @@
                         return;
                     }
                     importBtn.disabled = true;
-                    importBtn.innerHTML = '<i class="fa fa-spinner fa-spin me-2"></i>Importing...';
+                    importBtn.innerHTML = '<i class="fa fa-spinner fa-spin me-2"></i>Analysing file...';
                 });
             });
         </script>

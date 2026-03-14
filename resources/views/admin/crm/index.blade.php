@@ -220,16 +220,33 @@
 
             @if (session('import_errors'))
                 <div class="alert alert-warning alert-dismissible fade show mb-4" role="alert">
-                    <h6 class="alert-heading mb-2"><i class="fa fa-exclamation-triangle me-2"></i>Import Warnings (Some
-                        rows were skipped)</h6>
-                    <ul class="mb-0 ps-3">
-                        @foreach (session('import_errors') as $importError)
-                            <li>{{ $importError }}</li>
-                        @endforeach
-                    </ul>
-                    @if (session('more_errors'))
-                        <p class="mt-2 mb-0 text-muted">...and {{ session('more_errors') }} more errors.</p>
-                    @endif
+                    <div class="d-flex align-items-start">
+                        <div class="flex-grow-1">
+                            <h6 class="alert-heading mb-2">
+                                <i class="fa fa-exclamation-triangle me-2"></i>Import completed with some issues
+                            </h6>
+                            <p class="mb-2 small text-muted">
+                                The rows below were skipped during import. You can adjust your file and re-import to
+                                include them.
+                            </p>
+                            <div style="max-height: 200px; overflow-y: auto;">
+                                <ul class="mb-0 ps-3 small">
+                                    @foreach (session('import_errors') as $importError)
+                                        <li>{!! e($importError) !!}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            @if (session('more_errors'))
+                                <p class="mt-2 mb-0 text-muted small">...and {{ session('more_errors') }} more issue(s)
+                                    not shown.</p>
+                            @endif
+                            <div class="mt-3">
+                                <a href="{{ orgRoute('admin.crm.import') }}" class="btn btn-sm btn-outline-primary">
+                                    <i class="fa fa-redo me-1"></i>Re-import with corrections
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             @endif
