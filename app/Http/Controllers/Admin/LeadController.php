@@ -244,10 +244,24 @@ class LeadController extends Controller
         }
         $users = $usersQuery->get();
 
+        // Get drives scoped to the current org
+        $drivesQuery = LeadDrive::orderBy('is_default', 'desc')->orderBy('name');
+        if ($user && !$user->hasRole('admin')) {
+            if ($user->organization_id) {
+                $drivesQuery->where('organization_id', $user->organization_id);
+            } else {
+                $drivesQuery->whereNull('organization_id');
+            }
+        }
+        $drives = $drivesQuery->get();
+        $defaultDriveId = $drives->firstWhere('is_default', true)?->id ?? $drives->first()?->id;
+
         $leadStatuses = LeadStatus::getForOrg($orgId);
 
         return view('admin.crm.create', [
             'users' => $users,
+            'drives' => $drives,
+            'defaultDriveId' => $defaultDriveId,
             'statuses' => Lead::getStatuses($orgId),
             'leadStatuses' => $leadStatuses,
             'sources' => Lead::getSources($orgId),
@@ -296,6 +310,7 @@ class LeadController extends Controller
             'notes' => 'nullable|string|max:5000',
             'assigned_to' => 'nullable|exists:users,id',
             'organization_id' => 'nullable|exists:organizations,id',
+            'drive_id' => 'nullable|exists:lead_drives,id',
             'next_follow_up' => 'nullable|date|after:now',
         ]);
 
@@ -316,6 +331,7 @@ class LeadController extends Controller
             'currency',
             'requirements',
             'notes',
+            'drive_id',
             'next_follow_up'
         ];
         foreach ($nullableFields as $field) {

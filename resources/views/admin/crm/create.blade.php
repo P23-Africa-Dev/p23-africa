@@ -274,6 +274,33 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+                            <div class="col-md-12">
+                                <label class="form-label text-dark dark:text-gray-100">
+                                    <i class="fa fa-folder me-1 text-primary"></i>Pipeline
+                                </label>
+                                <select name="drive_id"
+                                    class="form-select dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 @error('drive_id') is-invalid @enderror">
+                                    <option value="">— No Pipeline (Lead Bank default) —</option>
+                                    @foreach ($drives as $drive)
+                                        <option value="{{ $drive->id }}"
+                                            {{ old('drive_id', $defaultDriveId) == $drive->id ? 'selected' : '' }}
+                                            style="border-left: 3px solid {{ $drive->color ?? '#6c757d' }};">
+                                            {{ $drive->name }}
+                                            @if ($drive->is_default)
+                                                (Default)
+                                            @endif
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('drive_id')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                                <div class="form-text text-muted">
+                                    <i class="fa fa-info-circle me-1"></i>
+                                    Organise this lead into a pipeline. If left blank, the default pipeline will be
+                                    used.
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
