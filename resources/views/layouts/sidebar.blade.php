@@ -59,6 +59,13 @@
                 <span class="sidebar-text">CRM</span>
             </a>
 
+            {{-- Spreadsheets --}}
+            <a href="{{ url($sidebarOrgPrefix . '/admin/spreadsheets') }}" data-tooltip="Spreadsheets"
+                class="sidebar-item {{ request()->routeIs('admin.spreadsheets.*', 'org.admin.spreadsheets.*') ? 'active' : '' }}">
+                <span class="sidebar-icon"><i class="bi bi-file-earmark-spreadsheet"></i></span>
+                <span class="sidebar-text">Spreadsheets</span>
+            </a>
+
             {{-- Calendar (admin / non-org users only) --}}
             @if (auth()->user() && (auth()->user()->hasRole('admin') || !auth()->user()->organization_id))
                 <a href="{{ url($sidebarOrgPrefix . '/admin/calendar') }}" data-tooltip="Calendar"

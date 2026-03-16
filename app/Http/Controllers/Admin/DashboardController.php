@@ -14,11 +14,13 @@ use App\Models\ConsultationApplication;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\Lead;
+use App\Models\LeadDrive;
 use App\Models\LeadStatus;
 use App\Models\Attendance;
 use App\Http\Controllers\Admin\ConsultationController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -89,6 +91,81 @@ class DashboardController extends Controller
             $defaultSlug = LeadStatus::getDefaultSlug($leadOrgId);
             $stats['new_leads'] = $orgScope(Lead::where('status', $defaultSlug))->count();
 
+            // ── Comprehensive CRM stats ──────────────────────────────────
+            $wonSlugs  = LeadStatus::getWonSlugs($leadOrgId);
+            $lostSlugs = LeadStatus::getLostSlugs($leadOrgId);
+
+            $stats['won_leads']  = $wonSlugs  ? $orgScope(Lead::whereIn('status', $wonSlugs))->count() : 0;
+            $stats['lost_leads'] = $lostSlugs ? $orgScope(Lead::whereIn('status', $lostSlugs))->count() : 0;
+
+            // Active = total minus won minus lost
+            $terminalSlugs = array_merge($wonSlugs, $lostSlugs);
+            $stats['active_leads'] = $terminalSlugs
+                ? $orgScope(Lead::whereNotIn('status', $terminalSlugs))->count()
+                : $stats['total_leads'];
+
+            // Conversion rate (won / (won + lost)) — avoid division by zero
+            $closedCount = $stats['won_leads'] + $stats['lost_leads'];
+            $stats['conversion_rate'] = $closedCount > 0
+                ? round(($stats['won_leads'] / $closedCount) * 100, 1)
+                : 0;
+
+            // Pipeline value (estimated_value of active leads)
+            $stats['pipeline_value'] = $terminalSlugs
+                ? (float) $orgScope(Lead::whereNotIn('status', $terminalSlugs))->sum('estimated_value')
+                : (float) $orgScope(Lead::query())->sum('estimated_value');
+            $stats['won_value'] = $wonSlugs
+                ? (float) $orgScope(Lead::whereIn('status', $wonSlugs))->sum('estimated_value')
+                : 0;
+
+            // Overdue follow-ups
+            $stats['overdue_follow_ups'] = $orgScope(
+                Lead::whereNotNull('next_follow_up')
+                    ->where('next_follow_up', '<', Carbon::now())
+                    ->when(!empty($terminalSlugs), fn($q) => $q->whereNotIn('status', $terminalSlugs))
+            )->count();
+
+            // This month
+            $startOfMonth = Carbon::now()->startOfMonth();
+            $stats['this_month_leads'] = $orgScope(Lead::where('created_at', '>=', $startOfMonth))->count();
+            $stats['this_month_won'] = $wonSlugs
+                ? $orgScope(Lead::whereIn('status', $wonSlugs)->where('converted_at', '>=', $startOfMonth))->count()
+                : 0;
+
+            // Per-status breakdown [ slug => ['name'=>..,'color'=>..,'count'=>..] ]
+            $allStatuses = LeadStatus::getForOrg($leadOrgId);
+            $statusBreakdown = [];
+            foreach ($allStatuses as $st) {
+                $statusBreakdown[$st->slug] = [
+                    'name'  => $st->name,
+                    'color' => $st->color,
+                    'count' => $orgScope(Lead::where('status', $st->slug))->count(),
+                ];
+            }
+            $stats['status_breakdown'] = $statusBreakdown;
+
+            // Per-drive breakdown
+            $drives = LeadDrive::when(!$isAdmin, function ($q) use ($user) {
+                $q->where('organization_id', $user->organization_id);
+            })->get();
+            $driveBreakdown = [];
+            foreach ($drives as $d) {
+                $driveBreakdown[] = [
+                    'name'  => $d->name,
+                    'color' => $d->color,
+                    'count' => $orgScope(Lead::where('drive_id', $d->id))->count(),
+                    'value' => (float) $orgScope(Lead::where('drive_id', $d->id))->sum('estimated_value'),
+                ];
+            }
+            $stats['drive_breakdown'] = $driveBreakdown;
+
+            // CRM currency symbol
+            $stats['crm_currency'] = '$';
+            if ($isOrgUser) {
+                $org = \App\Models\Organization::find($user->organization_id);
+                $stats['crm_currency'] = $org ? $org->getCrmCurrencySymbol() : '$';
+            }
+
             $hasSignedInToday = Attendance::hasSignedInToday($user->id);
 
             return view('admin.dashboard', compact('stats', 'hasSignedInToday'));
@@ -117,6 +194,18 @@ class DashboardController extends Controller
                 'pending_tasks' => 0,
                 'total_leads' => 0,
                 'new_leads' => 0,
+                'won_leads' => 0,
+                'lost_leads' => 0,
+                'active_leads' => 0,
+                'conversion_rate' => 0,
+                'pipeline_value' => 0,
+                'won_value' => 0,
+                'overdue_follow_ups' => 0,
+                'this_month_leads' => 0,
+                'this_month_won' => 0,
+                'status_breakdown' => [],
+                'drive_breakdown' => [],
+                'crm_currency' => '$',
             ];
 
             $hasSignedInToday = false;

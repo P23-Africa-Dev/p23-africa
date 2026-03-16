@@ -309,7 +309,7 @@
         </div>
     @endif
 
-    {{-- ─── Project / Task / Lead Quick Stats ─────────────────────────── --}}
+    {{-- ─── Project / Task Quick Stats ────────────────────────────── --}}
     <div class="row g-3 mb-4">
         <div class="col-6 col-lg-3 anim-in">
             <div class="card">
@@ -361,7 +361,7 @@
                         <i class="bi bi-funnel"></i>
                     </div>
                     <div>
-                        <div class="stat-label">Leads</div>
+                        <div class="stat-label">Total Leads</div>
                         <div class="stat-value">{{ $stats['total_leads'] ?? 0 }}</div>
                         <div class="stat-sub text-muted" style="font-size:.75rem;">{{ $stats['new_leads'] ?? 0 }} new
                         </div>
@@ -370,6 +370,205 @@
             </div>
         </div>
     </div>
+
+    {{-- ─── CRM Statistics ──────────────────────────────────────────── --}}
+    @if (($stats['total_leads'] ?? 0) > 0 || (auth()->user() && auth()->user()->organization_id))
+        <div class="card mb-4 anim-in">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0" style="font-size:.9375rem;display:flex;align-items:center;gap:.5rem;">
+                    <span
+                        style="width:28px;height:28px;border-radius:8px;background:rgba(16,185,129,.12);
+                    color:var(--p-success);display:inline-flex;align-items:center;justify-content:center;">
+                        <i class="bi bi-graph-up" style="font-size:.85rem;"></i>
+                    </span>
+                    CRM Statistics
+                </h5>
+                <a href="{{ orgRoute('admin.crm.pipeline') }}"
+                    class="btn btn-sm btn-outline-primary d-flex align-items-center gap-1">
+                    <i class="bi bi-kanban" style="font-size:.75rem;"></i> Pipeline
+                </a>
+            </div>
+            <div class="card-body">
+                {{-- Row 1: Key metrics --}}
+                <div class="row g-3 mb-3">
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="text-center p-2 rounded"
+                            style="background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.15);">
+                            <div
+                                style="font-size:.7rem;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:2px;">
+                                Active</div>
+                            <div style="font-size:1.25rem;font-weight:700;color:var(--p-info);">
+                                {{ $stats['active_leads'] ?? 0 }}</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="text-center p-2 rounded"
+                            style="background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.15);">
+                            <div
+                                style="font-size:.7rem;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:2px;">
+                                Won</div>
+                            <div style="font-size:1.25rem;font-weight:700;color:var(--p-success);">
+                                {{ $stats['won_leads'] ?? 0 }}</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="text-center p-2 rounded"
+                            style="background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.15);">
+                            <div
+                                style="font-size:.7rem;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:2px;">
+                                Lost</div>
+                            <div style="font-size:1.25rem;font-weight:700;color:var(--p-danger);">
+                                {{ $stats['lost_leads'] ?? 0 }}</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="text-center p-2 rounded"
+                            style="background:rgba(139,92,246,.06);border:1px solid rgba(139,92,246,.15);">
+                            <div
+                                style="font-size:.7rem;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:2px;">
+                                Conversion</div>
+                            <div style="font-size:1.25rem;font-weight:700;color:#8b5cf6;">
+                                {{ $stats['conversion_rate'] ?? 0 }}%</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="text-center p-2 rounded"
+                            style="background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.15);">
+                            <div
+                                style="font-size:.7rem;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:2px;">
+                                Pipeline Value</div>
+                            <div style="font-size:1.05rem;font-weight:700;color:var(--p-warning);">
+                                {{ $stats['crm_currency'] ?? '$' }}{{ number_format($stats['pipeline_value'] ?? 0, 0) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="text-center p-2 rounded"
+                            style="background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.15);">
+                            <div
+                                style="font-size:.7rem;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:2px;">
+                                Won Value</div>
+                            <div style="font-size:1.05rem;font-weight:700;color:var(--p-success);">
+                                {{ $stats['crm_currency'] ?? '$' }}{{ number_format($stats['won_value'] ?? 0, 0) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Row 2: Alerts + This Month --}}
+                <div class="row g-3 mb-3">
+                    @if (($stats['overdue_follow_ups'] ?? 0) > 0)
+                        <div class="col-12 col-md-6">
+                            <div class="d-flex align-items-center gap-2 p-2 rounded"
+                                style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);">
+                                <i class="bi bi-exclamation-triangle-fill"
+                                    style="color:var(--p-danger);font-size:1.1rem;"></i>
+                                <div>
+                                    <span
+                                        style="font-weight:600;color:var(--p-danger);">{{ $stats['overdue_follow_ups'] }}</span>
+                                    <span style="font-size:.8125rem;color:var(--text-muted);"> overdue
+                                        follow-up{{ $stats['overdue_follow_ups'] > 1 ? 's' : '' }}</span>
+                                </div>
+                                <a href="{{ orgRoute('admin.crm.index') }}?follow_up=overdue"
+                                    class="btn btn-sm btn-outline-danger ms-auto" style="font-size:.75rem;">View</a>
+                            </div>
+                        </div>
+                    @endif
+                    <div class="col-12 col-md-{{ ($stats['overdue_follow_ups'] ?? 0) > 0 ? '6' : '12' }}">
+                        <div class="d-flex align-items-center gap-3 p-2 rounded"
+                            style="background:rgba(99,102,241,.06);border:1px solid rgba(99,102,241,.15);">
+                            <div class="text-center" style="min-width:60px;">
+                                <div style="font-size:.65rem;text-transform:uppercase;color:var(--text-muted);">This
+                                    Month</div>
+                                <div style="font-size:1.1rem;font-weight:700;color:var(--p-primary);">
+                                    {{ $stats['this_month_leads'] ?? 0 }}</div>
+                                <div style="font-size:.65rem;color:var(--text-muted);">new leads</div>
+                            </div>
+                            <div style="width:1px;height:32px;background:var(--border);"></div>
+                            <div class="text-center" style="min-width:60px;">
+                                <div style="font-size:.65rem;text-transform:uppercase;color:var(--text-muted);">This
+                                    Month</div>
+                                <div style="font-size:1.1rem;font-weight:700;color:var(--p-success);">
+                                    {{ $stats['this_month_won'] ?? 0 }}</div>
+                                <div style="font-size:.65rem;color:var(--text-muted);">won</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Row 3: Status Breakdown (horizontal bar style) --}}
+                @if (!empty($stats['status_breakdown']))
+                    <div class="mb-3">
+                        <div style="font-size:.8125rem;font-weight:600;margin-bottom:.5rem;">Lead Pipeline Breakdown
+                        </div>
+                        {{-- Visual bar --}}
+                        @php
+                            $totalForBar = array_sum(array_column($stats['status_breakdown'], 'count'));
+                            $colorMap = [
+                                'primary' => '#6366f1',
+                                'secondary' => '#64748b',
+                                'success' => '#10b981',
+                                'danger' => '#ef4444',
+                                'warning' => '#f59e0b',
+                                'info' => '#3b82f6',
+                                'dark' => '#1e293b',
+                                'light' => '#f1f5f9',
+                            ];
+                        @endphp
+                        @if ($totalForBar > 0)
+                            <div class="d-flex rounded overflow-hidden"
+                                style="height:10px;background:var(--bg-muted);">
+                                @foreach ($stats['status_breakdown'] as $slug => $sb)
+                                    @if ($sb['count'] > 0)
+                                        <div style="width:{{ ($sb['count'] / $totalForBar) * 100 }}%;background:{{ $colorMap[$sb['color']] ?? '#6366f1' }};"
+                                            title="{{ $sb['name'] }}: {{ $sb['count'] }}"></div>
+                                    @endif
+                                @endforeach
+                            </div>
+                        @endif
+                        {{-- Legend --}}
+                        <div class="d-flex flex-wrap gap-3 mt-2">
+                            @foreach ($stats['status_breakdown'] as $slug => $sb)
+                                <div class="d-flex align-items-center gap-1" style="font-size:.75rem;">
+                                    <span
+                                        style="width:8px;height:8px;border-radius:50%;background:{{ $colorMap[$sb['color']] ?? '#6366f1' }};display:inline-block;"></span>
+                                    <span style="color:var(--text-muted);">{{ $sb['name'] }}</span>
+                                    <span style="font-weight:600;">{{ $sb['count'] }}</span>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+
+                {{-- Row 4: Drives breakdown --}}
+                @if (!empty($stats['drive_breakdown']) && count($stats['drive_breakdown']) > 1)
+                    <div>
+                        <div style="font-size:.8125rem;font-weight:600;margin-bottom:.5rem;">Pipelines (Drives)</div>
+                        <div class="row g-2">
+                            @foreach ($stats['drive_breakdown'] as $db)
+                                <div class="col-6 col-md-4 col-lg-3">
+                                    <div class="p-2 rounded d-flex align-items-center gap-2"
+                                        style="border:1px solid var(--border);">
+                                        <span
+                                            style="width:8px;height:8px;border-radius:50%;background:{{ $db['color'] ?? '#6366f1' }};flex-shrink:0;"></span>
+                                        <div style="min-width:0;flex:1;">
+                                            <div
+                                                style="font-size:.75rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                                                {{ $db['name'] }}</div>
+                                            <div style="font-size:.7rem;color:var(--text-muted);">
+                                                {{ $db['count'] }} leads ·
+                                                {{ $stats['crm_currency'] ?? '$' }}{{ number_format($db['value'], 0) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+            </div>
+        </div>
+    @endif
 
     {{-- ─── Main cards row ──────────────────────────────────────────────── --}}
     <div class="row g-4">
@@ -559,6 +758,17 @@
                                         style="background:rgba(99,102,241,.1);color:var(--p-primary);"><i
                                             class="bi bi-kanban"></i></div>
                                     <span style="font-size:.8125rem;">CRM Pipeline</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <a href="{{ orgRoute('admin.spreadsheets.index') }}" class="action-item"
+                                style="border:1px solid var(--border);border-radius:var(--radius-md);">
+                                <div class="d-flex align-items-center">
+                                    <div class="action-icon-wrap"
+                                        style="background:rgba(16,185,129,.1);color:var(--p-success);"><i
+                                            class="bi bi-file-earmark-spreadsheet"></i></div>
+                                    <span style="font-size:.8125rem;">Spreadsheets</span>
                                 </div>
                             </a>
                         </div>

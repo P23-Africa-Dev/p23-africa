@@ -478,6 +478,20 @@ Route::middleware(['auth', 'check.suspended', 'resolve.org', 'role:admin|supervi
         Route::post('/leave-requests/{leaveRequest}/respond', [\App\Http\Controllers\Admin\LeaveRequestController::class, 'senderRespond'])->name('leave-requests.respond');
         Route::post('/leave-requests/{leaveRequest}/approve', [\App\Http\Controllers\Admin\LeaveRequestController::class, 'approve'])->name('leave-requests.approve');
         Route::post('/leave-requests/{leaveRequest}/reject', [\App\Http\Controllers\Admin\LeaveRequestController::class, 'reject'])->name('leave-requests.reject');
+
+        // Spreadsheets
+        Route::get('/spreadsheets', [\App\Http\Controllers\Admin\SpreadsheetController::class, 'index'])->name('spreadsheets.index');
+        Route::get('/spreadsheets/create', [\App\Http\Controllers\Admin\SpreadsheetController::class, 'create'])->name('spreadsheets.create');
+        Route::post('/spreadsheets', [\App\Http\Controllers\Admin\SpreadsheetController::class, 'store'])->name('spreadsheets.store');
+        Route::get('/spreadsheets/passcode-info', [\App\Http\Controllers\Admin\SpreadsheetController::class, 'passcodeInfo'])->name('spreadsheets.passcode-info');
+        Route::post('/spreadsheets/generate-passcode', [\App\Http\Controllers\Admin\SpreadsheetController::class, 'generatePasscode'])->name('spreadsheets.generate-passcode');
+        Route::get('/spreadsheets/{spreadsheet}', [\App\Http\Controllers\Admin\SpreadsheetController::class, 'show'])->name('spreadsheets.show');
+        Route::get('/spreadsheets/{spreadsheet}/data', [\App\Http\Controllers\Admin\SpreadsheetController::class, 'getData'])->name('spreadsheets.data');
+        Route::post('/spreadsheets/{spreadsheet}/save', [\App\Http\Controllers\Admin\SpreadsheetController::class, 'save'])->name('spreadsheets.save');
+        Route::get('/spreadsheets/{spreadsheet}/export', [\App\Http\Controllers\Admin\SpreadsheetController::class, 'export'])->name('spreadsheets.export');
+        Route::delete('/spreadsheets/{spreadsheet}', [\App\Http\Controllers\Admin\SpreadsheetController::class, 'destroy'])->name('spreadsheets.destroy');
+        Route::post('/spreadsheets/{spreadsheet}/verify-passcode', [\App\Http\Controllers\Admin\SpreadsheetController::class, 'verifyPasscode'])->name('spreadsheets.verify-passcode');
+        Route::post('/spreadsheets/{spreadsheet}/request-passcode', [\App\Http\Controllers\Admin\SpreadsheetController::class, 'requestPasscode'])->name('spreadsheets.request-passcode');
     });
 
 // Org-prefixed notification routes
@@ -684,6 +698,20 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
     Route::post('/leave-requests/{leaveRequest}/respond', [\App\Http\Controllers\Admin\LeaveRequestController::class, 'senderRespond'])->name('leave-requests.respond');
     Route::post('/leave-requests/{leaveRequest}/approve', [\App\Http\Controllers\Admin\LeaveRequestController::class, 'approve'])->name('leave-requests.approve');
     Route::post('/leave-requests/{leaveRequest}/reject', [\App\Http\Controllers\Admin\LeaveRequestController::class, 'reject'])->name('leave-requests.reject');
+
+    // Spreadsheets
+    Route::get('/spreadsheets', [\App\Http\Controllers\Admin\SpreadsheetController::class, 'index'])->name('spreadsheets.index');
+    Route::get('/spreadsheets/create', [\App\Http\Controllers\Admin\SpreadsheetController::class, 'create'])->name('spreadsheets.create');
+    Route::post('/spreadsheets', [\App\Http\Controllers\Admin\SpreadsheetController::class, 'store'])->name('spreadsheets.store');
+    Route::get('/spreadsheets/passcode-info', [\App\Http\Controllers\Admin\SpreadsheetController::class, 'passcodeInfo'])->name('spreadsheets.passcode-info');
+    Route::post('/spreadsheets/generate-passcode', [\App\Http\Controllers\Admin\SpreadsheetController::class, 'generatePasscode'])->name('spreadsheets.generate-passcode');
+    Route::get('/spreadsheets/{spreadsheet}', [\App\Http\Controllers\Admin\SpreadsheetController::class, 'show'])->name('spreadsheets.show');
+    Route::get('/spreadsheets/{spreadsheet}/data', [\App\Http\Controllers\Admin\SpreadsheetController::class, 'getData'])->name('spreadsheets.data');
+    Route::post('/spreadsheets/{spreadsheet}/save', [\App\Http\Controllers\Admin\SpreadsheetController::class, 'save'])->name('spreadsheets.save');
+    Route::get('/spreadsheets/{spreadsheet}/export', [\App\Http\Controllers\Admin\SpreadsheetController::class, 'export'])->name('spreadsheets.export');
+    Route::delete('/spreadsheets/{spreadsheet}', [\App\Http\Controllers\Admin\SpreadsheetController::class, 'destroy'])->name('spreadsheets.destroy');
+    Route::post('/spreadsheets/{spreadsheet}/verify-passcode', [\App\Http\Controllers\Admin\SpreadsheetController::class, 'verifyPasscode'])->name('spreadsheets.verify-passcode');
+    Route::post('/spreadsheets/{spreadsheet}/request-passcode', [\App\Http\Controllers\Admin\SpreadsheetController::class, 'requestPasscode'])->name('spreadsheets.request-passcode');
 });
 
 
