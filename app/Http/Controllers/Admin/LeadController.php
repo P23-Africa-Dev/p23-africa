@@ -303,7 +303,7 @@ class LeadController extends Controller
             'status' => ['required', Rule::in($validSlugs)],
             'source' => ['required', Rule::in(array_keys(Lead::getSources($orgId)))],
             'priority' => ['required', Rule::in(array_keys(Lead::getPriorities()))],
-            'estimated_value' => 'nullable|numeric|min:0',
+            'estimated_value' => 'nullable|numeric|min:0|max:9999999999999.99',
             'currency' => 'nullable|string|max:3',
             ...($orgId ? [] : ['interested_services' => 'nullable|array']),
             'requirements' => 'nullable|string|max:5000',
@@ -466,7 +466,7 @@ class LeadController extends Controller
             'status' => ['required', Rule::in($validSlugs)],
             'source' => ['required', Rule::in(array_keys(Lead::getSources($orgId)))],
             'priority' => ['required', Rule::in(array_keys(Lead::getPriorities()))],
-            'estimated_value' => 'nullable|numeric|min:0',
+            'estimated_value' => 'nullable|numeric|min:0|max:9999999999999.99',
             'currency' => 'nullable|string|max:3',
             ...($orgId ? [] : ['interested_services' => 'nullable|array']),
             'requirements' => 'nullable|string|max:5000',
@@ -688,6 +688,11 @@ class LeadController extends Controller
             'scheduled_at' => 'nullable|date',
         ]);
 
+        // Convert empty strings to null for nullable fields
+        if (empty($validated['scheduled_at'])) {
+            $validated['scheduled_at'] = null;
+        }
+
         try {
             $activity = $lead->activities()->create([
                 'user_id' => auth()->id(),
@@ -728,6 +733,11 @@ class LeadController extends Controller
             'description' => 'nullable|string|max:5000',
             'scheduled_at' => 'nullable|date',
         ]);
+
+        // Convert empty strings to null for nullable fields
+        if (array_key_exists('scheduled_at', $validated) && empty($validated['scheduled_at'])) {
+            $validated['scheduled_at'] = null;
+        }
 
         try {
             $activity->update($validated);
