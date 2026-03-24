@@ -58,6 +58,10 @@
                                         <i class="fa fa-calendar me-1"></i>Schedule Session
                                     </button>
                                 @endif
+                                {{-- <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#manualScheduleModal">
+                                    <i class="fa fa-calendar-plus me-1"></i>Manual Schedule & Send Emails
+                                </button> --}}
                             </div>
                         </div>
                     </div>
@@ -79,37 +83,47 @@
                                 <div class="col-md-6">
                                     <h6 class="text-dark dark:text-gray-100 mb-3">Personal Information</h6>
                                     <div class="mb-3">
-                                        <label class="form-label text-muted dark:text-gray-400"><small>Full Name</small></label><br>
-                                        <p class="text-dark dark:text-gray-200 mb-0 d-inline">{{ $application->name }}</p>
+                                        <label class="form-label text-muted dark:text-gray-400"><small>Full
+                                                Name</small></label><br>
+                                        <p class="text-dark dark:text-gray-200 mb-0 d-inline">{{ $application->name }}
+                                        </p>
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label text-muted dark:text-gray-400"><small>Email Address</small></label><br>
-                                        <p class="text-dark dark:text-gray-200 mb-0 d-inline">{{ $application->email }}</p>
+                                        <label class="form-label text-muted dark:text-gray-400"><small>Email
+                                                Address</small></label><br>
+                                        <p class="text-dark dark:text-gray-200 mb-0 d-inline">{{ $application->email }}
+                                        </p>
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label text-muted dark:text-gray-400"><small>Phone Number</small></label><br>
+                                        <label class="form-label text-muted dark:text-gray-400"><small>Phone
+                                                Number</small></label><br>
                                         <p class="text-dark dark:text-gray-200 mb-0 d-inline">
                                             {{ $application->phone ?? 'Not provided' }}</p>
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label text-muted dark:text-gray-400"><small>Website/Social Handle</small></label><br>
-                                        <p class="text-dark dark:text-gray-200 mb-0 d-inline">{{ $application->website_or_handle }}</p>
+                                        <label class="form-label text-muted dark:text-gray-400"><small>Website/Social
+                                                Handle</small></label><br>
+                                        <p class="text-dark dark:text-gray-200 mb-0 d-inline">
+                                            {{ $application->website_or_handle }}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <h6 class="text-dark dark:text-gray-100 mb-3">Business Information</h6>
                                     <div class="mb-3">
-                                        <label class="form-label text-muted dark:text-gray-400"><small>Company</small></label><br>
+                                        <label
+                                            class="form-label text-muted dark:text-gray-400"><small>Company</small></label><br>
                                         <p class="text-dark dark:text-gray-200 mb-0 d-inline">
                                             {{ $application->company ?? 'Not provided' }}</p>
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label text-muted dark:text-gray-400"><small>Industry</small></label><br>
+                                        <label
+                                            class="form-label text-muted dark:text-gray-400"><small>Industry</small></label><br>
                                         <p class="text-dark dark:text-gray-200 mb-0 d-inline">
                                             {{ $application->industry ?? 'Not provided' }}</p>
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label text-muted dark:text-gray-400"><small>Applied On</small></label><br>
+                                        <label class="form-label text-muted dark:text-gray-400"><small>Applied
+                                                On</small></label><br>
                                         <p class="text-dark dark:text-gray-200 mb-0 d-inline">
                                             {{ $application->created_at->format('F d, Y \a\t h:i A') }}</p>
                                     </div>
@@ -346,9 +360,153 @@
             resize: vertical;
             min-height: 80px;
         }
+
+        #manualScheduleModal .modal-header {
+            background: linear-gradient(135deg, #0d4036 0%, #1a6b5a 100%);
+            color: #fff;
+        }
+
+        #manualScheduleModal .modal-header .btn-close {
+            filter: invert(1);
+        }
+
+        #schedule-result {
+            display: none;
+        }
     </style>
 
+    <!-- Manual Schedule Modal -->
+    <div class="modal fade" id="manualScheduleModal" tabindex="-1" aria-labelledby="manualScheduleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="manualScheduleModalLabel">
+                        <i class="fa fa-calendar-plus me-2"></i>Manual Schedule & Send Emails
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-info mb-3">
+                        <i class="fa fa-info-circle me-1"></i>
+                        This will create a <strong>Google Calendar event with Google Meet link</strong> and send the
+                        scheduling confirmation email (with .ics attachment) to
+                        <strong>{{ $application->email }}</strong>.
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-medium">Client</label>
+                        <input type="text" class="form-control"
+                            value="{{ $application->name }} ({{ $application->email }})" disabled>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="schedule_date" class="form-label fw-medium">Session Date <span
+                                class="text-danger">*</span></label>
+                        <input type="date" class="form-control" id="schedule_date" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="schedule_time" class="form-label fw-medium">Session Time <span
+                                class="text-danger">*</span></label>
+                        <input type="time" class="form-control" id="schedule_time" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="schedule_timezone" class="form-label fw-medium">Timezone <span
+                                class="text-danger">*</span></label>
+                        <select class="form-select" id="schedule_timezone">
+                            <option value="Africa/Lagos">Africa/Lagos (WAT)</option>
+                            <option value="Africa/Nairobi">Africa/Nairobi (EAT)</option>
+                            <option value="Africa/Johannesburg">Africa/Johannesburg (SAST)</option>
+                            <option value="Africa/Cairo">Africa/Cairo (EET)</option>
+                            <option value="Africa/Accra">Africa/Accra (GMT)</option>
+                            <option value="Europe/London">Europe/London (GMT/BST)</option>
+                            <option value="Europe/Paris">Europe/Paris (CET)</option>
+                            <option value="America/New_York">America/New_York (EST)</option>
+                            <option value="America/Chicago">America/Chicago (CST)</option>
+                            <option value="America/Los_Angeles">America/Los_Angeles (PST)</option>
+                            <option value="Asia/Dubai">Asia/Dubai (GST)</option>
+                            <option value="UTC">UTC</option>
+                        </select>
+                    </div>
+
+                    <div id="schedule-result" class="alert mt-3"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success" id="triggerScheduleBtn"
+                        onclick="triggerManualSchedule()">
+                        <i class="fa fa-paper-plane me-1"></i>Create Meeting & Send Emails
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Manual Schedule trigger
+        function triggerManualSchedule() {
+            const date = document.getElementById('schedule_date').value;
+            const time = document.getElementById('schedule_time').value;
+            const timezone = document.getElementById('schedule_timezone').value;
+            const btn = document.getElementById('triggerScheduleBtn');
+            const result = document.getElementById('schedule-result');
+
+            if (!date || !time) {
+                result.style.display = 'block';
+                result.className = 'alert mt-3 alert-danger';
+                result.textContent = 'Please fill in both date and time.';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa fa-spinner fa-spin me-1"></i>Creating meeting & sending emails...';
+            result.style.display = 'none';
+
+            fetch(`${window.adminBasePath}/consultations/{{ $application->id }}/manual-schedule`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        session_date: date,
+                        session_time: time,
+                        timezone: timezone
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    result.style.display = 'block';
+                    if (data.success) {
+                        result.className = 'alert mt-3 alert-success';
+                        let msg = data.message;
+                        if (data.meet_link) {
+                            msg += '<br><a href="' + data.meet_link + '" target="_blank" class="fw-bold">' +
+                                '<i class="fa fa-video me-1"></i>Open Google Meet Link</a>';
+                        }
+                        result.innerHTML = '<i class="fa fa-check-circle me-1"></i>' + msg;
+                        btn.innerHTML = '<i class="fa fa-check me-1"></i>Done!';
+                        btn.classList.remove('btn-success');
+                        btn.classList.add('btn-outline-success');
+
+                        // Reload after 3 seconds to show updated session data
+                        setTimeout(() => window.location.reload(), 3000);
+                    } else {
+                        throw new Error(data.message || 'Unknown error');
+                    }
+                })
+                .catch(error => {
+                    result.style.display = 'block';
+                    result.className = 'alert mt-3 alert-danger';
+                    result.innerHTML = '<i class="fa fa-times-circle me-1"></i>' + error.message;
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa fa-paper-plane me-1"></i>Create Meeting & Send Emails';
+                });
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             // Mark message as read functionality
             document.querySelectorAll('.mark-read-btn').forEach(button => {

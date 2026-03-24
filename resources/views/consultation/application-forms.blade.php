@@ -1714,7 +1714,7 @@
                             @enderror
 
                             <input type="text" name="website_or_handle" placeholder="Website/Social media"
-                                value="{{ old('website_or_handle') }}" required />
+                                value="{{ old('website_or_handle') }}" />
                             @error('website_or_handle')
                                 <span class="text-red-600 text-sm">{{ $message }}</span>
                             @enderror
@@ -2062,10 +2062,6 @@
                 {
                     name: 'company_brand_name',
                     label: 'Company Name'
-                },
-                {
-                    name: 'website_or_handle',
-                    label: 'Website/Social media'
                 },
                 {
                     name: 'email',
@@ -2491,32 +2487,6 @@
                         '.flag-item:not(.hidden)'));
                     const currentIndex = visibleItems.indexOf(item);
 
-                    // Hide placeholder text
-                    const flagPlaceholder = document.getElementById('flagPlaceholder');
-                    if (flagPlaceholder) {
-                        flagPlaceholder.style.display = "none";
-                    }
-
-                    // Show and update prefix
-                    prefixSpan.textContent = newCode;
-                    prefixSpan.style.display = "block";
-
-                    // Enable phone input and update placeholder
-                    phoneNumberInput.disabled = false;
-                    phoneNumberInput.placeholder = "Enter phone number";
-
-                    // Remove error styling if present
-                    flagBox.classList.remove('error');
-                    phoneNumberInput.classList.remove('error');
-
-                    // Update hidden backend field
-                    updateCombinedPhone();
-
-                    // Close dropdown immediately
-                    dropdown.style.display = "none";
-                    dropdownIcon.classList.remove("rotate");
-
-                    updatePhoneBorder(prefixSpan, phoneNumberInput);
                     if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
                         selectCountry(item);

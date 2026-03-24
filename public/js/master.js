@@ -37,7 +37,9 @@ function createNumberList(id, values) {
 
 function animateSlide(id, values) {
     const container = document.getElementById(id);
+    if (!container) return;
     const slide = container.querySelector(".slide");
+    if (!slide) return;
     const steps = values.length;
     const interval = totalDuration / (steps - 1);
     let index = 0;

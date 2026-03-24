@@ -14,12 +14,14 @@ class Payment extends Model
         'amount',
         'currency',
         'status',
-        'payment_data'
+        'payment_data',
+        'paid_at'
     ];
 
     protected $casts = [
         'payment_data' => 'array',
         'amount' => 'decimal:2',
+        'paid_at' => 'datetime',
     ];
 
     public function consultationApplication(): BelongsTo

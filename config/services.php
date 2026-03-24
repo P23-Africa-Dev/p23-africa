@@ -45,6 +45,10 @@ return [
         'secret_key' => env('FLUTTERWAVE_SECRET_KEY'),
     ],
 
+    'admin' => [
+        'email' => env('ADMIN_EMAIL', 'contact@p23africa.com'),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Google Workspace Configuration
