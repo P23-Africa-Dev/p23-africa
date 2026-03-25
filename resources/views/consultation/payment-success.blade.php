@@ -266,7 +266,7 @@
                     <div class="payment-card-cont">
 
                         <div class="amount-date-time">
-                            <span class="amount">${{ number_format($latestPayment->amount ?? 100, 2) }}</span>
+                            <span class="amount">{{ strtoupper($latestPayment->currency ?? 'GBP') }} {{ number_format($latestPayment->amount ?? 75, 2) }}</span>
                             <div class="date-time">
                                 <span class="date">{{ ($latestPayment->created_at ?? now())->format('M d, Y') }}</span>
                                 <span class="time">{{ ($latestPayment->created_at ?? now())->format('g:iA') }}</span>
@@ -298,7 +298,7 @@
                         </p>
                     @endif
 
-                    <a href="{{ route('consultation.schedule-consultation') }}" class="proceed-button">
+                    <a href="{{ route('consultation.schedule-consultation', ['booking' => $application->booking_token]) }}" class="proceed-button">
                         Proceed to scheduling your session
                     </a>
                 </div>

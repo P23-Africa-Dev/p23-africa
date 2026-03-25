@@ -497,28 +497,28 @@
                 </div>
 
                 {{-- Row 3: Status Breakdown (horizontal bar style) --}}
-                @if (!empty($stats['status_breakdown']))
+                @php
+                    $statusBreakdown = is_array($stats['status_breakdown'] ?? null) ? $stats['status_breakdown'] : [];
+                    $totalForBar = array_sum(array_map(fn($item) => (int) ($item['count'] ?? 0), $statusBreakdown));
+                    $colorMap = [
+                        'primary' => '#6366f1',
+                        'secondary' => '#64748b',
+                        'success' => '#10b981',
+                        'danger' => '#ef4444',
+                        'warning' => '#f59e0b',
+                        'info' => '#3b82f6',
+                        'dark' => '#1e293b',
+                        'light' => '#f1f5f9',
+                    ];
+                @endphp
+                @if (!empty($statusBreakdown))
                     <div class="mb-3">
                         <div style="font-size:.8125rem;font-weight:600;margin-bottom:.5rem;">Lead Pipeline Breakdown
                         </div>
-                        {{-- Visual bar --}}
-                        @php
-                            $totalForBar = array_sum(array_column($stats['status_breakdown'], 'count'));
-                            $colorMap = [
-                                'primary' => '#6366f1',
-                                'secondary' => '#64748b',
-                                'success' => '#10b981',
-                                'danger' => '#ef4444',
-                                'warning' => '#f59e0b',
-                                'info' => '#3b82f6',
-                                'dark' => '#1e293b',
-                                'light' => '#f1f5f9',
-                            ];
-                        @endphp
                         @if ($totalForBar > 0)
                             <div class="d-flex rounded overflow-hidden"
                                 style="height:10px;background:var(--bg-muted);">
-                                @foreach ($stats['status_breakdown'] as $slug => $sb)
+                                @foreach ($statusBreakdown as $slug => $sb)
                                     @if ($sb['count'] > 0)
                                         <div style="width:{{ ($sb['count'] / $totalForBar) * 100 }}%;background:{{ $colorMap[$sb['color']] ?? '#6366f1' }};"
                                             title="{{ $sb['name'] }}: {{ $sb['count'] }}"></div>
@@ -528,7 +528,7 @@
                         @endif
                         {{-- Legend --}}
                         <div class="d-flex flex-wrap gap-3 mt-2">
-                            @foreach ($stats['status_breakdown'] as $slug => $sb)
+                            @foreach ($statusBreakdown as $slug => $sb)
                                 <div class="d-flex align-items-center gap-1" style="font-size:.75rem;">
                                     <span
                                         style="width:8px;height:8px;border-radius:50%;background:{{ $colorMap[$sb['color']] ?? '#6366f1' }};display:inline-block;"></span>

@@ -204,7 +204,7 @@
 
         <p class="error-message">
             Your session has timed out for security reasons.
-            Don't worry — just refresh the page to continue where you left off.
+            Don't worry, just refresh the page to continue where you left off.
         </p>
 
         <button class="refresh-btn" onclick="window.location.reload();">

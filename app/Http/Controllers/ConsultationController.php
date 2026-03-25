@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 use App\Mail\ConsultationScheduledMail;
 use App\Mail\ConsultationScheduledNotificationMail;
 use App\Mail\ChatMessageNotification;
@@ -22,7 +24,12 @@ use Stripe\PaymentIntent;
 
 class ConsultationController extends Controller
 {
-    public function showApplicationForm()
+    private const CONSULTATION_AMOUNT_GBP = 75.00;
+    private const CONSULTATION_CURRENCY = 'GBP';
+    private const STRIPE_MINIMUM_GBP_PENCE = 30;
+    private const STRIPE_ZERO_DECIMAL_CURRENCIES = ['BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF', 'KRW', 'MGA', 'PYG', 'RWF', 'UGX', 'VND', 'VUV', 'XAF', 'XOF', 'XPF'];
+
+    public function showApplicationForm(Request $request)
     {
         return view('consultation.application-forms');
     }
@@ -75,6 +82,7 @@ class ConsultationController extends Controller
 
         // Prepare the application data
         $applicationData = [
+            'booking_token' => (string) Str::uuid(),
             'name' => $request->full_name,
             'email' => $request->email,
             'phone' => $request->phone,
@@ -114,45 +122,34 @@ class ConsultationController extends Controller
             'email' => $request->email
         ]);
 
-        // Store application ID in session for next steps
-        Session::put('consultation_application_id', $application->id);
+        $this->persistBookingContext($application);
 
-        return redirect()->route('consultation.consultation-summary');
+        return $this->redirectWithBooking('consultation.consultation-summary', $application);
     }
 
-    public function showSummary()
+    public function showSummary(Request $request)
     {
-        $applicationId = Session::get('consultation_application_id');
-
-        if (!$applicationId) {
-            return redirect()->route('consultation.application-forms')
-                ->with('error', 'Please complete the application form first.');
-        }
-
-        $application = ConsultationApplication::find($applicationId);
+        $application = $this->resolveApplication($request);
 
         if (!$application) {
             return redirect()->route('consultation.application-forms')
-                ->with('error', 'Application not found. Please complete the form again.');
+                ->with('error', 'Please complete the application form first.');
         }
 
         return view('consultation.consultation-summary', compact('application'));
     }
 
-    public function showPaymentSelection()
+    public function showPaymentSelection(Request $request)
     {
-        $applicationId = Session::get('consultation_application_id');
+        $application = $this->resolveApplication($request);
 
-        if (!$applicationId) {
+        if (!$application) {
             return redirect()->route('consultation.application-forms')
                 ->with('error', 'Please complete the application form first.');
         }
 
-        $application = ConsultationApplication::find($applicationId);
-
-        if (!$application) {
-            return redirect()->route('consultation.application-forms')
-                ->with('error', 'Application not found.');
+        if ($application->status === 'pending') {
+            $application->update(['status' => 'payment_pending']);
         }
 
         return view('consultation.payment-selection', compact('application'));
@@ -160,30 +157,27 @@ class ConsultationController extends Controller
 
     public function initiatePayment(Request $request)
     {
-        // This method is called from the consultation summary page
-        // It should redirect to the payment selection page
-        $applicationId = Session::get('consultation_application_id');
+        $application = $this->resolveApplication($request);
 
-        if (!$applicationId) {
+        if (!$application) {
             return redirect()->route('consultation.application-forms')
                 ->with('error', 'Please complete the application form first.');
         }
 
-        return redirect()->route('consultation.payment-selection');
+        return $this->redirectWithBooking('consultation.payment-selection', $application);
     }
 
     public function processPayment(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'payment_method' => 'required|in:flutterwave,stripe',
+            'payment_method' => 'required|in:stripe',
         ]);
 
         if ($validator->fails()) {
             return back()->withErrors($validator);
         }
 
-        $applicationId = Session::get('consultation_application_id');
-        $application = ConsultationApplication::find($applicationId);
+        $application = $this->resolveApplication($request);
 
         if (!$application) {
             return redirect()->route('consultation.application-forms')
@@ -194,8 +188,8 @@ class ConsultationController extends Controller
         $payment = Payment::create([
             'consultation_application_id' => $application->id,
             'payment_method' => $request->payment_method,
-            'amount' => 100.00, // Set your consultation fee
-            'currency' => 'USD',
+            'amount' => self::CONSULTATION_AMOUNT_GBP,
+            'currency' => self::CONSULTATION_CURRENCY,
             'status' => 'pending',
             'payment_reference' => 'REF_' . time() . '_' . $application->id,
         ]);
@@ -205,14 +199,13 @@ class ConsultationController extends Controller
 
         // Payment processing is now handled via JavaScript in frontend
         // This endpoint should not be reached in normal flow
-        return redirect()->route('consultation.payment-selection')
+        return $this->redirectWithBooking('consultation.payment-selection', $application)
             ->with('error', 'Please select a payment method and try again.');
     }
 
     public function createStripePaymentIntent(Request $request)
     {
-        $applicationId = Session::get('consultation_application_id');
-        $application = ConsultationApplication::find($applicationId);
+        $application = $this->resolveApplication($request);
 
         if (!$application) {
             return response()->json(['error' => 'Application not found'], 404);
@@ -222,20 +215,45 @@ class ConsultationController extends Controller
             // Set Stripe secret key from config
             Stripe::setApiKey(config('services.stripe.secret_key'));
 
+            $preferredCurrency = strtoupper((string) $request->input('preferred_currency', ''));
+            $chargeDetails = $this->resolveConsultationCharge($preferredCurrency);
+
+            $amount = $chargeDetails['amount'];
+            $currency = $chargeDetails['currency'];
+            $amountInSmallestUnit = $chargeDetails['amount_in_smallest_unit'];
+
+            Log::info('Stripe payment currency resolved', [
+                'application_id' => $application->id,
+                'requested_currency' => $preferredCurrency,
+                'resolved_currency' => $currency,
+                'resolved_amount' => $amount,
+                'resolution_source' => $chargeDetails['source'] ?? 'default',
+            ]);
+
+            if (strtoupper($currency) === self::CONSULTATION_CURRENCY && $amountInSmallestUnit < self::STRIPE_MINIMUM_GBP_PENCE) {
+                return response()->json([
+                    'error' => 'Payment amount is below Stripe minimum.',
+                    'message' => 'Unable to start payment because the configured consultation amount is invalid. Please contact support.',
+                    'code' => 'amount_below_minimum',
+                    'details' => 'Consultation payment must be at least 0.30 GBP.',
+                ], 422);
+            }
+
             // Create payment record
             $payment = Payment::create([
                 'consultation_application_id' => $application->id,
                 'payment_method' => 'stripe',
-                'amount' => 100.00,
-                'currency' => 'USD',
+                'amount' => $amount,
+                'currency' => $currency,
                 'status' => 'pending',
                 'payment_reference' => 'stripe_' . time() . '_' . $application->id,
             ]);
 
             // Create PaymentIntent
             $paymentIntent = PaymentIntent::create([
-                'amount' => 10000, // $100.00 in cents (100 * 100)
-                'currency' => 'usd',
+                'amount' => $amountInSmallestUnit,
+                'currency' => strtolower($currency),
+                'automatic_payment_methods' => ['enabled' => true],
                 'metadata' => [
                     'application_id' => $application->id,
                     'payment_id' => $payment->id,
@@ -257,54 +275,20 @@ class ConsultationController extends Controller
             return response()->json([
                 'client_secret' => $paymentIntent->client_secret,
                 'payment_intent_id' => $paymentIntent->id,
+                'amount' => $amount,
+                'currency' => strtoupper($currency),
+                'display_amount' => strtoupper($currency) . ' ' . number_format((float) $amount, 2),
             ]);
         } catch (\Exception $e) {
-            Log::error('Stripe PaymentIntent creation failed: ' . $e->getMessage());
+            Log::error('Stripe PaymentIntent creation failed: ' . $e->getMessage(), [
+                'application_id' => $application->id,
+                'requested_currency' => strtoupper((string) $request->input('preferred_currency', '')),
+            ]);
 
             return response()->json([
                 'error' => 'Failed to create payment intent',
-                'message' => $e->getMessage()
-            ], 500);
-        }
-    }
-
-    /**
-     * Create a pending payment record for Flutterwave before opening checkout modal.
-     * Returns the tx_ref to use in FlutterwaveCheckout so the callback can reliably find the payment.
-     */
-    public function createFlutterwavePayment(Request $request)
-    {
-        $applicationId = Session::get('consultation_application_id');
-        $application = ConsultationApplication::find($applicationId);
-
-        if (!$application) {
-            return response()->json(['error' => 'Application not found'], 404);
-        }
-
-        try {
-            $txRef = 'FLW_' . time() . '_' . $application->id;
-
-            $payment = Payment::create([
-                'consultation_application_id' => $application->id,
-                'payment_method' => 'flutterwave',
-                'amount' => 100.00,
-                'currency' => 'USD',
-                'status' => 'pending',
-                'payment_reference' => $txRef,
-            ]);
-
-            Session::put('pending_payment_id', $payment->id);
-
-            return response()->json([
-                'tx_ref' => $txRef,
-                'payment_id' => $payment->id,
-            ]);
-        } catch (\Exception $e) {
-            Log::error('Flutterwave payment record creation failed: ' . $e->getMessage());
-
-            return response()->json([
-                'error' => 'Failed to create payment record',
-                'message' => $e->getMessage()
+                'message' => 'Unable to initialize card payment right now. Please try again in a moment.',
+                'code' => 'payment_intent_creation_failed',
             ], 500);
         }
     }
@@ -312,30 +296,42 @@ class ConsultationController extends Controller
     public function handlePaymentCallback(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'gateway' => 'required|in:flutterwave,stripe',
-            'transaction_id' => 'required|string',
+            'gateway' => 'required|in:stripe',
+            'transaction_id' => 'nullable|string',
             'status' => 'required|string',
             'payment_data' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
+            Log::warning('Payment callback validation failed', [
+                'errors' => $validator->errors()->toArray(),
+                'payload' => $request->except(['_token']),
+            ]);
+
             return redirect()->route('consultation.payment-selection')
                 ->with('error', 'Invalid payment callback data.');
         }
 
-        $applicationId = Session::get('consultation_application_id');
-        $application = ConsultationApplication::find($applicationId);
+        $status = strtolower((string) $request->status);
+        $transactionId = trim((string) $request->transaction_id);
 
-        if (!$application) {
-            return redirect()->route('consultation.application-forms')
-                ->with('error', 'Application not found.');
+        if ($transactionId === '' && in_array($status, ['successful', 'success', 'pending_verification', 'pending', 'processing'], true)) {
+            Log::warning('Payment callback missing transaction id for non-failure status', [
+                'status' => $status,
+                'gateway' => $request->gateway,
+            ]);
+
+            return redirect()->route('consultation.payment-selection')
+                ->with('error', 'Invalid payment callback data.');
         }
+
+        $application = $this->resolveApplication($request, false);
 
         Log::info('Payment callback received', [
             'gateway' => $request->gateway,
-            'transaction_id' => $request->transaction_id,
-            'status' => $request->status,
-            'application_id' => $application->id
+            'transaction_id' => $transactionId,
+            'status' => $status,
+            'application_id' => $application?->id
         ]);
 
         // Find payment record - for Stripe, look by payment_reference first since it was set during PaymentIntent creation
@@ -343,21 +339,24 @@ class ConsultationController extends Controller
 
         if ($request->gateway === 'stripe') {
             // For Stripe, first try to find by the payment_reference (PaymentIntent ID)
-            $payment = Payment::where('payment_reference', $request->transaction_id)
-                ->where('consultation_application_id', $application->id)
-                ->first();
+            $stripeQuery = Payment::where('payment_reference', $transactionId);
+            if ($application) {
+                $stripeQuery->where('consultation_application_id', $application->id);
+            }
+            $payment = $stripeQuery->first();
 
             Log::info('Stripe payment lookup by reference', [
-                'payment_reference' => $request->transaction_id,
+                'payment_reference' => $transactionId,
                 'found' => $payment ? true : false,
                 'payment_id' => $payment ? $payment->id : null
             ]);
         }
 
         // If not found by payment_reference, try the original method
-        if (!$payment) {
+        if (!$payment && $application) {
             $payment = Payment::where('consultation_application_id', $application->id)
                 ->where('status', 'pending')
+                ->latest()
                 ->first();
 
             Log::info('Payment lookup by application and pending status', [
@@ -369,22 +368,39 @@ class ConsultationController extends Controller
         }
 
         if (!$payment) {
+            $payment = Payment::where('payment_reference', $transactionId)->first();
+        }
+
+        if (!$payment && $application) {
             // Create payment record if doesn't exist (direct callback scenario)
             $payment = Payment::create([
                 'consultation_application_id' => $application->id,
                 'payment_method' => $request->gateway,
-                'amount' => 100.00,
-                'currency' => 'USD',
+                'amount' => self::CONSULTATION_AMOUNT_GBP,
+                'currency' => self::CONSULTATION_CURRENCY,
                 'status' => 'pending',
-                'payment_reference' => $request->transaction_id,
+                'payment_reference' => $transactionId !== '' ? $transactionId : ('stripe_failed_' . time() . '_' . $application->id),
             ]);
+        }
+
+        if (!$payment) {
+            return redirect()->route('consultation.application-forms')
+                ->with('error', 'Payment not found for this booking. Please try again.');
+        }
+
+        $application = $payment->consultationApplication;
+        $this->persistBookingContext($application);
+
+        if (!$application) {
+            return redirect()->route('consultation.application-forms')
+                ->with('error', 'Application not found.');
         }
 
         // Update payment record with gateway response
         $paymentData = $request->payment_data ? json_decode($request->payment_data, true) : null;
 
         // Map external gateway status to our DB enum values
-        if ($request->status === 'successful' || $request->status === 'success') {
+        if ($status === 'successful' || $status === 'success') {
             // For Stripe payments that already have the correct payment_reference, don't update it again
             $updateData = [
                 'status' => 'successful',
@@ -393,15 +409,15 @@ class ConsultationController extends Controller
             ];
 
             // Only update payment_reference if it's different (to avoid unique constraint violation)
-            $referenceNeedsUpdate = $payment->payment_reference !== $request->transaction_id;
+            $referenceNeedsUpdate = $transactionId !== '' && $payment->payment_reference !== $transactionId;
             if ($referenceNeedsUpdate) {
-                $updateData['payment_reference'] = $request->transaction_id;
+                $updateData['payment_reference'] = $transactionId;
             }
 
             Log::info('Updating payment to successful', [
                 'payment_id' => $payment->id,
                 'current_reference' => $payment->payment_reference,
-                'new_reference' => $request->transaction_id,
+                'new_reference' => $transactionId,
                 'reference_needs_update' => $referenceNeedsUpdate,
                 'update_data_keys' => array_keys($updateData)
             ]);
@@ -412,30 +428,28 @@ class ConsultationController extends Controller
             $payment->consultationApplication->update(['status' => 'paid']);
 
             Session::put('payment_success', true);
-            return redirect()->route('consultation.payment-success');
-        } elseif ($request->status === 'pending_verification' || $request->status === 'pending' || $request->status === 'processing') {
-            // Handle bank transfers and other delayed verification payments
+            return $this->redirectWithBooking('consultation.payment-success', $application);
+        } elseif ($status === 'pending_verification' || $status === 'pending' || $status === 'processing') {
             $updateData = [
                 'status' => 'pending',
                 'payment_data' => $paymentData,
             ];
 
             // Only update payment_reference if it's different (to avoid unique constraint violation)
-            if ($payment->payment_reference !== $request->transaction_id) {
-                $updateData['payment_reference'] = $request->transaction_id;
+            if ($transactionId !== '' && $payment->payment_reference !== $transactionId) {
+                $updateData['payment_reference'] = $transactionId;
             }
 
             $payment->update($updateData);
 
-            // Mark application as paid for bank transfers (trust the payment gateway)
-            // Bank transfers will be verified by Flutterwave webhook later
+            // Mark application as paid for pending Stripe states to let user continue booking.
             $payment->consultationApplication->update(['status' => 'paid']);
 
             Session::put('payment_success', true);
             Session::put('payment_method_used', $request->gateway);
             Session::put('is_pending_verification', true);
 
-            return redirect()->route('consultation.payment-success');
+            return $this->redirectWithBooking('consultation.payment-success', $application);
         } else {
             // Any other status => failed
             $updateData = [
@@ -444,14 +458,24 @@ class ConsultationController extends Controller
             ];
 
             // Only update payment_reference if it's different (to avoid unique constraint violation)
-            if ($payment->payment_reference !== $request->transaction_id) {
-                $updateData['payment_reference'] = $request->transaction_id;
+            if ($transactionId !== '' && $payment->payment_reference !== $transactionId) {
+                $updateData['payment_reference'] = $transactionId;
             }
 
             $payment->update($updateData);
 
-            return redirect()->route('consultation.payment-selection')
-                ->with('error', 'Payment failed. Please try again.');
+            Log::warning('Stripe payment failed', $this->buildStripeFailureLogContext(
+                $application,
+                $payment,
+                $status,
+                $transactionId,
+                $paymentData
+            ));
+
+            $userFacingMessage = $this->mapStripeFailureUserMessage($paymentData);
+
+            return $this->redirectWithBooking('consultation.payment-selection', $application)
+                ->with('error', $userFacingMessage);
         }
     }
 
@@ -474,27 +498,29 @@ class ConsultationController extends Controller
 
             // mark application as paid
             $payment->consultationApplication->update(['status' => 'paid']);
+            $this->persistBookingContext($payment->consultationApplication);
 
             Session::put('payment_success', true);
-            return redirect()->route('consultation.payment-success');
+            return $this->redirectWithBooking('consultation.payment-success', $payment->consultationApplication);
         } else {
             // any non-success => failed
             $payment->update(['status' => 'failed']);
-            return redirect()->route('consultation.consultation-summary')
+            return $this->redirectWithBooking('consultation.consultation-summary', $payment->consultationApplication)
                 ->with('error', 'Payment failed. Please try again.');
         }
     }
 
-    public function showPaymentSuccess()
+    public function showPaymentSuccess(Request $request)
     {
-        if (!Session::get('payment_success')) {
+        $application = $this->resolveApplication($request, false);
+
+        if (!$application) {
             return redirect()->route('consultation.application-forms');
         }
 
-        $applicationId = Session::get('consultation_application_id');
         $application = ConsultationApplication::with(['payments' => function ($q) {
             $q->whereIn('status', ['successful', 'pending'])->latest();
-        }])->find($applicationId);
+        }])->find($application->id);
 
         if (!$application) {
             return redirect()->route('consultation.application-forms')
@@ -507,17 +533,11 @@ class ConsultationController extends Controller
         return view('consultation.payment-success', compact('application', 'latestPayment'));
     }
 
-    public function showScheduling()
+    public function showScheduling(Request $request)
     {
-        $applicationId = Session::get('consultation_application_id');
+        $application = $this->resolveApplication($request, false);
 
-        if (!$applicationId) {
-            return redirect()->route('consultation.application-forms');
-        }
-
-        $application = ConsultationApplication::find($applicationId);
-
-        if (!$application || $application->status !== 'paid') {
+        if (!$application || !in_array($application->status, ['paid', 'scheduled', 'completed'], true)) {
             return redirect()->route('consultation.application-forms')
                 ->with('error', 'Please complete payment first.');
         }
@@ -543,8 +563,7 @@ class ConsultationController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        $applicationId = Session::get('consultation_application_id');
-        $application = ConsultationApplication::find($applicationId);
+        $application = $this->resolveApplication($request, false);
 
         if (!$application || $application->status !== 'paid') {
             $errorMessage = 'Invalid application or payment not completed.';
@@ -678,7 +697,7 @@ class ConsultationController extends Controller
             }
 
             // Clear session
-            Session::forget(['consultation_application_id', 'payment_success']);
+            Session::forget(['payment_success']);
             Session::put('ics_filename', $icsFilename);
 
             $successMessage = 'Your consultation has been scheduled successfully! Calendar invitations have been sent via email with Google Meet link.';
@@ -760,95 +779,6 @@ class ConsultationController extends Controller
         $authUrl = $calendarService->getAuthUrl();
 
         return redirect($authUrl);
-    }
-
-    /**
-     * Handle Flutterwave webhook notifications
-     * This endpoint will be called by Flutterwave when payment status changes
-     */
-    public function handleFlutterwaveWebhook(Request $request)
-    {
-        // Verify webhook signature if available
-        $secretKey = config('services.flutterwave.secret_key');
-        $signature = $request->header('verif-hash');
-
-        if ($signature && $secretKey) {
-            $expectedSignature = hash('sha256', $secretKey);
-            if ($signature !== $expectedSignature) {
-                Log::warning('Invalid Flutterwave webhook signature');
-                return response()->json(['status' => 'error', 'message' => 'Invalid signature'], 400);
-            }
-        }
-
-        $webhookData = $request->all();
-        Log::info('Flutterwave webhook received:', $webhookData);
-
-        // Extract transaction data
-        if (!isset($webhookData['data'])) {
-            return response()->json(['status' => 'error', 'message' => 'Invalid webhook data'], 400);
-        }
-
-        $transactionData = $webhookData['data'];
-        $transactionId = $transactionData['id'] ?? null;
-        $status = $transactionData['status'] ?? null;
-        $txRef = $transactionData['tx_ref'] ?? null;
-
-        if (!$transactionId || !$status) {
-            return response()->json(['status' => 'error', 'message' => 'Missing required data'], 400);
-        }
-
-        // Find payment record by transaction reference
-        $payment = Payment::where('payment_reference', $transactionId)
-            ->orWhere('payment_reference', $txRef)
-            ->first();
-
-        if (!$payment) {
-            Log::warning('Payment not found for Flutterwave webhook', [
-                'transaction_id' => $transactionId,
-                'tx_ref' => $txRef
-            ]);
-            return response()->json(['status' => 'error', 'message' => 'Payment not found'], 404);
-        }
-
-        // Update payment status based on webhook
-        switch (strtolower($status)) {
-            case 'successful':
-                $payment->update([
-                    'status' => 'successful',
-                    'paid_at' => now(),
-                    'payment_data' => $transactionData,
-                ]);
-
-                // Ensure application is marked as paid
-                $payment->consultationApplication->update(['status' => 'paid']);
-
-                Log::info('Payment confirmed via webhook', ['payment_id' => $payment->id]);
-                break;
-
-            case 'failed':
-            case 'cancelled':
-                $payment->update([
-                    'status' => 'failed',
-                    'payment_data' => $transactionData,
-                ]);
-
-                Log::info('Payment failed via webhook', ['payment_id' => $payment->id]);
-                break;
-
-            default:
-                // For pending, processing, etc., keep current status
-                $payment->update([
-                    'payment_data' => $transactionData,
-                ]);
-
-                Log::info('Payment status updated via webhook', [
-                    'payment_id' => $payment->id,
-                    'status' => $status
-                ]);
-                break;
-        }
-
-        return response()->json(['status' => 'success'], 200);
     }
 
     /**
@@ -971,5 +901,254 @@ class ConsultationController extends Controller
                 'message' => 'Failed to get messages'
             ], 500);
         }
+    }
+
+    private function resolveApplication(Request $request, bool $persist = true): ?ConsultationApplication
+    {
+        $application = null;
+
+        $bookingToken = $request->query('booking')
+            ?? $request->input('booking')
+            ?? Session::get('consultation_booking_token');
+
+        if ($bookingToken) {
+            $application = ConsultationApplication::where('booking_token', $bookingToken)->first();
+        }
+
+        if (!$application) {
+            $applicationId = Session::get('consultation_application_id');
+            if ($applicationId) {
+                $application = ConsultationApplication::find($applicationId);
+            }
+        }
+
+        if ($application && $persist) {
+            $this->persistBookingContext($application);
+        }
+
+        return $application;
+    }
+
+    private function persistBookingContext(ConsultationApplication $application): void
+    {
+        if (!$application->booking_token) {
+            $application->booking_token = (string) Str::uuid();
+            $application->save();
+        }
+
+        Session::put('consultation_application_id', $application->id);
+        Session::put('consultation_booking_token', $application->booking_token);
+    }
+
+    private function redirectWithBooking(string $routeName, ConsultationApplication $application)
+    {
+        return redirect()->route($routeName, ['booking' => $application->booking_token]);
+    }
+
+    private function resolveConsultationCharge(string $preferredCurrency): array
+    {
+        $currency = self::CONSULTATION_CURRENCY;
+        $amount = self::CONSULTATION_AMOUNT_GBP;
+        $source = 'default_gbp';
+
+        $targetCurrency = $this->sanitizeCurrency($preferredCurrency);
+        $allowedCurrencies = $this->allowedStripeCurrencies();
+
+        if ($targetCurrency !== self::CONSULTATION_CURRENCY && in_array($targetCurrency, $allowedCurrencies, true)) {
+            $rate = $this->fetchExchangeRate(self::CONSULTATION_CURRENCY, $targetCurrency);
+
+            if ($rate !== null && $rate > 0) {
+                $currency = $targetCurrency;
+                $amount = round(self::CONSULTATION_AMOUNT_GBP * $rate, 2);
+                $source = 'fx_lookup';
+            } else {
+                $fallbackRate = $this->fallbackExchangeRate(self::CONSULTATION_CURRENCY, $targetCurrency);
+                if ($fallbackRate !== null && $fallbackRate > 0) {
+                    $currency = $targetCurrency;
+                    $amount = round(self::CONSULTATION_AMOUNT_GBP * $fallbackRate, 2);
+                    $source = 'fx_fallback';
+                }
+            }
+        }
+
+        return [
+            'currency' => $currency,
+            'amount' => $amount,
+            'amount_in_smallest_unit' => $this->toSmallestCurrencyUnit($amount, $currency),
+            'source' => $source,
+        ];
+    }
+
+    private function sanitizeCurrency(string $currency): string
+    {
+        $normalized = strtoupper(trim($currency));
+
+        if (!preg_match('/^[A-Z]{3}$/', $normalized)) {
+            return self::CONSULTATION_CURRENCY;
+        }
+
+        return $normalized;
+    }
+
+    private function allowedStripeCurrencies(): array
+    {
+        $raw = (string) config('services.stripe.allowed_currencies', 'GBP,USD,EUR,NGN,GHS,KES,ZAR,CAD,AUD');
+
+        $currencies = collect(explode(',', $raw))
+            ->map(fn ($item) => strtoupper(trim($item)))
+            ->filter(fn ($item) => preg_match('/^[A-Z]{3}$/', $item) === 1)
+            ->unique()
+            ->values()
+            ->all();
+
+        if (!in_array(self::CONSULTATION_CURRENCY, $currencies, true)) {
+            $currencies[] = self::CONSULTATION_CURRENCY;
+        }
+
+        return $currencies;
+    }
+
+    private function fetchExchangeRate(string $baseCurrency, string $targetCurrency): ?float
+    {
+        $endpoint = (string) config('services.stripe.fx_rate_url', 'https://api.exchangerate.host/convert');
+
+        try {
+            $response = Http::timeout(5)->get($endpoint, [
+                'from' => strtoupper($baseCurrency),
+                'to' => strtoupper($targetCurrency),
+                'amount' => 1,
+            ]);
+
+            if (!$response->ok()) {
+                return null;
+            }
+
+            $result = $response->json('result');
+
+            if (is_numeric($result) && (float) $result > 0) {
+                return (float) $result;
+            }
+        } catch (\Throwable $e) {
+            Log::warning('FX conversion lookup failed', [
+                'base_currency' => $baseCurrency,
+                'target_currency' => $targetCurrency,
+                'error' => $e->getMessage(),
+            ]);
+        }
+
+        return null;
+    }
+
+    private function toSmallestCurrencyUnit(float $amount, string $currency): int
+    {
+        $upperCurrency = strtoupper($currency);
+
+        if (in_array($upperCurrency, self::STRIPE_ZERO_DECIMAL_CURRENCIES, true)) {
+            return (int) round($amount);
+        }
+
+        return (int) round($amount * 100);
+    }
+
+    private function fallbackExchangeRate(string $baseCurrency, string $targetCurrency): ?float
+    {
+        $configured = config('services.stripe.fx_fallback_rates', []);
+        if (!is_array($configured)) {
+            return null;
+        }
+
+        $key = strtoupper($baseCurrency) . '_' . strtoupper($targetCurrency);
+
+        if (!isset($configured[$key]) || !is_numeric($configured[$key])) {
+            return null;
+        }
+
+        return (float) $configured[$key];
+    }
+
+    private function buildStripeFailureLogContext(
+        ConsultationApplication $application,
+        Payment $payment,
+        string $status,
+        string $transactionId,
+        ?array $paymentData
+    ): array {
+        $stripeError = $paymentData['stripe_error'] ?? [];
+        $paymentIntent = $paymentData['payment_intent'] ?? [];
+        $lastError = $paymentIntent['last_payment_error'] ?? [];
+
+        $sanitizedPayload = $this->sanitizeStripeFailurePayload($paymentData);
+
+        return [
+            'application_id' => $application->id,
+            'booking_token' => $application->booking_token,
+            'payment_id' => $payment->id,
+            'payment_reference' => $payment->payment_reference,
+            'callback_status' => $status,
+            'transaction_id' => $transactionId,
+            'stripe_error_type' => $stripeError['type'] ?? null,
+            'stripe_error_code' => $stripeError['code'] ?? null,
+            'stripe_decline_code' => $stripeError['decline_code'] ?? null,
+            'stripe_error_message' => $stripeError['message'] ?? null,
+            'stripe_payment_intent_status' => $paymentIntent['status'] ?? null,
+            'stripe_last_error_code' => $lastError['code'] ?? null,
+            'stripe_last_decline_code' => $lastError['decline_code'] ?? null,
+            'stripe_last_error_message' => $lastError['message'] ?? null,
+            'gateway_payload' => $sanitizedPayload,
+        ];
+    }
+
+    private function sanitizeStripeFailurePayload(?array $paymentData): ?array
+    {
+        if (!$paymentData) {
+            return $paymentData;
+        }
+
+        $clone = $paymentData;
+
+        if (isset($clone['payment_intent']['client_secret'])) {
+            $clone['payment_intent']['client_secret'] = '[redacted]';
+        }
+
+        if (isset($clone['payment_intent']['last_payment_error']['payment_method']['billing_details']['email'])) {
+            $clone['payment_intent']['last_payment_error']['payment_method']['billing_details']['email'] = '[redacted]';
+        }
+
+        return $clone;
+    }
+
+    private function mapStripeFailureUserMessage(?array $paymentData): string
+    {
+        $stripeError = $paymentData['stripe_error'] ?? [];
+        $lastError = $paymentData['payment_intent']['last_payment_error'] ?? [];
+
+        $errorCode = (string) ($stripeError['code'] ?? $lastError['code'] ?? '');
+        $declineCode = (string) ($stripeError['decline_code'] ?? $lastError['decline_code'] ?? '');
+
+        if ($declineCode === 'insufficient_funds') {
+            return 'Your bank declined this payment due to insufficient funds. Please try another card or contact your bank.';
+        }
+
+        if ($declineCode === 'do_not_honor') {
+            return 'Your bank did not approve this payment. Please contact your bank or try a different card.';
+        }
+
+        if ($declineCode === 'generic_decline' || $errorCode === 'card_declined') {
+            return 'Your card was declined by your bank. Please try another card, ensure online/international payments are enabled, or contact your bank.';
+        }
+
+        if ($errorCode === 'authentication_required') {
+            return 'Your bank requires additional authentication for this payment. Please try again and complete any verification prompts.';
+        }
+
+        if ($errorCode === 'expired_card') {
+            return 'This card has expired. Please use another card.';
+        }
+
+        if ($errorCode === 'incorrect_cvc') {
+            return 'The card security code is incorrect. Please check and try again.';
+        }
+
+        return 'Payment failed. Please try again or use a different card.';
     }
 }

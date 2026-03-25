@@ -2014,6 +2014,7 @@
                         <form id="scheduleForm" method="POST" action="{{ route('consultation.schedule.submit') }}"
                             style="display: none;">
                             @csrf
+                            <input type="hidden" name="booking" value="{{ $application->booking_token }}">
                             <input type="hidden" name="session_date" id="hiddenDate">
                             <input type="hidden" name="session_time" id="hiddenTime">
                             <input type="hidden" name="timezone" id="hiddenTimezone">

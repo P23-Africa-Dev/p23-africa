@@ -556,7 +556,7 @@
                     <h4>Your Key Challenges:</h4>
                     <div id="challengeList" class="list-container">
                         <div class="lists">
-                            @foreach ($application->selected_challenges as $challenge)
+                            @foreach (($application->selected_challenges ?? []) as $challenge)
                                 <label class="list-card">
                                     <span class="list-text">{{ $challenge }}</span>
                                     <span class="list-checkmark"><img src="{{ asset('img/marked.png') }}"
@@ -574,7 +574,7 @@
                     <h4>Your Current Goals:</h4>
                     <div id="goalList" class="list-container">
                         <div class="lists">
-                            @foreach ($application->selected_goals as $goal)
+                            @foreach (($application->selected_goals ?? []) as $goal)
                                 <label class="list-card">
                                     <span class="list-text">{{ $goal }}</span>
                                     <span class="list-checkmark"><img src="{{ asset('img/marked.png') }}"
@@ -604,6 +604,7 @@
                 <div class="payment-btn">
                     <form method="POST" action="{{ route('consultation.payment.initiate') }}">
                         @csrf
+                        <input type="hidden" name="booking" value="{{ $application->booking_token }}">
                         <button type="submit" class="btn proceed-btn">
                             Proceed to Payment
                             <i class="fa-solid fa-arrow-right"></i>

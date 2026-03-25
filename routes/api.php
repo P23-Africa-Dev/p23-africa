@@ -24,10 +24,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/event/{id}/booking-fields', [EventController::class, 'getBookingFields'])
     ->name('api.event.booking-fields');
 
-// Payment Webhook routes - accessible without authentication for payment gateways
-Route::post('/webhooks/flutterwave', [App\Http\Controllers\ConsultationController::class, 'handleFlutterwaveWebhook'])
-    ->name('api.webhooks.flutterwave');
-
 // Chat API routes for consultation help system
 Route::prefix('consultation')->group(function () {
     Route::post('/chat/send-message', [App\Http\Controllers\ConsultationController::class, 'sendChatMessage'])

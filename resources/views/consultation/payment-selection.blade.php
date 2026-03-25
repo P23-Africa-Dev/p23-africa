@@ -3,9 +3,9 @@
 
 @section('meta')
     <meta name="description"
-        content="Choose your preferred payment method for your P23 Africa consultation booking - Flutterwave or Stripe payment options available.">
+        content="Complete your P23 Africa consultation booking with secure Stripe card payment.">
     <meta name="keywords"
-        content="payment, consultation booking, P23 Africa, Flutterwave, Stripe, business consultation payment">
+        content="payment, consultation booking, P23 Africa, Stripe, business consultation payment">
     <meta name="author" content="P23 Africa">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
@@ -96,7 +96,7 @@
 
     .payment-options {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
         gap: 20px;
     }
 
@@ -209,12 +209,28 @@
         border-radius: 0 !important;
         object-fit: contain !important;
     }
+
+    .payment-error-banner {
+        display: none;
+        margin: 0 0 20px;
+        padding: 12px 14px;
+        border-radius: 10px;
+        border: 1px solid #f5c2c7;
+        background: #f8d7da;
+        color: #842029;
+        font-family: "GT Walsheim Con";
+        font-size: 0.95rem;
+        line-height: 1.45;
+    }
 </style>
 
 @section('content')
+    @php
+        $bookingQuery = $application->booking_token ? ['booking' => $application->booking_token] : [];
+    @endphp
     <section class="payment-selection-container">
         <div class="payment-wrapper">
-            <a href="{{ route('consultation.consultation-summary') }}" class="back-link">
+            <a href="{{ route('consultation.consultation-summary', $bookingQuery) }}" class="back-link">
                 <i class="fa-solid fa-arrow-left"></i>
                 Back to Summary
             </a>
@@ -240,9 +256,11 @@
                 </div>
                 <div class="detail-row">
                     <span>Total Amount:</span>
-                    <span><strong>$100.00 USD</strong></span>
+                    <span><strong id="paymentAmountLabel">GBP 75.00</strong></span>
                 </div>
             </div>
+
+            <div id="paymentErrorBanner" class="payment-error-banner" role="alert" aria-live="polite"></div>
 
             <form method="POST" action="{{ route('consultation.payment.process') }}" id="paymentForm">
                 @csrf
@@ -259,16 +277,6 @@
                             <h4>Stripe</h4>
                             <p>Secure payment processing with major credit cards and digital wallets <b>Globally</b></p>
                         </label>
-
-                        <label class="payment-option" for="flutterwave" data-gateway="flutterwave">
-                            <input type="radio" id="flutterwave" name="payment_method" value="flutterwave" required>
-                            <img src="{{ asset('img/stripe-logo.png') }}" alt="Flutterwave" class="payment-logo"
-                                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                            <div style="display:none; font-size: 2rem; color: #f5a623;">💳</div>
-                            <h4>Flutterwave</h4>
-                            <p>Pay with cards, bank transfers, mobile money and more payment methods across <b>Africa</b>
-                            </p>
-                        </label>
                     </div>
 
                     @error('payment_method')
@@ -280,23 +288,23 @@
 
                 <button type="button" class="proceed-payment-btn" id="proceedBtn" disabled onclick="processPayment()">
                     <i class="fa-solid fa-lock"></i>
-                    Secure Payment - $100.00
+                    Secure Payment - <span id="proceedAmountLabel">GBP 75.00</span>
                     <i class="fa-solid fa-arrow-right"></i>
                 </button>
             </form>
         </div>
     </section>
 
-    <!-- Flutterwave Inline SDK -->
-    <script src="https://checkout.flutterwave.com/v3.js"></script>
-
     <!-- Stripe JS -->
     <script src="https://js.stripe.com/v3/"></script>
 
     <script>
         // Payment gateway configurations
-        const FLUTTERWAVE_PUBLIC_KEY = '{{ config('services.flutterwave.public_key') }}';
         const STRIPE_PUBLIC_KEY = '{{ config('services.stripe.public_key') }}';
+        const BOOKING_TOKEN = @json($application->booking_token);
+        const BASE_DISPLAY_AMOUNT = 'GBP 75.00';
+        const LOCAL_CURRENCY = detectUserCurrency();
+        const SERVER_PAYMENT_ERROR = @json(session('error'));
 
         // Initialize Stripe
         let stripe;
@@ -307,6 +315,10 @@
         let selectedPaymentMethod = null;
 
         document.addEventListener('DOMContentLoaded', function() {
+            if (SERVER_PAYMENT_ERROR) {
+                handlePaymentError(SERVER_PAYMENT_ERROR);
+            }
+
             // Simple and reliable payment option selection
             const paymentOptions = document.querySelectorAll('.payment-option');
             const proceedBtn = document.getElementById('proceedBtn');
@@ -336,112 +348,16 @@
                 return;
             }
 
+            clearPaymentError();
+
             // Disable button during processing
             const proceedBtn = document.getElementById('proceedBtn');
             proceedBtn.disabled = true;
             proceedBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
 
-            if (selectedPaymentMethod === 'flutterwave') {
-                processFlutterwavePayment();
-            } else if (selectedPaymentMethod === 'stripe') {
+            if (selectedPaymentMethod === 'stripe') {
                 processStripePayment();
             }
-        }
-
-        function processFlutterwavePayment() {
-            // First create a pending payment record on the server to get a reliable tx_ref
-            fetch('{{ route('consultation.payment.create-flutterwave') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify({})
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.error) {
-                        throw new Error(data.error);
-                    }
-
-                    const txRef = data.tx_ref;
-
-                    FlutterwaveCheckout({
-                        public_key: FLUTTERWAVE_PUBLIC_KEY,
-                        tx_ref: txRef,
-                        amount: 1.00,
-                        currency: 'NGN',
-                        country: 'US',
-                        payment_options: 'card,mobilemoney,ussd,banktransfer',
-                        customer: {
-                            email: '{{ $application->email }}',
-                            phonenumber: '{{ $application->phone ?? 'N/A' }}',
-                            name: '{{ $application->name }}',
-                        },
-                        callback: function(response) {
-                            try {
-                                console.log('Flutterwave callback data:', response);
-                                console.log('Flutterwave payment status:', response.status);
-
-                                // Handle different payment statuses
-                                if (response.status === 'successful' || response.status === 'success' ||
-                                    response.status === 'completed') {
-                                    console.log('Payment successful, redirecting...');
-                                    submitPaymentCallback('flutterwave', response.transaction_id,
-                                        'successful',
-                                        response);
-                                } else if (response.status === 'pending' || response.status ===
-                                    'processing') {
-                                    console.log('Payment pending verification, redirecting...');
-                                    submitPaymentCallback('flutterwave', response.transaction_id,
-                                        'pending_verification', response);
-                                } else if (response.status === 'cancelled' || response.status ===
-                                    'failed') {
-                                    console.log('Payment failed or cancelled:', response.status);
-                                    handlePaymentError('Payment was ' + response.status +
-                                        '. Please try again.');
-                                } else {
-                                    console.log('Unknown payment status:', response.status,
-                                        'treating as pending');
-                                    submitPaymentCallback('flutterwave', response.transaction_id,
-                                        'pending_verification', response);
-                                }
-                            } catch (err) {
-                                console.error('Error in Flutterwave callback handler:', err);
-                                // Safety net: if anything crashes, still try to record the payment
-                                try {
-                                    submitPaymentCallback('flutterwave',
-                                        response.transaction_id || txRef,
-                                        response.status || 'pending_verification',
-                                        response);
-                                } catch (e2) {
-                                    console.error('Safety net also failed, forcing redirect:', e2);
-                                    window.location.href = '{{ route('consultation.payment.callback') }}' +
-                                        '?gateway=flutterwave&transaction_id=' + encodeURIComponent(txRef) +
-                                        '&status=pending_verification&_token=' +
-                                        encodeURIComponent(document.querySelector('meta[name="csrf-token"]')
-                                            .getAttribute('content'));
-                                }
-                            }
-                        },
-                        onclose: function() {
-                            resetPaymentButton();
-                        },
-                        meta: {
-                            application_id: '{{ $application->id }}',
-                            consultation_type: 'business_strategy',
-                        },
-                        customizations: {
-                            title: 'P23 Africa Consultation',
-                            description: '90-minute Business Strategy Session',
-                            logo: '{{ asset('img/flutterwave-logo.png') }}',
-                        },
-                    });
-                })
-                .catch(error => {
-                    console.error('Failed to initialize Flutterwave payment:', error);
-                    handlePaymentError(error.message || 'Failed to initialize payment. Please try again.');
-                });
         }
 
         function processStripePayment() {
@@ -450,6 +366,8 @@
         }
 
         function createStripePaymentModal() {
+            let createdPaymentIntentId = '';
+
             // Create modal for Stripe card input
             const modal = document.createElement('div');
             modal.style.cssText = `
@@ -467,13 +385,13 @@
             modalContent.innerHTML = `
                 <div style="text-align: center; margin-bottom: 20px;">
                     <h3 style="color: #591044; margin: 0 0 10px 0;">Complete Payment</h3>
-                    <p style="color: #6c757d; margin: 0;">Enter your card details to complete the $100.00 payment</p>
+                    <p id="stripeAmountCopy" style="color: #6c757d; margin: 0;">Enter your card details to complete the payment in your local currency</p>
                 </div>
                 <div id="stripe-card-element" style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 20px;"></div>
                 <div id="stripe-card-errors" style="color: #dc3545; margin-bottom: 15px; font-size: 14px;"></div>
                 <div style="display: flex; gap: 10px;">
                     <button id="stripe-cancel-btn" style="flex: 1; padding: 12px; border: 1px solid #ddd; background: white; border-radius: 8px; cursor: pointer;">Cancel</button>
-                    <button id="stripe-pay-btn" style="flex: 2; padding: 12px; background: #591044; color: white; border: none; border-radius: 8px; cursor: pointer;">Pay $100.00</button>
+                    <button id="stripe-pay-btn" style="flex: 2; padding: 12px; background: #591044; color: white; border: none; border-radius: 8px; cursor: pointer;">Pay ${BASE_DISPLAY_AMOUNT}</button>
                 </div>
             `;
 
@@ -531,12 +449,34 @@
                                 'content')
                         },
                         body: JSON.stringify({
+                            booking: BOOKING_TOKEN,
                             payment_method: 'stripe',
-                            amount: 100.00,
+                            amount: 75.00,
+                            preferred_currency: LOCAL_CURRENCY,
                         })
                     })
-                    .then(response => response.json())
+                    .then(async response => {
+                        const data = await response.json().catch(() => ({}));
+                        if (!response.ok) {
+                            const err = new Error(data.message || data.error ||
+                                'Unable to initialize payment. Please try again.');
+                            err.details = data.details || '';
+                            throw err;
+                        }
+
+                        return data;
+                    })
                     .then(data => {
+                        createdPaymentIntentId = data.payment_intent_id || '';
+                        const displayAmount = data.display_amount || BASE_DISPLAY_AMOUNT;
+                        const amountCopy = document.getElementById('stripeAmountCopy');
+                        if (amountCopy) {
+                            amountCopy.textContent = `Enter your card details to complete the ${displayAmount} payment`;
+                        }
+
+                        payBtn.innerHTML = `Pay ${displayAmount}`;
+                        updateDisplayedAmount(displayAmount);
+
                         if (data.client_secret) {
                             return stripe.confirmCardPayment(data.client_secret, {
                                 payment_method: {
@@ -548,13 +488,27 @@
                                 }
                             });
                         } else {
-                            throw new Error(data.error || 'Failed to create payment intent');
+                            throw new Error(data.message || data.error ||
+                                'Failed to create payment intent');
                         }
                     })
                     .then(result => {
                         if (result.error) {
                             document.body.removeChild(modal);
-                            handlePaymentError(result.error.message);
+                            const normalizedError = normalizeStripeError(result.error);
+
+                            const failedTransactionId = (result.error.payment_intent && result.error.payment_intent.id) ?
+                                result.error.payment_intent.id : createdPaymentIntentId;
+
+                            submitPaymentCallback('stripe', failedTransactionId || '', 'failed', {
+                                stripe_error: normalizedError,
+                                payment_intent: result.error.payment_intent || null,
+                            });
+
+                            const friendlyMessage = getFriendlyStripeErrorMessage(normalizedError,
+                                result.error.message);
+                            handlePaymentError(friendlyMessage, normalizedError.decline_code || normalizedError.code ||
+                                'card_declined');
                         } else {
                             // Payment succeeded - show success state briefly
                             const payBtn = document.getElementById('stripe-pay-btn');
@@ -575,7 +529,10 @@
                     .catch(error => {
                         document.body.removeChild(modal);
                         console.error('Stripe payment error:', error);
-                        handlePaymentError(error.message || 'Payment processing failed');
+                        handlePaymentError(
+                            error.message || 'Payment processing failed',
+                            error.details || ''
+                        );
                     });
             });
         }
@@ -589,8 +546,13 @@
                 // Show loading state while redirecting
                 const proceedBtn = document.getElementById('proceedBtn');
                 if (proceedBtn) {
-                    proceedBtn.innerHTML = '<i class="fa-solid fa-check-circle"></i> Payment Successful - Redirecting...';
-                    proceedBtn.style.background = '#28a745';
+                    if (status === 'successful' || status === 'success') {
+                        proceedBtn.innerHTML = '<i class="fa-solid fa-check-circle"></i> Payment Successful - Redirecting...';
+                        proceedBtn.style.background = '#28a745';
+                    } else {
+                        proceedBtn.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Logging payment failure...';
+                        proceedBtn.style.background = '#a93a2d';
+                    }
                 }
 
                 console.log(`${gateway} payment callback:`, {
@@ -617,7 +579,8 @@
                     'gateway': gateway,
                     'transaction_id': transactionId || '',
                     'status': status || 'pending_verification',
-                    'payment_data': JSON.stringify(data || {})
+                    'payment_data': JSON.stringify(data || {}),
+                    'booking': BOOKING_TOKEN || ''
                 };
 
                 for (const [name, value] of Object.entries(fields)) {
@@ -671,7 +634,8 @@
                         gateway: gateway,
                         transaction_id: transactionId || '',
                         status: status || 'pending_verification',
-                        payment_data: JSON.stringify(data || {})
+                        payment_data: JSON.stringify(data || {}),
+                        booking: BOOKING_TOKEN || ''
                     }),
                     redirect: 'follow'
                 })
@@ -680,8 +644,15 @@
                     if (response.redirected) {
                         window.location.href = response.url;
                     } else {
-                        // If no redirect, go to payment success directly
-                        window.location.href = '{{ route('consultation.payment-success') }}';
+                        // If no redirect response, route user based on callback status.
+                        if (status === 'successful' || status === 'success' || status === 'pending' || status ===
+                            'pending_verification') {
+                            window.location.href = '{{ route('consultation.payment-success') }}?booking=' +
+                                encodeURIComponent(BOOKING_TOKEN || '');
+                        } else {
+                            window.location.href = '{{ route('consultation.payment-selection') }}?booking=' +
+                                encodeURIComponent(BOOKING_TOKEN || '');
+                        }
                     }
                 })
                 .catch(fetchErr => {
@@ -689,20 +660,194 @@
                     alert(
                         'Payment was processed but we had trouble updating your record. Please contact support at contact@p23africa.com with your transaction reference.'
                     );
-                    window.location.href = '{{ route('consultation.payment-success') }}';
+                    if (status === 'successful' || status === 'success' || status === 'pending' || status ===
+                        'pending_verification') {
+                        window.location.href = '{{ route('consultation.payment-success') }}?booking=' +
+                            encodeURIComponent(BOOKING_TOKEN || '');
+                    } else {
+                        window.location.href = '{{ route('consultation.payment-selection') }}?booking=' +
+                            encodeURIComponent(BOOKING_TOKEN || '');
+                    }
                 });
         }
 
-        function handlePaymentError(message) {
+        function normalizeStripeError(error) {
+            if (!error) {
+                return {};
+            }
+
+            return {
+                type: error.type || null,
+                code: error.code || null,
+                decline_code: error.decline_code || null,
+                message: error.message || null,
+                charge: error.charge || null,
+                payment_intent_id: (error.payment_intent && error.payment_intent.id) ? error.payment_intent.id : null,
+                payment_method_id: (error.payment_method && error.payment_method.id) ? error.payment_method.id : null,
+            };
+        }
+
+        function handlePaymentError(message, details = '') {
+            const banner = document.getElementById('paymentErrorBanner');
+            if (banner) {
+                const safeMessage = message || 'Payment failed. Please try again.';
+                banner.textContent = details ? `${safeMessage} (${details})` : safeMessage;
+                banner.style.display = 'block';
+                banner.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }
+
             alert('Payment Error: ' + message);
             resetPaymentButton();
+        }
+
+        function getFriendlyStripeErrorMessage(error, fallbackMessage = '') {
+            const errorCode = error && error.code ? error.code : '';
+            const declineCode = error && error.decline_code ? error.decline_code : '';
+
+            if (declineCode === 'insufficient_funds') {
+                return 'Your bank declined this payment due to insufficient funds. Please try another card or contact your bank.';
+            }
+
+            if (declineCode === 'do_not_honor') {
+                return 'Your bank did not approve this payment. Please contact your bank or try a different card.';
+            }
+
+            if (declineCode === 'generic_decline' || errorCode === 'card_declined') {
+                return 'Your card was declined by your bank. Please try another card, ensure online/international payments are enabled, or contact your bank.';
+            }
+
+            if (errorCode === 'authentication_required') {
+                return 'Your bank requires additional authentication for this payment. Please try again and complete any verification prompts.';
+            }
+
+            if (errorCode === 'expired_card') {
+                return 'This card has expired. Please use another card.';
+            }
+
+            if (errorCode === 'incorrect_cvc') {
+                return 'The card security code is incorrect. Please check and try again.';
+            }
+
+            return fallbackMessage || 'Payment failed. Please try again or use another card.';
+        }
+
+        function clearPaymentError() {
+            const banner = document.getElementById('paymentErrorBanner');
+            if (banner) {
+                banner.style.display = 'none';
+                banner.textContent = '';
+            }
         }
 
         function resetPaymentButton() {
             const proceedBtn = document.getElementById('proceedBtn');
             proceedBtn.disabled = false;
+            const proceedLabel = document.getElementById('proceedAmountLabel');
+            if (proceedLabel && !proceedLabel.textContent.trim()) {
+                proceedLabel.textContent = BASE_DISPLAY_AMOUNT;
+            }
+
             proceedBtn.innerHTML =
-                '<i class="fa-solid fa-lock"></i> Secure Payment - $100.00 <i class="fa-solid fa-arrow-right"></i>';
+                '<i class="fa-solid fa-lock"></i> Secure Payment - <span id="proceedAmountLabel">' +
+                (proceedLabel ? proceedLabel.textContent : BASE_DISPLAY_AMOUNT) +
+                '</span> <i class="fa-solid fa-arrow-right"></i>';
+        }
+
+        function updateDisplayedAmount(displayAmount) {
+            const safeAmount = displayAmount || BASE_DISPLAY_AMOUNT;
+            const summaryAmount = document.getElementById('paymentAmountLabel');
+            const proceedAmount = document.getElementById('proceedAmountLabel');
+
+            if (summaryAmount) {
+                summaryAmount.textContent = safeAmount;
+            }
+
+            if (proceedAmount) {
+                proceedAmount.textContent = safeAmount;
+            }
+        }
+
+        function detectUserCurrency() {
+            const localeCandidates = Array.isArray(navigator.languages) && navigator.languages.length ?
+                navigator.languages : [navigator.language || 'en-GB'];
+
+            let region = null;
+            for (const locale of localeCandidates) {
+                const matchedRegion = extractRegionFromLocale(locale);
+                if (matchedRegion) {
+                    region = matchedRegion;
+                    break;
+                }
+            }
+
+            if (!region) {
+                const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+                region = mapTimezoneToRegion(timezone);
+            }
+
+            if (!region) {
+                region = 'GB';
+            }
+
+            const map = {
+                GB: 'GBP',
+                US: 'USD',
+                CA: 'CAD',
+                AU: 'AUD',
+                NZ: 'NZD',
+                IE: 'EUR',
+                FR: 'EUR',
+                DE: 'EUR',
+                ES: 'EUR',
+                IT: 'EUR',
+                PT: 'EUR',
+                NL: 'EUR',
+                BE: 'EUR',
+                NG: 'NGN',
+                GH: 'GHS',
+                KE: 'KES',
+                ZA: 'ZAR',
+            };
+
+            return map[region] || 'GBP';
+        }
+
+        function extractRegionFromLocale(locale) {
+            if (!locale || typeof locale !== 'string') {
+                return null;
+            }
+
+            const normalized = locale.replace('_', '-').toUpperCase();
+            const parts = normalized.split('-');
+
+            // Handles patterns like en-NG and zh-Hans-CN.
+            for (let i = parts.length - 1; i >= 0; i--) {
+                if (/^[A-Z]{2}$/.test(parts[i])) {
+                    return parts[i];
+                }
+            }
+
+            return null;
+        }
+
+        function mapTimezoneToRegion(timezone) {
+            const timezoneMap = {
+                'Africa/Lagos': 'NG',
+                'Africa/Accra': 'GH',
+                'Africa/Nairobi': 'KE',
+                'Africa/Johannesburg': 'ZA',
+                'Europe/London': 'GB',
+                'America/New_York': 'US',
+                'America/Chicago': 'US',
+                'America/Los_Angeles': 'US',
+                'Europe/Paris': 'FR',
+                'Europe/Berlin': 'DE',
+            };
+
+            return timezoneMap[timezone] || null;
         }
     </script>
 @endsection

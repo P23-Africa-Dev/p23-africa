@@ -271,7 +271,6 @@ Route::post('/book-consultation/payment/initiate', [App\Http\Controllers\Consult
 Route::post('/book-consultation/payment/process', [App\Http\Controllers\ConsultationController::class, 'processPayment'])->name('consultation.payment.process');
 Route::post('/book-consultation/payment/callback', [App\Http\Controllers\ConsultationController::class, 'handlePaymentCallback'])->name('consultation.payment.callback');
 Route::post('/book-consultation/payment/create-intent', [App\Http\Controllers\ConsultationController::class, 'createStripePaymentIntent'])->name('consultation.payment.create-intent');
-Route::post('/book-consultation/payment/create-flutterwave', [App\Http\Controllers\ConsultationController::class, 'createFlutterwavePayment'])->name('consultation.payment.create-flutterwave');
 Route::get('/book-consultation/payment/callback/{reference}/{status}', [App\Http\Controllers\ConsultationController::class, 'handlePaymentCallbackLegacy'])->name('consultation.payment.callback.legacy');
 
 // Payment Success
@@ -290,9 +289,9 @@ Route::get('/chat-test', function () {
 Route::get('/book-consultation/download-ics/{filename}', [App\Http\Controllers\ConsultationController::class, 'downloadIcs'])->name('consultation.download-ics');
 Route::get('/google/calendar/auth', [App\Http\Controllers\ConsultationController::class, 'googleCalendarAuth'])->name('google.calendar.auth');
 Route::get('/google/calendar/callback', [App\Http\Controllers\ConsultationController::class, 'googleCalendarCallback'])->name('google.calendar.callback');
-Route::get('/email-test', function () {
-    return view('emails.consultation-scheduled');
-})->name('feedback.thankyou');
+// Route::get('/email-test', function () {
+//     return view('emails.consultation-scheduled');
+// })->name('feedback.thankyou');
 
 // Route::get('/events/all-events', function () {
 //     $events = Event::all();

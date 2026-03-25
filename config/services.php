@@ -38,11 +38,30 @@ return [
     'stripe' => [
         'public_key' => env('STRIPE_PUBLIC_KEY'),
         'secret_key' => env('STRIPE_SECRET_KEY'),
+        'currency' => env('STRIPE_CURRENCY', 'GBP'),
+        'amount' => env('STRIPE_AMOUNT', 75),
+        'allowed_currencies' => env('STRIPE_ALLOWED_CURRENCIES', 'GBP,USD,EUR,NGN,GHS,KES,ZAR,CAD,AUD'),
+        'fx_rate_url' => env('STRIPE_FX_RATE_URL', 'https://api.exchangerate.host/convert'),
+        'fx_fallback_rates' => [
+            'GBP_NGN' => (float) env('STRIPE_FX_FALLBACK_GBP_NGN', 2000),
+            'GBP_GHS' => (float) env('STRIPE_FX_FALLBACK_GBP_GHS', 16),
+            'GBP_KES' => (float) env('STRIPE_FX_FALLBACK_GBP_KES', 165),
+            'GBP_ZAR' => (float) env('STRIPE_FX_FALLBACK_GBP_ZAR', 24),
+            'GBP_USD' => (float) env('STRIPE_FX_FALLBACK_GBP_USD', 1.3),
+            'GBP_EUR' => (float) env('STRIPE_FX_FALLBACK_GBP_EUR', 1.17),
+            'GBP_CAD' => (float) env('STRIPE_FX_FALLBACK_GBP_CAD', 1.75),
+            'GBP_AUD' => (float) env('STRIPE_FX_FALLBACK_GBP_AUD', 2.0),
+        ],
     ],
 
     'flutterwave' => [
         'public_key' => env('FLUTTERWAVE_PUBLIC_KEY'),
         'secret_key' => env('FLUTTERWAVE_SECRET_KEY'),
+        'webhook_secret' => env('FLUTTERWAVE_WEBHOOK_SECRET'),
+        'currency' => env('FLUTTERWAVE_CURRENCY', 'USD'),
+        'country' => env('FLUTTERWAVE_COUNTRY', 'NG'),
+        'amount' => env('FLUTTERWAVE_AMOUNT', 100),
+        'payment_options' => env('FLUTTERWAVE_PAYMENT_OPTIONS', 'card'),
     ],
 
     'admin' => [

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class ConsultationApplication extends Model
 {
     protected $fillable = [
+        'booking_token',
         'name',
         'email',
         'phone',

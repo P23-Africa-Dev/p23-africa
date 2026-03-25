@@ -106,6 +106,9 @@
 </head>
 
 <body>
+    @php
+        $bookingQuery = $application->booking_token ? ['booking' => $application->booking_token] : [];
+    @endphp
     <div class="container">
         <div class="header">
             <h1>💬 Response from P23 Africa</h1>
@@ -137,11 +140,11 @@
                     booking process.</p>
 
                 @if ($application->status !== 'paid')
-                    <a href="{{ route('consultation.payment-selection') }}" class="reply-button">
+                    <a href="{{ route('consultation.payment-selection', $bookingQuery) }}" class="reply-button">
                         Continue Booking Process
                     </a>
                 @elseif($application->scheduledSessions->count() === 0)
-                    <a href="{{ route('consultation.schedule-consultation') }}" class="reply-button">
+                    <a href="{{ route('consultation.schedule-consultation', $bookingQuery) }}" class="reply-button">
                         Schedule Your Session
                     </a>
                 @endif
@@ -160,7 +163,7 @@
                 @if ($application->scheduledSessions->count() > 0)
                     <p style="margin: 5px 0;">
                         <strong>Session:</strong> ✅ Scheduled for
-                        {{ $application->scheduledSessions->first()->consultation_date->format('F j, Y') }}
+                        {{ $application->scheduledSessions->first()->session_date->format('F j, Y') }}
                     </p>
                 @endif
             </div>
