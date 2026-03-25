@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\ConsultationApplication;
 use App\Models\Payment;
 use App\Models\ScheduledSession;
+use App\Services\GoogleCalendarService;
+use App\Mail\ConsultationScheduledMail;
+use App\Mail\ConsultationScheduledNotificationMail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -207,6 +210,156 @@ class ConsultationController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to mark message as read'
+            ], 500);
+        }
+    }
+
+    /**
+     * Manually trigger Google Calendar event creation + send scheduling emails
+     * for a consultation that was missed (e.g. due to fake DB records).
+     */
+    public function manualSchedule(Request $request, $id)
+    {
+        $request->validate([
+            'session_date' => 'required|date',
+            'session_time' => 'required|date_format:H:i',
+            'timezone'     => 'required|string',
+        ]);
+
+        $application = ConsultationApplication::findOrFail($id);
+
+        try {
+            // Build start / end datetime
+            $sessionDateTime = \Carbon\Carbon::createFromFormat(
+                'Y-m-d H:i',
+                $request->session_date . ' ' . $request->session_time,
+                $request->timezone
+            );
+            $sessionEndTime = $sessionDateTime->copy()->addMinutes(90);
+
+            $startDateTime = $sessionDateTime->toIso8601String();
+            $endDateTime   = $sessionEndTime->toIso8601String();
+
+            // Google Calendar event
+            $calendarService = new GoogleCalendarService();
+            $adminEmail = config('services.admin.email', 'contact@p23africa.com');
+
+            $eventSummary = 'P23 Africa Consultation';
+            $eventDescription = "90-minute consultation session\n\n"
+                . "Client: {$application->name}\n"
+                . "Company: {$application->company}\n"
+                . "Industry: {$application->industry}\n"
+                . "Email: {$application->email}\n"
+                . "Phone: {$application->phone}\n\n"
+                . "Business Description:\n{$application->business_description}\n\n"
+                . "This consultation will be conducted via Google Meet.";
+
+            $attendees = [$adminEmail, $application->email];
+
+            $calendarResult = $calendarService->createEvent(
+                $eventSummary,
+                $eventDescription,
+                $startDateTime,
+                $endDateTime,
+                $request->timezone,
+                $attendees
+            );
+
+            if (!$calendarResult['success']) {
+                throw new \Exception('Google Calendar event creation failed: ' . ($calendarResult['error'] ?? 'Unknown error'));
+            }
+
+            // Create (or update) ScheduledSession record
+            $scheduledSession = ScheduledSession::updateOrCreate(
+                ['consultation_application_id' => $application->id],
+                [
+                    'session_date'              => $request->session_date,
+                    'session_time'              => $request->session_time,
+                    'timezone'                  => $request->timezone,
+                    'meet_link'                 => $calendarResult['meet_link'] ?? '',
+                    'google_calendar_event_id'  => $calendarResult['event_id'],
+                    'google_meet_link'          => $calendarResult['meet_link'],
+                    'calendar_html_link'        => $calendarResult['html_link'],
+                    'status'                    => 'scheduled',
+                ]
+            );
+
+            $application->update(['status' => 'scheduled']);
+
+            // Generate .ics file
+            $icsContent = $calendarService->generateIcsFile(
+                $eventSummary,
+                $eventDescription,
+                $startDateTime,
+                $endDateTime,
+                $calendarResult['meet_link'] ?? 'Google Meet',
+                $adminEmail,
+                $application->email
+            );
+
+            $icsFilename = 'consultation_' . $application->id . '_' . time() . '.ics';
+            $icsPath = storage_path('app/temp/' . $icsFilename);
+            if (!file_exists(dirname($icsPath))) {
+                mkdir(dirname($icsPath), 0755, true);
+            }
+            file_put_contents($icsPath, $icsContent);
+
+            // Build the same $emailData object used by the normal flow
+            $emailData = (object) [
+                'id'                 => $scheduledSession->id,
+                'name'               => $application->name,
+                'email'              => $application->email,
+                'phone'              => $application->phone,
+                'company'            => $application->company,
+                'consultation_type'  => $application->industry ?? 'Business Consultation',
+                'consultation_date'  => $sessionDateTime,
+                'google_meet_link'   => $calendarResult['meet_link'] ?? null,
+                'calendar_html_link' => $calendarResult['html_link'] ?? null,
+                'message'            => $application->business_description ?? null,
+                'created_at'         => $scheduledSession->created_at,
+            ];
+
+            // Send client email with .ics attachment
+            try {
+                Mail::to($application->email)->send(new ConsultationScheduledMail($emailData, $icsContent));
+                Log::info('Manual schedule: client email sent', ['email' => $application->email]);
+            } catch (\Exception $e) {
+                Log::error('Manual schedule: client email failed', ['error' => $e->getMessage()]);
+            }
+
+            // Send admin notification email
+            try {
+                Mail::to($adminEmail)->send(new ConsultationScheduledNotificationMail($emailData));
+                Log::info('Manual schedule: admin email sent', ['email' => $adminEmail]);
+            } catch (\Exception $e) {
+                Log::error('Manual schedule: admin email failed', ['error' => $e->getMessage()]);
+            }
+
+            activity()
+                ->causedBy(Auth::user())
+                ->withProperties([
+                    'application_id' => $application->id,
+                    'client_name'    => $application->name,
+                    'session_date'   => $request->session_date,
+                    'session_time'   => $request->session_time,
+                    'meet_link'      => $calendarResult['meet_link'] ?? null,
+                ])
+                ->log('Manually scheduled consultation & sent meeting emails');
+
+            return response()->json([
+                'success'   => true,
+                'message'   => 'Google Meet created and scheduling emails sent to ' . $application->email,
+                'meet_link' => $calendarResult['meet_link'] ?? null,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Manual schedule failed', [
+                'application_id' => $id,
+                'error'          => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed: ' . $e->getMessage(),
             ], 500);
         }
     }

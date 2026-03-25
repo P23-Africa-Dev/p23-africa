@@ -374,7 +374,7 @@ class LeadController extends Controller
         $user = auth()->user();
         $this->ensureLeadOrgAccess($lead, $user);
 
-        $lead->load(['assignedUser', 'activities.user']);
+        $lead->load(['assignedUser', 'activities.user', 'drive']);
 
         $orgId = $this->currentOrgId();
         $leadStatuses = LeadStatus::getForOrg($orgId);

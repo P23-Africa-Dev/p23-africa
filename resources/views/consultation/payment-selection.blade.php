@@ -295,8 +295,8 @@
 
     <script>
         // Payment gateway configurations
-        const FLUTTERWAVE_PUBLIC_KEY = '{{ env('FLUTTERWAVE_PUBLIC_KEY') }}';
-        const STRIPE_PUBLIC_KEY = '{{ env('STRIPE_PUBLIC_KEY') }}';
+        const FLUTTERWAVE_PUBLIC_KEY = '{{ config('services.flutterwave.public_key') }}';
+        const STRIPE_PUBLIC_KEY = '{{ config('services.stripe.public_key') }}';
 
         // Initialize Stripe
         let stripe;
@@ -349,57 +349,99 @@
         }
 
         function processFlutterwavePayment() {
-            FlutterwaveCheckout({
-                public_key: FLUTTERWAVE_PUBLIC_KEY,
-                tx_ref: 'REF_' + Date.now(),
-                amount: 100.00,
-                currency: 'USD',
-                country: 'US',
-                payment_options: 'card,mobilemoney,ussd,banktransfer',
-                customer: {
-                    email: '{{ $application->email }}',
-                    phonenumber: '{{ $application->phone ?? 'N/A' }}',
-                    name: '{{ $application->name }}',
-                },
-                callback: function(data) {
-                    console.log('Flutterwave callback data:', data);
-                    console.log('Flutterwave payment status:', data.status);
-
-                    // Handle different payment statuses
-                    if (data.status === 'successful') {
-                        // Immediate success (cards, mobile money, etc.)
-                        console.log('Payment successful, redirecting...');
-                        submitPaymentCallback('flutterwave', data.transaction_id, 'successful', data);
-                    } else if (data.status === 'pending' || data.status === 'processing' ||
-                        data.status === 'completed' || data.status === 'success') {
-                        // Bank transfers and other delayed payments
-                        // Also handle 'completed' and 'success' as variants
-                        console.log('Payment pending verification, redirecting...');
-                        submitPaymentCallback('flutterwave', data.transaction_id, 'pending_verification', data);
-                    } else if (data.status === 'cancelled' || data.status === 'failed') {
-                        // Explicitly failed or cancelled payments
-                        console.log('Payment failed or cancelled:', data.status);
-                        handlePaymentError('Payment was ' + data.status + '. Please try again.');
-                    } else {
-                        // Unknown status - treat as pending for safety
-                        console.log('Unknown payment status:', data.status, 'treating as pending');
-                        submitPaymentCallback('flutterwave', data.transaction_id, 'pending_verification', data);
+            // First create a pending payment record on the server to get a reliable tx_ref
+            fetch('{{ route('consultation.payment.create-flutterwave') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({})
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        throw new Error(data.error);
                     }
-                },
-                onclose: function() {
-                    // Re-enable button if modal is closed without payment
-                    resetPaymentButton();
-                },
-                meta: {
-                    application_id: '{{ $application->id }}',
-                    consultation_type: 'business_strategy',
-                },
-                customizations: {
-                    title: 'P23 Africa Consultation',
-                    description: '90-minute Business Strategy Session',
-                    logo: '{{ asset('img/flutterwave-logo.png') }}',
-                },
-            });
+
+                    const txRef = data.tx_ref;
+
+                    FlutterwaveCheckout({
+                        public_key: FLUTTERWAVE_PUBLIC_KEY,
+                        tx_ref: txRef,
+                        amount: 1.00,
+                        currency: 'NGN',
+                        country: 'US',
+                        payment_options: 'card,mobilemoney,ussd,banktransfer',
+                        customer: {
+                            email: '{{ $application->email }}',
+                            phonenumber: '{{ $application->phone ?? 'N/A' }}',
+                            name: '{{ $application->name }}',
+                        },
+                        callback: function(response) {
+                            try {
+                                console.log('Flutterwave callback data:', response);
+                                console.log('Flutterwave payment status:', response.status);
+
+                                // Handle different payment statuses
+                                if (response.status === 'successful' || response.status === 'success' ||
+                                    response.status === 'completed') {
+                                    console.log('Payment successful, redirecting...');
+                                    submitPaymentCallback('flutterwave', response.transaction_id,
+                                        'successful',
+                                        response);
+                                } else if (response.status === 'pending' || response.status ===
+                                    'processing') {
+                                    console.log('Payment pending verification, redirecting...');
+                                    submitPaymentCallback('flutterwave', response.transaction_id,
+                                        'pending_verification', response);
+                                } else if (response.status === 'cancelled' || response.status ===
+                                    'failed') {
+                                    console.log('Payment failed or cancelled:', response.status);
+                                    handlePaymentError('Payment was ' + response.status +
+                                        '. Please try again.');
+                                } else {
+                                    console.log('Unknown payment status:', response.status,
+                                        'treating as pending');
+                                    submitPaymentCallback('flutterwave', response.transaction_id,
+                                        'pending_verification', response);
+                                }
+                            } catch (err) {
+                                console.error('Error in Flutterwave callback handler:', err);
+                                // Safety net: if anything crashes, still try to record the payment
+                                try {
+                                    submitPaymentCallback('flutterwave',
+                                        response.transaction_id || txRef,
+                                        response.status || 'pending_verification',
+                                        response);
+                                } catch (e2) {
+                                    console.error('Safety net also failed, forcing redirect:', e2);
+                                    window.location.href = '{{ route('consultation.payment.callback') }}' +
+                                        '?gateway=flutterwave&transaction_id=' + encodeURIComponent(txRef) +
+                                        '&status=pending_verification&_token=' +
+                                        encodeURIComponent(document.querySelector('meta[name="csrf-token"]')
+                                            .getAttribute('content'));
+                                }
+                            }
+                        },
+                        onclose: function() {
+                            resetPaymentButton();
+                        },
+                        meta: {
+                            application_id: '{{ $application->id }}',
+                            consultation_type: 'business_strategy',
+                        },
+                        customizations: {
+                            title: 'P23 Africa Consultation',
+                            description: '90-minute Business Strategy Session',
+                            logo: '{{ asset('img/flutterwave-logo.png') }}',
+                        },
+                    });
+                })
+                .catch(error => {
+                    console.error('Failed to initialize Flutterwave payment:', error);
+                    handlePaymentError(error.message || 'Failed to initialize payment. Please try again.');
+                });
         }
 
         function processStripePayment() {
@@ -539,61 +581,116 @@
         }
 
         function submitPaymentCallback(gateway, transactionId, status, data) {
-            // Show loading state while redirecting
-            const proceedBtn = document.getElementById('proceedBtn');
-            proceedBtn.innerHTML = '<i class="fa-solid fa-check-circle"></i> Payment Successful - Redirecting...';
-            proceedBtn.style.background = '#28a745';
+            // Prevent double submission
+            if (window._paymentCallbackSubmitted) return;
+            window._paymentCallbackSubmitted = true;
 
-            console.log(`${gateway} payment callback:`, {
-                transactionId,
-                status,
-                data
-            });
+            try {
+                // Show loading state while redirecting
+                const proceedBtn = document.getElementById('proceedBtn');
+                if (proceedBtn) {
+                    proceedBtn.innerHTML = '<i class="fa-solid fa-check-circle"></i> Payment Successful - Redirecting...';
+                    proceedBtn.style.background = '#28a745';
+                }
 
-            // Create a form to submit the payment callback data
-            const form = document.createElement('form');
-            form.method = 'POST';
-            form.action = '{{ route('consultation.payment.callback') }}';
-            form.style.display = 'none';
+                console.log(`${gateway} payment callback:`, {
+                    transactionId,
+                    status,
+                    data
+                });
 
-            // Add CSRF token
-            const csrfInput = document.createElement('input');
-            csrfInput.type = 'hidden';
-            csrfInput.name = '_token';
-            csrfInput.value = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            form.appendChild(csrfInput);
+                // Create a form to submit the payment callback data
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '{{ route('consultation.payment.callback') }}';
+                form.style.display = 'none';
 
-            // Add payment data
-            const gatewayInput = document.createElement('input');
-            gatewayInput.type = 'hidden';
-            gatewayInput.name = 'gateway';
-            gatewayInput.value = gateway;
-            form.appendChild(gatewayInput);
+                // Add CSRF token
+                const csrfInput = document.createElement('input');
+                csrfInput.type = 'hidden';
+                csrfInput.name = '_token';
+                csrfInput.value = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                form.appendChild(csrfInput);
 
-            const transactionInput = document.createElement('input');
-            transactionInput.type = 'hidden';
-            transactionInput.name = 'transaction_id';
-            transactionInput.value = transactionId;
-            form.appendChild(transactionInput);
+                // Add payment data
+                const fields = {
+                    'gateway': gateway,
+                    'transaction_id': transactionId || '',
+                    'status': status || 'pending_verification',
+                    'payment_data': JSON.stringify(data || {})
+                };
 
-            const statusInput = document.createElement('input');
-            statusInput.type = 'hidden';
-            statusInput.name = 'status';
-            statusInput.value = status;
-            form.appendChild(statusInput);
+                for (const [name, value] of Object.entries(fields)) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = name;
+                    input.value = value;
+                    form.appendChild(input);
+                }
 
-            const dataInput = document.createElement('input');
-            dataInput.type = 'hidden';
-            dataInput.name = 'payment_data';
-            dataInput.value = JSON.stringify(data);
-            form.appendChild(dataInput);
+                document.body.appendChild(form);
 
-            document.body.appendChild(form);
+                // Submit after brief UX delay
+                setTimeout(() => {
+                    try {
+                        form.submit();
+                    } catch (submitError) {
+                        console.error('Form submit failed:', submitError);
+                        // Fallback: use fetch to POST the callback
+                        fallbackPaymentCallback(gateway, transactionId, status, data);
+                    }
+                }, 800);
 
-            // Add a small delay for better UX, then submit
-            setTimeout(() => {
-                form.submit();
-            }, 1000);
+                // Ultimate safety net: if page hasn't navigated in 10 seconds, force redirect
+                setTimeout(() => {
+                    console.warn('Payment callback timeout - forcing redirect via fetch fallback');
+                    fallbackPaymentCallback(gateway, transactionId, status, data);
+                }, 10000);
+
+            } catch (err) {
+                console.error('submitPaymentCallback crashed:', err);
+                fallbackPaymentCallback(gateway, transactionId, status, data);
+            }
+        }
+
+        // Fallback: use fetch + manual redirect if form submission fails
+        function fallbackPaymentCallback(gateway, transactionId, status, data) {
+            if (window._paymentFallbackUsed) return;
+            window._paymentFallbackUsed = true;
+
+            console.log('Using fetch fallback for payment callback');
+
+            fetch('{{ route('consultation.payment.callback') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Accept': 'text/html'
+                    },
+                    body: JSON.stringify({
+                        gateway: gateway,
+                        transaction_id: transactionId || '',
+                        status: status || 'pending_verification',
+                        payment_data: JSON.stringify(data || {})
+                    }),
+                    redirect: 'follow'
+                })
+                .then(response => {
+                    // Server returns a redirect — follow it
+                    if (response.redirected) {
+                        window.location.href = response.url;
+                    } else {
+                        // If no redirect, go to payment success directly
+                        window.location.href = '{{ route('consultation.payment-success') }}';
+                    }
+                })
+                .catch(fetchErr => {
+                    console.error('Fetch fallback also failed:', fetchErr);
+                    alert(
+                        'Payment was processed but we had trouble updating your record. Please contact support at contact@p23africa.com with your transaction reference.'
+                    );
+                    window.location.href = '{{ route('consultation.payment-success') }}';
+                });
         }
 
         function handlePaymentError(message) {

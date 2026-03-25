@@ -271,6 +271,7 @@ Route::post('/book-consultation/payment/initiate', [App\Http\Controllers\Consult
 Route::post('/book-consultation/payment/process', [App\Http\Controllers\ConsultationController::class, 'processPayment'])->name('consultation.payment.process');
 Route::post('/book-consultation/payment/callback', [App\Http\Controllers\ConsultationController::class, 'handlePaymentCallback'])->name('consultation.payment.callback');
 Route::post('/book-consultation/payment/create-intent', [App\Http\Controllers\ConsultationController::class, 'createStripePaymentIntent'])->name('consultation.payment.create-intent');
+Route::post('/book-consultation/payment/create-flutterwave', [App\Http\Controllers\ConsultationController::class, 'createFlutterwavePayment'])->name('consultation.payment.create-flutterwave');
 Route::get('/book-consultation/payment/callback/{reference}/{status}', [App\Http\Controllers\ConsultationController::class, 'handlePaymentCallbackLegacy'])->name('consultation.payment.callback.legacy');
 
 // Payment Success
@@ -361,6 +362,7 @@ Route::middleware(['auth', 'check.suspended', 'resolve.org', 'role:admin|supervi
             Route::post('/consultation/bulk-delete', [\App\Http\Controllers\Admin\ConsultationController::class, 'bulkDelete'])->name('consultation.bulk-delete');
             Route::post('/consultations/{id}/update-status', [\App\Http\Controllers\Admin\ConsultationController::class, 'updateStatus'])->name('consultation.updateStatus');
             Route::post('/consultations/{id}/reply', [\App\Http\Controllers\Admin\ConsultationController::class, 'sendReply'])->name('consultation.reply');
+            Route::post('/consultations/{id}/manual-schedule', [\App\Http\Controllers\Admin\ConsultationController::class, 'manualSchedule'])->name('consultation.manual-schedule');
             Route::post('/consultation/chat/mark-read/{messageId}', [\App\Http\Controllers\Admin\ConsultationController::class, 'markMessageAsRead'])->name('consultation.chat.markRead');
         });
 
@@ -551,6 +553,7 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
         Route::post('/consultation/bulk-delete', [\App\Http\Controllers\Admin\ConsultationController::class, 'bulkDelete'])->name('consultation.bulk-delete');
         Route::post('/consultations/{id}/update-status', [\App\Http\Controllers\Admin\ConsultationController::class, 'updateStatus'])->name('consultation.updateStatus');
         Route::post('/consultations/{id}/reply', [\App\Http\Controllers\Admin\ConsultationController::class, 'sendReply'])->name('consultation.reply');
+        Route::post('/consultations/{id}/manual-schedule', [\App\Http\Controllers\Admin\ConsultationController::class, 'manualSchedule'])->name('consultation.manual-schedule');
         Route::post('/consultation/chat/mark-read/{messageId}', [\App\Http\Controllers\Admin\ConsultationController::class, 'markMessageAsRead'])->name('consultation.chat.markRead');
     });
 

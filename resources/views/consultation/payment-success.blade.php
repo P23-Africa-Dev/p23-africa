@@ -266,22 +266,22 @@
                     <div class="payment-card-cont">
 
                         <div class="amount-date-time">
-                            <span class="amount">${{ number_format($application->payment->amount, 2) }}</span>
+                            <span class="amount">${{ number_format($latestPayment->amount ?? 100, 2) }}</span>
                             <div class="date-time">
-                                <span class="date">{{ $application->payment->created_at->format('M d, Y') }}</span>
-                                <span class="time">{{ $application->payment->created_at->format('g:iA') }}</span>
+                                <span class="date">{{ ($latestPayment->created_at ?? now())->format('M d, Y') }}</span>
+                                <span class="time">{{ ($latestPayment->created_at ?? now())->format('g:iA') }}</span>
                             </div>
                         </div>
                         <div class="details-row">
                             <div class="detail-item">
                                 <span class="label">Reference Number</span>
-                                <span class="value">{{ Str::limit($application->payment->payment_reference, 10) }}</span>
+                                <span class="value">{{ Str::limit($latestPayment->payment_reference ?? 'N/A', 10) }}</span>
                             </div>
                             <div class="divider"></div>
 
                             <div class="detail-item">
                                 <span class="label">Payment Method</span>
-                                <span class="value">{{ ucfirst($application->payment->payment_method) }}</span>
+                                <span class="value">{{ ucfirst($latestPayment->payment_method ?? 'N/A') }}</span>
                             </div>
                         </div>
 

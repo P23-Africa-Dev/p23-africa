@@ -103,6 +103,12 @@
                                     <div class="text-dark dark:text-gray-100 fw-medium">{{ $lead->company }}</div>
                                 </div>
                             @endif
+                            @if ($lead->employee_count)
+                                <div class="mb-3">
+                                    <label class="text-muted small">Employee Count</label>
+                                    <div class="text-dark dark:text-gray-100">{{ $lead->employee_count }}</div>
+                                </div>
+                            @endif
                             @if ($lead->job_title)
                                 <div class="mb-3">
                                     <label class="text-muted small">Job Title</label>
@@ -131,12 +137,38 @@
                                     </div>
                                 </div>
                             @endif
+                            @if ($lead->company_linkedin_profile)
+                                <div class="mb-3">
+                                    <label class="text-muted small">Company LinkedIn</label>
+                                    <div class="text-dark dark:text-gray-100">
+                                        <a href="{{ $lead->company_linkedin_profile }}" target="_blank">
+                                            <i class="fa fa-linkedin me-1"></i>{{ $lead->company_linkedin_profile }}
+                                        </a>
+                                    </div>
+                                </div>
+                            @endif
+                            @if ($lead->ceo_linkedin_profile)
+                                <div class="mb-3">
+                                    <label class="text-muted small">CEO LinkedIn</label>
+                                    <div class="text-dark dark:text-gray-100">
+                                        <a href="{{ $lead->ceo_linkedin_profile }}" target="_blank">
+                                            <i class="fa fa-linkedin me-1"></i>{{ $lead->ceo_linkedin_profile }}
+                                        </a>
+                                    </div>
+                                </div>
+                            @endif
                             @if ($lead->country || $lead->city)
                                 <div class="mb-3">
                                     <label class="text-muted small">Location</label>
                                     <div class="text-dark dark:text-gray-100">
                                         {{ implode(', ', array_filter([$lead->city, $lead->country])) }}
                                     </div>
+                                </div>
+                            @endif
+                            @if ($lead->address)
+                                <div class="mb-3">
+                                    <label class="text-muted small">Address</label>
+                                    <div class="text-dark dark:text-gray-100">{{ $lead->address }}</div>
                                 </div>
                             @endif
                         </div>
@@ -174,11 +206,25 @@
                                 <label class="text-muted small">Source</label>
                                 <div class="text-dark dark:text-gray-100">{{ $lead->source_label }}</div>
                             </div>
+                            @if ($lead->drive)
+                                <div class="mb-3">
+                                    <label class="text-muted small">Lead Drive</label>
+                                    <div class="text-dark dark:text-gray-100">
+                                        <i class="fa fa-folder me-1 text-primary"></i>{{ $lead->drive->name }}
+                                    </div>
+                                </div>
+                            @endif
                             @if ($lead->estimated_value)
                                 <div class="mb-3">
                                     <label class="text-muted small">Estimated Value</label>
                                     <div class="text-success fw-bold fs-5">
                                         {{ $crmCurrency }}{{ number_format($lead->estimated_value, 2) }}</div>
+                                </div>
+                            @endif
+                            @if ($lead->currency)
+                                <div class="mb-3">
+                                    <label class="text-muted small">Currency</label>
+                                    <div class="text-dark dark:text-gray-100">{{ $lead->currency }}</div>
                                 </div>
                             @endif
                             <div class="mb-3">
@@ -229,6 +275,35 @@
                                 <div class="text-dark dark:text-gray-100">
                                     {{ $lead->created_at->format('M d, Y h:i A') }}</div>
                             </div>
+                            @if ($lead->converted_at)
+                                <div class="mb-3 mt-3">
+                                    <label class="text-muted small">Converted At</label>
+                                    <div class="text-success fw-medium">
+                                        <i
+                                            class="fa fa-trophy me-1"></i>{{ $lead->converted_at->format('M d, Y h:i A') }}
+                                    </div>
+                                </div>
+                            @endif
+                            @if ($lead->lost_reason)
+                                <div class="mb-3 mt-3">
+                                    <label class="text-muted small">Lost Reason</label>
+                                    <div class="text-danger">
+                                        <i class="fa fa-times-circle me-1"></i>{{ $lead->lost_reason }}
+                                    </div>
+                                </div>
+                            @endif
+                            @if ($lead->source_type)
+                                <div class="mb-3 mt-3">
+                                    <label class="text-muted small">Source Origin</label>
+                                    <div class="text-dark dark:text-gray-100">
+                                        <i class="fa fa-link me-1"></i>
+                                        {{ str_replace('_', ' ', ucfirst($lead->source_type)) }}
+                                        @if ($lead->source_id)
+                                            <span class="text-muted">#{{ $lead->source_id }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
 

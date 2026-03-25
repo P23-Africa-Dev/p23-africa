@@ -32,7 +32,7 @@ class ConsultationController extends Controller
         $validator = Validator::make($request->all(), [
             'full_name' => 'required|string|min:2|max:255',
             'email' => 'required|email|max:255',
-            'phone' => 'required|string|min:5|max:20',
+            'phone' => 'required|string|min:5|max:30',
             'company_brand_name' => 'required|string|min:2|max:255',
             'website_or_handle' => 'nullable|string|max:255',
             'industry' => 'required|string|min:2|max:255',
@@ -144,24 +144,8 @@ class ConsultationController extends Controller
         $applicationId = Session::get('consultation_application_id');
 
         if (!$applicationId) {
-            // For testing purposes, create a sample application
-            $application = ConsultationApplication::create([
-                'name' => 'Test User',
-                'email' => 'test@example.com',
-                'phone' => '+1234567890',
-                'company' => 'Test Company',
-                'business_stage' => 'growth',
-                'consultation_focus' => 'strategy',
-                'specific_goals' => 'Test goals',
-                'challenges' => 'Test challenges',
-                'preferred_date' => now()->addDays(7)->format('Y-m-d'),
-                'preferred_time' => '10:00',
-                'timezone' => 'UTC',
-                'additional_info' => 'Test application for development'
-            ]);
-
-            Session::put('consultation_application_id', $application->id);
-            $applicationId = $application->id;
+            return redirect()->route('consultation.application-forms')
+                ->with('error', 'Please complete the application form first.');
         }
 
         $application = ConsultationApplication::find($applicationId);
@@ -235,8 +219,8 @@ class ConsultationController extends Controller
         }
 
         try {
-            // Set Stripe secret key from environment
-            Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
+            // Set Stripe secret key from config
+            Stripe::setApiKey(config('services.stripe.secret_key'));
 
             // Create payment record
             $payment = Payment::create([
@@ -279,6 +263,47 @@ class ConsultationController extends Controller
 
             return response()->json([
                 'error' => 'Failed to create payment intent',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Create a pending payment record for Flutterwave before opening checkout modal.
+     * Returns the tx_ref to use in FlutterwaveCheckout so the callback can reliably find the payment.
+     */
+    public function createFlutterwavePayment(Request $request)
+    {
+        $applicationId = Session::get('consultation_application_id');
+        $application = ConsultationApplication::find($applicationId);
+
+        if (!$application) {
+            return response()->json(['error' => 'Application not found'], 404);
+        }
+
+        try {
+            $txRef = 'FLW_' . time() . '_' . $application->id;
+
+            $payment = Payment::create([
+                'consultation_application_id' => $application->id,
+                'payment_method' => 'flutterwave',
+                'amount' => 100.00,
+                'currency' => 'USD',
+                'status' => 'pending',
+                'payment_reference' => $txRef,
+            ]);
+
+            Session::put('pending_payment_id', $payment->id);
+
+            return response()->json([
+                'tx_ref' => $txRef,
+                'payment_id' => $payment->id,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Flutterwave payment record creation failed: ' . $e->getMessage());
+
+            return response()->json([
+                'error' => 'Failed to create payment record',
                 'message' => $e->getMessage()
             ], 500);
         }
@@ -467,9 +492,19 @@ class ConsultationController extends Controller
         }
 
         $applicationId = Session::get('consultation_application_id');
-        $application = ConsultationApplication::with('payment')->find($applicationId);
+        $application = ConsultationApplication::with(['payments' => function ($q) {
+            $q->whereIn('status', ['successful', 'pending'])->latest();
+        }])->find($applicationId);
 
-        return view('consultation.payment-success', compact('application'));
+        if (!$application) {
+            return redirect()->route('consultation.application-forms')
+                ->with('error', 'Application not found.');
+        }
+
+        // Get the latest relevant payment for display
+        $latestPayment = $application->payments->first();
+
+        return view('consultation.payment-success', compact('application', 'latestPayment'));
     }
 
     public function showScheduling()
@@ -542,7 +577,7 @@ class ConsultationController extends Controller
             $calendarService = new GoogleCalendarService();
 
             // Get admin email from config or environment
-            $adminEmail = env('ADMIN_EMAIL', 'contact@p23africa.com');
+            $adminEmail = config('services.admin.email', 'contact@p23africa.com');
 
             // Prepare event details
             // $eventSummary = 'P23 Africa Business Consultation - ' . $application->name;
@@ -635,9 +670,9 @@ class ConsultationController extends Controller
 
             // Send admin notification email
             try {
-                Mail::to(env('ADMIN_EMAIL', 'contact@p23africa.com'))
+                Mail::to(config('services.admin.email', 'contact@p23africa.com'))
                     ->send(new ConsultationScheduledNotificationMail($emailData));
-                Log::info('Admin notification email sent to: ' . env('ADMIN_EMAIL', 'contact@p23africa.com'));
+                Log::info('Admin notification email sent to: ' . config('services.admin.email', 'contact@p23africa.com'));
             } catch (\Exception $emailError) {
                 Log::error('Failed to send admin email: ' . $emailError->getMessage());
             }
@@ -734,7 +769,7 @@ class ConsultationController extends Controller
     public function handleFlutterwaveWebhook(Request $request)
     {
         // Verify webhook signature if available
-        $secretKey = env('FLUTTERWAVE_SECRET_KEY');
+        $secretKey = config('services.flutterwave.secret_key');
         $signature = $request->header('verif-hash');
 
         if ($signature && $secretKey) {

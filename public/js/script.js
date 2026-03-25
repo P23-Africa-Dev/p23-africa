@@ -1,5 +1,3 @@
-
-
 // NAVBAR
 const sidebar = document.getElementById("sidebar");
 const overlay = document.getElementById("overlay");
@@ -22,14 +20,14 @@ function closeSidebar() {
     mainMenu.classList.remove("hide");
 }
 
-menuToggle.addEventListener("click", openSidebar);
-closeBtn.addEventListener("click", closeSidebar);
-overlay.addEventListener("click", closeSidebar);
+if (menuToggle) menuToggle.addEventListener("click", openSidebar);
+if (closeBtn) closeBtn.addEventListener("click", closeSidebar);
+if (overlay) overlay.addEventListener("click", closeSidebar);
 
 document.querySelectorAll("[data-target]").forEach((item) => {
     item.addEventListener("click", () => {
         const target = document.getElementById(
-            item.getAttribute("data-target")
+            item.getAttribute("data-target"),
         );
         mainMenu.classList.add("hide");
         submenuElements.forEach((sm) => sm.classList.remove("active"));
@@ -84,6 +82,3 @@ function switchTab(tabId, button) {
         .forEach((btn) => btn.classList.remove("active"));
     button.classList.add("active");
 }
-
-
-
