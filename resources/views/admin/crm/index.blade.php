@@ -746,6 +746,18 @@
                     pendingLostUpdate = null;
                 });
 
+                function parseApiResponse(response, fallbackMessage) {
+                    return response.json()
+                        .catch(() => ({}))
+                        .then(data => {
+                            if (!response.ok) {
+                                throw new Error(data.message || fallbackMessage);
+                            }
+
+                            return data;
+                        });
+                }
+
                 function updateLeadStatus(leadId, newStatus, btn, dropdown, lostReason = null) {
                     // Show loading state
                     btn.classList.add('loading');
@@ -767,7 +779,7 @@
                             },
                             body: JSON.stringify(requestBody)
                         })
-                        .then(res => res.json())
+                        .then(res => parseApiResponse(res, 'Failed to update status'))
                         .then(data => {
                             btn.classList.remove('loading');
                             btn.disabled = false;
@@ -810,7 +822,7 @@
                         .catch(err => {
                             btn.classList.remove('loading');
                             btn.disabled = false;
-                            showToast('error', 'Failed to update status');
+                            showToast('error', err.message || 'Failed to update status');
                         });
                 }
 
@@ -879,7 +891,7 @@
                                 ids
                             })
                         })
-                        .then(res => res.json())
+                        .then(res => parseApiResponse(res, 'Bulk action failed'))
                         .then(data => {
                             if (data.success) {
                                 showToast('success', data.message);
@@ -888,7 +900,7 @@
                                 showToast('error', data.message);
                             }
                         })
-                        .catch(() => showToast('error', 'An error occurred'));
+                        .catch(err => showToast('error', err.message || 'An error occurred'));
                 }
 
                 // Single delete
@@ -905,7 +917,7 @@
                                         'Accept': 'application/json'
                                     }
                                 })
-                                .then(res => res.json())
+                                .then(res => parseApiResponse(res, 'Failed to delete lead'))
                                 .then(data => {
                                     if (data.success) {
                                         showToast('success', data.message);
@@ -914,7 +926,7 @@
                                         showToast('error', data.message);
                                     }
                                 })
-                                .catch(() => showToast('error', 'Failed to delete lead'));
+                                .catch(err => showToast('error', err.message || 'Failed to delete lead'));
                         }
                     });
                 });

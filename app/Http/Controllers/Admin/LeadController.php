@@ -727,6 +727,10 @@ class LeadController extends Controller
      */
     public function updateActivity(Request $request, LeadActivity $activity)
     {
+        $user = auth()->user();
+        $activity->loadMissing('lead');
+        $this->ensureLeadOrgAccess($activity->lead, $user);
+
         $validated = $request->validate([
             'type' => ['sometimes', Rule::in(array_keys(LeadActivity::getTypes()))],
             'title' => 'sometimes|required|string|max:255',
@@ -762,6 +766,10 @@ class LeadController extends Controller
      */
     public function completeActivity(LeadActivity $activity)
     {
+        $user = auth()->user();
+        $activity->loadMissing('lead');
+        $this->ensureLeadOrgAccess($activity->lead, $user);
+
         try {
             $activity->markAsCompleted();
 
@@ -950,6 +958,9 @@ class LeadController extends Controller
      */
     public function bulkUpdate(Request $request)
     {
+        $user = auth()->user();
+        $orgId = $this->currentOrgId();
+
         $validated = $request->validate([
             'ids' => 'required|array',
             'ids.*' => 'exists:leads,id',
@@ -957,9 +968,30 @@ class LeadController extends Controller
             'value' => 'nullable',
         ]);
 
-        try {
-            $user = auth()->user();
+        if ($validated['action'] === 'assign') {
+            if (empty($validated['value'])) {
+                return response()->json(['success' => false, 'message' => 'Assignee is required for assign action.'], 422);
+            }
 
+            $assignee = User::find($validated['value']);
+            if (!$assignee) {
+                return response()->json(['success' => false, 'message' => 'Invalid assignee selected.'], 422);
+            }
+
+            // Prevent assigning to users outside the actor's organization.
+            if ($user && !$user->hasRole('admin') && $user->organization_id && $assignee->organization_id !== $user->organization_id) {
+                return response()->json(['success' => false, 'message' => 'Cannot assign leads to a user outside your organization.'], 403);
+            }
+        }
+
+        if ($validated['action'] === 'priority') {
+            $validPriorities = array_keys(Lead::getPriorities());
+            if (!in_array($validated['value'], $validPriorities, true)) {
+                return response()->json(['success' => false, 'message' => 'Invalid priority value.'], 422);
+            }
+        }
+
+        try {
             $leads = Lead::whereIn('id', $validated['ids']);
 
             // Scope bulk actions to user's organization for non-admins
@@ -973,6 +1005,8 @@ class LeadController extends Controller
 
             $count = $leads->count();
 
+            DB::beginTransaction();
+
             switch ($validated['action']) {
                 case 'assign':
                     $leads->update(['assigned_to' => $validated['value']]);
@@ -980,9 +1014,9 @@ class LeadController extends Controller
                     break;
 
                 case 'status':
-                    $orgId = $this->currentOrgId();
                     $validSlugs = array_keys(Lead::getStatuses($orgId));
                     if (!in_array($validated['value'], $validSlugs)) {
+                        DB::rollBack();
                         return response()->json(['success' => false, 'message' => 'Invalid status value.'], 422);
                     }
                     $leads->update(['status' => $validated['value']]);
@@ -1000,14 +1034,18 @@ class LeadController extends Controller
                     break;
 
                 default:
+                    DB::rollBack();
                     return response()->json(['success' => false, 'message' => 'Invalid action'], 400);
             }
+
+            DB::commit();
 
             return response()->json([
                 'success' => true,
                 'message' => $message
             ]);
         } catch (\Exception $e) {
+            DB::rollBack();
             Log::error('Bulk update failed: ' . $e->getMessage());
 
             return response()->json([

@@ -12,6 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (DB::getDriverName() === 'sqlite') {
+            return;
+        }
+
         // Modify the status enum to include 'unqualified'
         DB::statement("ALTER TABLE leads MODIFY COLUMN status ENUM('new', 'contacted', 'qualified', 'proposal', 'negotiation', 'won', 'lost', 'unqualified') DEFAULT 'new'");
     }
@@ -21,6 +25,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        if (DB::getDriverName() === 'sqlite') {
+            return;
+        }
+
         // First update any 'unqualified' leads to 'new' status
         DB::table('leads')->where('status', 'unqualified')->update(['status' => 'new']);
 

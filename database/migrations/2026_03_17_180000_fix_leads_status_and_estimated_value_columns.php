@@ -19,6 +19,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (DB::getDriverName() === 'sqlite') {
+            return;
+        }
+
         // Change status from ENUM to VARCHAR(50) — keeps existing data intact
         DB::statement("ALTER TABLE leads MODIFY COLUMN status VARCHAR(50) NOT NULL DEFAULT 'new'");
 
@@ -31,6 +35,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        if (DB::getDriverName() === 'sqlite') {
+            return;
+        }
+
         // Restore status to the last known ENUM definition
         DB::statement("ALTER TABLE leads MODIFY COLUMN status ENUM('new','contacted','qualified','proposal','negotiation','won','lost','unqualified') DEFAULT 'new'");
 

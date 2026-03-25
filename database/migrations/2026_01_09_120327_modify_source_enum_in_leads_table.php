@@ -12,6 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (DB::getDriverName() === 'sqlite') {
+            return;
+        }
+
         // Modify the source enum to include noel_waitlist
         DB::statement("ALTER TABLE leads MODIFY COLUMN source ENUM('website', 'referral', 'social_media', 'email_campaign', 'cold_call', 'event', 'advertisement', 'noel_waitlist', 'other') DEFAULT 'website'");
     }
@@ -21,6 +25,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        if (DB::getDriverName() === 'sqlite') {
+            return;
+        }
+
         // Revert to original enum values
         DB::statement("ALTER TABLE leads MODIFY COLUMN source ENUM('website', 'referral', 'social_media', 'email_campaign', 'cold_call', 'event', 'advertisement', 'other') DEFAULT 'website'");
     }
