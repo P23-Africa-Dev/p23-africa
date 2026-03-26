@@ -88,7 +88,7 @@ class Lead extends Model
         // If no org specified, attempt to infer from the authenticated user
         if (is_null($orgId) && auth()->check()) {
             $user = auth()->user();
-            $orgId = ($user && !$user->hasRole('admin')) ? $user->organization_id : null;
+            $orgId = $user?->organization_id;
         }
 
         $map = LeadStatus::getMapForOrg($orgId);

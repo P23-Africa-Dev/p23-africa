@@ -17,9 +17,21 @@ class AdminNotificationService
         string $message,
         ?string $url = null,
         ?string $icon = null,
-        array $data = []
+        array $data = [],
+        ?int $organizationId = null,
+        bool $scopeToOrganization = false
     ): void {
-        $admins = User::role(['admin', 'supervisor'])->get();
+        $adminsQuery = User::role(['admin', 'supervisor']);
+
+        if ($scopeToOrganization) {
+            if (is_null($organizationId)) {
+                $adminsQuery->whereNull('organization_id');
+            } else {
+                $adminsQuery->where('organization_id', $organizationId);
+            }
+        }
+
+        $admins = $adminsQuery->get();
 
         Notification::send($admins, new AdminNotification(
             $type,
@@ -150,7 +162,9 @@ class AdminNotificationService
                 'project_name' => $project->name,
                 'creator_id' => $creator->id,
                 'creator_name' => $creator->name,
-            ]
+            ],
+            $project->organization_id,
+            true
         );
     }
 
@@ -175,7 +189,9 @@ class AdminNotificationService
                 'creator_id' => $creator->id,
                 'creator_name' => $creator->name,
                 'priority' => $task->priority,
-            ]
+            ],
+            $task->organization_id,
+            true
         );
     }
 
@@ -215,7 +231,9 @@ class AdminNotificationService
                 'commenter_id' => $commenter->id,
                 'commenter_name' => $commenter->name,
                 'comment_preview' => \Illuminate\Support\Str::limit($comment->comment, 100),
-            ]
+            ],
+            $task->organization_id,
+            true
         );
     }
 
@@ -248,7 +266,9 @@ class AdminNotificationService
                 'company' => $lead->company,
                 'source' => $lead->source,
                 'status' => $lead->status,
-            ]
+            ],
+            $lead->organization_id,
+            true
         );
     }
 }

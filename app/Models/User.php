@@ -90,4 +90,32 @@ class User extends Authenticatable
         // For staff, check permissions (assuming a many-to-many relationship)
         return $this->permissions()->where('name', $permission)->exists();
     }
+
+    /**
+     * Determine whether this user can bypass organization scoping globally.
+     */
+    public function hasCrossOrganizationAccess(): bool
+    {
+        return $this->hasRole('super-admin');
+    }
+
+    /**
+     * Determine whether organization scoping should be applied for this user.
+     */
+    public function appliesOrganizationScope(): bool
+    {
+        return !$this->hasCrossOrganizationAccess();
+    }
+
+    /**
+     * Determine whether a given organization context is accessible to this user.
+     */
+    public function canAccessOrganization(?int $organizationId): bool
+    {
+        if (!$this->appliesOrganizationScope()) {
+            return true;
+        }
+
+        return $this->organization_id === $organizationId;
+    }
 }

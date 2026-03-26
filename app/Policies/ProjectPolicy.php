@@ -12,18 +12,11 @@ class ProjectPolicy
      */
     protected function isInSameOrg(User $user, Project $project): bool
     {
-        // Admin bypasses org checks
-        if ($user->hasRole('admin')) {
+        if ($user->hasCrossOrganizationAccess()) {
             return true;
         }
 
-        // Org user can only access their org's projects
-        if ($user->organization_id) {
-            return $project->organization_id === $user->organization_id;
-        }
-
-        // Non-org user can only access global (null org) projects
-        return is_null($project->organization_id);
+        return $user->canAccessOrganization($project->organization_id);
     }
 
     /**

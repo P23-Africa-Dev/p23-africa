@@ -23,16 +23,36 @@ use Illuminate\Validation\Rule;
 
 class LeadController extends Controller
 {
+    protected function shouldApplyOrgScope(?User $user): bool
+    {
+        return $user && $user->appliesOrganizationScope();
+    }
+
+    protected function scopeByOrganization($query, ?User $user, string $column = 'organization_id'): void
+    {
+        if (!$this->shouldApplyOrgScope($user)) {
+            return;
+        }
+
+        if (is_null($user->organization_id)) {
+            $query->whereNull($column);
+            return;
+        }
+
+        $query->where($column, $user->organization_id);
+    }
+
     /**
      * Resolve the organization_id for the current user (for status scoping).
      */
     protected function currentOrgId(): ?int
     {
         $user = auth()->user();
-        if ($user && !$user->hasRole('admin') && $user->organization_id) {
-            return $user->organization_id;
+        if (!$user) {
+            return null;
         }
-        return null;
+
+        return $user->appliesOrganizationScope() ? $user->organization_id : null;
     }
 
     /**
@@ -54,22 +74,12 @@ class LeadController extends Controller
      */
     protected function ensureLeadOrgAccess(Lead $lead, $user)
     {
-        if ($user && $user->hasRole('admin')) {
-            return;
+        if (!$user) {
+            // Unauthenticated users cannot access leads
+            abort(403, 'You are not authorized to access this lead.');
         }
 
-        if ($user) {
-            if ($user->organization_id) {
-                if ($lead->organization_id !== $user->organization_id) {
-                    abort(403, 'You are not authorized to access this lead.');
-                }
-            } else {
-                if (!is_null($lead->organization_id)) {
-                    abort(403, 'You are not authorized to access this lead.');
-                }
-            }
-        } else {
-            // Unauthenticated users cannot access leads
+        if ($user->appliesOrganizationScope() && !$user->canAccessOrganization($lead->organization_id)) {
             abort(403, 'You are not authorized to access this lead.');
         }
     }
@@ -84,15 +94,7 @@ class LeadController extends Controller
             $q->latest()->limit(1);
         }])->orderBy('created_at', 'desc');
 
-        // If not a global admin, scope leads to user's organization
-        if ($user && !$user->hasRole('admin')) {
-            if ($user->organization_id) {
-                $query->where('organization_id', $user->organization_id);
-            } else {
-                // users without org should see none
-                $query->whereNull('organization_id');
-            }
-        }
+        $this->scopeByOrganization($query, $user);
 
         // Filter by drive
         if ($request->filled('drive')) {
@@ -160,14 +162,7 @@ class LeadController extends Controller
         // Build stats query with same org + drive filter
         $statsQuery = Lead::query();
 
-        // Apply same org scoping as the main query
-        if ($user && !$user->hasRole('admin')) {
-            if ($user->organization_id) {
-                $statsQuery->where('organization_id', $user->organization_id);
-            } else {
-                $statsQuery->whereNull('organization_id');
-            }
-        }
+        $this->scopeByOrganization($statsQuery, $user);
 
         if ($request->filled('drive') && $request->drive !== 'all') {
             if ($request->drive === 'unassigned') {
@@ -200,24 +195,19 @@ class LeadController extends Controller
         $usersQuery = User::whereHas('roles', function ($q) {
             $q->whereIn('name', ['admin', 'supervisor', 'staff']);
         });
-        if ($user && !$user->hasRole('admin')) {
-            $usersQuery->where('organization_id', $user->organization_id);
-        }
+        $this->scopeByOrganization($usersQuery, $user);
         $users = $usersQuery->get();
 
         // Get drives for filter (scoped to user's organization)
         $drivesQuery = LeadDrive::orderBy('name');
-        if ($user && !$user->hasRole('admin')) {
-            if ($user->organization_id) {
-                $drivesQuery->where('organization_id', $user->organization_id);
-            } else {
-                $drivesQuery->whereNull('organization_id');
-            }
-        }
+        $this->scopeByOrganization($drivesQuery, $user);
         $drives = $drivesQuery->get();
-        $currentDrive = $request->filled('drive') && $request->drive !== 'all' && $request->drive !== 'unassigned'
-            ? LeadDrive::find($request->drive)
-            : null;
+        $currentDrive = null;
+        if ($request->filled('drive') && $request->drive !== 'all' && $request->drive !== 'unassigned') {
+            $currentDriveQuery = LeadDrive::whereKey($request->drive);
+            $this->scopeByOrganization($currentDriveQuery, $user);
+            $currentDrive = $currentDriveQuery->first();
+        }
 
         $orgId = $this->currentOrgId();
         $leadStatuses = LeadStatus::getForOrg($orgId);
@@ -239,21 +229,12 @@ class LeadController extends Controller
         $usersQuery = User::whereHas('roles', function ($q) {
             $q->whereIn('name', ['admin', 'supervisor', 'staff']);
         });
-        // Scope to same organization for non-admins
-        if ($user && !$user->hasRole('admin') && $user->organization_id) {
-            $usersQuery->where('organization_id', $user->organization_id);
-        }
+        $this->scopeByOrganization($usersQuery, $user);
         $users = $usersQuery->get();
 
         // Get drives scoped to the current org
         $drivesQuery = LeadDrive::orderBy('is_default', 'desc')->orderBy('name');
-        if ($user && !$user->hasRole('admin')) {
-            if ($user->organization_id) {
-                $drivesQuery->where('organization_id', $user->organization_id);
-            } else {
-                $drivesQuery->whereNull('organization_id');
-            }
-        }
+        $this->scopeByOrganization($drivesQuery, $user);
         $drives = $drivesQuery->get();
         $defaultDriveId = $drives->firstWhere('is_default', true)?->id ?? $drives->first()?->id;
 
@@ -278,6 +259,7 @@ class LeadController extends Controller
      */
     public function store(Request $request)
     {
+        $user = auth()->user();
         $orgId = $this->currentOrgId();
         $validSlugs = array_keys(Lead::getStatuses($orgId));
 
@@ -341,12 +323,23 @@ class LeadController extends Controller
             }
         }
 
+        if ($this->shouldApplyOrgScope($user)) {
+            $validated['organization_id'] = $user->organization_id;
+        }
+
+        if (!empty($validated['assigned_to'])) {
+            $assignee = User::find($validated['assigned_to']);
+            if ($assignee && $this->shouldApplyOrgScope($user) && !$user->canAccessOrganization($assignee->organization_id)) {
+                abort(403, 'Cannot assign lead to a user outside your organization.');
+            }
+        }
+
         try {
             DB::beginTransaction();
 
             // Ensure organization is set: prefer passed org (admin), fallback to creator's org
             if (empty($validated['organization_id'])) {
-                $validated['organization_id'] = auth()->user()->organization_id ?? null;
+                $validated['organization_id'] = $user?->organization_id;
             }
 
             $lead = Lead::create($validated);
@@ -383,10 +376,7 @@ class LeadController extends Controller
         $usersQuery = User::whereHas('roles', function ($q) {
             $q->whereIn('name', ['admin', 'supervisor', 'staff']);
         });
-        // Scope to same organization for non-admins
-        if ($user && !$user->hasRole('admin') && $user->organization_id) {
-            $usersQuery->where('organization_id', $user->organization_id);
-        }
+        $this->scopeByOrganization($usersQuery, $user);
         $users = $usersQuery->get();
 
         return view('admin.crm.show', [
@@ -414,10 +404,7 @@ class LeadController extends Controller
         $usersQuery = User::whereHas('roles', function ($q) {
             $q->whereIn('name', ['admin', 'supervisor', 'staff']);
         });
-        // Scope to same organization for non-admins
-        if ($user && !$user->hasRole('admin') && $user->organization_id) {
-            $usersQuery->where('organization_id', $user->organization_id);
-        }
+        $this->scopeByOrganization($usersQuery, $user);
         $users = $usersQuery->get();
 
         return view('admin.crm.edit', [
@@ -638,9 +625,9 @@ class LeadController extends Controller
         ]);
 
         // Prevent assigning to a user from a different organization
-        if (!empty($validated['assigned_to']) && $user && !$user->hasRole('admin') && $user->organization_id) {
+        if (!empty($validated['assigned_to']) && $this->shouldApplyOrgScope($user)) {
             $assignee = User::find($validated['assigned_to']);
-            if ($assignee && $assignee->organization_id !== $user->organization_id) {
+            if ($assignee && !$user->canAccessOrganization($assignee->organization_id)) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Cannot assign lead to a user outside your organization.'
@@ -867,8 +854,8 @@ class LeadController extends Controller
 
             $lead = Lead::createFromContactSubmission($contact);
             // Associate with current user's organization if available
-            if (auth()->check() && auth()->user()->organization_id) {
-                $lead->update(['organization_id' => auth()->user()->organization_id]);
+            if (auth()->check()) {
+                $lead->update(['organization_id' => $this->currentOrgId()]);
             }
             $lead->logActivity('note', 'Lead created from contact submission', 'Converted from contact form submission #' . $contact->id);
 
@@ -930,8 +917,8 @@ class LeadController extends Controller
             DB::beginTransaction();
 
             $lead = Lead::createFromConsultation($consultation);
-            if (auth()->check() && auth()->user()->organization_id) {
-                $lead->update(['organization_id' => auth()->user()->organization_id]);
+            if (auth()->check()) {
+                $lead->update(['organization_id' => $this->currentOrgId()]);
             }
             $lead->logActivity('note', 'Lead created from consultation', 'Converted from consultation application #' . $consultation->id);
 
@@ -980,7 +967,7 @@ class LeadController extends Controller
             }
 
             // Prevent assigning to users outside the actor's organization.
-            if ($user && !$user->hasRole('admin') && $user->organization_id && $assignee->organization_id !== $user->organization_id) {
+            if ($this->shouldApplyOrgScope($user) && !$user->canAccessOrganization($assignee->organization_id)) {
                 return response()->json(['success' => false, 'message' => 'Cannot assign leads to a user outside your organization.'], 403);
             }
         }
@@ -995,14 +982,7 @@ class LeadController extends Controller
         try {
             $leads = Lead::whereIn('id', $validated['ids']);
 
-            // Scope bulk actions to user's organization for non-admins
-            if ($user && !$user->hasRole('admin')) {
-                if ($user->organization_id) {
-                    $leads->where('organization_id', $user->organization_id);
-                } else {
-                    $leads->whereNull('organization_id');
-                }
-            }
+            $this->scopeByOrganization($leads, $user);
 
             $count = $leads->count();
 
@@ -1077,17 +1057,14 @@ class LeadController extends Controller
 
         // Get drives for filter (scoped to user's organization)
         $drivesQuery = LeadDrive::orderBy('name');
-        if ($user && !$user->hasRole('admin')) {
-            if ($user->organization_id) {
-                $drivesQuery->where('organization_id', $user->organization_id);
-            } else {
-                $drivesQuery->whereNull('organization_id');
-            }
-        }
+        $this->scopeByOrganization($drivesQuery, $user);
         $drives = $drivesQuery->get();
-        $currentDrive = $request->filled('drive') && $request->drive !== 'all' && $request->drive !== 'unassigned'
-            ? LeadDrive::find($request->drive)
-            : null;
+        $currentDrive = null;
+        if ($request->filled('drive') && $request->drive !== 'all' && $request->drive !== 'unassigned') {
+            $currentDriveQuery = LeadDrive::whereKey($request->drive);
+            $this->scopeByOrganization($currentDriveQuery, $user);
+            $currentDrive = $currentDriveQuery->first();
+        }
 
         foreach ($statuses as $key => $label) {
             $query = Lead::where('status', $key)
@@ -1102,14 +1079,7 @@ class LeadController extends Controller
                 }
             }
 
-            // Scope to user's organization
-            if ($user && !$user->hasRole('admin')) {
-                if ($user->organization_id) {
-                    $query->where('organization_id', $user->organization_id);
-                } else {
-                    $query->whereNull('organization_id');
-                }
-            }
+            $this->scopeByOrganization($query, $user);
 
             $leadsQuery = clone $query;
             $countQuery = clone $query;

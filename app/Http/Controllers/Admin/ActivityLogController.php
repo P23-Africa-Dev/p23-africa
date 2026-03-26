@@ -19,11 +19,11 @@ class ActivityLogController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->hasRole('admin')) {
-            return null; // Admin sees everything
+        if (!$user || !$user->appliesOrganizationScope()) {
+            return null;
         }
 
-        if ($user->organization_id) {
+        if (!is_null($user->organization_id)) {
             return User::where('organization_id', $user->organization_id)->pluck('id')->toArray();
         }
 
@@ -234,7 +234,9 @@ class ActivityLogController extends Controller
     public function markAsSeen()
     {
         $user = Auth::user();
-        $latestActivity = Activity::latest()->first();
+        $latestQ = Activity::query();
+        $this->scopeToOrg($latestQ);
+        $latestActivity = $latestQ->latest()->first();
 
         if ($latestActivity) {
             ActivityLogView::updateOrCreate(

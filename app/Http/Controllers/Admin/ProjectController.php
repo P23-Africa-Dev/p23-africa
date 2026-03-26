@@ -11,6 +11,25 @@ use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
+    protected function shouldApplyOrgScope(?User $user): bool
+    {
+        return $user && $user->appliesOrganizationScope();
+    }
+
+    protected function scopeByOrganization($query, ?User $user, string $column = 'organization_id'): void
+    {
+        if (!$this->shouldApplyOrgScope($user)) {
+            return;
+        }
+
+        if (is_null($user->organization_id)) {
+            $query->whereNull($column);
+            return;
+        }
+
+        $query->where($column, $user->organization_id);
+    }
+
     /**
      * Display Gantt chart view for all projects and tasks
      */
@@ -32,14 +51,7 @@ class ProjectController extends Controller
             }, 'tasks.assignees', 'creator']);
         }
 
-        // Scope to user's organization if not an admin (multi-tenant)
-        if (!$user->hasRole('admin')) {
-            if ($user->organization_id) {
-                $query->where('organization_id', $user->organization_id);
-            } else {
-                $query->whereNull('organization_id');
-            }
-        }
+        $this->scopeByOrganization($query, $user);
 
         // Filter by status if provided
         if ($request->filled('status')) {
@@ -81,14 +93,9 @@ class ProjectController extends Controller
 
         $query = Project::with(['creator', 'tasks'])->latest();
 
-        // Scope to organization
-        if (!$user->hasRole('admin')) {
-            if ($user->organization_id) {
-                $query->where('organization_id', $user->organization_id);
-            } else {
-                $query->whereNull('organization_id');
-            }
+        $this->scopeByOrganization($query, $user);
 
+        if ($this->shouldApplyOrgScope($user)) {
             // Staff only sees projects they're assigned to
             if (!$user->hasRole('supervisor')) {
                 $query->whereHas('tasks.assignees', function ($q) use ($user) {
@@ -172,8 +179,7 @@ class ProjectController extends Controller
             $assignableUsers = collect();
         }
 
-        // For non-admins, limit assignable users to same organization
-        if (!$user->hasRole('admin') && $user->organization_id) {
+        if ($this->shouldApplyOrgScope($user)) {
             $assignableUsers = $assignableUsers->where('organization_id', $user->organization_id)->values();
         }
 

@@ -15,25 +15,36 @@ use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
 {
+    protected function shouldApplyOrgScope(?User $user): bool
+    {
+        return $user && $user->appliesOrganizationScope();
+    }
+
+    protected function scopeByOrganization($query, ?User $user, string $column = 'organization_id'): void
+    {
+        if (!$this->shouldApplyOrgScope($user)) {
+            return;
+        }
+
+        if (is_null($user->organization_id)) {
+            $query->whereNull($column);
+            return;
+        }
+
+        $query->where($column, $user->organization_id);
+    }
+
     /**
      * Ensure the current user can access the given task based on organization.
      */
     protected function ensureTaskOrgAccess(Task $task, $user)
     {
-        if ($user->hasRole('admin')) {
+        if (!$this->shouldApplyOrgScope($user)) {
             return;
         }
 
-        // If user belongs to an organization, require task to belong to same org.
-        if ($user->organization_id) {
-            if ($task->organization_id !== $user->organization_id) {
-                abort(403, 'You are not authorized to access this task.');
-            }
-        } else {
-            // If user has no org, require task to be global (null org)
-            if (!is_null($task->organization_id)) {
-                abort(403, 'You are not authorized to access this task.');
-            }
+        if (!$user->canAccessOrganization($task->organization_id)) {
+            abort(403, 'You are not authorized to access this task.');
         }
     }
 
@@ -56,26 +67,12 @@ class TaskController extends Controller
             });
         }
 
-        // Scope to user's organization for non-admin users
-        if (!$user->hasRole('admin')) {
-            if ($user->organization_id) {
-                $query->where('organization_id', $user->organization_id);
-            } else {
-                $query->whereNull('organization_id');
-            }
-        }
+        $this->scopeByOrganization($query, $user);
 
         $tasks = $query->orderBy('order')->latest()->paginate(15);
 
-        // Scope projects for dropdowns to user's organization (admins see all)
         $projectsQuery = Project::query();
-        if (!$user->hasRole('admin')) {
-            if ($user->organization_id) {
-                $projectsQuery->where('organization_id', $user->organization_id);
-            } else {
-                $projectsQuery->whereNull('organization_id');
-            }
-        }
+        $this->scopeByOrganization($projectsQuery, $user);
         $projects = $projectsQuery->get();
 
         return view('admin.tasks.index', compact('tasks', 'projects', 'projectId'));
@@ -100,14 +97,7 @@ class TaskController extends Controller
             });
         }
 
-        // Scope to organization for non-admins
-        if (!$user->hasRole('admin')) {
-            if ($user->organization_id) {
-                $query->where('organization_id', $user->organization_id);
-            } else {
-                $query->whereNull('organization_id');
-            }
-        }
+        $this->scopeByOrganization($query, $user);
 
         $tasks = $query->orderBy('order')->get();
 
@@ -118,15 +108,8 @@ class TaskController extends Controller
             'completed' => $tasks->where('status', 'completed')->values(),
         ];
 
-        // Scope projects for kanban view
         $projectsQuery = Project::query();
-        if (!$user->hasRole('admin')) {
-            if ($user->organization_id) {
-                $projectsQuery->where('organization_id', $user->organization_id);
-            } else {
-                $projectsQuery->whereNull('organization_id');
-            }
-        }
+        $this->scopeByOrganization($projectsQuery, $user);
         $projects = $projectsQuery->get();
         $statuses = Task::getStatuses();
 
@@ -139,8 +122,7 @@ class TaskController extends Controller
             $assignableUsers = collect();
         }
 
-        // Limit assignable users to same organization for non-admins
-        if (!$user->hasRole('admin') && $user->organization_id) {
+        if ($this->shouldApplyOrgScope($user)) {
             $assignableUsers = $assignableUsers->where('organization_id', $user->organization_id)->values();
         }
 
@@ -179,15 +161,8 @@ class TaskController extends Controller
             abort(403, 'Only admins and supervisors can create tasks.');
         }
 
-        // Scope projects for create form
         $projectsQuery = Project::query();
-        if (!$user->hasRole('admin')) {
-            if ($user->organization_id) {
-                $projectsQuery->where('organization_id', $user->organization_id);
-            } else {
-                $projectsQuery->whereNull('organization_id');
-            }
-        }
+        $this->scopeByOrganization($projectsQuery, $user);
         $projects = $projectsQuery->get();
         $statuses = Task::getStatuses();
         $priorities = Task::getPriorities();
@@ -199,8 +174,7 @@ class TaskController extends Controller
             $assignableUsers = User::role('staff')->get();
         }
 
-        // Limit assignable users to same organization for non-admins
-        if (!$user->hasRole('admin') && $user->organization_id) {
+        if ($this->shouldApplyOrgScope($user)) {
             $assignableUsers = $assignableUsers->where('organization_id', $user->organization_id)->values();
         }
 
@@ -233,11 +207,19 @@ class TaskController extends Controller
             $data['due_date'] = null;
         }
 
+        $projectQuery = Project::whereKey($data['project_id']);
+        $this->scopeByOrganization($projectQuery, $user);
+        $project = $projectQuery->first();
+
+        if (!$project) {
+            abort(403, 'You are not authorized to create tasks in this project.');
+        }
+
         $data['created_by'] = Auth::id();
         $data['order'] = Task::where('project_id', $data['project_id'])->max('order') + 1;
 
-        // Set organization for the task based on creator
-        $data['organization_id'] = Auth::user()->organization_id ?? null;
+        // Keep task organization aligned with the selected project.
+        $data['organization_id'] = $project->organization_id;
 
         $task = Task::create($data);
 
@@ -291,15 +273,8 @@ class TaskController extends Controller
             abort(403, 'Only admins and supervisors can edit tasks.');
         }
 
-        // Scope projects for edit form
         $projectsQuery = Project::query();
-        if (!$user->hasRole('admin')) {
-            if ($user->organization_id) {
-                $projectsQuery->where('organization_id', $user->organization_id);
-            } else {
-                $projectsQuery->whereNull('organization_id');
-            }
-        }
+        $this->scopeByOrganization($projectsQuery, $user);
         $projects = $projectsQuery->get();
         $statuses = Task::getStatuses();
         $priorities = Task::getPriorities();
@@ -310,8 +285,7 @@ class TaskController extends Controller
             $assignableUsers = User::role('staff')->get();
         }
 
-        // Limit assignable users to same organization for non-admins
-        if (!$user->hasRole('admin') && $user->organization_id) {
+        if ($this->shouldApplyOrgScope($user)) {
             $assignableUsers = $assignableUsers->where('organization_id', $user->organization_id)->values();
         }
 
@@ -346,6 +320,16 @@ class TaskController extends Controller
         if (empty($data['due_date'])) {
             $data['due_date'] = null;
         }
+
+        $projectQuery = Project::whereKey($data['project_id']);
+        $this->scopeByOrganization($projectQuery, $user);
+        $project = $projectQuery->first();
+
+        if (!$project) {
+            abort(403, 'You are not authorized to move this task to the selected project.');
+        }
+
+        $data['organization_id'] = $project->organization_id;
 
         $task->update($data);
 
@@ -473,19 +457,9 @@ class TaskController extends Controller
         $user = Auth::user();
 
         foreach ($request->tasks as $taskData) {
-            // Respect organization scope when finding the task for update
-            if ($user->hasRole('admin')) {
-                $task = Task::find($taskData['id']);
-            } else {
-                $task = Task::where('id', $taskData['id'])
-                    ->where(function ($q) use ($user) {
-                        if ($user->organization_id) {
-                            $q->where('organization_id', $user->organization_id);
-                        } else {
-                            $q->whereNull('organization_id');
-                        }
-                    })->first();
-            }
+            $taskQuery = Task::where('id', $taskData['id']);
+            $this->scopeByOrganization($taskQuery, $user);
+            $task = $taskQuery->first();
 
             if (!$task) {
                 // Skip tasks that are not accessible in this organization
@@ -562,11 +536,8 @@ class TaskController extends Controller
                 continue;
             }
 
-            // Prevent assigning users from other organizations for non-admins
-            if (!$user->hasRole('admin') && $user->organization_id) {
-                if ($assignee->organization_id !== $user->organization_id) {
-                    abort(403, 'You cannot assign tasks to users outside your organization.');
-                }
+            if ($this->shouldApplyOrgScope($user) && !$user->canAccessOrganization($assignee->organization_id)) {
+                abort(403, 'You cannot assign tasks to users outside your organization.');
             }
 
             // Admin can assign to supervisors and staff
@@ -709,8 +680,7 @@ class TaskController extends Controller
             $mentionableUsers = $mentionableUsers->merge($task->project->members);
         }
 
-        // Filter to same organization for non-admin users
-        if (!$user->hasRole('admin') && $user->organization_id) {
+        if ($this->shouldApplyOrgScope($user)) {
             $mentionableUsers = $mentionableUsers->where('organization_id', $user->organization_id);
         }
 
