@@ -10,9 +10,47 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class LeadExportService
 {
+    public function exportColumns(): array
+    {
+        return [
+            'id' => 'ID',
+            'full_name' => 'Name',
+            'first_name' => 'First Name',
+            'last_name' => 'Last Name',
+            'email' => 'Email',
+            'phone' => 'Phone',
+            'company' => 'Company',
+            'job_title' => 'Job Title',
+            'employee_count' => 'Employee Count',
+            'year_founded' => 'Year Founded',
+            'industry' => 'Industry',
+            'website' => 'Website',
+            'company_linkedin_profile' => 'Company LinkedIn Profile',
+            'ceo_linkedin_profile' => 'Contact LinkedIn Profile',
+            'country' => 'Country',
+            'city' => 'City',
+            'address' => 'Address',
+            'status_label' => 'Status',
+            'source_label' => 'Source',
+            'priority_label' => 'Priority',
+            'estimated_value' => 'Estimated Value',
+            'currency' => 'Currency',
+            'interested_services' => 'Interested Services',
+            'requirements' => 'Requirements',
+            'notes' => 'Notes',
+            'lost_reason' => 'Lost Reason',
+            'drive_name' => 'Pipeline',
+            'assigned_user_name' => 'Assigned To',
+            'next_follow_up' => 'Next Follow Up',
+            'last_contacted_at' => 'Last Contacted',
+            'converted_at' => 'Converted At',
+            'created_at' => 'Created At',
+        ];
+    }
+
     public function buildQuery(Request $request, ?User $user): Builder
     {
-        $query = Lead::query()->with('assignedUser');
+        $query = Lead::query()->with(['assignedUser', 'drive']);
 
         if ($user && !$user->hasRole('admin')) {
             if ($user->organization_id) {
@@ -91,51 +129,17 @@ class LeadExportService
 
             fwrite($file, "\xEF\xBB\xBF");
 
-            fputcsv($file, [
-                'ID',
-                'Name',
-                'Email',
-                'Phone',
-                'Company',
-                'Year Founded',
-                'Industry',
-                'Job Title',
-                'Status',
-                'Source',
-                'Priority',
-                'Estimated Value',
-                'Currency',
-                'Country',
-                'City',
-                'Assigned To',
-                'Next Follow Up',
-                'Last Contacted',
-                'Created At',
-            ]);
+            $columns = $this->exportColumns();
+            fputcsv($file, array_values($columns));
 
-            $query->chunkById(500, function ($leads) use ($file) {
+            $query->chunkById(500, function ($leads) use ($file, $columns) {
                 foreach ($leads as $lead) {
-                    fputcsv($file, [
-                        $lead->id,
-                        $lead->full_name,
-                        $lead->email,
-                        $lead->phone,
-                        $lead->company,
-                        $lead->year_founded,
-                        $lead->industry,
-                        $lead->job_title,
-                        $lead->status_label,
-                        $lead->source_label,
-                        $lead->priority_label,
-                        $lead->estimated_value,
-                        $lead->currency,
-                        $lead->country,
-                        $lead->city,
-                        $lead->assignedUser?->name ?? 'Unassigned',
-                        $lead->next_follow_up?->format('Y-m-d H:i'),
-                        $lead->last_contacted_at?->format('Y-m-d H:i'),
-                        $lead->created_at?->format('Y-m-d H:i'),
-                    ]);
+                    $row = [];
+                    foreach (array_keys($columns) as $column) {
+                        $row[] = $this->formatExportValue($lead, $column);
+                    }
+
+                    fputcsv($file, $row);
                 }
             });
 
@@ -143,5 +147,23 @@ class LeadExportService
         };
 
         return response()->stream($callback, 200, $headers);
+    }
+
+    protected function formatExportValue(Lead $lead, string $column): string
+    {
+        return match ($column) {
+            'full_name' => $lead->full_name,
+            'status_label' => $lead->status_label,
+            'source_label' => $lead->source_label,
+            'priority_label' => $lead->priority_label,
+            'assigned_user_name' => $lead->assignedUser?->name ?? 'Unassigned',
+            'drive_name' => $lead->drive?->name ?? 'Unassigned',
+            'interested_services' => is_array($lead->interested_services)
+                ? implode(', ', array_filter($lead->interested_services))
+                : (string) ($lead->interested_services ?? ''),
+            'next_follow_up', 'last_contacted_at', 'converted_at', 'created_at' => $lead->{$column}?->format('Y-m-d H:i') ?? '',
+            'estimated_value' => $lead->estimated_value !== null ? (string) $lead->estimated_value : '',
+            default => (string) ($lead->{$column} ?? ''),
+        };
     }
 }

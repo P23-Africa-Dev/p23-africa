@@ -474,6 +474,64 @@ class CrmLeadImportExportRefactorTest extends TestCase
         $this->assertStringNotContainsString('foreign@example.com', $csv);
     }
 
+    public function test_export_includes_extended_crm_columns_and_values(): void
+    {
+        $organization = $this->createOrganization('Extended Export Org');
+        $drive = $this->createDrive($organization, 'LinkedIn Pipeline');
+        $user = User::factory()->create(['organization_id' => $organization->id]);
+
+        Lead::create([
+            'organization_id' => $organization->id,
+            'drive_id' => $drive->id,
+            'first_name' => 'Ada',
+            'last_name' => 'Founder',
+            'email' => 'ada@example.com',
+            'phone' => '+2348000000000',
+            'company' => 'Founders Hub',
+            'job_title' => 'CEO',
+            'employee_count' => '11-50',
+            'year_founded' => 2020,
+            'industry' => 'Technology',
+            'website' => 'https://foundershub.test',
+            'company_linkedin_profile' => 'https://linkedin.com/company/foundershub',
+            'ceo_linkedin_profile' => 'https://linkedin.com/in/ada-founder',
+            'country' => 'Nigeria',
+            'city' => 'Lagos',
+            'address' => '42 Startup Avenue',
+            'status' => 'new',
+            'source' => 'website',
+            'priority' => 'high',
+            'estimated_value' => 15000,
+            'currency' => 'USD',
+            'interested_services' => ['Consulting', 'Web Development'],
+            'requirements' => 'Needs CRM implementation',
+            'notes' => 'Met at conference',
+            'lost_reason' => 'Budget delayed',
+        ]);
+
+        $this->actingAs($user);
+
+        $response = app(LeadController::class)->export(
+            Request::create('/admin/crm/export', 'GET'),
+            app(LeadExportService::class),
+        );
+
+        ob_start();
+        $response->sendContent();
+        $csv = ob_get_clean();
+
+        $this->assertStringContainsString('Company LinkedIn Profile', $csv);
+        $this->assertStringContainsString('Contact LinkedIn Profile', $csv);
+        $this->assertStringContainsString('Interested Services', $csv);
+        $this->assertStringContainsString('Requirements', $csv);
+        $this->assertStringContainsString('Lost Reason', $csv);
+        $this->assertStringContainsString('https://linkedin.com/company/foundershub', $csv);
+        $this->assertStringContainsString('https://linkedin.com/in/ada-founder', $csv);
+        $this->assertStringContainsString('Consulting, Web Development', $csv);
+        $this->assertStringContainsString('Needs CRM implementation', $csv);
+        $this->assertStringContainsString('Budget delayed', $csv);
+    }
+
     private function createOrganization(string $name): Organization
     {
         return Organization::create([
