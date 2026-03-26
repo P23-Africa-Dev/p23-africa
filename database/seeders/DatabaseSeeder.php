@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        AdminUserSeeder::class;
+        
         Permission::create(['name' => 'manage_events']);
         Permission::create(['name' => 'resource_hub']);
         Permission::create(['name' => 'view_students']);

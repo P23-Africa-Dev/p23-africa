@@ -25,6 +25,23 @@
                 </div>
             @endif
 
+            @if ($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+                    <i class="fa fa-exclamation-circle me-2"></i>
+                    <strong>Import could not start.</strong>
+                    <ul class="mb-0 mt-2 ps-3 small">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
+
+            <div class="alert alert-info d-none" id="importProcessingNotice" role="status">
+                <i class="fa fa-spinner fa-spin me-2"></i>Import in progress. Please keep this page open while the file is processed.
+            </div>
+
             <form method="POST" action="{{ orgRoute('admin.crm.import.process') }}" id="mappingForm">
                 @csrf
                 <input type="hidden" name="temp_path" value="{{ $tempPath }}">
@@ -205,7 +222,7 @@
                         <span class="text-muted small me-2">
                             <i class="fa fa-database me-1"></i>{{ $totalRows }} row(s) will be processed
                         </span>
-                        <button type="submit" class="btn btn-success btn-lg" id="importBtn" disabled>
+                        <button type="submit" class="btn btn-success btn-lg" id="importBtn">
                             <i class="fa fa-check-double me-2"></i>Import {{ $totalRows }} Lead(s)
                         </button>
                     </div>
@@ -293,6 +310,7 @@
                 const clearAllBtn = document.getElementById('clearAllBtn');
                 const autoMapBtn = document.getElementById('autoMapBtn');
                 const alertsContainer = document.getElementById('validationAlerts');
+                const mappingForm = document.getElementById('mappingForm');
 
                 // Original auto-mappings from server
                 const originalMappings = @json($suggestedMapping);
@@ -378,14 +396,18 @@
 
                     // 6. Enable / disable import button
                     const hasBlockingIssues = issues.length > 0;
-                    importBtn.disabled = hasBlockingIssues;
+                    importBtn.disabled = false;
                     if (hasBlockingIssues) {
                         importBtn.classList.add('btn-blocked');
                         importBtn.classList.remove('btn-success');
+                        importBtn.title = 'Resolve validation issues before importing.';
                     } else {
                         importBtn.classList.remove('btn-blocked');
                         importBtn.classList.add('btn-success');
+                        importBtn.title = '';
                     }
+
+                    importBtn.dataset.blockingIssues = String(issues.length);
                 }
 
                 /**
@@ -478,18 +500,39 @@
                 validate();
 
                 // Form submission
-                document.getElementById('mappingForm').addEventListener('submit', function(e) {
-                    // Final guard
-                    let anyMapped = false;
-                    selects.forEach(sel => {
-                        if (sel.value && sel.value !== 'skip') anyMapped = true;
-                    });
-                    if (!anyMapped) {
+                mappingForm.addEventListener('submit', function(e) {
+                    validate();
+
+                    const blockingIssues = parseInt(importBtn.dataset.blockingIssues || '0', 10);
+                    if (blockingIssues > 0) {
                         e.preventDefault();
+
+                        const currentHtml = (alertsContainer.innerHTML || '').trim();
+                        if (!currentHtml) {
+                            alertsContainer.innerHTML = `<div class="alert alert-danger validation-alert d-flex align-items-center py-2 mb-2" role="alert">
+                                <i class="fa fa-exclamation-circle me-2"></i>
+                                <div class="small"><strong>Import blocked.</strong> Please resolve the highlighted mapping issues and try again.</div>
+                            </div>`;
+                        }
+
+                        alertsContainer.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+
+                        const firstInvalid = document.querySelector('.column-mapping-select.is-invalid');
+                        if (firstInvalid) {
+                            firstInvalid.focus();
+                        }
+
                         return;
                     }
+
+                    document.getElementById('importProcessingNotice').classList.remove('d-none');
+                    clearAllBtn.disabled = true;
+                    autoMapBtn.disabled = true;
                     importBtn.disabled = true;
-                    importBtn.innerHTML = '<i class="fa fa-spinner fa-spin me-2"></i>Importing...';
+                    importBtn.innerHTML = '<i class="fa fa-spinner fa-spin me-2"></i>Importing leads...';
                 });
             });
         </script>

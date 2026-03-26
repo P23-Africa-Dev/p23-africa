@@ -139,6 +139,10 @@
                         enctype="multipart/form-data" id="importForm">
                         @csrf
 
+                        <div class="alert alert-info d-none" id="importProcessingNotice" role="status">
+                            <i class="fa fa-spinner fa-spin me-2"></i>Analysing your file and preparing the column mapping preview. Large files may take a little longer.
+                        </div>
+
                         <!-- Drive Selection -->
                         <div class="mb-4">
                             <label class="form-label text-dark dark:text-gray-100">
@@ -345,9 +349,14 @@
 
                 let fileReady = false;
                 let driveReady = false;
+                let isSubmitting = false;
 
                 // Update import button state
                 function updateImportButton() {
+                    if (isSubmitting) {
+                        return;
+                    }
+
                     importBtn.disabled = !(fileReady && driveReady);
                 }
 
@@ -467,7 +476,7 @@
                     const extension = file.name.split('.').pop().toLowerCase();
 
                     if (!validExtensions.includes(extension)) {
-                        alert('Please select a valid CSV or Excel file.');
+                        alert('Please select a valid CSV or Excel file (.csv, .xlsx, .xls).');
                         return;
                     }
 
@@ -506,6 +515,8 @@
                         alert('Please select a drive or create a new one.');
                         return;
                     }
+                    isSubmitting = true;
+                    document.getElementById('importProcessingNotice').classList.remove('d-none');
                     importBtn.disabled = true;
                     importBtn.innerHTML = '<i class="fa fa-spinner fa-spin me-2"></i>Analysing file...';
                 });

@@ -372,7 +372,7 @@
     </div>
 
     {{-- ─── CRM Statistics ──────────────────────────────────────────── --}}
-    @if (($stats['total_leads'] ?? 0) > 0 || (auth()->user() && auth()->user()->organization_id))
+    {{-- @if (($stats['total_leads'] ?? 0) > 0 || (auth()->user() && auth()->user()->organization_id))
         <div class="card mb-4 anim-in">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0" style="font-size:.9375rem;display:flex;align-items:center;gap:.5rem;">
@@ -389,7 +389,7 @@
                 </a>
             </div>
             <div class="card-body">
-                {{-- Row 1: Key metrics --}}
+                
                 <div class="row g-3 mb-3">
                     <div class="col-6 col-md-4 col-lg-2">
                         <div class="text-center p-2 rounded"
@@ -455,7 +455,7 @@
                     </div>
                 </div>
 
-                {{-- Row 2: Alerts + This Month --}}
+                
                 <div class="row g-3 mb-3">
                     @if (($stats['overdue_follow_ups'] ?? 0) > 0)
                         <div class="col-12 col-md-6">
@@ -496,7 +496,7 @@
                     </div>
                 </div>
 
-                {{-- Row 3: Status Breakdown (horizontal bar style) --}}
+                
                 @php
                     $statusBreakdown = is_array($stats['status_breakdown'] ?? null) ? $stats['status_breakdown'] : [];
                     $totalForBar = array_sum(array_map(fn($item) => (int) ($item['count'] ?? 0), $statusBreakdown));
@@ -526,7 +526,7 @@
                                 @endforeach
                             </div>
                         @endif
-                        {{-- Legend --}}
+                        
                         <div class="d-flex flex-wrap gap-3 mt-2">
                             @foreach ($statusBreakdown as $slug => $sb)
                                 <div class="d-flex align-items-center gap-1" style="font-size:.75rem;">
@@ -540,7 +540,7 @@
                     </div>
                 @endif
 
-                {{-- Row 4: Drives breakdown --}}
+               
                 @if (!empty($stats['drive_breakdown']) && count($stats['drive_breakdown']) > 1)
                     <div>
                         <div style="font-size:.8125rem;font-weight:600;margin-bottom:.5rem;">Pipelines (Drives)</div>
@@ -568,7 +568,7 @@
                 @endif
             </div>
         </div>
-    @endif
+    @endif --}}
 
     {{-- ─── Main cards row ──────────────────────────────────────────────── --}}
     <div class="row g-4">

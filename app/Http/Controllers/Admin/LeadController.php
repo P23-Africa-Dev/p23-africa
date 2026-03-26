@@ -13,6 +13,7 @@ use App\Models\User;
 use App\Models\ContactSubmission;
 use App\Models\ConsultationApplication;
 use App\Mail\LeadMail;
+use App\Services\Crm\LeadExportService;
 use App\Services\LeadEmailService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -1058,97 +1059,9 @@ class LeadController extends Controller
     /**
      * Export leads to CSV
      */
-    public function export(Request $request)
+    public function export(Request $request, LeadExportService $exportService)
     {
-        $user = auth()->user();
-
-        $query = Lead::with('assignedUser');
-
-        // Scope to user's organization for non-admin users
-        if ($user && !$user->hasRole('admin')) {
-            if ($user->organization_id) {
-                $query->where('organization_id', $user->organization_id);
-            } else {
-                $query->whereNull('organization_id');
-            }
-        }
-
-        // Apply same filters as index
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
-        }
-
-        if ($request->filled('source')) {
-            $query->where('source', $request->source);
-        }
-
-        if ($request->filled('assigned_to')) {
-            $query->where('assigned_to', $request->assigned_to);
-        }
-
-        $leads = $query->get();
-
-        $filename = 'leads-export-' . now()->format('Y-m-d-His') . '.csv';
-
-        $headers = [
-            'Content-Type' => 'text/csv',
-            'Content-Disposition' => "attachment; filename=\"{$filename}\"",
-        ];
-
-        $callback = function () use ($leads) {
-            $file = fopen('php://output', 'w');
-
-            // Header row
-            fputcsv($file, [
-                'ID',
-                'Name',
-                'Email',
-                'Phone',
-                'Company',
-                'Year Founded',
-                'Industry',
-                'Job Title',
-                'Status',
-                'Source',
-                'Priority',
-                'Estimated Value',
-                'Currency',
-                'Country',
-                'City',
-                'Assigned To',
-                'Next Follow Up',
-                'Last Contacted',
-                'Created At'
-            ]);
-
-            foreach ($leads as $lead) {
-                fputcsv($file, [
-                    $lead->id,
-                    $lead->full_name,
-                    $lead->email,
-                    $lead->phone,
-                    $lead->company,
-                    $lead->year_founded,
-                    $lead->industry,
-                    $lead->job_title,
-                    $lead->status_label,
-                    $lead->source_label,
-                    $lead->priority_label,
-                    $lead->estimated_value,
-                    $lead->currency,
-                    $lead->country,
-                    $lead->city,
-                    $lead->assignedUser?->name ?? 'Unassigned',
-                    $lead->next_follow_up?->format('Y-m-d H:i'),
-                    $lead->last_contacted_at?->format('Y-m-d H:i'),
-                    $lead->created_at->format('Y-m-d H:i'),
-                ]);
-            }
-
-            fclose($file);
-        };
-
-        return response()->stream($callback, 200, $headers);
+        return $exportService->streamCsv($request, auth()->user());
     }
 
     /**

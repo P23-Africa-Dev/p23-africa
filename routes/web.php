@@ -372,6 +372,7 @@ Route::middleware(['auth', 'check.suspended', 'resolve.org', 'role:admin|supervi
         Route::get('/crm/pipeline', [\App\Http\Controllers\Admin\LeadController::class, 'pipeline'])->name('crm.pipeline');
         Route::get('/crm/export', [\App\Http\Controllers\Admin\LeadController::class, 'export'])->name('crm.export');
         Route::get('/crm/import', [\App\Http\Controllers\Admin\LeadImportController::class, 'showImport'])->name('crm.import');
+        Route::get('/crm/import/preview', [\App\Http\Controllers\Admin\LeadImportController::class, 'showPreview'])->name('crm.import.preview-page');
         Route::post('/crm/import/preview', [\App\Http\Controllers\Admin\LeadImportController::class, 'preview'])->name('crm.import.preview');
         Route::post('/crm/import', [\App\Http\Controllers\Admin\LeadImportController::class, 'import'])->name('crm.import.process');
         Route::get('/crm/import/review', [\App\Http\Controllers\Admin\LeadImportController::class, 'showReview'])->name('crm.import.review');
@@ -563,6 +564,7 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
     Route::get('/crm/pipeline', [\App\Http\Controllers\Admin\LeadController::class, 'pipeline'])->name('crm.pipeline');
     Route::get('/crm/export', [\App\Http\Controllers\Admin\LeadController::class, 'export'])->name('crm.export');
     Route::get('/crm/import', [\App\Http\Controllers\Admin\LeadImportController::class, 'showImport'])->name('crm.import');
+    Route::get('/crm/import/preview', [\App\Http\Controllers\Admin\LeadImportController::class, 'showPreview'])->name('crm.import.preview-page');
     Route::post('/crm/import/preview', [\App\Http\Controllers\Admin\LeadImportController::class, 'preview'])->name('crm.import.preview');
     Route::post('/crm/import', [\App\Http\Controllers\Admin\LeadImportController::class, 'import'])->name('crm.import.process');
     Route::get('/crm/import/review', [\App\Http\Controllers\Admin\LeadImportController::class, 'showReview'])->name('crm.import.review');

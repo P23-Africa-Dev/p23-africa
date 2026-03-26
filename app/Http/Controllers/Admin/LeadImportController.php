@@ -7,10 +7,12 @@ use App\Models\Lead;
 use App\Models\LeadDrive;
 use App\Models\LeadStatus;
 use App\Models\Organization;
+use App\Services\Crm\LeadImportService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -18,6 +20,9 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class LeadImportController extends Controller
 {
+    private const MAX_IMPORT_ROWS = 5000;
+    private const TEMP_IMPORT_PREFIX = 'imports/temp/';
+
     /**
      * All mappable lead fields with human-friendly labels.
      */
@@ -514,6 +519,28 @@ class LeadImportController extends Controller
      */
     public function showImport()
     {
+        $this->logImportStep(request(), 'show-import.requested');
+
+        $staleTempPath = (string) session('import_temp_path', '');
+        if ($this->isSafeTempImportPath($staleTempPath) && Storage::disk('local')->exists($staleTempPath)) {
+            Storage::disk('local')->delete($staleTempPath);
+            $this->logImportStep(request(), 'show-import.stale-temp-deleted', [
+                'stale_temp_path' => $staleTempPath,
+            ]);
+        }
+
+        session()->forget([
+            'import_trace_id',
+            'import_preview_payload',
+            'import_temp_path',
+            'import_original_name',
+            'import_drive_id',
+            'import_new_drive_name',
+            'import_new_drive_color',
+        ]);
+
+        $this->logImportStep(request(), 'show-import.session-cleared');
+
         $org = $this->currentOrg();
         $drives = $org
             ? LeadDrive::where('organization_id', $org->id)->orderBy('name')->get()
@@ -525,10 +552,46 @@ class LeadImportController extends Controller
     /**
      * Step 2 — Parse file, auto-map columns, return mapping UI.
      */
-    public function preview(Request $request)
+    public function preview(Request $request, LeadImportService $importService)
     {
-        $request->validate([
-            'file' => 'required|file|mimes:csv,xlsx,xls,txt|max:10240',
+        $request->session()->put('import_trace_id', (string) Str::uuid());
+        $this->logImportStep($request, 'preview.request-received', [
+            'has_file' => $request->hasFile('file'),
+            'drive_id' => $request->input('drive_id'),
+            'new_drive_name_present' => filled($request->input('new_drive_name')),
+        ]);
+
+        $validator = Validator::make($request->all(), [
+            'file' => 'required|file|max:10240',
+        ]);
+
+        if ($validator->fails()) {
+            $this->logImportStep($request, 'preview.validation-failed', [
+                'errors' => $validator->errors()->toArray(),
+            ], 'warning');
+
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $this->logImportStep($request, 'preview.validation-passed');
+
+        $file = $request->file('file');
+        $extension = strtolower((string) $file->getClientOriginalExtension());
+        if (!$importService->isSupportedImportExtension($extension)) {
+            $this->logImportStep($request, 'preview.unsupported-extension', [
+                'extension' => $extension,
+                'filename' => $file->getClientOriginalName(),
+            ], 'warning');
+
+            return back()->withErrors([
+                'file' => 'The file field must be a file of type: csv, xlsx, xls, txt.',
+            ]);
+        }
+
+        $this->logImportStep($request, 'preview.extension-accepted', [
+            'extension' => $extension,
+            'filename' => $file->getClientOriginalName(),
+            'size' => $file->getSize(),
         ]);
 
         // --- keep drive selection in session so Step 3 has it ---
@@ -536,21 +599,64 @@ class LeadImportController extends Controller
         $request->session()->put('import_new_drive_name', $request->input('new_drive_name'));
         $request->session()->put('import_new_drive_color', $request->input('new_drive_color'));
 
-        $file = $request->file('file');
+        $this->logImportStep($request, 'preview.drive-selection-stored', [
+            'drive_id' => $request->input('drive_id'),
+            'new_drive_name_present' => filled($request->input('new_drive_name')),
+        ]);
 
-        // Store temp file in the 'local' disk (root = storage/app/private)
-        $tempPath = $file->store('imports/temp', 'local');
+        Log::info('CRM import preview: upload received', [
+            'original_name' => $file->getClientOriginalName(),
+            'client_extension' => $extension,
+            'client_mime' => $file->getClientMimeType(),
+            'detected_mime' => $file->getMimeType(),
+            'size' => $file->getSize(),
+        ]);
+
+        // Preserve original extension to avoid reader-identification issues on servers
+        // that detect XLSX uploads as generic application/octet-stream.
+        $tempFilename = Str::random(48) . '.' . $extension;
+        $tempPath = $file->storeAs('imports/temp', $tempFilename, 'local');
         $fullPath = Storage::disk('local')->path($tempPath);
+
+        $this->logImportStep($request, 'preview.temp-file-stored', [
+            'temp_path' => $tempPath,
+            'stored_extension' => pathinfo($tempPath, PATHINFO_EXTENSION),
+        ]);
+
+        Log::info('CRM import preview: temp file stored', [
+            'temp_path' => $tempPath,
+            'stored_extension' => pathinfo($tempPath, PATHINFO_EXTENSION),
+        ]);
 
         try {
             $rows = $this->parseFile($fullPath, $file->getClientOriginalExtension());
         } catch (\Exception $e) {
+            $this->logImportStep($request, 'preview.parse-failed', [
+                'temp_path' => $tempPath,
+                'error' => $e->getMessage(),
+            ], 'error');
+
+            Log::error('CRM import preview: parse failed', [
+                'temp_path' => $tempPath,
+                'full_path' => $fullPath,
+                'original_name' => $file->getClientOriginalName(),
+                'client_extension' => $extension,
+                'file_size' => @filesize($fullPath) ?: null,
+                'error' => $e->getMessage(),
+            ]);
             Storage::disk('local')->delete($tempPath);
             return back()->with('error', 'Could not read file: ' . $e->getMessage());
         }
 
+        $this->logImportStep($request, 'preview.file-parsed', [
+            'row_count_including_header' => count($rows),
+        ]);
+
         if (empty($rows) || count($rows) < 2) {
             Storage::disk('local')->delete($tempPath);
+            $this->logImportStep($request, 'preview.no-data-rows', [
+                'temp_path' => $tempPath,
+            ], 'warning');
             return back()->with('error', 'The file is empty or has no data rows.');
         }
 
@@ -558,39 +664,22 @@ class LeadImportController extends Controller
         $headers = array_map(fn($h) => trim((string) $h), $rows[0]);
         $dataRows = array_slice($rows, 1);
 
-        // Auto-map headers
-        $autoMappings = self::getAutoMappings();
         $mappableFields = self::getMappableFields();
-        $suggestedMapping = [];
-
-        foreach ($headers as $index => $header) {
-            // Normalise: lowercase, collapse whitespace/underscores/hyphens into space, strip parenthetical hints
-            $normalised = strtolower(trim(preg_replace('/[\s_\-]+/', ' ', $header)));
-            // Strip parenthetical suffixes like "(e.g. Startup)" or "(YYYY-MM-DD)"
-            $normalised = trim(preg_replace('/\s*\(.*?\)\s*$/', '', $normalised));
-
-            // 1. Exact match
-            if (isset($autoMappings[$normalised])) {
-                $suggestedMapping[$index] = $autoMappings[$normalised];
-                continue;
-            }
-
-            // 2. Partial / contains match — check if any alias is contained in the header
-            $found = '';
-            $bestLen = 0;
-            foreach ($autoMappings as $alias => $field) {
-                // Only match aliases that are ≥3 chars to avoid false positives
-                if (strlen($alias) >= 3 && str_contains($normalised, $alias) && strlen($alias) > $bestLen) {
-                    $found = $field;
-                    $bestLen = strlen($alias);
-                }
-            }
-            $suggestedMapping[$index] = $found;
-        }
+        $suggestedMapping = $importService->suggestMappings($headers, self::getAutoMappings());
 
         // Preview first 5 data rows
         $previewRows = array_slice($dataRows, 0, 5);
         $totalRows = count($dataRows);
+
+        if ($totalRows > $this->maxImportRows()) {
+            Storage::disk('local')->delete($tempPath);
+            $this->logImportStep($request, 'preview.row-limit-exceeded', [
+                'total_rows' => $totalRows,
+                'max_rows' => $this->maxImportRows(),
+            ], 'warning');
+
+            return back()->with('error', "This file contains {$totalRows} rows. The maximum allowed per import is {$this->maxImportRows()} rows. Please split the file and import in batches.");
+        }
 
         // Store temp path in session
         $request->session()->put('import_temp_path', $tempPath);
@@ -600,6 +689,25 @@ class LeadImportController extends Controller
         $driveId = $request->input('drive_id', '');
         $newDriveName = $request->input('new_drive_name', '');
         $newDriveColor = $request->input('new_drive_color', '');
+
+        $request->session()->put('import_preview_payload', [
+            'headers' => $headers,
+            'suggestedMapping' => $suggestedMapping,
+            'mappableFields' => $mappableFields,
+            'previewRows' => $previewRows,
+            'totalRows' => $totalRows,
+            'tempPath' => $tempPath,
+            'driveId' => $driveId,
+            'newDriveName' => $newDriveName,
+            'newDriveColor' => $newDriveColor,
+        ]);
+
+        $this->logImportStep($request, 'preview.payload-stored', [
+            'headers_count' => count($headers),
+            'preview_rows_count' => count($previewRows),
+            'total_rows' => $totalRows,
+            'temp_path' => $tempPath,
+        ]);
 
         return view('admin.crm.import-mapping', compact(
             'headers',
@@ -612,6 +720,27 @@ class LeadImportController extends Controller
             'newDriveName',
             'newDriveColor'
         ));
+    }
+
+    /**
+     * GET fallback for import preview mapping page.
+     * Prevents MethodNotAllowed when browser refreshes /crm/import/preview.
+     */
+    public function showPreview(Request $request)
+    {
+        $payload = $request->session()->get('import_preview_payload');
+
+        $this->logImportStep($request, 'preview-page.requested', [
+            'payload_present' => !empty($payload),
+        ]);
+
+        if (empty($payload)) {
+            $this->logImportStep($request, 'preview-page.payload-missing', [], 'warning');
+            return redirect(orgRoute('admin.crm.import'))
+                ->with('error', 'Import preview expired. Please upload your file again.');
+        }
+
+        return view('admin.crm.import-mapping', $payload);
     }
 
     /**
@@ -667,81 +796,7 @@ class LeadImportController extends Controller
      */
     protected function friendlyDbError(\Exception $e, array $leadData): string
     {
-        $msg = $e->getMessage();
-
-        // Data truncation errors (e.g. ENUM mismatch, wrong date format)
-        if (str_contains($msg, 'Data truncated') || str_contains($msg, '1265')) {
-            if (preg_match("/column '(\w+)'/", $msg, $m)) {
-                $column = $m[1];
-                $value = $leadData[$column] ?? 'unknown';
-                $friendly = str_replace('_', ' ', $column);
-                return "Invalid value \"{$value}\" for {$friendly}. Please check the format.";
-            }
-            return 'A value was in the wrong format and could not be saved.';
-        }
-
-        // Incorrect integer / numeric value
-        if (str_contains($msg, 'Incorrect integer') || str_contains($msg, '1366')) {
-            if (preg_match("/column '(\w+)'/", $msg, $m)) {
-                $column = $m[1];
-                $friendly = str_replace('_', ' ', $column);
-                return "Non-numeric value provided for {$friendly}.";
-            }
-            return 'A numeric field received a non-numeric value.';
-        }
-
-        // Too long for column
-        if (str_contains($msg, 'too long') || str_contains($msg, '1406')) {
-            if (preg_match("/column '(\w+)'/", $msg, $m)) {
-                $friendly = str_replace('_', ' ', $m[1]);
-                return "Value too long for {$friendly}. Please shorten it.";
-            }
-            return 'A value was too long for its field.';
-        }
-
-        // Duplicate entry
-        if (str_contains($msg, 'Duplicate entry') || str_contains($msg, '1062')) {
-            // Composite unique (org_id + email) — extract email portion
-            if (str_contains($msg, 'leads_org_email_unique') && preg_match("/Duplicate entry '(?:\d+-)?(.*?)' for key/", $msg, $m)) {
-                return "A lead with email \"{$m[1]}\" already exists in your organisation.";
-            }
-            if (preg_match("/Duplicate entry '(.+?)' for key/", $msg, $m)) {
-                return "Duplicate value \"{$m[1]}\" — this record already exists.";
-            }
-            return 'This record already exists (duplicate).';
-        }
-
-        // Cannot be null
-        if (str_contains($msg, 'cannot be null') || str_contains($msg, '1048')) {
-            if (preg_match("/Column '(\w+)'/", $msg, $m)) {
-                $friendly = str_replace('_', ' ', $m[1]);
-                return "The {$friendly} field is required and cannot be empty.";
-            }
-            return 'A required field was left empty.';
-        }
-
-        // Out of range
-        if (str_contains($msg, 'Out of range') || str_contains($msg, '1264')) {
-            if (preg_match("/column '(\w+)'/", $msg, $m)) {
-                $friendly = str_replace('_', ' ', $m[1]);
-                return "Value out of range for {$friendly}. Please use a smaller number.";
-            }
-            return 'A numeric value was out of the allowed range.';
-        }
-
-        // Generic SQLSTATE fallback — try to extract the column name at least
-        if (str_contains($msg, 'SQLSTATE')) {
-            if (preg_match("/column '(\w+)'/i", $msg, $m)) {
-                $column  = $m[1];
-                $value   = $leadData[$column] ?? null;
-                $friendly = str_replace('_', ' ', $column);
-                $hint = $value !== null ? " (value: \"{$value}\")" : '';
-                return "Database error on {$friendly}{$hint}. Please check the value.";
-            }
-            return 'Database error — please check your data for invalid values. Check the log for details.';
-        }
-
-        return Str::limit($msg, 120);
+        return app(LeadImportService::class)->friendlyDbError($e, $leadData);
     }
 
     /**
@@ -749,36 +804,77 @@ class LeadImportController extends Controller
      */
     protected function extractErrorField(\Exception $e): ?string
     {
-        $msg = $e->getMessage();
-        if (preg_match("/column '(\w+)'/i", $msg, $m)) {
-            return $m[1]; // raw column name e.g. "year_founded"
-        }
-        return null;
+        return app(LeadImportService::class)->extractErrorField($e);
     }
 
     /**
      * Step 3 — Process import using user-defined column mappings.
      */
-    public function import(Request $request)
+    public function import(Request $request, LeadImportService $importService)
     {
-        $request->validate([
+        $this->logImportStep($request, 'import.request-received', [
+            'temp_path' => $request->input('temp_path'),
+            'column_map_count' => is_array($request->input('column_map')) ? count($request->input('column_map')) : 0,
+        ]);
+
+        $validator = Validator::make($request->all(), [
             'column_map'   => 'required|array',
             'temp_path'    => 'required|string',
         ]);
+
+        if ($validator->fails()) {
+            $this->logImportStep($request, 'import.validation-failed', [
+                'errors' => $validator->errors()->toArray(),
+            ], 'warning');
+
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $this->logImportStep($request, 'import.validation-passed');
 
         $org = $this->currentOrg();
         $orgId = $org ? $org->id : null;
 
         $tempPath = $request->input('temp_path');
+        $sessionTempPath = (string) $request->session()->get('import_temp_path', '');
+
+        if (!$this->isSafeTempImportPath($tempPath) || empty($sessionTempPath) || !hash_equals($sessionTempPath, $tempPath)) {
+            $this->logImportStep($request, 'import.invalid-session-or-path', [
+                'temp_path' => $tempPath,
+                'session_temp_path' => $sessionTempPath,
+            ], 'warning');
+
+            return redirect(orgRoute('admin.crm.import'))
+                ->with('error', 'Invalid import session detected. Please upload the file again.');
+        }
+
+        $fieldToColumns = $importService->buildFieldToColumns($request->input('column_map', []));
+        if (empty($fieldToColumns)) {
+            $this->logImportStep($request, 'import.empty-mapping', [], 'warning');
+            return redirect(orgRoute('admin.crm.import.preview-page'))
+                ->with('error', 'Map at least one column before starting the import.');
+        }
+
+        $this->logImportStep($request, 'import.mapping-built', [
+            'mapped_fields' => array_keys($fieldToColumns),
+        ]);
+
         $fullPath = Storage::disk('local')->path($tempPath);
 
         if (!file_exists($fullPath)) {
+            $this->logImportStep($request, 'import.temp-file-missing', [
+                'temp_path' => $tempPath,
+            ], 'warning');
             return redirect(orgRoute('admin.crm.import'))
                 ->with('error', 'Upload session expired. Please upload the file again.');
         }
 
         // --- resolve drive ---
         $driveId = $this->resolveDrive($request, $orgId);
+        $this->logImportStep($request, 'import.drive-resolved', [
+            'drive_id' => $driveId,
+            'organization_id' => $orgId,
+        ]);
 
         // --- parse file again ---
         $extension = pathinfo($request->session()->get('import_original_name', $tempPath), PATHINFO_EXTENSION);
@@ -786,100 +882,63 @@ class LeadImportController extends Controller
             $rows = $this->parseFile($fullPath, $extension);
         } catch (\Exception $e) {
             Storage::disk('local')->delete($tempPath);
+            $this->logImportStep($request, 'import.parse-failed', [
+                'temp_path' => $tempPath,
+                'error' => $e->getMessage(),
+            ], 'error');
             return redirect(orgRoute('admin.crm.import'))
                 ->with('error', 'Error reading file: ' . $e->getMessage());
+        }
+
+        $this->logImportStep($request, 'import.file-parsed', [
+            'row_count_including_header' => count($rows),
+            'extension' => $extension,
+        ]);
+
+        if (empty($rows) || count($rows) < 2) {
+            Storage::disk('local')->delete($tempPath);
+            $this->logImportStep($request, 'import.no-data-rows', [
+                'temp_path' => $tempPath,
+            ], 'warning');
+            return redirect(orgRoute('admin.crm.import'))
+                ->with('error', 'The uploaded file is empty or has no importable data rows.');
         }
 
         $headers = array_map(fn($h) => trim((string) $h), $rows[0]);
         $dataRows = array_slice($rows, 1);
 
-        // Column mapping from user
-        $columnMap = $request->input('column_map', []); // index => field_name
-
-        // Invert: field_name => [column indices]
-        $fieldToColumns = [];
-        foreach ($columnMap as $colIndex => $fieldName) {
-            if ($fieldName && $fieldName !== '' && $fieldName !== 'skip') {
-                $fieldToColumns[$fieldName][] = (int) $colIndex;
-            }
+        if (count($dataRows) > $this->maxImportRows()) {
+            Storage::disk('local')->delete($tempPath);
+            $this->logImportStep($request, 'import.row-limit-exceeded', [
+                'total_rows' => count($dataRows),
+                'max_rows' => $this->maxImportRows(),
+            ], 'warning');
+            return redirect(orgRoute('admin.crm.import'))
+                ->with('error', "This file contains " . count($dataRows) . " rows. The maximum allowed per import is {$this->maxImportRows()} rows. Please split the file and import in batches.");
         }
-
-        $imported = 0;
-        $skipped = 0;
-        $errorRows = 0;
-        $descriptionRowsSkipped = 0;
-        $errors = [];
 
         $defaultStatus = LeadStatus::getDefaultSlug($orgId);
+        $importResult = $importService->processMappedRows(
+            $dataRows,
+            $fieldToColumns,
+            $orgId,
+            $driveId,
+            $defaultStatus,
+            fn (array $row, array $mapping) => $this->isDescriptionRow($row, $mapping)
+        );
 
-        foreach ($dataRows as $rowIndex => $row) {
-            $rowNumber = $rowIndex + 2; // +1 for 0-index, +1 for header
+        $imported = $importResult['imported'];
+        $skipped = $importResult['skipped'];
+        $errorRows = $importResult['error_rows'];
+        $descriptionRowsSkipped = $importResult['description_rows_skipped'];
+        $errors = $importResult['errors'];
 
-            // Skip entirely empty rows
-            $nonEmpty = array_filter($row, fn($v) => $v !== null && trim((string) $v) !== '');
-            if (empty($nonEmpty)) {
-                continue;
-            }
-
-            // Skip header / description / template rows
-            if ($this->isDescriptionRow($row, $fieldToColumns)) {
-                $descriptionRowsSkipped++;
-                continue;
-            }
-
-            try {
-                $leadData = $this->buildLeadData($row, $fieldToColumns, $orgId, $driveId, $defaultStatus);
-
-                // Duplicate check: same org + email (include soft-deleted — DB index still blocks them)
-                if (!empty($leadData['email'])) {
-                    $dupQuery = Lead::withTrashed()->where('email', $leadData['email']);
-                    if ($orgId) {
-                        $dupQuery->where('organization_id', $orgId);
-                    } else {
-                        $dupQuery->whereNull('organization_id');
-                    }
-                    $existingLead = $dupQuery->first();
-
-                    if ($existingLead) {
-                        if ($existingLead->trashed()) {
-                            // Restore the soft-deleted lead and update with fresh data
-                            $existingLead->restore();
-                            $existingLead->update($leadData);
-                            $imported++;
-                            continue;
-                        }
-                        // Active duplicate — skip
-                        $skipped++;
-                        $errors[] = [
-                            'row'     => $rowNumber,
-                            'type'    => 'duplicate',
-                            'message' => "Duplicate email \"{$leadData['email']}\" — skipped.",
-                        ];
-                        continue;
-                    }
-                }
-
-                Lead::create($leadData);
-                $imported++;
-            } catch (\Illuminate\Database\QueryException $e) {
-                $errorRows++;
-                $leadData = $leadData ?? [];
-                $errors[] = [
-                    'row'            => $rowNumber,
-                    'type'           => 'database',
-                    'message'        => $this->friendlyDbError($e, $leadData),
-                    'affected_field' => $this->extractErrorField($e),
-                ];
-            } catch (\Exception $e) {
-                $errorRows++;
-                $errors[] = [
-                    'row'            => $rowNumber,
-                    'type'           => 'general',
-                    'message'        => Str::limit($e->getMessage(), 120),
-                    'affected_field' => null,
-                ];
-            }
-        }
+        $this->logImportStep($request, 'import.rows-processed', [
+            'imported' => $imported,
+            'skipped_duplicates' => $skipped,
+            'error_rows' => $errorRows,
+            'description_rows_skipped' => $descriptionRowsSkipped,
+        ]);
 
         // Cleanup temp file
         Storage::disk('local')->delete($tempPath);
@@ -889,6 +948,11 @@ class LeadImportController extends Controller
             'import_drive_id',
             'import_new_drive_name',
             'import_new_drive_color',
+            'import_preview_payload',
+        ]);
+
+        $this->logImportStep($request, 'import.cleanup-complete', [
+            'temp_path' => $tempPath,
         ]);
 
         // Build success message
@@ -906,14 +970,9 @@ class LeadImportController extends Controller
             // We need to capture the raw row data for each error row so the user can edit it
             $reviewRows = [];
             foreach ($errors as $err) {
-                $rowIndex = $err['row'] - 2; // reverse the +2 offset used during processing
-                $rawRow = $dataRows[$rowIndex] ?? [];
-                // Build current parsed values so the review form is pre-populated
-                try {
-                    $parsed = $this->buildLeadData($rawRow, $fieldToColumns, $orgId, $driveId, $defaultStatus);
-                } catch (\Exception $e2) {
-                    $parsed = [];
-                }
+                $rowIndex = $err['row'] - 2;
+                $rawRow = $err['raw'] ?? ($dataRows[$rowIndex] ?? []);
+                $parsed = $err['parsed'] ?? [];
                 $reviewRows[] = [
                     'row_number'     => $err['row'],
                     'type'           => $err['type'],
@@ -937,9 +996,18 @@ class LeadImportController extends Controller
                 'defaultStatus' => $defaultStatus,
             ]);
 
+            $this->logImportStep($request, 'import.sent-to-review', [
+                'review_rows' => count($reviewRows),
+            ], 'warning');
+
             return redirect(orgRoute('admin.crm.import.review'))
                 ->with('success', $message . " {$errorRows} row(s) need your attention. Review them below.");
         }
+
+        $this->logImportStep($request, 'import.completed-successfully', [
+            'imported' => $imported,
+            'skipped_duplicates' => $skipped,
+        ]);
 
         return redirect(orgRoute('admin.crm.index'))->with('success', $message);
     }
@@ -991,6 +1059,11 @@ class LeadImportController extends Controller
         $reviewRows = $request->session()->get('import_review_rows');
         $meta       = $request->session()->get('import_review_meta');
 
+        $this->logImportStep($request, 'review-page.requested', [
+            'has_review_rows' => !empty($reviewRows),
+            'has_meta' => !empty($meta),
+        ]);
+
         if (empty($reviewRows) || empty($meta)) {
             return redirect(orgRoute('admin.crm.import'))
                 ->with('error', 'No import errors to review. Please start a new import.');
@@ -1004,11 +1077,18 @@ class LeadImportController extends Controller
     /**
      * Step 4 — Retry: accept per-row corrections and import only the fixed rows.
      */
-    public function retry(Request $request)
+    public function retry(Request $request, LeadImportService $importService)
     {
         $meta = $request->session()->get('import_review_meta');
+        $reviewRows = $request->session()->get('import_review_rows', []);
+
+        $this->logImportStep($request, 'review-retry.request-received', [
+            'row_action_count' => is_array($request->input('row_action')) ? count($request->input('row_action')) : 0,
+            'existing_review_rows' => count($reviewRows),
+        ]);
 
         if (empty($meta)) {
+            $this->logImportStep($request, 'review-retry.meta-missing', [], 'warning');
             return redirect(orgRoute('admin.crm.import'))
                 ->with('error', 'Review session expired. Please start a new import.');
         }
@@ -1023,152 +1103,163 @@ class LeadImportController extends Controller
         $imported = 0;
         $skipped  = 0;
         $errors   = [];
+        $existingRowsByNumber = [];
+        foreach ($reviewRows as $row) {
+            $existingRowsByNumber[(int) ($row['row_number'] ?? 0)] = $row;
+        }
+        $remainingRowsByNumber = $existingRowsByNumber;
 
         foreach ($rowActions as $rowNumber => $action) {
+            $rowNumber = (int) $rowNumber;
+
             if ($action === 'skip') {
                 $skipped++;
+                unset($remainingRowsByNumber[$rowNumber]);
+                $this->logImportStep($request, 'review-retry.row-skipped', [
+                    'row_number' => $rowNumber,
+                ]);
                 continue;
             }
 
-            // Build lead data from the user-edited fields
             $fields = $rowOverrides[$rowNumber] ?? [];
+            $prepared = $importService->buildLeadDataFromManualFields($fields, $orgId, $driveId, $defaultStatus);
 
-            // Remove empty strings so defaults kick in
-            $fields = array_filter($fields, fn($v) => trim((string) $v) !== '');
-
-            // Apply type transformations identical to buildLeadData
-            $leadData = [
-                'organization_id' => $orgId,
-                'drive_id'        => $driveId,
-                'status'          => $defaultStatus,
-                'source'          => 'other',
-                'priority'        => 'medium',
-            ];
-
-            foreach ($fields as $field => $value) {
-                $value = trim((string) $value);
-                if ($value === '') continue;
-
-                try {
-                    switch ($field) {
-                        case 'full_name':
-                            $parts = explode(' ', $value, 2);
-                            $leadData['first_name'] = $parts[0];
-                            $leadData['last_name']  = $parts[1] ?? '';
-                            break;
-                        case 'year_founded':
-                            if (preg_match('/\b((?:19|20)\d{2})\b/', $value, $m)) {
-                                $leadData['year_founded'] = (int) $m[1];
-                            }
-                            break;
-                        case 'currency':
-                            $code = strtoupper(preg_replace('/[^a-zA-Z]/', '', $value));
-                            if (strlen($code) === 3) $leadData['currency'] = $code;
-                            break;
-                        case 'estimated_value':
-                            $numeric = preg_replace('/[^0-9.]/', '', $value);
-                            if (is_numeric($numeric)) $leadData['estimated_value'] = (float) $numeric;
-                            break;
-                        case 'interested_services':
-                            $services = array_values(array_filter(array_map('trim', preg_split('/[,;]+/', $value))));
-                            if (!empty($services)) $leadData['interested_services'] = $services;
-                            break;
-                        case 'last_contacted_at':
-                        case 'next_follow_up':
-                            try {
-                                $leadData[$field] = \Carbon\Carbon::parse($value)->toDateTimeString();
-                            } catch (\Exception $ignored) {
-                            }
-                            break;
-                        case 'status':
-                            $statuses = array_keys(Lead::getStatuses($orgId));
-                            $n = strtolower(trim(str_replace([' ', '-'], '_', $value)));
-                            $leadData['status'] = in_array($n, $statuses) ? $n : $defaultStatus;
-                            break;
-                        case 'source':
-                            $sources = array_keys(Lead::getSources($orgId));
-                            $n = strtolower(str_replace([' ', '-'], '_', $value));
-                            $leadData['source'] = in_array($n, $sources) ? $n : 'other';
-                            break;
-                        case 'priority':
-                            $priorities = array_keys(Lead::getPriorities());
-                            $n = strtolower(trim($value));
-                            $leadData['priority'] = in_array($n, $priorities) ? $n : 'medium';
-                            break;
-                        default:
-                            $leadData[$field] = $value;
-                            break;
-                    }
-                } catch (\Exception $ignored) {
-                }
-            }
-
-            if (empty($leadData['first_name'])) {
-                $leadData['first_name'] = 'Unknown';
-            }
-            if (!empty($leadData['email']) && !filter_var($leadData['email'], FILTER_VALIDATE_EMAIL)) {
-                unset($leadData['email']);
-            }
-
-            // Sanitise: keep only fields the Lead model actually accepts
-            $fillable = (new Lead)->getFillable();
-            $leadData = array_intersect_key($leadData, array_flip($fillable));
-
-            // Ensure status / source / priority are safe ENUM values
-            $safeStatuses   = ['new', 'contacted', 'qualified', 'proposal', 'negotiation', 'won', 'lost', 'unqualified'];
-            $safeSources    = ['website', 'referral', 'social_media', 'email_campaign', 'cold_call', 'event', 'advertisement', 'noel_waitlist', 'other'];
-            $safePriorities = ['low', 'medium', 'high', 'urgent'];
-
-            if (!empty($leadData['status']) && !in_array($leadData['status'], $safeStatuses)) {
-                $leadData['status'] = 'new';
-            }
-            if (!empty($leadData['source']) && !in_array($leadData['source'], $safeSources)) {
-                $leadData['source'] = 'other';
-            }
-            if (!empty($leadData['priority']) && !in_array($leadData['priority'], $safePriorities)) {
-                $leadData['priority'] = 'medium';
-            }
-
-            // Duplicate check (include soft-deleted — DB index still blocks them)
-            if (!empty($leadData['email'])) {
-                $dupQuery = Lead::withTrashed()->where('email', $leadData['email']);
-                $orgId ? $dupQuery->where('organization_id', $orgId) : $dupQuery->whereNull('organization_id');
-                $existingLead = $dupQuery->first();
-
-                if ($existingLead) {
-                    if ($existingLead->trashed()) {
-                        // Restore the soft-deleted lead and update with fresh data
-                        $existingLead->restore();
-                        $existingLead->update($leadData);
-                        $imported++;
-                        continue;
-                    }
-                    $skipped++;
-                    $errors[] = "🔁 Row {$rowNumber}: Duplicate email \"{$leadData['email']}\" — skipped.";
-                    continue;
-                }
+            if ($prepared['error']) {
+                $message = $prepared['error']['message'];
+                $errors[] = "⚠️ Row {$rowNumber}: {$message}";
+                $remainingRowsByNumber[$rowNumber] = [
+                    'row_number' => $rowNumber,
+                    'type' => 'validation',
+                    'message' => $message,
+                    'affected_field' => $prepared['error']['affected_field'] ?? null,
+                    'raw' => array_values($fields),
+                    'parsed' => $prepared['data'],
+                    'suggestion' => $this->buildFixSuggestion([
+                        'type' => 'validation',
+                        'message' => $message,
+                        'affected_field' => $prepared['error']['affected_field'] ?? null,
+                    ], $prepared['data']),
+                ];
+                $this->logImportStep($request, 'review-retry.row-validation-failed', [
+                    'row_number' => $rowNumber,
+                    'message' => $message,
+                ], 'warning');
+                continue;
             }
 
             try {
-                Lead::create($leadData);
+                $result = $importService->importPreparedLead($prepared['data'], $orgId);
+
+                if ($result['status'] === 'duplicate') {
+                    $skipped++;
+                    $message = $result['message'];
+                    $errors[] = "🔁 Row {$rowNumber}: {$message}";
+                    $remainingRowsByNumber[$rowNumber] = [
+                        'row_number' => $rowNumber,
+                        'type' => 'duplicate',
+                        'message' => $message,
+                        'affected_field' => 'email',
+                        'raw' => array_values($fields),
+                        'parsed' => $prepared['data'],
+                        'suggestion' => $this->buildFixSuggestion([
+                            'type' => 'duplicate',
+                            'message' => $message,
+                            'affected_field' => 'email',
+                        ], $prepared['data']),
+                    ];
+                    $this->logImportStep($request, 'review-retry.row-duplicate', [
+                        'row_number' => $rowNumber,
+                    ], 'warning');
+                    continue;
+                }
+
                 $imported++;
+                unset($remainingRowsByNumber[$rowNumber]);
+                $this->logImportStep($request, 'review-retry.row-imported', [
+                    'row_number' => $rowNumber,
+                ]);
             } catch (\Illuminate\Database\QueryException $e) {
-                $errors[] = "⚠️ Row {$rowNumber}: " . $this->friendlyDbError($e, $leadData);
+                $message = $this->friendlyDbError($e, $prepared['data']);
+                $errors[] = "⚠️ Row {$rowNumber}: {$message}";
+                $remainingRowsByNumber[$rowNumber] = [
+                    'row_number' => $rowNumber,
+                    'type' => 'database',
+                    'message' => $message,
+                    'affected_field' => $this->extractErrorField($e),
+                    'raw' => array_values($fields),
+                    'parsed' => $prepared['data'],
+                    'suggestion' => $this->buildFixSuggestion([
+                        'type' => 'database',
+                        'message' => $message,
+                        'affected_field' => $this->extractErrorField($e),
+                    ], $prepared['data']),
+                ];
+                $this->logImportStep($request, 'review-retry.row-db-failed', [
+                    'row_number' => $rowNumber,
+                    'message' => $message,
+                ], 'error');
             } catch (\Exception $e) {
-                $errors[] = "❌ Row {$rowNumber}: " . Str::limit($e->getMessage(), 120);
+                $message = Str::limit($e->getMessage(), 120);
+                $errors[] = "❌ Row {$rowNumber}: {$message}";
+                $remainingRowsByNumber[$rowNumber] = [
+                    'row_number' => $rowNumber,
+                    'type' => 'general',
+                    'message' => $message,
+                    'affected_field' => null,
+                    'raw' => array_values($fields),
+                    'parsed' => $prepared['data'],
+                    'suggestion' => $this->buildFixSuggestion([
+                        'type' => 'general',
+                        'message' => $message,
+                        'affected_field' => null,
+                    ], $prepared['data']),
+                ];
+                $this->logImportStep($request, 'review-retry.row-general-failed', [
+                    'row_number' => $rowNumber,
+                    'message' => $message,
+                ], 'error');
             }
         }
 
-        // Clear review session
-        $request->session()->forget(['import_review_rows', 'import_review_meta']);
-
         $message = "{$imported} row(s) imported from review.";
         if ($skipped > 0) $message .= " {$skipped} row(s) skipped.";
+
+        if (!empty($remainingRowsByNumber)) {
+            $remainingRows = array_values($remainingRowsByNumber);
+            usort($remainingRows, fn(array $a, array $b) => ($a['row_number'] ?? 0) <=> ($b['row_number'] ?? 0));
+
+            $meta['error_count'] = count($remainingRows);
+            $request->session()->put('import_review_rows', $remainingRows);
+            $request->session()->put('import_review_meta', $meta);
+
+            $redirect = redirect(orgRoute('admin.crm.import.review'))
+                ->with('success', $message . ' Some rows still need correction.');
+            if (!empty($errors)) {
+                $redirect->with('import_errors', array_slice($errors, 0, 25));
+            }
+
+            $this->logImportStep($request, 'review-retry.partial-complete', [
+                'imported' => $imported,
+                'skipped' => $skipped,
+                'remaining_rows' => count($remainingRows),
+            ], 'warning');
+
+            return $redirect;
+        }
+
+        // Clear review session after all rows are resolved
+        $request->session()->forget(['import_review_rows', 'import_review_meta']);
 
         $redirect = redirect(orgRoute('admin.crm.index'))->with('success', $message);
         if (!empty($errors)) {
             $redirect->with('import_errors', array_slice($errors, 0, 25));
         }
+
+        $this->logImportStep($request, 'review-retry.completed', [
+            'imported' => $imported,
+            'skipped' => $skipped,
+        ]);
+
         return $redirect;
     }
 
@@ -1178,11 +1269,17 @@ class LeadImportController extends Controller
      * Body: { row_number, action: 'import'|'skip', row_data: { field: value, ... } }
      * Returns JSON { ok, message } or { ok: false, error }
      */
-    public function retrySingle(Request $request)
+    public function retrySingle(Request $request, LeadImportService $importService)
     {
         $meta = $request->session()->get('import_review_meta');
 
+        $this->logImportStep($request, 'review-retry-single.request-received', [
+            'row_number' => $request->input('row_number'),
+            'action' => $request->input('action', 'import'),
+        ]);
+
         if (empty($meta)) {
+            $this->logImportStep($request, 'review-retry-single.meta-missing', [], 'warning');
             return response()->json(['ok' => false, 'error' => 'Review session expired. Start a new import.'], 422);
         }
 
@@ -1193,6 +1290,9 @@ class LeadImportController extends Controller
         // --- skip action --------------------------------------------------
         if ($action === 'skip') {
             $this->removeReviewRow($request, $rowNumber);
+            $this->logImportStep($request, 'review-retry-single.row-skipped', [
+                'row_number' => $rowNumber,
+            ]);
             return response()->json(['ok' => true, 'message' => "Row {$rowNumber} skipped."]);
         }
 
@@ -1201,135 +1301,40 @@ class LeadImportController extends Controller
         $driveId       = $meta['drive_id'];
         $defaultStatus = $meta['defaultStatus'];
 
-        // Remove empty strings so defaults kick in
-        $fields = array_filter($fields, fn($v) => trim((string) $v) !== '');
+        $prepared = $importService->buildLeadDataFromManualFields($fields, $orgId, $driveId, $defaultStatus);
 
-        $leadData = [
-            'organization_id' => $orgId,
-            'drive_id'        => $driveId,
-            'status'          => $defaultStatus,
-            'source'          => 'other',
-            'priority'        => 'medium',
-        ];
-
-        foreach ($fields as $field => $value) {
-            $value = trim((string) $value);
-            if ($value === '') continue;
-
-            try {
-                switch ($field) {
-                    case 'full_name':
-                        $parts = explode(' ', $value, 2);
-                        $leadData['first_name'] = $parts[0];
-                        $leadData['last_name']  = $parts[1] ?? '';
-                        break;
-                    case 'year_founded':
-                        if (preg_match('/\b((?:19|20)\d{2})\b/', $value, $m)) {
-                            $leadData['year_founded'] = (int) $m[1];
-                        }
-                        break;
-                    case 'currency':
-                        $code = strtoupper(preg_replace('/[^a-zA-Z]/', '', $value));
-                        if (strlen($code) === 3) $leadData['currency'] = $code;
-                        break;
-                    case 'estimated_value':
-                        $numeric = preg_replace('/[^0-9.]/', '', $value);
-                        if (is_numeric($numeric)) $leadData['estimated_value'] = (float) $numeric;
-                        break;
-                    case 'interested_services':
-                        $services = array_values(array_filter(array_map('trim', preg_split('/[,;]+/', $value))));
-                        if (!empty($services)) $leadData['interested_services'] = $services;
-                        break;
-                    case 'last_contacted_at':
-                    case 'next_follow_up':
-                        try {
-                            $leadData[$field] = \Carbon\Carbon::parse($value)->toDateTimeString();
-                        } catch (\Exception $ignored) {
-                        }
-                        break;
-                    case 'status':
-                        $statuses = array_keys(Lead::getStatuses($orgId));
-                        $n = strtolower(trim(str_replace([' ', '-'], '_', $value)));
-                        $leadData['status'] = in_array($n, $statuses) ? $n : $defaultStatus;
-                        break;
-                    case 'source':
-                        $sources = array_keys(Lead::getSources($orgId));
-                        $n = strtolower(str_replace([' ', '-'], '_', $value));
-                        $leadData['source'] = in_array($n, $sources) ? $n : 'other';
-                        break;
-                    case 'priority':
-                        $priorities = array_keys(Lead::getPriorities());
-                        $n = strtolower(trim($value));
-                        $leadData['priority'] = in_array($n, $priorities) ? $n : 'medium';
-                        break;
-                    default:
-                        $leadData[$field] = $value;
-                        break;
-                }
-            } catch (\Exception $ignored) {
-            }
-        }
-
-        if (empty($leadData['first_name'])) {
-            $leadData['first_name'] = 'Unknown';
-        }
-        if (!empty($leadData['email']) && !filter_var($leadData['email'], FILTER_VALIDATE_EMAIL)) {
-            unset($leadData['email']);
-        }
-
-        // Sanitise: keep only fields the Lead model actually accepts
-        $fillable = (new Lead)->getFillable();
-        $leadData = array_intersect_key($leadData, array_flip($fillable));
-
-        // Ensure status / source / priority are safe ENUM values
-        $safeStatuses   = ['new', 'contacted', 'qualified', 'proposal', 'negotiation', 'won', 'lost', 'unqualified'];
-        $safeSources    = ['website', 'referral', 'social_media', 'email_campaign', 'cold_call', 'event', 'advertisement', 'noel_waitlist', 'other'];
-        $safePriorities = ['low', 'medium', 'high', 'urgent'];
-
-        if (!empty($leadData['status']) && !in_array($leadData['status'], $safeStatuses)) {
-            $leadData['status'] = 'new';
-        }
-        if (!empty($leadData['source']) && !in_array($leadData['source'], $safeSources)) {
-            $leadData['source'] = 'other';
-        }
-        if (!empty($leadData['priority']) && !in_array($leadData['priority'], $safePriorities)) {
-            $leadData['priority'] = 'medium';
-        }
-
-        // Duplicate check (include soft-deleted — DB index still blocks them)
-        if (!empty($leadData['email'])) {
-            $dupQuery = Lead::withTrashed()->where('email', $leadData['email']);
-            $orgId ? $dupQuery->where('organization_id', $orgId) : $dupQuery->whereNull('organization_id');
-            $existingLead = $dupQuery->first();
-
-            if ($existingLead) {
-                if ($existingLead->trashed()) {
-                    // Restore the soft-deleted lead and update with fresh data
-                    $existingLead->restore();
-                    $existingLead->update($leadData);
-
-                    $this->removeReviewRow($request, $rowNumber);
-                    return response()->json(['ok' => true, 'message' => "Row {$rowNumber} imported successfully (restored previously deleted lead)."]);
-                }
-
-                return response()->json([
-                    'ok'    => false,
-                    'error' => "Duplicate email \"{$leadData['email']}\" already exists in your organisation.",
-                ], 422);
-            }
+        if ($prepared['error']) {
+            $this->logImportStep($request, 'review-retry-single.validation-failed', [
+                'row_number' => $rowNumber,
+                'message' => $prepared['error']['message'],
+            ], 'warning');
+            return response()->json([
+                'ok' => false,
+                'error' => $prepared['error']['message'],
+            ], 422);
         }
 
         try {
-            Lead::create($leadData);
+            $result = $importService->importPreparedLead($prepared['data'], $orgId);
+
+            if ($result['status'] === 'duplicate') {
+                $this->logImportStep($request, 'review-retry-single.duplicate', [
+                    'row_number' => $rowNumber,
+                ], 'warning');
+                return response()->json([
+                    'ok' => false,
+                    'error' => $result['message'],
+                ], 422);
+            }
         } catch (\Illuminate\Database\QueryException $e) {
             \Illuminate\Support\Facades\Log::error('retrySingle DB error', [
                 'row'      => $rowNumber,
-                'leadData' => $leadData,
+                'leadData' => $prepared['data'],
                 'sql'      => $e->getMessage(),
             ]);
             return response()->json([
                 'ok'    => false,
-                'error' => $this->friendlyDbError($e, $leadData),
+                'error' => $this->friendlyDbError($e, $prepared['data']),
             ], 422);
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error('retrySingle error', [
@@ -1345,6 +1350,10 @@ class LeadImportController extends Controller
         // Remove the row from session so page stays in sync
         $this->removeReviewRow($request, $rowNumber);
 
+        $this->logImportStep($request, 'review-retry-single.row-imported', [
+            'row_number' => $rowNumber,
+        ]);
+
         return response()->json(['ok' => true, 'message' => "Row {$rowNumber} imported successfully!"]);
     }
 
@@ -1356,12 +1365,18 @@ class LeadImportController extends Controller
         $meta = $request->session()->get('import_review_meta');
         $count = 0;
 
+        $this->logImportStep($request, 'review-skip-all.request-received');
+
         if (!empty($meta)) {
             $rows = $request->session()->get('import_review_rows', []);
             $count = count($rows);
         }
 
         $request->session()->forget(['import_review_rows', 'import_review_meta']);
+
+        $this->logImportStep($request, 'review-skip-all.completed', [
+            'rows_skipped' => $count,
+        ]);
 
         return response()->json([
             'ok'       => true,
@@ -1376,6 +1391,7 @@ class LeadImportController extends Controller
     protected function removeReviewRow(Request $request, $rowNumber): void
     {
         $rows = $request->session()->get('import_review_rows', []);
+        $before = count($rows);
         $rows = array_values(array_filter($rows, fn($r) => ($r['row_number'] ?? null) != $rowNumber));
         $request->session()->put('import_review_rows', $rows);
 
@@ -1383,6 +1399,40 @@ class LeadImportController extends Controller
         $meta = $request->session()->get('import_review_meta', []);
         $meta['error_count'] = count($rows);
         $request->session()->put('import_review_meta', $meta);
+
+        $this->logImportStep($request, 'review-row-removed', [
+            'row_number' => $rowNumber,
+            'before_count' => $before,
+            'after_count' => count($rows),
+        ]);
+    }
+
+    protected function logImportStep(Request $request, string $step, array $context = [], string $level = 'info'): void
+    {
+        $traceId = (string) $request->session()->get('import_trace_id', '');
+        $baseContext = [
+            'step' => $step,
+            'trace_id' => $traceId !== '' ? $traceId : null,
+            'user_id' => Auth::id(),
+            'organization_id' => optional($this->currentOrg())->id,
+            'route_name' => optional($request->route())->getName(),
+            'method' => $request->method(),
+            'path' => $request->path(),
+        ];
+
+        $payload = array_merge($baseContext, $context);
+
+        if ($level === 'error') {
+            Log::error('CRM import step', $payload);
+            return;
+        }
+
+        if ($level === 'warning') {
+            Log::warning('CRM import step', $payload);
+            return;
+        }
+
+        Log::info('CRM import step', $payload);
     }
 
     /**
@@ -1516,7 +1566,7 @@ class LeadImportController extends Controller
         if ($ext === 'csv' || $ext === 'txt') {
             return $this->parseCsv($path);
         }
-        return $this->parseExcel($path);
+        return $this->parseExcel($path, $ext);
     }
 
     protected function parseCsv(string $path): array
@@ -1526,19 +1576,134 @@ class LeadImportController extends Controller
             // Detect delimiter
             $firstLine = fgets($handle);
             rewind($handle);
-            $delimiter = (substr_count($firstLine, "\t") > substr_count($firstLine, ',')) ? "\t" : ',';
+            if ($firstLine === false) {
+                fclose($handle);
+                return [];
+            }
+
+            $delimiter = $this->detectCsvDelimiter($firstLine);
 
             while (($data = fgetcsv($handle, 0, $delimiter)) !== false) {
                 $rows[] = $data;
             }
             fclose($handle);
         }
+
+        if (!empty($rows[0][0])) {
+            $rows[0][0] = preg_replace('/^\xEF\xBB\xBF/', '', (string) $rows[0][0]);
+        }
+
         return $rows;
     }
 
-    protected function parseExcel(string $path): array
+    protected function detectCsvDelimiter(string $firstLine): string
     {
-        $spreadsheet = IOFactory::load($path);
+        $candidates = [',', ';', "\t", '|'];
+        $winner = ',';
+        $winnerCount = -1;
+
+        foreach ($candidates as $candidate) {
+            $count = substr_count($firstLine, $candidate);
+            if ($count > $winnerCount) {
+                $winnerCount = $count;
+                $winner = $candidate;
+            }
+        }
+
+        return $winner;
+    }
+
+    protected function maxImportRows(): int
+    {
+        return max(1, (int) config('crm.import.max_rows', self::MAX_IMPORT_ROWS));
+    }
+
+    protected function isSafeTempImportPath(string $tempPath): bool
+    {
+        if ($tempPath === '') {
+            return false;
+        }
+
+        $normalised = str_replace('\\', '/', $tempPath);
+        if (str_contains($normalised, '..') || !str_starts_with($normalised, self::TEMP_IMPORT_PREFIX)) {
+            return false;
+        }
+
+        $extension = strtolower((string) pathinfo($normalised, PATHINFO_EXTENSION));
+        return app(LeadImportService::class)->isSupportedImportExtension($extension);
+    }
+
+    protected function parseExcel(string $path, ?string $extension = null): array
+    {
+        $reader = null;
+        $extension = strtolower((string) $extension);
+
+        $preferredReaderByExtension = [
+            'xlsx' => 'Xlsx',
+            'xls' => 'Xls',
+            'ods' => 'Ods',
+            'csv' => 'Csv',
+            'txt' => 'Csv',
+        ];
+
+        if (!empty($preferredReaderByExtension[$extension])) {
+            $preferredReaderType = $preferredReaderByExtension[$extension];
+            try {
+                $candidate = IOFactory::createReader($preferredReaderType);
+                if ($candidate->canRead($path)) {
+                    $reader = $candidate;
+                    Log::info('CRM import parseExcel: preferred reader selected from extension', [
+                        'path' => $path,
+                        'extension' => $extension,
+                        'reader' => $preferredReaderType,
+                    ]);
+                }
+            } catch (\Throwable $ignored) {
+            }
+        }
+
+        if (!$reader) {
+            try {
+                $readerType = IOFactory::identify($path);
+                $reader = IOFactory::createReader($readerType);
+                Log::info('CRM import parseExcel: reader identified', [
+                    'path' => $path,
+                    'extension' => $extension,
+                    'reader' => $readerType,
+                ]);
+            } catch (\Throwable $e) {
+                Log::warning('CRM import parseExcel: auto-identify failed, trying canRead fallbacks', [
+                    'path' => $path,
+                    'extension' => $extension,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
+
+        if (!$reader) {
+            foreach (['Xlsx', 'Xls', 'Csv', 'Ods'] as $fallbackType) {
+                try {
+                    $candidate = IOFactory::createReader($fallbackType);
+                    if ($candidate->canRead($path)) {
+                        $reader = $candidate;
+                        Log::info('CRM import parseExcel: fallback reader selected', [
+                            'path' => $path,
+                            'extension' => $extension,
+                            'reader' => $fallbackType,
+                        ]);
+                        break;
+                    }
+                } catch (\Throwable $ignored) {
+                }
+            }
+        }
+
+        if (!$reader) {
+            throw new \RuntimeException('Unable to identify a reader for this file');
+        }
+
+        $reader->setReadDataOnly(true);
+        $spreadsheet = $reader->load($path);
         $sheet = $spreadsheet->getActiveSheet();
         $rows = [];
         foreach ($sheet->getRowIterator() as $row) {
@@ -1571,18 +1736,26 @@ class LeadImportController extends Controller
         }
 
         if (!empty($newDriveName)) {
-            $drive = LeadDrive::create([
-                'organization_id' => $orgId,
-                'name' => $newDriveName,
-                'slug' => Str::slug($newDriveName),
-                'color' => $newDriveColor ?: '#0d6efd',
-                'is_default' => false,
-            ]);
+            $drive = LeadDrive::firstOrCreate(
+                [
+                    'organization_id' => $orgId,
+                    'slug' => Str::slug($newDriveName),
+                ],
+                [
+                    'name' => $newDriveName,
+                    'color' => $newDriveColor ?: '#0d6efd',
+                    'is_default' => false,
+                ]
+            );
+
             return $drive->id;
         }
 
         if ($driveId) {
-            return (int) $driveId;
+            $query = LeadDrive::query()->whereKey((int) $driveId);
+            $orgId ? $query->where('organization_id', $orgId) : $query->whereNull('organization_id');
+
+            return $query->value('id');
         }
 
         // Fallback: default drive
