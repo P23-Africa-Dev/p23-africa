@@ -64,7 +64,7 @@ class BrnApproved extends Mailable
         ]);
 
         // Build short URL with just the token
-        $this->registrationUrl = "http://104.131.166.92/registration/continue?token={$token}";
+        $this->registrationUrl = "https://noel54.com/registration/continue?token={$token}";
     }
 
     public function build()
