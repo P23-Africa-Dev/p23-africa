@@ -592,7 +592,7 @@
                             <table cellpadding="0" cellspacing="0" role="presentation" width="100%"
                                 style="margin-bottom:32px;">
 
-                                @foreach ([['Click <strong>Login to Dashboard</strong> below and sign in with the credentials above.', false], ['Navigate to <strong>Profile &amp; Settings</strong> and set a new secure password right away.', false], ['Complete your profile — add your photo and contact details so your team can reach you.', false], ['Explore your dashboard and familiarise yourself with your tasks and projects.', true]] as [$text, $isLast])
+                                @foreach ([['Click <strong>Login to Dashboard</strong> below and sign in with the credentials above.', false], ['Navigate to <strong>Profile &amp; Settings</strong> and set a new secure password right away.', false], ['Complete your profile, add your photo and contact details so your team can reach you.', false], ['Explore your dashboard and familiarise yourself with your tasks and projects.', true]] as [$text, $isLast])
                                     <tr>
                                         <td class="step-num-cell">
                                             <table cellpadding="0" cellspacing="0" role="presentation">

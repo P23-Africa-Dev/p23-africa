@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Organization;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -32,14 +34,43 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
 
-        if (Auth::attempt($credentials)) {
+        $orgSlug = $request->attributes->get('orgSlug') ?? $request->route('orgSlug');
+        $usersQuery = User::where('email', $request->email);
+
+        if ($orgSlug) {
+            $organization = $request->attributes->get('organization')
+                ?? Organization::where('slug', $orgSlug)->first();
+
+            if (!$organization) {
+                return back()->withErrors([
+                    'email' => 'Invalid organization login URL.',
+                ]);
+            }
+
+            $usersQuery->where('organization_id', $organization->id);
+        }
+
+        $users = $usersQuery->limit(2)->get();
+
+        // If the same email exists in multiple organizations, user must log in via org URL.
+        if (!$orgSlug && $users->count() > 1) {
+            return back()->withErrors([
+                'email' => 'This email is used in multiple organizations. Please use your organization login URL.',
+            ]);
+        }
+
+        $user = $users->first();
+
+        if ($user && Hash::check($request->password, $user->password)) {
+            Auth::login($user);
             $request->session()->regenerate();
 
-            $user = Auth::user();
             $intendedUrl = $this->getDashboardUrl($user, $request);
-
             return redirect()->intended($intendedUrl);
         }
 

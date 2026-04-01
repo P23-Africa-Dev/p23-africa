@@ -13,9 +13,41 @@ use App\Mail\StaffWelcomeMail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Unique;
+use Illuminate\Database\QueryException;
 
 class StaffController extends Controller
 {
+    protected function resolveTargetOrganizationId(array $data, User $currentUser): ?int
+    {
+        $orgId = !empty($data['organization_id']) ? (int) $data['organization_id'] : null;
+
+        // Non-admin org users are always constrained to their own organization.
+        if (!$currentUser->hasRole('admin') && !is_null($currentUser->organization_id)) {
+            return (int) $currentUser->organization_id;
+        }
+
+        return $orgId;
+    }
+
+    protected function scopedEmailUniquenessRule(?int $orgId, ?int $ignoreUserId = null): Unique
+    {
+        $rule = Rule::unique('users', 'email')->where(function ($query) use ($orgId) {
+            if (is_null($orgId)) {
+                return $query->whereNull('organization_id');
+            }
+
+            return $query->where('organization_id', $orgId);
+        });
+
+        if (!is_null($ignoreUserId)) {
+            $rule->ignore($ignoreUserId);
+        }
+
+        return $rule;
+    }
+
     public function index()
     {
         $user = Auth::user();
@@ -57,21 +89,28 @@ class StaffController extends Controller
     {
         $currentUser = Auth::user();
 
-        $data = $request->validate([
+        $baseData = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email',
             'role' => 'nullable|in:staff,supervisor',
             'organization_id' => 'nullable|exists:organizations,id',
-            // 'permissions' => 'nullable|array',
+        ]);
+
+        $orgId = $this->resolveTargetOrganizationId($baseData, $currentUser);
+
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => ['required', 'email', $this->scopedEmailUniquenessRule($orgId)],
+            'role' => 'nullable|in:staff,supervisor',
+            'organization_id' => 'nullable|exists:organizations,id',
+        ], [
+            'email.unique' => 'This staff member already exists in your organization.',
         ]);
 
         $password = Str::random(10);
 
         // Determine organization_id — non-admin org users forced to their own org
-        $orgId = !empty($data['organization_id']) ? $data['organization_id'] : null;
-        if (!$currentUser->hasRole('admin') && $currentUser->organization_id) {
-            $orgId = $currentUser->organization_id;
-        }
+        $orgId = $this->resolveTargetOrganizationId($data, $currentUser);
 
         // Determine role — supervisors can only create "staff", not other supervisors
         $assignedRole = $data['role'] ?? 'staff';
@@ -79,12 +118,23 @@ class StaffController extends Controller
             $assignedRole = 'staff';
         }
 
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($password),
-            'organization_id' => $orgId,
-        ]);
+        try {
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($password),
+                'organization_id' => $orgId,
+            ]);
+        } catch (QueryException $e) {
+            // Defensive fallback for index-level conflicts (e.g. old global unique index not yet migrated).
+            $error = str_contains(strtolower($e->getMessage()), 'email')
+                ? 'Unable to create staff with this email due to a database uniqueness constraint. If this email belongs to another organization, ensure the latest users email-scope migration has been applied.'
+                : 'Unable to create staff account due to a database constraint error.';
+
+            return back()
+                ->withInput()
+                ->withErrors(['email' => $error]);
+        }
 
         $role = Role::firstOrCreate(['name' => $assignedRole]);
         $user->assignRole($role);
@@ -147,18 +197,24 @@ class StaffController extends Controller
 
         $currentUser = Auth::user();
 
+        $baseData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'organization_id' => 'nullable|exists:organizations,id',
+        ]);
+
+        $orgId = $this->resolveTargetOrganizationId($baseData, $currentUser);
+
         $data = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $staff->id,
+            'email' => ['required', 'email', $this->scopedEmailUniquenessRule($orgId, $staff->id)],
             'organization_id' => 'nullable|exists:organizations,id',
-            // 'permissions' => 'nullable|array',
+        ], [
+            'email.unique' => 'This staff member already exists in your organization.',
         ]);
 
         // Determine organization_id — non-admin org users cannot change it
-        $orgId = !empty($data['organization_id']) ? $data['organization_id'] : null;
-        if (!$currentUser->hasRole('admin') && $currentUser->organization_id) {
-            $orgId = $currentUser->organization_id;
-        }
+        $orgId = $this->resolveTargetOrganizationId($data, $currentUser);
 
         $staff->update([
             'name' => $data['name'],

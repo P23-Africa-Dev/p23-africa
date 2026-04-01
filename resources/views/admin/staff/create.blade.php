@@ -11,25 +11,47 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 table-responsive">
                     <div class="my-5">
+                        @if (session('success'))
+                            <div class="alert alert-success">{{ session('success') }}</div>
+                        @endif
+
+                        @if (session('warning'))
+                            <div class="alert alert-warning">{{ session('warning') }}</div>
+                        @endif
+
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                         <form action="{{ orgRoute('admin.staff.store') }}" method="POST">
                             @csrf
 
                             <div class="mb-3">
                                 <label>Email</label>
-                                <input type="email" name="email" class="form-control" required>
+                                <input type="email" name="email" value="{{ old('email') }}"
+                                    class="form-control @error('email') is-invalid @enderror" required>
                             </div>
 
                             <div class="mb-3">
                                 <label>Name</label>
-                                <input type="text" name="name" class="form-control" required>
+                                <input type="text" name="name" value="{{ old('name') }}"
+                                    class="form-control @error('name') is-invalid @enderror" required>
                             </div>
 
                             @if (auth()->user()->hasRole('admin'))
                                 <div class="mb-3">
                                     <label>Role</label>
                                     <select name="role" class="form-control">
-                                        <option value="staff" selected>Staff</option>
-                                        <option value="supervisor">Supervisor</option>
+                                        <option value="staff" {{ old('role', 'staff') === 'staff' ? 'selected' : '' }}>
+                                            Staff</option>
+                                        <option value="supervisor"
+                                            {{ old('role') === 'supervisor' ? 'selected' : '' }}>Supervisor</option>
                                     </select>
                                 </div>
 
