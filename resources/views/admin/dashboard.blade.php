@@ -209,104 +209,109 @@
         </div>
 
         {{-- Contact Stats --}}
-        <div class="row g-3 mb-4">
-            <div class="col-12 col-md-4 anim-in">
-                <div class="card">
-                    <div class="stat-card-inner">
-                        <div class="stat-icon-wrap"
-                            style="background:rgba(100,116,139,.12);color:var(--text-secondary);">
-                            <i class="bi bi-envelope"></i>
+        @if (auth()->user() && (auth()->user()->hasRole('admin') || auth()->user()->hasRole('supervisor')))
+            <div class="row g-3 mb-4">
+                <div class="col-12 col-md-4 anim-in">
+                    <div class="card">
+                        <div class="stat-card-inner">
+                            <div class="stat-icon-wrap"
+                                style="background:rgba(100,116,139,.12);color:var(--text-secondary);">
+                                <i class="bi bi-envelope"></i>
+                            </div>
+                            <div>
+                                <div class="stat-label">Total Contacts</div>
+                                <div class="stat-value">{{ $stats['total_contacts'] ?? 0 }}</div>
+                            </div>
                         </div>
-                        <div>
-                            <div class="stat-label">Total Contacts</div>
-                            <div class="stat-value">{{ $stats['total_contacts'] ?? 0 }}</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 anim-in">
+                    <div class="card">
+                        <div class="stat-card-inner">
+                            <div class="stat-icon-wrap" style="background:rgba(16,185,129,.12);color:var(--p-success);">
+                                <i class="bi bi-calendar-day"></i>
+                            </div>
+                            <div>
+                                <div class="stat-label">Today</div>
+                                <div class="stat-value">{{ $stats['today_contacts'] ?? 0 }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 anim-in">
+                    <div class="card">
+                        <div class="stat-card-inner">
+                            <div class="stat-icon-wrap" style="background:rgba(6,182,212,.12);color:var(--p-accent);">
+                                <i class="bi bi-calendar-range"></i>
+                            </div>
+                            <div>
+                                <div class="stat-label">Last 30 Days</div>
+                                <div class="stat-value">{{ $stats['recent_contacts'] ?? 0 }}</div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-6 col-md-4 anim-in">
-                <div class="card">
-                    <div class="stat-card-inner">
-                        <div class="stat-icon-wrap" style="background:rgba(16,185,129,.12);color:var(--p-success);">
-                            <i class="bi bi-calendar-day"></i>
-                        </div>
-                        <div>
-                            <div class="stat-label">Today</div>
-                            <div class="stat-value">{{ $stats['today_contacts'] ?? 0 }}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-4 anim-in">
-                <div class="card">
-                    <div class="stat-card-inner">
-                        <div class="stat-icon-wrap" style="background:rgba(6,182,212,.12);color:var(--p-accent);">
-                            <i class="bi bi-calendar-range"></i>
-                        </div>
-                        <div>
-                            <div class="stat-label">Last 30 Days</div>
-                            <div class="stat-value">{{ $stats['recent_contacts'] ?? 0 }}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @endif
 
         {{-- Consultation Stats --}}
-        <div class="row g-3 mb-4">
-            <div class="col-6 col-lg-3 anim-in">
-                <div class="card">
-                    <div class="stat-card-inner">
-                        <div class="stat-icon-wrap" style="background:rgba(99,102,241,.12);color:var(--p-primary);">
-                            <i class="bi bi-handshake"></i>
+        @if (auth()->user() && (auth()->user()->hasRole('admin') || auth()->user()->hasRole('supervisor')))
+            <div class="row g-3 mb-4">
+                <div class="col-6 col-lg-3 anim-in">
+                    <div class="card">
+                        <div class="stat-card-inner">
+                            <div class="stat-icon-wrap" style="background:rgba(99,102,241,.12);color:var(--p-primary);">
+                                <i class="bi bi-handshake"></i>
+                            </div>
+                            <div>
+                                <div class="stat-label">Total Consultations</div>
+                                <div class="stat-value">{{ $stats['total_consultations'] ?? 0 }}</div>
+                            </div>
                         </div>
-                        <div>
-                            <div class="stat-label">Total Consultations</div>
-                            <div class="stat-value">{{ $stats['total_consultations'] ?? 0 }}</div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3 anim-in">
+                    <div class="card">
+                        <div class="stat-card-inner">
+                            <div class="stat-icon-wrap" style="background:rgba(245,158,11,.12);color:var(--p-warning);">
+                                <i class="bi bi-clock"></i>
+                            </div>
+                            <div>
+                                <div class="stat-label">Pending Payment</div>
+                                <div class="stat-value">{{ $stats['pending_consultations'] ?? 0 }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3 anim-in">
+                    <div class="card">
+                        <div class="stat-card-inner">
+                            <div class="stat-icon-wrap"
+                                style="background:rgba(16,185,129,.12);color:var(--p-success);">
+                                <i class="bi bi-credit-card"></i>
+                            </div>
+                            <div>
+                                <div class="stat-label">Paid</div>
+                                <div class="stat-value">{{ $stats['paid_consultations'] ?? 0 }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3 anim-in">
+                    <div class="card">
+                        <div class="stat-card-inner">
+                            <div class="stat-icon-wrap" style="background:rgba(59,130,246,.12);color:var(--p-info);">
+                                <i class="bi bi-calendar-check"></i>
+                            </div>
+                            <div>
+                                <div class="stat-label">Scheduled</div>
+                                <div class="stat-value">{{ $stats['scheduled_consultations'] ?? 0 }}</div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-6 col-lg-3 anim-in">
-                <div class="card">
-                    <div class="stat-card-inner">
-                        <div class="stat-icon-wrap" style="background:rgba(245,158,11,.12);color:var(--p-warning);">
-                            <i class="bi bi-clock"></i>
-                        </div>
-                        <div>
-                            <div class="stat-label">Pending Payment</div>
-                            <div class="stat-value">{{ $stats['pending_consultations'] ?? 0 }}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-lg-3 anim-in">
-                <div class="card">
-                    <div class="stat-card-inner">
-                        <div class="stat-icon-wrap" style="background:rgba(16,185,129,.12);color:var(--p-success);">
-                            <i class="bi bi-credit-card"></i>
-                        </div>
-                        <div>
-                            <div class="stat-label">Paid</div>
-                            <div class="stat-value">{{ $stats['paid_consultations'] ?? 0 }}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-lg-3 anim-in">
-                <div class="card">
-                    <div class="stat-card-inner">
-                        <div class="stat-icon-wrap" style="background:rgba(59,130,246,.12);color:var(--p-info);">
-                            <i class="bi bi-calendar-check"></i>
-                        </div>
-                        <div>
-                            <div class="stat-label">Scheduled</div>
-                            <div class="stat-value">{{ $stats['scheduled_consultations'] ?? 0 }}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @endif
     @endif
 
     {{-- ─── Project / Task Quick Stats ────────────────────────────── --}}
