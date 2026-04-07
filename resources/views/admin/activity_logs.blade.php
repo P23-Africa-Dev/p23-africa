@@ -226,53 +226,18 @@
                                         </td>
                                         <td class="dark:text-gray-300 align-middle">
                                             @if ($log->properties && $log->properties->count() > 0)
-                                                <button type="button" class="btn btn-sm btn-outline-secondary"
+                                                <button type="button"
+                                                    class="btn btn-sm btn-outline-secondary js-activity-log-view"
                                                     data-bs-toggle="modal"
-                                                    data-bs-target="#detailsModal{{ $log->id }}">
+                                                    data-bs-target="#activityLogDetailsModal"
+                                                    data-action="{{ $log->description }}"
+                                                    data-user="{{ $log->causer?->name ?? 'System' }}"
+                                                    data-date="{{ $log->created_at->format('M d, Y h:i A') }}"
+                                                    data-properties-source="activity-log-properties-{{ $log->id }}">
                                                     <i class="fa fa-eye me-1"></i> View
                                                 </button>
-
-                                                <!-- Details Modal -->
-                                                <div class="modal fade" id="detailsModal{{ $log->id }}"
-                                                    tabindex="-1">
-                                                    <div class="modal-dialog modal-lg">
-                                                        <div class="modal-content dark:bg-gray-800">
-                                                            <div class="modal-header border-0">
-                                                                <h5 class="modal-title dark:text-gray-100">
-                                                                    <i
-                                                                        class="fa fa-info-circle text-primary me-2"></i>Activity
-                                                                    Details
-                                                                </h5>
-                                                                <button type="button"
-                                                                    class="btn-close dark:btn-close-white"
-                                                                    data-bs-dismiss="modal"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <div class="row mb-3">
-                                                                    <div class="col-sm-4 text-muted">Action:</div>
-                                                                    <div class="col-sm-8 dark:text-gray-200">
-                                                                        {{ $log->description }}</div>
-                                                                </div>
-                                                                <div class="row mb-3">
-                                                                    <div class="col-sm-4 text-muted">Performed by:
-                                                                    </div>
-                                                                    <div class="col-sm-8 dark:text-gray-200">
-                                                                        {{ $log->causer?->name ?? 'System' }}</div>
-                                                                </div>
-                                                                <div class="row mb-3">
-                                                                    <div class="col-sm-4 text-muted">Date/Time:</div>
-                                                                    <div class="col-sm-8 dark:text-gray-200">
-                                                                        {{ $log->created_at->format('M d, Y h:i A') }}
-                                                                    </div>
-                                                                </div>
-                                                                <hr class="dark:border-gray-700">
-                                                                <h6 class="text-muted mb-3">Properties</h6>
-                                                                <pre class="bg-light dark:bg-gray-700 p-3 rounded small dark:text-gray-200"
-                                                                    style="max-height: 300px; overflow: auto;">{{ json_encode($log->properties, JSON_PRETTY_PRINT) }}</pre>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <script type="application/json"
+                                                    id="activity-log-properties-{{ $log->id }}">@json($log->properties, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)</script>
                                             @else
                                                 <span class="text-muted small">No details</span>
                                             @endif
@@ -303,4 +268,76 @@
         </div>
     </div>
 
+    <div class="modal fade" id="activityLogDetailsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content dark:bg-gray-800">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title dark:text-gray-100">
+                        <i class="fa fa-info-circle text-primary me-2"></i>Activity Details
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">Action:</div>
+                        <div class="col-sm-8 dark:text-gray-200" id="activityLogModalAction">-</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">Performed by:</div>
+                        <div class="col-sm-8 dark:text-gray-200" id="activityLogModalUser">-</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">Date/Time:</div>
+                        <div class="col-sm-8 dark:text-gray-200" id="activityLogModalDate">-</div>
+                    </div>
+                    <hr class="dark:border-gray-700">
+                    <h6 class="text-muted mb-3">Properties</h6>
+                    <pre id="activityLogModalProperties"
+                        class="bg-light dark:bg-gray-700 p-3 rounded small dark:text-gray-200"
+                        style="max-height: 300px; overflow: auto;">{}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @push('scripts')
+        <script>
+            function initActivityLogDetailsModal() {
+                const modalElement = document.getElementById('activityLogDetailsModal');
+
+                if (!modalElement || modalElement.dataset.initialized === 'true') {
+                    return;
+                }
+
+                modalElement.dataset.initialized = 'true';
+
+                const actionField = document.getElementById('activityLogModalAction');
+                const userField = document.getElementById('activityLogModalUser');
+                const dateField = document.getElementById('activityLogModalDate');
+                const propertiesField = document.getElementById('activityLogModalProperties');
+
+                modalElement.addEventListener('show.bs.modal', function(event) {
+                    const trigger = event.relatedTarget;
+
+                    if (!trigger) {
+                        return;
+                    }
+
+                    actionField.textContent = trigger.dataset.action || '-';
+                    userField.textContent = trigger.dataset.user || '-';
+                    dateField.textContent = trigger.dataset.date || '-';
+
+                    const sourceId = trigger.dataset.propertiesSource;
+                    const sourceElement = sourceId ? document.getElementById(sourceId) : null;
+                    propertiesField.textContent = sourceElement ? sourceElement.textContent.trim() : '{}';
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initActivityLogDetailsModal);
+            } else {
+                initActivityLogDetailsModal();
+            }
+        </script>
+    @endpush
 </x-app-layout>
