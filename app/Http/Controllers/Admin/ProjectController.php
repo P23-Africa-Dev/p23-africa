@@ -97,7 +97,7 @@ class ProjectController extends Controller
 
         if ($this->shouldApplyOrgScope($user)) {
             // Staff only sees projects they're assigned to
-            if (!$user->hasRole('supervisor')) {
+            if (!$user->hasRole('supervisor') && !$user->hasRole('admin')) {
                 $query->whereHas('tasks.assignees', function ($q) use ($user) {
                     $q->where('user_id', $user->id);
                 });
