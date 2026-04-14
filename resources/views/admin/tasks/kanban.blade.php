@@ -33,7 +33,7 @@
                             <a href="{{ orgRoute('admin.tasks.index') }}" class="btn btn-outline-secondary btn-sm">
                                 <i class="fas fa-list me-1"></i> List View
                             </a>
-                            @if (auth()->user()->hasRole(['admin', 'supervisor']))
+                            @if (auth()->user()->hasRole(['admin', 'supervisor', 'staff']))
                                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                     data-bs-target="#addTaskModal">
                                     <i class="fas fa-plus me-1"></i> Add Task
@@ -181,7 +181,7 @@
     </div>
 
     <!-- Add Task Modal -->
-    @if (auth()->user()->hasRole(['admin', 'supervisor']))
+    @if (auth()->user()->hasRole(['admin', 'supervisor', 'staff']))
         <div class="modal fade" id="addTaskModal" tabindex="-1" aria-labelledby="addTaskModalLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-lg">

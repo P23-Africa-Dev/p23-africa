@@ -176,7 +176,8 @@ class ProjectController extends Controller
             // Supervisor can only assign to staff
             $assignableUsers = User::role('staff')->get();
         } else {
-            $assignableUsers = collect();
+            // Staff can only assign to staff
+            $assignableUsers = User::role('staff')->get();
         }
 
         if ($this->shouldApplyOrgScope($user)) {

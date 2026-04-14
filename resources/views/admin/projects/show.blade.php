@@ -83,8 +83,8 @@
                 </div>
             </div>
 
-            <!-- Task Quick Add (for Admin/Supervisor) -->
-            @if (auth()->user()->hasRole(['admin', 'supervisor']))
+            <!-- Task Quick Add (for Admin/Supervisor/Staff) -->
+            @if (auth()->user()->hasRole(['admin', 'supervisor', 'staff']))
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-4">
                     <div class="p-6">
                         <h5 class="fw-bold mb-3"><i class="fas fa-plus-circle me-2"></i>Quick Add Task</h5>
@@ -137,7 +137,7 @@
                 <div class="p-6">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h5 class="fw-bold mb-0"><i class="fas fa-list-check me-2"></i>Tasks</h5>
-                        @if (auth()->user()->hasRole(['admin', 'supervisor']))
+                        @if (auth()->user()->hasRole(['admin', 'supervisor', 'staff']))
                             <a href="{{ orgRoute('admin.tasks.create', ['project_id' => $project->id]) }}"
                                 class="btn btn-sm btn-outline-primary">
                                 <i class="fas fa-plus me-1"></i> Add Task

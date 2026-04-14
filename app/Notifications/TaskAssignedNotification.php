@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Str;
 
 class TaskAssignedNotification extends Notification
 {
@@ -42,23 +43,40 @@ class TaskAssignedNotification extends Notification
         $projectName = $this->task->project?->name ?? 'Unknown Project';
         $priorityLabel = ucfirst($this->task->priority);
         $dueDate = $this->task->due_date ? $this->task->due_date->format('M d, Y') : 'No due date';
+        $taskUrl = route('admin.projects.show', $this->task->project_id);
+        $taskDescriptionHtml = $this->sanitizeDescriptionHtml($this->task->description);
 
         return (new MailMessage)
             ->subject('New Task Assigned: ' . $this->task->title)
-            ->greeting('Hello ' . $notifiable->name . ',')
-            ->line('You have been assigned a new task by ' . $this->assignedBy->name . '.')
-            ->line('')
-            ->line('**Task Details:**')
-            ->line('• **Title:** ' . $this->task->title)
-            ->line('• **Project:** ' . $projectName)
-            ->line('• **Priority:** ' . $priorityLabel)
-            ->line('• **Due Date:** ' . $dueDate)
-            ->line('')
-            ->when($this->task->description, function ($mail) {
-                return $mail->line('**Description:** ' . \Illuminate\Support\Str::limit($this->task->description, 200));
-            })
-            ->action('View Task', route('admin.projects.show', $this->task->project_id))
-            ->line('Thank you for being part of the team!');
+            ->view('emails.notifications.task-assigned', [
+                'notifiable' => $notifiable,
+                'assignedBy' => $this->assignedBy,
+                'task' => $this->task,
+                'projectName' => $projectName,
+                'priorityLabel' => $priorityLabel,
+                'dueDate' => $dueDate,
+                'taskUrl' => $taskUrl,
+                'taskDescriptionHtml' => $taskDescriptionHtml,
+            ]);
+    }
+
+    /**
+     * Preserve basic rich-text formatting while removing unsafe markup.
+     */
+    protected function sanitizeDescriptionHtml(?string $description): ?string
+    {
+        if (blank($description)) {
+            return null;
+        }
+
+        $allowedTags = '<p><br><ul><ol><li><strong><em><b><i><u><blockquote><a>';
+        $sanitized = strip_tags($description, $allowedTags);
+
+        // Remove script/style blocks and javascript: URLs defensively.
+        $sanitized = preg_replace('/<(script|style)\b[^>]*>(.*?)<\/\1>/is', '', $sanitized) ?? $sanitized;
+        $sanitized = preg_replace('/(<a\s[^>]*href\s*=\s*["\'])\s*javascript:[^"\']*(["\'])/i', '$1#$2', $sanitized) ?? $sanitized;
+
+        return Str::limit(trim($sanitized), 2000);
     }
 
     /**

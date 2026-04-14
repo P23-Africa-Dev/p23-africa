@@ -33,7 +33,7 @@
                                 class="btn btn-outline-primary">
                                 <i class="fas fa-columns me-1"></i> Kanban Board
                             </a>
-                            @if (auth()->user()->hasRole(['admin', 'supervisor']))
+                            @if (auth()->user()->hasRole(['admin', 'supervisor', 'staff']))
                                 <a href="{{ orgRoute('admin.tasks.create', request()->query()) }}" class="btn btn-dark">
                                     <i class="fas fa-plus me-1"></i> Add Task
                                 </a>

@@ -119,7 +119,7 @@ class TaskController extends Controller
         } elseif ($user->hasRole('supervisor')) {
             $assignableUsers = User::role('staff')->get();
         } else {
-            $assignableUsers = collect();
+            $assignableUsers = User::role('staff')->get();
         }
 
         if ($this->shouldApplyOrgScope($user)) {
@@ -157,8 +157,8 @@ class TaskController extends Controller
     {
         $user = Auth::user();
 
-        if (!$user->hasRole(['admin', 'supervisor'])) {
-            abort(403, 'Only admins and supervisors can create tasks.');
+        if (!$user->hasRole(['admin', 'supervisor', 'staff'])) {
+            abort(403, 'Only admins, supervisors, and staff can create tasks.');
         }
 
         $projectsQuery = Project::query();
@@ -187,8 +187,8 @@ class TaskController extends Controller
     {
         $user = Auth::user();
 
-        if (!$user->hasRole(['admin', 'supervisor'])) {
-            abort(403, 'Only admins and supervisors can create tasks.');
+        if (!$user->hasRole(['admin', 'supervisor', 'staff'])) {
+            abort(403, 'Only admins, supervisors, and staff can create tasks.');
         }
 
         $data = $request->validate([
@@ -221,6 +221,10 @@ class TaskController extends Controller
         // Keep task organization aligned with the selected project.
         $data['organization_id'] = $project->organization_id;
 
+        if (!empty($data['assignees'])) {
+            $this->validateAssignees($user, $data['assignees']);
+        }
+
         $task = Task::create($data);
 
         // Send notification to admins about new task
@@ -228,8 +232,6 @@ class TaskController extends Controller
 
         // Assign users to the task and send notifications
         if (!empty($data['assignees'])) {
-            $this->validateAssignees($user, $data['assignees']);
-
             $assigneeData = [];
             foreach ($data['assignees'] as $userId) {
                 $assigneeData[$userId] = ['assigned_by' => Auth::id()];
@@ -550,6 +552,12 @@ class TaskController extends Controller
             elseif ($user->hasRole('supervisor')) {
                 if (!$assignee->hasRole('staff')) {
                     abort(403, 'Supervisor can only assign tasks to staff.');
+                }
+            }
+            // Staff can only assign to staff
+            elseif ($user->hasRole('staff')) {
+                if (!$assignee->hasRole('staff')) {
+                    abort(403, 'Staff can only assign tasks to staff.');
                 }
             }
         }
