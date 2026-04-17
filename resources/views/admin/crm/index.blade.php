@@ -180,12 +180,16 @@
                     <i class="fa fa-columns me-2"></i>Pipeline View
                 </a>
                 @hasanyrole('admin|supervisor')
-                <!-- 
-                    <a href="{{ orgRoute('admin.crm.statuses.index') }}" class="btn btn-outline-dark">
-                        <i class="fa fa-tags me-2"></i>Manage Statuses
-                    </a>  -->
+                    <!--
+                        <a href="{{ orgRoute('admin.crm.statuses.index') }}" class="btn btn-outline-dark">
+                            <i class="fa fa-tags me-2"></i>Manage Statuses
+                        </a>  -->
                     <a href="{{ orgRoute('admin.crm.settings') }}" class="btn btn-outline-secondary">
                         <i class="fa fa-cog me-2"></i>CRM Settings
+                    </a>
+                
+                    <a href="{{ orgRoute('admin.crm.import-activity') }}" class="btn btn-outline-dark">
+                        <i class="fa fa-chart-bar me-2"></i>Import Activity
                     </a>
                 @endhasanyrole
                 <a href="{{ orgRoute('admin.crm.import') }}" class="btn btn-outline-success">
@@ -927,7 +931,8 @@
                                         showToast('error', data.message);
                                     }
                                 })
-                                .catch(err => showToast('error', err.message || 'Failed to delete lead'));
+                                .catch(err => showToast('error', err.message ||
+                                    'Failed to delete lead'));
                         }
                     });
                 });

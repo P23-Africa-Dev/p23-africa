@@ -80,6 +80,9 @@
                     <i class="fa fa-list"></i><span class="mobile-btn-text ms-2">List View</span>
                 </a>
                 @hasanyrole('admin|supervisor')
+                    <a href="{{ orgRoute('admin.crm.import-activity') }}" class="btn btn-outline-dark">
+                        <i class="fa fa-chart-bar me-2"></i>Import Activity
+                    </a>
                     <a href="{{ orgRoute('admin.crm.statuses.index') }}" class="btn btn-outline-dark"
                         title="Manage Statuses">
                         <i class="fa fa-tags"></i><span class="mobile-btn-text ms-2">Statuses</span>

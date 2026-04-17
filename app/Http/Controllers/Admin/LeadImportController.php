@@ -924,7 +924,8 @@ class LeadImportController extends Controller
             $orgId,
             $driveId,
             $defaultStatus,
-            fn (array $row, array $mapping) => $this->isDescriptionRow($row, $mapping)
+            fn (array $row, array $mapping) => $this->isDescriptionRow($row, $mapping),
+            auth()->id()
         );
 
         $imported = $importResult['imported'];
@@ -1122,7 +1123,7 @@ class LeadImportController extends Controller
             }
 
             $fields = $rowOverrides[$rowNumber] ?? [];
-            $prepared = $importService->buildLeadDataFromManualFields($fields, $orgId, $driveId, $defaultStatus);
+            $prepared = $importService->buildLeadDataFromManualFields($fields, $orgId, $driveId, $defaultStatus, auth()->id());
 
             if ($prepared['error']) {
                 $message = $prepared['error']['message'];
@@ -1301,7 +1302,7 @@ class LeadImportController extends Controller
         $driveId       = $meta['drive_id'];
         $defaultStatus = $meta['defaultStatus'];
 
-        $prepared = $importService->buildLeadDataFromManualFields($fields, $orgId, $driveId, $defaultStatus);
+        $prepared = $importService->buildLeadDataFromManualFields($fields, $orgId, $driveId, $defaultStatus, auth()->id());
 
         if ($prepared['error']) {
             $this->logImportStep($request, 'review-retry-single.validation-failed', [

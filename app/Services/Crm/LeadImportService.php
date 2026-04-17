@@ -62,7 +62,8 @@ class LeadImportService
         ?int $orgId,
         ?int $driveId,
         string $defaultStatus,
-        callable $descriptionRowChecker
+        callable $descriptionRowChecker,
+        ?int $createdBy = null
     ): array {
         $imported = 0;
         $skipped = 0;
@@ -85,7 +86,7 @@ class LeadImportService
                 continue;
             }
 
-            $prepared = $this->buildLeadDataFromMappedRow($row, $fieldToColumns, $orgId, $driveId, $defaultStatus);
+            $prepared = $this->buildLeadDataFromMappedRow($row, $fieldToColumns, $orgId, $driveId, $defaultStatus, $createdBy);
 
             if ($prepared['error']) {
                 $errorRows++;
@@ -157,14 +158,17 @@ class LeadImportService
         array $fieldToColumns,
         ?int $orgId,
         ?int $driveId,
-        string $defaultStatus
+        string $defaultStatus,
+        ?int $createdBy = null
     ): array {
         $data = [
             'organization_id' => $orgId,
+            'created_by' => $createdBy,
             'drive_id' => $driveId,
             'status' => $defaultStatus,
             'source' => 'other',
             'priority' => 'medium',
+            'source_type' => 'file_import',
         ];
         $rawValues = [];
 
@@ -195,14 +199,17 @@ class LeadImportService
         array $fields,
         ?int $orgId,
         ?int $driveId,
-        string $defaultStatus
+        string $defaultStatus,
+        ?int $createdBy = null
     ): array {
         $data = [
             'organization_id' => $orgId,
+            'created_by' => $createdBy,
             'drive_id' => $driveId,
             'status' => $defaultStatus,
             'source' => 'other',
             'priority' => 'medium',
+            'source_type' => 'file_import',
         ];
         $rawValues = [];
 

@@ -15,6 +15,7 @@ use App\Models\ConsultationApplication;
 use App\Mail\LeadMail;
 use App\Services\Crm\LeadExportService;
 use App\Services\LeadEmailService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -219,6 +220,93 @@ class LeadController extends Controller
     }
 
     /**
+     * Supervisor dashboard: lead creation/import activity by staff member.
+     */
+    public function importActivity(Request $request)
+    {
+        $user = auth()->user();
+
+        if (!$user || !$user->hasRole('supervisor')) {
+            abort(403, 'Only supervisors can access lead import activity.');
+        }
+
+        $validated = $request->validate([
+            'period' => ['nullable', Rule::in(['daily', 'weekly', 'monthly', 'custom'])],
+            'date_from' => ['nullable', 'date'],
+            'date_to' => ['nullable', 'date', 'after_or_equal:date_from'],
+        ]);
+
+        $period = $validated['period'] ?? 'monthly';
+
+        if ($period === 'custom') {
+            if (empty($validated['date_from']) || empty($validated['date_to'])) {
+                return back()->withErrors([
+                    'date_from' => 'Both start and end dates are required for a custom range.',
+                ])->withInput();
+            }
+
+            $dateFrom = Carbon::parse($validated['date_from'])->startOfDay();
+            $dateTo = Carbon::parse($validated['date_to'])->endOfDay();
+        } elseif ($period === 'daily') {
+            $dateFrom = now()->startOfDay();
+            $dateTo = now()->endOfDay();
+        } elseif ($period === 'weekly') {
+            $dateFrom = now()->startOfWeek();
+            $dateTo = now()->endOfWeek();
+        } else {
+            $dateFrom = now()->startOfMonth();
+            $dateTo = now()->endOfMonth();
+        }
+
+        $staffUsersQuery = User::role('staff')->orderBy('name');
+        $this->scopeByOrganization($staffUsersQuery, $user);
+        $staffUsers = $staffUsersQuery->get(['id', 'name', 'email', 'organization_id']);
+
+        $countsQuery = Lead::query()
+            ->select('created_by')
+            ->selectRaw('COUNT(*) as total_leads')
+            ->selectRaw("SUM(CASE WHEN source_type = 'file_import' THEN 1 ELSE 0 END) as imported_leads")
+            ->selectRaw("SUM(CASE WHEN source_type = 'file_import' THEN 0 ELSE 1 END) as manual_leads")
+            ->selectRaw('MAX(created_at) as last_activity_at')
+            ->whereNotNull('created_by')
+            ->whereDate('created_at', '>=', $dateFrom->toDateString())
+            ->whereDate('created_at', '<=', $dateTo->toDateString())
+            ->groupBy('created_by');
+
+        $this->scopeByOrganization($countsQuery, $user);
+        $counts = $countsQuery->get()->keyBy('created_by');
+
+        $staffLeadStats = $staffUsers->map(function (User $staff) use ($counts) {
+            $row = $counts->get($staff->id);
+
+            return [
+                'user' => $staff,
+                'total_leads' => (int) ($row->total_leads ?? 0),
+                'imported_leads' => (int) ($row->imported_leads ?? 0),
+                'manual_leads' => (int) ($row->manual_leads ?? 0),
+                'last_activity_at' => isset($row->last_activity_at)
+                    ? Carbon::parse($row->last_activity_at)
+                    : null,
+            ];
+        });
+
+        $summary = [
+            'staff_count' => $staffLeadStats->count(),
+            'total_leads' => $staffLeadStats->sum('total_leads'),
+            'imported_leads' => $staffLeadStats->sum('imported_leads'),
+            'manual_leads' => $staffLeadStats->sum('manual_leads'),
+        ];
+
+        return view('admin.crm.import-activity', [
+            'staffLeadStats' => $staffLeadStats,
+            'summary' => $summary,
+            'period' => $period,
+            'dateFrom' => $dateFrom->toDateString(),
+            'dateTo' => $dateTo->toDateString(),
+        ]);
+    }
+
+    /**
      * Show the form for creating a new lead.
      */
     public function create()
@@ -341,6 +429,8 @@ class LeadController extends Controller
             if (empty($validated['organization_id'])) {
                 $validated['organization_id'] = $user?->organization_id;
             }
+
+            $validated['created_by'] = $user?->id;
 
             $lead = Lead::create($validated);
 
@@ -855,7 +945,10 @@ class LeadController extends Controller
             $lead = Lead::createFromContactSubmission($contact);
             // Associate with current user's organization if available
             if (auth()->check()) {
-                $lead->update(['organization_id' => $this->currentOrgId()]);
+                $lead->update([
+                    'organization_id' => $this->currentOrgId(),
+                    'created_by' => auth()->id(),
+                ]);
             }
             $lead->logActivity('note', 'Lead created from contact submission', 'Converted from contact form submission #' . $contact->id);
 
@@ -918,7 +1011,10 @@ class LeadController extends Controller
 
             $lead = Lead::createFromConsultation($consultation);
             if (auth()->check()) {
-                $lead->update(['organization_id' => $this->currentOrgId()]);
+                $lead->update([
+                    'organization_id' => $this->currentOrgId(),
+                    'created_by' => auth()->id(),
+                ]);
             }
             $lead->logActivity('note', 'Lead created from consultation', 'Converted from consultation application #' . $consultation->id);
 

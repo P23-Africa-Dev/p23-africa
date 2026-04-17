@@ -14,6 +14,7 @@ class Lead extends Model
 
     protected $fillable = [
         'organization_id',
+        'created_by',
         'drive_id',
         'first_name',
         'last_name',
@@ -220,6 +221,14 @@ class Lead extends Model
     public function assignedUser(): BelongsTo
     {
         return $this->belongsTo(User::class, 'assigned_to');
+    }
+
+    /**
+     * Get the user who created/imported this lead.
+     */
+    public function creator(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 
     /**

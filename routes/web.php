@@ -399,6 +399,10 @@ Route::middleware(['auth', 'check.suspended', 'resolve.org', 'role:admin|supervi
             Route::post('/crm/settings', [\App\Http\Controllers\Admin\CrmSettingsController::class, 'update'])->name('crm.settings.update');
         });
 
+        Route::middleware('role:admin|supervisor')->group(function () {
+            Route::get('/crm/import-activity', [\App\Http\Controllers\Admin\LeadController::class, 'importActivity'])->name('crm.import-activity');
+        });
+
         Route::get('/crm/{lead}', [\App\Http\Controllers\Admin\LeadController::class, 'show'])->name('crm.show');
         Route::get('/crm/{lead}/edit', [\App\Http\Controllers\Admin\LeadController::class, 'edit'])->name('crm.edit');
         Route::put('/crm/{lead}', [\App\Http\Controllers\Admin\LeadController::class, 'update'])->name('crm.update');
@@ -590,6 +594,10 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
         // CRM Settings (currency, etc.)
         Route::get('/crm/settings', [\App\Http\Controllers\Admin\CrmSettingsController::class, 'index'])->name('crm.settings');
         Route::post('/crm/settings', [\App\Http\Controllers\Admin\CrmSettingsController::class, 'update'])->name('crm.settings.update');
+    });
+
+    Route::middleware('role:supervisor')->group(function () {
+        Route::get('/crm/import-activity', [\App\Http\Controllers\Admin\LeadController::class, 'importActivity'])->name('crm.import-activity');
     });
 
     Route::get('/crm/{lead}', [\App\Http\Controllers\Admin\LeadController::class, 'show'])->name('crm.show');

@@ -271,6 +271,39 @@ class CrmLeadImportExportRefactorTest extends TestCase
         $this->assertSame('email', $result['errors'][0]['affected_field']);
     }
 
+    public function test_import_service_attributes_created_by_and_source_type_for_file_imports(): void
+    {
+        $service = app(LeadImportService::class);
+        $organization = $this->createOrganization('Attribution Org');
+        $drive = $this->createDrive($organization, 'Attribution');
+        $staff = User::factory()->create(['organization_id' => $organization->id]);
+
+        $fieldToColumns = $service->buildFieldToColumns([
+            0 => 'email',
+            1 => 'first_name',
+        ]);
+
+        $result = $service->processMappedRows(
+            [
+                ['attributed@example.com', 'Attributed'],
+            ],
+            $fieldToColumns,
+            $organization->id,
+            $drive->id,
+            'new',
+            fn () => false,
+            $staff->id,
+        );
+
+        $this->assertSame(1, $result['imported']);
+        $this->assertDatabaseHas('leads', [
+            'organization_id' => $organization->id,
+            'created_by' => $staff->id,
+            'source_type' => 'file_import',
+            'email' => 'attributed@example.com',
+        ]);
+    }
+
     public function test_import_process_rejects_tampered_temp_path(): void
     {
         Storage::disk('local')->put('imports/temp/valid-import.csv', "First Name,Email\nJane,jane@example.com\n");
