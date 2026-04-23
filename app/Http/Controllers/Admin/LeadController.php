@@ -14,6 +14,7 @@ use App\Models\ContactSubmission;
 use App\Models\ConsultationApplication;
 use App\Mail\LeadMail;
 use App\Services\Crm\LeadExportService;
+use App\Services\Crm\LeadAnalyticsService;
 use App\Services\LeadEmailService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -220,23 +221,33 @@ class LeadController extends Controller
     }
 
     /**
-     * Supervisor dashboard: lead creation/import activity by staff member.
+     * Lead creation/import activity analytics for Admins and Supervisors.
+     * Tracks both Staff and Supervisor lead creation activity.
      */
     public function importActivity(Request $request)
     {
         $user = auth()->user();
 
-        if (!$user || !$user->hasRole('supervisor')) {
-            abort(403, 'Only supervisors can access lead import activity.');
+        // Allow access to Admins and Supervisors only
+        if (!$user || (!$user->hasRole('admin') && !$user->hasRole('supervisor'))) {
+            abort(403, 'You do not have permission to access lead activity analytics.');
         }
 
+        // Validate filters
         $validated = $request->validate([
             'period' => ['nullable', Rule::in(['daily', 'weekly', 'monthly', 'custom'])],
             'date_from' => ['nullable', 'date'],
             'date_to' => ['nullable', 'date', 'after_or_equal:date_from'],
+            'drive_ids' => ['nullable', 'array'],
+            'drive_ids.*' => ['numeric'],
+            'user_ids' => ['nullable', 'array'],
+            'user_ids.*' => ['numeric'],
+            'lead_type' => ['nullable', Rule::in(['all', 'manual', 'imported'])],
         ]);
 
+        // Determine date range based on period
         $period = $validated['period'] ?? 'monthly';
+        $dateFrom = $dateTo = null;
 
         if ($period === 'custom') {
             if (empty($validated['date_from']) || empty($validated['date_to'])) {
@@ -244,65 +255,116 @@ class LeadController extends Controller
                     'date_from' => 'Both start and end dates are required for a custom range.',
                 ])->withInput();
             }
-
-            $dateFrom = Carbon::parse($validated['date_from'])->startOfDay();
-            $dateTo = Carbon::parse($validated['date_to'])->endOfDay();
+            $dateFrom = $validated['date_from'];
+            $dateTo = $validated['date_to'];
         } elseif ($period === 'daily') {
-            $dateFrom = now()->startOfDay();
-            $dateTo = now()->endOfDay();
+            $dateFrom = now()->format('Y-m-d');
+            $dateTo = now()->format('Y-m-d');
         } elseif ($period === 'weekly') {
-            $dateFrom = now()->startOfWeek();
-            $dateTo = now()->endOfWeek();
+            $dateFrom = now()->startOfWeek()->format('Y-m-d');
+            $dateTo = now()->endOfWeek()->format('Y-m-d');
         } else {
-            $dateFrom = now()->startOfMonth();
-            $dateTo = now()->endOfMonth();
+            $dateFrom = now()->startOfMonth()->format('Y-m-d');
+            $dateTo = now()->endOfMonth()->format('Y-m-d');
         }
 
-        $staffUsersQuery = User::role('staff')->orderBy('name');
-        $this->scopeByOrganization($staffUsersQuery, $user);
-        $staffUsers = $staffUsersQuery->get(['id', 'name', 'email', 'organization_id']);
-
-        $countsQuery = Lead::query()
-            ->select('created_by')
-            ->selectRaw('COUNT(*) as total_leads')
-            ->selectRaw("SUM(CASE WHEN source_type = 'file_import' THEN 1 ELSE 0 END) as imported_leads")
-            ->selectRaw("SUM(CASE WHEN source_type = 'file_import' THEN 0 ELSE 1 END) as manual_leads")
-            ->selectRaw('MAX(created_at) as last_activity_at')
-            ->whereNotNull('created_by')
-            ->whereDate('created_at', '>=', $dateFrom->toDateString())
-            ->whereDate('created_at', '<=', $dateTo->toDateString())
-            ->groupBy('created_by');
-
-        $this->scopeByOrganization($countsQuery, $user);
-        $counts = $countsQuery->get()->keyBy('created_by');
-
-        $staffLeadStats = $staffUsers->map(function (User $staff) use ($counts) {
-            $row = $counts->get($staff->id);
-
-            return [
-                'user' => $staff,
-                'total_leads' => (int) ($row->total_leads ?? 0),
-                'imported_leads' => (int) ($row->imported_leads ?? 0),
-                'manual_leads' => (int) ($row->manual_leads ?? 0),
-                'last_activity_at' => isset($row->last_activity_at)
-                    ? Carbon::parse($row->last_activity_at)
-                    : null,
-            ];
-        });
-
-        $summary = [
-            'staff_count' => $staffLeadStats->count(),
-            'total_leads' => $staffLeadStats->sum('total_leads'),
-            'imported_leads' => $staffLeadStats->sum('imported_leads'),
-            'manual_leads' => $staffLeadStats->sum('manual_leads'),
+        // Prepare filters for the analytics service
+        $filters = [
+            'date_from' => $dateFrom,
+            'date_to' => $dateTo,
+            'drive_ids' => $validated['drive_ids'] ?? [],
+            'user_ids' => $validated['user_ids'] ?? [],
+            'lead_type' => $validated['lead_type'] ?? 'all',
         ];
 
+        // Get analytics using service
+        $analyticsService = new LeadAnalyticsService();
+        $activityData = $analyticsService->getLeadActivityByUser($user, $filters);
+
+        // Get available filters
+        $availableUsers = $analyticsService->getAvailableUsers($user);
+        $drivesQuery = LeadDrive::orderBy('name');
+        $this->scopeByOrganization($drivesQuery, $user);
+        $drives = $drivesQuery->get();
+
+        // Get breakdown by pipeline
+        $pipelineBreakdown = $analyticsService->getLeadActivityByPipeline($user, $filters);
+
         return view('admin.crm.import-activity', [
-            'staffLeadStats' => $staffLeadStats,
-            'summary' => $summary,
+            'staffLeadStats' => $activityData['stats'],
+            'summary' => $activityData['summary'],
             'period' => $period,
-            'dateFrom' => $dateFrom->toDateString(),
-            'dateTo' => $dateTo->toDateString(),
+            'dateFrom' => $activityData['date_from']->toDateString(),
+            'dateTo' => $activityData['date_to']->toDateString(),
+            'availableUsers' => $availableUsers,
+            'drives' => $drives,
+            'pipelineBreakdown' => $pipelineBreakdown,
+            'filters' => $filters,
+        ]);
+    }
+
+    /**
+     * View detailed lead activity for a specific user.
+     * Accessible from the lead analytics dashboard.
+     */
+    public function userActivity(Request $request, int $userId)
+    {
+        $currentUser = auth()->user();
+
+        // Verify access
+        if (!$currentUser || (!$currentUser->hasRole('admin') && !$currentUser->hasRole('supervisor'))) {
+            abort(403, 'You do not have permission to access this resource.');
+        }
+
+        // Get the target user
+        $targetUser = User::find($userId);
+        if (!$targetUser) {
+            abort(404, 'User not found.');
+        }
+
+        // Verify current user can view this user's data
+        if ($currentUser->hasRole('supervisor') && !$targetUser->hasRole('staff')) {
+            abort(403, 'Supervisors can only view staff member activity.');
+        }
+
+        // Verify organization scope
+        if ($currentUser->appliesOrganizationScope() && $targetUser->organization_id !== $currentUser->organization_id) {
+            abort(403, 'You do not have access to this user.');
+        }
+
+        // Get analytics service
+        $analyticsService = new LeadAnalyticsService();
+
+        // Validate filters
+        $validated = $request->validate([
+            'date_from' => ['nullable', 'date'],
+            'date_to' => ['nullable', 'date', 'after_or_equal:date_from'],
+            'drive_ids' => ['nullable', 'array'],
+            'drive_ids.*' => ['numeric'],
+            'lead_type' => ['nullable', Rule::in(['all', 'manual', 'imported'])],
+        ]);
+
+        // Prepare filters
+        $filters = [
+            'date_from' => $validated['date_from'] ?? now()->startOfMonth()->format('Y-m-d'),
+            'date_to' => $validated['date_to'] ?? now()->format('Y-m-d'),
+            'drive_ids' => $validated['drive_ids'] ?? [],
+            'lead_type' => $validated['lead_type'] ?? 'all',
+        ];
+
+        // Get detailed leads for user
+        $leads = $analyticsService->getUserLeadDetails($currentUser, $userId, $filters);
+
+        // Get available drives for filtering
+        $drivesQuery = LeadDrive::orderBy('name');
+        $this->scopeByOrganization($drivesQuery, $currentUser);
+        $drives = $drivesQuery->get();
+
+        return view('admin.crm.user-activity', [
+            'targetUser' => $targetUser,
+            'leads' => $leads,
+            'drives' => $drives,
+            'filters' => $filters,
         ]);
     }
 

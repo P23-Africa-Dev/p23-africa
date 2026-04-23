@@ -401,6 +401,7 @@ Route::middleware(['auth', 'check.suspended', 'resolve.org', 'role:admin|supervi
 
         Route::middleware('role:admin|supervisor')->group(function () {
             Route::get('/crm/import-activity', [\App\Http\Controllers\Admin\LeadController::class, 'importActivity'])->name('crm.import-activity');
+            Route::get('/crm/user-activity/{userId}', [\App\Http\Controllers\Admin\LeadController::class, 'userActivity'])->name('crm.user-activity');
         });
 
         Route::get('/crm/{lead}', [\App\Http\Controllers\Admin\LeadController::class, 'show'])->name('crm.show');
@@ -596,8 +597,9 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
         Route::post('/crm/settings', [\App\Http\Controllers\Admin\CrmSettingsController::class, 'update'])->name('crm.settings.update');
     });
 
-    Route::middleware('role:supervisor')->group(function () {
+    Route::middleware('role:admin|supervisor')->group(function () {
         Route::get('/crm/import-activity', [\App\Http\Controllers\Admin\LeadController::class, 'importActivity'])->name('crm.import-activity');
+        Route::get('/crm/user-activity/{userId}', [\App\Http\Controllers\Admin\LeadController::class, 'userActivity'])->name('crm.user-activity');
     });
 
     Route::get('/crm/{lead}', [\App\Http\Controllers\Admin\LeadController::class, 'show'])->name('crm.show');
