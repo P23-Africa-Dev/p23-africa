@@ -43,6 +43,13 @@ class LeadAnalyticsService
         // Apply organization scope
         $this->applyOrgScope($query, $currentUser);
 
+        // Apply user filter
+        if (!empty($filters['user_ids'])) {
+            $userIds = (array) $filters['user_ids'];
+            $query->whereIn('created_by', $userIds);
+            $trackedUsers = $trackedUsers->whereIn('id', $userIds);
+        }
+
         // Apply drive/pipeline filter
         if (!empty($filters['drive_ids'])) {
             $query->whereIn('drive_id', (array) $filters['drive_ids']);
@@ -79,15 +86,19 @@ class LeadAnalyticsService
             ];
         })->sortByDesc('total_leads')->values();
 
+        // Calculate active user stats
+        $activeStaffStats = $staffLeadStats->where('total_leads', '>', 0);
+        $activeCount = $activeStaffStats->count();
+
         // Calculate summary totals
         $summary = [
-            'users_count' => $staffLeadStats->count(),
+            'users_count' => $activeCount,
             'total_leads' => $staffLeadStats->sum('total_leads'),
             'imported_leads' => $staffLeadStats->sum('imported_leads'),
             'manual_leads' => $staffLeadStats->sum('manual_leads'),
             'direct_leads' => $staffLeadStats->sum('direct_leads'),
-            'avg_leads_per_user' => $staffLeadStats->count() > 0
-                ? round($staffLeadStats->sum('total_leads') / $staffLeadStats->count(), 2)
+            'avg_leads_per_user' => $activeCount > 0
+                ? round($staffLeadStats->sum('total_leads') / $activeCount, 2)
                 : 0,
         ];
 
