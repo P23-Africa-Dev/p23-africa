@@ -23,7 +23,7 @@ class SpreadsheetController extends Controller
     protected function currentOrgId(): ?int
     {
         $user = auth()->user();
-        if ($user && !$user->hasRole('admin|supervisor') && $user->organization_id) {
+        if ($user && $user->hasRole('admin|supervisor') && $user->organization_id) {
             return (int) $user->organization_id;
         }
         return null;
