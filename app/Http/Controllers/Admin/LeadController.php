@@ -559,9 +559,14 @@ class LeadController extends Controller
         $this->scopeByOrganization($usersQuery, $user);
         $users = $usersQuery->get();
 
+        $drivesQuery = LeadDrive::orderBy('is_default', 'desc')->orderBy('name');
+        $this->scopeByOrganization($drivesQuery, $user);
+        $drives = $drivesQuery->get();
+
         return view('admin.crm.edit', [
             'lead' => $lead,
             'users' => $users,
+            'drives' => $drives,
             'statuses' => Lead::getStatuses($orgId),
             'leadStatuses' => $leadStatuses,
             'sources' => Lead::getSources($orgId),
@@ -612,6 +617,7 @@ class LeadController extends Controller
             'requirements' => 'nullable|string|max:5000',
             'notes' => 'nullable|string|max:5000',
             'assigned_to' => 'nullable|exists:users,id',
+            'drive_id' => 'nullable|exists:lead_drives,id',
             'next_follow_up' => 'nullable|date',
             'lost_reason' => 'nullable|string|max:500',
         ]);
@@ -634,11 +640,19 @@ class LeadController extends Controller
             'currency',
             'requirements',
             'notes',
+            'drive_id',
             'next_follow_up'
         ];
         foreach ($nullableFields as $field) {
             if (array_key_exists($field, $validated) && $validated[$field] === '') {
                 $validated[$field] = null;
+            }
+        }
+
+        if (!empty($validated['drive_id'])) {
+            $drive = LeadDrive::find($validated['drive_id']);
+            if ($drive && $this->shouldApplyOrgScope($user) && !$user->canAccessOrganization($drive->organization_id)) {
+                abort(403, 'Cannot move lead to a pipeline outside your organization.');
             }
         }
 

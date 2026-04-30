@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Http\Controllers\Admin\LeadController;
 use App\Models\Lead;
 use App\Models\LeadActivity;
+use App\Models\LeadDrive;
 use App\Models\Organization;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -117,9 +118,9 @@ class CrmLeadFlowRefactorTest extends TestCase
         $this->assertInstanceOf(JsonResponse::class, $response);
         $this->assertSame(403, $response->getStatusCode());
         $this->assertSame([
-                'success' => false,
-                'message' => 'Cannot assign leads to a user outside your organization.',
-            ], $response->getData(true));
+            'success' => false,
+            'message' => 'Cannot assign leads to a user outside your organization.',
+        ], $response->getData(true));
 
         $this->assertNull($lead->fresh()->assigned_to);
     }
@@ -144,9 +145,9 @@ class CrmLeadFlowRefactorTest extends TestCase
         $this->assertInstanceOf(JsonResponse::class, $response);
         $this->assertSame(422, $response->getStatusCode());
         $this->assertSame([
-                'success' => false,
-                'message' => 'Invalid priority value.',
-            ], $response->getData(true));
+            'success' => false,
+            'message' => 'Invalid priority value.',
+        ], $response->getData(true));
 
         $this->assertSame('medium', $lead->fresh()->priority);
     }
@@ -201,6 +202,55 @@ class CrmLeadFlowRefactorTest extends TestCase
 
         $this->assertSoftDeleted('leads', ['id' => $leadA->id]);
         $this->assertSoftDeleted('leads', ['id' => $leadB->id]);
+    }
+
+    public function test_user_can_update_lead_pipeline_within_same_organization(): void
+    {
+        $org = $this->createOrganization('Org Pipeline');
+        $actor = $this->createStaffUser($org);
+
+        $oldDrive = LeadDrive::create([
+            'organization_id' => $org->id,
+            'name' => 'Old Pipeline',
+            'color' => '#0d6efd',
+            'is_default' => false,
+        ]);
+
+        $newDrive = LeadDrive::create([
+            'organization_id' => $org->id,
+            'name' => 'New Pipeline',
+            'color' => '#198754',
+            'is_default' => false,
+        ]);
+
+        $lead = $this->createLeadForOrganization($org, [
+            'drive_id' => $oldDrive->id,
+            'priority' => 'medium',
+            'source' => 'website',
+            'status' => 'new',
+        ]);
+
+        $controller = app(LeadController::class);
+        $request = Request::create('/admin/crm/' . $lead->id, 'PUT', [
+            'first_name' => $lead->first_name,
+            'last_name' => $lead->last_name,
+            'email' => $lead->email,
+            'phone' => $lead->phone,
+            'company' => $lead->company,
+            'status' => $lead->status,
+            'source' => $lead->source,
+            'priority' => $lead->priority,
+            'assigned_to' => $lead->assigned_to,
+            'drive_id' => $newDrive->id,
+        ]);
+
+        $this->actingAs($actor);
+        $controller->update($request, $lead);
+
+        $this->assertDatabaseHas('leads', [
+            'id' => $lead->id,
+            'drive_id' => $newDrive->id,
+        ]);
     }
 
     private function createOrganization(string $name): Organization
