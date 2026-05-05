@@ -217,7 +217,29 @@ class LeadController extends Controller
 
         $crmCurrency = $this->crmCurrencySymbol();
 
-        return view('admin.crm.index', compact('leads', 'stats', 'users', 'drives', 'currentDrive', 'leadStatuses', 'sources', 'crmCurrency'));
+        $canCrossOrgExport = $user
+            && $user->hasRole('admin')
+            && is_null($user->organization_id);
+
+        $exportOrganizations = collect();
+        if ($canCrossOrgExport) {
+            $exportOrganizations = Organization::query()
+                ->orderBy('name')
+                ->get(['id', 'name']);
+        }
+
+        return view('admin.crm.index', compact(
+            'leads',
+            'stats',
+            'users',
+            'drives',
+            'currentDrive',
+            'leadStatuses',
+            'sources',
+            'crmCurrency',
+            'canCrossOrgExport',
+            'exportOrganizations'
+        ));
     }
 
     /**
@@ -1213,7 +1235,40 @@ class LeadController extends Controller
      */
     public function export(Request $request, LeadExportService $exportService)
     {
-        return $exportService->streamCsv($request, auth()->user());
+        $user = auth()->user();
+
+        $validated = $request->validate([
+            'organization_id' => 'nullable|integer|exists:organizations,id',
+        ]);
+
+        // Default to the caller's own organization context when no explicit target is provided.
+        $targetOrganizationId = array_key_exists('organization_id', $validated)
+            ? $validated['organization_id']
+            : $user?->organization_id;
+
+        $isLegacyAdmin = $user
+            && $user->hasRole('admin')
+            && is_null($user->organization_id);
+
+        // Only legacy-admins can export across organizations.
+        if (!$isLegacyAdmin && (($user?->organization_id) !== $targetOrganizationId)) {
+            abort(403, 'You are not allowed to export leads for this organization.');
+        }
+
+        $request->merge([
+            'organization_id' => $targetOrganizationId,
+        ]);
+
+        Log::info('CRM leads export requested', [
+            'user_id' => $user?->id,
+            'user_roles' => $user?->roles?->pluck('name')->values()->all() ?? [],
+            'request_organization_id' => $request->input('organization_id'),
+            'export_organization_id' => $targetOrganizationId,
+            'is_legacy_admin_export' => $isLegacyAdmin,
+            'requested_at' => now()->toDateTimeString(),
+        ]);
+
+        return $exportService->streamCsv($request, $user);
     }
 
     /**

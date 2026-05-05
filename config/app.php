@@ -73,7 +73,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => env('APP_TIMEZONE', 'UTC'),
 
     /*
     |--------------------------------------------------------------------------
@@ -132,7 +132,7 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
-   
+
 
     /*
     |--------------------------------------------------------------------------
@@ -145,7 +145,7 @@ return [
     |
     */
 
-    'aliases' => Facade::defaultAliases()->merge( [
+    'aliases' => Facade::defaultAliases()->merge([
 
         'App' => Illuminate\Support\Facades\App::class,
         'Arr' => Illuminate\Support\Arr::class,
@@ -190,6 +190,6 @@ return [
         'NoCaptcha' => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class,
         'Honeypot' => Msurguy\Honeypot\HoneypotFacade::class,
 
-    ])->toArray(),  
+    ])->toArray(),
 
 ];

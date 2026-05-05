@@ -14,7 +14,7 @@
 <p>
     🖥️ <strong>Event:</strong> {{ $event->title }} <br>
     📅 <strong>Date:</strong> {{ \Carbon\Carbon::parse($event->event_date)->format('jS F, Y') }} <br>
-    🕒 <strong>Time:</strong> {{ \Carbon\Carbon::parse($event->event_time)->format('g:i A') }} (Your Local Time) <br>
+    🕒 <strong>Time:</strong> {{ \Carbon\Carbon::parse($event->event_time)->format('g:i A') }} (GMT+1) <br>
     🔗 <strong>Access Link:</strong> <a href="{{ $link }}">{{ $link }}</a>
 </p>
 

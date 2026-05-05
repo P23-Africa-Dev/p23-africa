@@ -9,15 +9,23 @@ use App\Models\Event;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class SendEventReminders extends Command
 {
     protected $signature = 'reminders:send';
     protected $description = 'Send event reminders 24 hours and 15 minutes before event';
 
+    protected const REMINDER_WINDOW_MINUTES = 5;
+
     public function handle()
     {
-        $this->info('Starting event reminder check at ' . now()->format('Y-m-d H:i:s'));
+        $now = now()->timezone(config('app.timezone'));
+        $this->info('Starting event reminder check at ' . $now->format('Y-m-d H:i:s'));
+        Log::info('Event reminder scheduler started', [
+            'timezone' => config('app.timezone'),
+            'now' => $now->toDateTimeString(),
+        ]);
 
         // Send 24-hour reminders
         $this->send24HourReminders();
@@ -26,19 +34,22 @@ class SendEventReminders extends Command
         $this->send15MinuteReminders();
 
         $this->info('Event reminder check completed.');
+        Log::info('Event reminder scheduler completed');
+
+        return self::SUCCESS;
     }
 
     protected function send24HourReminders()
     {
-        $now = Carbon::now();
-        $targetStart = $now->copy()->addHours(24)->subMinutes(1);
-        $targetEnd = $now->copy()->addHours(24)->addMinutes(1);
+        $now = Carbon::now(config('app.timezone'));
+        $targetStart = $now->copy()->addHours(24)->subMinutes(self::REMINDER_WINDOW_MINUTES);
+        $targetEnd = $now->copy()->addHours(24)->addMinutes(self::REMINDER_WINDOW_MINUTES);
 
         // Find events happening in ~24 hours that haven't had 24hr reminder sent
         $events = Event::whereNull('reminder_24hr_sent_at')
-            ->whereRaw("CONCAT(event_date, ' ', event_time) BETWEEN ? AND ?", [
-                $targetStart->format('Y-m-d H:i:s'),
-                $targetEnd->format('Y-m-d H:i:s')
+            ->whereBetween(DB::raw('TIMESTAMP(event_date, event_time)'), [
+                $targetStart->toDateTimeString(),
+                $targetEnd->toDateTimeString(),
             ])
             ->get();
 
@@ -53,15 +64,15 @@ class SendEventReminders extends Command
 
     protected function send15MinuteReminders()
     {
-        $now = Carbon::now();
-        $targetStart = $now->copy()->addMinutes(14);
-        $targetEnd = $now->copy()->addMinutes(16);
+        $now = Carbon::now(config('app.timezone'));
+        $targetStart = $now->copy()->addMinutes(15)->subMinutes(self::REMINDER_WINDOW_MINUTES);
+        $targetEnd = $now->copy()->addMinutes(15)->addMinutes(self::REMINDER_WINDOW_MINUTES);
 
         // Find events happening in ~15 minutes that haven't had 15min reminder sent
         $events = Event::whereNull('reminder_15min_sent_at')
-            ->whereRaw("CONCAT(event_date, ' ', event_time) BETWEEN ? AND ?", [
-                $targetStart->format('Y-m-d H:i:s'),
-                $targetEnd->format('Y-m-d H:i:s')
+            ->whereBetween(DB::raw('TIMESTAMP(event_date, event_time)'), [
+                $targetStart->toDateTimeString(),
+                $targetEnd->toDateTimeString(),
             ])
             ->get();
 
@@ -99,7 +110,7 @@ class SendEventReminders extends Command
                 // Determine the event link based on visibility
                 $link = $event->visibility === 'public'
                     ? $event->link
-                    : url('/events/' . $event->slug);
+                    : route('private.access', ['slug' => $event->slug, 'code' => $seat->seat_code]);
 
                 Mail::to($seat->email)->send(new EventReminderMail(
                     $seat,

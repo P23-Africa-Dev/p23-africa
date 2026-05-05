@@ -4,7 +4,6 @@ namespace App\Http;
 
 use App\Http\Middleware\CheckSuspended;
 use Illuminate\Auth\Middleware\Authenticate;
-use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Spatie\Permission\Middleware\PermissionMiddleware;
@@ -28,11 +27,6 @@ class Kernel extends HttpKernel
         // 'role' => RoleMiddleware::class,
 
     ];
-
-    protected function schedule(Schedule $schedule)
-    {
-        $schedule->command('reminders:send')->everyMinute(); // or every 10 minutes
-    }
 
     /**
      * The application's route middleware groups.

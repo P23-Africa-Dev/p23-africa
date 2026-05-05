@@ -181,23 +181,57 @@
                 </a>
                 @hasanyrole('admin|supervisor')
                     <!--
-                        <a href="{{ orgRoute('admin.crm.statuses.index') }}" class="btn btn-outline-dark">
-                            <i class="fa fa-tags me-2"></i>Manage Statuses
-                        </a>  -->
+                            <a href="{{ orgRoute('admin.crm.statuses.index') }}" class="btn btn-outline-dark">
+                                <i class="fa fa-tags me-2"></i>Manage Statuses
+                            </a>  -->
                     <a href="{{ orgRoute('admin.crm.settings') }}" class="btn btn-outline-secondary">
                         <i class="fa fa-cog me-2"></i>CRM Settings
                     </a>
-                
+
+                    <!--
                     <a href="{{ orgRoute('admin.crm.import-activity') }}" class="btn btn-outline-dark">
                         <i class="fa fa-chart-bar me-2"></i>Import Activity
-                    </a>
+                    </a> -->
                 @endhasanyrole
                 <a href="{{ orgRoute('admin.crm.import') }}" class="btn btn-outline-success">
                     <i class="fa fa-file-import me-2"></i>Import Leads
                 </a>
-                <a href="{{ orgRoute('admin.crm.export', request()->all()) }}" class="btn btn-outline-secondary">
-                    <i class="fa fa-download me-2"></i>Export CSV
-                </a>
+                @if (($canCrossOrgExport ?? false) && $exportOrganizations->count() > 0)
+                    <form method="GET" action="{{ orgRoute('admin.crm.export') }}"
+                        class="d-flex gap-2 align-items-center">
+                        @foreach (request()->except('page', 'organization_id') as $key => $value)
+                            @if (is_array($value))
+                                @foreach ($value as $item)
+                                    <input type="hidden" name="{{ $key }}[]" value="{{ $item }}">
+                                @endforeach
+                            @else
+                                <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                            @endif
+                        @endforeach
+
+                        <select name="organization_id" class="form-select form-select-sm" style="min-width: 220px;"
+                            required>
+                            <option value="" disabled
+                                {{ request()->filled('organization_id') ? '' : 'selected' }}>Select Organization
+                            </option>
+                            @foreach ($exportOrganizations as $organization)
+                                <option value="{{ $organization->id }}"
+                                    {{ (string) request('organization_id') === (string) $organization->id ? 'selected' : '' }}>
+                                    {{ $organization->name }}
+                                </option>
+                            @endforeach
+                        </select>
+
+                        <button type="submit" class="btn btn-outline-secondary">
+                            <i class="fa fa-download me-2"></i>Export CSV
+                        </button>
+                    </form>
+                @else
+                    <a href="{{ orgRoute('admin.crm.export', request()->except('page', 'organization_id')) }}"
+                        class="btn btn-outline-secondary">
+                        <i class="fa fa-download me-2"></i>Export CSV
+                    </a>
+                @endif
                 <a href="{{ orgRoute('admin.crm.create') }}" class="btn btn-primary">
                     <i class="fa fa-plus me-2"></i>Add New Lead
                 </a>

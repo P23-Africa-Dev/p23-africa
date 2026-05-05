@@ -8,6 +8,11 @@
                 <p class="text-muted dark:text-gray-400 text-sm mb-0">Configure display preferences for your CRM</p>
             </div>
             <div class="d-flex gap-2">
+                @hasanyrole('admin|supervisor')
+                    <a href="{{ orgRoute('admin.crm.import-activity') }}" class="btn btn-outline-dark">
+                        <i class="fa fa-chart-bar me-2"></i>Import Activity
+                    </a>
+                @endhasanyrole
                 <a href="{{ orgRoute('admin.crm.statuses.index') }}" class="btn btn-outline-secondary">
                     <i class="fa fa-tags me-2"></i>Manage Statuses
                 </a>

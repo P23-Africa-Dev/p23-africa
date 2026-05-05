@@ -9,12 +9,12 @@
 
 <p>Hi {{ $firstName }},</p>
 
-<p>This is a quick reminder that the event you registered for is happening soon!</p>
+<p>This is a reminder that the event you registered for is coming up!</p>
 
 <p>
     🖥️ <strong>Event:</strong> {{ $event->title }}<br>
     📅 <strong>Date:</strong> {{ \Carbon\Carbon::parse($event->event_date)->format('jS F, Y') }}<br>
-    🕒 <strong>Time:</strong> {{ \Carbon\Carbon::parse($event->event_time)->format('g:i A') }}<br>
+    🕒 <strong>Time:</strong> {{ \Carbon\Carbon::parse($event->event_time)->format('g:i A') }} (GMT+1)<br>
     📍 <strong>Venue:</strong> {{ $event->venue ?? 'Online' }}<br>
 </p>
 

@@ -52,7 +52,15 @@ class LeadExportService
     {
         $query = Lead::query()->with(['assignedUser', 'drive']);
 
-        if ($user && !$user->hasRole('admin')) {
+        if ($request->has('organization_id')) {
+            $organizationId = $request->input('organization_id');
+
+            if ($organizationId === null || $organizationId === '') {
+                $query->whereNull('organization_id');
+            } else {
+                $query->where('organization_id', (int) $organizationId);
+            }
+        } elseif ($user) {
             if ($user->organization_id) {
                 $query->where('organization_id', $user->organization_id);
             } else {

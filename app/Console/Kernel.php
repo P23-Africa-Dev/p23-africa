@@ -15,8 +15,11 @@ class Kernel extends ConsoleKernel
 
     protected function schedule(Schedule $schedule)
     {
-        // Schedule your commands here
-        $schedule->command('reminders:send')->everyMinute();
+        $schedule->command('reminders:send')
+            ->everyMinute()
+            ->timezone(config('app.timezone'))
+            ->withoutOverlapping()
+            ->appendOutputTo(storage_path('logs/scheduler.log'));
     }
 
     protected function commands()
@@ -25,5 +28,4 @@ class Kernel extends ConsoleKernel
 
         require base_path('routes/console.php');
     }
-    
 }

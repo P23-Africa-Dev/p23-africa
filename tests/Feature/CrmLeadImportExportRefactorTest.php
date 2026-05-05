@@ -17,11 +17,24 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Tests\TestCase;
 
 class CrmLeadImportExportRefactorTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
+        Role::findOrCreate('admin', 'web');
+        Role::findOrCreate('supervisor', 'web');
+        Role::findOrCreate('staff', 'web');
+    }
 
     public function test_import_service_skips_existing_and_in_file_duplicates(): void
     {
@@ -55,7 +68,7 @@ class CrmLeadImportExportRefactorTest extends TestCase
             $organization->id,
             $drive->id,
             'new',
-            fn () => false,
+            fn() => false,
         );
 
         $this->assertSame(1, $result['imported']);
@@ -229,7 +242,7 @@ class CrmLeadImportExportRefactorTest extends TestCase
             $organization->id,
             $drive->id,
             'new',
-            fn () => false,
+            fn() => false,
         );
 
         $this->assertSame(1, $result['imported']);
@@ -262,7 +275,7 @@ class CrmLeadImportExportRefactorTest extends TestCase
             $organization->id,
             $drive->id,
             'new',
-            fn () => false,
+            fn() => false,
         );
 
         $this->assertSame(0, $result['imported']);
@@ -291,7 +304,7 @@ class CrmLeadImportExportRefactorTest extends TestCase
             $organization->id,
             $drive->id,
             'new',
-            fn () => false,
+            fn() => false,
             $staff->id,
         );
 
@@ -563,6 +576,111 @@ class CrmLeadImportExportRefactorTest extends TestCase
         $this->assertStringContainsString('Consulting, Web Development', $csv);
         $this->assertStringContainsString('Needs CRM implementation', $csv);
         $this->assertStringContainsString('Budget delayed', $csv);
+    }
+
+    public function test_legacy_admin_can_export_specified_organization_only(): void
+    {
+        $targetOrganization = $this->createOrganization('Target Export Org');
+        $otherOrganization = $this->createOrganization('Other Export Org');
+
+        $targetDrive = $this->createDrive($targetOrganization, 'Target Pipeline');
+        $otherDrive = $this->createDrive($otherOrganization, 'Other Pipeline');
+
+        $legacyAdmin = User::factory()->create(['organization_id' => null]);
+        $legacyAdmin->assignRole('admin');
+
+        Lead::create([
+            'organization_id' => $targetOrganization->id,
+            'drive_id' => $targetDrive->id,
+            'first_name' => 'Target Lead',
+            'email' => 'target-export@example.com',
+            'status' => 'new',
+            'source' => 'website',
+            'priority' => 'high',
+        ]);
+
+        Lead::create([
+            'organization_id' => $otherOrganization->id,
+            'drive_id' => $otherDrive->id,
+            'first_name' => 'Other Lead',
+            'email' => 'other-export@example.com',
+            'status' => 'new',
+            'source' => 'website',
+            'priority' => 'high',
+        ]);
+
+        $this->actingAs($legacyAdmin);
+
+        $response = app(LeadController::class)->export(
+            Request::create('/admin/crm/export', 'GET', [
+                'organization_id' => $targetOrganization->id,
+            ]),
+            app(LeadExportService::class),
+        );
+
+        ob_start();
+        $response->sendContent();
+        $csv = ob_get_clean();
+
+        $this->assertStringContainsString('target-export@example.com', $csv);
+        $this->assertStringNotContainsString('other-export@example.com', $csv);
+    }
+
+    public function test_non_legacy_admin_cannot_export_other_organization(): void
+    {
+        $adminOrganization = $this->createOrganization('Scoped Admin Org');
+        $otherOrganization = $this->createOrganization('Blocked Export Org');
+
+        $orgAdmin = User::factory()->create(['organization_id' => $adminOrganization->id]);
+        $orgAdmin->assignRole('admin');
+
+        $this->actingAs($orgAdmin);
+
+        try {
+            app(LeadController::class)->export(
+                Request::create('/admin/crm/export', 'GET', [
+                    'organization_id' => $otherOrganization->id,
+                ]),
+                app(LeadExportService::class),
+            );
+
+            $this->fail('Expected a 403 exception when exporting another organization.');
+        } catch (HttpException $exception) {
+            $this->assertSame(403, $exception->getStatusCode());
+        }
+    }
+
+    public function test_index_exposes_export_organizations_for_legacy_admin(): void
+    {
+        $this->createOrganization('Org Alpha');
+        $this->createOrganization('Org Beta');
+
+        $legacyAdmin = User::factory()->create(['organization_id' => null]);
+        $legacyAdmin->assignRole('admin');
+
+        $this->actingAs($legacyAdmin);
+
+        $response = app(LeadController::class)->index(Request::create('/admin/crm', 'GET'));
+
+        $this->assertSame('admin.crm.index', $response->name());
+        $this->assertTrue($response->getData()['canCrossOrgExport']);
+        $this->assertCount(2, $response->getData()['exportOrganizations']);
+    }
+
+    public function test_index_hides_cross_org_export_options_for_non_legacy_admin(): void
+    {
+        $organization = $this->createOrganization('Scoped Org');
+
+        $admin = User::factory()->create(['organization_id' => $organization->id]);
+        $admin->assignRole('admin');
+
+        $this->actingAs($admin);
+
+        $response = app(LeadController::class)->index(Request::create('/admin/crm', 'GET'));
+
+        $this->assertSame('admin.crm.index', $response->name());
+        $this->assertFalse($response->getData()['canCrossOrgExport']);
+        $this->assertCount(0, $response->getData()['exportOrganizations']);
     }
 
     private function createOrganization(string $name): Organization
