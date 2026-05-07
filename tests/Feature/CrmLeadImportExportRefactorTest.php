@@ -5,7 +5,9 @@ namespace Tests\Feature;
 use App\Http\Controllers\Admin\LeadController;
 use App\Http\Controllers\Admin\LeadImportController;
 use App\Models\Lead;
+use App\Models\LeadActivity;
 use App\Models\LeadDrive;
+use App\Models\LeadEmail;
 use App\Models\Organization;
 use App\Models\User;
 use App\Services\Crm\LeadExportService;
@@ -647,6 +649,164 @@ class CrmLeadImportExportRefactorTest extends TestCase
             $this->fail('Expected a 403 exception when exporting another organization.');
         } catch (HttpException $exception) {
             $this->assertSame(403, $exception->getStatusCode());
+        }
+    }
+
+    public function test_migration_export_json_includes_relationship_mappings_and_histories(): void
+    {
+        $organization = $this->createOrganization('Migration Org');
+        $drive = $this->createDrive($organization, 'Migration Pipeline');
+
+        $admin = User::factory()->create(['organization_id' => $organization->id]);
+        $admin->assignRole('admin');
+
+        $assignee = User::factory()->create(['organization_id' => $organization->id]);
+        $assignee->assignRole('staff');
+
+        $lead = Lead::create([
+            'organization_id' => $organization->id,
+            'drive_id' => $drive->id,
+            'created_by' => $admin->id,
+            'assigned_to' => $assignee->id,
+            'first_name' => 'Migrate',
+            'last_name' => 'Lead',
+            'email' => 'migrate@example.com',
+            'status' => 'new',
+            'source' => 'website',
+            'priority' => 'high',
+            'notes' => 'Important migration lead',
+        ]);
+
+        LeadActivity::create([
+            'lead_id' => $lead->id,
+            'user_id' => $admin->id,
+            'type' => 'status_change',
+            'title' => 'Status changed',
+            'description' => 'Updated from contacted to new',
+            'old_value' => 'contacted',
+            'new_value' => 'new',
+            'metadata' => ['reason' => 'retry'],
+        ]);
+
+        LeadActivity::create([
+            'lead_id' => $lead->id,
+            'user_id' => $assignee->id,
+            'type' => 'follow_up',
+            'title' => 'Follow up scheduled',
+            'description' => 'Call next week',
+            'scheduled_at' => now()->addDays(7),
+            'is_completed' => false,
+        ]);
+
+        LeadEmail::create([
+            'lead_id' => $lead->id,
+            'user_id' => $admin->id,
+            'from_email' => 'admin@example.com',
+            'to_email' => 'migrate@example.com',
+            'subject' => 'Welcome',
+            'body' => 'Welcome body',
+            'direction' => 'outgoing',
+            'status' => 'sent',
+            'sent_at' => now(),
+        ]);
+
+        $this->actingAs($admin);
+
+        $response = app(LeadController::class)->export(
+            Request::create('/admin/crm/export', 'GET', [
+                'organization_id' => $organization->id,
+                'format' => 'migration_json',
+            ]),
+            app(LeadExportService::class),
+        );
+
+        ob_start();
+        $response->sendContent();
+        $json = ob_get_clean();
+        $payload = json_decode($json, true);
+
+        $this->assertIsArray($payload);
+        $this->assertSame('crm-leads-migration.v1', $payload['schema_version']);
+        $this->assertSame($organization->id, $payload['organization']['id']);
+        $this->assertSame(1, $payload['metadata']['lead_count']);
+        $this->assertNotEmpty($payload['mappings']['statuses']);
+        $this->assertCount(1, $payload['leads']);
+        $this->assertSame('migrate@example.com', $payload['leads'][0]['lead']['email']);
+        $this->assertSame('Migration Pipeline', $payload['leads'][0]['pipeline']['name']);
+        $this->assertSame($assignee->id, $payload['leads'][0]['assigned_user']['id']);
+        $this->assertCount(1, $payload['leads'][0]['status_history']);
+        $this->assertCount(1, $payload['leads'][0]['tasks_reminders']);
+        $this->assertCount(1, $payload['leads'][0]['emails']);
+    }
+
+    public function test_migration_export_json_is_organization_scoped(): void
+    {
+        $organization = $this->createOrganization('Migration Scoped Org');
+        $otherOrganization = $this->createOrganization('Migration Other Org');
+
+        $drive = $this->createDrive($organization, 'Scoped Pipeline');
+        $otherDrive = $this->createDrive($otherOrganization, 'Other Pipeline');
+
+        $admin = User::factory()->create(['organization_id' => $organization->id]);
+        $admin->assignRole('admin');
+
+        Lead::create([
+            'organization_id' => $organization->id,
+            'drive_id' => $drive->id,
+            'first_name' => 'Scoped',
+            'email' => 'scoped@example.com',
+            'status' => 'new',
+            'source' => 'website',
+            'priority' => 'medium',
+        ]);
+
+        Lead::create([
+            'organization_id' => $otherOrganization->id,
+            'drive_id' => $otherDrive->id,
+            'first_name' => 'Foreign',
+            'email' => 'foreign-migration@example.com',
+            'status' => 'new',
+            'source' => 'website',
+            'priority' => 'medium',
+        ]);
+
+        $this->actingAs($admin);
+
+        $response = app(LeadController::class)->export(
+            Request::create('/admin/crm/export', 'GET', [
+                'organization_id' => $organization->id,
+                'format' => 'migration_json',
+            ]),
+            app(LeadExportService::class),
+        );
+
+        ob_start();
+        $response->sendContent();
+        $json = ob_get_clean();
+        $payload = json_decode($json, true);
+
+        $this->assertCount(1, $payload['leads']);
+        $this->assertSame('scoped@example.com', $payload['leads'][0]['lead']['email']);
+    }
+
+    public function test_migration_export_requires_specific_organization_context(): void
+    {
+        $legacyAdmin = User::factory()->create(['organization_id' => null]);
+        $legacyAdmin->assignRole('admin');
+
+        $this->actingAs($legacyAdmin);
+
+        try {
+            app(LeadController::class)->export(
+                Request::create('/admin/crm/export', 'GET', [
+                    'format' => 'migration_json',
+                ]),
+                app(LeadExportService::class),
+            );
+
+            $this->fail('Expected a 422 exception when organization_id is omitted for migration export.');
+        } catch (HttpException $exception) {
+            $this->assertSame(422, $exception->getStatusCode());
         }
     }
 

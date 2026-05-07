@@ -181,17 +181,17 @@
                 </a>
                 @hasanyrole('admin|supervisor')
                     <!--
-                            <a href="{{ orgRoute('admin.crm.statuses.index') }}" class="btn btn-outline-dark">
-                                <i class="fa fa-tags me-2"></i>Manage Statuses
-                            </a>  -->
+                                <a href="{{ orgRoute('admin.crm.statuses.index') }}" class="btn btn-outline-dark">
+                                    <i class="fa fa-tags me-2"></i>Manage Statuses
+                                </a>  -->
                     <a href="{{ orgRoute('admin.crm.settings') }}" class="btn btn-outline-secondary">
                         <i class="fa fa-cog me-2"></i>CRM Settings
                     </a>
 
                     <!--
-                    <a href="{{ orgRoute('admin.crm.import-activity') }}" class="btn btn-outline-dark">
-                        <i class="fa fa-chart-bar me-2"></i>Import Activity
-                    </a> -->
+                        <a href="{{ orgRoute('admin.crm.import-activity') }}" class="btn btn-outline-dark">
+                            <i class="fa fa-chart-bar me-2"></i>Import Activity
+                        </a> -->
                 @endhasanyrole
                 <a href="{{ orgRoute('admin.crm.import') }}" class="btn btn-outline-success">
                     <i class="fa fa-file-import me-2"></i>Import Leads
@@ -199,7 +199,7 @@
                 @if (($canCrossOrgExport ?? false) && $exportOrganizations->count() > 0)
                     <form method="GET" action="{{ orgRoute('admin.crm.export') }}"
                         class="d-flex gap-2 align-items-center">
-                        @foreach (request()->except('page', 'organization_id') as $key => $value)
+                        @foreach (request()->except('page', 'organization_id', 'format') as $key => $value)
                             @if (is_array($value))
                                 @foreach ($value as $item)
                                     <input type="hidden" name="{{ $key }}[]" value="{{ $item }}">
@@ -222,15 +222,25 @@
                             @endforeach
                         </select>
 
-                        <button type="submit" class="btn btn-outline-secondary">
+                        <button type="submit" name="format" value="csv" class="btn btn-outline-secondary">
                             <i class="fa fa-download me-2"></i>Export CSV
+                        </button>
+
+                        <button type="submit" name="format" value="migration_json" class="btn btn-outline-dark">
+                            <i class="fa fa-database me-2"></i>Export Migration JSON
                         </button>
                     </form>
                 @else
-                    <a href="{{ orgRoute('admin.crm.export', request()->except('page', 'organization_id')) }}"
-                        class="btn btn-outline-secondary">
-                        <i class="fa fa-download me-2"></i>Export CSV
-                    </a>
+                    <div class="btn-group" role="group" aria-label="Lead export options">
+                        <a href="{{ orgRoute('admin.crm.export', array_merge(request()->except('page', 'organization_id', 'format'), ['format' => 'csv'])) }}"
+                            class="btn btn-outline-secondary">
+                            <i class="fa fa-download me-2"></i>Export CSV
+                        </a>
+                        <a href="{{ orgRoute('admin.crm.export', array_merge(request()->except('page', 'organization_id', 'format'), ['format' => 'migration_json'])) }}"
+                            class="btn btn-outline-dark">
+                            <i class="fa fa-database me-2"></i>Export Migration JSON
+                        </a>
+                    </div>
                 @endif
                 <a href="{{ orgRoute('admin.crm.create') }}" class="btn btn-primary">
                     <i class="fa fa-plus me-2"></i>Add New Lead
@@ -276,7 +286,8 @@
                                 </ul>
                             </div>
                             @if (session('more_errors'))
-                                <p class="mt-2 mb-0 text-muted small">...and {{ session('more_errors') }} more issue(s)
+                                <p class="mt-2 mb-0 text-muted small">...and {{ session('more_errors') }} more
+                                    issue(s)
                                     not shown.</p>
                             @endif
                             <div class="mt-3">

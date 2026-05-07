@@ -58,6 +58,21 @@ return new class extends Migration
      */
     private function getExistingIndexNames(): array
     {
+        $driver = DB::connection()->getDriverName();
+
+        if ($driver === 'sqlite') {
+            $rows = DB::select("PRAGMA index_list('leads')");
+
+            return collect($rows)
+                ->map(function ($row) {
+                    $name = is_array($row) ? ($row['name'] ?? null) : ($row->name ?? null);
+                    return is_string($name) ? strtolower($name) : null;
+                })
+                ->filter()
+                ->values()
+                ->all();
+        }
+
         $dbName = DB::connection()->getDatabaseName();
 
         return DB::table('information_schema.statistics')
@@ -65,7 +80,7 @@ return new class extends Migration
             ->where('table_name', 'leads')
             ->distinct()
             ->pluck('index_name')
-            ->map(fn ($n) => strtolower($n))
+            ->map(fn($n) => strtolower($n))
             ->toArray();
     }
 };

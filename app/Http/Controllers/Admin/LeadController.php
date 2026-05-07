@@ -1239,7 +1239,10 @@ class LeadController extends Controller
 
         $validated = $request->validate([
             'organization_id' => 'nullable|integer|exists:organizations,id',
+            'format' => ['nullable', Rule::in(['csv', 'migration_json'])],
         ]);
+
+        $format = $validated['format'] ?? 'csv';
 
         // Default to the caller's own organization context when no explicit target is provided.
         $targetOrganizationId = array_key_exists('organization_id', $validated)
@@ -1255,8 +1258,13 @@ class LeadController extends Controller
             abort(403, 'You are not allowed to export leads for this organization.');
         }
 
+        if ($format === 'migration_json' && is_null($targetOrganizationId)) {
+            abort(422, 'Migration export requires a specific organization context.');
+        }
+
         $request->merge([
             'organization_id' => $targetOrganizationId,
+            'format' => $format,
         ]);
 
         Log::info('CRM leads export requested', [
@@ -1265,10 +1273,13 @@ class LeadController extends Controller
             'request_organization_id' => $request->input('organization_id'),
             'export_organization_id' => $targetOrganizationId,
             'is_legacy_admin_export' => $isLegacyAdmin,
+            'format' => $format,
             'requested_at' => now()->toDateTimeString(),
         ]);
 
-        return $exportService->streamCsv($request, $user);
+        return $format === 'migration_json'
+            ? $exportService->streamMigrationJson($request, $user)
+            : $exportService->streamCsv($request, $user);
     }
 
     /**
