@@ -842,6 +842,21 @@
                                     </div>
                                 </a>
                             </div>
+                            @if (auth()->user() &&
+                                    (auth()->user()->hasRole('admin') || auth()->user()->hasRole('supervisor')) &&
+                                    is_null(auth()->user()->organization_id))
+                                <div class="col-6 col-md-4 col-lg-3">
+                                    <a href="{{ orgRoute('admin.link-tracking.index') }}" class="action-item"
+                                        style="border:1px solid var(--border);border-radius:var(--radius-md);">
+                                        <div class="d-flex align-items-center">
+                                            <div class="action-icon-wrap"
+                                                style="background:rgba(13,110,253,.12);color:#0d6efd;"><i
+                                                    class="bi bi-link-45deg"></i></div>
+                                            <span style="font-size:.8125rem;">Redirect Link Analytics</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endif
                             <div class="col-6 col-md-4 col-lg-3">
                                 <a href="{{ orgRoute('admin.activity.logs') }}" class="action-item"
                                     style="border:1px solid var(--border);border-radius:var(--radius-md);">

@@ -4,6 +4,7 @@ use App\Helpers\ClickTracker;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ClickReportController;
+use App\Http\Controllers\Admin\TrackedLinkAnalyticsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
@@ -20,6 +21,7 @@ use App\Http\Controllers\ResourceHubController;
 use App\Http\Controllers\SeatController;
 use App\Http\Controllers\submitStudent;
 use App\Http\Controllers\UserEventController;
+use App\Http\Controllers\TrackedLinkRedirectController;
 use App\Mail\ChallengeSubmission;
 use App\Models\Click;
 use App\Models\Event;
@@ -40,6 +42,9 @@ Route::get('/run-schedule', function () {
     Artisan::call('schedule:run');
     return 'Schedule run executed!';
 });
+
+Route::get('/r/{tracking_code}', TrackedLinkRedirectController::class)
+    ->name('tracked-links.redirect');
 
 
 Route::get('/admin/login', [LoginController::class, 'viewLogin'])->name('login');
@@ -443,6 +448,11 @@ Route::middleware(['auth', 'check.suspended', 'resolve.org', 'role:admin|supervi
         Route::get('/clicks/export', [ClickReportController::class, 'export'])->name('clicks.export');
         Route::post('/clicks/backfill-countries', [ClickReportController::class, 'backfillCountries'])->name('clicks.backfill-countries');
 
+        Route::middleware('legacy.analytics')->group(function () {
+            Route::get('/link-tracking', [TrackedLinkAnalyticsController::class, 'index'])->name('link-tracking.index');
+            Route::get('/link-tracking/export', [TrackedLinkAnalyticsController::class, 'export'])->name('link-tracking.export');
+        });
+
         Route::post('/playbooks/resend-funding', [\App\Http\Controllers\PlaybookController::class, 'resendFundingReadinessPending'])->name('playbooks.resend-funding');
 
         // Projects
@@ -667,6 +677,11 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
     Route::get('/clicks/report', [ClickReportController::class, 'index'])->name('clicks.report');
     Route::get('/clicks/export', [ClickReportController::class, 'export'])->name('clicks.export');
     Route::post('/clicks/backfill-countries', [ClickReportController::class, 'backfillCountries'])->name('clicks.backfill-countries');
+
+    Route::middleware('legacy.analytics')->group(function () {
+        Route::get('/link-tracking', [TrackedLinkAnalyticsController::class, 'index'])->name('link-tracking.index');
+        Route::get('/link-tracking/export', [TrackedLinkAnalyticsController::class, 'export'])->name('link-tracking.export');
+    });
 
     // Playbook email resend functionality
     Route::post('/playbooks/resend-funding', [\App\Http\Controllers\PlaybookController::class, 'resendFundingReadinessPending'])->name('playbooks.resend-funding');
