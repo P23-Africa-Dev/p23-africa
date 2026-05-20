@@ -2,7 +2,12 @@
 
 namespace App\Providers;
 
+use App\Events\WhatsAppConversationAssigned;
+use App\Events\WhatsAppMessageReceived;
+use App\Listeners\NotifyAssignedAdminOfIncomingWhatsAppMessage;
+use App\Listeners\SendWhatsAppAssignmentNotification;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,6 +30,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Event::listen(
+            WhatsAppMessageReceived::class,
+            NotifyAssignedAdminOfIncomingWhatsAppMessage::class
+        );
+
+        Event::listen(
+            WhatsAppConversationAssigned::class,
+            SendWhatsAppAssignmentNotification::class
+        );
     }
 }

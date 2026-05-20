@@ -20,6 +20,13 @@ class Kernel extends ConsoleKernel
             ->timezone(config('app.timezone'))
             ->withoutOverlapping()
             ->appendOutputTo(storage_path('logs/scheduler.log'));
+
+        if ((bool) config('whatsapp.queue', true)) {
+            $schedule->command('queue:work --queue=whatsapp,default --stop-when-empty --tries=5 --max-time=50')
+                ->everyMinute()
+                ->withoutOverlapping()
+                ->appendOutputTo(storage_path('logs/whatsapp-queue.log'));
+        }
     }
 
     protected function commands()

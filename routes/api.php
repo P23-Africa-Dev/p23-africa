@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\BrnTokenController;
 use App\Http\Controllers\Api\EventController;
+use App\Http\Controllers\Api\WhatsAppWebhookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -47,3 +48,10 @@ Route::prefix('brn')->group(function () {
 // Lead Email Webhook - for receiving email replies from external email providers
 Route::post('/webhooks/lead-email/inbound', [App\Http\Controllers\Api\LeadEmailWebhookController::class, 'handleInbound'])
     ->name('api.webhooks.lead-email.inbound');
+
+// WhatsApp Cloud API webhooks (Meta)
+Route::get('/whatsapp/webhook', [WhatsAppWebhookController::class, 'verify'])
+    ->name('api.whatsapp.webhook.verify');
+
+Route::post('/whatsapp/webhook', [WhatsAppWebhookController::class, 'receive'])
+    ->name('api.whatsapp.webhook.receive');

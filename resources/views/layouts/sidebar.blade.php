@@ -59,6 +59,15 @@
                 <span class="sidebar-text">CRM</span>
             </a>
 
+            {{-- WhatsApp (admin only) --}}
+            @if (auth()->user() && auth()->user()->hasRole('admin'))
+                <a href="{{ url($sidebarOrgPrefix . '/admin/whatsapp/conversations') }}" data-tooltip="WhatsApp"
+                    class="sidebar-item {{ request()->routeIs('admin.whatsapp.*', 'org.admin.whatsapp.*') ? 'active' : '' }}">
+                    <span class="sidebar-icon"><i class="bi bi-whatsapp"></i></span>
+                    <span class="sidebar-text">WhatsApp</span>
+                </a>
+            @endif
+
             {{-- Spreadsheets --}}
             <a href="{{ url($sidebarOrgPrefix . '/admin/spreadsheets') }}" data-tooltip="Spreadsheets"
                 class="sidebar-item {{ request()->routeIs('admin.spreadsheets.*', 'org.admin.spreadsheets.*') ? 'active' : '' }}">

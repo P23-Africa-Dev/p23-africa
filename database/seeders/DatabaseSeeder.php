@@ -16,10 +16,10 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         AdminUserSeeder::class;
-        
-        Permission::create(['name' => 'manage_events']);
-        Permission::create(['name' => 'resource_hub']);
-        Permission::create(['name' => 'view_students']);
+
+        // Permission::create(['name' => 'manage_events']);
+        // Permission::create(['name' => 'resource_hub']);
+        // Permission::create(['name' => 'view_students']);
 
         $adminRole = Role::create(['name' => 'admin']);
         $supervisorRole = Role::create(['name' => 'supervisor']);

@@ -370,6 +370,27 @@ Route::middleware(['auth', 'check.suspended', 'resolve.org', 'role:admin|supervi
             Route::post('/consultation/chat/mark-read/{messageId}', [\App\Http\Controllers\Admin\ConsultationController::class, 'markMessageAsRead'])->name('consultation.chat.markRead');
         });
 
+        // WhatsApp module (admin only)
+        Route::middleware('role:admin')->prefix('whatsapp')->name('whatsapp.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Admin\WhatsAppController::class, 'overview'])->name('overview');
+            Route::get('/overview', [\App\Http\Controllers\Admin\WhatsAppController::class, 'overview'])->name('overview.index');
+            Route::get('/conversations', [\App\Http\Controllers\Admin\WhatsAppController::class, 'conversations'])->name('conversations');
+            Route::post('/conversations/{conversation}/messages', [\App\Http\Controllers\Admin\WhatsAppController::class, 'sendMessage'])->name('messages.send');
+            Route::patch('/conversations/{conversation}', [\App\Http\Controllers\Admin\WhatsAppController::class, 'updateConversation'])->name('conversations.update');
+            Route::post('/conversations/{conversation}/notes', [\App\Http\Controllers\Admin\WhatsAppController::class, 'addNote'])->name('notes.store');
+            Route::post('/conversations/{conversation}/mark-read', [\App\Http\Controllers\Admin\WhatsAppController::class, 'markRead'])->name('conversations.mark-read');
+            Route::get('/templates', [\App\Http\Controllers\Admin\WhatsAppController::class, 'templates'])->name('templates');
+            Route::post('/templates', [\App\Http\Controllers\Admin\WhatsAppController::class, 'storeTemplate'])->name('templates.store');
+            Route::put('/templates/{template}', [\App\Http\Controllers\Admin\WhatsAppController::class, 'updateTemplate'])->name('templates.update');
+            Route::get('/contacts', [\App\Http\Controllers\Admin\WhatsAppController::class, 'contacts'])->name('contacts');
+            Route::patch('/contacts/{contact}', [\App\Http\Controllers\Admin\WhatsAppController::class, 'updateContact'])->name('contacts.update');
+            Route::get('/settings', [\App\Http\Controllers\Admin\WhatsAppController::class, 'settings'])->name('settings');
+            Route::post('/settings/account', [\App\Http\Controllers\Admin\WhatsAppController::class, 'saveAccount'])->name('settings.account.save');
+            Route::get('/account-setup', [\App\Http\Controllers\Admin\WhatsAppController::class, 'accountSetup'])->name('account-setup');
+            Route::get('/webhook-logs', [\App\Http\Controllers\Admin\WhatsAppController::class, 'webhookLogs'])->name('webhook-logs');
+            Route::get('/poll', [\App\Http\Controllers\Admin\WhatsAppController::class, 'poll'])->name('poll');
+        });
+
         // CRM
         Route::get('/crm', [\App\Http\Controllers\Admin\LeadController::class, 'index'])->name('crm.index');
         Route::get('/crm/create', [\App\Http\Controllers\Admin\LeadController::class, 'create'])->name('crm.create');
@@ -570,6 +591,27 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
         Route::post('/consultations/{id}/reply', [\App\Http\Controllers\Admin\ConsultationController::class, 'sendReply'])->name('consultation.reply');
         Route::post('/consultations/{id}/manual-schedule', [\App\Http\Controllers\Admin\ConsultationController::class, 'manualSchedule'])->name('consultation.manual-schedule');
         Route::post('/consultation/chat/mark-read/{messageId}', [\App\Http\Controllers\Admin\ConsultationController::class, 'markMessageAsRead'])->name('consultation.chat.markRead');
+    });
+
+    // WhatsApp module (admin only)
+    Route::middleware('role:admin')->prefix('whatsapp')->name('whatsapp.')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Admin\WhatsAppController::class, 'overview'])->name('overview');
+        Route::get('/overview', [\App\Http\Controllers\Admin\WhatsAppController::class, 'overview'])->name('overview.index');
+        Route::get('/conversations', [\App\Http\Controllers\Admin\WhatsAppController::class, 'conversations'])->name('conversations');
+        Route::post('/conversations/{conversation}/messages', [\App\Http\Controllers\Admin\WhatsAppController::class, 'sendMessage'])->name('messages.send');
+        Route::patch('/conversations/{conversation}', [\App\Http\Controllers\Admin\WhatsAppController::class, 'updateConversation'])->name('conversations.update');
+        Route::post('/conversations/{conversation}/notes', [\App\Http\Controllers\Admin\WhatsAppController::class, 'addNote'])->name('notes.store');
+        Route::post('/conversations/{conversation}/mark-read', [\App\Http\Controllers\Admin\WhatsAppController::class, 'markRead'])->name('conversations.mark-read');
+        Route::get('/templates', [\App\Http\Controllers\Admin\WhatsAppController::class, 'templates'])->name('templates');
+        Route::post('/templates', [\App\Http\Controllers\Admin\WhatsAppController::class, 'storeTemplate'])->name('templates.store');
+        Route::put('/templates/{template}', [\App\Http\Controllers\Admin\WhatsAppController::class, 'updateTemplate'])->name('templates.update');
+        Route::get('/contacts', [\App\Http\Controllers\Admin\WhatsAppController::class, 'contacts'])->name('contacts');
+        Route::patch('/contacts/{contact}', [\App\Http\Controllers\Admin\WhatsAppController::class, 'updateContact'])->name('contacts.update');
+        Route::get('/settings', [\App\Http\Controllers\Admin\WhatsAppController::class, 'settings'])->name('settings');
+        Route::post('/settings/account', [\App\Http\Controllers\Admin\WhatsAppController::class, 'saveAccount'])->name('settings.account.save');
+        Route::get('/account-setup', [\App\Http\Controllers\Admin\WhatsAppController::class, 'accountSetup'])->name('account-setup');
+        Route::get('/webhook-logs', [\App\Http\Controllers\Admin\WhatsAppController::class, 'webhookLogs'])->name('webhook-logs');
+        Route::get('/poll', [\App\Http\Controllers\Admin\WhatsAppController::class, 'poll'])->name('poll');
     });
 
     // CRM - Lead Management
