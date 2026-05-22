@@ -11,19 +11,22 @@ use App\Models\WhatsAppMessage;
 use App\Services\WhatsApp\Hooks\FutureIntegrationBridge;
 use Carbon\Carbon;
 use RuntimeException;
+use Illuminate\Support\Facades\Log;
 
 class MessageService
 {
     public function __construct(
         protected WhatsAppService $whatsAppService,
         protected ConversationService $conversationService,
+        protected MessageStatusSyncService $messageStatusSyncService,
+        protected WhatsAppRealtimeDebugService $realtimeDebugService,
         protected FutureIntegrationBridge $futureHooks,
     ) {}
 
     public function queueTextMessage(WhatsAppConversation $conversation, int $senderId, string $body, ?int $accountId = null): WhatsAppMessage
     {
         if (!$this->whatsAppService->isEnabled()) {
-            throw new RuntimeException('WhatsApp module is disabled.');
+            throw new RuntimeException('WhatsApp module is disabled. Set WHATSAPP_ENABLED=true (or provide a valid WhatsApp account config), then clear and recache Laravel config.');
         }
 
         $message = WhatsAppMessage::create([
@@ -36,6 +39,8 @@ class MessageService
                 'account_id' => $accountId,
             ],
             'status' => WhatsAppMessage::STATUS_QUEUED,
+            'status_dirty' => true,
+            'status_updated_at' => now(),
         ]);
 
         $conversation->update([
@@ -73,6 +78,8 @@ class MessageService
         $message->update([
             'whatsapp_message_id' => data_get($response, 'messages.0.id'),
             'status' => WhatsAppMessage::STATUS_SENT,
+            'status_dirty' => true,
+            'status_updated_at' => now(),
             'sent_at' => now(),
             'payload' => array_merge($message->payload ?? [], [
                 'response' => $response,
@@ -85,7 +92,16 @@ class MessageService
             $this->futureHooks->onOutgoingMessage($message->conversation, $message);
         }
 
-        event(new WhatsAppMessageSent($message));
+        $this->realtimeDebugService->logStatusSync($message?->id, $message?->status, [
+            'conversation_id' => $message?->conversation_id,
+            'source' => 'process_outgoing_message',
+        ]);
+
+        $this->dispatchRealtimeEvent(new WhatsAppMessageSent($message), [
+            'conversation_id' => $message->conversation_id,
+            'message_id' => $message->id,
+            'direction' => 'outgoing',
+        ]);
 
         return $message;
     }
@@ -94,9 +110,16 @@ class MessageService
     {
         $message->update([
             'status' => WhatsAppMessage::STATUS_FAILED,
+            'status_dirty' => true,
+            'status_updated_at' => now(),
             'payload' => array_merge($message->payload ?? [], [
                 'error' => $error,
             ]),
+        ]);
+
+        $this->realtimeDebugService->logStatusSync($message->id, WhatsAppMessage::STATUS_FAILED, [
+            'conversation_id' => $message->conversation_id,
+            'source' => 'mark_failed',
         ]);
     }
 
@@ -146,52 +169,27 @@ class MessageService
             $this->futureHooks->onIncomingMessage($message->conversation, $message);
         }
 
-        event(new WhatsAppMessageReceived($message));
+        $this->dispatchRealtimeEvent(new WhatsAppMessageReceived($message), [
+            'conversation_id' => $message->conversation_id,
+            'message_id' => $message->id,
+            'direction' => 'incoming',
+        ]);
 
         return $message;
     }
 
     public function handleStatusUpdate(array $statusPayload): ?WhatsAppMessage
     {
-        $whatsAppMessageId = data_get($statusPayload, 'id');
-
-        if (!$whatsAppMessageId) {
-            return null;
-        }
-
-        $message = WhatsAppMessage::query()
-            ->where('whatsapp_message_id', $whatsAppMessageId)
-            ->orderByDesc('id')
-            ->first();
+        $message = $this->messageStatusSyncService->syncMessageStatus($statusPayload);
 
         if (!$message) {
             return null;
         }
 
-        $mappedStatus = $this->mapStatus((string) data_get($statusPayload, 'status', 'sent'));
-
-        $updates = [
-            'status' => $mappedStatus,
-        ];
-
-        $timestamp = data_get($statusPayload, 'timestamp');
-        if ($timestamp) {
-            $eventAt = Carbon::createFromTimestamp((int) $timestamp);
-
-            if ($mappedStatus === WhatsAppMessage::STATUS_DELIVERED) {
-                $updates['delivered_at'] = $eventAt;
-            }
-
-            if ($mappedStatus === WhatsAppMessage::STATUS_READ) {
-                $updates['read_at'] = $eventAt;
-                if (!$message->delivered_at) {
-                    $updates['delivered_at'] = $eventAt;
-                }
-            }
-        }
-
-        $message->update($updates);
-        $message = $message->fresh(['conversation.contact', 'conversation.assignedUser']);
+        $this->realtimeDebugService->logStatusSync($message->id, $message->status, [
+            'conversation_id' => $message->conversation_id,
+            'source' => 'webhook_status_update',
+        ]);
 
         if ($message && $message->conversation) {
             $this->futureHooks->onMessageLifecycleEvent('status_updated', $message->conversation, $message, [
@@ -199,20 +197,13 @@ class MessageService
             ]);
         }
 
-        event(new WhatsAppMessageStatusUpdated($message));
+        $this->dispatchRealtimeEvent(new WhatsAppMessageStatusUpdated($message), [
+            'conversation_id' => $message->conversation_id,
+            'message_id' => $message->id,
+            'direction' => 'status',
+        ]);
 
         return $message;
-    }
-
-    protected function mapStatus(string $status): string
-    {
-        return match (strtolower($status)) {
-            'sent' => WhatsAppMessage::STATUS_SENT,
-            'delivered' => WhatsAppMessage::STATUS_DELIVERED,
-            'read' => WhatsAppMessage::STATUS_READ,
-            'failed' => WhatsAppMessage::STATUS_FAILED,
-            default => WhatsAppMessage::STATUS_SENT,
-        };
     }
 
     protected function extractBody(array $messagePayload): ?string
@@ -228,5 +219,17 @@ class MessageService
             'interactive' => '[Interactive Message]',
             default => '[Unsupported message type: ' . $type . ']',
         };
+    }
+
+    protected function dispatchRealtimeEvent(object $event, array $context = []): void
+    {
+        try {
+            event($event);
+        } catch (\Throwable $exception) {
+            Log::warning('WhatsApp realtime event dispatch skipped', array_merge($context, [
+                'event' => get_class($event),
+                'error' => $exception->getMessage(),
+            ]));
+        }
     }
 }

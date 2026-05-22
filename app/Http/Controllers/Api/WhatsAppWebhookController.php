@@ -28,7 +28,7 @@ class WhatsAppWebhookController extends Controller
     {
         $rawPayload = $request->getContent();
         $payload = $request->all();
-        $signatureHeader = $request->header('X-Hub-Signature-256');
+        $signatureHeader = $this->resolveSignatureHeader($request);
 
         $signatureValid = $webhookService->verifySignature($rawPayload, $signatureHeader);
 
@@ -57,5 +57,13 @@ class WhatsAppWebhookController extends Controller
             'message' => 'Webhook processed.',
             'log_id' => $log->id,
         ]);
+    }
+
+    protected function resolveSignatureHeader(Request $request): ?string
+    {
+        return $request->header('X-Hub-Signature-256')
+            ?? $request->header('x-hub-signature-256')
+            ?? $request->server('HTTP_X_HUB_SIGNATURE_256')
+            ?? $request->server('X_HUB_SIGNATURE_256');
     }
 }

@@ -22,7 +22,7 @@ class Kernel extends ConsoleKernel
             ->appendOutputTo(storage_path('logs/scheduler.log'));
 
         if ((bool) config('whatsapp.queue', true)) {
-            $schedule->command('queue:work --queue=whatsapp,default --stop-when-empty --tries=5 --max-time=50')
+            $schedule->command('queue:work --queue=whatsapp --stop-when-empty --tries=5 --max-time=50')
                 ->everyMinute()
                 ->withoutOverlapping()
                 ->appendOutputTo(storage_path('logs/whatsapp-queue.log'));

@@ -30,20 +30,33 @@ class WebhookService
 
     public function verifySignature(string $rawPayload, ?string $signatureHeader): bool
     {
-        $secret = (string) config('whatsapp.webhook_secret');
+        $secret = trim((string) config('whatsapp.webhook_secret'));
 
         if ($secret === '') {
             return true;
         }
 
-        if (!$signatureHeader || !str_starts_with($signatureHeader, 'sha256=')) {
+        if (!$signatureHeader) {
             return false;
         }
 
-        $providedSignature = substr($signatureHeader, 7);
+        $signatureHeader = trim($signatureHeader);
+
+        // Meta sends: X-Hub-Signature-256: sha256=<hex hash>
+        // Some proxies may strip prefix and pass only the hash, so support both.
+        if (str_starts_with(strtolower($signatureHeader), 'sha256=')) {
+            $providedSignature = substr($signatureHeader, 7);
+        } else {
+            $providedSignature = $signatureHeader;
+        }
+
+        if ($providedSignature === '') {
+            return false;
+        }
+
         $expectedSignature = hash_hmac('sha256', $rawPayload, $secret);
 
-        return hash_equals($expectedSignature, $providedSignature);
+        return hash_equals(strtolower($expectedSignature), strtolower($providedSignature));
     }
 
     public function handleWebhook(array $payload, array $headers = [], bool $signatureValid = true): WhatsAppWebhookLog

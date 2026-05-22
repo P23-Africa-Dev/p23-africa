@@ -45,6 +45,7 @@
                                 <th>Status</th>
                                 <th>Error</th>
                                 <th>Received</th>
+                                <th>Headers</th>
                                 <th class="pe-3">Payload</th>
                             </tr>
                         </thead>
@@ -69,6 +70,12 @@
                                             class="text-danger">{{ \Illuminate\Support\Str::limit($log->error_message, 50) }}</small>
                                     </td>
                                     <td>{{ optional($log->created_at)->format('Y-m-d H:i:s') }}</td>
+                                    <td style="min-width:240px;">
+                                        <details>
+                                            <summary class="small">View Headers</summary>
+                                            <pre class="small mt-2 mb-0">{{ json_encode($log->headers, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) }}</pre>
+                                        </details>
+                                    </td>
                                     <td class="pe-3" style="min-width:260px;">
                                         <details>
                                             <summary class="small">View JSON</summary>
@@ -78,14 +85,14 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7" class="text-center py-4 text-muted">No webhook logs yet.</td>
+                                    <td colspan="8" class="text-center py-4 text-muted">No webhook logs yet.</td>
                                 </tr>
                             @endforelse
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="card-footer">{{ $logs->links() }}</div>
+            <div class="card-footer">{{ $logs->links('pagination::bootstrap-5') }}</div>
         </div>
     </div>
 </x-app-layout>

@@ -20,13 +20,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin-ui.css') }}">
-    @env('local')
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @endenv
-    @env('production')
-        <link rel="stylesheet" href="{{ asset('build/assets/app-B1LvQkRQ.css') }}">
-        <script src="{{ asset('build/assets/app-BGjDqbHR.js') }}" defer></script>
-    @endenv
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <x-head.tinymce-config />
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @stack('head')

@@ -11,6 +11,7 @@ use App\Services\WhatsApp\Hooks\FutureIntegrationBridge;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Log;
 use InvalidArgumentException;
 
 class ConversationService
@@ -131,7 +132,15 @@ class ConversationService
 
         $conversation->refresh()->load('contact', 'assignedUser');
 
-        event(new WhatsAppConversationAssigned($conversation, $assignee));
+        try {
+            event(new WhatsAppConversationAssigned($conversation, $assignee));
+        } catch (\Throwable $exception) {
+            Log::warning('WhatsApp assignment realtime event dispatch skipped', [
+                'conversation_id' => $conversation->id,
+                'assignee_id' => $assignee?->id,
+                'error' => $exception->getMessage(),
+            ]);
+        }
 
         return $conversation;
     }

@@ -31,6 +31,8 @@ class WhatsAppMessage extends Model
         'body',
         'payload',
         'status',
+        'status_dirty',
+        'status_updated_at',
         'sent_at',
         'delivered_at',
         'read_at',
@@ -40,6 +42,8 @@ class WhatsAppMessage extends Model
     {
         return [
             'payload' => 'array',
+            'status_dirty' => 'boolean',
+            'status_updated_at' => 'datetime',
             'sent_at' => 'datetime',
             'delivered_at' => 'datetime',
             'read_at' => 'datetime',

@@ -1,7 +1,8 @@
 <?php
 
 return [
-    'enabled' => (bool) env('WHATSAPP_ENABLED', false),
+    // If null/empty, runtime will auto-enable when a valid account configuration exists.
+    'enabled' => env('WHATSAPP_ENABLED'),
 
     'phone_number_id' => env('WHATSAPP_PHONE_NUMBER_ID'),
 
@@ -20,4 +21,8 @@ return [
     'queue' => (bool) env('WHATSAPP_QUEUE', true),
 
     'poll_interval' => (int) env('WHATSAPP_POLL_INTERVAL', 5),
+
+    'status_poll_interval_ms' => (int) env('WHATSAPP_STATUS_POLL_INTERVAL_MS', 3000),
+
+    'realtime_debug' => (bool) env('WHATSAPP_REALTIME_DEBUG', true),
 ];

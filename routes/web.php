@@ -389,6 +389,8 @@ Route::middleware(['auth', 'check.suspended', 'resolve.org', 'role:admin|supervi
             Route::get('/account-setup', [\App\Http\Controllers\Admin\WhatsAppController::class, 'accountSetup'])->name('account-setup');
             Route::get('/webhook-logs', [\App\Http\Controllers\Admin\WhatsAppController::class, 'webhookLogs'])->name('webhook-logs');
             Route::get('/poll', [\App\Http\Controllers\Admin\WhatsAppController::class, 'poll'])->name('poll');
+            Route::get('/status-poll', [\App\Http\Controllers\Admin\WhatsAppController::class, 'statusPoll'])->name('status-poll');
+            Route::post('/realtime-debug', [\App\Http\Controllers\Admin\WhatsAppController::class, 'realtimeDebug'])->name('realtime-debug');
         });
 
         // CRM
@@ -612,6 +614,8 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
         Route::get('/account-setup', [\App\Http\Controllers\Admin\WhatsAppController::class, 'accountSetup'])->name('account-setup');
         Route::get('/webhook-logs', [\App\Http\Controllers\Admin\WhatsAppController::class, 'webhookLogs'])->name('webhook-logs');
         Route::get('/poll', [\App\Http\Controllers\Admin\WhatsAppController::class, 'poll'])->name('poll');
+        Route::get('/status-poll', [\App\Http\Controllers\Admin\WhatsAppController::class, 'statusPoll'])->name('status-poll');
+        Route::post('/realtime-debug', [\App\Http\Controllers\Admin\WhatsAppController::class, 'realtimeDebug'])->name('realtime-debug');
     });
 
     // CRM - Lead Management

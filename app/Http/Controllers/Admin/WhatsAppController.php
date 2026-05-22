@@ -10,8 +10,10 @@ use App\Models\WhatsAppMessage;
 use App\Models\WhatsAppTemplate;
 use App\Models\WhatsAppWebhookLog;
 use App\Services\WhatsApp\ConversationService;
+use App\Services\WhatsApp\MessageStatusSyncService;
 use App\Services\WhatsApp\MessageService;
 use App\Services\WhatsApp\TemplateService;
+use App\Services\WhatsApp\WhatsAppRealtimeDebugService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -63,7 +65,15 @@ class WhatsAppController extends Controller
 
         $conversations = $conversationService->listConversations($filters, 20);
 
-        $selectedConversationId = (int) ($request->query('conversation') ?: optional($conversations->items()[0] ?? null)->id);
+        $conversationQuery = $request->query('conversation');
+        $selectedConversationId = 0;
+        if ($conversationQuery === 'none') {
+            $selectedConversationId = 0;
+        } elseif ($conversationQuery !== null && $conversationQuery !== '') {
+            $selectedConversationId = (int) $conversationQuery;
+        } else {
+            $selectedConversationId = (int) optional($conversations->items()[0] ?? null)->id;
+        }
         $selectedConversation = null;
 
         if ($selectedConversationId > 0) {
@@ -83,7 +93,10 @@ class WhatsAppController extends Controller
             'assignees' => $conversationService->availableAssignees(),
             'templates' => WhatsAppTemplate::query()->orderBy('name')->get(),
             'pollInterval' => (int) config('whatsapp.poll_interval', 5),
+            'statusPollIntervalMs' => max(1500, (int) config('whatsapp.status_poll_interval_ms', 3000)),
             'totalUnread' => (int) WhatsAppConversation::sum('unread_count'),
+            'realtimeDebugEnabled' => app()->hasDebugModeEnabled() && (bool) config('whatsapp.realtime_debug', true),
+            'pollCursor' => $selectedConversation?->messages->last()?->updated_at?->toIso8601String() ?: now()->subSeconds(((int) config('whatsapp.poll_interval', 5)) + 2)->toIso8601String(),
         ]);
     }
 
@@ -127,6 +140,12 @@ class WhatsAppController extends Controller
                 'data' => [
                     'id' => $message->id,
                     'status' => $message->status,
+                    'conversation_id' => $message->conversation_id,
+                    'sender_type' => $message->sender_type,
+                    'type' => $message->type,
+                    'body' => $message->body,
+                    'created_at' => optional($message->created_at)->toIso8601String(),
+                    'updated_at' => optional($message->updated_at)->toIso8601String(),
                 ],
             ],
             200,
@@ -154,6 +173,13 @@ class WhatsAppController extends Controller
             [
                 'success' => true,
                 'message' => 'Conversation updated successfully.',
+                'data' => [
+                    'conversation_id' => $conversation->id,
+                    'status' => $conversation->status,
+                    'assigned_to' => $conversation->assigned_to,
+                    'unread_count' => $conversation->unread_count,
+                    'updated_at' => optional($conversation->updated_at)->toIso8601String(),
+                ],
             ],
             200,
             'Conversation updated successfully.'
@@ -176,6 +202,8 @@ class WhatsAppController extends Controller
                 'data' => [
                     'id' => $note->id,
                     'note' => $note->note,
+                    'admin_name' => $note->admin?->name ?: $request->user()->name,
+                    'created_at' => now()->toIso8601String(),
                 ],
             ],
             201,
@@ -193,8 +221,12 @@ class WhatsAppController extends Controller
         ]);
     }
 
-    public function poll(Request $request): JsonResponse
+    public function poll(Request $request, ?WhatsAppRealtimeDebugService $debugService = null): JsonResponse
     {
+        $debugService ??= app(WhatsAppRealtimeDebugService::class);
+
+        $conversationId = (int) $request->query('conversation_id', 0);
+        $scope = strtolower((string) $request->query('scope', 'messages'));
         $since = $request->query('since');
 
         try {
@@ -203,12 +235,73 @@ class WhatsAppController extends Controller
             $sinceAt = now()->subMinutes(1);
         }
 
+        if ($conversationId > 0) {
+            $conversation = WhatsAppConversation::query()
+                ->with(['contact', 'assignedUser'])
+                ->find($conversationId);
+
+            if (!$conversation) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Conversation not found.',
+                ], 404);
+            }
+
+            $messages = WhatsAppMessage::query()
+                ->where('conversation_id', $conversationId)
+                ->where('created_at', '>', $sinceAt)
+                ->orderBy('created_at')
+                ->get();
+
+            $debugService->logPollExecution('messages', $conversationId, [
+                'count' => $messages->count(),
+                'since' => optional($sinceAt)->toIso8601String(),
+            ]);
+            $debugService->logMessageRefresh($conversationId, $messages->count(), ['scope' => 'messages']);
+
+            return response()->json([
+                'success' => true,
+                'server_time' => now()->toIso8601String(),
+                'unread_total' => (int) WhatsAppConversation::sum('unread_count'),
+                'conversation' => [
+                    'id' => $conversation->id,
+                    'status' => $conversation->status,
+                    'unread_count' => $conversation->unread_count,
+                    'last_message' => $conversation->last_message,
+                    'updated_at' => optional($conversation->updated_at)->toIso8601String(),
+                    'contact' => [
+                        'name' => $conversation->contact?->name,
+                        'phone' => $conversation->contact?->phone,
+                    ],
+                    'assigned_user' => [
+                        'id' => $conversation->assignedUser?->id,
+                        'name' => $conversation->assignedUser?->name,
+                    ],
+                ],
+                'messages' => $messages,
+            ]);
+        }
+
         $updatedConversations = WhatsAppConversation::query()
             ->with(['contact', 'assignedUser'])
             ->where('updated_at', '>=', $sinceAt)
             ->orderByDesc('updated_at')
             ->limit(100)
             ->get();
+
+        if ($scope === 'conversations') {
+            $debugService->logPollExecution('conversations', null, [
+                'count' => $updatedConversations->count(),
+                'since' => optional($sinceAt)->toIso8601String(),
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'server_time' => now()->toIso8601String(),
+                'unread_total' => (int) WhatsAppConversation::sum('unread_count'),
+                'conversations' => $updatedConversations,
+            ]);
+        }
 
         $conversationIds = $updatedConversations->pluck('id')->values()->all();
 
@@ -221,12 +314,85 @@ class WhatsAppController extends Controller
                 ->get();
         }
 
+        $debugService->logPollExecution('dashboard', null, [
+            'conversation_count' => $updatedConversations->count(),
+            'message_count' => count($messages),
+            'since' => optional($sinceAt)->toIso8601String(),
+        ]);
+
         return response()->json([
             'success' => true,
             'server_time' => now()->toIso8601String(),
             'unread_total' => (int) WhatsAppConversation::sum('unread_count'),
             'conversations' => $updatedConversations,
             'messages' => $messages,
+        ]);
+    }
+
+    public function statusPoll(
+        Request $request,
+        MessageStatusSyncService $statusSyncService,
+        ?WhatsAppRealtimeDebugService $debugService = null
+    ): JsonResponse {
+        $debugService ??= app(WhatsAppRealtimeDebugService::class);
+
+        $conversationId = (int) $request->query('conversation_id', 0);
+        $since = $request->query('since');
+
+        if ($conversationId <= 0) {
+            return response()->json([
+                'success' => false,
+                'message' => 'conversation_id is required.',
+            ], 422);
+        }
+
+        $conversationExists = WhatsAppConversation::query()->whereKey($conversationId)->exists();
+        if (!$conversationExists) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Conversation not found.',
+            ], 404);
+        }
+
+        $statusUpdates = $statusSyncService->getPendingStatusUpdates($conversationId, $since);
+        $statusSyncService->markStatusUpdatesDelivered($statusUpdates->pluck('id'));
+
+        $debugService->logPollExecution('status', $conversationId, [
+            'count' => $statusUpdates->count(),
+            'since' => $since,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'server_time' => now()->toIso8601String(),
+            'conversation_id' => $conversationId,
+            'statuses' => $statusUpdates->map(static function (WhatsAppMessage $message) {
+                return [
+                    'message_id' => $message->id,
+                    'status' => $message->status,
+                    'updated_at' => optional($message->status_updated_at ?: $message->updated_at)->toIso8601String(),
+                ];
+            })->values(),
+        ]);
+    }
+
+    public function realtimeDebug(Request $request, WhatsAppRealtimeDebugService $debugService): JsonResponse
+    {
+        $validated = $request->validate([
+            'event' => ['required', 'string', 'max:120'],
+            'context' => ['nullable', 'array'],
+        ]);
+
+        $debugService->log((string) $validated['event'], [
+            'source' => 'frontend',
+            'context' => Arr::get($validated, 'context', []),
+            'user_id' => $request->user()?->id,
+            'ip' => $request->ip(),
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'enabled' => $debugService->enabled(),
         ]);
     }
 

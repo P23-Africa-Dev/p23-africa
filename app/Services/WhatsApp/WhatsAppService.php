@@ -10,7 +10,25 @@ class WhatsAppService
 {
     public function isEnabled(): bool
     {
-        return (bool) config('whatsapp.enabled', false);
+        $enabled = config('whatsapp.enabled');
+
+        if (is_bool($enabled)) {
+            return $enabled;
+        }
+
+        if (is_string($enabled) && trim($enabled) !== '') {
+            $parsed = filter_var($enabled, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+            if (!is_null($parsed)) {
+                return $parsed;
+            }
+        }
+
+        try {
+            $this->resolveAccount();
+            return true;
+        } catch (\Throwable) {
+            return false;
+        }
     }
 
     public function resolveAccount(?int $accountId = null): array
