@@ -3,6 +3,8 @@ import ScrollManager from './ScrollManager.js';
 import MessageRenderer from './MessageRenderer.js';
 import MessageSyncManager from './MessageSyncManager.js';
 import StatusPollManager from './StatusPollManager.js';
+import HistoryLoader from './HistoryLoader.js';
+import ConversationScrollManager from './ConversationScrollManager.js';
 
 function escapeHtml(value) {
     return String(value || '')
@@ -137,6 +139,9 @@ function initMessaging() {
     }
 
     const listElement = document.querySelector('[data-wa-message-list]');
+    const conversationScrollElement = document.querySelector('[data-wa-conversation-scroll]');
+    const messageScrollElement = document.querySelector('[data-wa-message-scroll]');
+    const historyLoadingElement = document.querySelector('[data-wa-history-loading]');
     const emptyStateElement = document.querySelector('[data-wa-empty-state]');
     const threadContent = document.querySelector('[data-wa-thread-content]');
     const emptyChatWrap = document.querySelector('[data-wa-empty-chat-wrap]');
@@ -154,6 +159,8 @@ function initMessaging() {
     const pollUrl = root?.getAttribute('data-wa-poll-url') || '';
     const statusPollUrl = root?.getAttribute('data-wa-status-poll-url') || '';
     const statusPollIntervalMs = Number(root?.getAttribute('data-wa-status-poll-interval') || 3000);
+    const historyUrl = listElement?.getAttribute('data-wa-history-url') || '';
+    const historyLimit = Number(listElement?.getAttribute('data-wa-history-limit') || 30);
     const sidebarPollUrl = root?.getAttribute('data-wa-sidebar-poll-url') || pollUrl;
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
     const pollIntervalRaw = Number(root?.getAttribute('data-wa-poll-interval') || 5);
@@ -204,6 +211,19 @@ function initMessaging() {
         state,
         listElement,
         intervalMs: statusIntervalMs,
+    });
+    const historyLoader = new HistoryLoader({
+        listElement,
+        renderer,
+        state,
+        historyUrl,
+        emptyStateElement,
+        loadingElement: historyLoadingElement,
+        limit: historyLimit,
+        threshold: 56,
+    });
+    const isolatedScrollManager = new ConversationScrollManager({
+        panels: [conversationScrollElement, messageScrollElement],
     });
 
     const updateSidebarConversationItem = (conversation) => {
@@ -398,9 +418,12 @@ function initMessaging() {
         scrollManager.syncButtonVisibility();
         syncManager.start();
         statusManager.start();
+        historyLoader.start();
         window.setTimeout(() => scrollManager.scrollToBottom('auto'), 0);
         listElement.addEventListener('scroll', saveScroll, { passive: true });
     }
+
+    isolatedScrollManager.start();
 
     startSidebarPolling();
     persistActiveConversation();

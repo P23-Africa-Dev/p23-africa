@@ -76,12 +76,13 @@ class WhatsAppController extends Controller
         }
         $selectedConversation = null;
 
+        $initialMessageLimit = 30;
+
         if ($selectedConversationId > 0) {
-            $selectedConversation = $conversationService->getConversationThread($selectedConversationId, 250);
+            $selectedConversation = $conversationService->getConversationThread($selectedConversationId, $initialMessageLimit);
             if ($selectedConversation->unread_count > 0) {
                 $conversationService->markConversationRead($selectedConversation);
-                $selectedConversation->refresh();
-                $selectedConversation->load(['contact', 'assignedUser', 'messages', 'notes.admin']);
+                $selectedConversation = $conversationService->getConversationThread($selectedConversationId, $initialMessageLimit);
             }
         }
 
@@ -94,9 +95,51 @@ class WhatsAppController extends Controller
             'templates' => WhatsAppTemplate::query()->orderBy('name')->get(),
             'pollInterval' => (int) config('whatsapp.poll_interval', 5),
             'statusPollIntervalMs' => max(1500, (int) config('whatsapp.status_poll_interval_ms', 3000)),
+            'historyPageSize' => $initialMessageLimit,
             'totalUnread' => (int) WhatsAppConversation::sum('unread_count'),
             'realtimeDebugEnabled' => app()->hasDebugModeEnabled() && (bool) config('whatsapp.realtime_debug', true),
             'pollCursor' => $selectedConversation?->messages->last()?->updated_at?->toIso8601String() ?: now()->subSeconds(((int) config('whatsapp.poll_interval', 5)) + 2)->toIso8601String(),
+        ]);
+    }
+
+    public function conversationHistory(Request $request, WhatsAppConversation $conversation): JsonResponse
+    {
+        $validated = $request->validate([
+            'limit' => ['nullable', 'integer', 'min:10', 'max:100'],
+            'before_message_id' => ['nullable', 'integer'],
+            'cursor' => ['nullable', 'date'],
+        ]);
+
+        $limit = (int) Arr::get($validated, 'limit', 30);
+        $beforeMessageId = Arr::get($validated, 'before_message_id');
+        $cursor = Arr::get($validated, 'cursor');
+
+        $query = WhatsAppMessage::query()
+            ->where('conversation_id', $conversation->id)
+            ->orderByDesc('id');
+
+        if ($beforeMessageId) {
+            $query->where('id', '<', (int) $beforeMessageId);
+        }
+
+        if ($cursor) {
+            try {
+                $query->where('created_at', '<', Carbon::parse((string) $cursor));
+            } catch (\Throwable) {
+                // Ignore bad cursor values; limit and id cursor still constrain the query.
+            }
+        }
+
+        $messages = $query->limit($limit + 1)->get();
+        $hasMore = $messages->count() > $limit;
+        $messages = $messages->take($limit)->sortBy('created_at')->values();
+
+        return response()->json([
+            'success' => true,
+            'conversation_id' => $conversation->id,
+            'has_more' => $hasMore,
+            'oldest_message_id' => optional($messages->first())->id,
+            'messages' => $messages,
         ]);
     }
 

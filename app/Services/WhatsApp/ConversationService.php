@@ -40,14 +40,21 @@ class ConversationService
 
     public function getConversationThread(int $conversationId, int $messageLimit = 200): WhatsAppConversation
     {
-        return WhatsAppConversation::query()
+        $conversation = WhatsAppConversation::query()
             ->with([
                 'contact',
                 'assignedUser',
-                'messages' => fn($query) => $query->orderBy('created_at', 'asc')->limit($messageLimit),
+                'messages' => fn($query) => $query->orderByDesc('created_at')->limit($messageLimit),
                 'notes.admin',
             ])
             ->findOrFail($conversationId);
+
+        $conversation->setRelation(
+            'messages',
+            $conversation->messages->sortBy('created_at')->values()
+        );
+
+        return $conversation;
     }
 
     public function findOrCreateConversationForPhone(string $phone, ?string $name = null, array $metadata = []): WhatsAppConversation

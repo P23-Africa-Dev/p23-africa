@@ -371,6 +371,57 @@ class WhatsAppModuleTest extends TestCase
         $this->assertFalse((bool) $latest->fresh()->status_dirty);
     }
 
+    public function test_conversation_history_returns_only_older_messages(): void
+    {
+        $contact = WhatsAppContact::create([
+            'name' => 'History Contact',
+            'phone' => '233511111111',
+        ]);
+
+        $conversation = WhatsAppConversation::create([
+            'contact_id' => $contact->id,
+            'status' => 'open',
+        ]);
+
+        $messages = collect();
+
+        for ($i = 1; $i <= 12; $i++) {
+            $messages->push(WhatsAppMessage::create([
+                'conversation_id' => $conversation->id,
+                'sender_type' => $i % 2 === 0 ? 'admin' : 'contact',
+                'type' => 'text',
+                'body' => 'Message ' . $i,
+                'status' => $i % 2 === 0 ? 'sent' : 'received',
+                'created_at' => now()->subMinutes(13 - $i),
+                'updated_at' => now()->subMinutes(13 - $i),
+            ]));
+        }
+
+        $oldest = $messages->first();
+        $newest = $messages->last();
+
+        $request = Request::create('/admin/whatsapp/conversations/' . $conversation->id . '/history', 'GET', [
+            'before_message_id' => $newest->id,
+            'limit' => 10,
+        ]);
+        $request->headers->set('Accept', 'application/json');
+
+        $response = app(WhatsAppController::class)->conversationHistory($request, $conversation);
+
+        $this->assertSame(200, $response->getStatusCode());
+
+        $payload = $response->getData(true);
+        $this->assertTrue($payload['success']);
+        $this->assertSame($conversation->id, $payload['conversation_id']);
+        $this->assertCount(10, $payload['messages']);
+        $this->assertSame($messages[1]->id, $payload['messages'][0]['id']);
+        $this->assertSame($messages[10]->id, $payload['messages'][9]['id']);
+        $this->assertTrue($payload['has_more']);
+        $this->assertSame($messages[1]->id, $payload['oldest_message_id']);
+        $this->assertNotSame($newest->id, $payload['messages'][9]['id']);
+        $this->assertSame($oldest->id, WhatsAppMessage::query()->orderBy('id')->first()->id);
+    }
+
     public function test_process_outgoing_message_calls_graph_api_and_updates_status(): void
     {
         config([

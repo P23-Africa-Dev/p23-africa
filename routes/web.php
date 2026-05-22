@@ -375,6 +375,7 @@ Route::middleware(['auth', 'check.suspended', 'resolve.org', 'role:admin|supervi
             Route::get('/', [\App\Http\Controllers\Admin\WhatsAppController::class, 'overview'])->name('overview');
             Route::get('/overview', [\App\Http\Controllers\Admin\WhatsAppController::class, 'overview'])->name('overview.index');
             Route::get('/conversations', [\App\Http\Controllers\Admin\WhatsAppController::class, 'conversations'])->name('conversations');
+            Route::get('/conversations/{conversation}/history', [\App\Http\Controllers\Admin\WhatsAppController::class, 'conversationHistory'])->name('conversations.history');
             Route::post('/conversations/{conversation}/messages', [\App\Http\Controllers\Admin\WhatsAppController::class, 'sendMessage'])->name('messages.send');
             Route::patch('/conversations/{conversation}', [\App\Http\Controllers\Admin\WhatsAppController::class, 'updateConversation'])->name('conversations.update');
             Route::post('/conversations/{conversation}/notes', [\App\Http\Controllers\Admin\WhatsAppController::class, 'addNote'])->name('notes.store');
@@ -600,6 +601,7 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
         Route::get('/', [\App\Http\Controllers\Admin\WhatsAppController::class, 'overview'])->name('overview');
         Route::get('/overview', [\App\Http\Controllers\Admin\WhatsAppController::class, 'overview'])->name('overview.index');
         Route::get('/conversations', [\App\Http\Controllers\Admin\WhatsAppController::class, 'conversations'])->name('conversations');
+        Route::get('/conversations/{conversation}/history', [\App\Http\Controllers\Admin\WhatsAppController::class, 'conversationHistory'])->name('conversations.history');
         Route::post('/conversations/{conversation}/messages', [\App\Http\Controllers\Admin\WhatsAppController::class, 'sendMessage'])->name('messages.send');
         Route::patch('/conversations/{conversation}', [\App\Http\Controllers\Admin\WhatsAppController::class, 'updateConversation'])->name('conversations.update');
         Route::post('/conversations/{conversation}/notes', [\App\Http\Controllers\Admin\WhatsAppController::class, 'addNote'])->name('notes.store');
