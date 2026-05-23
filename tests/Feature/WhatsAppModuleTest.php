@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Http\Controllers\Admin\WhatsAppController;
 use App\Http\Controllers\Admin\DeveloperSecurityController;
+use App\Jobs\SyncWhatsAppBusinessProfileJob;
 use App\Http\Controllers\Api\WhatsAppWebhookController;
 use App\Jobs\SendWhatsAppMessageJob;
 use App\Models\WhatsAppAccount;
@@ -17,13 +18,16 @@ use App\Services\WhatsApp\DeveloperPasscodeService;
 use App\Services\WhatsApp\MessageService;
 use App\Services\WhatsApp\MessageStatusSyncService;
 use App\Services\WhatsApp\TemplateRendererService;
+use App\Services\WhatsApp\WhatsAppBusinessProfileService;
 use App\Services\WhatsApp\WebhookService;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Queue;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
@@ -696,5 +700,107 @@ class WhatsAppModuleTest extends TestCase
             'action' => 'developer_passcode_update',
             'status' => 'success',
         ]);
+    }
+
+    public function test_saving_business_name_queues_meta_profile_sync_and_stores_logo(): void
+    {
+        Queue::fake();
+        Storage::fake('public');
+
+        Role::findOrCreate('admin');
+
+        $admin = User::factory()->create();
+        $admin->assignRole('admin');
+
+        $account = WhatsAppAccount::create([
+            'business_name' => 'Old Business',
+            'phone_number' => '233500222333',
+            'phone_number_id' => '998877661201',
+            'waba_id' => '1122334455662582',
+            'access_token' => 'very-secret-token',
+            'webhook_verify_token' => 'verify-secret',
+            'status' => 'active',
+        ]);
+
+        $request = Request::create('/admin/whatsapp/settings/account', 'POST', [
+            'id' => $account->id,
+            'business_name' => 'New Business Name',
+            'phone_number' => $account->phone_number,
+        ], [], [
+            'profile_image' => UploadedFile::fake()->image('logo.png'),
+        ]);
+        $request->setUserResolver(fn() => $admin);
+
+        $response = app(WhatsAppController::class)->saveAccount($request);
+
+        $this->assertSame(302, $response->getStatusCode());
+        $this->assertDatabaseHas('whatsapp_accounts', [
+            'id' => $account->id,
+            'business_name' => 'New Business Name',
+            'display_name_status' => 'pending_approval',
+            'profile_sync_status' => 'pending_approval',
+        ]);
+
+        Queue::assertPushed(SyncWhatsAppBusinessProfileJob::class, function (SyncWhatsAppBusinessProfileJob $job) use ($account) {
+            return $job->accountId === $account->id;
+        });
+    }
+
+    public function test_whatsapp_business_profile_service_pushes_meta_payload_and_refreshes_status(): void
+    {
+        config([
+            'whatsapp.base_url' => 'https://graph.facebook.com',
+            'whatsapp.graph_version' => 'v25.0',
+            'app.name' => 'P23 Africa',
+            'app.url' => 'https://example.test',
+            'mail.from.address' => 'support@example.test',
+        ]);
+
+        $account = WhatsAppAccount::create([
+            'business_name' => 'Acme Logistics',
+            'phone_number' => '233500222333',
+            'phone_number_id' => '998877661201',
+            'waba_id' => '1122334455662582',
+            'access_token' => 'very-secret-token',
+            'webhook_verify_token' => 'verify-secret',
+            'status' => 'active',
+            'profile_image_url' => 'https://cdn.example.test/logo.png',
+        ]);
+
+        Http::fake(function ($request) {
+            if (str_contains($request->url(), '/whatsapp_business_profile')) {
+                return Http::response(['id' => 'meta-profile-123'], 200);
+            }
+
+            return Http::response([
+                'id' => 'meta-profile-123',
+                'verified_name' => 'Acme Logistics',
+                'name_status' => 'APPROVED',
+            ], 200);
+        });
+
+        $service = app(WhatsAppBusinessProfileService::class);
+        $response = $service->syncBusinessProfile($account);
+
+        $this->assertSame('meta-profile-123', $response['id']);
+        $this->assertDatabaseHas('whatsapp_accounts', [
+            'id' => $account->id,
+            'display_name_status' => 'approved',
+            'profile_sync_status' => 'approved',
+            'meta_profile_id' => 'meta-profile-123',
+        ]);
+
+        Http::assertSent(function ($request) {
+            if (! str_contains($request->url(), '/whatsapp_business_profile')) {
+                return false;
+            }
+
+            $payload = $request->data();
+
+            return ($payload['about'] ?? null) !== null
+                && ($payload['email'] ?? null) === 'support@example.test'
+                && ($payload['websites'][0] ?? null) === 'https://example.test'
+                && ($payload['profile_picture_url'] ?? null) === 'https://cdn.example.test/logo.png';
+        });
     }
 }

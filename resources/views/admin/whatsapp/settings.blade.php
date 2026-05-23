@@ -2,6 +2,8 @@
     <x-slot name="header">
         <div>
             <h2 class="font-semibold mb-1" style="font-size:1.25rem;">WhatsApp Settings</h2>
+
+            @include('admin.whatsapp.partials.profile-sync-card', ['activeAccount' => $activeAccount])
             <p class="mb-0" style="font-size:.875rem;color:var(--text-muted);">Company-safe configuration with
                 developer-locked credentials.</p>
         </div>
@@ -28,7 +30,8 @@
                     <div class="card-header fw-semibold">Company View</div>
                     <div class="card-body">
                         @if ($activeAccount)
-                            <form method="POST" action="{{ orgRoute('admin.whatsapp.settings.account.save') }}">
+                            <form method="POST" action="{{ orgRoute('admin.whatsapp.settings.account.save') }}"
+                                enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $activeAccount->id }}">
                                 <input type="hidden" name="phone_number" value="{{ $activeAccount->phone_number }}">
@@ -44,6 +47,13 @@
                                     <input type="text" class="form-control"
                                         value="{{ $activeAccount->phone_number }}" disabled readonly>
                                     <small class="text-muted">Read-only. Contact developer for number changes.</small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Company Logo</label>
+                                    <input type="file" name="profile_image" class="form-control" accept="image/*">
+                                    <small class="text-muted">Uploaded logo will be used for the Meta profile
+                                        sync.</small>
                                 </div>
 
                                 <button class="btn btn-success" type="submit">Save Business Name</button>
@@ -115,7 +125,8 @@
 
                             <div class="mb-3">
                                 <label class="form-label"><i class="bi bi-lock me-1"></i>Webhook Verify Token</label>
-                                <input type="text" name="webhook_verify_token" class="form-control sensitive-field"
+                                <input type="text" name="webhook_verify_token"
+                                    class="form-control sensitive-field"
                                     value="{{ $sensitiveMasked['webhook_verify_token'] }}" disabled>
                             </div>
 
@@ -362,7 +373,8 @@
                 if (contactDeveloperButton) {
                     contactDeveloperButton.addEventListener('click', function() {
                         alert(
-                            'Contact Developer: Please reach out to your system developer for secure credential updates.');
+                            'Contact Developer: Please reach out to your system developer for secure credential updates.'
+                            );
                     });
                 }
 

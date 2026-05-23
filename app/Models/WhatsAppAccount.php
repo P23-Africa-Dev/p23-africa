@@ -23,6 +23,15 @@ class WhatsAppAccount extends Model
         'access_token',
         'webhook_verify_token',
         'status',
+        'display_name_status',
+        'profile_sync_status',
+        'last_profile_sync',
+        'meta_profile_id',
+        'profile_image_url',
+    ];
+
+    protected $casts = [
+        'last_profile_sync' => 'datetime',
     ];
 
     public function scopeActive(Builder $query): Builder

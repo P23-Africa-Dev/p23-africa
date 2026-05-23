@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SyncWhatsAppBusinessProfileJob;
 use App\Models\WhatsAppAccount;
 use App\Models\WhatsAppContact;
 use App\Models\WhatsAppConversation;
@@ -15,12 +16,14 @@ use App\Services\WhatsApp\MessageStatusSyncService;
 use App\Services\WhatsApp\MessageService;
 use App\Services\WhatsApp\TemplateService;
 use App\Services\WhatsApp\TemplateRendererService;
+use App\Services\WhatsApp\WhatsAppBusinessProfileService;
 use App\Services\WhatsApp\WhatsAppRealtimeDebugService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
@@ -592,13 +595,35 @@ class WhatsAppController extends Controller
             'id' => ['required', 'integer', 'exists:whatsapp_accounts,id'],
             'business_name' => ['required', 'string', 'max:255'],
             'phone_number' => ['required', 'string', 'max:40'],
+            'profile_image' => ['nullable', 'image', 'max:5120'],
         ]);
 
         $account = WhatsAppAccount::query()->findOrFail((int) Arr::get($validated, 'id'));
+
+        $syncRequired = $account->business_name !== $validated['business_name'];
+        $profileImageUrl = $account->profile_image_url;
+
+        if ($request->hasFile('profile_image')) {
+            $profileImagePath = $request->file('profile_image')->store('whatsapp/profile-images', 'public');
+            $profileImageUrl = Storage::url($profileImagePath);
+            $syncRequired = true;
+        }
+
         $account->update([
             'business_name' => $validated['business_name'],
+            'profile_image_url' => $profileImageUrl,
+            'display_name_status' => $syncRequired
+                ? WhatsAppBusinessProfileService::STATUS_PENDING_APPROVAL
+                : $account->display_name_status,
+            'profile_sync_status' => $syncRequired
+                ? WhatsAppBusinessProfileService::STATUS_PENDING_APPROVAL
+                : $account->profile_sync_status,
             'phone_number' => $validated['phone_number'],
         ]);
+
+        if ($syncRequired) {
+            SyncWhatsAppBusinessProfileJob::dispatch($account->id)->onQueue('whatsapp');
+        }
 
         return back()->with('success', 'WhatsApp business profile updated successfully.');
     }

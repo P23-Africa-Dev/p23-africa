@@ -621,6 +621,9 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
         Route::patch('/contacts/{contact}', [\App\Http\Controllers\Admin\WhatsAppController::class, 'updateContact'])->name('contacts.update');
         Route::get('/settings', [\App\Http\Controllers\Admin\WhatsAppController::class, 'settings'])->name('settings');
         Route::post('/settings/account', [\App\Http\Controllers\Admin\WhatsAppController::class, 'saveAccount'])->name('settings.account.save');
+        Route::get('/profile-sync', [\App\Http\Controllers\Admin\MetaProfileSyncController::class, 'index'])->name('profile-sync');
+        Route::post('/profile-sync/sync', [\App\Http\Controllers\Admin\MetaProfileSyncController::class, 'syncNow'])->name('profile-sync.sync');
+        Route::post('/profile-sync/refresh', [\App\Http\Controllers\Admin\MetaProfileSyncController::class, 'refreshMetaStatus'])->name('profile-sync.refresh');
         Route::post('/settings/unlock', [\App\Http\Controllers\Admin\DeveloperSecurityController::class, 'unlock'])->name('settings.unlock');
         Route::post('/settings/lock', [\App\Http\Controllers\Admin\DeveloperSecurityController::class, 'lock'])->name('settings.lock');
         Route::get('/settings/sensitive-data', [\App\Http\Controllers\Admin\DeveloperSecurityController::class, 'sensitiveData'])->name('settings.sensitive-data');
