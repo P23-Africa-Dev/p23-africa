@@ -2,12 +2,12 @@
     <x-slot name="header">
         <div>
             <h2 class="font-semibold mb-1" style="font-size:1.25rem;">WhatsApp Templates</h2>
-            <p class="mb-0" style="font-size:.875rem;color:var(--text-muted);">Store and manage reusable message
-                templates for future Meta-approved workflows.</p>
+            <p class="mb-0" style="font-size:.875rem;color:var(--text-muted);">Build templates in JSON, rich text,
+                or HTML with live WhatsApp-style preview.</p>
         </div>
     </x-slot>
 
-    <div class="py-4">
+    <div class="py-4" data-wa-template-builder>
         @include('admin.whatsapp.partials.nav')
 
         @if (session('success'))
@@ -22,51 +22,114 @@
             </div>
         @endif
 
-        <div class="row g-3">
-            <div class="col-12 col-lg-4">
-                <div class="card">
+        <div class="row g-3 wa-template-workspace-row">
+            <div class="col-12 col-xl-7 wa-template-editor-column">
+                <div class="card wa-template-editor-card">
                     <div class="card-header fw-semibold">Create Template</div>
                     <div class="card-body">
                         <form method="POST" action="{{ orgRoute('admin.whatsapp.templates.store') }}">
                             @csrf
-                            <div class="mb-2">
-                                <label class="form-label">Name</label>
-                                <input type="text" name="name" class="form-control" required>
+
+                            <div class="row g-2">
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label">Name</label>
+                                    <input type="text" name="name" class="form-control"
+                                        value="{{ old('name') }}" required>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label">Category</label>
+                                    <input type="text" name="category" class="form-control" placeholder="utility"
+                                        value="{{ old('category', 'utility') }}" required>
+                                </div>
                             </div>
-                            <div class="mb-2">
-                                <label class="form-label">Category</label>
-                                <input type="text" name="category" class="form-control" placeholder="utility"
-                                    required>
+
+                            <div class="row g-2 mt-1">
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label">Language</label>
+                                    <input type="text" name="language" class="form-control" placeholder="en"
+                                        value="{{ old('language', 'en') }}" required>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label">Status</label>
+                                    <select name="status" class="form-select" required>
+                                        @foreach ($statuses as $status)
+                                            <option value="{{ $status }}"
+                                                {{ old('status', 'draft') === $status ? 'selected' : '' }}>
+                                                {{ ucfirst($status) }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
-                            <div class="mb-2">
-                                <label class="form-label">Language</label>
-                                <input type="text" name="language" class="form-control" placeholder="en" required>
+
+                            <div class="mt-3">
+                                <label class="form-label">Template Format</label>
+                                <input type="hidden" name="template_format"
+                                    value="{{ old('template_format', 'json') }}" data-template-format-input>
+                                <div class="btn-group w-100" role="group" aria-label="Template Format">
+                                    <button type="button"
+                                        class="btn {{ old('template_format', 'json') === 'json' ? 'btn-success' : 'btn-outline-secondary' }}"
+                                        data-format-switch="json">JSON</button>
+                                    <button type="button"
+                                        class="btn {{ old('template_format') === 'rich_text' ? 'btn-success' : 'btn-outline-secondary' }}"
+                                        data-format-switch="rich_text">Rich Text</button>
+                                    <button type="button"
+                                        class="btn {{ old('template_format') === 'html' ? 'btn-success' : 'btn-outline-secondary' }}"
+                                        data-format-switch="html">HTML</button>
+                                </div>
                             </div>
-                            <div class="mb-2">
-                                <label class="form-label">Status</label>
-                                <select name="status" class="form-select" required>
-                                    @foreach ($statuses as $status)
-                                        <option value="{{ $status }}">{{ ucfirst($status) }}</option>
+
+                            <div class="border rounded p-2 mt-3 bg-body-tertiary">
+                                <label class="form-label">Variables</label>
+                                <div class="d-flex flex-wrap gap-2 mb-2">
+                                    @foreach ($defaultVariables as $variable)
+                                        <button type="button" class="btn btn-sm btn-outline-primary"
+                                            data-insert-variable="{{ $variable }}">{{ '{' . '{' . $variable . '}' . '}' }}</button>
                                     @endforeach
-                                </select>
+                                </div>
+                                <label class="form-label">Preview Variables (JSON)</label>
+                                <textarea class="form-control font-monospace" rows="3" data-template-preview-vars>{"name":"Ada","company":"P23 Africa","date":"2026-05-23","event":"Summit"}</textarea>
                             </div>
-                            <div class="mb-2">
-                                <label class="form-label">Template JSON</label>
-                                <textarea name="template_json" class="form-control" rows="8" required>{
-  "components": [
-    {
-      "type": "BODY",
-      "text": "Hello {{ 1 }}, this is a placeholder template message."
-    }
-  ]
-}</textarea>
+
+                            <input type="hidden" name="editor_metadata" data-editor-metadata value="{}">
+
+                            <div class="mt-3">
+                                @include('admin.whatsapp.partials.JsonTemplateEditor', [
+                                    'value' => old(
+                                        'template_json',
+                                        "{\n  \"components\": [\n    {\n      \"type\": \"BODY\",\n      \"text\": \"Hello {{ 1 }}, thanks for joining our event.\"\n    }\n  ]\n}"),
+                                ])
+
+                                @include('admin.whatsapp.partials.RichTextEditor', [
+                                    'value' => old(
+                                        'rich_text_content',
+                                        '<p>Hello @{{ name }}</p><p>Thank you for joining @{{ company }}.</p><p><strong>Offer ends tomorrow.</strong></p>'),
+                                ])
+
+                                @include('admin.whatsapp.partials.HtmlTemplateEditor', [
+                                    'value' => old(
+                                        'html_content',
+                                        "<h2>Welcome @{{ name }}</h2>\n<p>Your event: <strong>@{{ event }}</strong></p>\n<p>Date: @{{ date }}</p>\n<img src=\"https://via.placeholder.com/320x120\" alt=\"Banner\">"),
+                                ])
                             </div>
+
                             <button class="btn btn-success w-100" type="submit">Save Template</button>
                         </form>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-lg-8">
+
+            <div class="col-12 col-xl-5 wa-template-preview-column">
+                <div class="wa-template-preview-shell">
+                    @include('admin.whatsapp.partials.TemplatePreview', [
+                        'activeFormat' => old('template_format', 'json'),
+                    ])
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-1">
+            <div class="col-12">
                 <div class="card">
                     <div class="card-header fw-semibold">Existing Templates</div>
                     <div class="card-body p-0">
@@ -76,7 +139,8 @@
                                     <tr>
                                         <th class="ps-3">Template</th>
                                         <th>Status</th>
-                                        <th>JSON</th>
+                                        <th>Format</th>
+                                        <th>Preview</th>
                                         <th class="pe-3 text-end">Action</th>
                                     </tr>
                                 </thead>
@@ -92,10 +156,22 @@
                                                 <span
                                                     class="badge {{ $template->status === 'approved' ? 'bg-success' : ($template->status === 'rejected' ? 'bg-danger' : ($template->status === 'pending' ? 'bg-warning text-dark' : 'bg-secondary')) }}">{{ ucfirst($template->status) }}</span>
                                             </td>
-                                            <td style="min-width:260px;">
+                                            <td>
+                                                <span
+                                                    class="badge text-bg-light">{{ strtoupper($template->template_format ?? 'json') }}</span>
+                                            </td>
+                                            <td style="min-width:300px; max-width:420px;">
                                                 <details>
-                                                    <summary class="small">Preview JSON</summary>
-                                                    <pre class="small mt-2 mb-0">{{ json_encode($template->template_json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) }}</pre>
+                                                    <summary class="small">Open Preview</summary>
+                                                    <div class="small mt-2 rounded-3 p-2"
+                                                        style="background:#dcf8c6;border:1px solid #cfeab8;">
+                                                        @if (($template->template_format ?? 'json') === 'json')
+                                                            <pre class="small mb-0">{{ json_encode($template->template_json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) }}</pre>
+                                                        @else
+                                                            {!! $template->preview_content ?:
+                                                                nl2br(e(\Illuminate\Support\Str::limit((string) $template->rendered_content, 280))) !!}
+                                                        @endif
+                                                    </div>
                                                 </details>
                                             </td>
                                             <td class="pe-3 text-end" style="min-width: 260px;">
@@ -104,13 +180,22 @@
                                                     class="d-inline-flex gap-1">
                                                     @csrf
                                                     @method('PUT')
-                                                    <input type="hidden" name="name" value="{{ $template->name }}">
+                                                    <input type="hidden" name="name"
+                                                        value="{{ $template->name }}">
                                                     <input type="hidden" name="category"
                                                         value="{{ $template->category }}">
                                                     <input type="hidden" name="language"
                                                         value="{{ $template->language }}">
+                                                    <input type="hidden" name="template_format"
+                                                        value="{{ $template->template_format ?? 'json' }}">
                                                     <input type="hidden" name="template_json"
                                                         value='@json($template->template_json)'>
+                                                    <input type="hidden" name="rich_text_content"
+                                                        value="{{ $template->template_format === 'rich_text' ? $template->editor_metadata['source_content'] ?? ($template->rendered_content ?? '') : '' }}">
+                                                    <input type="hidden" name="html_content"
+                                                        value="{{ $template->template_format === 'html' ? $template->editor_metadata['source_content'] ?? ($template->rendered_content ?? '') : '' }}">
+                                                    <input type="hidden" name="editor_metadata"
+                                                        value='@json($template->editor_metadata ?? [])'>
                                                     <select name="status" class="form-select form-select-sm"
                                                         style="width:130px;">
                                                         @foreach ($statuses as $status)
@@ -126,8 +211,8 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="4" class="text-center py-4 text-muted">No templates created
-                                                yet.</td>
+                                            <td colspan="5" class="text-center py-4 text-muted">No templates
+                                                created yet.</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -139,4 +224,111 @@
             </div>
         </div>
     </div>
+
+    @push('styles')
+        <style>
+            @media (min-width: 1200px) {
+                .wa-template-workspace-row {
+                    --wa-preview-top: 96px;
+                    --wa-preview-bottom-gap: 24px;
+                    --wa-preview-width: clamp(340px, 30vw, 460px);
+                    --wa-workspace-height: calc(100vh - 116px);
+                }
+
+                .wa-template-editor-card {
+                    height: var(--wa-workspace-height);
+                }
+
+                .wa-template-editor-card .card-body {
+                    overflow-y: auto;
+                    overscroll-behavior: contain;
+                }
+
+                .wa-template-preview-column {
+                    min-height: 1px;
+                }
+
+                .wa-template-preview-shell {
+                    position: fixed;
+                    top: var(--wa-preview-top);
+                    right: 1.5rem;
+                    z-index: 20;
+                    width: min(var(--wa-preview-width), calc(100vw - 3rem));
+                    height: calc(100vh - var(--wa-preview-top) - var(--wa-preview-bottom-gap));
+                }
+
+                .wa-template-preview-shell .card {
+                    height: 100%;
+                }
+
+                .wa-template-preview-shell .card-body {
+                    overflow-y: auto;
+                    overscroll-behavior: contain;
+                }
+
+                .wa-template-preview-shell [data-preview-bubble] {
+                    max-width: 100%;
+                }
+            }
+
+            @media (min-width: 1200px) and (max-width: 1399.98px) {
+                .wa-template-workspace-row {
+                    --wa-preview-width: 360px;
+                }
+            }
+
+            @media (min-width: 1400px) {
+                .wa-template-preview-shell {
+                    right: max(1.5rem, calc((100vw - 1320px) / 2 + 12px));
+                }
+            }
+        </style>
+    @endpush
+
+    @push('scripts')
+        <script>
+            // Fallback for format switching in case dynamic module load is stale/cached.
+            (function() {
+                const root = document.querySelector('[data-wa-template-builder]');
+                if (!root) {
+                    return;
+                }
+
+                const formatInput = root.querySelector('[data-template-format-input]');
+                const formatButtons = Array.from(root.querySelectorAll('[data-format-switch]'));
+                const formatPanes = Array.from(root.querySelectorAll('[data-format-pane]'));
+
+                if (!formatInput || formatButtons.length === 0 || formatPanes.length === 0) {
+                    return;
+                }
+
+                const switchFormat = (format) => {
+                    formatInput.value = format;
+                    formatInput.dispatchEvent(new Event('change', {
+                        bubbles: true
+                    }));
+                    root.dispatchEvent(new CustomEvent('wa-template-format-changed'));
+
+                    formatButtons.forEach((button) => {
+                        const selected = button.getAttribute('data-format-switch') === format;
+                        button.classList.toggle('btn-success', selected);
+                        button.classList.toggle('btn-outline-secondary', !selected);
+                    });
+
+                    formatPanes.forEach((pane) => {
+                        pane.classList.toggle('d-none', pane.getAttribute('data-format-pane') !== format);
+                    });
+                };
+
+                formatButtons.forEach((button) => {
+                    button.addEventListener('click', () => {
+                        const format = button.getAttribute('data-format-switch') || 'json';
+                        switchFormat(format);
+                    });
+                });
+
+                switchFormat(formatInput.value || 'json');
+            })();
+        </script>
+    @endpush
 </x-app-layout>

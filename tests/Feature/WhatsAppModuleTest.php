@@ -3,19 +3,26 @@
 namespace Tests\Feature;
 
 use App\Http\Controllers\Admin\WhatsAppController;
+use App\Http\Controllers\Admin\DeveloperSecurityController;
 use App\Http\Controllers\Api\WhatsAppWebhookController;
 use App\Jobs\SendWhatsAppMessageJob;
+use App\Models\WhatsAppAccount;
 use App\Models\WhatsAppContact;
 use App\Models\WhatsAppConversation;
 use App\Models\WhatsAppMessage;
+use App\Models\WhatsAppSettingSecurity;
+use App\Models\WhatsappSecurityLog;
 use App\Models\User;
+use App\Services\WhatsApp\DeveloperPasscodeService;
 use App\Services\WhatsApp\MessageService;
 use App\Services\WhatsApp\MessageStatusSyncService;
+use App\Services\WhatsApp\TemplateRendererService;
 use App\Services\WhatsApp\WebhookService;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Queue;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
@@ -30,6 +37,7 @@ class WhatsAppModuleTest extends TestCase
 
         config([
             'broadcasting.default' => 'log',
+            'session.driver' => 'array',
         ]);
     }
 
@@ -466,5 +474,227 @@ class WhatsAppModuleTest extends TestCase
         $this->assertNotNull($processed->sent_at);
         $this->assertTrue((bool) $processed->status_dirty);
         $this->assertNotNull($processed->status_updated_at);
+    }
+
+    public function test_store_template_supports_rich_text_format(): void
+    {
+        $request = Request::create('/admin/whatsapp/templates', 'POST', [
+            'name' => 'welcome_rich_text',
+            'category' => 'utility',
+            'language' => 'en',
+            'status' => 'draft',
+            'template_format' => 'rich_text',
+            'rich_text_content' => '<p>Hello {{name}}</p><script>alert(1)</script>',
+            'template_json' => null,
+            'editor_metadata' => json_encode([
+                'source' => 'rich_editor',
+            ]),
+        ]);
+
+        $response = app(WhatsAppController::class)->storeTemplate(
+            $request,
+            app(\App\Services\WhatsApp\TemplateService::class),
+            app(TemplateRendererService::class)
+        );
+
+        $this->assertSame(302, $response->getStatusCode());
+
+        $this->assertDatabaseHas('whatsapp_templates', [
+            'name' => 'welcome_rich_text',
+            'language' => 'en',
+            'template_format' => 'rich_text',
+            'status' => 'draft',
+        ]);
+
+        $template = \App\Models\WhatsAppTemplate::query()
+            ->where('name', 'welcome_rich_text')
+            ->firstOrFail();
+
+        $this->assertStringNotContainsString('<script>', (string) $template->rendered_content);
+        $this->assertIsArray($template->template_json);
+        $this->assertSame('BODY', $template->template_json['components'][0]['type']);
+        $this->assertSame('rich_editor', $template->editor_metadata['source'] ?? null);
+    }
+
+    public function test_unlock_requires_valid_passcode_and_logs_failure(): void
+    {
+        Role::findOrCreate('admin');
+
+        $admin = User::factory()->create();
+        $admin->assignRole('admin');
+
+        WhatsAppSettingSecurity::query()->create([
+            'developer_passcode' => Hash::make('StrongPass@2026'),
+        ]);
+
+        $session = app('session')->driver();
+        $session->start();
+
+        $request = Request::create('/admin/whatsapp/settings/unlock', 'POST', [
+            'passcode' => 'wrong-passcode',
+        ]);
+        $request->setUserResolver(fn() => $admin);
+        $request->setLaravelSession($session);
+        $request->headers->set('Accept', 'application/json');
+
+        $response = app(DeveloperSecurityController::class)->unlock($request, app(DeveloperPasscodeService::class));
+
+        $this->assertSame(422, $response->getStatusCode());
+        $this->assertFalse((bool) $response->getData(true)['success']);
+        $this->assertDatabaseHas('whatsapp_security_logs', [
+            'user_id' => $admin->id,
+            'action' => 'unlock_attempt',
+            'status' => 'failure',
+        ]);
+    }
+
+    public function test_sensitive_data_requires_unlock_and_returns_values_after_unlock(): void
+    {
+        Role::findOrCreate('admin');
+
+        $admin = User::factory()->create();
+        $admin->assignRole('admin');
+
+        WhatsAppSettingSecurity::query()->create([
+            'developer_passcode' => Hash::make('WhatsAppPass@2026'),
+        ]);
+
+        $account = WhatsAppAccount::create([
+            'business_name' => 'Secure WA',
+            'phone_number' => '233500222333',
+            'phone_number_id' => '998877661201',
+            'waba_id' => '1122334455662582',
+            'access_token' => 'very-secret-token',
+            'webhook_verify_token' => 'verify-secret',
+            'status' => 'active',
+        ]);
+
+        $session = app('session')->driver();
+        $session->start();
+
+        $sensitiveBeforeUnlockRequest = Request::create('/admin/whatsapp/settings/sensitive-data', 'GET');
+        $sensitiveBeforeUnlockRequest->setUserResolver(fn() => $admin);
+        $sensitiveBeforeUnlockRequest->setLaravelSession($session);
+        $sensitiveBeforeUnlockRequest->headers->set('Accept', 'application/json');
+
+        $blockedResponse = app(DeveloperSecurityController::class)->sensitiveData(
+            $sensitiveBeforeUnlockRequest,
+            app(DeveloperPasscodeService::class)
+        );
+
+        $this->assertSame(403, $blockedResponse->getStatusCode());
+
+        $unlockRequest = Request::create('/admin/whatsapp/settings/unlock', 'POST', [
+            'passcode' => 'WhatsAppPass@2026',
+        ]);
+        $unlockRequest->setUserResolver(fn() => $admin);
+        $unlockRequest->setLaravelSession($session);
+        $unlockRequest->headers->set('Accept', 'application/json');
+
+        $unlockResponse = app(DeveloperSecurityController::class)->unlock($unlockRequest, app(DeveloperPasscodeService::class));
+        $this->assertSame(200, $unlockResponse->getStatusCode());
+
+        $sensitiveAfterUnlockRequest = Request::create('/admin/whatsapp/settings/sensitive-data', 'GET');
+        $sensitiveAfterUnlockRequest->setUserResolver(fn() => $admin);
+        $sensitiveAfterUnlockRequest->setLaravelSession($session);
+        $sensitiveAfterUnlockRequest->headers->set('Accept', 'application/json');
+
+        $allowedResponse = app(DeveloperSecurityController::class)->sensitiveData(
+            $sensitiveAfterUnlockRequest,
+            app(DeveloperPasscodeService::class)
+        );
+
+        $this->assertSame(200, $allowedResponse->getStatusCode());
+        $payload = $allowedResponse->getData(true);
+
+        $this->assertTrue($payload['success']);
+        $this->assertSame($account->phone_number_id, $payload['data']['phone_number_id']);
+        $this->assertSame('very-secret-token', $payload['data']['access_token']);
+
+        $this->assertDatabaseHas('whatsapp_security_logs', [
+            'user_id' => $admin->id,
+            'action' => 'unlock_attempt',
+            'status' => 'success',
+        ]);
+
+        $this->assertTrue(WhatsappSecurityLog::query()->where('action', 'sensitive_data_access')->exists());
+    }
+
+    public function test_update_passcode_fails_with_invalid_master_passcode(): void
+    {
+        Role::findOrCreate('admin');
+
+        $admin = User::factory()->create([
+            'organization_id' => null,
+        ]);
+        $admin->assignRole('admin');
+
+        WhatsAppSettingSecurity::query()->create([
+            'developer_passcode' => Hash::make('OldDeveloperPass@2026'),
+            'master_passcode_hash' => Hash::make('HappyDevReset401'),
+        ]);
+
+        $request = Request::create('/admin/whatsapp/developer-security/passcode', 'POST', [
+            'master_passcode' => 'wrong-master',
+            'new_passcode' => 'NewDeveloperPass@2026',
+            'new_passcode_confirmation' => 'NewDeveloperPass@2026',
+        ]);
+        $request->setUserResolver(fn() => $admin);
+        $request->headers->set('Accept', 'text/html');
+
+        $response = app(DeveloperSecurityController::class)->updatePasscode($request, app(DeveloperPasscodeService::class));
+
+        $this->assertSame(302, $response->getStatusCode());
+
+        $record = WhatsAppSettingSecurity::query()->firstOrFail();
+        $this->assertTrue(Hash::check('OldDeveloperPass@2026', $record->developer_passcode));
+
+        $this->assertDatabaseHas('whatsapp_security_logs', [
+            'user_id' => $admin->id,
+            'action' => 'master_passcode_validation',
+            'status' => 'failure',
+        ]);
+    }
+
+    public function test_update_passcode_succeeds_with_valid_master_passcode(): void
+    {
+        Role::findOrCreate('admin');
+
+        $admin = User::factory()->create([
+            'organization_id' => null,
+        ]);
+        $admin->assignRole('admin');
+
+        WhatsAppSettingSecurity::query()->create([
+            'developer_passcode' => Hash::make('OldDeveloperPass@2026'),
+            'master_passcode_hash' => Hash::make('HappyDevReset401'),
+        ]);
+
+        $request = Request::create('/admin/whatsapp/developer-security/passcode', 'POST', [
+            'master_passcode' => 'HappyDevReset401',
+            'new_passcode' => 'NewDeveloperPass@2026',
+            'new_passcode_confirmation' => 'NewDeveloperPass@2026',
+        ]);
+        $request->setUserResolver(fn() => $admin);
+        $request->headers->set('Accept', 'text/html');
+
+        $response = app(DeveloperSecurityController::class)->updatePasscode($request, app(DeveloperPasscodeService::class));
+
+        $this->assertSame(302, $response->getStatusCode());
+
+        $record = WhatsAppSettingSecurity::query()->firstOrFail();
+        $this->assertTrue(Hash::check('NewDeveloperPass@2026', $record->developer_passcode));
+
+        $this->assertDatabaseHas('whatsapp_security_logs', [
+            'user_id' => $admin->id,
+            'action' => 'master_passcode_validation',
+            'status' => 'success',
+        ]);
+
+        $this->assertDatabaseHas('whatsapp_security_logs', [
+            'user_id' => $admin->id,
+            'action' => 'developer_passcode_update',
+            'status' => 'success',
+        ]);
     }
 }

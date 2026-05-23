@@ -8,6 +8,7 @@ use App\Events\WhatsAppMessageStatusUpdated;
 use App\Jobs\SendWhatsAppMessageJob;
 use App\Models\WhatsAppConversation;
 use App\Models\WhatsAppMessage;
+use App\Models\WhatsAppTemplate;
 use App\Services\WhatsApp\Hooks\FutureIntegrationBridge;
 use Carbon\Carbon;
 use RuntimeException;
@@ -21,6 +22,7 @@ class MessageService
         protected MessageStatusSyncService $messageStatusSyncService,
         protected WhatsAppRealtimeDebugService $realtimeDebugService,
         protected FutureIntegrationBridge $futureHooks,
+        protected TemplateRendererService $templateRendererService,
     ) {}
 
     public function queueTextMessage(WhatsAppConversation $conversation, int $senderId, string $body, ?int $accountId = null): WhatsAppMessage
@@ -65,15 +67,19 @@ class MessageService
             throw new RuntimeException('Cannot send message without a linked conversation contact.');
         }
 
-        if ($message->type !== 'text') {
-            throw new RuntimeException('Only text messages are currently supported for sending.');
-        }
+        $resolvedAccountId = $accountId ?? data_get($message->payload, 'account_id');
 
-        $response = $this->whatsAppService->sendTextMessage(
-            $message->conversation->contact->phone,
-            (string) $message->body,
-            $accountId ?? data_get($message->payload, 'account_id')
-        );
+        if ($message->type === 'text') {
+            $response = $this->whatsAppService->sendTextMessage(
+                $message->conversation->contact->phone,
+                (string) $message->body,
+                $resolvedAccountId
+            );
+        } elseif ($message->type === 'template') {
+            $response = $this->sendTemplateContent($message, $resolvedAccountId);
+        } else {
+            throw new RuntimeException('Unsupported message type for sending: ' . $message->type);
+        }
 
         $message->update([
             'whatsapp_message_id' => data_get($response, 'messages.0.id'),
@@ -104,6 +110,51 @@ class MessageService
         ]);
 
         return $message;
+    }
+
+    protected function sendTemplateContent(WhatsAppMessage $message, ?int $accountId = null): array
+    {
+        $templateId = (int) data_get($message->payload, 'template_id', 0);
+
+        if ($templateId <= 0) {
+            throw new RuntimeException('Template message payload must include template_id.');
+        }
+
+        $template = WhatsAppTemplate::query()->find($templateId);
+        if (!$template) {
+            throw new RuntimeException('Template not found: ' . $templateId);
+        }
+
+        $format = (string) ($template->template_format ?: TemplateRendererService::FORMAT_JSON);
+        $variables = data_get($message->payload, 'variables', []);
+        if (!is_array($variables)) {
+            $variables = [];
+        }
+
+        $sourceContent = $format === TemplateRendererService::FORMAT_JSON
+            ? ($template->template_json ?? [])
+            : (string) ($template->rendered_content ?: data_get($template->editor_metadata, 'source_content', ''));
+
+        $rendered = $this->templateRendererService->render($format, $sourceContent, $variables);
+        $textBody = (string) data_get($rendered, 'whatsapp_payload.components.0.text', '');
+        $firstMedia = data_get($rendered, 'whatsapp_payload.media.0');
+
+        if (is_array($firstMedia) && data_get($firstMedia, 'type') === 'image' && data_get($firstMedia, 'url')) {
+            return $this->whatsAppService->sendImageMessage(
+                $message->conversation->contact->phone,
+                [
+                    'link' => (string) data_get($firstMedia, 'url'),
+                    'caption' => $textBody,
+                ],
+                $accountId
+            );
+        }
+
+        return $this->whatsAppService->sendTextMessage(
+            $message->conversation->contact->phone,
+            $textBody,
+            $accountId
+        );
     }
 
     public function markFailed(WhatsAppMessage $message, string $error): void

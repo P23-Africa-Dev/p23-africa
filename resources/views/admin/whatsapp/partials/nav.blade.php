@@ -21,6 +21,15 @@
                 class="btn btn-sm {{ request()->routeIs('admin.whatsapp.settings', 'admin.whatsapp.settings.*', 'org.admin.whatsapp.settings', 'org.admin.whatsapp.settings.*') ? 'btn-success' : 'btn-outline-success' }}">
                 Settings
             </a>
+            @if (auth()->user() &&
+                    (auth()->user()->hasRole('super-admin') ||
+                        auth()->user()->hasRole('developer') ||
+                        (auth()->user()->hasRole('admin') && is_null(auth()->user()->organization_id))))
+                <a href="{{ orgRoute('admin.whatsapp.developer-security') }}"
+                    class="btn btn-sm {{ request()->routeIs('admin.whatsapp.developer-security', 'admin.whatsapp.developer-security.*', 'org.admin.whatsapp.developer-security', 'org.admin.whatsapp.developer-security.*') ? 'btn-success' : 'btn-outline-success' }}">
+                    Developer Security
+                </a>
+            @endif
             <a href="{{ orgRoute('admin.whatsapp.account-setup') }}"
                 class="btn btn-sm {{ request()->routeIs('admin.whatsapp.account-setup', 'org.admin.whatsapp.account-setup') ? 'btn-success' : 'btn-outline-success' }}">
                 Account Setup

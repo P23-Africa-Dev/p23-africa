@@ -22,7 +22,11 @@ class WhatsAppTemplate extends Model
         'name',
         'category',
         'language',
+        'template_format',
         'template_json',
+        'rendered_content',
+        'preview_content',
+        'editor_metadata',
         'status',
     ];
 
@@ -30,6 +34,7 @@ class WhatsAppTemplate extends Model
     {
         return [
             'template_json' => 'array',
+            'editor_metadata' => 'array',
         ];
     }
 }

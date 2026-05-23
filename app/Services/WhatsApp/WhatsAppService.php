@@ -102,7 +102,29 @@ class WhatsAppService
 
     public function sendImageMessage(string $to, array $imagePayload, ?int $accountId = null): array
     {
-        throw new RuntimeException('Image message support is prepared but not implemented yet.');
+        $account = $this->resolveAccount($accountId);
+
+        $link = (string) data_get($imagePayload, 'link', '');
+        if ($link === '') {
+            throw new RuntimeException('Image payload must include a public image link.');
+        }
+
+        $payload = [
+            'messaging_product' => 'whatsapp',
+            'recipient_type' => 'individual',
+            'to' => $this->normalizePhone($to),
+            'type' => 'image',
+            'image' => [
+                'link' => $link,
+                'caption' => (string) data_get($imagePayload, 'caption', ''),
+            ],
+        ];
+
+        return $this->post(
+            $this->messagesEndpoint((string) $account['phone_number_id']),
+            $payload,
+            (string) $account['access_token']
+        );
     }
 
     public function sendVideoMessage(string $to, array $videoPayload, ?int $accountId = null): array
@@ -122,7 +144,34 @@ class WhatsAppService
 
     public function sendTemplateMessage(string $to, array $templatePayload, ?int $accountId = null): array
     {
-        throw new RuntimeException('Template sending support is prepared but not implemented yet.');
+        $account = $this->resolveAccount($accountId);
+
+        $templateName = (string) data_get($templatePayload, 'name', '');
+        $languageCode = (string) data_get($templatePayload, 'language.code', data_get($templatePayload, 'language', 'en'));
+
+        if ($templateName === '') {
+            throw new RuntimeException('Template payload must include a template name.');
+        }
+
+        $payload = [
+            'messaging_product' => 'whatsapp',
+            'recipient_type' => 'individual',
+            'to' => $this->normalizePhone($to),
+            'type' => 'template',
+            'template' => [
+                'name' => $templateName,
+                'language' => [
+                    'code' => $languageCode,
+                ],
+                'components' => data_get($templatePayload, 'components', []),
+            ],
+        ];
+
+        return $this->post(
+            $this->messagesEndpoint((string) $account['phone_number_id']),
+            $payload,
+            (string) $account['access_token']
+        );
     }
 
     public function sendInteractiveMessage(string $to, array $interactivePayload, ?int $accountId = null): array

@@ -24,7 +24,11 @@ class TemplateService
             ],
             [
                 'category' => $attributes['category'],
+                'template_format' => $attributes['template_format'] ?? TemplateRendererService::FORMAT_JSON,
                 'template_json' => $attributes['template_json'],
+                'rendered_content' => $attributes['rendered_content'] ?? null,
+                'preview_content' => $attributes['preview_content'] ?? null,
+                'editor_metadata' => $attributes['editor_metadata'] ?? null,
                 'status' => $attributes['status'] ?? WhatsAppTemplate::STATUS_DRAFT,
             ]
         );
@@ -36,7 +40,11 @@ class TemplateService
             'name' => $attributes['name'] ?? $template->name,
             'category' => $attributes['category'] ?? $template->category,
             'language' => $attributes['language'] ?? $template->language,
+            'template_format' => $attributes['template_format'] ?? $template->template_format,
             'template_json' => $attributes['template_json'] ?? $template->template_json,
+            'rendered_content' => $attributes['rendered_content'] ?? $template->rendered_content,
+            'preview_content' => $attributes['preview_content'] ?? $template->preview_content,
+            'editor_metadata' => $attributes['editor_metadata'] ?? $template->editor_metadata,
             'status' => $attributes['status'] ?? $template->status,
         ]);
 
@@ -68,7 +76,11 @@ class TemplateService
             'language' => $language,
             'category' => $category,
             'status' => (string) $status,
+            'template_format' => TemplateRendererService::FORMAT_JSON,
             'template_json' => $payload,
+            'rendered_content' => null,
+            'preview_content' => null,
+            'editor_metadata' => null,
         ]);
     }
 }

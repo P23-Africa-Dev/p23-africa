@@ -10,9 +10,11 @@ use App\Models\WhatsAppMessage;
 use App\Models\WhatsAppTemplate;
 use App\Models\WhatsAppWebhookLog;
 use App\Services\WhatsApp\ConversationService;
+use App\Services\WhatsApp\DeveloperPasscodeService;
 use App\Services\WhatsApp\MessageStatusSyncService;
 use App\Services\WhatsApp\MessageService;
 use App\Services\WhatsApp\TemplateService;
+use App\Services\WhatsApp\TemplateRendererService;
 use App\Services\WhatsApp\WhatsAppRealtimeDebugService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -443,6 +445,17 @@ class WhatsAppController extends Controller
     {
         return view('admin.whatsapp.templates', [
             'templates' => $templateService->paginate(20),
+            'formats' => [
+                TemplateRendererService::FORMAT_JSON,
+                TemplateRendererService::FORMAT_RICH_TEXT,
+                TemplateRendererService::FORMAT_HTML,
+            ],
+            'defaultVariables' => [
+                'name',
+                'company',
+                'date',
+                'event',
+            ],
             'statuses' => [
                 WhatsAppTemplate::STATUS_DRAFT,
                 WhatsAppTemplate::STATUS_PENDING,
@@ -452,43 +465,70 @@ class WhatsAppController extends Controller
         ]);
     }
 
-    public function storeTemplate(Request $request, TemplateService $templateService): RedirectResponse
-    {
+    public function storeTemplate(
+        Request $request,
+        TemplateService $templateService,
+        TemplateRendererService $rendererService
+    ): RedirectResponse {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:120'],
             'category' => ['required', 'string', 'max:80'],
             'language' => ['required', 'string', 'max:20'],
             'status' => ['required', 'string', 'in:draft,pending,approved,rejected'],
-            'template_json' => ['required'],
+            'template_format' => ['required', 'string', 'in:json,rich_text,html'],
+            'template_json' => ['nullable'],
+            'rich_text_content' => ['nullable', 'string'],
+            'html_content' => ['nullable', 'string'],
+            'editor_metadata' => ['nullable'],
         ]);
+
+        $templatePayload = $this->prepareTemplatePayload($validated, $rendererService);
 
         $templateService->createOrUpdate([
             'name' => $validated['name'],
             'category' => $validated['category'],
             'language' => $validated['language'],
             'status' => $validated['status'],
-            'template_json' => $this->decodeJsonInput($validated['template_json']),
+            'template_format' => $templatePayload['template_format'],
+            'template_json' => $templatePayload['template_json'],
+            'rendered_content' => $templatePayload['rendered_content'],
+            'preview_content' => $templatePayload['preview_content'],
+            'editor_metadata' => $templatePayload['editor_metadata'],
         ]);
 
         return back()->with('success', 'Template saved successfully.');
     }
 
-    public function updateTemplate(Request $request, WhatsAppTemplate $template, TemplateService $templateService): RedirectResponse
-    {
+    public function updateTemplate(
+        Request $request,
+        WhatsAppTemplate $template,
+        TemplateService $templateService,
+        TemplateRendererService $rendererService
+    ): RedirectResponse {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:120'],
             'category' => ['required', 'string', 'max:80'],
             'language' => ['required', 'string', 'max:20'],
             'status' => ['required', 'string', 'in:draft,pending,approved,rejected'],
-            'template_json' => ['required'],
+            'template_format' => ['required', 'string', 'in:json,rich_text,html'],
+            'template_json' => ['nullable'],
+            'rich_text_content' => ['nullable', 'string'],
+            'html_content' => ['nullable', 'string'],
+            'editor_metadata' => ['nullable'],
         ]);
+
+        $templatePayload = $this->prepareTemplatePayload($validated, $rendererService);
 
         $templateService->updateTemplate($template, [
             'name' => $validated['name'],
             'category' => $validated['category'],
             'language' => $validated['language'],
             'status' => $validated['status'],
-            'template_json' => $this->decodeJsonInput($validated['template_json']),
+            'template_format' => $templatePayload['template_format'],
+            'template_json' => $templatePayload['template_json'],
+            'rendered_content' => $templatePayload['rendered_content'],
+            'preview_content' => $templatePayload['preview_content'],
+            'editor_metadata' => $templatePayload['editor_metadata'],
         ]);
 
         return back()->with('success', 'Template updated successfully.');
@@ -526,11 +566,16 @@ class WhatsAppController extends Controller
         return back()->with('success', 'Contact updated successfully.');
     }
 
-    public function settings(): View
+    public function settings(Request $request, DeveloperPasscodeService $passcodeService): View
     {
+        $activeAccount = WhatsAppAccount::query()->latest('id')->first();
+
         return view('admin.whatsapp.settings', [
-            'activeAccount' => WhatsAppAccount::query()->active()->latest('id')->first(),
+            'activeAccount' => $activeAccount,
             'accounts' => WhatsAppAccount::query()->orderByDesc('id')->get(),
+            'sensitiveMasked' => $passcodeService->maskedSensitiveFields($activeAccount),
+            'unlocked' => $passcodeService->isUnlocked($request),
+            'canManageDeveloperSecurity' => $passcodeService->isDeveloperManager($request->user()),
             'config' => [
                 'enabled' => (bool) config('whatsapp.enabled'),
                 'graph_version' => config('whatsapp.graph_version'),
@@ -544,22 +589,18 @@ class WhatsAppController extends Controller
     public function saveAccount(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'id' => ['nullable', 'integer', 'exists:whatsapp_accounts,id'],
+            'id' => ['required', 'integer', 'exists:whatsapp_accounts,id'],
             'business_name' => ['required', 'string', 'max:255'],
             'phone_number' => ['required', 'string', 'max:40'],
-            'phone_number_id' => ['required', 'string', 'max:80'],
-            'waba_id' => ['nullable', 'string', 'max:80'],
-            'access_token' => ['required', 'string'],
-            'webhook_verify_token' => ['required', 'string', 'max:255'],
-            'status' => ['required', 'string', 'in:active,inactive'],
         ]);
 
-        WhatsAppAccount::updateOrCreate(
-            ['id' => Arr::get($validated, 'id')],
-            Arr::except($validated, ['id'])
-        );
+        $account = WhatsAppAccount::query()->findOrFail((int) Arr::get($validated, 'id'));
+        $account->update([
+            'business_name' => $validated['business_name'],
+            'phone_number' => $validated['phone_number'],
+        ]);
 
-        return back()->with('success', 'WhatsApp account saved successfully.');
+        return back()->with('success', 'WhatsApp business profile updated successfully.');
     }
 
     public function accountSetup(): View
@@ -602,6 +643,56 @@ class WhatsAppController extends Controller
         }
 
         return $decoded;
+    }
+
+    protected function prepareTemplatePayload(array $validated, TemplateRendererService $rendererService): array
+    {
+        $format = $rendererService->normalizeFormat((string) Arr::get($validated, 'template_format', 'json'));
+        $editorMetadata = Arr::get($validated, 'editor_metadata', []);
+
+        if (is_string($editorMetadata) && trim($editorMetadata) !== '') {
+            $decodedMetadata = json_decode($editorMetadata, true);
+            $editorMetadata = is_array($decodedMetadata) ? $decodedMetadata : [];
+        }
+
+        if (!is_array($editorMetadata)) {
+            $editorMetadata = [];
+        }
+
+        if ($format === TemplateRendererService::FORMAT_JSON) {
+            $jsonPayload = $this->decodeJsonInput(Arr::get($validated, 'template_json'));
+            $rendered = $rendererService->renderJson($jsonPayload);
+
+            return [
+                'template_format' => TemplateRendererService::FORMAT_JSON,
+                'template_json' => $jsonPayload,
+                'rendered_content' => json_encode($rendered['rendered_content'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+                'preview_content' => (string) $rendered['preview_content'],
+                'editor_metadata' => $editorMetadata,
+            ];
+        }
+
+        $content = $format === TemplateRendererService::FORMAT_HTML
+            ? (string) Arr::get($validated, 'html_content', '')
+            : (string) Arr::get($validated, 'rich_text_content', '');
+
+        if (trim($content) === '') {
+            throw ValidationException::withMessages([
+                $format === TemplateRendererService::FORMAT_HTML ? 'html_content' : 'rich_text_content' => 'Template content is required.',
+            ]);
+        }
+
+        $rendered = $rendererService->render($format, $content);
+
+        return [
+            'template_format' => $format,
+            'template_json' => $rendered['whatsapp_payload'],
+            'rendered_content' => (string) $rendered['stored_content'],
+            'preview_content' => (string) $rendered['preview_content'],
+            'editor_metadata' => array_merge($editorMetadata, [
+                'source_content' => (string) $content,
+            ]),
+        ];
     }
 
     protected function response(Request $request, array $payload, int $statusCode, string $flashMessage): JsonResponse|RedirectResponse

@@ -8,11 +8,19 @@ Alpine.start();
 
 async function bootPageModules() {
     const hasWhatsAppChat = Boolean(document.querySelector('[data-wa-root]'));
+    const hasTemplateBuilder = Boolean(document.querySelector('[data-wa-template-builder]'));
 
     if (hasWhatsAppChat) {
         const module = await import('./whatsapp/conversations.js');
         if (typeof module.bootWhatsAppConversations === 'function') {
             module.bootWhatsAppConversations();
+        }
+    }
+
+    if (hasTemplateBuilder) {
+        const module = await import('./whatsapp/TemplatePreviewManager.js');
+        if (typeof module.bootTemplatePreviewManager === 'function') {
+            module.bootTemplatePreviewManager();
         }
     }
 }
