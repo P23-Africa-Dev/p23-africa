@@ -74,7 +74,10 @@ class WhatsAppConversation extends Model
             $subQuery->where('last_message', 'like', '%' . $term . '%')
                 ->orWhereHas('contact', function (Builder $contactQuery) use ($term) {
                     $contactQuery->where('name', 'like', '%' . $term . '%')
-                        ->orWhere('phone', 'like', '%' . $term . '%');
+                        ->orWhere('phone', 'like', '%' . $term . '%')
+                        ->orWhere('email', 'like', '%' . $term . '%')
+                        ->orWhere('company', 'like', '%' . $term . '%')
+                        ->orWhere('notes', 'like', '%' . $term . '%');
                 });
         });
     }

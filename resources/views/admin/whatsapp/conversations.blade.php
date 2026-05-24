@@ -2,11 +2,34 @@
     @push('head')
         <style>
             .wa-chat-shell {
-                --wa-shell-height: calc(100vh - 210px);
+                --wa-shell-height: calc(100vh - 190px);
                 display: grid;
                 grid-template-columns: 280px minmax(0, 1fr) 260px;
-                gap: .75rem;
+                gap: .5rem;
                 align-items: stretch;
+            }
+
+            .wa-density-compact .card-header,
+            .wa-density-compact .card-body,
+            .wa-density-compact .card-footer {
+                padding-top: .5rem;
+                padding-bottom: .5rem;
+            }
+
+            .wa-density-compact .btn,
+            .wa-density-compact .form-control,
+            .wa-density-compact .form-select,
+            .wa-density-compact .badge,
+            .wa-density-compact small,
+            .wa-density-compact .small {
+                font-size: .76rem;
+            }
+
+            .wa-compact-btn {
+                min-height: 27px;
+                padding: .08rem .42rem;
+                font-size: .72rem;
+                line-height: 1.2;
             }
 
             .wa-conversation-panel,
@@ -35,13 +58,27 @@
             .wa-conversation-item {
                 border: 1px solid rgba(148, 163, 184, .28);
                 border-radius: 12px;
-                padding: .62rem .66rem;
-                margin-bottom: .45rem;
+                padding: .45rem .48rem;
+                margin-bottom: .35rem;
                 display: block;
                 text-decoration: none;
                 color: inherit;
                 background: var(--bg-primary);
                 transition: border-color .12s ease, box-shadow .12s ease;
+            }
+
+            .wa-conversation-main-link {
+                display: block;
+            }
+
+            .wa-conversation-title {
+                font-size: .81rem;
+                line-height: 1.18;
+            }
+
+            .wa-conversation-phone {
+                font-size: .7rem;
+                line-height: 1.1;
             }
 
             .wa-conversation-item:hover {
@@ -72,7 +109,7 @@
                 border: 0;
                 border-bottom: 1px solid var(--border);
                 border-radius: 0;
-                padding: .45rem .65rem;
+                padding: .36rem .52rem;
                 background: rgba(255, 255, 255, .9);
             }
 
@@ -135,9 +172,9 @@
             .wa-bubble {
                 max-width: min(82%, 500px);
                 border-radius: 14px;
-                padding: .58rem .68rem;
-                font-size: .87rem;
-                line-height: 1.42;
+                padding: .45rem .56rem;
+                font-size: .78rem;
+                line-height: 1.34;
                 box-shadow: 0 6px 18px rgba(15, 23, 42, .05);
             }
 
@@ -173,7 +210,7 @@
                 bottom: 0;
                 z-index: 3;
                 background: var(--bg-primary);
-                padding: .56rem .65rem;
+                padding: .4rem .52rem;
             }
 
             [data-wa-message-body] {
@@ -274,24 +311,31 @@
     <x-slot name="header">
         <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap">
             <div>
-                <h2 class="font-semibold mb-0" style="font-size:1.1rem;">WhatsApp Conversations</h2>
-                <p class="mb-0" style="font-size:.8rem;color:var(--text-muted);">Compact dashboard chat with incremental
+                <h2 class="font-semibold mb-0" style="font-size:1rem;">WhatsApp Conversations</h2>
+                <p class="mb-0" style="font-size:.74rem;color:var(--text-muted);">Compact dashboard chat with
+                    incremental
                     updates and lazy history.</p>
             </div>
             <div class="d-flex align-items-center gap-2">
                 <span class="badge bg-success" data-wa-unread-total data-count="{{ $totalUnread }}">Unread:
                     {{ $totalUnread }}</span>
-                <a href="{{ orgRoute('admin.whatsapp.overview') }}" class="btn btn-outline-success btn-sm">Overview</a>
+                <button class="btn btn-success btn-sm wa-compact-btn" type="button" data-bs-toggle="modal"
+                    data-bs-target="#waNewChatModal">New Chat</button>
+                <a href="{{ orgRoute('admin.whatsapp.overview') }}"
+                    class="btn btn-outline-success btn-sm wa-compact-btn">Overview</a>
             </div>
         </div>
     </x-slot>
 
-    <div class="py-3" data-wa-root data-wa-conversation-id="{{ $selectedConversation?->id ?? '' }}"
+    <div class="py-2 wa-density-compact" data-wa-root data-wa-conversation-id="{{ $selectedConversation?->id ?? '' }}"
         data-wa-poll-url="{{ orgRoute('admin.whatsapp.poll') }}"
         data-wa-status-poll-url="{{ orgRoute('admin.whatsapp.status-poll') }}"
         data-wa-status-poll-interval="{{ $statusPollIntervalMs }}"
         data-wa-sidebar-poll-url="{{ orgRoute('admin.whatsapp.poll') }}"
         data-wa-poll-interval="{{ max(3, (int) $pollInterval) }}"
+        data-wa-quick-chat-validate-url="{{ orgRoute('admin.whatsapp.quick-chat.validate') }}"
+        data-wa-quick-chat-start-url="{{ orgRoute('admin.whatsapp.quick-chat.start') }}"
+        data-wa-save-contact-url="{{ orgRoute('admin.whatsapp.quick-chat.save-contact') }}"
         data-wa-debug-url="{{ orgRoute('admin.whatsapp.realtime-debug') }}"
         data-wa-debug-enabled="{{ $realtimeDebugEnabled ? '1' : '0' }}" data-wa-poll-cursor="{{ $pollCursor }}">
         @include('admin.whatsapp.partials.nav')
@@ -376,5 +420,8 @@
                 @endif
             </aside>
         </div>
+
+        @include('admin.whatsapp.partials.NewChatModal')
+        @include('admin.whatsapp.partials.SaveContactModal')
     </div>
 </x-app-layout>

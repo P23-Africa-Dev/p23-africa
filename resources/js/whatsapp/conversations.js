@@ -85,6 +85,26 @@ async function submitAjaxForm(form, options = {}) {
     return data;
 }
 
+async function postJson(url, payload, csrfToken) {
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRF-TOKEN': csrfToken,
+        },
+        body: JSON.stringify(payload),
+    });
+
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || !data.success) {
+        throw new Error(data.message || 'Request failed.');
+    }
+
+    return data;
+}
+
 function createDebugReporter(root, csrfToken) {
     const enabled = root?.getAttribute('data-wa-debug-enabled') === '1';
     const debugUrl = root?.getAttribute('data-wa-debug-url') || '';
@@ -130,6 +150,10 @@ function setItemActive(item, active) {
     }
 
     item.classList.toggle('active', Boolean(active));
+    const parentCard = item.closest('.wa-conversation-item');
+    if (parentCard) {
+        parentCard.classList.toggle('active', Boolean(active));
+    }
 }
 
 function initMessaging() {
@@ -153,11 +177,16 @@ function initMessaging() {
     const sendForm = document.querySelector('[data-wa-send-form]');
     const noteForm = document.querySelector('[data-wa-note-form]');
     const conversationForms = document.querySelectorAll('[data-wa-ajax-conversation-form]');
+    const newChatForm = document.querySelector('[data-wa-new-chat-form]');
+    const saveContactForm = document.querySelector('[data-wa-save-contact-form]');
     const searchForm = document.querySelector('[data-wa-search-form]');
     const textarea = document.querySelector('[data-wa-message-body]');
     const conversationId = Number(root?.getAttribute('data-wa-conversation-id') || 0) || null;
     const pollUrl = root?.getAttribute('data-wa-poll-url') || '';
     const statusPollUrl = root?.getAttribute('data-wa-status-poll-url') || '';
+    const quickChatValidateUrl = root?.getAttribute('data-wa-quick-chat-validate-url') || '';
+    const quickChatStartUrl = root?.getAttribute('data-wa-quick-chat-start-url') || '';
+    const saveContactUrl = root?.getAttribute('data-wa-save-contact-url') || '';
     const statusPollIntervalMs = Number(root?.getAttribute('data-wa-status-poll-interval') || 3000);
     const historyUrl = listElement?.getAttribute('data-wa-history-url') || '';
     const historyLimit = Number(listElement?.getAttribute('data-wa-history-limit') || 30);
@@ -685,6 +714,230 @@ function initMessaging() {
             }
         });
     });
+
+    document.querySelectorAll('[data-wa-delete-contact]').forEach((button) => {
+        button.addEventListener('click', async (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+
+            const deleteUrl = button.getAttribute('data-wa-delete-url') || '';
+            if (!deleteUrl) {
+                return;
+            }
+
+            const shouldDelete = window.confirm('Delete this contact from the list?');
+            if (!shouldDelete) {
+                return;
+            }
+
+            button.disabled = true;
+
+            try {
+                const response = await fetch(deleteUrl, {
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': csrfToken,
+                    },
+                    body: JSON.stringify({ _method: 'DELETE' }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Delete failed');
+                }
+
+                window.location.reload();
+            } catch (error) {
+                button.disabled = false;
+            }
+        });
+    });
+
+    document.querySelectorAll('[data-wa-clear-conversation]').forEach((button) => {
+        button.addEventListener('click', async (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+
+            const clearUrl = button.getAttribute('data-wa-clear-url') || '';
+            if (!clearUrl) {
+                return;
+            }
+
+            const shouldClear = window.confirm('Clear all messages and notes in this conversation?');
+            if (!shouldClear) {
+                return;
+            }
+
+            button.disabled = true;
+
+            try {
+                const response = await fetch(clearUrl, {
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': csrfToken,
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Clear failed');
+                }
+
+                window.location.reload();
+            } catch (error) {
+                button.disabled = false;
+            }
+        });
+    });
+
+    if (newChatForm) {
+        const resultNode = newChatForm.querySelector('[data-wa-validation-result]');
+        const validateButton = newChatForm.querySelector('[data-wa-validate-number]');
+        const startButton = newChatForm.querySelector('[data-wa-start-chat]');
+
+        const setValidationResult = (text, style = 'muted') => {
+            if (!resultNode) {
+                return;
+            }
+
+            resultNode.className = `small text-${style}`;
+        };
+
+        const payloadFromForm = () => {
+            const formData = new FormData(newChatForm);
+
+            return {
+                name: String(formData.get('name') || '').trim(),
+                phone_number: String(formData.get('phone_number') || '').trim(),
+            };
+        };
+
+        validateButton?.addEventListener('click', async () => {
+            if (!quickChatValidateUrl) {
+                return;
+            }
+
+            const payload = payloadFromForm();
+            if (!payload.phone_number) {
+                setValidationResult('Enter a phone number first.', 'warning');
+                return;
+            }
+
+            try {
+                setValidationResult('Validating number...', 'secondary');
+                const data = await postJson(quickChatValidateUrl, payload, csrfToken);
+                const status = String(data?.data?.validation_status || 'pending');
+
+                if (status === 'valid') {
+                    setValidationResult('Number is available on WhatsApp.', 'success');
+                } else if (status === 'invalid') {
+                    setValidationResult('Number is not available on WhatsApp.', 'danger');
+                } else {
+                    setValidationResult('Validation is pending. You can still start chat.', 'warning');
+                }
+            } catch (error) {
+                setValidationResult('Validation failed. Please retry.', 'danger');
+            }
+        });
+
+        newChatForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            if (!quickChatStartUrl || !startButton) {
+                return;
+            }
+
+            const payload = payloadFromForm();
+            if (!payload.phone_number) {
+                setValidationResult('Phone number is required.', 'warning');
+                return;
+            }
+
+            startButton.disabled = true;
+            const originalText = startButton.textContent;
+            startButton.textContent = 'Starting...';
+
+            try {
+                const data = await postJson(quickChatStartUrl, payload, csrfToken);
+                const conversationUrl = data?.data?.conversation_url;
+                if (conversationUrl) {
+                    window.location.assign(conversationUrl);
+                    return;
+                }
+
+                window.location.reload();
+            } catch (error) {
+                setValidationResult(error.message || 'Failed to start chat.', 'danger');
+            } finally {
+                startButton.disabled = false;
+                startButton.textContent = originalText || 'Start Chat';
+            }
+        });
+    }
+
+    document.querySelectorAll('[data-wa-open-save-contact]').forEach((button) => {
+        button.addEventListener('click', () => {
+            const phone = button.getAttribute('data-wa-phone') || '';
+            const name = button.getAttribute('data-wa-name') || '';
+
+            const savePhone = document.querySelector('[data-wa-save-phone]');
+            const savePhoneDisplay = document.querySelector('[data-wa-save-phone-display]');
+            const saveName = document.querySelector('[data-wa-save-name]');
+
+            if (savePhone) {
+                savePhone.value = phone;
+            }
+
+            if (savePhoneDisplay) {
+                savePhoneDisplay.value = phone;
+            }
+
+            if (saveName) {
+                saveName.value = name;
+            }
+        });
+    });
+
+    if (saveContactForm) {
+        const resultNode = saveContactForm.querySelector('[data-wa-save-contact-result]');
+
+        const setSaveResult = (text, style = 'muted') => {
+            if (!resultNode) {
+                return;
+            }
+
+            resultNode.textContent = text;
+            resultNode.className = `small text-${style}`;
+        };
+
+        saveContactForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            if (!saveContactUrl) {
+                return;
+            }
+
+            const formData = new FormData(saveContactForm);
+            const payload = {
+                phone_number: String(formData.get('phone_number') || '').trim(),
+                name: String(formData.get('name') || '').trim(),
+            };
+
+            try {
+                setSaveResult('Saving contact...', 'secondary');
+                await postJson(saveContactUrl, payload, csrfToken);
+                setSaveResult('Contact saved successfully.', 'success');
+                window.setTimeout(() => {
+                    window.location.reload();
+                }, 300);
+            } catch (error) {
+                setSaveResult(error.message || 'Failed to save contact.', 'danger');
+            }
+        });
+    }
 }
 
 export function bootWhatsAppConversations() {

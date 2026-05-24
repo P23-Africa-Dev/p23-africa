@@ -11,11 +11,13 @@ use App\Models\WhatsAppMessage;
 use App\Models\WhatsAppTemplate;
 use App\Models\WhatsAppWebhookLog;
 use App\Services\WhatsApp\ConversationService;
+use App\Services\WhatsApp\ContactManagerService;
 use App\Services\WhatsApp\DeveloperPasscodeService;
 use App\Services\WhatsApp\MessageStatusSyncService;
 use App\Services\WhatsApp\MessageService;
 use App\Services\WhatsApp\TemplateService;
 use App\Services\WhatsApp\TemplateRendererService;
+use App\Services\WhatsApp\WhatsAppNumberValidationService;
 use App\Services\WhatsApp\WhatsAppBusinessProfileService;
 use App\Services\WhatsApp\WhatsAppRealtimeDebugService;
 use Carbon\Carbon;
@@ -267,6 +269,33 @@ class WhatsAppController extends Controller
             'success' => true,
             'conversation_id' => $conversation->id,
         ]);
+    }
+
+    public function clearConversation(Request $request, WhatsAppConversation $conversation): JsonResponse|RedirectResponse
+    {
+        WhatsAppMessage::query()
+            ->where('conversation_id', $conversation->id)
+            ->delete();
+
+        $conversation->notes()->delete();
+
+        $conversation->update([
+            'last_message' => null,
+            'unread_count' => 0,
+        ]);
+
+        return $this->response(
+            $request,
+            [
+                'success' => true,
+                'message' => 'Conversation cleared successfully.',
+                'data' => [
+                    'conversation_id' => $conversation->id,
+                ],
+            ],
+            200,
+            'Conversation cleared successfully.'
+        );
     }
 
     public function poll(Request $request, ?WhatsAppRealtimeDebugService $debugService = null): JsonResponse
@@ -541,15 +570,7 @@ class WhatsAppController extends Controller
     {
         $search = $request->query('search');
 
-        $contacts = WhatsAppContact::query()
-            ->withCount('conversations')
-            ->when($search, function ($query) use ($search) {
-                $query->where('name', 'like', '%' . $search . '%')
-                    ->orWhere('phone', 'like', '%' . $search . '%');
-            })
-            ->orderByDesc('updated_at')
-            ->paginate(20)
-            ->withQueryString();
+        $contacts = app(ContactManagerService::class)->listContacts($search, 20);
 
         return view('admin.whatsapp.contacts', [
             'contacts' => $contacts,
@@ -557,16 +578,70 @@ class WhatsAppController extends Controller
         ]);
     }
 
-    public function updateContact(Request $request, WhatsAppContact $contact): RedirectResponse
+    public function storeContact(
+        Request $request,
+        ContactManagerService $contactManagerService,
+        WhatsAppNumberValidationService $numberValidationService
+    ): RedirectResponse {
+        $validated = $request->validate([
+            'name' => ['nullable', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:40'],
+            'country_code' => ['nullable', 'string', 'max:8'],
+            'email' => ['nullable', 'email', 'max:255'],
+            'company' => ['nullable', 'string', 'max:255'],
+            'notes' => ['nullable', 'string', 'max:3000'],
+            'avatar' => ['nullable', 'url', 'max:2048'],
+            'avatar_file' => ['nullable', 'image', 'max:5120'],
+        ]);
+
+        $normalizedPhone = $numberValidationService->normalizeNumber(
+            (string) $validated['phone'],
+            (string) ($validated['country_code'] ?? '')
+        );
+
+        $digitsOnly = preg_replace('/\D+/', '', $normalizedPhone) ?? '';
+        $duplicate = WhatsAppContact::query()
+            ->where('phone', $normalizedPhone)
+            ->when($digitsOnly !== '', fn($query) => $query->orWhere('phone', $digitsOnly))
+            ->exists();
+
+        if ($duplicate) {
+            throw ValidationException::withMessages([
+                'phone' => 'A contact with this phone already exists.',
+            ]);
+        }
+
+        $validated['phone'] = $normalizedPhone;
+
+        $contactManagerService->createContact($validated);
+
+        return back()->with('success', 'Contact created successfully.');
+    }
+
+    public function updateContact(Request $request, WhatsAppContact $contact, ContactManagerService $contactManagerService): RedirectResponse
     {
         $validated = $request->validate([
             'name' => ['nullable', 'string', 'max:255'],
+            'country_code' => ['nullable', 'string', 'max:8'],
+            'email' => ['nullable', 'email', 'max:255'],
+            'company' => ['nullable', 'string', 'max:255'],
+            'notes' => ['nullable', 'string', 'max:3000'],
+            'avatar' => ['nullable', 'url', 'max:2048'],
+            'avatar_file' => ['nullable', 'image', 'max:5120'],
             'profile_picture' => ['nullable', 'url', 'max:2048'],
+            'unsaved_contact' => ['nullable', 'boolean'],
         ]);
 
-        $contact->update($validated);
+        $contactManagerService->updateContact($contact, $validated);
 
         return back()->with('success', 'Contact updated successfully.');
+    }
+
+    public function destroyContact(WhatsAppContact $contact, ContactManagerService $contactManagerService): RedirectResponse
+    {
+        $contactManagerService->deleteContact($contact);
+
+        return back()->with('success', 'Contact deleted successfully.');
     }
 
     public function settings(Request $request, DeveloperPasscodeService $passcodeService): View

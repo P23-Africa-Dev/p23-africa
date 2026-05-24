@@ -14,6 +14,19 @@
         </div>
 
         <div class="d-flex align-items-center gap-2 flex-wrap wa-thread-actions">
+            @include('admin.whatsapp.partials.ContactValidationBadge', [
+                'contact' => $selectedConversation->contact,
+            ])
+            @if ($selectedConversation->contact?->unsaved_contact)
+                <span class="badge bg-info text-dark">Unsaved Contact</span>
+                <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
+                    data-bs-target="#waSaveContactModal" data-wa-open-save-contact
+                    data-wa-phone="{{ $selectedConversation->contact?->phone }}"
+                    data-wa-name="{{ $selectedConversation->contact?->name }}"
+                    data-wa-country-code="{{ $selectedConversation->contact?->country_code }}">
+                    Save Contact
+                </button>
+            @endif
             <span
                 class="badge {{ $selectedConversation->status === 'open' ? 'bg-success' : ($selectedConversation->status === 'pending' ? 'bg-warning text-dark' : 'bg-secondary') }}"
                 data-wa-conversation-status-badge>{{ ucfirst($selectedConversation->status) }}</span>

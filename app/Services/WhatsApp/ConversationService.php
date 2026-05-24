@@ -60,13 +60,20 @@ class ConversationService
     public function findOrCreateConversationForPhone(string $phone, ?string $name = null, array $metadata = []): WhatsAppConversation
     {
         $normalizedPhone = $this->normalizePhone($phone);
+        $digitsOnlyPhone = preg_replace('/\D+/', '', $phone) ?? '';
 
-        $contact = WhatsAppContact::query()->where('phone', $normalizedPhone)->first();
+        $contact = WhatsAppContact::query()
+            ->where('phone', $normalizedPhone)
+            ->when($digitsOnlyPhone !== '' && $digitsOnlyPhone !== $normalizedPhone, function ($query) use ($digitsOnlyPhone) {
+                $query->orWhere('phone', $digitsOnlyPhone);
+            })
+            ->first();
 
         if (!$contact) {
             $contact = WhatsAppContact::create([
                 'name' => $name,
                 'phone' => $normalizedPhone,
+                'unsaved_contact' => true,
                 'metadata' => $metadata ?: null,
             ]);
         } else {
@@ -78,6 +85,10 @@ class ConversationService
 
             if (!empty($metadata)) {
                 $updates['metadata'] = array_merge($contact->metadata ?? [], $metadata);
+            }
+
+            if ($contact->unsaved_contact) {
+                $updates['unsaved_contact'] = true;
             }
 
             if (!empty($updates)) {
@@ -178,6 +189,20 @@ class ConversationService
 
     protected function normalizePhone(string $phone): string
     {
-        return preg_replace('/\D+/', '', $phone) ?? $phone;
+        $raw = trim($phone);
+        if ($raw === '') {
+            return '';
+        }
+
+        $digits = preg_replace('/\D+/', '', $raw) ?? '';
+        if ($digits === '') {
+            return '';
+        }
+
+        if (str_starts_with($raw, '+')) {
+            return '+' . $digits;
+        }
+
+        return $digits;
     }
 }

@@ -49,6 +49,10 @@ class MessageService
             'last_message' => $body,
         ]);
 
+        $conversation->contact?->update([
+            'last_chat_at' => now(),
+        ]);
+
         if ((bool) config('whatsapp.queue', true)) {
             SendWhatsAppMessageJob::dispatch($message->id, $accountId)->onQueue('whatsapp');
         } else {
@@ -212,6 +216,10 @@ class MessageService
             'status' => WhatsAppConversation::STATUS_OPEN,
             'last_message' => $body ?: '[' . ucfirst($type) . ']',
             'unread_count' => max(0, $conversation->unread_count + 1),
+        ]);
+
+        $conversation->contact?->update([
+            'last_chat_at' => now(),
         ]);
 
         $message = $message->fresh(['conversation.contact', 'conversation.assignedUser']);

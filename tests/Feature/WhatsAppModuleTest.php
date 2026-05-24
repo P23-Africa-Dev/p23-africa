@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Http\Controllers\Admin\WhatsAppController;
+use App\Http\Controllers\Admin\QuickChatController;
 use App\Http\Controllers\Admin\DeveloperSecurityController;
 use App\Jobs\SyncWhatsAppBusinessProfileJob;
 use App\Http\Controllers\Api\WhatsAppWebhookController;
@@ -19,6 +20,7 @@ use App\Services\WhatsApp\MessageService;
 use App\Services\WhatsApp\MessageStatusSyncService;
 use App\Services\WhatsApp\TemplateRendererService;
 use App\Services\WhatsApp\WhatsAppBusinessProfileService;
+use App\Services\WhatsApp\WhatsAppNumberValidationService;
 use App\Services\WhatsApp\WebhookService;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -434,6 +436,44 @@ class WhatsAppModuleTest extends TestCase
         $this->assertSame($oldest->id, WhatsAppMessage::query()->orderBy('id')->first()->id);
     }
 
+    public function test_clear_conversation_removes_messages_and_resets_thread_state(): void
+    {
+        $contact = WhatsAppContact::create([
+            'name' => 'Clear Contact',
+            'phone' => '233577700011',
+        ]);
+
+        $conversation = WhatsAppConversation::create([
+            'contact_id' => $contact->id,
+            'status' => 'open',
+            'last_message' => 'To be cleared',
+            'unread_count' => 3,
+        ]);
+
+        $message = WhatsAppMessage::create([
+            'conversation_id' => $conversation->id,
+            'sender_type' => 'contact',
+            'type' => 'text',
+            'body' => 'Old chat body',
+            'status' => 'received',
+        ]);
+
+        $request = Request::create('/admin/whatsapp/conversations/' . $conversation->id . '/clear', 'POST');
+        $request->headers->set('Accept', 'application/json');
+
+        $response = app(WhatsAppController::class)->clearConversation($request, $conversation);
+
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertDatabaseMissing('whatsapp_messages', [
+            'id' => $message->id,
+        ]);
+        $this->assertDatabaseHas('whatsapp_conversations', [
+            'id' => $conversation->id,
+            'last_message' => null,
+            'unread_count' => 0,
+        ]);
+    }
+
     public function test_process_outgoing_message_calls_graph_api_and_updates_status(): void
     {
         config([
@@ -802,5 +842,91 @@ class WhatsAppModuleTest extends TestCase
                 && ($payload['websites'][0] ?? null) === 'https://example.test'
                 && ($payload['profile_picture_url'] ?? null) === 'https://cdn.example.test/logo.png';
         });
+    }
+
+    public function test_number_validation_uses_24_hour_cache_when_available(): void
+    {
+        WhatsAppContact::create([
+            'name' => 'Cached Contact',
+            'phone' => '+233500111999',
+            'is_whatsapp' => true,
+            'validation_status' => 'valid',
+            'validated_at' => now()->subMinutes(10),
+            'validation_cache_until' => now()->addHours(23),
+        ]);
+
+        $result = app(WhatsAppNumberValidationService::class)
+            ->validateWhatsAppNumber('+233500111999', '233');
+
+        $this->assertSame('cache', $result['source']);
+        $this->assertTrue((bool) $result['is_whatsapp']);
+        $this->assertSame('valid', $result['validation_status']);
+    }
+
+    public function test_quick_chat_start_and_save_contact_flow_updates_unsaved_contact_state(): void
+    {
+        Role::findOrCreate('admin');
+
+        $admin = User::factory()->create();
+        $admin->assignRole('admin');
+
+        WhatsAppAccount::create([
+            'business_name' => 'Quick Chat WA',
+            'phone_number' => '233500000111',
+            'phone_number_id' => '991122334455',
+            'waba_id' => '1122334455667788',
+            'access_token' => 'quick-chat-token',
+            'webhook_verify_token' => 'verify-token',
+            'status' => 'active',
+        ]);
+
+        Http::fake([
+            'https://graph.facebook.com/*/contacts' => Http::response([
+                'contacts' => [
+                    [
+                        'input' => '233500888777',
+                        'wa_id' => '233500888777',
+                        'status' => 'valid',
+                    ],
+                ],
+            ], 200),
+        ]);
+
+        $startRequest = Request::create('/admin/whatsapp/quick-chat/start', 'POST', [
+            'phone_number' => '0500888777',
+            'country_code' => '233',
+            'name' => 'Quick Chat User',
+        ]);
+        $startRequest->headers->set('Accept', 'application/json');
+        $startRequest->setUserResolver(fn() => $admin);
+
+        $startResponse = app(QuickChatController::class)->start($startRequest);
+        $this->assertSame(200, $startResponse->getStatusCode());
+
+        $contact = WhatsAppContact::query()->where('phone', '+233500888777')->firstOrFail();
+        $this->assertTrue((bool) $contact->unsaved_contact);
+        $this->assertSame('valid', $contact->validation_status);
+
+        $saveRequest = Request::create('/admin/whatsapp/quick-chat/save-contact', 'POST', [
+            'phone_number' => '+233500888777',
+            'country_code' => '233',
+            'name' => 'Saved Contact',
+            'email' => 'saved@example.test',
+            'company' => 'P23 Africa',
+            'notes' => 'Saved from quick chat',
+        ]);
+        $saveRequest->headers->set('Accept', 'application/json');
+        $saveRequest->setUserResolver(fn() => $admin);
+
+        $saveResponse = app(QuickChatController::class)->saveContact($saveRequest);
+        $this->assertSame(200, $saveResponse->getStatusCode());
+
+        $this->assertDatabaseHas('whatsapp_contacts', [
+            'phone' => '+233500888777',
+            'name' => 'Saved Contact',
+            'email' => 'saved@example.test',
+            'company' => 'P23 Africa',
+            'unsaved_contact' => 0,
+        ]);
     }
 }

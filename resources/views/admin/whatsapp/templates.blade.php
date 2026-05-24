@@ -1,13 +1,56 @@
 <x-app-layout>
+    @push('head')
+        <style>
+            .wa-template-compact .card-header,
+            .wa-template-compact .card-body,
+            .wa-template-compact .card-footer {
+                padding-top: .45rem;
+                padding-bottom: .45rem;
+            }
+
+            .wa-template-compact .form-label {
+                margin-bottom: .2rem;
+                font-size: .72rem;
+            }
+
+            .wa-template-compact .form-control,
+            .wa-template-compact .form-select,
+            .wa-template-compact .btn,
+            .wa-template-compact textarea {
+                font-size: .76rem;
+            }
+
+            .wa-template-compact .btn {
+                min-height: 28px;
+                padding-top: .12rem;
+                padding-bottom: .12rem;
+            }
+
+            .wa-template-compact table {
+                font-size: .76rem;
+            }
+
+            .wa-template-compact summary {
+                font-size: .74rem;
+            }
+
+            .wa-template-compact .table td,
+            .wa-template-compact .table th {
+                padding-top: .38rem;
+                padding-bottom: .38rem;
+            }
+        </style>
+    @endpush
+
     <x-slot name="header">
         <div>
-            <h2 class="font-semibold mb-1" style="font-size:1.25rem;">WhatsApp Templates</h2>
-            <p class="mb-0" style="font-size:.875rem;color:var(--text-muted);">Build templates in JSON, rich text,
+            <h2 class="font-semibold mb-1" style="font-size:1.05rem;">WhatsApp Templates</h2>
+            <p class="mb-0" style="font-size:.74rem;color:var(--text-muted);">Build templates in JSON, rich text,
                 or HTML with live WhatsApp-style preview.</p>
         </div>
     </x-slot>
 
-    <div class="py-4" data-wa-template-builder>
+    <div class="py-2 wa-template-compact" data-wa-template-builder>
         @include('admin.whatsapp.partials.nav')
 
         @if (session('success'))
@@ -231,7 +274,7 @@
                 .wa-template-workspace-row {
                     --wa-preview-top: 96px;
                     --wa-preview-bottom-gap: 24px;
-                    --wa-preview-width: clamp(340px, 30vw, 460px);
+                    --wa-preview-width: clamp(320px, 28vw, 430px);
                     --wa-workspace-height: calc(100vh - 116px);
                 }
 
