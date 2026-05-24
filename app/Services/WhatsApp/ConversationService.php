@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\WhatsAppContact;
 use App\Models\WhatsAppConversation;
 use App\Models\WhatsAppNote;
+use App\Services\WhatsApp\ConversationResolverService;
 use App\Services\WhatsApp\Hooks\FutureIntegrationBridge;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
@@ -18,6 +19,7 @@ class ConversationService
 {
     public function __construct(
         protected FutureIntegrationBridge $futureHooks,
+        protected ConversationResolverService $conversationResolver,
     ) {}
 
     public function listConversations(array $filters = [], int $perPage = 25): LengthAwarePaginator
@@ -59,49 +61,19 @@ class ConversationService
 
     public function findOrCreateConversationForPhone(string $phone, ?string $name = null, array $metadata = []): WhatsAppConversation
     {
-        $normalizedPhone = $this->normalizePhone($phone);
-        $digitsOnlyPhone = preg_replace('/\D+/', '', $phone) ?? '';
-
-        $contact = WhatsAppContact::query()
-            ->where('phone', $normalizedPhone)
-            ->when($digitsOnlyPhone !== '' && $digitsOnlyPhone !== $normalizedPhone, function ($query) use ($digitsOnlyPhone) {
-                $query->orWhere('phone', $digitsOnlyPhone);
-            })
-            ->first();
-
-        if (!$contact) {
-            $contact = WhatsAppContact::create([
-                'name' => $name,
-                'phone' => $normalizedPhone,
-                'unsaved_contact' => true,
-                'metadata' => $metadata ?: null,
-            ]);
-        } else {
-            $updates = [];
-
-            if ($name && !$contact->name) {
-                $updates['name'] = $name;
-            }
-
-            if (!empty($metadata)) {
-                $updates['metadata'] = array_merge($contact->metadata ?? [], $metadata);
-            }
-
-            if ($contact->unsaved_contact) {
-                $updates['unsaved_contact'] = true;
-            }
-
-            if (!empty($updates)) {
-                $contact->update($updates);
-            }
-        }
-
-        $conversation = WhatsAppConversation::firstOrCreate(
-            ['contact_id' => $contact->id],
+        $conversation = $this->conversationResolver->resolveConversation(
+            $phone,
+            data_get($metadata, 'wa_id'),
+            data_get($metadata, 'contact_id'),
+            $name,
+            [
+                'metadata' => $metadata,
+                'unsaved_contact' => (bool) data_get($metadata, 'unsaved_contact', true),
+            ],
             [
                 'status' => WhatsAppConversation::STATUS_OPEN,
                 'unread_count' => 0,
-            ]
+            ],
         );
 
         return $conversation->load('contact', 'assignedUser');
@@ -185,24 +157,5 @@ class ConversationService
             })
             ->orderBy('name')
             ->get(['id', 'name', 'email']);
-    }
-
-    protected function normalizePhone(string $phone): string
-    {
-        $raw = trim($phone);
-        if ($raw === '') {
-            return '';
-        }
-
-        $digits = preg_replace('/\D+/', '', $raw) ?? '';
-        if ($digits === '') {
-            return '';
-        }
-
-        if (str_starts_with($raw, '+')) {
-            return '+' . $digits;
-        }
-
-        return $digits;
     }
 }

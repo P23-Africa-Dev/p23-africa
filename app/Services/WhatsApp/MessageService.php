@@ -190,6 +190,7 @@ class MessageService
         $conversation = $this->conversationService->findOrCreateConversationForPhone($from, $contactName, [
             'wa_id' => data_get($contactPayload, 'wa_id'),
             'raw_contact' => $contactPayload,
+            'unsaved_contact' => true,
         ]);
 
         $type = (string) data_get($messagePayload, 'type', 'text');

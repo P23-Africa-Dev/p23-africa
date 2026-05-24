@@ -28,6 +28,9 @@ class WhatsAppWebhookController extends Controller
     {
         $rawPayload = $request->getContent();
         $payload = $request->all();
+        if ($payload === [] && $rawPayload !== '') {
+            $payload = json_decode($rawPayload, true) ?: [];
+        }
         $signatureHeader = $this->resolveSignatureHeader($request);
 
         $signatureValid = $webhookService->verifySignature($rawPayload, $signatureHeader);

@@ -20,11 +20,40 @@ class WhatsAppConversation extends Model
 
     protected $fillable = [
         'contact_id',
+        'wa_id',
+        'normalized_phone',
+        'conversation_key',
         'assigned_to',
         'status',
         'last_message',
         'unread_count',
     ];
+
+    protected static function booted(): void
+    {
+        static::saving(function (self $conversation): void {
+            $contactPhone = $conversation->contact?->phone;
+
+            if (!$contactPhone && $conversation->contact_id) {
+                $contactPhone = WhatsAppContact::query()
+                    ->whereKey($conversation->contact_id)
+                    ->value('phone');
+            }
+
+            $conversation->wa_id = self::sanitizeWaId($conversation->wa_id);
+            $conversation->normalized_phone = self::normalizePhone($conversation->normalized_phone ?: $contactPhone);
+
+            $conversationKey = self::buildConversationKey(
+                $conversation->wa_id,
+                $conversation->normalized_phone,
+                $conversation->contact_id,
+            );
+
+            if ($conversationKey) {
+                $conversation->conversation_key = $conversationKey;
+            }
+        });
+    }
 
     public static function statuses(): array
     {
@@ -33,6 +62,58 @@ class WhatsAppConversation extends Model
             self::STATUS_PENDING,
             self::STATUS_CLOSED,
         ];
+    }
+
+    public static function sanitizeWaId(?string $waId): ?string
+    {
+        $digits = preg_replace('/\D+/', '', (string) $waId) ?? '';
+
+        return $digits !== '' ? $digits : null;
+    }
+
+    public static function normalizePhone(?string $phone): ?string
+    {
+        $raw = trim((string) $phone);
+        if ($raw === '') {
+            return null;
+        }
+
+        $digits = preg_replace('/\D+/', '', $raw) ?? '';
+        if ($digits === '') {
+            return null;
+        }
+
+        return '+' . $digits;
+    }
+
+    public static function phoneCandidates(?string $phone): array
+    {
+        $normalized = self::normalizePhone($phone);
+        $digits = preg_replace('/\D+/', '', (string) $phone) ?? '';
+
+        return array_values(array_filter(array_unique([
+            $normalized,
+            $digits !== '' ? $digits : null,
+        ])));
+    }
+
+    public static function buildConversationKey(?string $waId, ?string $normalizedPhone, ?int $contactId): ?string
+    {
+        $sanitizedWaId = self::sanitizeWaId($waId);
+        if ($sanitizedWaId) {
+            return 'wa_' . sha1($sanitizedWaId);
+        }
+
+        $canonicalPhone = self::normalizePhone($normalizedPhone);
+        if ($canonicalPhone) {
+            return 'ph_' . sha1($canonicalPhone);
+        }
+
+        if ($contactId) {
+            return 'ct_' . $contactId;
+        }
+
+        return null;
     }
 
     public function contact(): BelongsTo

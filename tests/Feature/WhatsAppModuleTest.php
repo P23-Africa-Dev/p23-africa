@@ -16,6 +16,8 @@ use App\Models\WhatsAppSettingSecurity;
 use App\Models\WhatsappSecurityLog;
 use App\Models\User;
 use App\Services\WhatsApp\DeveloperPasscodeService;
+use App\Services\WhatsApp\ConversationService;
+use App\Services\WhatsApp\ConversationMergeService;
 use App\Services\WhatsApp\MessageService;
 use App\Services\WhatsApp\MessageStatusSyncService;
 use App\Services\WhatsApp\TemplateRendererService;
@@ -110,11 +112,11 @@ class WhatsAppModuleTest extends TestCase
         $this->assertTrue((bool) $response->getData(true)['success']);
 
         $this->assertDatabaseHas('whatsapp_contacts', [
-            'phone' => '15551234567',
+            'phone' => '+15551234567',
             'name' => 'John Doe',
         ]);
 
-        $contact = WhatsAppContact::where('phone', '15551234567')->firstOrFail();
+        $contact = WhatsAppContact::where('phone', '+15551234567')->firstOrFail();
         $conversation = WhatsAppConversation::where('contact_id', $contact->id)->firstOrFail();
 
         $this->assertDatabaseHas('whatsapp_messages', [
@@ -127,6 +129,252 @@ class WhatsAppModuleTest extends TestCase
         $this->assertDatabaseHas('whatsapp_webhook_logs', [
             'event_type' => 'messages',
             'status' => 'processed',
+        ]);
+
+        $this->assertSame('15551234567', $conversation->wa_id);
+        $this->assertSame('+15551234567', $conversation->normalized_phone);
+        $this->assertNotNull($conversation->conversation_key);
+    }
+
+    public function test_incoming_reply_reuses_existing_outgoing_conversation(): void
+    {
+        config(['whatsapp.webhook_secret' => '']);
+
+        $contact = WhatsAppContact::create([
+            'name' => 'John Doe',
+            'phone' => '+2348012345678',
+        ]);
+
+        $conversation = app(ConversationService::class)->findOrCreateConversationForPhone(
+            '+2348012345678',
+            'John Doe',
+            ['unsaved_contact' => false]
+        );
+
+        $payload = [
+            'entry' => [[
+                'changes' => [[
+                    'field' => 'messages',
+                    'value' => [
+                        'contacts' => [[
+                            'wa_id' => '2348012345678',
+                            'profile' => [
+                                'name' => 'John Doe',
+                            ],
+                        ]],
+                        'messages' => [[
+                            'from' => '2348012345678',
+                            'id' => 'wamid.reply.1',
+                            'timestamp' => (string) now()->timestamp,
+                            'type' => 'text',
+                            'text' => [
+                                'body' => 'Reply from WhatsApp',
+                            ],
+                        ]],
+                    ],
+                ]],
+            ]],
+        ];
+
+        $request = Request::create(
+            '/api/whatsapp/webhook',
+            'POST',
+            [],
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode($payload)
+        );
+
+        $request->headers->set('Accept', 'application/json');
+
+        $response = app(WhatsAppWebhookController::class)->receive($request, app(WebhookService::class));
+
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame(1, WhatsAppConversation::query()->count());
+
+        $conversation->refresh();
+
+        $this->assertSame($contact->id, $conversation->contact_id);
+        $this->assertSame('2348012345678', $conversation->wa_id);
+        $this->assertSame('+2348012345678', $conversation->normalized_phone);
+        $this->assertSame('Reply from WhatsApp', $conversation->last_message);
+        $this->assertSame(1, $conversation->unread_count);
+
+        $this->assertDatabaseHas('whatsapp_messages', [
+            'conversation_id' => $conversation->id,
+            'whatsapp_message_id' => 'wamid.reply.1',
+            'sender_type' => 'contact',
+        ]);
+    }
+
+    public function test_unknown_incoming_number_creates_new_conversation(): void
+    {
+        config(['whatsapp.webhook_secret' => '']);
+
+        $payload = [
+            'entry' => [[
+                'changes' => [[
+                    'field' => 'messages',
+                    'value' => [
+                        'contacts' => [[
+                            'wa_id' => '447700900123',
+                            'profile' => [
+                                'name' => 'Unknown User',
+                            ],
+                        ]],
+                        'messages' => [[
+                            'from' => '447700900123',
+                            'id' => 'wamid.unknown.1',
+                            'timestamp' => (string) now()->timestamp,
+                            'type' => 'text',
+                            'text' => [
+                                'body' => 'First inbound message',
+                            ],
+                        ]],
+                    ],
+                ]],
+            ]],
+        ];
+
+        $request = Request::create(
+            '/api/whatsapp/webhook',
+            'POST',
+            [],
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode($payload)
+        );
+
+        $request->headers->set('Accept', 'application/json');
+
+        $response = app(WhatsAppWebhookController::class)->receive($request, app(WebhookService::class));
+
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame(1, WhatsAppContact::query()->count());
+        $this->assertSame(1, WhatsAppConversation::query()->count());
+
+        $conversation = WhatsAppConversation::query()->firstOrFail();
+
+        $this->assertSame('447700900123', $conversation->wa_id);
+        $this->assertSame('+447700900123', $conversation->normalized_phone);
+        $this->assertSame('First inbound message', $conversation->last_message);
+    }
+
+    public function test_existing_contact_without_active_chat_reuses_contact_and_creates_conversation(): void
+    {
+        config(['whatsapp.webhook_secret' => '']);
+
+        $contact = WhatsAppContact::create([
+            'name' => 'Existing Contact',
+            'phone' => '+233500000001',
+            'company' => 'Acme',
+            'notes' => 'Keep linked',
+            'unsaved_contact' => false,
+        ]);
+
+        $payload = [
+            'entry' => [[
+                'changes' => [[
+                    'field' => 'messages',
+                    'value' => [
+                        'contacts' => [[
+                            'wa_id' => '233500000001',
+                            'profile' => [
+                                'name' => 'Existing Contact',
+                            ],
+                        ]],
+                        'messages' => [[
+                            'from' => '233500000001',
+                            'id' => 'wamid.existing.1',
+                            'timestamp' => (string) now()->timestamp,
+                            'type' => 'text',
+                            'text' => [
+                                'body' => 'Hello again',
+                            ],
+                        ]],
+                    ],
+                ]],
+            ]],
+        ];
+
+        $request = Request::create(
+            '/api/whatsapp/webhook',
+            'POST',
+            [],
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode($payload)
+        );
+
+        $request->headers->set('Accept', 'application/json');
+
+        $response = app(WhatsAppWebhookController::class)->receive($request, app(WebhookService::class));
+
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame(1, WhatsAppContact::query()->count());
+        $this->assertSame(1, WhatsAppConversation::query()->count());
+
+        $conversation = WhatsAppConversation::query()->firstOrFail();
+        $contact->refresh();
+
+        $this->assertSame($contact->id, $conversation->contact_id);
+        $this->assertSame('Existing Contact', $contact->name);
+        $this->assertSame('Acme', $contact->company);
+        $this->assertSame('Keep linked', $contact->notes);
+        $this->assertFalse((bool) $contact->unsaved_contact);
+    }
+
+    public function test_conversation_merge_service_merges_duplicate_threads(): void
+    {
+        $contact = WhatsAppContact::create([
+            'name' => 'Merge Contact',
+            'phone' => '+254700123456',
+        ]);
+
+        $olderConversation = WhatsAppConversation::withoutEvents(function () use ($contact) {
+            return WhatsAppConversation::create([
+                'contact_id' => $contact->id,
+                'wa_id' => null,
+                'normalized_phone' => null,
+                'conversation_key' => 'dup_old_' . uniqid('', true),
+                'status' => 'open',
+                'last_message' => 'Older thread',
+                'unread_count' => 1,
+            ]);
+        });
+
+        $newerConversation = WhatsAppConversation::withoutEvents(function () use ($contact) {
+            return WhatsAppConversation::create([
+                'contact_id' => $contact->id,
+                'wa_id' => '254700123456',
+                'normalized_phone' => '+254700123456',
+                'conversation_key' => 'dup_new_' . uniqid('', true),
+                'status' => 'open',
+                'last_message' => 'Newest thread',
+                'unread_count' => 2,
+            ]);
+        });
+
+        $movedMessage = WhatsAppMessage::create([
+            'conversation_id' => $olderConversation->id,
+            'sender_type' => 'contact',
+            'type' => 'text',
+            'body' => 'Old duplicate message',
+            'status' => 'received',
+        ]);
+
+        app(ConversationMergeService::class)->mergeDuplicates();
+
+        $this->assertDatabaseMissing('whatsapp_conversations', [
+            'id' => $olderConversation->id,
+        ]);
+
+        $this->assertDatabaseHas('whatsapp_messages', [
+            'id' => $movedMessage->id,
+            'conversation_id' => $newerConversation->id,
         ]);
     }
 

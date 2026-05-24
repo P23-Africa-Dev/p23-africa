@@ -103,7 +103,9 @@ class WebhookService
 
             foreach ((array) data_get($value, 'messages', []) as $messagePayload) {
                 $from = data_get($messagePayload, 'from');
-                $contactPayload = $this->findContactPayload($contacts, $from);
+                $contactPayload = array_merge([
+                    'wa_id' => $from,
+                ], $this->findContactPayload($contacts, $from));
                 $this->messageService->handleIncomingMessage((array) $messagePayload, $contactPayload);
             }
 
