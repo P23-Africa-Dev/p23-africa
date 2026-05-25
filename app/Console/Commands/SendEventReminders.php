@@ -6,6 +6,7 @@ use App\Mail\EventReminderMail;
 use Illuminate\Console\Command;
 use App\Models\Seat;
 use App\Models\Event;
+use App\Services\WhatsApp\EventWhatsAppAutomationService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
@@ -87,6 +88,12 @@ class SendEventReminders extends Command
 
     protected function sendRemindersForEvent(Event $event, string $type)
     {
+        try {
+            app(EventWhatsAppAutomationService::class)->beforeEvent($event);
+        } catch (\Throwable) {
+            // Hook execution is best-effort and should not block reminder emails.
+        }
+
         $seats = $event->seats; // Get all registered attendees
 
         if ($seats->isEmpty()) {

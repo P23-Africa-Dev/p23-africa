@@ -18,6 +18,8 @@ class QuickChatController extends Controller
 
     public function validateNumber(Request $request): JsonResponse
     {
+        $this->authorize('whatsapp.send');
+
         $validated = $request->validate([
             'phone_number' => ['required', 'string', 'max:40'],
             'country_code' => ['nullable', 'string', 'max:8'],
@@ -38,6 +40,8 @@ class QuickChatController extends Controller
 
     public function start(Request $request): JsonResponse
     {
+        $this->authorize('whatsapp.send');
+
         $validated = $request->validate([
             'phone_number' => ['required', 'string', 'max:40'],
             'country_code' => ['nullable', 'string', 'max:8'],
@@ -79,6 +83,8 @@ class QuickChatController extends Controller
 
     public function saveContact(Request $request): JsonResponse
     {
+        $this->authorize('whatsapp.manage');
+
         $validated = $request->validate([
             'phone_number' => ['required', 'string', 'max:40'],
             'country_code' => ['nullable', 'string', 'max:8'],

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\SeatBookedMail;
 use App\Models\Event;
 use App\Models\Seat;
+use App\Services\WhatsApp\EventWhatsAppAutomationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -45,6 +46,12 @@ class SeatController extends Controller
         $fillableData['seat_code'] = $seatCode;
 
         $seat = Seat::create($fillableData);
+
+        try {
+            app(EventWhatsAppAutomationService::class)->afterBooking($seat);
+        } catch (\Throwable) {
+            // Automation hooks are best-effort and should not block registrations.
+        }
 
         // $event = Event::findOrFail($event_id);
 

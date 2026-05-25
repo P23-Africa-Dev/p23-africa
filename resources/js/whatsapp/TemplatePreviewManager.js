@@ -60,6 +60,13 @@ export function bootTemplatePreviewManager() {
         company: 'P23 Africa',
         date: new Date().toLocaleDateString(),
         event: 'Summit 2026',
+        event_name: 'Nigerian Business Market',
+        event_date: new Date().toLocaleDateString(),
+        location: 'Lagos',
+        seat_code: 'P23-1004',
+        email: 'attendee@example.com',
+        phone: '+2348012345678',
+        booking_date: new Date().toLocaleDateString(),
     };
 
     let activeFormat = formatInput?.value || 'json';

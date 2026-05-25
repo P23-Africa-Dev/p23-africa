@@ -6,66 +6,46 @@
 
 <div class="wa-thread-header card" data-wa-thread-header>
     <div class="d-flex justify-content-between align-items-center gap-2">
-        <div class="min-w-0">
-            <div class="fw-semibold text-truncate">
-                {{ $selectedConversation->contact?->name ?: $selectedConversation->contact?->phone }}
+        @php
+            $contact = $selectedConversation->contact;
+            $displayName = $contact?->name ?: $contact?->phone ?: 'Unknown Contact';
+            $avatar = $contact?->profile_picture ?: $contact?->avatar;
+            $initial = strtoupper(mb_substr((string) $displayName, 0, 1));
+        @endphp
+
+        <div class="min-w-0 d-flex align-items-center gap-2" data-wa-contact-summary>
+            <span class="wa-avatar">
+                @if ($avatar)
+                    <img src="{{ $avatar }}" alt="{{ $displayName }}">
+                @else
+                    {{ $initial }}
+                @endif
+            </span>
+
+            <div class="min-w-0">
+                <div class="fw-semibold text-truncate" data-wa-contact-name>
+                    {{ $displayName }}
+                </div>
+                @if ($contact?->phone)
+                    <div class="small text-muted text-truncate" data-wa-contact-phone>{{ $contact->phone }}</div>
+                @endif
             </div>
-            <div class="small text-muted text-truncate">{{ $selectedConversation->contact?->phone }}</div>
         </div>
 
-        <div class="d-flex align-items-center gap-2 flex-wrap wa-thread-actions">
-            @include('admin.whatsapp.partials.ContactValidationBadge', [
-                'contact' => $selectedConversation->contact,
+        <div class="d-flex align-items-center gap-2 wa-thread-actions">
+            @include('admin.whatsapp.partials.CompactBadge', [
+                'type' => 'validation-icon',
+                'status' => $contact?->validation_status,
             ])
-            @if ($selectedConversation->contact?->unsaved_contact)
-                <span class="badge bg-info text-dark">Unsaved Contact</span>
-                <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
-                    data-bs-target="#waSaveContactModal" data-wa-open-save-contact
-                    data-wa-phone="{{ $selectedConversation->contact?->phone }}"
-                    data-wa-name="{{ $selectedConversation->contact?->name }}"
-                    data-wa-country-code="{{ $selectedConversation->contact?->country_code }}">
-                    Save Contact
-                </button>
-            @endif
-            <span
-                class="badge {{ $selectedConversation->status === 'open' ? 'bg-success' : ($selectedConversation->status === 'pending' ? 'bg-warning text-dark' : 'bg-secondary') }}"
-                data-wa-conversation-status-badge>{{ ucfirst($selectedConversation->status) }}</span>
-            <small class="text-muted">Updated <span
+            <small class="text-muted d-none d-md-inline">Updated <span
                     data-wa-conversation-updated-at>{{ optional($selectedConversation->updated_at)->format('M d, H:i') }}</span></small>
+            @include('admin.whatsapp.partials.ChatHeaderMenu', [
+                'selectedConversation' => $selectedConversation,
+                'statuses' => $statuses,
+                'assignees' => $assignees,
+            ])
 
-            <form method="POST"
-                action="{{ orgRoute('admin.whatsapp.conversations.update', ['conversation' => $selectedConversation->id]) }}"
-                class="d-flex align-items-center" data-wa-ajax-conversation-form>
-                @csrf
-                @method('PATCH')
-                <select name="status" class="form-select form-select-sm">
-                    @foreach ($statuses as $status)
-                        <option value="{{ $status }}"
-                            {{ $selectedConversation->status === $status ? 'selected' : '' }}>
-                            {{ ucfirst($status) }}
-                        </option>
-                    @endforeach
-                </select>
-            </form>
-
-            <form method="POST"
-                action="{{ orgRoute('admin.whatsapp.conversations.update', ['conversation' => $selectedConversation->id]) }}"
-                class="d-flex align-items-center" data-wa-ajax-conversation-form>
-                @csrf
-                @method('PATCH')
-                <select name="assigned_to" class="form-select form-select-sm">
-                    <option value="">Unassigned</option>
-                    @foreach ($assignees as $assignee)
-                        <option value="{{ $assignee->id }}"
-                            {{ (int) $selectedConversation->assigned_to === (int) $assignee->id ? 'selected' : '' }}>
-                            {{ $assignee->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </form>
-
-            <a href="#waComposer" class="btn btn-sm btn-outline-success">Reply</a>
-            @include('admin.whatsapp.partials.chat-close-button')
+            <span class="d-none" data-wa-conversation-status-badge>{{ ucfirst($selectedConversation->status) }}</span>
         </div>
     </div>
 </div>

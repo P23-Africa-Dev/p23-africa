@@ -13,6 +13,8 @@ class MetaProfileSyncController extends Controller
 {
     public function index(): View
     {
+        $this->authorize('whatsapp.view');
+
         $account = WhatsAppAccount::query()->latest('id')->first();
 
         return view('admin.whatsapp.profile-sync', [
@@ -22,6 +24,8 @@ class MetaProfileSyncController extends Controller
 
     public function syncNow(): RedirectResponse
     {
+        $this->authorize('whatsapp.manage');
+
         $account = WhatsAppAccount::query()->latest('id')->first();
 
         if (! $account) {
@@ -41,6 +45,8 @@ class MetaProfileSyncController extends Controller
 
     public function refreshMetaStatus(WhatsAppBusinessProfileService $service): RedirectResponse
     {
+        $this->authorize('whatsapp.manage');
+
         $account = WhatsAppAccount::query()->latest('id')->first();
 
         if (! $account) {

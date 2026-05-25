@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\User;
 use App\Models\Project;
 use App\Policies\ProjectPolicy;
+use App\Policies\WhatsAppPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -50,5 +51,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('view_students', function ($user) {
             return $user->hasPermission('view_students');
         });
+
+        Gate::define('whatsapp.view', [WhatsAppPolicy::class, 'view']);
+        Gate::define('whatsapp.send', [WhatsAppPolicy::class, 'send']);
+        Gate::define('whatsapp.manage', [WhatsAppPolicy::class, 'manage']);
     }
 }

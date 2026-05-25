@@ -5,9 +5,12 @@ namespace Tests\Feature;
 use App\Http\Controllers\Admin\WhatsAppController;
 use App\Http\Controllers\Admin\QuickChatController;
 use App\Http\Controllers\Admin\DeveloperSecurityController;
+use App\Jobs\SendEventBroadcastJob;
 use App\Jobs\SyncWhatsAppBusinessProfileJob;
 use App\Http\Controllers\Api\WhatsAppWebhookController;
 use App\Jobs\SendWhatsAppMessageJob;
+use App\Models\Event;
+use App\Models\Seat;
 use App\Models\WhatsAppAccount;
 use App\Models\WhatsAppContact;
 use App\Models\WhatsAppConversation;
@@ -18,6 +21,8 @@ use App\Models\User;
 use App\Services\WhatsApp\DeveloperPasscodeService;
 use App\Services\WhatsApp\ConversationService;
 use App\Services\WhatsApp\ConversationMergeService;
+use App\Services\WhatsApp\EventAudienceService;
+use App\Services\WhatsApp\EventWhatsAppService;
 use App\Services\WhatsApp\MessageService;
 use App\Services\WhatsApp\MessageStatusSyncService;
 use App\Services\WhatsApp\TemplateRendererService;
@@ -1176,5 +1181,177 @@ class WhatsAppModuleTest extends TestCase
             'company' => 'P23 Africa',
             'unsaved_contact' => 0,
         ]);
+    }
+
+    public function test_event_audience_service_extracts_only_valid_deduplicated_whatsapp_attendees(): void
+    {
+        WhatsAppAccount::create([
+            'business_name' => 'Event WA',
+            'phone_number' => '233500123456',
+            'phone_number_id' => '901122334455',
+            'waba_id' => '11223344000099',
+            'access_token' => 'event-wa-token',
+            'webhook_verify_token' => 'verify-wa-token',
+            'status' => 'active',
+        ]);
+
+        $event = Event::create([
+            'title' => 'Nigerian Business Market',
+            'subtitle' => 'Growth Event',
+            'description' => 'Event description',
+            'link' => 'https://example.test/event',
+            'event_date' => now()->addDays(5)->toDateString(),
+            'event_time' => '10:30:00',
+            'venue' => 'Lagos',
+            'display' => 'open_to_all',
+            'visibility' => 'public',
+        ]);
+
+        Seat::create([
+            'event_id' => $event->id,
+            'name' => 'Nurudeen',
+            'email' => 'nurudeen@example.test',
+            'phone' => '+233500111111',
+            'organization' => 'P23 Africa',
+            'seat_code' => 'P23-1004',
+        ]);
+
+        Seat::create([
+            'event_id' => $event->id,
+            'name' => 'Nurudeen Duplicate',
+            'email' => 'nurudeen.dup@example.test',
+            'phone' => '233500111111',
+            'organization' => 'P23 Africa',
+            'seat_code' => 'P23-1005',
+        ]);
+
+        Seat::create([
+            'event_id' => $event->id,
+            'name' => 'Invalid Number',
+            'email' => 'invalid@example.test',
+            'phone' => '+233500222222',
+            'seat_code' => 'P23-1006',
+        ]);
+
+        Http::fake(function ($request) {
+            if (!str_contains($request->url(), '/contacts')) {
+                return Http::response([], 200);
+            }
+
+            $target = (string) data_get($request->data(), 'contacts.0', '');
+
+            return Http::response([
+                'contacts' => [[
+                    'input' => $target,
+                    'status' => $target === '233500111111' ? 'valid' : 'invalid',
+                ]],
+            ], 200);
+        });
+
+        $audience = app(EventAudienceService::class)->extractValidatedAudience([
+            'event_filter' => 'single',
+            'event_id' => $event->id,
+        ]);
+
+        $this->assertCount(1, $audience);
+        $this->assertSame('+233500111111', $audience->first()['phone']);
+        $this->assertSame('Nurudeen', $audience->first()['name']);
+
+        $this->assertDatabaseHas('whatsapp_contacts', [
+            'phone' => '+233500111111',
+            'validation_status' => 'valid',
+        ]);
+
+        $this->assertDatabaseHas('whatsapp_contacts', [
+            'phone' => '+233500222222',
+            'validation_status' => 'invalid',
+        ]);
+    }
+
+    public function test_event_whatsapp_service_queues_campaign_and_dispatches_chunk_jobs(): void
+    {
+        Queue::fake();
+
+        WhatsAppAccount::create([
+            'business_name' => 'Event WA',
+            'phone_number' => '233500123456',
+            'phone_number_id' => '901122334455',
+            'waba_id' => '11223344000099',
+            'access_token' => 'event-wa-token',
+            'webhook_verify_token' => 'verify-wa-token',
+            'status' => 'active',
+        ]);
+
+        $event = Event::create([
+            'title' => 'Startup Expo',
+            'subtitle' => 'Expo',
+            'description' => 'Expo description',
+            'link' => 'https://example.test/expo',
+            'event_date' => now()->addDays(3)->toDateString(),
+            'event_time' => '09:00:00',
+            'venue' => 'Abuja',
+            'display' => 'open_to_all',
+            'visibility' => 'public',
+        ]);
+
+        Seat::create([
+            'event_id' => $event->id,
+            'name' => 'Amina',
+            'email' => 'amina@example.test',
+            'phone' => '+2348012345678',
+            'organization' => 'Amina Ltd',
+            'seat_code' => 'P23-2001',
+        ]);
+
+        $template = \App\Models\WhatsAppTemplate::create([
+            'name' => 'event_followup',
+            'category' => 'utility',
+            'language' => 'en',
+            'template_format' => 'json',
+            'template_json' => [
+                'components' => [
+                    [
+                        'type' => 'BODY',
+                        'text' => 'Hello {{name}}, thank you for registering for {{event_name}}. Seat {{seat_code}}.',
+                    ],
+                ],
+            ],
+            'status' => 'approved',
+        ]);
+
+        Http::fake(function ($request) {
+            if (!str_contains($request->url(), '/contacts')) {
+                return Http::response([], 200);
+            }
+
+            return Http::response([
+                'contacts' => [[
+                    'input' => '2348012345678',
+                    'status' => 'valid',
+                ]],
+            ], 200);
+        });
+
+        $campaign = app(EventWhatsAppService::class)->queueCampaign([
+            'source_type' => 'event_contacts',
+            'event_filter' => 'single',
+            'event_id' => $event->id,
+            'template_id' => $template->id,
+        ]);
+
+        $this->assertSame('queued', $campaign->status);
+        $this->assertSame(1, $campaign->total_contacts);
+        $this->assertSame(1, $campaign->valid_contacts);
+
+        $this->assertDatabaseHas('event_whatsapp_recipients', [
+            'campaign_id' => $campaign->id,
+            'phone' => '+2348012345678',
+            'status' => 'queued',
+        ]);
+
+        Queue::assertPushed(SendEventBroadcastJob::class, function (SendEventBroadcastJob $job) use ($campaign) {
+            return $job->campaignId === $campaign->id
+                && count($job->recipientIds) === 1;
+        });
     }
 }

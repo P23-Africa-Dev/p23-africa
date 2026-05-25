@@ -33,6 +33,8 @@ class WhatsAppController extends Controller
 {
     public function overview(): View
     {
+        $this->authorize('whatsapp.view');
+
         $stats = [
             'total_conversations' => WhatsAppConversation::count(),
             'open_conversations' => WhatsAppConversation::where('status', WhatsAppConversation::STATUS_OPEN)->count(),
@@ -64,6 +66,8 @@ class WhatsAppController extends Controller
 
     public function conversations(Request $request, ConversationService $conversationService): View
     {
+        $this->authorize('whatsapp.view');
+
         $filters = [
             'search' => $request->query('search'),
             'status' => $request->query('status'),
@@ -111,6 +115,8 @@ class WhatsAppController extends Controller
 
     public function conversationHistory(Request $request, WhatsAppConversation $conversation): JsonResponse
     {
+        $this->authorize('whatsapp.view');
+
         $validated = $request->validate([
             'limit' => ['nullable', 'integer', 'min:10', 'max:100'],
             'before_message_id' => ['nullable', 'integer'],
@@ -152,6 +158,8 @@ class WhatsAppController extends Controller
 
     public function sendMessage(Request $request, WhatsAppConversation $conversation, MessageService $messageService): JsonResponse|RedirectResponse
     {
+        $this->authorize('whatsapp.send');
+
         $validated = $request->validate([
             'type' => ['required', 'string', 'in:text,image,video,document,audio,template,interactive'],
             'body' => ['nullable', 'string', 'max:4096'],
@@ -205,6 +213,8 @@ class WhatsAppController extends Controller
 
     public function updateConversation(Request $request, WhatsAppConversation $conversation, ConversationService $conversationService): JsonResponse|RedirectResponse
     {
+        $this->authorize('whatsapp.manage');
+
         $validated = $request->validate([
             'status' => ['nullable', 'string', 'in:open,pending,closed'],
             'assigned_to' => ['nullable', 'integer', 'exists:users,id'],
@@ -238,6 +248,8 @@ class WhatsAppController extends Controller
 
     public function addNote(Request $request, WhatsAppConversation $conversation, ConversationService $conversationService): JsonResponse|RedirectResponse
     {
+        $this->authorize('whatsapp.manage');
+
         $validated = $request->validate([
             'note' => ['required', 'string', 'max:2000'],
         ]);
@@ -263,6 +275,8 @@ class WhatsAppController extends Controller
 
     public function markRead(WhatsAppConversation $conversation, ConversationService $conversationService): JsonResponse
     {
+        $this->authorize('whatsapp.manage');
+
         $conversationService->markConversationRead($conversation);
 
         return response()->json([
@@ -273,6 +287,8 @@ class WhatsAppController extends Controller
 
     public function clearConversation(Request $request, WhatsAppConversation $conversation): JsonResponse|RedirectResponse
     {
+        $this->authorize('whatsapp.manage');
+
         WhatsAppMessage::query()
             ->where('conversation_id', $conversation->id)
             ->delete();
@@ -300,6 +316,8 @@ class WhatsAppController extends Controller
 
     public function poll(Request $request, ?WhatsAppRealtimeDebugService $debugService = null): JsonResponse
     {
+        $this->authorize('whatsapp.view');
+
         $debugService ??= app(WhatsAppRealtimeDebugService::class);
 
         $conversationId = (int) $request->query('conversation_id', 0);
@@ -411,6 +429,8 @@ class WhatsAppController extends Controller
         MessageStatusSyncService $statusSyncService,
         ?WhatsAppRealtimeDebugService $debugService = null
     ): JsonResponse {
+        $this->authorize('whatsapp.view');
+
         $debugService ??= app(WhatsAppRealtimeDebugService::class);
 
         $conversationId = (int) $request->query('conversation_id', 0);
@@ -455,6 +475,8 @@ class WhatsAppController extends Controller
 
     public function realtimeDebug(Request $request, WhatsAppRealtimeDebugService $debugService): JsonResponse
     {
+        $this->authorize('whatsapp.manage');
+
         $validated = $request->validate([
             'event' => ['required', 'string', 'max:120'],
             'context' => ['nullable', 'array'],
@@ -475,6 +497,8 @@ class WhatsAppController extends Controller
 
     public function templates(TemplateService $templateService): View
     {
+        $this->authorize('whatsapp.view');
+
         return view('admin.whatsapp.templates', [
             'templates' => $templateService->paginate(20),
             'formats' => [
@@ -484,9 +508,16 @@ class WhatsAppController extends Controller
             ],
             'defaultVariables' => [
                 'name',
+                'location',
                 'company',
                 'date',
                 'event',
+                'event_name',
+                'event_date',
+                'seat_code',
+                'email',
+                'phone',
+                'booking_date',
             ],
             'statuses' => [
                 WhatsAppTemplate::STATUS_DRAFT,
@@ -502,6 +533,8 @@ class WhatsAppController extends Controller
         TemplateService $templateService,
         TemplateRendererService $rendererService
     ): RedirectResponse {
+        $this->authorize('whatsapp.manage');
+
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:120'],
             'category' => ['required', 'string', 'max:80'],
@@ -537,6 +570,8 @@ class WhatsAppController extends Controller
         TemplateService $templateService,
         TemplateRendererService $rendererService
     ): RedirectResponse {
+        $this->authorize('whatsapp.manage');
+
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:120'],
             'category' => ['required', 'string', 'max:80'],
@@ -568,6 +603,8 @@ class WhatsAppController extends Controller
 
     public function contacts(Request $request): View
     {
+        $this->authorize('whatsapp.view');
+
         $search = $request->query('search');
 
         $contacts = app(ContactManagerService::class)->listContacts($search, 20);
@@ -583,6 +620,8 @@ class WhatsAppController extends Controller
         ContactManagerService $contactManagerService,
         WhatsAppNumberValidationService $numberValidationService
     ): RedirectResponse {
+        $this->authorize('whatsapp.manage');
+
         $validated = $request->validate([
             'name' => ['nullable', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:40'],
@@ -620,6 +659,8 @@ class WhatsAppController extends Controller
 
     public function updateContact(Request $request, WhatsAppContact $contact, ContactManagerService $contactManagerService): RedirectResponse
     {
+        $this->authorize('whatsapp.manage');
+
         $validated = $request->validate([
             'name' => ['nullable', 'string', 'max:255'],
             'country_code' => ['nullable', 'string', 'max:8'],
@@ -639,6 +680,8 @@ class WhatsAppController extends Controller
 
     public function destroyContact(WhatsAppContact $contact, ContactManagerService $contactManagerService): RedirectResponse
     {
+        $this->authorize('whatsapp.manage');
+
         $contactManagerService->deleteContact($contact);
 
         return back()->with('success', 'Contact deleted successfully.');
@@ -646,6 +689,8 @@ class WhatsAppController extends Controller
 
     public function settings(Request $request, DeveloperPasscodeService $passcodeService): View
     {
+        $this->authorize('whatsapp.view');
+
         $activeAccount = WhatsAppAccount::query()->latest('id')->first();
 
         return view('admin.whatsapp.settings', [
@@ -666,6 +711,8 @@ class WhatsAppController extends Controller
 
     public function saveAccount(Request $request): RedirectResponse
     {
+        $this->authorize('whatsapp.manage');
+
         $validated = $request->validate([
             'id' => ['required', 'integer', 'exists:whatsapp_accounts,id'],
             'business_name' => ['required', 'string', 'max:255'],
@@ -705,6 +752,8 @@ class WhatsAppController extends Controller
 
     public function accountSetup(): View
     {
+        $this->authorize('whatsapp.view');
+
         return view('admin.whatsapp.account-setup', [
             'webhookUrl' => url('/api/whatsapp/webhook'),
             'graphVersion' => config('whatsapp.graph_version', 'v23.0'),
@@ -714,6 +763,8 @@ class WhatsAppController extends Controller
 
     public function webhookLogs(Request $request): View
     {
+        $this->authorize('whatsapp.view');
+
         $status = $request->query('status');
 
         $logs = WhatsAppWebhookLog::query()

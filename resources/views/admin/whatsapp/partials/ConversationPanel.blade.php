@@ -50,51 +50,62 @@
             @php
                 $active = $selectedConversation && $selectedConversation->id === $conversation->id;
                 $query = array_filter(array_merge(request()->query(), ['conversation' => $conversation->id]));
+                $contact = $conversation->contact;
+                $displayName = $contact?->name ?: $contact?->phone ?: 'Unknown Contact';
+                $avatar = $contact?->profile_picture ?: $contact?->avatar;
+                $initial = strtoupper(mb_substr((string) $displayName, 0, 1));
+                $priority = data_get($contact?->metadata, 'priority');
             @endphp
             <div class="wa-conversation-item {{ $active ? 'active' : '' }}" data-wa-conversation-item-wrap>
                 <div class="d-flex justify-content-between align-items-start gap-2">
                     <a href="{{ orgRoute('admin.whatsapp.conversations', $query) }}"
                         class="wa-conversation-main-link text-decoration-none text-reset flex-grow-1 min-w-0"
                         data-wa-conversation-item="{{ $conversation->id }}">
-                        <div class="fw-semibold text-truncate wa-conversation-title">
-                            {{ $conversation->contact?->name ?: $conversation->contact?->phone }}
-                        </div>
-                        <div class="small text-muted text-truncate wa-conversation-phone">
-                            {{ $conversation->contact?->phone }}</div>
-                        <div class="mt-1 d-flex gap-1 flex-wrap">
-                            @if ($conversation->contact?->unsaved_contact)
-                                <span class="badge bg-info text-dark">Unsaved</span>
-                            @endif
-                            @include('admin.whatsapp.partials.ContactValidationBadge', [
-                                'contact' => $conversation->contact,
-                            ])
+                        <div class="d-flex align-items-start gap-2 min-w-0">
+                            <span class="wa-avatar wa-avatar-sm flex-shrink-0">
+                                @if ($avatar)
+                                    <img src="{{ $avatar }}" alt="{{ $displayName }}">
+                                @else
+                                    {{ $initial }}
+                                @endif
+                            </span>
+                            <div class="min-w-0 flex-grow-1">
+                                <div class="d-flex justify-content-between align-items-center gap-2">
+                                    <div class="fw-semibold text-truncate wa-conversation-title">{{ $displayName }}
+                                    </div>
+                                    <small data-wa-sidebar-updated-at class="text-muted flex-shrink-0">
+                                        {{ optional($conversation->updated_at)->format('H:i') }}
+                                    </small>
+                                </div>
+                                <div class="small text-muted wa-conversation-preview mt-1" data-wa-sidebar-last-message>
+                                    {{ \Illuminate\Support\Str::limit($conversation->last_message ?: 'No messages yet.', 68) }}
+                                </div>
+                            </div>
                         </div>
                     </a>
-                    <div class="d-flex align-items-start gap-1">
-                        <button type="button" class="btn btn-outline-warning wa-compact-btn" data-wa-clear-conversation
-                            data-wa-clear-url="{{ orgRoute('admin.whatsapp.conversations.clear', ['conversation' => $conversation->id]) }}">
-                            Clear
-                        </button>
-                        <button type="button" class="btn btn-outline-danger wa-compact-btn" data-wa-delete-contact
-                            data-wa-delete-url="{{ $conversation->contact ? orgRoute('admin.whatsapp.contacts.destroy', ['contact' => $conversation->contact->id]) : '' }}"
-                            {{ $conversation->contact ? '' : 'disabled' }}>
-                            Delete
-                        </button>
-                        <span class="badge bg-danger {{ $conversation->unread_count > 0 ? '' : 'd-none' }}"
-                            data-wa-sidebar-unread>{{ $conversation->unread_count }}</span>
+                    <div class="d-flex align-items-center gap-1 flex-shrink-0">
+                        @include('admin.whatsapp.partials.CompactBadge', [
+                            'type' => 'validation-icon',
+                            'status' => $contact?->validation_status,
+                        ])
+                        @if ($priority)
+                            @include('admin.whatsapp.partials.CompactBadge', [
+                                'type' => 'priority',
+                                'status' => $priority,
+                                'label' => ucfirst($priority),
+                            ])
+                        @endif
+                        @include('admin.whatsapp.partials.CompactBadge', [
+                            'type' => 'unread',
+                            'value' => $conversation->unread_count,
+                        ])
+
+                        @include('admin.whatsapp.partials.ConversationActionsDropdown', [
+                            'conversation' => $conversation,
+                            'statuses' => $statuses,
+                            'assignees' => $assignees,
+                        ])
                     </div>
-                </div>
-                <div class="small text-muted mt-1 wa-conversation-preview" data-wa-sidebar-last-message>
-                    {{ \Illuminate\Support\Str::limit($conversation->last_message, 68) }}
-                </div>
-                <div class="d-flex justify-content-between align-items-center mt-1">
-                    <span
-                        class="badge {{ $conversation->status === 'open' ? 'bg-success' : ($conversation->status === 'pending' ? 'bg-warning text-dark' : 'bg-secondary') }}"
-                        data-wa-sidebar-status>
-                        {{ ucfirst($conversation->status) }}
-                    </span>
-                    <small data-wa-sidebar-updated-at
-                        class="text-muted">{{ optional($conversation->updated_at)->diffForHumans() }}</small>
                 </div>
             </div>
         @empty

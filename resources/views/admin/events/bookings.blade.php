@@ -211,8 +211,7 @@
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap">
                                                     <div class="text-sm text-gray-900">{{ $booking->email }}</div>
-                                                    <button
-                                                        onclick="copyToClipboard('{{ $booking->email }}', this)"
+                                                    <button onclick="copyToClipboard('{{ $booking->email }}', this)"
                                                         class="text-xs text-blue-600 hover:text-blue-800 mt-1">
                                                         <i class="fas fa-copy mr-1"></i>Copy
                                                     </button>
@@ -244,7 +243,8 @@
                                                         class="px-2 py-1 bg-gray-100 rounded text-xs font-mono text-gray-800">{{ $booking->seat_code }}</code>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                    <div>{{ \Carbon\Carbon::parse($booking->created_at)->format('M d, Y') }}
+                                                    <div>
+                                                        {{ \Carbon\Carbon::parse($booking->created_at)->format('M d, Y') }}
                                                     </div>
                                                     <div class="text-xs text-gray-400">
                                                         {{ \Carbon\Carbon::parse($booking->created_at)->format('g:i A') }}
@@ -252,11 +252,13 @@
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm">
                                                     <button onclick="viewDetails({{ $booking->id }})"
-                                                        class="text-blue-600 hover:text-blue-900 mr-3" title="View Details">
+                                                        class="text-blue-600 hover:text-blue-900 mr-3"
+                                                        title="View Details">
                                                         <i class="fas fa-eye"></i>
                                                     </button>
                                                     <a href="mailto:{{ $booking->email }}"
-                                                        class="text-green-600 hover:text-green-900" title="Send Email">
+                                                        class="text-green-600 hover:text-green-900"
+                                                        title="Send Email">
                                                         <i class="fas fa-envelope"></i>
                                                     </a>
                                                 </td>
@@ -378,7 +380,7 @@
                         <p class="text-base text-gray-900">${booking.email}</p>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-lg">
-                        <p class="text-sm font-medium text-gray-500 mb-1">Phone Number</p>
+                        <p class="text-sm font-medium text-gray-500 mb-1">Phone Number (<i>WhatsApp Preferably  <i class="fas fa-whatsapp ml-1"></i></i>)</p>
                         <p class="text-base text-gray-900">${booking.phone || 'Not provided'}</p>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-lg">
@@ -402,17 +404,17 @@
                         <p class="text-base text-gray-900"><code class="px-2 py-1 bg-gray-200 rounded text-sm font-mono">${booking.seat_code}</code></p>
                     </div>
                     ${booking.referral_source ? `
-                    <div class="bg-gray-50 p-4 rounded-lg md:col-span-2">
-                        <p class="text-sm font-medium text-gray-500 mb-1">How They Heard About Us</p>
-                        <p class="text-base text-gray-900">${booking.referral_source}</p>
-                    </div>
-                    ` : ''}
+                            <div class="bg-gray-50 p-4 rounded-lg md:col-span-2">
+                                <p class="text-sm font-medium text-gray-500 mb-1">How They Heard About Us</p>
+                                <p class="text-base text-gray-900">${booking.referral_source}</p>
+                            </div>
+                            ` : ''}
                     ${booking.expectations ? `
-                    <div class="bg-gray-50 p-4 rounded-lg md:col-span-2">
-                        <p class="text-sm font-medium text-gray-500 mb-1">Expectations</p>
-                        <p class="text-base text-gray-900">${booking.expectations}</p>
-                    </div>
-                    ` : ''}
+                            <div class="bg-gray-50 p-4 rounded-lg md:col-span-2">
+                                <p class="text-sm font-medium text-gray-500 mb-1">Expectations</p>
+                                <p class="text-base text-gray-900">${booking.expectations}</p>
+                            </div>
+                            ` : ''}
                     <div class="bg-blue-50 p-4 rounded-lg md:col-span-2">
                         <p class="text-sm font-medium text-blue-700 mb-1">Registration Date</p>
                         <p class="text-base text-blue-900">${new Date(booking.created_at).toLocaleString('en-US', { 

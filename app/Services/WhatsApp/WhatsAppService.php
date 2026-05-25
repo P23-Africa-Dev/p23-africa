@@ -3,11 +3,19 @@
 namespace App\Services\WhatsApp;
 
 use App\Models\WhatsAppAccount;
+use App\Services\AccessAuditService;
+use App\Services\LegacyWhatsAppAccessService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use RuntimeException;
 
 class WhatsAppService
 {
+    public function __construct(
+        protected LegacyWhatsAppAccessService $legacyWhatsAppAccessService,
+        protected AccessAuditService $accessAuditService,
+    ) {}
+
     public function isEnabled(): bool
     {
         $enabled = config('whatsapp.enabled');
@@ -80,6 +88,8 @@ class WhatsAppService
 
     public function sendTextMessage(string $to, string $text, ?int $accountId = null): array
     {
+        $this->assertInteractiveAccess();
+
         $account = $this->resolveAccount($accountId);
 
         $payload = [
@@ -102,6 +112,8 @@ class WhatsAppService
 
     public function sendImageMessage(string $to, array $imagePayload, ?int $accountId = null): array
     {
+        $this->assertInteractiveAccess();
+
         $account = $this->resolveAccount($accountId);
 
         $link = (string) data_get($imagePayload, 'link', '');
@@ -144,6 +156,8 @@ class WhatsAppService
 
     public function sendTemplateMessage(string $to, array $templatePayload, ?int $accountId = null): array
     {
+        $this->assertInteractiveAccess();
+
         $account = $this->resolveAccount($accountId);
 
         $templateName = (string) data_get($templatePayload, 'name', '');
@@ -177,6 +191,29 @@ class WhatsAppService
     public function sendInteractiveMessage(string $to, array $interactivePayload, ?int $accountId = null): array
     {
         throw new RuntimeException('Interactive message support is prepared but not implemented yet.');
+    }
+
+    protected function assertInteractiveAccess(): void
+    {
+        if (app()->runningInConsole() || !auth()->check()) {
+            return;
+        }
+
+        $user = auth()->user();
+        if ($this->legacyWhatsAppAccessService->canAccessWhatsApp($user)) {
+            return;
+        }
+
+        $httpRequest = request();
+
+        $this->accessAuditService->logDeniedWhatsAppAccess(
+            $httpRequest instanceof Request ? $httpRequest : null,
+            $user,
+            'blocked',
+            'Service-level WhatsApp send operation blocked by legacy access policy.'
+        );
+
+        throw new RuntimeException('Forbidden WhatsApp access.');
     }
 
     protected function messagesEndpoint(string $phoneNumberId): string

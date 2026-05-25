@@ -2,10 +2,10 @@
     @push('head')
         <style>
             .wa-chat-shell {
-                --wa-shell-height: calc(100vh - 190px);
+                --wa-shell-height: calc(100vh - 176px);
                 display: grid;
-                grid-template-columns: 280px minmax(0, 1fr) 260px;
-                gap: .5rem;
+                grid-template-columns: 272px minmax(0, 1fr) 250px;
+                gap: .45rem;
                 align-items: stretch;
             }
 
@@ -58,8 +58,8 @@
             .wa-conversation-item {
                 border: 1px solid rgba(148, 163, 184, .28);
                 border-radius: 12px;
-                padding: .45rem .48rem;
-                margin-bottom: .35rem;
+                padding: .42rem .45rem;
+                margin-bottom: .3rem;
                 display: block;
                 text-decoration: none;
                 color: inherit;
@@ -98,6 +98,159 @@
                 overflow: hidden;
             }
 
+            .wa-avatar {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                font-size: .75rem;
+                font-weight: 600;
+                color: #14532d;
+                background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+                overflow: hidden;
+                border: 1px solid rgba(22, 163, 74, .2);
+            }
+
+            .wa-avatar img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .wa-avatar-sm {
+                width: 28px;
+                height: 28px;
+                font-size: .7rem;
+            }
+
+            .wa-validation-icon {
+                width: 1rem;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                font-size: .85rem;
+            }
+
+            .wa-mini-badge {
+                font-size: .64rem;
+                line-height: 1;
+                border-radius: 999px;
+                padding: .18rem .34rem;
+                background: #e2e8f0;
+                color: #1e293b;
+                white-space: nowrap;
+            }
+
+            .wa-mini-badge-unread {
+                background: #dc2626;
+                color: #fff;
+                min-width: 1.2rem;
+                text-align: center;
+            }
+
+            .wa-badge-priority-high {
+                background: #dc2626;
+                color: #fff;
+            }
+
+            .wa-badge-priority-medium {
+                background: #f59e0b;
+                color: #111827;
+            }
+
+            .wa-badge-priority-low {
+                background: #0ea5e9;
+                color: #fff;
+            }
+
+            .wa-menu-trigger {
+                font-size: .8rem;
+                line-height: 1;
+                color: #64748b;
+                border-radius: 8px;
+                padding: .22rem .28rem;
+                text-decoration: none;
+            }
+
+            .wa-menu-trigger:hover {
+                color: #0f172a;
+                background: rgba(148, 163, 184, .18);
+            }
+
+            .wa-actions-dropdown {
+                position: relative;
+            }
+
+            .wa-menu {
+                min-width: 218px;
+                border-radius: 12px;
+                border: 1px solid rgba(148, 163, 184, .3);
+                box-shadow: 0 8px 24px rgba(15, 23, 42, .14);
+                padding: .36rem 0;
+                position: fixed;
+                top: var(--wa-menu-top, -9999px);
+                left: var(--wa-menu-left, -9999px);
+                right: auto;
+                z-index: 9999;
+                background: #fff;
+                display: block;
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+                transition: opacity .16s ease, visibility 0s linear .16s;
+                will-change: opacity;
+            }
+
+            .wa-menu.wa-menu-active {
+                opacity: 1;
+                visibility: visible;
+                pointer-events: auto;
+                transition: opacity .16s ease;
+            }
+
+            .wa-actions-dropdown.is-open .wa-menu-trigger {
+                color: #0f172a;
+                background: rgba(148, 163, 184, .18);
+            }
+
+            .wa-menu .dropdown-item {
+                font-size: .75rem;
+                padding: .3rem .72rem;
+            }
+
+            .wa-menu .dropdown-item:active {
+                background: rgba(16, 185, 129, .14);
+                color: #065f46;
+            }
+
+            .wa-menu-section-title {
+                font-size: .62rem;
+                font-weight: 700;
+                letter-spacing: .06em;
+                color: #64748b;
+                padding: .15rem .72rem;
+            }
+
+            .wa-menu-divider {
+                height: 1px;
+                margin: .24rem 0;
+                background: rgba(148, 163, 184, .3);
+            }
+
+            .wa-menu-label {
+                display: block;
+                font-size: .64rem;
+                color: #64748b;
+                margin-bottom: .2rem;
+            }
+
+            .wa-menu .form-select.form-select-sm {
+                font-size: .72rem;
+                min-height: 28px;
+            }
+
             .wa-thread-card {
                 display: flex;
                 flex-direction: column;
@@ -109,7 +262,7 @@
                 border: 0;
                 border-bottom: 1px solid var(--border);
                 border-radius: 0;
-                padding: .36rem .52rem;
+                padding: .34rem .5rem;
                 background: rgba(255, 255, 255, .9);
             }
 
@@ -239,6 +392,11 @@
                 padding: 0;
             }
 
+            .wa-details-panel {
+                border-radius: 12px;
+                overflow: hidden;
+            }
+
             .wa-right-panel .wa-accordion {
                 border-radius: 12px;
             }
@@ -282,7 +440,7 @@
 
             @media (max-width: 1399px) {
                 .wa-chat-shell {
-                    grid-template-columns: 260px minmax(0, 1fr) 240px;
+                    grid-template-columns: 248px minmax(0, 1fr) 230px;
                 }
             }
 
@@ -303,6 +461,10 @@
                 .wa-list-scroll,
                 .wa-message-list {
                     max-height: 420px;
+                }
+
+                .wa-thread-header .text-muted {
+                    display: none;
                 }
             }
         </style>
@@ -386,30 +548,9 @@
 
             <aside class="wa-right-panel" data-wa-right-panel>
                 @if ($selectedConversation)
-                    @php
-                        $notesBodyHtml = view('admin.whatsapp.partials.notes-panel', [
-                            'conversation' => $selectedConversation,
-                            'notes' => $selectedConversation->notes,
-                            'noteStoreUrl' => orgRoute('admin.whatsapp.notes.store', [
-                                'conversation' => $selectedConversation->id,
-                            ]),
-                        ])->render();
-
-                        $deliveryBodyHtml = view('admin.whatsapp.partials.delivery-guide')->render();
-                    @endphp
-
-                    @include('admin.whatsapp.partials.chat-accordion', [
-                        'title' => 'Internal Notes',
-                        'key' => 'notes-' . $selectedConversation->id,
-                        'open' => false,
-                        'bodyHtml' => $notesBodyHtml,
-                    ])
-
-                    @include('admin.whatsapp.partials.chat-accordion', [
-                        'title' => 'Delivery Details',
-                        'key' => 'delivery-' . $selectedConversation->id,
-                        'open' => false,
-                        'bodyHtml' => $deliveryBodyHtml,
+                    @include('admin.whatsapp.partials.ConversationDetailsPanel', [
+                        'selectedConversation' => $selectedConversation,
+                        'assignees' => $assignees,
                     ])
                 @else
                     <div class="card">

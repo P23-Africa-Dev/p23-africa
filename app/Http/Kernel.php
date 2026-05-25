@@ -74,5 +74,6 @@ class Kernel extends HttpKernel
 
         'check.suspended' => CheckSuspended::class,
         'resolve.org' => \App\Http\Middleware\ResolveOrganization::class,
+        'legacy.whatsapp' => \App\Http\Middleware\EnsureLegacyWhatsAppAccess::class,
     ];
 }

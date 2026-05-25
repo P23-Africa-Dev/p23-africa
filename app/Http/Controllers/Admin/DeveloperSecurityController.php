@@ -15,6 +15,8 @@ class DeveloperSecurityController extends Controller
 {
     public function unlock(Request $request, DeveloperPasscodeService $passcodeService): JsonResponse
     {
+        $this->authorize('whatsapp.manage');
+
         $validated = $request->validate([
             'passcode' => ['required', 'string', 'max:255'],
         ]);
@@ -36,6 +38,8 @@ class DeveloperSecurityController extends Controller
 
     public function lock(Request $request, DeveloperPasscodeService $passcodeService): JsonResponse
     {
+        $this->authorize('whatsapp.manage');
+
         $passcodeService->clearUnlock($request);
         $passcodeService->log($request, 'manual_lock', 'success');
 
@@ -47,6 +51,8 @@ class DeveloperSecurityController extends Controller
 
     public function sensitiveData(Request $request, DeveloperPasscodeService $passcodeService): JsonResponse
     {
+        $this->authorize('whatsapp.manage');
+
         if (!$passcodeService->isUnlocked($request)) {
             $passcodeService->log($request, 'sensitive_data_access', 'blocked');
 
@@ -82,6 +88,8 @@ class DeveloperSecurityController extends Controller
 
     public function saveSensitive(Request $request, DeveloperPasscodeService $passcodeService): RedirectResponse
     {
+        $this->authorize('whatsapp.manage');
+
         if (!$passcodeService->isUnlocked($request)) {
             $passcodeService->log($request, 'sensitive_edit', 'blocked');
 
@@ -120,6 +128,8 @@ class DeveloperSecurityController extends Controller
 
     public function index(Request $request, DeveloperPasscodeService $passcodeService): View
     {
+        $this->authorize('whatsapp.view');
+
         $this->authorizeDeveloperAccess($request, $passcodeService);
 
         return view('admin.whatsapp.developer-security', [
@@ -129,6 +139,8 @@ class DeveloperSecurityController extends Controller
 
     public function updatePasscode(Request $request, DeveloperPasscodeService $passcodeService): RedirectResponse
     {
+        $this->authorize('whatsapp.manage');
+
         $this->authorizeDeveloperAccess($request, $passcodeService);
 
         $validated = $request->validate([
@@ -147,6 +159,8 @@ class DeveloperSecurityController extends Controller
 
     public function resetPasscode(Request $request, DeveloperPasscodeService $passcodeService): RedirectResponse
     {
+        $this->authorize('whatsapp.manage');
+
         $this->authorizeDeveloperAccess($request, $passcodeService);
 
         $passcodeService->resetToDefaultPasscode($request);
@@ -156,6 +170,8 @@ class DeveloperSecurityController extends Controller
 
     public function forceRelock(Request $request, DeveloperPasscodeService $passcodeService): RedirectResponse
     {
+        $this->authorize('whatsapp.manage');
+
         $this->authorizeDeveloperAccess($request, $passcodeService);
 
         $passcodeService->forceRelockAllSessions($request);

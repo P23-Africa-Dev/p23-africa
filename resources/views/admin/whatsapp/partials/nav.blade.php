@@ -17,6 +17,18 @@
                 class="btn btn-sm {{ request()->routeIs('admin.whatsapp.contacts', 'admin.whatsapp.contacts.*', 'org.admin.whatsapp.contacts', 'org.admin.whatsapp.contacts.*') ? 'btn-success' : 'btn-outline-success' }}">
                 Contacts
             </a>
+            <a href="{{ orgRoute('admin.whatsapp.events.contacts') }}"
+                class="btn btn-sm {{ request()->routeIs('admin.whatsapp.events.contacts', 'org.admin.whatsapp.events.contacts') ? 'btn-success' : 'btn-outline-success' }}">
+                Event Contacts
+            </a>
+            <a href="{{ orgRoute('admin.whatsapp.events.broadcast') }}"
+                class="btn btn-sm {{ request()->routeIs('admin.whatsapp.events.broadcast', 'org.admin.whatsapp.events.broadcast') ? 'btn-success' : 'btn-outline-success' }}">
+                Event Broadcast
+            </a>
+            <a href="{{ orgRoute('admin.whatsapp.events.campaign-history') }}"
+                class="btn btn-sm {{ request()->routeIs('admin.whatsapp.events.campaign-history', 'org.admin.whatsapp.events.campaign-history') ? 'btn-success' : 'btn-outline-success' }}">
+                Campaign History
+            </a>
             <a href="{{ orgRoute('admin.whatsapp.settings') }}"
                 class="btn btn-sm {{ request()->routeIs('admin.whatsapp.settings', 'admin.whatsapp.settings.*', 'org.admin.whatsapp.settings', 'org.admin.whatsapp.settings.*') ? 'btn-success' : 'btn-outline-success' }}">
                 Settings

@@ -370,8 +370,8 @@ Route::middleware(['auth', 'check.suspended', 'resolve.org', 'role:admin|supervi
             Route::post('/consultation/chat/mark-read/{messageId}', [\App\Http\Controllers\Admin\ConsultationController::class, 'markMessageAsRead'])->name('consultation.chat.markRead');
         });
 
-        // WhatsApp module (admin only)
-        Route::middleware('role:admin')->prefix('whatsapp')->name('whatsapp.')->group(function () {
+        // WhatsApp module (legacy-only admin/supervisor)
+        Route::middleware(['role:admin|supervisor', 'legacy.whatsapp'])->prefix('whatsapp')->name('whatsapp.')->group(function () {
             Route::get('/', [\App\Http\Controllers\Admin\WhatsAppController::class, 'overview'])->name('overview');
             Route::get('/overview', [\App\Http\Controllers\Admin\WhatsAppController::class, 'overview'])->name('overview.index');
             Route::get('/conversations', [\App\Http\Controllers\Admin\WhatsAppController::class, 'conversations'])->name('conversations');
@@ -388,6 +388,11 @@ Route::middleware(['auth', 'check.suspended', 'resolve.org', 'role:admin|supervi
             Route::post('/contacts', [\App\Http\Controllers\Admin\WhatsAppController::class, 'storeContact'])->name('contacts.store');
             Route::patch('/contacts/{contact}', [\App\Http\Controllers\Admin\WhatsAppController::class, 'updateContact'])->name('contacts.update');
             Route::delete('/contacts/{contact}', [\App\Http\Controllers\Admin\WhatsAppController::class, 'destroyContact'])->name('contacts.destroy');
+            Route::get('/events/contacts', [\App\Http\Controllers\Admin\EventCampaignController::class, 'eventContacts'])->name('events.contacts');
+            Route::get('/events/broadcast', [\App\Http\Controllers\Admin\EventCampaignController::class, 'eventBroadcast'])->name('events.broadcast');
+            Route::post('/events/audience-preview', [\App\Http\Controllers\Admin\EventCampaignController::class, 'audiencePreview'])->name('events.audience-preview');
+            Route::post('/events/send-broadcast', [\App\Http\Controllers\Admin\EventCampaignController::class, 'sendBroadcast'])->name('events.send-broadcast');
+            Route::get('/events/campaign-history', [\App\Http\Controllers\Admin\EventCampaignController::class, 'campaignHistory'])->name('events.campaign-history');
             Route::post('/quick-chat/validate', [\App\Http\Controllers\Admin\QuickChatController::class, 'validateNumber'])->name('quick-chat.validate');
             Route::post('/quick-chat/start', [\App\Http\Controllers\Admin\QuickChatController::class, 'start'])->name('quick-chat.start');
             Route::post('/quick-chat/save-contact', [\App\Http\Controllers\Admin\QuickChatController::class, 'saveContact'])->name('quick-chat.save-contact');
@@ -610,8 +615,8 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
         Route::post('/consultation/chat/mark-read/{messageId}', [\App\Http\Controllers\Admin\ConsultationController::class, 'markMessageAsRead'])->name('consultation.chat.markRead');
     });
 
-    // WhatsApp module (admin only)
-    Route::middleware('role:admin')->prefix('whatsapp')->name('whatsapp.')->group(function () {
+    // WhatsApp module (legacy-only admin/supervisor)
+    Route::middleware(['role:admin|supervisor', 'legacy.whatsapp'])->prefix('whatsapp')->name('whatsapp.')->group(function () {
         Route::get('/', [\App\Http\Controllers\Admin\WhatsAppController::class, 'overview'])->name('overview');
         Route::get('/overview', [\App\Http\Controllers\Admin\WhatsAppController::class, 'overview'])->name('overview.index');
         Route::get('/conversations', [\App\Http\Controllers\Admin\WhatsAppController::class, 'conversations'])->name('conversations');
@@ -628,6 +633,11 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
         Route::post('/contacts', [\App\Http\Controllers\Admin\WhatsAppController::class, 'storeContact'])->name('contacts.store');
         Route::patch('/contacts/{contact}', [\App\Http\Controllers\Admin\WhatsAppController::class, 'updateContact'])->name('contacts.update');
         Route::delete('/contacts/{contact}', [\App\Http\Controllers\Admin\WhatsAppController::class, 'destroyContact'])->name('contacts.destroy');
+        Route::get('/events/contacts', [\App\Http\Controllers\Admin\EventCampaignController::class, 'eventContacts'])->name('events.contacts');
+        Route::get('/events/broadcast', [\App\Http\Controllers\Admin\EventCampaignController::class, 'eventBroadcast'])->name('events.broadcast');
+        Route::post('/events/audience-preview', [\App\Http\Controllers\Admin\EventCampaignController::class, 'audiencePreview'])->name('events.audience-preview');
+        Route::post('/events/send-broadcast', [\App\Http\Controllers\Admin\EventCampaignController::class, 'sendBroadcast'])->name('events.send-broadcast');
+        Route::get('/events/campaign-history', [\App\Http\Controllers\Admin\EventCampaignController::class, 'campaignHistory'])->name('events.campaign-history');
         Route::post('/quick-chat/validate', [\App\Http\Controllers\Admin\QuickChatController::class, 'validateNumber'])->name('quick-chat.validate');
         Route::post('/quick-chat/start', [\App\Http\Controllers\Admin\QuickChatController::class, 'start'])->name('quick-chat.start');
         Route::post('/quick-chat/save-contact', [\App\Http\Controllers\Admin\QuickChatController::class, 'saveContact'])->name('quick-chat.save-contact');

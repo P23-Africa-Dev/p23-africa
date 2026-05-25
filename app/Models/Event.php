@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 class Event extends Model
@@ -47,6 +48,11 @@ class Event extends Model
     public function feedbacks()
     {
         return $this->hasMany(Feedback::class);
+    }
+
+    public function whatsappCampaigns(): HasMany
+    {
+        return $this->hasMany(EventWhatsAppCampaign::class, 'event_id');
     }
 
     public function getBookingFields()

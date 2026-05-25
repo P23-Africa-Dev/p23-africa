@@ -2,6 +2,7 @@
 
 namespace App\Services\WhatsApp;
 
+use App\Models\EventWhatsAppRecipient;
 use App\Models\WhatsAppMessage;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
@@ -104,6 +105,8 @@ class MessageStatusSyncService
 
         $message->update($updates);
 
+        $this->syncCampaignRecipientStatus($message, $mappedStatus, $eventTimestamp);
+
         return $message->fresh(['conversation.contact', 'conversation.assignedUser']);
     }
 
@@ -193,5 +196,48 @@ class MessageStatusSyncService
             WhatsAppMessage::STATUS_QUEUED => 1,
             default => 0,
         };
+    }
+
+    protected function syncCampaignRecipientStatus(WhatsAppMessage $message, string $mappedStatus, Carbon $eventTimestamp): void
+    {
+        $payload = is_array($message->payload) ? $message->payload : [];
+
+        $recipientId = (int) ($payload['campaign_recipient_id'] ?? 0);
+        if ($recipientId <= 0) {
+            return;
+        }
+
+        $recipient = EventWhatsAppRecipient::query()->find($recipientId);
+        if (!$recipient) {
+            return;
+        }
+
+        if ($mappedStatus === WhatsAppMessage::STATUS_SENT) {
+            $recipient->update([
+                'status' => EventWhatsAppRecipient::STATUS_SENT,
+                'message_id' => $message->id,
+                'sent_at' => $recipient->sent_at ?: $eventTimestamp,
+            ]);
+
+            return;
+        }
+
+        if (in_array($mappedStatus, [WhatsAppMessage::STATUS_DELIVERED, WhatsAppMessage::STATUS_READ], true)) {
+            $recipient->update([
+                'status' => EventWhatsAppRecipient::STATUS_DELIVERED,
+                'message_id' => $message->id,
+                'sent_at' => $recipient->sent_at ?: $eventTimestamp,
+                'delivered_at' => $eventTimestamp,
+            ]);
+
+            return;
+        }
+
+        if ($mappedStatus === WhatsAppMessage::STATUS_FAILED) {
+            $recipient->update([
+                'status' => EventWhatsAppRecipient::STATUS_FAILED,
+                'message_id' => $message->id,
+            ]);
+        }
     }
 }

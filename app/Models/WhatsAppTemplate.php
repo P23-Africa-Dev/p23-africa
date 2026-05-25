@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class WhatsAppTemplate extends Model
 {
@@ -36,5 +37,10 @@ class WhatsAppTemplate extends Model
             'template_json' => 'array',
             'editor_metadata' => 'array',
         ];
+    }
+
+    public function eventCampaigns(): HasMany
+    {
+        return $this->hasMany(EventWhatsAppCampaign::class, 'template_id');
     }
 }

@@ -46,4 +46,9 @@ class WhatsAppContact extends Model
     {
         return $this->hasMany(WhatsAppConversation::class, 'contact_id');
     }
+
+    public function eventRecipients(): HasMany
+    {
+        return $this->hasMany(EventWhatsAppRecipient::class, 'contact_id');
+    }
 }

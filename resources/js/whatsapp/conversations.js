@@ -5,6 +5,7 @@ import MessageSyncManager from './MessageSyncManager.js';
 import StatusPollManager from './StatusPollManager.js';
 import HistoryLoader from './HistoryLoader.js';
 import ConversationScrollManager from './ConversationScrollManager.js';
+import { bootActionMenuManager } from './ActionMenuManager.js';
 
 function escapeHtml(value) {
     return String(value || '')
@@ -280,7 +281,7 @@ function initMessaging() {
         const statusNode = item.querySelector('[data-wa-sidebar-status]');
         if (statusNode && conversation.status) {
             statusNode.textContent = conversation.status.charAt(0).toUpperCase() + conversation.status.slice(1);
-            statusNode.className = `badge ${conversation.status === 'open' ? 'bg-success' : (conversation.status === 'pending' ? 'bg-warning text-dark' : 'bg-secondary')}`;
+            statusNode.setAttribute('data-status', conversation.status);
         }
 
         const updatedNode = item.querySelector('[data-wa-sidebar-updated-at]');
@@ -455,6 +456,7 @@ function initMessaging() {
     isolatedScrollManager.start();
 
     startSidebarPolling();
+    bootActionMenuManager(root, conversationId);
     persistActiveConversation();
     void debug('frontend_registration', {
         component: 'whatsapp.conversations',
