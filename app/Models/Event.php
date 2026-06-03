@@ -50,6 +50,11 @@ class Event extends Model
         return $this->hasMany(Feedback::class);
     }
 
+    public function updateHistories(): HasMany
+    {
+        return $this->hasMany(EventUpdateHistory::class);
+    }
+
     public function whatsappCampaigns(): HasMany
     {
         return $this->hasMany(EventWhatsAppCampaign::class, 'event_id');

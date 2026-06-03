@@ -13,7 +13,7 @@
         }
     }
 
-    $canAccessLegacyWhatsApp = app(\App\Services\LegacyWhatsAppAccessService::class)->canAccessWhatsApp($sidebarUser);
+    $canAccessLegacyWhatsApp = app(\App\Services\LegacyContextService::class)->hasLegacyWhatsAppAccess($sidebarUser);
 @endphp
 <div x-data="{
     sidebarOpen: localStorage.getItem('sidebarOpen') !== 'false',
@@ -64,7 +64,7 @@
             {{-- WhatsApp (legacy admin/supervisor only) --}}
             @if ($canAccessLegacyWhatsApp)
                 <a href="{{ url($sidebarOrgPrefix . '/admin/whatsapp/conversations') }}" data-tooltip="WhatsApp"
-                    class="sidebar-item {{ request()->routeIs('admin.whatsapp.*', 'org.admin.whatsapp.*') ? 'active' : '' }}">
+                    class="sidebar-item {{ request()->routeIs('admin.whatsapp.*') ? 'active' : '' }}">
                     <span class="sidebar-icon"><i class="bi bi-whatsapp"></i></span>
                     <span class="sidebar-text">WhatsApp</span>
                 </a>

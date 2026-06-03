@@ -50,8 +50,8 @@
                                     <select name="role" class="form-control">
                                         <option value="staff" {{ old('role', 'staff') === 'staff' ? 'selected' : '' }}>
                                             Staff</option>
-                                        <option value="supervisor"
-                                            {{ old('role') === 'supervisor' ? 'selected' : '' }}>Supervisor</option>
+                                        <option value="supervisor" {{ old('role') === 'supervisor' ? 'selected' : '' }}>
+                                            Supervisor</option>
                                     </select>
                                 </div>
 
@@ -61,12 +61,12 @@
                                         <option value="">-- None --</option>
                                         @foreach ($organizations as $org)
                                             <option value="{{ $org->id }}"
-                                                @if (old('organization_id')) {{ old('organization_id') == $org->id ? 'selected' : '' }}
-                                                @elseif(!empty($defaultOrg))
-                                                    {{ $defaultOrg->id == $org->id ? 'selected' : '' }} @endif>
+                                                {{ old('organization_id') == $org->id ? 'selected' : '' }}>
                                                 {{ $org->name }}</option>
                                         @endforeach
                                     </select>
+                                    <small class="text-muted">Leave as None to create a legacy user without an
+                                        organization.</small>
                                 </div>
                             @else
                                 {{-- Supervisors can only add staff role, org is auto-set --}}

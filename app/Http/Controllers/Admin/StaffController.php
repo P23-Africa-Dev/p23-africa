@@ -81,8 +81,7 @@ class StaffController extends Controller
     {
         $permissions = \Spatie\Permission\Models\Permission::all();
         $organizations = \App\Models\Organization::orderBy('name')->get();
-        $defaultOrg = \App\Models\Organization::where('slug', 'default-org')->first();
-        return view('admin.staff.create', compact('permissions', 'organizations', 'defaultOrg'));
+        return view('admin.staff.create', compact('permissions', 'organizations'));
     }
 
     public function store(Request $request)

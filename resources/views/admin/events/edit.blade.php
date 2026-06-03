@@ -465,10 +465,16 @@
                                 class="bg-gray-300 hover:bg-gray-400 dark:bg-gray-600 dark:hover:bg-gray-500 text-gray-800 dark:text-gray-200 px-6 py-3 rounded-lg font-medium transition-colors duration-200">
                                 <i class="fas fa-arrow-left mr-2"></i>Cancel
                             </a>
-                            <button type="submit"
-                                class="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200 shadow-md hover:shadow-lg">
-                                <i class="fas fa-save mr-2"></i>Update Event
-                            </button>
+                            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                                <button type="submit" name="send_update_email" value="0"
+                                    class="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200 shadow-md hover:shadow-lg">
+                                    <i class="fas fa-save mr-2"></i>Update Event
+                                </button>
+                                <button type="submit" name="send_update_email" value="1"
+                                    class="bg-gradient-to-r from-blue-700 to-indigo-700 hover:from-blue-800 hover:to-indigo-800 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200 shadow-md hover:shadow-lg">
+                                    <i class="fas fa-paper-plane mr-2"></i>Update Event &amp; Send Update Email
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>

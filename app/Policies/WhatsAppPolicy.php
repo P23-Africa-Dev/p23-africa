@@ -3,24 +3,24 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Services\LegacyWhatsAppAccessService;
+use App\Services\LegacyContextService;
 
 class WhatsAppPolicy
 {
-    public function __construct(protected LegacyWhatsAppAccessService $legacyWhatsAppAccessService) {}
+    public function __construct(protected LegacyContextService $legacyContextService) {}
 
     public function view(User $user): bool
     {
-        return $this->legacyWhatsAppAccessService->canAccessWhatsApp($user);
+        return $this->legacyContextService->hasLegacyWhatsAppAccess($user);
     }
 
     public function send(User $user): bool
     {
-        return $this->legacyWhatsAppAccessService->canAccessWhatsApp($user);
+        return $this->legacyContextService->hasLegacyWhatsAppAccess($user);
     }
 
     public function manage(User $user): bool
     {
-        return $this->legacyWhatsAppAccessService->canAccessWhatsApp($user);
+        return $this->legacyContextService->hasLegacyWhatsAppAccess($user);
     }
 }

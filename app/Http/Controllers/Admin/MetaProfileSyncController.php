@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\SyncWhatsAppBusinessProfileJob;
+use App\Jobs\SyncWhatsAppTemplatesJob;
 use App\Models\WhatsAppAccount;
 use App\Services\WhatsApp\WhatsAppBusinessProfileService;
 use Illuminate\Http\RedirectResponse;
@@ -56,5 +57,20 @@ class MetaProfileSyncController extends Controller
         $service->refreshMetaStatus($account);
 
         return back()->with('success', 'Meta profile status refreshed successfully.');
+    }
+
+    public function syncTemplatesNow(): RedirectResponse
+    {
+        $this->authorize('whatsapp.manage');
+
+        $account = WhatsAppAccount::query()->latest('id')->first();
+
+        if (!$account) {
+            return back()->withErrors(['whatsapp_templates' => 'No active WhatsApp account is configured.']);
+        }
+
+        SyncWhatsAppTemplatesJob::dispatch($account->id)->onQueue('whatsapp');
+
+        return back()->with('success', 'WhatsApp template sync queued successfully.');
     }
 }

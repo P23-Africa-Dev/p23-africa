@@ -494,6 +494,18 @@ function initMessaging() {
     const templatePicker = document.getElementById('waTemplatePicker');
     if (templatePicker && textarea) {
         templatePicker.addEventListener('change', function () {
+            const selectedOption = this.selectedOptions?.[0] || null;
+            const messageTypeField = sendForm?.querySelector('[data-wa-message-type]');
+            const templateIdField = sendForm?.querySelector('[data-wa-template-id]');
+
+            if (messageTypeField) {
+                messageTypeField.value = selectedOption?.dataset?.templateId ? 'template' : 'text';
+            }
+
+            if (templateIdField) {
+                templateIdField.value = selectedOption?.dataset?.templateId || '';
+            }
+
             if (!this.value) {
                 return;
             }
@@ -521,17 +533,32 @@ function initMessaging() {
 
             const bodyField = sendForm.querySelector('[data-wa-message-body]');
             const body = bodyField?.value.trim() || '';
-            if (!body || state.isSending) {
+            const selectedTemplateOption = templatePicker?.selectedOptions?.[0] || null;
+            const selectedTemplateId = selectedTemplateOption?.dataset?.templateId || '';
+            const isTemplateSend = selectedTemplateId !== '';
+
+            const messageTypeField = sendForm.querySelector('[data-wa-message-type]');
+            const templateIdField = sendForm.querySelector('[data-wa-template-id]');
+            if (messageTypeField) {
+                messageTypeField.value = isTemplateSend ? 'template' : 'text';
+            }
+            if (templateIdField) {
+                templateIdField.value = selectedTemplateId;
+            }
+
+            if ((!body && !isTemplateSend) || state.isSending) {
                 return;
             }
 
             const sendButton = sendForm.querySelector('[data-wa-send-button]');
             const tempId = `local-${Date.now()}`;
+            const templateDisplayName = selectedTemplateOption?.dataset?.templateName || 'selected template';
+            const optimisticBody = isTemplateSend ? `Template: ${templateDisplayName}` : body;
             const optimisticMessage = {
                 id: tempId,
                 sender_type: 'admin',
-                type: 'text',
-                body,
+                type: isTemplateSend ? 'template' : 'text',
+                body: optimisticBody,
                 status: 'sending',
                 created_at: new Date().toISOString(),
                 updated_at: new Date().toISOString(),
@@ -562,6 +589,10 @@ function initMessaging() {
                     bodyField.value = '';
                     bodyField.dispatchEvent(new Event('input'));
                 }
+                if (templatePicker) {
+                    templatePicker.value = '';
+                    templatePicker.dispatchEvent(new Event('change'));
+                }
 
                 const responseMessage = data.data || {};
                 const row = listElement?.querySelector(`[data-message-id="${tempId}"]`);
@@ -570,8 +601,8 @@ function initMessaging() {
                     const finalized = {
                         id: responseMessage.id || tempId,
                         sender_type: responseMessage.sender_type || 'admin',
-                        type: responseMessage.type || 'text',
-                        body: responseMessage.body || body,
+                        type: responseMessage.type || (isTemplateSend ? 'template' : 'text'),
+                        body: responseMessage.body || optimisticBody,
                         status: responseMessage.status || 'queued',
                         created_at: responseMessage.created_at || new Date().toISOString(),
                         updated_at: responseMessage.updated_at || responseMessage.created_at || new Date().toISOString(),
@@ -592,7 +623,8 @@ function initMessaging() {
                     renderer.updateElement(row, {
                         id: tempId,
                         sender_type: 'admin',
-                        body,
+                        type: isTemplateSend ? 'template' : 'text',
+                        body: optimisticBody,
                         status: 'failed',
                         created_at: new Date().toISOString(),
                         updated_at: new Date().toISOString(),

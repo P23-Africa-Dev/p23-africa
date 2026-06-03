@@ -53,6 +53,11 @@
                     <button type="submit" class="btn btn-outline-primary">Refresh Meta Status</button>
                 </form>
 
+                <form method="POST" action="{{ orgRoute('admin.whatsapp.templates.sync') }}">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-success">Sync Templates from Meta</button>
+                </form>
+
                 <a href="{{ orgRoute('admin.whatsapp.profile-sync') }}" class="btn btn-outline-dark">Preview
                     Profile</a>
             </div>

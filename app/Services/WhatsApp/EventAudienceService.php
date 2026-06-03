@@ -57,7 +57,7 @@ class EventAudienceService
         }
 
         $seats = Seat::query()
-            ->with('event:id,title,event_date,event_time,venue')
+            ->with('event:id,title,slug,link,event_date,event_time,venue')
             ->whereIn('event_id', $eventIds)
             ->whereNotNull('phone')
             ->where('phone', '!=', '')
@@ -87,18 +87,32 @@ class EventAudienceService
             }
 
             $validation = $this->numberValidationService->validateWhatsAppNumber($normalizedPhone, null, false);
-            if (($validation['validation_status'] ?? null) !== WhatsAppNumberValidationService::STATUS_VALID) {
+
+            // Only skip contacts that Meta has explicitly confirmed as invalid.
+            // Pending status means the validation API is unsupported or unavailable —
+            // event registrants should be trusted unless explicitly rejected.
+            if (($validation['validation_status'] ?? null) === WhatsAppNumberValidationService::STATUS_INVALID) {
                 $this->persistValidationCache($contact, $seat, $normalizedPhone, $validation);
                 continue;
             }
 
             $contact = $this->persistValidationCache($contact, $seat, $normalizedPhone, $validation);
 
+            $eventSlug = trim((string) ($seat->event?->slug ?? ''));
+            $eventPageUrl = $eventSlug !== '' ? url('/events/' . $eventSlug) : '';
+            $eventTime = blank($seat->event?->event_time)
+                ? ''
+                : Carbon::parse((string) $seat->event?->event_time)->format('g:i A');
+
             $audienceByPhone[$normalizedPhone] = [
                 'seat_id' => $seat->id,
                 'event_id' => $seat->event_id,
                 'event_name' => $seat->event?->title,
+                'event_slug' => $seat->event?->slug,
+                'event_link' => $seat->event?->link,
                 'event_date' => $seat->event?->event_date,
+                'event_time' => $eventTime,
+                'event_page_url' => $eventPageUrl,
                 'booking_name' => $seat->name,
                 'name' => $seat->name,
                 'phone' => $normalizedPhone,
@@ -161,13 +175,15 @@ class EventAudienceService
         $eventId = (int) ($filters['event_id'] ?? 0);
         $eventIds = array_values(array_filter(array_map('intval', (array) ($filters['event_ids'] ?? []))));
 
-        $query = Event::query()->select(['id', 'title', 'event_date', 'event_time', 'venue']);
+        $query = Event::query()->select(['id', 'title', 'slug', 'link', 'event_date', 'event_time', 'venue']);
 
-        if ($filterType === self::FILTER_SINGLE && $eventId > 0) {
+        // Explicit event selections always take priority over the filter-type dropdown.
+        // This ensures picking a specific event always scopes the audience correctly.
+        if ($eventId > 0) {
             return $query->whereKey($eventId);
         }
 
-        if ($filterType === self::FILTER_MULTIPLE && !empty($eventIds)) {
+        if (!empty($eventIds)) {
             return $query->whereIn('id', $eventIds);
         }
 
@@ -179,6 +195,7 @@ class EventAudienceService
             return $query->whereDate('event_date', '>=', now()->toDateString());
         }
 
+        // FILTER_ALL or no matching event selection → return all events
         return $query;
     }
 

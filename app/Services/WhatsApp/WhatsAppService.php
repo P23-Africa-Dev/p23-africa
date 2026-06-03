@@ -4,15 +4,16 @@ namespace App\Services\WhatsApp;
 
 use App\Models\WhatsAppAccount;
 use App\Services\AccessAuditService;
-use App\Services\LegacyWhatsAppAccessService;
+use App\Services\LegacyContextService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use RuntimeException;
 
 class WhatsAppService
 {
     public function __construct(
-        protected LegacyWhatsAppAccessService $legacyWhatsAppAccessService,
+        protected LegacyContextService $legacyContextService,
         protected AccessAuditService $accessAuditService,
     ) {}
 
@@ -181,6 +182,16 @@ class WhatsAppService
             ],
         ];
 
+        if ((bool) config('whatsapp.debug_logging', false)) {
+            Log::debug('WhatsApp template send request', [
+                'to' => $payload['to'],
+                'template' => $templateName,
+                'language' => $languageCode,
+                'component_count' => count((array) data_get($templatePayload, 'components', [])),
+                'components' => data_get($templatePayload, 'components', []),
+            ]);
+        }
+
         return $this->post(
             $this->messagesEndpoint((string) $account['phone_number_id']),
             $payload,
@@ -193,6 +204,31 @@ class WhatsAppService
         throw new RuntimeException('Interactive message support is prepared but not implemented yet.');
     }
 
+    public function fetchMessageTemplatesPage(?int $accountId = null, ?string $afterCursor = null, int $limit = 100): array
+    {
+        $account = $this->resolveAccount($accountId);
+
+        $wabaId = (string) ($account['waba_id'] ?? '');
+        if (blank($wabaId)) {
+            throw new RuntimeException('WhatsApp Business Account ID (WABA ID) is not configured.');
+        }
+
+        $query = [
+            'fields' => 'id,name,status,category,language,components,parameter_format',
+            'limit' => max(1, min($limit, 100)),
+        ];
+
+        if (!blank($afterCursor)) {
+            $query['after'] = (string) $afterCursor;
+        }
+
+        return $this->get(
+            $this->messageTemplatesEndpoint($wabaId),
+            $query,
+            (string) $account['access_token']
+        );
+    }
+
     protected function assertInteractiveAccess(): void
     {
         if (app()->runningInConsole() || !auth()->check()) {
@@ -200,7 +236,7 @@ class WhatsAppService
         }
 
         $user = auth()->user();
-        if ($this->legacyWhatsAppAccessService->canAccessWhatsApp($user)) {
+        if ($this->legacyContextService->hasLegacyWhatsAppAccess($user)) {
             return;
         }
 
@@ -224,18 +260,63 @@ class WhatsAppService
         return $baseUrl . '/' . $graphVersion . '/' . $phoneNumberId . '/messages';
     }
 
+    protected function messageTemplatesEndpoint(string $wabaId): string
+    {
+        $baseUrl = rtrim((string) config('whatsapp.base_url', 'https://graph.facebook.com'), '/');
+        $graphVersion = trim((string) config('whatsapp.graph_version', 'v23.0'), '/');
+
+        return $baseUrl . '/' . $graphVersion . '/' . $wabaId . '/message_templates';
+    }
+
+    protected function get(string $url, array $query, string $accessToken): array
+    {
+        $response = Http::withToken($accessToken)
+            ->acceptJson()
+            ->timeout(20)
+            ->retry(2, 300, null, false)
+            ->get($url, $query);
+
+        if (!$response->successful()) {
+            throw new RuntimeException(
+                'WhatsApp Cloud API request failed with status ' . $response->status() . ': ' . $response->body()
+            );
+        }
+
+        return $response->json() ?? [];
+    }
+
     protected function post(string $url, array $payload, string $accessToken): array
     {
         $response = Http::withToken($accessToken)
             ->acceptJson()
             ->asJson()
             ->timeout(20)
-            ->retry(2, 300)
+            ->retry(2, 300, null, false)
             ->post($url, $payload);
 
         if (!$response->successful()) {
+            $body = $response->body();
+            $json = $response->json();
+
+            Log::warning('WhatsApp Cloud API POST failed', [
+                'url' => $url,
+                'status' => $response->status(),
+                'template_name' => data_get($payload, 'template.name'),
+                'template_language' => data_get($payload, 'template.language.code'),
+                'component_count' => count((array) data_get($payload, 'template.components', [])),
+                'meta_error_code' => data_get($json, 'error.code'),
+                'meta_error_type' => data_get($json, 'error.type'),
+                'meta_error_message' => data_get($json, 'error.message'),
+                'meta_error_details' => data_get($json, 'error.error_data.details'),
+                'meta_fbtrace_id' => data_get($json, 'error.fbtrace_id'),
+            ]);
+
+            $errorPayload = is_array($json)
+                ? json_encode($json, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+                : $body;
+
             throw new RuntimeException(
-                'WhatsApp Cloud API request failed with status ' . $response->status() . ': ' . $response->body()
+                'WhatsApp Cloud API request failed with status ' . $response->status() . ': ' . $errorPayload
             );
         }
 

@@ -121,10 +121,17 @@ class SendEventBroadcastJob implements ShouldQueue
 
                 $failed++;
 
+                $metaError = $this->extractMetaApiError($exception->getMessage());
+
                 Log::warning('Event broadcast recipient send failed', [
                     'campaign_id' => $campaign->id,
                     'recipient_id' => $recipient->id,
                     'error' => $exception->getMessage(),
+                    'meta_code' => $metaError['code'] ?? null,
+                    'meta_type' => $metaError['type'] ?? null,
+                    'meta_message' => $metaError['message'] ?? null,
+                    'meta_details' => $metaError['details'] ?? null,
+                    'meta_fbtrace_id' => $metaError['fbtrace_id'] ?? null,
                 ]);
             }
 
@@ -163,5 +170,36 @@ class SendEventBroadcastJob implements ShouldQueue
             'status' => $status,
             'completed_at' => now(),
         ]);
+    }
+
+    protected function extractMetaApiError(string $errorMessage): array
+    {
+        $start = strpos($errorMessage, '{');
+        if ($start === false) {
+            return [];
+        }
+
+        $json = substr($errorMessage, $start);
+        if (!is_string($json) || trim($json) === '') {
+            return [];
+        }
+
+        $end = strrpos($json, '}');
+        if ($end !== false) {
+            $json = substr($json, 0, $end + 1);
+        }
+
+        $decoded = json_decode($json, true);
+        if (!is_array($decoded)) {
+            return [];
+        }
+
+        return [
+            'code' => data_get($decoded, 'error.code'),
+            'type' => data_get($decoded, 'error.type'),
+            'message' => data_get($decoded, 'error.message'),
+            'details' => data_get($decoded, 'error.error_data.details'),
+            'fbtrace_id' => data_get($decoded, 'error.fbtrace_id'),
+        ];
     }
 }

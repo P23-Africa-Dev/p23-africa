@@ -20,6 +20,14 @@ return [
 
     'queue' => (bool) env('WHATSAPP_QUEUE', true),
 
+    'template_sync' => [
+        'enabled' => (bool) env('WHATSAPP_TEMPLATE_SYNC_ENABLED', true),
+        'only_approved' => (bool) env('WHATSAPP_TEMPLATE_SYNC_ONLY_APPROVED', true),
+        'page_limit' => (int) env('WHATSAPP_TEMPLATE_SYNC_PAGE_LIMIT', 100),
+    ],
+
+    'enforce_customer_service_window' => (bool) env('WHATSAPP_ENFORCE_CUSTOMER_SERVICE_WINDOW', true),
+
     'poll_interval' => (int) env('WHATSAPP_POLL_INTERVAL', 5),
 
     'status_poll_interval_ms' => (int) env('WHATSAPP_STATUS_POLL_INTERVAL_MS', 3000),

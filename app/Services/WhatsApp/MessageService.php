@@ -13,6 +13,7 @@ use App\Services\WhatsApp\Hooks\FutureIntegrationBridge;
 use Carbon\Carbon;
 use RuntimeException;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 
 class MessageService
 {
@@ -23,12 +24,19 @@ class MessageService
         protected WhatsAppRealtimeDebugService $realtimeDebugService,
         protected FutureIntegrationBridge $futureHooks,
         protected TemplateRendererService $templateRendererService,
+        protected MetaTemplateParameterService $metaTemplateParameterService,
     ) {}
 
     public function queueTextMessage(WhatsAppConversation $conversation, int $senderId, string $body, ?int $accountId = null): WhatsAppMessage
     {
         if (!$this->whatsAppService->isEnabled()) {
             throw new RuntimeException('WhatsApp module is disabled. Set WHATSAPP_ENABLED=true (or provide a valid WhatsApp account config), then clear and recache Laravel config.');
+        }
+
+        if ($this->shouldEnforceCustomerServiceWindow() && !$this->hasRecentInboundReply($conversation)) {
+            throw ValidationException::withMessages([
+                'body' => 'Cannot send free-form text because the 24-hour WhatsApp customer service window has expired. Use an approved template message (Meta error 131047).',
+            ]);
         }
 
         $message = WhatsAppMessage::create([
@@ -61,6 +69,70 @@ class MessageService
         }
 
         return $message;
+    }
+
+    public function queueTemplateMessage(WhatsAppConversation $conversation, int $senderId, int $templateId, ?int $accountId = null): WhatsAppMessage
+    {
+        if (!$this->whatsAppService->isEnabled()) {
+            throw new RuntimeException('WhatsApp module is disabled. Set WHATSAPP_ENABLED=true (or provide a valid WhatsApp account config), then clear and recache Laravel config.');
+        }
+
+        $template = WhatsAppTemplate::query()->find($templateId);
+        if (!$template || $template->status !== WhatsAppTemplate::STATUS_APPROVED) {
+            throw ValidationException::withMessages([
+                'template_id' => 'Selected template is unavailable or not approved by Meta.',
+            ]);
+        }
+
+        $message = WhatsAppMessage::create([
+            'conversation_id' => $conversation->id,
+            'sender_type' => WhatsAppMessage::SENDER_ADMIN,
+            'type' => 'template',
+            'body' => sprintf('Template: %s (%s)', (string) $template->name, (string) $template->language),
+            'payload' => [
+                'requested_by' => $senderId,
+                'account_id' => $accountId,
+                'template_id' => $template->id,
+                'direct_template' => true,
+                'template_components' => [],
+            ],
+            'status' => WhatsAppMessage::STATUS_QUEUED,
+            'status_dirty' => true,
+            'status_updated_at' => now(),
+        ]);
+
+        $conversation->update([
+            'last_message' => (string) $message->body,
+        ]);
+
+        $conversation->contact?->update([
+            'last_chat_at' => now(),
+        ]);
+
+        if ((bool) config('whatsapp.queue', true)) {
+            SendWhatsAppMessageJob::dispatch($message->id, $accountId)->onQueue('whatsapp');
+        } else {
+            $this->processOutgoingMessage($message, $accountId);
+            $message->refresh();
+        }
+
+        return $message;
+    }
+
+    protected function shouldEnforceCustomerServiceWindow(): bool
+    {
+        return (bool) config('whatsapp.enforce_customer_service_window', true);
+    }
+
+    protected function hasRecentInboundReply(WhatsAppConversation $conversation): bool
+    {
+        $windowStart = now()->subHours(24);
+
+        return WhatsAppMessage::query()
+            ->where('conversation_id', $conversation->id)
+            ->where('sender_type', WhatsAppMessage::SENDER_CONTACT)
+            ->where('created_at', '>=', $windowStart)
+            ->exists();
     }
 
     public function processOutgoingMessage(WhatsAppMessage $message, ?int $accountId = null): WhatsAppMessage
@@ -129,11 +201,36 @@ class MessageService
             throw new RuntimeException('Template not found: ' . $templateId);
         }
 
-        $format = (string) ($template->template_format ?: TemplateRendererService::FORMAT_JSON);
+        if ((bool) data_get($message->payload, 'direct_template', false)) {
+            return $this->whatsAppService->sendTemplateMessage(
+                $message->conversation->contact->phone,
+                [
+                    'name' => (string) $template->name,
+                    'language' => [
+                        'code' => (string) ($template->language ?: 'en'),
+                    ],
+                    'components' => is_array(data_get($message->payload, 'template_components'))
+                        ? data_get($message->payload, 'template_components')
+                        : [],
+                ],
+                $accountId
+            );
+        }
+
         $variables = data_get($message->payload, 'variables', []);
         if (!is_array($variables)) {
             $variables = [];
         }
+
+        if ($template->status === WhatsAppTemplate::STATUS_APPROVED && $this->metaTemplateParameterService->supportsTemplate($template)) {
+            return $this->whatsAppService->sendTemplateMessage(
+                $message->conversation->contact->phone,
+                $this->metaTemplateParameterService->buildPayload($template, $variables),
+                $accountId
+            );
+        }
+
+        $format = (string) ($template->template_format ?: TemplateRendererService::FORMAT_JSON);
 
         $sourceContent = $format === TemplateRendererService::FORMAT_JSON
             ? ($template->template_json ?? [])
@@ -249,6 +346,7 @@ class MessageService
         $this->realtimeDebugService->logStatusSync($message->id, $message->status, [
             'conversation_id' => $message->conversation_id,
             'source' => 'webhook_status_update',
+            'meta_error' => $this->extractMetaStatusError($statusPayload),
         ]);
 
         if ($message && $message->conversation) {
@@ -264,6 +362,23 @@ class MessageService
         ]);
 
         return $message;
+    }
+
+    protected function extractMetaStatusError(array $statusPayload): ?array
+    {
+        $errors = data_get($statusPayload, 'errors', []);
+        if (!is_array($errors) || empty($errors)) {
+            return null;
+        }
+
+        $first = is_array($errors[0] ?? null) ? $errors[0] : [];
+
+        return [
+            'code' => data_get($first, 'code'),
+            'title' => data_get($first, 'title'),
+            'message' => data_get($first, 'message'),
+            'details' => data_get($first, 'error_data.details'),
+        ];
     }
 
     protected function extractBody(array $messagePayload): ?string

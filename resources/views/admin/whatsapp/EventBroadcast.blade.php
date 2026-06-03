@@ -252,6 +252,34 @@
                     }
                 }
 
+                // Auto-sync event_filter when user picks a specific event,
+                // so the backend always receives the correct filter mode.
+                const eventIdSelect = document.querySelector('select[name="event_id"]');
+                const eventIdsSelect = document.querySelector('select[name="event_ids[]"]');
+                const eventFilter = document.getElementById('eventFilter');
+
+                if (eventIdSelect && eventFilter) {
+                    eventIdSelect.addEventListener('change', function() {
+                        if (this.value) {
+                            eventFilter.value = 'single';
+                        } else if (!eventIdsSelect || eventIdsSelect.selectedOptions.length === 0) {
+                            eventFilter.value = 'upcoming';
+                        }
+                    });
+                }
+
+                if (eventIdsSelect && eventFilter) {
+                    eventIdsSelect.addEventListener('change', function() {
+                        if (this.selectedOptions.length > 0) {
+                            eventFilter.value = 'multiple';
+                            // Clear the single-event picker to avoid ambiguity
+                            if (eventIdSelect) eventIdSelect.value = '';
+                        } else if (!eventIdSelect || !eventIdSelect.value) {
+                            eventFilter.value = 'upcoming';
+                        }
+                    });
+                }
+
                 sourceType.addEventListener('change', togglePanels);
                 previewBtn.addEventListener('click', loadPreview);
                 togglePanels();

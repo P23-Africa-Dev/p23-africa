@@ -8,9 +8,13 @@ use App\Mail\EventReminderMail;
 use App\Models\Event;
 use App\Models\EventClick;
 use App\Models\EventClickLog;
+use App\Models\EventUpdateHistory;
 use App\Models\Seat;
+use App\Services\EventUpdateNotificationService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Mews\Purifier\Facades\Purifier;
 use Illuminate\Support\Str;
@@ -141,8 +145,10 @@ class EventController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Event $event)
+    public function update(Request $request, Event $event, EventUpdateNotificationService $notificationService)
     {
+        $notifyAttendees = $request->boolean('send_update_email');
+
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'subtitle' => 'nullable|string|max:255',
@@ -173,7 +179,7 @@ class EventController extends Controller
         // Remove current image if requested
         if ($request->has('remove_image') && $event->image) {
             Storage::disk('public')->delete($event->image);
-            $event->image = null;
+            $validated['image'] = null;
         }
 
         // Upload new image if provided
@@ -207,13 +213,75 @@ class EventController extends Controller
         $validated['description'] = Purifier::clean($request->description);
         $validated['slug'] = Str::slug($validated['title']);
 
-        $event->update($validated);
+        $changes = $notificationService->detectChanges($event, $validated);
+        $notifiedCount = 0;
+        $updateHistory = null;
+
+        try {
+            DB::transaction(function () use (
+                $event,
+                $validated,
+                $notifyAttendees,
+                $changes,
+                &$updateHistory
+            ) {
+                $event->update($validated);
+
+                $updateHistory = EventUpdateHistory::create([
+                    'event_id' => $event->id,
+                    'updated_by' => Auth::id(),
+                    'changed_fields' => $changes['changed_fields'],
+                    'old_values' => $changes['old_values'],
+                    'new_values' => $changes['new_values'],
+                    'notifications_requested' => $notifyAttendees,
+                    'notified_attendees_count' => 0,
+                ]);
+            });
+
+            if ($notifyAttendees && !empty($changes['changed_fields'])) {
+                $notifiedCount = $notificationService->sendNotifications($event, $changes, Auth::id());
+
+                if ($updateHistory) {
+                    $updateHistory->update(['notified_attendees_count' => $notifiedCount]);
+                }
+            }
+        } catch (\Throwable $exception) {
+            Log::error('Event update failed', [
+                'event_id' => $event->id,
+                'user_id' => Auth::id(),
+                'notify_attendees' => $notifyAttendees,
+                'error' => $exception->getMessage(),
+            ]);
+
+            return back()
+                ->withInput()
+                ->with('error', 'Event update failed. Please try again.');
+        }
 
         activity()
             ->causedBy(Auth::user())
             ->performedOn($event)
-            ->withProperties(['title' => $event->title])
+            ->withProperties([
+                'title' => $event->title,
+                'notify_attendees' => $notifyAttendees,
+                'changed_fields' => $changes['changed_fields'],
+                'notified_attendees_count' => $notifiedCount,
+            ])
             ->log('Updated event');
+
+        if ($notifyAttendees && empty($changes['changed_fields'])) {
+            return orgRedirect('admin.events.index')->with(
+                'success',
+                'Event updated successfully. No attendee-facing changes were detected, so no update emails were sent.'
+            );
+        }
+
+        if ($notifyAttendees) {
+            return orgRedirect('admin.events.index')->with(
+                'success',
+                "Event updated successfully. Update emails sent to {$notifiedCount} attendee(s)."
+            );
+        }
 
         return orgRedirect('admin.events.index')->with('success', 'Event updated successfully.');
     }
@@ -264,7 +332,7 @@ class EventController extends Controller
                 $sentCount++;
             } catch (\Exception $e) {
                 $failedCount++;
-                \Log::error("Failed to send {$type} reminder to {$seat->email} for event '{$event->title}': " . $e->getMessage());
+                Log::error("Failed to send {$type} reminder to {$seat->email} for event '{$event->title}': " . $e->getMessage());
             }
         }
 

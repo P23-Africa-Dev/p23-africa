@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Services\AccessAuditService;
-use App\Services\LegacyWhatsAppAccessService;
+use App\Services\LegacyContextService;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 class EnsureLegacyWhatsAppAccess
 {
     public function __construct(
-        protected LegacyWhatsAppAccessService $legacyWhatsAppAccessService,
+        protected LegacyContextService $legacyContextService,
         protected AccessAuditService $accessAuditService,
     ) {}
 
@@ -22,7 +22,7 @@ class EnsureLegacyWhatsAppAccess
     {
         $user = $request->user();
 
-        if ($this->legacyWhatsAppAccessService->canAccessWhatsApp($user)) {
+        if ($this->legacyContextService->hasLegacyWhatsAppAccess($user)) {
             return $next($request);
         }
 

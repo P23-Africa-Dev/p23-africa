@@ -370,48 +370,9 @@ Route::middleware(['auth', 'check.suspended', 'resolve.org', 'role:admin|supervi
             Route::post('/consultation/chat/mark-read/{messageId}', [\App\Http\Controllers\Admin\ConsultationController::class, 'markMessageAsRead'])->name('consultation.chat.markRead');
         });
 
-        // WhatsApp module (legacy-only admin/supervisor)
-        Route::middleware(['role:admin|supervisor', 'legacy.whatsapp'])->prefix('whatsapp')->name('whatsapp.')->group(function () {
-            Route::get('/', [\App\Http\Controllers\Admin\WhatsAppController::class, 'overview'])->name('overview');
-            Route::get('/overview', [\App\Http\Controllers\Admin\WhatsAppController::class, 'overview'])->name('overview.index');
-            Route::get('/conversations', [\App\Http\Controllers\Admin\WhatsAppController::class, 'conversations'])->name('conversations');
-            Route::get('/conversations/{conversation}/history', [\App\Http\Controllers\Admin\WhatsAppController::class, 'conversationHistory'])->name('conversations.history');
-            Route::post('/conversations/{conversation}/messages', [\App\Http\Controllers\Admin\WhatsAppController::class, 'sendMessage'])->name('messages.send');
-            Route::patch('/conversations/{conversation}', [\App\Http\Controllers\Admin\WhatsAppController::class, 'updateConversation'])->name('conversations.update');
-            Route::post('/conversations/{conversation}/clear', [\App\Http\Controllers\Admin\WhatsAppController::class, 'clearConversation'])->name('conversations.clear');
-            Route::post('/conversations/{conversation}/notes', [\App\Http\Controllers\Admin\WhatsAppController::class, 'addNote'])->name('notes.store');
-            Route::post('/conversations/{conversation}/mark-read', [\App\Http\Controllers\Admin\WhatsAppController::class, 'markRead'])->name('conversations.mark-read');
-            Route::get('/templates', [\App\Http\Controllers\Admin\WhatsAppController::class, 'templates'])->name('templates');
-            Route::post('/templates', [\App\Http\Controllers\Admin\WhatsAppController::class, 'storeTemplate'])->name('templates.store');
-            Route::put('/templates/{template}', [\App\Http\Controllers\Admin\WhatsAppController::class, 'updateTemplate'])->name('templates.update');
-            Route::get('/contacts', [\App\Http\Controllers\Admin\WhatsAppController::class, 'contacts'])->name('contacts');
-            Route::post('/contacts', [\App\Http\Controllers\Admin\WhatsAppController::class, 'storeContact'])->name('contacts.store');
-            Route::patch('/contacts/{contact}', [\App\Http\Controllers\Admin\WhatsAppController::class, 'updateContact'])->name('contacts.update');
-            Route::delete('/contacts/{contact}', [\App\Http\Controllers\Admin\WhatsAppController::class, 'destroyContact'])->name('contacts.destroy');
-            Route::get('/events/contacts', [\App\Http\Controllers\Admin\EventCampaignController::class, 'eventContacts'])->name('events.contacts');
-            Route::get('/events/broadcast', [\App\Http\Controllers\Admin\EventCampaignController::class, 'eventBroadcast'])->name('events.broadcast');
-            Route::post('/events/audience-preview', [\App\Http\Controllers\Admin\EventCampaignController::class, 'audiencePreview'])->name('events.audience-preview');
-            Route::post('/events/send-broadcast', [\App\Http\Controllers\Admin\EventCampaignController::class, 'sendBroadcast'])->name('events.send-broadcast');
-            Route::get('/events/campaign-history', [\App\Http\Controllers\Admin\EventCampaignController::class, 'campaignHistory'])->name('events.campaign-history');
-            Route::post('/quick-chat/validate', [\App\Http\Controllers\Admin\QuickChatController::class, 'validateNumber'])->name('quick-chat.validate');
-            Route::post('/quick-chat/start', [\App\Http\Controllers\Admin\QuickChatController::class, 'start'])->name('quick-chat.start');
-            Route::post('/quick-chat/save-contact', [\App\Http\Controllers\Admin\QuickChatController::class, 'saveContact'])->name('quick-chat.save-contact');
-            Route::get('/settings', [\App\Http\Controllers\Admin\WhatsAppController::class, 'settings'])->name('settings');
-            Route::post('/settings/account', [\App\Http\Controllers\Admin\WhatsAppController::class, 'saveAccount'])->name('settings.account.save');
-            Route::post('/settings/unlock', [\App\Http\Controllers\Admin\DeveloperSecurityController::class, 'unlock'])->name('settings.unlock');
-            Route::post('/settings/lock', [\App\Http\Controllers\Admin\DeveloperSecurityController::class, 'lock'])->name('settings.lock');
-            Route::get('/settings/sensitive-data', [\App\Http\Controllers\Admin\DeveloperSecurityController::class, 'sensitiveData'])->name('settings.sensitive-data');
-            Route::post('/settings/sensitive', [\App\Http\Controllers\Admin\DeveloperSecurityController::class, 'saveSensitive'])->name('settings.sensitive.save');
-            Route::get('/developer-security', [\App\Http\Controllers\Admin\DeveloperSecurityController::class, 'index'])->name('developer-security');
-            Route::post('/developer-security/passcode', [\App\Http\Controllers\Admin\DeveloperSecurityController::class, 'updatePasscode'])->name('developer-security.passcode.update');
-            Route::post('/developer-security/passcode/reset', [\App\Http\Controllers\Admin\DeveloperSecurityController::class, 'resetPasscode'])->name('developer-security.passcode.reset');
-            Route::post('/developer-security/force-relock', [\App\Http\Controllers\Admin\DeveloperSecurityController::class, 'forceRelock'])->name('developer-security.force-relock');
-            Route::get('/account-setup', [\App\Http\Controllers\Admin\WhatsAppController::class, 'accountSetup'])->name('account-setup');
-            Route::get('/webhook-logs', [\App\Http\Controllers\Admin\WhatsAppController::class, 'webhookLogs'])->name('webhook-logs');
-            Route::get('/poll', [\App\Http\Controllers\Admin\WhatsAppController::class, 'poll'])->name('poll');
-            Route::get('/status-poll', [\App\Http\Controllers\Admin\WhatsAppController::class, 'statusPoll'])->name('status-poll');
-            Route::post('/realtime-debug', [\App\Http\Controllers\Admin\WhatsAppController::class, 'realtimeDebug'])->name('realtime-debug');
-        });
+        // WhatsApp routes are intentionally registered only under /admin.
+        // Legacy users are identified by organization_id = null, so org-prefixed
+        // routing would force resolve.org tenant lookup and break legacy access.
 
         // CRM
         Route::get('/crm', [\App\Http\Controllers\Admin\LeadController::class, 'index'])->name('crm.index');
@@ -646,6 +607,7 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
         Route::get('/profile-sync', [\App\Http\Controllers\Admin\MetaProfileSyncController::class, 'index'])->name('profile-sync');
         Route::post('/profile-sync/sync', [\App\Http\Controllers\Admin\MetaProfileSyncController::class, 'syncNow'])->name('profile-sync.sync');
         Route::post('/profile-sync/refresh', [\App\Http\Controllers\Admin\MetaProfileSyncController::class, 'refreshMetaStatus'])->name('profile-sync.refresh');
+        Route::post('/templates/sync', [\App\Http\Controllers\Admin\MetaProfileSyncController::class, 'syncTemplatesNow'])->name('templates.sync');
         Route::post('/settings/unlock', [\App\Http\Controllers\Admin\DeveloperSecurityController::class, 'unlock'])->name('settings.unlock');
         Route::post('/settings/lock', [\App\Http\Controllers\Admin\DeveloperSecurityController::class, 'lock'])->name('settings.lock');
         Route::get('/settings/sensitive-data', [\App\Http\Controllers\Admin\DeveloperSecurityController::class, 'sensitiveData'])->name('settings.sensitive-data');

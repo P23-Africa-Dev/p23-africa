@@ -6,21 +6,24 @@ use App\Models\User;
 
 class LegacyWhatsAppAccessService
 {
+    public function __construct(protected LegacyContextService $legacyContextService) {}
+
     /**
      * Legacy context is defined as users without an organization assignment.
      */
     public function isLegacyOrganization(?User $user): bool
     {
-        return (bool) $user && is_null($user->organization_id);
+        return $this->legacyContextService->isLegacyUser($user);
     }
 
     public function isAllowedRole(?User $user): bool
     {
-        return (bool) $user && $user->hasRole(['admin', 'supervisor']);
+        return $this->legacyContextService->isLegacyAdmin($user)
+            || $this->legacyContextService->isLegacySupervisor($user);
     }
 
     public function canAccessWhatsApp(?User $user): bool
     {
-        return $this->isLegacyOrganization($user) && $this->isAllowedRole($user);
+        return $this->legacyContextService->hasLegacyWhatsAppAccess($user);
     }
 }

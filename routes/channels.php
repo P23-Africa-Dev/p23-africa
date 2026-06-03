@@ -1,5 +1,6 @@
 <?php
 
+use App\Services\LegacyContextService;
 use Illuminate\Support\Facades\Broadcast;
 
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
@@ -7,9 +8,9 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('whatsapp.dashboard', function ($user) {
-    return $user->hasRole(['admin', 'supervisor']);
+    return app(LegacyContextService::class)->hasLegacyWhatsAppAccess($user);
 });
 
 Broadcast::channel('whatsapp.conversation.{conversationId}', function ($user, $conversationId) {
-    return $user->hasRole(['admin', 'supervisor']);
+    return app(LegacyContextService::class)->hasLegacyWhatsAppAccess($user);
 });

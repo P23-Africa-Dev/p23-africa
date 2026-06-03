@@ -51,13 +51,16 @@
                 action="{{ orgRoute('admin.whatsapp.messages.send', ['conversation' => $selectedConversation->id]) }}"
                 data-wa-send-form>
                 @csrf
-                <input type="hidden" name="type" value="text">
+                <input type="hidden" name="type" value="text" data-wa-message-type>
+                <input type="hidden" name="template_id" value="" data-wa-template-id>
                 <div class="row g-2 mb-2">
                     <div class="col-12 col-lg-4">
                         <select class="form-select form-select-sm" id="waTemplatePicker">
                             <option value="">Insert template text (optional)</option>
                             @foreach ($templates as $template)
-                                <option value="{{ json_encode($template->template_json) }}">{{ $template->name }}
+                                <option value="{{ json_encode($template->template_json) }}"
+                                    data-template-id="{{ $template->id }}" data-template-name="{{ $template->name }}">
+                                    {{ $template->name }}
                                     ({{ $template->language }})
                                 </option>
                             @endforeach

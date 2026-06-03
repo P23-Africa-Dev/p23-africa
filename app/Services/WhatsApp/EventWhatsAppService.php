@@ -8,7 +8,7 @@ use App\Models\EventWhatsAppRecipient;
 use App\Models\WhatsAppContact;
 use App\Models\WhatsAppTemplate;
 use App\Services\AccessAuditService;
-use App\Services\LegacyWhatsAppAccessService;
+use App\Services\LegacyContextService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -23,7 +23,8 @@ class EventWhatsAppService
         protected EventAudienceService $audienceService,
         protected WhatsAppNumberValidationService $numberValidationService,
         protected TemplateRendererService $templateRendererService,
-        protected LegacyWhatsAppAccessService $legacyWhatsAppAccessService,
+        protected MetaTemplateParameterService $metaTemplateParameterService,
+        protected LegacyContextService $legacyContextService,
         protected AccessAuditService $accessAuditService,
     ) {}
 
@@ -113,6 +114,16 @@ class EventWhatsAppService
 
         $samples = $audience->take(max(1, $limit))->map(function (array $row) use ($template) {
             $variables = Arr::get($row, 'variables', []);
+
+            if ($this->metaTemplateParameterService->supportsTemplate($template)) {
+                return [
+                    'name' => Arr::get($row, 'name'),
+                    'phone' => Arr::get($row, 'phone'),
+                    'event_name' => Arr::get($variables, 'event_title', Arr::get($variables, 'event_name')),
+                    'message_preview' => nl2br(e($this->metaTemplateParameterService->buildPreview($template, $variables))),
+                ];
+            }
+
             $sourceContent = ($template->template_format ?? TemplateRendererService::FORMAT_JSON) === TemplateRendererService::FORMAT_JSON
                 ? ($template->template_json ?? [])
                 : (string) ($template->rendered_content ?: data_get($template->editor_metadata, 'source_content', ''));
@@ -153,9 +164,16 @@ class EventWhatsAppService
                 'name' => Arr::get($row, 'name'),
                 'variables' => [
                     'name' => $this->resolveName(Arr::get($row, 'name'), null, null),
+                    'event_title' => Arr::get($row, 'event_name'),
                     'event_name' => Arr::get($row, 'event_name'),
                     'event_date' => Arr::get($row, 'event_date') ? date('M d, Y', strtotime((string) Arr::get($row, 'event_date'))) : '',
+                    'event_time' => Arr::get($row, 'event_time', ''),
+                    'event_location' => Arr::get($row, 'location'),
+                    'event_meeting_link' => Arr::get($row, 'event_link', Arr::get($row, 'event_page_url', '')),
+                    'event_slug' => Arr::get($row, 'event_slug', ''),
+                    'event_page_url' => Arr::get($row, 'event_page_url', ''),
                     'location' => Arr::get($row, 'location'),
+                    'event_link' => Arr::get($row, 'event_link', ''),
                     'seat_code' => Arr::get($row, 'seat_code'),
                     'email' => Arr::get($row, 'email'),
                     'phone' => Arr::get($row, 'phone'),
@@ -202,9 +220,16 @@ class EventWhatsAppService
                 'name' => $contact->name,
                 'variables' => [
                     'name' => $this->resolveName(null, data_get($contact->metadata, 'whatsapp_profile_name'), $contact->name),
+                    'event_title' => '',
                     'event_name' => '',
                     'event_date' => '',
+                    'event_time' => '',
+                    'event_location' => '',
+                    'event_meeting_link' => '',
+                    'event_slug' => '',
+                    'event_page_url' => '',
                     'location' => '',
+                    'event_link' => '',
                     'seat_code' => '',
                     'email' => $contact->email,
                     'phone' => $normalizedPhone,
@@ -261,9 +286,16 @@ class EventWhatsAppService
                 'name' => $contact->name,
                 'variables' => [
                     'name' => $this->resolveName(null, data_get($contact->metadata, 'whatsapp_profile_name'), $contact->name),
+                    'event_title' => '',
                     'event_name' => '',
                     'event_date' => '',
+                    'event_time' => '',
+                    'event_location' => '',
+                    'event_meeting_link' => '',
+                    'event_slug' => '',
+                    'event_page_url' => '',
                     'location' => '',
+                    'event_link' => '',
                     'seat_code' => '',
                     'email' => $contact->email,
                     'phone' => $normalizedPhone,
@@ -316,7 +348,7 @@ class EventWhatsAppService
         }
 
         $user = auth()->user();
-        if ($this->legacyWhatsAppAccessService->canAccessWhatsApp($user)) {
+        if ($this->legacyContextService->hasLegacyWhatsAppAccess($user)) {
             return;
         }
 

@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\SendEventReminders;
+use App\Console\Commands\SyncWhatsAppTemplatesCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -11,6 +12,7 @@ class Kernel extends ConsoleKernel
     // 👇 Register your custom commands here
     protected $commands = [
         SendEventReminders::class,
+        SyncWhatsAppTemplatesCommand::class,
     ];
 
     protected function schedule(Schedule $schedule)
@@ -26,6 +28,16 @@ class Kernel extends ConsoleKernel
                 ->everyMinute()
                 ->withoutOverlapping()
                 ->appendOutputTo(storage_path('logs/whatsapp-queue.log'));
+        }
+
+        if ((bool) config('whatsapp.template_sync.enabled', true)) {
+            $onlyApproved = (bool) config('whatsapp.template_sync.only_approved', true);
+
+            $schedule->command('whatsapp:sync-templates --only-approved=' . ($onlyApproved ? '1' : '0'))
+                ->everySixHours()
+                ->timezone(config('app.timezone'))
+                ->withoutOverlapping()
+                ->appendOutputTo(storage_path('logs/whatsapp-template-sync.log'));
         }
     }
 

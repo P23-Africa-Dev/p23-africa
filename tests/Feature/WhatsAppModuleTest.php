@@ -2,14 +2,17 @@
 
 namespace Tests\Feature;
 
+use App\Http\Controllers\Admin\MetaProfileSyncController;
 use App\Http\Controllers\Admin\WhatsAppController;
 use App\Http\Controllers\Admin\QuickChatController;
 use App\Http\Controllers\Admin\DeveloperSecurityController;
 use App\Jobs\SendEventBroadcastJob;
 use App\Jobs\SyncWhatsAppBusinessProfileJob;
+use App\Jobs\SyncWhatsAppTemplatesJob;
 use App\Http\Controllers\Api\WhatsAppWebhookController;
 use App\Jobs\SendWhatsAppMessageJob;
 use App\Models\Event;
+use App\Models\Organization;
 use App\Models\Seat;
 use App\Models\WhatsAppAccount;
 use App\Models\WhatsAppContact;
@@ -31,13 +34,16 @@ use App\Services\WhatsApp\WhatsAppNumberValidationService;
 use App\Services\WhatsApp\WebhookService;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 use Tests\TestCase;
 
 class WhatsAppModuleTest extends TestCase
@@ -452,6 +458,7 @@ class WhatsAppModuleTest extends TestCase
         config([
             'whatsapp.enabled' => true,
             'whatsapp.queue' => true,
+            'whatsapp.enforce_customer_service_window' => true,
         ]);
 
         $contact = WhatsAppContact::create([
@@ -462,6 +469,14 @@ class WhatsAppModuleTest extends TestCase
         $conversation = WhatsAppConversation::create([
             'contact_id' => $contact->id,
             'status' => 'open',
+        ]);
+
+        WhatsAppMessage::create([
+            'conversation_id' => $conversation->id,
+            'sender_type' => WhatsAppMessage::SENDER_CONTACT,
+            'type' => 'text',
+            'body' => 'Recent customer reply',
+            'status' => WhatsAppMessage::STATUS_RECEIVED,
         ]);
 
         $message = app(MessageService::class)->queueTextMessage($conversation, 1, 'Queued message');
@@ -481,6 +496,7 @@ class WhatsAppModuleTest extends TestCase
         config([
             'whatsapp.enabled' => true,
             'whatsapp.queue' => true,
+            'whatsapp.enforce_customer_service_window' => true,
         ]);
 
         Role::findOrCreate('admin');
@@ -496,6 +512,14 @@ class WhatsAppModuleTest extends TestCase
         $conversation = WhatsAppConversation::create([
             'contact_id' => $contact->id,
             'status' => 'open',
+        ]);
+
+        WhatsAppMessage::create([
+            'conversation_id' => $conversation->id,
+            'sender_type' => WhatsAppMessage::SENDER_CONTACT,
+            'type' => 'text',
+            'body' => 'Recent customer reply',
+            'status' => WhatsAppMessage::STATUS_RECEIVED,
         ]);
 
         $request = Request::create(
@@ -525,6 +549,109 @@ class WhatsAppModuleTest extends TestCase
         ]);
 
         Queue::assertPushed(SendWhatsAppMessageJob::class);
+    }
+
+    public function test_send_message_accepts_approved_template_and_queues_template_job(): void
+    {
+        Queue::fake();
+
+        config([
+            'whatsapp.enabled' => true,
+            'whatsapp.queue' => true,
+            'whatsapp.enforce_customer_service_window' => true,
+        ]);
+
+        Role::findOrCreate('admin');
+
+        $admin = User::factory()->create();
+        $admin->assignRole('admin');
+
+        $contact = WhatsAppContact::create([
+            'name' => 'Template Contact',
+            'phone' => '233500777111',
+        ]);
+
+        $conversation = WhatsAppConversation::create([
+            'contact_id' => $contact->id,
+            'status' => 'open',
+        ]);
+
+        $template = \App\Models\WhatsAppTemplate::create([
+            'name' => 'welcome_message',
+            'category' => 'utility',
+            'language' => 'en',
+            'template_format' => 'json',
+            'template_json' => [
+                'components' => [
+                    [
+                        'type' => 'BODY',
+                        'text' => 'Welcome to P23 Africa.',
+                    ],
+                ],
+            ],
+            'status' => 'approved',
+        ]);
+
+        $request = Request::create(
+            '/admin/whatsapp/conversations/' . $conversation->id . '/messages',
+            'POST',
+            [
+                'type' => 'template',
+                'template_id' => $template->id,
+            ]
+        );
+        $request->headers->set('Accept', 'application/json');
+        $request->setUserResolver(fn() => $admin);
+
+        $response = app(WhatsAppController::class)->sendMessage($request, $conversation, app(MessageService::class));
+
+        $this->assertSame(200, $response->getStatusCode());
+        $payload = $response->getData(true);
+        $this->assertTrue($payload['success']);
+        $this->assertSame('queued', $payload['data']['status']);
+        $this->assertSame('template', $payload['data']['type']);
+
+        $this->assertDatabaseHas('whatsapp_messages', [
+            'conversation_id' => $conversation->id,
+            'sender_type' => 'admin',
+            'type' => 'template',
+            'status' => 'queued',
+        ]);
+
+        Queue::assertPushed(SendWhatsAppMessageJob::class);
+    }
+
+    public function test_queue_text_message_is_blocked_when_customer_service_window_expired(): void
+    {
+        config([
+            'whatsapp.enabled' => true,
+            'whatsapp.queue' => true,
+            'whatsapp.enforce_customer_service_window' => true,
+        ]);
+
+        $contact = WhatsAppContact::create([
+            'name' => 'Window Expired Contact',
+            'phone' => '233500222333',
+        ]);
+
+        $conversation = WhatsAppConversation::create([
+            'contact_id' => $contact->id,
+            'status' => 'open',
+        ]);
+
+        WhatsAppMessage::create([
+            'conversation_id' => $conversation->id,
+            'sender_type' => WhatsAppMessage::SENDER_CONTACT,
+            'type' => 'text',
+            'body' => 'Old customer reply',
+            'status' => WhatsAppMessage::STATUS_RECEIVED,
+            'created_at' => now()->subHours(25),
+            'updated_at' => now()->subHours(25),
+        ]);
+
+        $this->expectException(\Illuminate\Validation\ValidationException::class);
+
+        app(MessageService::class)->queueTextMessage($conversation, 1, 'This should be blocked');
     }
 
     public function test_active_conversation_poll_returns_only_delta_messages(): void
@@ -1268,6 +1395,59 @@ class WhatsAppModuleTest extends TestCase
         ]);
     }
 
+    public function test_event_audience_service_includes_pending_contacts_when_meta_api_is_unsupported(): void
+    {
+        // When Meta /contacts API is unavailable (returns non-200 or unsupported),
+        // event registrants should still be included in the audience (pending ≠ invalid).
+        // Only explicitly INVALID contacts must be excluded.
+        WhatsAppAccount::create([
+            'business_name' => 'Event WA',
+            'phone_number' => '234800000001',
+            'phone_number_id' => '902200330044',
+            'waba_id' => '11223344000088',
+            'access_token' => 'pending-wa-token',
+            'webhook_verify_token' => 'verify-wa-token',
+            'status' => 'active',
+        ]);
+
+        $event = Event::create([
+            'title' => 'Summit 2025',
+            'subtitle' => 'Pending test',
+            'description' => 'desc',
+            'link' => 'https://example.test/summit',
+            'event_date' => now()->addDays(3)->toDateString(),
+            'event_time' => '09:00:00',
+            'venue' => 'Abuja',
+            'display' => 'open_to_all',
+            'visibility' => 'public',
+        ]);
+
+        Seat::create([
+            'event_id' => $event->id,
+            'name' => 'Pending Registrant',
+            'email' => 'pending@example.test',
+            'phone' => '+2348012300001',
+            'seat_code' => 'P23-3001',
+        ]);
+
+        // Simulate Meta contacts API being unavailable (returns 500)
+        Http::fake(function ($request) {
+            if (str_contains($request->url(), '/contacts')) {
+                return Http::response(['error' => 'Service unavailable'], 500);
+            }
+            return Http::response([], 200);
+        });
+
+        $audience = app(EventAudienceService::class)->extractValidatedAudience([
+            'event_filter' => 'single',
+            'event_id' => $event->id,
+        ]);
+
+        // Registrant must be included even though Meta couldn't validate them
+        $this->assertCount(1, $audience, 'Pending contacts should be included when Meta validation API is unavailable');
+        $this->assertSame('+2348012300001', $audience->first()['phone']);
+    }
+
     public function test_event_whatsapp_service_queues_campaign_and_dispatches_chunk_jobs(): void
     {
         Queue::fake();
@@ -1353,5 +1533,659 @@ class WhatsAppModuleTest extends TestCase
             return $job->campaignId === $campaign->id
                 && count($job->recipientIds) === 1;
         });
+    }
+
+    public function test_event_reminder_template_variables_are_mapped_from_event_data(): void
+    {
+        Queue::fake();
+
+        WhatsAppAccount::create([
+            'business_name' => 'Event WA',
+            'phone_number' => '233500123456',
+            'phone_number_id' => '901122334455',
+            'waba_id' => '11223344000099',
+            'access_token' => 'event-wa-token',
+            'webhook_verify_token' => 'verify-wa-token',
+            'status' => 'active',
+        ]);
+
+        $event = Event::create([
+            'title' => 'Knowing Your Customer Beyond Everybody',
+            'subtitle' => 'Reminder',
+            'description' => 'Event description',
+            'link' => 'https://meet.google.com/pqh-mehi-akj',
+            'event_date' => '2026-06-03',
+            'event_time' => '16:00:00',
+            'venue' => 'Google Meet',
+            'display' => 'open_to_all',
+            'visibility' => 'public',
+        ]);
+
+        Seat::create([
+            'event_id' => $event->id,
+            'name' => 'Nurudeen',
+            'email' => 'nurudeen@example.test',
+            'phone' => '+233500111111',
+            'organization' => 'P23 Africa',
+            'seat_code' => 'P23-3001',
+        ]);
+
+        $template = \App\Models\WhatsAppTemplate::create([
+            'name' => 'event_reminder_2',
+            'category' => 'utility',
+            'language' => 'en',
+            'template_format' => 'json',
+            'template_json' => ['components' => []],
+            'status' => 'approved',
+        ]);
+
+        Http::fake(function ($request) {
+            if (!str_contains($request->url(), '/contacts')) {
+                return Http::response([], 200);
+            }
+
+            return Http::response([
+                'contacts' => [[
+                    'input' => '233500111111',
+                    'status' => 'valid',
+                ]],
+            ], 200);
+        });
+
+        $campaign = app(EventWhatsAppService::class)->queueCampaign([
+            'source_type' => 'event_contacts',
+            'event_filter' => 'single',
+            'event_id' => $event->id,
+            'template_id' => $template->id,
+        ]);
+
+        $recipient = $campaign->recipients()->firstOrFail();
+        $variables = is_array($recipient->variables) ? $recipient->variables : [];
+
+        $this->assertSame('Knowing Your Customer Beyond Everybody', $variables['event_title'] ?? null);
+        $this->assertSame('Jun 03, 2026', $variables['event_date'] ?? null);
+        $this->assertSame('4:00 PM', $variables['event_time'] ?? null);
+        $this->assertSame('Google Meet', $variables['event_location'] ?? null);
+        $this->assertSame('https://meet.google.com/pqh-mehi-akj', $variables['event_meeting_link'] ?? null);
+        $this->assertSame($event->slug, $variables['event_slug'] ?? null);
+        $this->assertSame(url('/events/' . $event->slug), $variables['event_page_url'] ?? null);
+    }
+
+    public function test_process_outgoing_message_sends_event_reminder_template_with_meta_components(): void
+    {
+        config([
+            'whatsapp.enabled' => true,
+            'whatsapp.queue' => false,
+            'whatsapp.base_url' => 'https://graph.facebook.com',
+            'whatsapp.graph_version' => 'v23.0',
+        ]);
+
+        WhatsAppAccount::create([
+            'business_name' => 'Meta WA',
+            'phone_number' => '233500444555',
+            'phone_number_id' => '123456789',
+            'waba_id' => '1122334455',
+            'access_token' => 'token-123',
+            'webhook_verify_token' => 'verify-123',
+            'status' => 'active',
+        ]);
+
+        Http::fake([
+            'https://graph.facebook.com/*' => Http::response([
+                'messages' => [
+                    ['id' => 'wamid.template.1'],
+                ],
+            ], 200),
+        ]);
+
+        $contact = WhatsAppContact::create([
+            'name' => 'Template Receiver',
+            'phone' => '+233500999888',
+        ]);
+
+        $conversation = WhatsAppConversation::create([
+            'contact_id' => $contact->id,
+            'status' => 'open',
+        ]);
+
+        $template = \App\Models\WhatsAppTemplate::create([
+            'name' => 'event_reminder_2',
+            'category' => 'utility',
+            'language' => 'en',
+            'template_format' => 'json',
+            'template_json' => ['components' => []],
+            'status' => 'approved',
+        ]);
+
+        $message = WhatsAppMessage::create([
+            'conversation_id' => $conversation->id,
+            'sender_type' => 'system',
+            'type' => 'template',
+            'status' => 'queued',
+            'payload' => [
+                'template_id' => $template->id,
+                'variables' => [
+                    'event_title' => 'Knowing Your Customer Beyond Everybody',
+                    'event_date' => 'June 3, 2026',
+                    'event_time' => '4:00 PM',
+                    'event_location' => 'Google Meet',
+                    'event_meeting_link' => 'https://meet.google.com/pqh-mehi-akj',
+                    'event_slug' => 'knowing-your-customer-beyond-everybody',
+                    'event_page_url' => 'https://p23africa.com/events/knowing-your-customer-beyond-everybody',
+                ],
+            ],
+        ]);
+
+        $processed = app(MessageService::class)->processOutgoingMessage($message);
+
+        $this->assertSame('sent', $processed->status);
+        $this->assertSame('wamid.template.1', $processed->whatsapp_message_id);
+
+        Http::assertSent(function ($request) {
+            if (!str_contains($request->url(), '/messages')) {
+                return false;
+            }
+
+            $payload = $request->data();
+            $components = data_get($payload, 'template.components', []);
+
+            return data_get($payload, 'template.name') === 'event_reminder_2'
+                && data_get($components, '0.type') === 'header'
+                && data_get($components, '1.type') === 'body'
+                && count((array) data_get($components, '1.parameters', [])) === 6
+                && data_get($components, '2.type') === 'button'
+                && data_get($components, '2.sub_type') === 'url'
+                && data_get($components, '2.parameters.0.text') === 'knowing-your-customer-beyond-everybody';
+        });
+    }
+
+    public function test_process_outgoing_message_matches_template_defined_parameter_counts(): void
+    {
+        config([
+            'whatsapp.enabled' => true,
+            'whatsapp.queue' => false,
+            'whatsapp.base_url' => 'https://graph.facebook.com',
+            'whatsapp.graph_version' => 'v23.0',
+        ]);
+
+        WhatsAppAccount::create([
+            'business_name' => 'Meta WA',
+            'phone_number' => '233500444555',
+            'phone_number_id' => '123456789',
+            'waba_id' => '1122334455',
+            'access_token' => 'token-123',
+            'webhook_verify_token' => 'verify-123',
+            'status' => 'active',
+        ]);
+
+        Http::fake([
+            'https://graph.facebook.com/*' => Http::response([
+                'messages' => [
+                    ['id' => 'wamid.template.dynamic.1'],
+                ],
+            ], 200),
+        ]);
+
+        $contact = WhatsAppContact::create([
+            'name' => 'Template Receiver',
+            'phone' => '+233500999888',
+        ]);
+
+        $conversation = WhatsAppConversation::create([
+            'contact_id' => $contact->id,
+            'status' => 'open',
+        ]);
+
+        $template = \App\Models\WhatsAppTemplate::create([
+            'name' => 'event_reminder_2',
+            'category' => 'utility',
+            'language' => 'en',
+            'template_format' => 'json',
+            'template_json' => [
+                'components' => [
+                    [
+                        'type' => 'HEADER',
+                        'format' => 'TEXT',
+                        'text' => 'Upcoming Event {{1}}',
+                    ],
+                    [
+                        'type' => 'BODY',
+                        'text' => 'Hello {{1}}. Date {{2}} Time {{3}} Location {{4}} Link {{5}}',
+                    ],
+                    [
+                        'type' => 'BUTTONS',
+                        'buttons' => [
+                            [
+                                'type' => 'URL',
+                                'text' => 'View Event',
+                                'url' => 'https://p23africa.com/events/{{1}}',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'status' => 'approved',
+        ]);
+
+        $message = WhatsAppMessage::create([
+            'conversation_id' => $conversation->id,
+            'sender_type' => 'system',
+            'type' => 'template',
+            'status' => 'queued',
+            'payload' => [
+                'template_id' => $template->id,
+                'variables' => [
+                    'event_title' => 'Knowing Your Customer Beyond Everybody',
+                    'event_date' => 'June 3, 2026',
+                    'event_time' => '4:00 PM',
+                    'event_location' => 'Google Meet',
+                    'event_meeting_link' => 'https://meet.google.com/pqh-mehi-akj',
+                    'event_slug' => 'knowing-your-customer-beyond-everybody',
+                    'event_page_url' => 'https://p23africa.com/events/knowing-your-customer-beyond-everybody',
+                ],
+            ],
+        ]);
+
+        $processed = app(MessageService::class)->processOutgoingMessage($message);
+
+        $this->assertSame('sent', $processed->status);
+        $this->assertSame('wamid.template.dynamic.1', $processed->whatsapp_message_id);
+
+        Http::assertSent(function ($request) {
+            if (!str_contains($request->url(), '/messages')) {
+                return false;
+            }
+
+            $payload = $request->data();
+            $components = data_get($payload, 'template.components', []);
+
+            return data_get($payload, 'template.name') === 'event_reminder_2'
+                && data_get($components, '0.type') === 'header'
+                && count((array) data_get($components, '0.parameters', [])) === 1
+                && data_get($components, '1.type') === 'body'
+                && count((array) data_get($components, '1.parameters', [])) === 5
+                && data_get($components, '2.type') === 'button'
+                && data_get($components, '2.sub_type') === 'url'
+                && count((array) data_get($components, '2.parameters', [])) === 1;
+        });
+    }
+
+    public function test_event_reminder_fallback_payload_uses_five_body_parameters_not_six(): void
+    {
+        $service = app(\App\Services\WhatsApp\MetaTemplateParameterService::class);
+
+        $template = \App\Models\WhatsAppTemplate::create([
+            'name' => 'event_reminder_2',
+            'category' => 'utility',
+            'language' => 'en',
+            'template_format' => 'json',
+            'template_json' => ['components' => []],
+            'status' => 'approved',
+        ]);
+
+        $payload = $service->buildPayload($template, [
+            'event_title' => 'Knowing Your Customer Beyond Everybody',
+            'event_date' => 'June 3, 2026',
+            'event_time' => '4:00 PM',
+            'event_location' => 'Google Meet',
+            'event_meeting_link' => 'https://meet.google.com/pqh-mehi-akj',
+            'event_slug' => 'knowing-your-customer-beyond-everybody',
+            'event_page_url' => 'https://p23africa.com/events/knowing-your-customer-beyond-everybody',
+        ]);
+
+        $components = data_get($payload, 'components', []);
+
+        $this->assertSame('header', data_get($components, '0.type'));
+        $this->assertSame('body', data_get($components, '1.type'));
+        $this->assertCount(5, (array) data_get($components, '1.parameters', []));
+        $this->assertSame('button', data_get($components, '2.type'));
+        $this->assertSame('url', data_get($components, '2.sub_type'));
+    }
+
+    public function test_event_reminder_payload_prefers_meta_canonical_language_code(): void
+    {
+        $service = app(\App\Services\WhatsApp\MetaTemplateParameterService::class);
+
+        $template = \App\Models\WhatsAppTemplate::create([
+            'name' => 'event_reminder_2',
+            'category' => 'utility',
+            'language' => 'en',
+            'template_format' => 'json',
+            'template_json' => [
+                'language' => 'en_US',
+                'components' => [
+                    [
+                        'type' => 'HEADER',
+                        'format' => 'TEXT',
+                        'text' => 'Upcoming Event {{1}}',
+                    ],
+                    [
+                        'type' => 'BODY',
+                        'text' => 'Event Title: {{1}} Date: {{2}} Time: {{3}} Location: {{4}} Link: {{5}}',
+                    ],
+                    [
+                        'type' => 'BUTTONS',
+                        'buttons' => [
+                            [
+                                'type' => 'URL',
+                                'text' => 'Open Event',
+                                'url' => 'https://example.com/events/{{1}}',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'status' => 'approved',
+        ]);
+
+        // Ensure live template fetch does not override this test's local canonical language path.
+        Http::fake([
+            '*' => Http::response([], 500),
+        ]);
+
+        $payload = $service->buildPayload($template, [
+            'event_title' => 'Knowing Your Customer Beyond Everybody',
+            'event_date' => 'June 3, 2026',
+            'event_time' => '4:00 PM',
+            'event_location' => 'Google Meet',
+            'event_meeting_link' => 'https://meet.google.com/pqh-mehi-akj',
+            'event_slug' => 'knowing-your-customer-beyond-everybody',
+            'event_page_url' => 'https://p23africa.com/events/knowing-your-customer-beyond-everybody',
+        ]);
+
+        $this->assertSame('en_US', data_get($payload, 'language.code'));
+    }
+
+    public function test_event_broadcast_job_extracts_structured_meta_error_fields(): void
+    {
+        $job = new SendEventBroadcastJob(123, [1, 2, 3]);
+
+        $exceptionMessage = 'WhatsApp Cloud API request failed with status 400: '
+            . '{"error":{"message":"(#100) Invalid parameter","code":100,"type":"OAuthException","error_data":{"details":"Parameter name is missing or empty"},"fbtrace_id":"ABC123XYZ"}}'
+            . ' (truncated...)';
+
+        $method = new \ReflectionMethod(SendEventBroadcastJob::class, 'extractMetaApiError');
+        $method->setAccessible(true);
+
+        /** @var array<string,mixed> $metaError */
+        $metaError = $method->invoke($job, $exceptionMessage);
+
+        $this->assertSame(100, data_get($metaError, 'code'));
+        $this->assertSame('OAuthException', data_get($metaError, 'type'));
+        $this->assertSame('(#100) Invalid parameter', data_get($metaError, 'message'));
+        $this->assertSame('Parameter name is missing or empty', data_get($metaError, 'details'));
+        $this->assertSame('ABC123XYZ', data_get($metaError, 'fbtrace_id'));
+    }
+
+    public function test_event_reminder_named_parameter_format_includes_parameter_names(): void
+    {
+        $service = app(\App\Services\WhatsApp\MetaTemplateParameterService::class);
+
+        $template = \App\Models\WhatsAppTemplate::create([
+            'name' => 'event_reminder_2',
+            'category' => 'utility',
+            'language' => 'en',
+            'template_format' => 'json',
+            'template_json' => [
+                'language' => 'en',
+                'parameter_format' => 'NAMED',
+                'components' => [
+                    [
+                        'type' => 'HEADER',
+                        'text' => 'Upcoming Event {{event_title}}',
+                    ],
+                    [
+                        'type' => 'BODY',
+                        'text' => 'Event {{event_title}} on {{event_date}} at {{event_time}} in {{event_location}}',
+                    ],
+                    [
+                        'type' => 'BUTTONS',
+                        'buttons' => [
+                            [
+                                'type' => 'URL',
+                                'text' => 'Open Event',
+                                'url' => 'https://p23africa.com/events/{{event_slug}}',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'status' => 'approved',
+        ]);
+
+        Http::fake([
+            '*' => Http::response([], 500),
+        ]);
+
+        $payload = $service->buildPayload($template, [
+            'event_title' => 'Business Brunch Connect',
+            'event_date' => 'Mar 05, 2027',
+            'event_time' => '11:00 AM',
+            'event_location' => 'Abuja, Nigeria',
+            'event_meeting_link' => 'https://meet.example.com/room-12',
+            'event_slug' => 'business-brunch-connect',
+            'event_page_url' => 'https://p23africa.com/events/business-brunch-connect',
+        ]);
+
+        $components = (array) data_get($payload, 'components', []);
+
+        $this->assertSame('event_title', data_get($components, '0.parameters.0.parameter_name'));
+        $this->assertSame('event_title', data_get($components, '1.parameters.0.parameter_name'));
+        $this->assertSame('event_date', data_get($components, '1.parameters.1.parameter_name'));
+        $this->assertSame('event_time', data_get($components, '1.parameters.2.parameter_name'));
+        $this->assertSame('event_location', data_get($components, '1.parameters.3.parameter_name'));
+        $this->assertSame('event_slug', data_get($components, '2.parameters.0.parameter_name'));
+    }
+
+    public function test_meta_parameter_service_supports_new_event_reminder_templates(): void
+    {
+        $service = app(\App\Services\WhatsApp\MetaTemplateParameterService::class);
+
+        $latestTemplate = \App\Models\WhatsAppTemplate::create([
+            'name' => 'latest_event_reminder',
+            'category' => 'utility',
+            'language' => 'en',
+            'template_format' => 'json',
+            'template_json' => ['components' => []],
+            'status' => 'approved',
+        ]);
+
+        $finalTemplate = \App\Models\WhatsAppTemplate::create([
+            'name' => 'final_event_reminder',
+            'category' => 'utility',
+            'language' => 'en',
+            'template_format' => 'json',
+            'template_json' => ['components' => []],
+            'status' => 'approved',
+        ]);
+
+        $this->assertTrue($service->supportsTemplate($latestTemplate));
+        $this->assertTrue($service->supportsTemplate($finalTemplate));
+    }
+
+    public function test_latest_event_reminder_named_name_placeholder_uses_booking_name(): void
+    {
+        $service = app(\App\Services\WhatsApp\MetaTemplateParameterService::class);
+
+        $template = \App\Models\WhatsAppTemplate::create([
+            'name' => 'latest_event_reminder',
+            'category' => 'utility',
+            'language' => 'en',
+            'template_format' => 'json',
+            'template_json' => [
+                'language' => 'en',
+                'parameter_format' => 'NAMED',
+                'components' => [
+                    [
+                        'type' => 'HEADER',
+                        'text' => 'Hello {{name}},',
+                    ],
+                    [
+                        'type' => 'BODY',
+                        'text' => 'Event {{event_title}} on {{event_date}} at {{event_time}} in {{event_location}}. Link: {{event_meeting_link}}',
+                    ],
+                    [
+                        'type' => 'BUTTONS',
+                        'buttons' => [
+                            [
+                                'type' => 'URL',
+                                'text' => 'Open Event',
+                                'url' => 'https://p23africa.com/events/{{1}}',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'status' => 'approved',
+        ]);
+
+        Http::fake([
+            '*' => Http::response([], 500),
+        ]);
+
+        $payload = $service->buildPayload($template, [
+            'name' => 'John Mike',
+            'event_title' => 'Knowing Your Customer Beyond Everybody',
+            'event_date' => 'June 3, 2026',
+            'event_time' => '4:00 PM',
+            'event_location' => 'Google Meet',
+            'event_meeting_link' => 'https://meet.google.com/pqh-mehi-akj',
+            'event_slug' => 'knowing-your-customer-beyond-everybody',
+            'event_page_url' => 'https://p23africa.com/events/knowing-your-customer-beyond-everybody',
+        ]);
+
+        $components = (array) data_get($payload, 'components', []);
+
+        $this->assertSame('John Mike', data_get($components, '0.parameters.0.text'));
+        $this->assertSame('name', data_get($components, '0.parameters.0.parameter_name'));
+        $this->assertSame('knowing-your-customer-beyond-everybody', data_get($components, '2.parameters.0.text'));
+    }
+
+    public function test_sync_templates_command_supports_dry_run_and_real_sync(): void
+    {
+        config([
+            'whatsapp.template_sync.enabled' => true,
+            'whatsapp.template_sync.only_approved' => true,
+        ]);
+
+        $account = WhatsAppAccount::create([
+            'business_name' => 'Template Sync WA',
+            'phone_number' => '233500999111',
+            'phone_number_id' => '990011223344',
+            'waba_id' => '11220033445566',
+            'access_token' => 'meta-template-token',
+            'webhook_verify_token' => 'verify-template-token',
+            'status' => 'active',
+        ]);
+
+        Http::fake([
+            '*' => Http::response([
+                'data' => [
+                    [
+                        'name' => 'follow_up_template',
+                        'status' => 'APPROVED',
+                        'category' => 'UTILITY',
+                        'language' => 'en',
+                    ],
+                    [
+                        'name' => 'pending_template',
+                        'status' => 'PENDING',
+                        'category' => 'UTILITY',
+                        'language' => 'en',
+                    ],
+                ],
+            ], 200),
+        ]);
+
+        $dryRunCode = Artisan::call('whatsapp:sync-templates', [
+            '--account-id' => $account->id,
+            '--only-approved' => '1',
+            '--dry-run' => true,
+        ]);
+
+        $this->assertSame(0, $dryRunCode);
+        $this->assertDatabaseCount('whatsapp_templates', 0);
+
+        $syncCode = Artisan::call('whatsapp:sync-templates', [
+            '--account-id' => $account->id,
+            '--only-approved' => '1',
+        ]);
+
+        $this->assertSame(0, $syncCode);
+
+        $this->assertDatabaseHas('whatsapp_templates', [
+            'name' => 'follow_up_template',
+            'language' => 'en',
+            'status' => 'approved',
+        ]);
+
+        $this->assertDatabaseMissing('whatsapp_templates', [
+            'name' => 'pending_template',
+            'language' => 'en',
+        ]);
+    }
+
+    public function test_template_sync_command_is_registered_in_console_kernel(): void
+    {
+        $kernel = app(\App\Console\Kernel::class);
+        $commandsProperty = new \ReflectionProperty($kernel, 'commands');
+        $commandsProperty->setAccessible(true);
+
+        $registeredCommands = $commandsProperty->getValue($kernel);
+
+        $this->assertContains(\App\Console\Commands\SyncWhatsAppTemplatesCommand::class, $registeredCommands);
+    }
+
+    public function test_meta_profile_sync_controller_dispatches_template_sync_job_for_legacy_admin(): void
+    {
+        Queue::fake();
+
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
+        Role::findOrCreate('admin');
+
+        $admin = User::factory()->create([
+            'organization_id' => null,
+        ]);
+        $admin->assignRole('admin');
+        $this->be($admin);
+
+        $account = WhatsAppAccount::create([
+            'business_name' => 'Template Sync WA',
+            'phone_number' => '233500111333',
+            'phone_number_id' => '909988776655',
+            'waba_id' => '665544332211',
+            'access_token' => 'meta-template-token',
+            'webhook_verify_token' => 'verify-template-token',
+            'status' => 'active',
+        ]);
+
+        $response = app(MetaProfileSyncController::class)->syncTemplatesNow();
+
+        $this->assertSame(302, $response->getStatusCode());
+
+        Queue::assertPushed(SyncWhatsAppTemplatesJob::class, function (SyncWhatsAppTemplatesJob $job) use ($account) {
+            return $job->accountId === $account->id;
+        });
+    }
+
+    public function test_meta_profile_sync_controller_blocks_template_sync_for_non_legacy_admin(): void
+    {
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
+        Role::findOrCreate('admin');
+
+        $organization = Organization::query()->create([
+            'name' => 'Org Tenant',
+            'slug' => 'org-tenant',
+        ]);
+
+        $orgAdmin = User::factory()->create([
+            'organization_id' => $organization->id,
+        ]);
+        $orgAdmin->assignRole('admin');
+        $this->be($orgAdmin);
+
+        $this->expectException(AuthorizationException::class);
+
+        app(MetaProfileSyncController::class)->syncTemplatesNow();
     }
 }

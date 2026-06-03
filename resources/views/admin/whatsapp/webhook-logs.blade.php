@@ -51,6 +51,18 @@
                         </thead>
                         <tbody>
                             @forelse ($logs as $log)
+                                @php
+                                    $statusError = data_get($log->payload, 'entry.0.changes.0.value.statuses.0.errors.0')
+                                        ?? data_get($log->payload, 'entry.0.changes.0.value.errors.0');
+
+                                    $metaErrorCode = data_get($statusError, 'code');
+                                    $metaErrorTitle = data_get($statusError, 'title');
+                                    $metaErrorMessage = data_get($statusError, 'message') ?: data_get($statusError, 'error_data.details');
+
+                                    $resolvedError = $log->error_message
+                                        ?: ($metaErrorCode ? ('Code ' . $metaErrorCode . ($metaErrorTitle ? ' - ' . $metaErrorTitle : '')) : null)
+                                        ?: $metaErrorMessage;
+                                @endphp
                                 <tr>
                                     <td class="ps-3">#{{ $log->id }}</td>
                                     <td>{{ $log->event_type ?: '-' }}</td>
@@ -66,8 +78,7 @@
                                         </span>
                                     </td>
                                     <td>
-                                        <small
-                                            class="text-danger">{{ \Illuminate\Support\Str::limit($log->error_message, 50) }}</small>
+                                        <small class="text-danger">{{ \Illuminate\Support\Str::limit((string) $resolvedError, 80) }}</small>
                                     </td>
                                     <td>{{ optional($log->created_at)->format('Y-m-d H:i:s') }}</td>
                                     <td style="min-width:240px;">

@@ -26,6 +26,7 @@
                 'check.suspended' => \App\Http\Middleware\CheckSuspended::class,
                 'resolve.org' => \App\Http\Middleware\ResolveOrganization::class,
                 'legacy.analytics' => \App\Http\Middleware\EnsureLegacyAnalyticsAccess::class,
+                'legacy.whatsapp' => \App\Http\Middleware\EnsureLegacyWhatsAppAccess::class,
             ]);
 
             // $middleware->append(CheckSuspended::class);

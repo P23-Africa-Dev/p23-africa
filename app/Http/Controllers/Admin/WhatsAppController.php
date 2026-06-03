@@ -26,6 +26,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
@@ -103,7 +104,10 @@ class WhatsAppController extends Controller
             'filters' => $filters,
             'statuses' => WhatsAppConversation::statuses(),
             'assignees' => $conversationService->availableAssignees(),
-            'templates' => WhatsAppTemplate::query()->orderBy('name')->get(),
+            'templates' => WhatsAppTemplate::query()
+                ->where('status', WhatsAppTemplate::STATUS_APPROVED)
+                ->orderBy('name')
+                ->get(),
             'pollInterval' => (int) config('whatsapp.poll_interval', 5),
             'statusPollIntervalMs' => max(1500, (int) config('whatsapp.status_poll_interval_ms', 3000)),
             'historyPageSize' => $initialMessageLimit,
@@ -163,32 +167,56 @@ class WhatsAppController extends Controller
         $validated = $request->validate([
             'type' => ['required', 'string', 'in:text,image,video,document,audio,template,interactive'],
             'body' => ['nullable', 'string', 'max:4096'],
+            'template_id' => [
+                'nullable',
+                'integer',
+                Rule::exists('whatsapp_templates', 'id')->where(function ($query) {
+                    $query->where('status', WhatsAppTemplate::STATUS_APPROVED);
+                }),
+            ],
             'account_id' => ['nullable', 'integer', 'exists:whatsapp_accounts,id'],
         ]);
 
-        if ($validated['type'] !== 'text') {
-            return $this->response(
-                $request,
-                [
-                    'success' => false,
-                    'message' => 'Only text sending is enabled currently. Placeholder message types are prepared in architecture.',
-                ],
-                422,
-                'Only text sending is enabled currently. Placeholder message types are prepared in architecture.'
+        if ($validated['type'] === 'template') {
+            $templateId = (int) Arr::get($validated, 'template_id', 0);
+
+            if ($templateId <= 0) {
+                throw ValidationException::withMessages([
+                    'template_id' => 'Select an approved template to send.',
+                ]);
+            }
+
+            $message = $messageService->queueTemplateMessage(
+                $conversation,
+                (int) $request->user()->id,
+                $templateId,
+                Arr::get($validated, 'account_id')
+            );
+        } else {
+            if ($validated['type'] !== 'text') {
+                return $this->response(
+                    $request,
+                    [
+                        'success' => false,
+                        'message' => 'Only text and approved template sending are enabled currently.',
+                    ],
+                    422,
+                    'Only text and approved template sending are enabled currently.'
+                );
+            }
+
+            $body = trim((string) ($validated['body'] ?? ''));
+            if ($body === '') {
+                throw ValidationException::withMessages(['body' => 'Message body is required for text messages.']);
+            }
+
+            $message = $messageService->queueTextMessage(
+                $conversation,
+                (int) $request->user()->id,
+                $body,
+                Arr::get($validated, 'account_id')
             );
         }
-
-        $body = trim((string) ($validated['body'] ?? ''));
-        if ($body === '') {
-            throw ValidationException::withMessages(['body' => 'Message body is required for text messages.']);
-        }
-
-        $message = $messageService->queueTextMessage(
-            $conversation,
-            (int) $request->user()->id,
-            $body,
-            Arr::get($validated, 'account_id')
-        );
 
         return $this->response(
             $request,
@@ -464,10 +492,18 @@ class WhatsAppController extends Controller
             'server_time' => now()->toIso8601String(),
             'conversation_id' => $conversationId,
             'statuses' => $statusUpdates->map(static function (WhatsAppMessage $message) {
+                $statusError = data_get($message->payload, 'status_error.errors.0');
+
                 return [
                     'message_id' => $message->id,
                     'status' => $message->status,
                     'updated_at' => optional($message->status_updated_at ?: $message->updated_at)->toIso8601String(),
+                    'failure_reason' => $message->status === WhatsAppMessage::STATUS_FAILED ? [
+                        'code' => data_get($statusError, 'code'),
+                        'title' => data_get($statusError, 'title'),
+                        'message' => data_get($statusError, 'message'),
+                        'details' => data_get($statusError, 'error_data.details'),
+                    ] : null,
                 ];
             })->values(),
         ]);

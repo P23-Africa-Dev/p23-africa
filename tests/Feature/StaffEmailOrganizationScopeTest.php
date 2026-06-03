@@ -91,6 +91,22 @@ class StaffEmailOrganizationScopeTest extends TestCase
         $this->assertSame(1, User::where('organization_id', $orgB->id)->where('email', 'shared@example.com')->count());
     }
 
+    public function test_admin_staff_create_form_does_not_preselect_an_organization(): void
+    {
+        $orgA = $this->createOrganization('Org A');
+        $orgB = $this->createOrganization('Org B');
+        $admin = $this->createAdmin(null);
+
+        $this->actingAs($admin);
+
+        $view = app(StaffController::class)->create();
+        $html = preg_replace('/\s+/', ' ', $view->render()) ?? $view->render();
+
+        $this->assertStringContainsString('Leave as None to create a legacy user without an organization.', $html);
+        $this->assertStringNotContainsString('option value="' . $orgA->id . '" selected', $html);
+        $this->assertStringNotContainsString('option value="' . $orgB->id . '" selected', $html);
+    }
+
     private function createOrganization(string $name): Organization
     {
         return Organization::create([

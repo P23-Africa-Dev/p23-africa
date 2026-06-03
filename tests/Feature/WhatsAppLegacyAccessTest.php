@@ -98,4 +98,19 @@ class WhatsAppLegacyAccessTest extends TestCase
 
         app(EnsureLegacyWhatsAppAccess::class)->handle($request, fn() => new Response('OK', 200));
     }
+
+    public function test_legacy_user_does_not_crash_when_no_organization_record_exists(): void
+    {
+        $user = User::factory()->create([
+            'organization_id' => null,
+        ]);
+        $user->assignRole('admin');
+
+        $request = Request::create('/admin/whatsapp/conversations', 'GET');
+        $request->setUserResolver(fn() => $user);
+
+        $response = app(EnsureLegacyWhatsAppAccess::class)->handle($request, fn() => new Response('OK', 200));
+
+        $this->assertSame(200, $response->getStatusCode());
+    }
 }

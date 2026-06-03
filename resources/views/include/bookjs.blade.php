@@ -86,7 +86,7 @@
                         } else if (field === 'phone') {
                             fieldDiv.innerHTML = `
                             <div class="phone-input-group mb-4" style="display: flex; align-items: center; gap: 8px;">
-                                <select class="form-select country-code-select" id="countryCode_${field}" style="max-width: 120px; flex-shrink: 0;">
+                                <select class="form-select country-code-select" id="countryCode_${field}" style="max-width: 120px; flex-shrink: 0;" data-live-search="true" data-size="8" data-max-options="8">
                                     <option value="+1" data-flag="us">🇺🇸 +1</option>
                                     <option value="+1" data-flag="ca">🇨🇦 +1</option>
                                     <option value="+44" data-flag="gb" selected>🇬🇧 +44</option>
@@ -111,7 +111,7 @@
                                 <input type="tel" 
                                        name="${field}" 
                                        class="form-control phone-input" 
-                                       placeholder="Enter phone number" 
+                                       placeholder="Enter WhatsApp number" 
                                        style="flex: 1;"
                                        ${isRequired ? 'required' : ''}>
                             </div>
@@ -168,7 +168,7 @@
                     <option value="+33" data-flag="fr">🇫🇷 +33</option>
                     <option value="+49" data-flag="de">🇩🇪 +49</option>
                 </select>
-                <input type="tel" name="phone" class="form-control phone-input" placeholder="Enter phone number" style="flex: 1;" required>
+                <input type="tel" name="phone" class="form-control phone-input" placeholder="Enter WhatsApp number" style="flex: 1;" required>
             </div>
         `;
         }
