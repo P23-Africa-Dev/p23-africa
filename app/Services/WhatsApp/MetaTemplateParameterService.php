@@ -12,6 +12,7 @@ class MetaTemplateParameterService
     public const EVENT_REMINDER_TEMPLATE = 'event_reminder_2';
     public const LATEST_EVENT_REMINDER_TEMPLATE = 'latest_event_reminder';
     public const FINAL_EVENT_REMINDER_TEMPLATE = 'final_event_reminder';
+    public const EVENT_INVITATION_TEMPLATE = 'event_invitation';
 
     public function __construct(
         protected WhatsAppService $whatsAppService,
@@ -25,6 +26,7 @@ class MetaTemplateParameterService
             self::EVENT_REMINDER_TEMPLATE,
             self::LATEST_EVENT_REMINDER_TEMPLATE,
             self::FINAL_EVENT_REMINDER_TEMPLATE,
+            self::EVENT_INVITATION_TEMPLATE,
         ], true);
     }
 
@@ -39,7 +41,7 @@ class MetaTemplateParameterService
         $templateComponents = $this->resolveTemplateComponents($template);
         $parameterFormat = strtoupper(trim((string) Arr::get($template->template_json, 'parameter_format', '')));
         $useNamedParameters = $parameterFormat === 'NAMED';
-        $components = $this->buildDynamicComponents($templateComponents, $resolved, $useNamedParameters);
+        $components = $this->buildDynamicComponents((string) $template->name, $templateComponents, $resolved, $useNamedParameters);
 
         // Prefer Meta's canonical language code from synced template metadata
         // (e.g. en_US). Generic DB values like "en" can be rejected by Graph.
@@ -55,7 +57,7 @@ class MetaTemplateParameterService
                 'language' => $template->language,
                 'template_id' => $template->id,
             ]);
-            $components = $this->fallbackComponents($resolved);
+            $components = $this->fallbackComponents((string) $template->name, $resolved);
         }
 
         if ((bool) config('whatsapp.debug_logging', false)) {
@@ -134,6 +136,22 @@ class MetaTemplateParameterService
             ]));
         }
 
+        if ($templateName === self::EVENT_INVITATION_TEMPLATE) {
+            return trim(implode("\n", [
+                'Hello ' . $resolved['name'] . ',',
+                '',
+                'P23 Africa is excited to invite you to join our upcoming event. This is a great opportunity to connect, learn, and engage with like-minded professionals and industry leaders.',
+                '',
+                'Event: ' . $resolved['event_title'],
+                'Location: ' . $resolved['event_location'],
+                'Register Here: ' . $resolved['event_registration_link'],
+                '',
+                'Book a seat for FREE today and reserve your spot before seats fill up.',
+                'We look forward to seeing you there!',
+                '— P23 Africa',
+            ]));
+        }
+
         return trim(implode("\n", [
             'Upcoming Event ' . $resolved['event_title'],
             'This is a reminder for your upcoming event.',
@@ -152,10 +170,17 @@ class MetaTemplateParameterService
     public function normalizeVariables(array $variables): array
     {
         $eventPageUrl = trim((string) Arr::get($variables, 'event_page_url', ''));
+        $eventRegistrationLink = trim((string) Arr::get(
+            $variables,
+            'event_registration_link',
+            $eventPageUrl !== ''
+                ? $eventPageUrl
+                : Arr::get($variables, 'event_link', Arr::get($variables, 'event_meeting_link', Arr::get($variables, 'meeting_link', '')))
+        ));
         $eventSlug = trim((string) Arr::get($variables, 'event_slug', Arr::get($variables, 'event_url_param', '')));
 
-        if ($eventSlug === '' && $eventPageUrl !== '') {
-            $path = trim((string) parse_url($eventPageUrl, PHP_URL_PATH), '/');
+        if ($eventSlug === '' && $eventRegistrationLink !== '') {
+            $path = trim((string) parse_url($eventRegistrationLink, PHP_URL_PATH), '/');
             $segments = $path === '' ? [] : explode('/', $path);
             $eventSlug = (string) end($segments);
         }
@@ -167,12 +192,13 @@ class MetaTemplateParameterService
             'event_time' => trim((string) Arr::get($variables, 'event_time', '')),
             'event_location' => trim((string) Arr::get($variables, 'event_location', Arr::get($variables, 'location', ''))),
             'event_meeting_link' => trim((string) Arr::get($variables, 'event_meeting_link', Arr::get($variables, 'event_link', Arr::get($variables, 'meeting_link', '')))),
+            'event_registration_link' => $eventRegistrationLink,
             'event_slug' => $eventSlug,
-            'event_page_url' => $eventPageUrl,
+            'event_page_url' => $eventPageUrl !== '' ? $eventPageUrl : $eventRegistrationLink,
         ];
     }
 
-    protected function buildDynamicComponents(array $components, array $resolved, bool $useNamedParameters = false): array
+    protected function buildDynamicComponents(string $templateName, array $components, array $resolved, bool $useNamedParameters = false): array
     {
         if (empty($components)) {
             return [];
@@ -192,7 +218,7 @@ class MetaTemplateParameterService
                 if (!empty($tokens)) {
                     $built[] = [
                         'type' => 'header',
-                        'parameters' => $this->buildTemplateParameters($this->headerValuePool($resolved), $tokens, $resolved, $useNamedParameters),
+                        'parameters' => $this->buildTemplateParameters($this->headerValuePool($resolved, $templateName), $tokens, $resolved, $useNamedParameters),
                     ];
                 }
                 continue;
@@ -203,7 +229,7 @@ class MetaTemplateParameterService
                 if (!empty($tokens)) {
                     $built[] = [
                         'type' => 'body',
-                        'parameters' => $this->buildTemplateParameters($this->bodyValuePool($resolved), $tokens, $resolved, $useNamedParameters),
+                        'parameters' => $this->buildTemplateParameters($this->bodyValuePool($resolved, $templateName), $tokens, $resolved, $useNamedParameters),
                     ];
                 }
                 continue;
@@ -216,7 +242,7 @@ class MetaTemplateParameterService
                         'type' => 'button',
                         'sub_type' => strtolower((string) Arr::get($component, 'sub_type', 'url')),
                         'index' => (string) Arr::get($component, 'index', '0'),
-                        'parameters' => $this->buildTemplateParameters($this->buttonValuePool($resolved), $tokens, $resolved, $useNamedParameters),
+                        'parameters' => $this->buildTemplateParameters($this->buttonValuePool($resolved, $templateName), $tokens, $resolved, $useNamedParameters),
                     ];
                 }
                 continue;
@@ -245,7 +271,7 @@ class MetaTemplateParameterService
                         'type' => 'button',
                         'sub_type' => $subType === '' ? 'url' : $subType,
                         'index' => (string) $index,
-                        'parameters' => $this->buildTemplateParameters($this->buttonValuePool($resolved), $tokens, $resolved, $useNamedParameters),
+                        'parameters' => $this->buildTemplateParameters($this->buttonValuePool($resolved, $templateName), $tokens, $resolved, $useNamedParameters),
                     ];
                 }
             }
@@ -254,8 +280,50 @@ class MetaTemplateParameterService
         return $built;
     }
 
-    protected function fallbackComponents(array $resolved): array
+    protected function fallbackComponents(string $templateName, array $resolved): array
     {
+        if (strtolower(trim($templateName)) === self::EVENT_INVITATION_TEMPLATE) {
+            return [
+                [
+                    'type' => 'header',
+                    'parameters' => [
+                        [
+                            'type' => 'text',
+                            'text' => $resolved['name'],
+                        ],
+                    ],
+                ],
+                [
+                    'type' => 'body',
+                    'parameters' => [
+                        [
+                            'type' => 'text',
+                            'text' => $resolved['event_title'],
+                        ],
+                        [
+                            'type' => 'text',
+                            'text' => $resolved['event_location'],
+                        ],
+                        [
+                            'type' => 'text',
+                            'text' => $resolved['event_registration_link'],
+                        ],
+                    ],
+                ],
+                [
+                    'type' => 'button',
+                    'sub_type' => 'url',
+                    'index' => '0',
+                    'parameters' => [
+                        [
+                            'type' => 'text',
+                            'text' => $resolved['event_slug'],
+                        ],
+                    ],
+                ],
+            ];
+        }
+
         // Conservative fallback for legacy local templates that do not have
         // synchronized Meta component definitions in template_json.
         return [
@@ -411,8 +479,12 @@ class MetaTemplateParameterService
         return strtok($a, '_') === strtok($b, '_');
     }
 
-    protected function headerValuePool(array $resolved): array
+    protected function headerValuePool(array $resolved, string $templateName = ''): array
     {
+        if (strtolower(trim($templateName)) === self::EVENT_INVITATION_TEMPLATE) {
+            return [$resolved['name']];
+        }
+
         return [
             $resolved['name'],
             $resolved['event_title'],
@@ -424,8 +496,16 @@ class MetaTemplateParameterService
         ];
     }
 
-    protected function bodyValuePool(array $resolved): array
+    protected function bodyValuePool(array $resolved, string $templateName = ''): array
     {
+        if (strtolower(trim($templateName)) === self::EVENT_INVITATION_TEMPLATE) {
+            return [
+                $resolved['event_title'],
+                $resolved['event_location'],
+                $resolved['event_registration_link'],
+            ];
+        }
+
         return [
             $resolved['name'],
             $resolved['event_title'],
@@ -439,8 +519,16 @@ class MetaTemplateParameterService
         ];
     }
 
-    protected function buttonValuePool(array $resolved): array
+    protected function buttonValuePool(array $resolved, string $templateName = ''): array
     {
+        if (strtolower(trim($templateName)) === self::EVENT_INVITATION_TEMPLATE) {
+            return [
+                $resolved['event_slug'],
+                $resolved['event_registration_link'],
+                $resolved['event_page_url'],
+            ];
+        }
+
         return [
             $resolved['event_slug'],
             $resolved['event_page_url'],
@@ -525,6 +613,9 @@ class MetaTemplateParameterService
             'event_link' => 'event_meeting_link',
             'meeting_link' => 'event_meeting_link',
             'link' => 'event_meeting_link',
+            'event_registration_link' => 'event_registration_link',
+            'registration_link' => 'event_registration_link',
+            'register_link' => 'event_registration_link',
             'slug' => 'event_slug',
             'event_url_param' => 'event_slug',
             'url' => 'event_page_url',

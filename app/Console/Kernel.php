@@ -31,10 +31,10 @@ class Kernel extends ConsoleKernel
         }
 
         if ((bool) config('whatsapp.template_sync.enabled', true)) {
-            $onlyApproved = (bool) config('whatsapp.template_sync.only_approved', true);
+            $onlyApproved = (bool) config('whatsapp.template_sync.only_approved', false);
 
             $schedule->command('whatsapp:sync-templates --only-approved=' . ($onlyApproved ? '1' : '0'))
-                ->everySixHours()
+                ->everyFifteenMinutes()
                 ->timezone(config('app.timezone'))
                 ->withoutOverlapping()
                 ->appendOutputTo(storage_path('logs/whatsapp-template-sync.log'));

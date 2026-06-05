@@ -25,10 +25,11 @@
         <div class="card mb-3">
             <div class="card-body">
                 <form method="GET" action="{{ orgRoute('admin.whatsapp.events.contacts') }}"
-                    class="row g-2 align-items-end">
+                    class="row g-2 align-items-end" id="eventAudienceFilterForm" data-event-audience-filter-form>
                     <div class="col-12 col-md-3">
                         <label class="form-label">Event Filter</label>
-                        <select name="event_filter" class="form-select form-select-sm">
+                        <select name="event_filter" class="form-select form-select-sm" id="eventFilterSelect"
+                            data-event-filter>
                             @foreach ($eventFilterOptions as $option)
                                 <option value="{{ $option }}"
                                     {{ ($filters['event_filter'] ?? '') === $option ? 'selected' : '' }}>
@@ -39,7 +40,8 @@
                     </div>
                     <div class="col-12 col-md-4">
                         <label class="form-label">Single Event</label>
-                        <select name="event_id" class="form-select form-select-sm">
+                        <select name="event_id" class="form-select form-select-sm" id="singleEventSelect"
+                            data-single-event>
                             <option value="">Select event</option>
                             @foreach ($events as $event)
                                 <option value="{{ $event->id }}"
@@ -52,11 +54,11 @@
                     <div class="col-12 col-md-5">
                         <label class="form-label">Search Audience</label>
                         <input type="text" class="form-control form-control-sm" name="search"
-                            value="{{ $search }}"
+                            value="{{ $search }}" data-audience-search
                             placeholder="Search attendee name, phone, email, event or seat code">
                     </div>
                     <div class="col-12 d-flex gap-2">
-                        <button class="btn btn-sm btn-success" type="submit">Apply</button>
+                        <button class="btn btn-sm btn-success" type="submit" data-apply-filter>Apply</button>
                         <a href="{{ orgRoute('admin.whatsapp.events.contacts') }}"
                             class="btn btn-sm btn-outline-secondary">Reset</a>
                         <a href="{{ orgRoute('admin.whatsapp.events.broadcast', [
@@ -169,4 +171,59 @@
             <div class="card-footer">{{ $audience->links() }}</div>
         </div>
     </div>
+
+    @push('scripts')
+        <script>
+            (function() {
+                const form = document.querySelector('[data-event-audience-filter-form]');
+                if (!form) return;
+
+                const filter = form.querySelector('[data-event-filter]');
+                const singleEvent = form.querySelector('[data-single-event]');
+                const search = form.querySelector('[data-audience-search]');
+                let searchTimer = null;
+
+                const syncSingleEventState = () => {
+                    const isSingle = (filter?.value || '') === 'single';
+                    if (!singleEvent) return;
+
+                    singleEvent.disabled = !isSingle;
+                    if (!isSingle) {
+                        singleEvent.value = '';
+                    }
+                };
+
+                const submitForm = () => {
+                    if (form.dataset.submitting === '1') return;
+                    form.dataset.submitting = '1';
+                    form.requestSubmit();
+                };
+
+                filter?.addEventListener('change', () => {
+                    syncSingleEventState();
+                    submitForm();
+                });
+
+                singleEvent?.addEventListener('change', () => {
+                    if (filter && filter.value !== 'single') {
+                        filter.value = 'single';
+                    }
+                    syncSingleEventState();
+                    submitForm();
+                });
+
+                search?.addEventListener('input', () => {
+                    if (searchTimer) {
+                        clearTimeout(searchTimer);
+                    }
+
+                    searchTimer = setTimeout(() => {
+                        submitForm();
+                    }, 450);
+                });
+
+                syncSingleEventState();
+            })();
+        </script>
+    @endpush
 </x-app-layout>

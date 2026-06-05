@@ -555,11 +555,43 @@ class WhatsAppController extends Controller
                 'phone',
                 'booking_date',
             ],
-            'statuses' => [
-                WhatsAppTemplate::STATUS_DRAFT,
-                WhatsAppTemplate::STATUS_PENDING,
-                WhatsAppTemplate::STATUS_APPROVED,
-                WhatsAppTemplate::STATUS_REJECTED,
+        ]);
+    }
+
+    public function templateStatusPoll(Request $request): JsonResponse
+    {
+        $this->authorize('whatsapp.view');
+
+        $validated = $request->validate([
+            'ids' => ['nullable', 'array'],
+            'ids.*' => ['integer', 'exists:whatsapp_templates,id'],
+        ]);
+
+        $ids = array_values(array_filter(array_map('intval', (array) Arr::get($validated, 'ids', []))));
+
+        $query = WhatsAppTemplate::query()
+            ->select(['id', 'name', 'status', 'language', 'updated_at'])
+            ->orderByDesc('updated_at');
+
+        if (!empty($ids)) {
+            $query->whereIn('id', $ids);
+        }
+
+        $templates = $query->limit(200)->get()->map(static function (WhatsAppTemplate $template): array {
+            return [
+                'id' => $template->id,
+                'name' => $template->name,
+                'status' => $template->status,
+                'language' => $template->language,
+                'updated_at' => optional($template->updated_at)->toIso8601String(),
+            ];
+        })->values()->all();
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'templates' => $templates,
+                'server_time' => now()->toIso8601String(),
             ],
         ]);
     }
@@ -575,7 +607,6 @@ class WhatsAppController extends Controller
             'name' => ['required', 'string', 'max:120'],
             'category' => ['required', 'string', 'max:80'],
             'language' => ['required', 'string', 'max:20'],
-            'status' => ['required', 'string', 'in:draft,pending,approved,rejected'],
             'template_format' => ['required', 'string', 'in:json,rich_text,html'],
             'template_json' => ['nullable'],
             'rich_text_content' => ['nullable', 'string'],
@@ -583,13 +614,18 @@ class WhatsAppController extends Controller
             'editor_metadata' => ['nullable'],
         ]);
 
+        $existingTemplate = WhatsAppTemplate::query()
+            ->where('name', $validated['name'])
+            ->where('language', $validated['language'])
+            ->first();
+
         $templatePayload = $this->prepareTemplatePayload($validated, $rendererService);
 
         $templateService->createOrUpdate([
             'name' => $validated['name'],
             'category' => $validated['category'],
             'language' => $validated['language'],
-            'status' => $validated['status'],
+            'status' => $existingTemplate?->status ?? WhatsAppTemplate::STATUS_DRAFT,
             'template_format' => $templatePayload['template_format'],
             'template_json' => $templatePayload['template_json'],
             'rendered_content' => $templatePayload['rendered_content'],
@@ -612,7 +648,6 @@ class WhatsAppController extends Controller
             'name' => ['required', 'string', 'max:120'],
             'category' => ['required', 'string', 'max:80'],
             'language' => ['required', 'string', 'max:20'],
-            'status' => ['required', 'string', 'in:draft,pending,approved,rejected'],
             'template_format' => ['required', 'string', 'in:json,rich_text,html'],
             'template_json' => ['nullable'],
             'rich_text_content' => ['nullable', 'string'],
@@ -626,7 +661,6 @@ class WhatsAppController extends Controller
             'name' => $validated['name'],
             'category' => $validated['category'],
             'language' => $validated['language'],
-            'status' => $validated['status'],
             'template_format' => $templatePayload['template_format'],
             'template_json' => $templatePayload['template_json'],
             'rendered_content' => $templatePayload['rendered_content'],

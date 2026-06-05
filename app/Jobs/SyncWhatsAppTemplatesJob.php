@@ -25,7 +25,7 @@ class SyncWhatsAppTemplatesJob implements ShouldQueue
     {
         $syncService->syncTemplates(
             $this->accountId,
-            (bool) config('whatsapp.template_sync.only_approved', true),
+            (bool) config('whatsapp.template_sync.only_approved', false),
             false,
             (int) config('whatsapp.template_sync.page_limit', 100),
         );

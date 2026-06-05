@@ -22,7 +22,7 @@ return [
 
     'template_sync' => [
         'enabled' => (bool) env('WHATSAPP_TEMPLATE_SYNC_ENABLED', true),
-        'only_approved' => (bool) env('WHATSAPP_TEMPLATE_SYNC_ONLY_APPROVED', true),
+        'only_approved' => (bool) env('WHATSAPP_TEMPLATE_SYNC_ONLY_APPROVED', false),
         'page_limit' => (int) env('WHATSAPP_TEMPLATE_SYNC_PAGE_LIMIT', 100),
     ],
 

@@ -95,6 +95,32 @@ class EventWhatsAppService
         return $campaign;
     }
 
+    public function previewAudienceCount(array $payload): array
+    {
+        $sourceType = strtolower((string) Arr::get($payload, 'source_type', 'event_contacts'));
+
+        $audience = match ($sourceType) {
+            'saved_contacts' => $this->savedContactsAudience($payload),
+            'manual_contacts' => $this->manualAudience($payload),
+            default => $this->eventAudience($payload),
+        };
+
+        $eventCount = $sourceType === 'event_contacts'
+            ? $audience->pluck('variables.event_title')->filter()->unique()->count()
+            : 0;
+
+        $selectedCount = $sourceType === 'saved_contacts'
+            ? count(array_values(array_filter(array_map('intval', (array) Arr::get($payload, 'saved_contact_ids', [])))))
+            : null;
+
+        return [
+            'total' => $audience->count(),
+            'source_type' => $sourceType,
+            'event_count' => $eventCount,
+            'selected_count' => $selectedCount,
+        ];
+    }
+
     public function previewTemplateForAudience(array $payload, int $limit = 5): array
     {
         $this->assertInteractiveAccess();
@@ -170,6 +196,7 @@ class EventWhatsAppService
                     'event_time' => Arr::get($row, 'event_time', ''),
                     'event_location' => Arr::get($row, 'location'),
                     'event_meeting_link' => Arr::get($row, 'event_link', Arr::get($row, 'event_page_url', '')),
+                    'event_registration_link' => Arr::get($row, 'event_page_url', Arr::get($row, 'event_link', '')),
                     'event_slug' => Arr::get($row, 'event_slug', ''),
                     'event_page_url' => Arr::get($row, 'event_page_url', ''),
                     'location' => Arr::get($row, 'location'),
@@ -190,15 +217,27 @@ class EventWhatsAppService
 
         $query = WhatsAppContact::query()
             ->whereNotNull('phone')
-            ->where('phone', '!=', '')
-            ->where('validation_status', WhatsAppNumberValidationService::STATUS_VALID)
-            ->where(function ($sub) {
-                $sub->whereNull('validation_cache_until')
-                    ->orWhere('validation_cache_until', '>=', now());
-            });
+            ->where('phone', '!=', '');
 
         if (!empty($ids)) {
-            $query->whereIn('id', $ids);
+            $query->whereIn('id', $ids)
+                ->where(function ($statusQuery) {
+                    $statusQuery->whereNull('validation_status')
+                        ->orWhere('validation_status', '!=', WhatsAppNumberValidationService::STATUS_INVALID);
+                });
+        } else {
+            $query->where(function ($statusQuery) {
+                $statusQuery->where(function ($validQuery) {
+                    $validQuery->where('validation_status', WhatsAppNumberValidationService::STATUS_VALID)
+                        ->where(function ($cacheQuery) {
+                            $cacheQuery->whereNull('validation_cache_until')
+                                ->orWhere('validation_cache_until', '>=', now());
+                        });
+                })->orWhereIn('validation_status', [
+                    WhatsAppNumberValidationService::STATUS_PENDING,
+                    WhatsAppNumberValidationService::STATUS_FAILED,
+                ])->orWhereNull('validation_status');
+            });
         }
 
         $seen = [];
@@ -226,6 +265,7 @@ class EventWhatsAppService
                     'event_time' => '',
                     'event_location' => '',
                     'event_meeting_link' => '',
+                    'event_registration_link' => '',
                     'event_slug' => '',
                     'event_page_url' => '',
                     'location' => '',
@@ -264,7 +304,7 @@ class EventWhatsAppService
                 continue;
             }
 
-            if (($validation['validation_status'] ?? null) !== WhatsAppNumberValidationService::STATUS_VALID) {
+            if (($validation['validation_status'] ?? null) === WhatsAppNumberValidationService::STATUS_INVALID) {
                 continue;
             }
 
@@ -292,6 +332,7 @@ class EventWhatsAppService
                     'event_time' => '',
                     'event_location' => '',
                     'event_meeting_link' => '',
+                    'event_registration_link' => '',
                     'event_slug' => '',
                     'event_page_url' => '',
                     'location' => '',

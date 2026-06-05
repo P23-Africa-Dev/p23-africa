@@ -588,6 +588,7 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
         Route::post('/conversations/{conversation}/notes', [\App\Http\Controllers\Admin\WhatsAppController::class, 'addNote'])->name('notes.store');
         Route::post('/conversations/{conversation}/mark-read', [\App\Http\Controllers\Admin\WhatsAppController::class, 'markRead'])->name('conversations.mark-read');
         Route::get('/templates', [\App\Http\Controllers\Admin\WhatsAppController::class, 'templates'])->name('templates');
+        Route::get('/templates/status-poll', [\App\Http\Controllers\Admin\WhatsAppController::class, 'templateStatusPoll'])->name('templates.status-poll');
         Route::post('/templates', [\App\Http\Controllers\Admin\WhatsAppController::class, 'storeTemplate'])->name('templates.store');
         Route::put('/templates/{template}', [\App\Http\Controllers\Admin\WhatsAppController::class, 'updateTemplate'])->name('templates.update');
         Route::get('/contacts', [\App\Http\Controllers\Admin\WhatsAppController::class, 'contacts'])->name('contacts');
@@ -596,9 +597,11 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
         Route::delete('/contacts/{contact}', [\App\Http\Controllers\Admin\WhatsAppController::class, 'destroyContact'])->name('contacts.destroy');
         Route::get('/events/contacts', [\App\Http\Controllers\Admin\EventCampaignController::class, 'eventContacts'])->name('events.contacts');
         Route::get('/events/broadcast', [\App\Http\Controllers\Admin\EventCampaignController::class, 'eventBroadcast'])->name('events.broadcast');
+        Route::post('/events/audience-count', [\App\Http\Controllers\Admin\EventCampaignController::class, 'audienceCount'])->name('events.audience-count');
         Route::post('/events/audience-preview', [\App\Http\Controllers\Admin\EventCampaignController::class, 'audiencePreview'])->name('events.audience-preview');
         Route::post('/events/send-broadcast', [\App\Http\Controllers\Admin\EventCampaignController::class, 'sendBroadcast'])->name('events.send-broadcast');
         Route::get('/events/campaign-history', [\App\Http\Controllers\Admin\EventCampaignController::class, 'campaignHistory'])->name('events.campaign-history');
+        Route::post('/templates/submit-to-meta', [\App\Http\Controllers\Admin\EventCampaignController::class, 'submitTemplateToMeta'])->name('templates.submit-to-meta');
         Route::post('/quick-chat/validate', [\App\Http\Controllers\Admin\QuickChatController::class, 'validateNumber'])->name('quick-chat.validate');
         Route::post('/quick-chat/start', [\App\Http\Controllers\Admin\QuickChatController::class, 'start'])->name('quick-chat.start');
         Route::post('/quick-chat/save-contact', [\App\Http\Controllers\Admin\QuickChatController::class, 'saveContact'])->name('quick-chat.save-contact');

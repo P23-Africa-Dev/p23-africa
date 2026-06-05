@@ -14,7 +14,7 @@ class MetaTemplateSyncService
         protected TemplateService $templateService,
     ) {}
 
-    public function syncTemplates(?int $accountId = null, bool $onlyApproved = true, bool $dryRun = false, int $limit = 100): array
+    public function syncTemplates(?int $accountId = null, bool $onlyApproved = false, bool $dryRun = false, int $limit = 100): array
     {
         $limit = max(1, min($limit ?: (int) config('whatsapp.template_sync.page_limit', 100), 100));
 

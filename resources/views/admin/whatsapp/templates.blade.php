@@ -87,21 +87,10 @@
                             </div>
 
                             <div class="row g-2 mt-1">
-                                <div class="col-12 col-md-6">
+                                <div class="col-12">
                                     <label class="form-label">Language</label>
                                     <input type="text" name="language" class="form-control" placeholder="en"
                                         value="{{ old('language', 'en') }}" required>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <label class="form-label">Status</label>
-                                    <select name="status" class="form-select" required>
-                                        @foreach ($statuses as $status)
-                                            <option value="{{ $status }}"
-                                                {{ old('status', 'draft') === $status ? 'selected' : '' }}>
-                                                {{ ucfirst($status) }}
-                                            </option>
-                                        @endforeach
-                                    </select>
                                 </div>
                             </div>
 
@@ -158,6 +147,29 @@
 
                             <button class="btn btn-success w-100" type="submit">Save Template</button>
                         </form>
+
+                        {{-- ── Submit to Meta for approval ─────────────────── --}}
+                        <div class="mt-3 border-top pt-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="fw-semibold small">Submit to Meta for Approval</span>
+                                <span class="badge bg-info text-dark">Requires JSON format with
+                                    HEADER/BODY/BUTTONS</span>
+                            </div>
+                            <p class="small text-muted mb-2">
+                                This will send the template you just built above directly to Meta.
+                                New submissions keep the same name. Updates are submitted as a revision
+                                (<code>_v2</code>, <code>_v3</code>, ...), because Meta reviews updated templates as
+                                new versions.
+                            </p>
+                            <button type="button" class="btn btn-sm btn-primary w-100" id="submitToMetaBtn">
+                                Submit New Template to Meta
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-primary w-100 mt-2"
+                                id="updateTemplateToMetaBtn">
+                                Submit Template Update to Meta (New Revision)
+                            </button>
+                            <div id="submitToMetaResult" class="mt-2 small d-none"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -187,16 +199,17 @@
                                         <th class="pe-3 text-end">Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="templatesTableBody">
                                     @forelse ($templates as $template)
-                                        <tr>
+                                        <tr data-template-id="{{ $template->id }}">
                                             <td class="ps-3">
                                                 <div class="fw-semibold">{{ $template->name }}</div>
                                                 <small class="text-muted">{{ $template->category }} |
                                                     {{ $template->language }}</small>
                                             </td>
                                             <td>
-                                                <span
+                                                <span data-template-status-badge
+                                                    data-template-status="{{ $template->status }}"
                                                     class="badge {{ $template->status === 'approved' ? 'bg-success' : ($template->status === 'rejected' ? 'bg-danger' : ($template->status === 'pending' ? 'bg-warning text-dark' : 'bg-secondary')) }}">{{ ucfirst($template->status) }}</span>
                                             </td>
                                             <td>
@@ -217,7 +230,7 @@
                                                     </div>
                                                 </details>
                                             </td>
-                                            <td class="pe-3 text-end" style="min-width: 260px;">
+                                            <td class="pe-3 text-end" style="min-width: 220px;">
                                                 <form method="POST"
                                                     action="{{ orgRoute('admin.whatsapp.templates.update', ['template' => $template->id]) }}"
                                                     class="d-inline-flex gap-1">
@@ -239,16 +252,15 @@
                                                         value="{{ $template->template_format === 'html' ? $template->editor_metadata['source_content'] ?? ($template->rendered_content ?? '') : '' }}">
                                                     <input type="hidden" name="editor_metadata"
                                                         value='@json($template->editor_metadata ?? [])'>
-                                                    <select name="status" class="form-select form-select-sm"
-                                                        style="width:130px;">
-                                                        @foreach ($statuses as $status)
-                                                            <option value="{{ $status }}"
-                                                                {{ $template->status === $status ? 'selected' : '' }}>
-                                                                {{ ucfirst($status) }}</option>
-                                                        @endforeach
-                                                    </select>
                                                     <button class="btn btn-sm btn-outline-success"
                                                         type="submit">Update</button>
+                                                </form>
+                                                <form method="POST"
+                                                    action="{{ orgRoute('admin.whatsapp.templates.sync') }}"
+                                                    class="d-inline">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-sm btn-outline-info"
+                                                        title="Re-sync this template status from Meta">↺ Sync</button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -330,20 +342,15 @@
 
     @push('scripts')
         <script>
-            // Fallback for format switching in case dynamic module load is stale/cached.
+            // Keep template format switching resilient to stale script bundles.
             (function() {
                 const root = document.querySelector('[data-wa-template-builder]');
-                if (!root) {
-                    return;
-                }
+                if (!root) return;
 
                 const formatInput = root.querySelector('[data-template-format-input]');
                 const formatButtons = Array.from(root.querySelectorAll('[data-format-switch]'));
                 const formatPanes = Array.from(root.querySelectorAll('[data-format-pane]'));
-
-                if (!formatInput || formatButtons.length === 0 || formatPanes.length === 0) {
-                    return;
-                }
+                if (!formatInput || formatButtons.length === 0 || formatPanes.length === 0) return;
 
                 const switchFormat = (format) => {
                     formatInput.value = format;
@@ -371,6 +378,217 @@
                 });
 
                 switchFormat(formatInput.value || 'json');
+            })();
+        </script>
+
+        <script>
+            (function() {
+                const CSRF = document.querySelector('meta[name="csrf-token"]')?.content ?? '';
+                const SUBMIT_URL = @json(orgRoute('admin.whatsapp.templates.submit-to-meta'));
+                const STATUS_POLL_URL = @json(orgRoute('admin.whatsapp.templates.status-poll'));
+                const root = document.querySelector('[data-wa-template-builder]');
+                const submitBtn = document.getElementById('submitToMetaBtn');
+                const updateBtn = document.getElementById('updateTemplateToMetaBtn');
+                const resultDiv = document.getElementById('submitToMetaResult');
+
+                if (!root) return;
+
+                const getStatusClass = (status) => {
+                    const value = String(status || '').toLowerCase();
+                    if (value === 'approved') return 'bg-success';
+                    if (value === 'rejected') return 'bg-danger';
+                    if (value === 'pending') return 'bg-warning text-dark';
+                    return 'bg-secondary';
+                };
+
+                const showToast = (message, kind = 'success') => {
+                    let host = document.getElementById('templateToastHost');
+                    if (!host) {
+                        host = document.createElement('div');
+                        host.id = 'templateToastHost';
+                        host.style.position = 'fixed';
+                        host.style.top = '1rem';
+                        host.style.right = '1rem';
+                        host.style.zIndex = '1080';
+                        document.body.appendChild(host);
+                    }
+
+                    const alert = document.createElement('div');
+                    alert.className =
+                        `alert alert-${kind === 'success' ? 'success' : 'danger'} shadow-sm py-2 px-3 mb-2`;
+                    alert.style.minWidth = '280px';
+                    alert.textContent = message;
+                    host.appendChild(alert);
+
+                    window.setTimeout(() => {
+                        alert.remove();
+                    }, 2800);
+                };
+
+                const pollStatuses = async () => {
+                    const rows = Array.from(document.querySelectorAll('tr[data-template-id]'));
+                    if (!rows.length) return;
+
+                    const ids = rows
+                        .map((row) => Number(row.getAttribute('data-template-id')))
+                        .filter((id) => Number.isFinite(id) && id > 0);
+
+                    if (!ids.length) return;
+
+                    const query = ids.map((id) => `ids[]=${encodeURIComponent(id)}`).join('&');
+
+                    try {
+                        const res = await fetch(`${STATUS_POLL_URL}?${query}`, {
+                            method: 'GET',
+                            headers: {
+                                Accept: 'application/json',
+                            },
+                        });
+
+                        const json = await res.json();
+                        if (!res.ok || !json.success) return;
+
+                        const templates = Array.isArray(json.data?.templates) ? json.data.templates : [];
+                        const statusMap = new Map(templates.map((template) => [Number(template.id), String(template
+                            .status || '')]));
+
+                        rows.forEach((row) => {
+                            const id = Number(row.getAttribute('data-template-id'));
+                            if (!statusMap.has(id)) return;
+
+                            const status = statusMap.get(id);
+                            const badge = row.querySelector('[data-template-status-badge]');
+                            if (!badge) return;
+
+                            const oldStatus = String(badge.getAttribute('data-template-status') || '')
+                                .toLowerCase();
+                            const nextStatus = String(status || '').toLowerCase();
+
+                            if (oldStatus === nextStatus) return;
+
+                            badge.setAttribute('data-template-status', nextStatus);
+                            badge.className = `badge ${getStatusClass(nextStatus)}`;
+                            badge.textContent = nextStatus ?
+                                `${nextStatus.charAt(0).toUpperCase()}${nextStatus.slice(1)}` : 'Unknown';
+                        });
+                    } catch (_) {
+                        // Silent fail for polling; page remains usable.
+                    }
+                };
+
+                const submitToMeta = async (mode = 'create') => {
+                    const name = root.querySelector('input[name="name"]')?.value?.trim() ?? '';
+                    const category = (root.querySelector('input[name="category"]')?.value ?? 'utility').trim()
+                        .toUpperCase();
+                    const language = (root.querySelector('input[name="language"]')?.value ?? 'en').trim();
+                    const jsonEditor = root.querySelector('textarea[name="template_json"]') ?? root
+                        .querySelector('[data-json-editor]');
+
+                    if (!name) {
+                        showToast('Enter a template name first.', 'danger');
+                        return;
+                    }
+
+                    let components = [];
+                    try {
+                        const raw = (jsonEditor?.value ?? '').trim();
+                        const parsed = raw ? JSON.parse(raw) : {};
+                        components = Array.isArray(parsed.components) ? parsed.components : [];
+                    } catch (_) {
+                        showToast('Template JSON is invalid. Fix it before submitting.', 'danger');
+                        return;
+                    }
+
+                    if (!components.length) {
+                        showToast('Template JSON must include at least one component.', 'danger');
+                        return;
+                    }
+
+                    const activeBtn = mode === 'update' ? updateBtn : submitBtn;
+                    const inactiveBtn = mode === 'update' ? submitBtn : updateBtn;
+
+                    if (activeBtn) {
+                        activeBtn.disabled = true;
+                        activeBtn.textContent = mode === 'update' ? 'Submitting update…' : 'Submitting…';
+                    }
+                    if (inactiveBtn) {
+                        inactiveBtn.disabled = true;
+                    }
+
+                    if (resultDiv) {
+                        resultDiv.className = 'mt-2 small d-none';
+                        resultDiv.textContent = '';
+                    }
+
+                    try {
+                        const fd = new FormData();
+                        fd.append('name', name);
+                        fd.append('category', category);
+                        fd.append('language', language);
+                        fd.append('mode', mode);
+                        fd.append('components', JSON.stringify(components));
+
+                        const res = await fetch(SUBMIT_URL, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': CSRF,
+                                Accept: 'application/json',
+                            },
+                            body: fd,
+                        });
+
+                        const json = await res.json();
+                        if (!res.ok || !json.success) {
+                            throw new Error(json.message || 'Submission failed.');
+                        }
+
+                        const status = String(json.data?.status || 'PENDING').toUpperCase();
+                        const effectiveName = String(json.data?.effective_name || name);
+                        const baseName = String(json.data?.base_name || name);
+
+                        if (mode === 'update') {
+                            showToast(
+                                `Update submitted to Meta as ${effectiveName} (from ${baseName}). Status: Pending.`,
+                                'success'
+                            );
+                        } else {
+                            showToast('Submitted to Meta as Pending. Template list will refresh now.', 'success');
+                        }
+
+                        if (resultDiv) {
+                            resultDiv.className = 'mt-2 small alert alert-success';
+                            resultDiv.textContent = mode === 'update' ?
+                                `Template update submitted as ${effectiveName}. Current status: ${status}.` :
+                                `Submitted to Meta. Current status: ${status}.`;
+                        }
+
+                        await pollStatuses();
+                        window.setTimeout(() => window.location.reload(), 1200);
+                    } catch (error) {
+                        const message = error instanceof Error ? error.message : 'Submission failed.';
+                        showToast(message, 'danger');
+                        if (resultDiv) {
+                            resultDiv.className = 'mt-2 small alert alert-danger';
+                            resultDiv.textContent = `Submission failed: ${message}`;
+                        }
+                    } finally {
+                        if (submitBtn) {
+                            submitBtn.disabled = false;
+                            submitBtn.textContent = 'Submit New Template to Meta';
+                        }
+                        if (updateBtn) {
+                            updateBtn.disabled = false;
+                            updateBtn.textContent = 'Submit Template Update to Meta (New Revision)';
+                        }
+                    }
+                };
+
+                submitBtn?.addEventListener('click', () => submitToMeta('create'));
+                updateBtn?.addEventListener('click', () => submitToMeta('update'));
+
+                // Lightweight in-page status polling.
+                window.setInterval(pollStatuses, 15000);
+                window.setTimeout(pollStatuses, 1500);
             })();
         </script>
     @endpush

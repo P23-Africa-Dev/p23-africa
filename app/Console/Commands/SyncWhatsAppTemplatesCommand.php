@@ -9,7 +9,7 @@ class SyncWhatsAppTemplatesCommand extends Command
 {
     protected $signature = 'whatsapp:sync-templates
         {--account-id= : Sync templates for a specific whatsapp_accounts id}
-        {--only-approved=1 : Sync only approved templates (1/0)}
+        {--only-approved=0 : Sync only approved templates (1/0)}
         {--dry-run : Fetch and process without writing to database}';
 
     protected $description = 'Sync WhatsApp templates from Meta Graph API into local whatsapp_templates table.';
@@ -20,7 +20,7 @@ class SyncWhatsAppTemplatesCommand extends Command
         $accountId = is_null($accountId) || $accountId === '' ? null : (int) $accountId;
 
         $onlyApproved = filter_var((string) $this->option('only-approved'), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
-        $onlyApproved = is_null($onlyApproved) ? true : $onlyApproved;
+        $onlyApproved = is_null($onlyApproved) ? false : $onlyApproved;
 
         $dryRun = (bool) $this->option('dry-run');
 

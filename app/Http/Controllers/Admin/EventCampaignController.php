@@ -50,7 +50,14 @@ class EventCampaignController extends Controller
             })->values();
         }
 
-        $audience = $this->paginateCollection($audienceCollection, 20, (int) $request->query('audience_page', 1), 'audience_page');
+        $audience = $this->paginateCollection(
+            $audienceCollection,
+            20,
+            (int) $request->query('audience_page', 1),
+            'audience_page',
+            $request->url(),
+            $request->query()
+        );
 
         return view('admin.whatsapp.EventAudienceSelector', [
             'filters' => $filters,
@@ -82,7 +89,6 @@ class EventCampaignController extends Controller
                 ->whereNotNull('phone')
                 ->where('phone', '!=', '')
                 ->orderByDesc('last_chat_at')
-                ->limit(200)
                 ->get(['id', 'name', 'phone', 'validation_status', 'is_whatsapp']),
             'eventFilterOptions' => [
                 EventAudienceService::FILTER_SINGLE,
@@ -93,6 +99,82 @@ class EventCampaignController extends Controller
             ],
             'defaultFilter' => EventAudienceService::FILTER_UPCOMING,
         ]);
+    }
+
+    public function audienceCount(Request $request, EventWhatsAppService $eventWhatsAppService): JsonResponse
+    {
+        $this->authorize('whatsapp.send');
+
+        $validated = $request->validate([
+            'source_type'        => ['required', 'string', 'in:event_contacts,saved_contacts,manual_contacts'],
+            'event_filter'       => ['nullable', 'string', 'in:single,multiple,past,upcoming,all'],
+            'event_id'           => ['nullable', 'integer'],
+            'event_ids'          => ['nullable', 'array'],
+            'event_ids.*'        => ['integer'],
+            'saved_contact_ids'  => ['nullable', 'array'],
+            'saved_contact_ids.*' => ['integer'],
+            'manual_contacts'    => ['nullable', 'string', 'max:20000'],
+        ]);
+
+        try {
+            $preview = $eventWhatsAppService->previewAudienceCount($validated);
+        } catch (\Throwable $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 422);
+        }
+
+        return response()->json(['success' => true, 'data' => $preview]);
+    }
+
+    public function submitTemplateToMeta(
+        Request $request,
+        \App\Services\WhatsApp\MetaTemplateSubmissionService $submissionService
+    ): JsonResponse {
+        $this->authorize('whatsapp.manage');
+
+        $validated = $request->validate([
+            'name'     => ['required', 'string', 'max:120', 'regex:/^[a-z0-9_]+$/'],
+            'category' => ['required', 'string', 'in:MARKETING,UTILITY,AUTHENTICATION'],
+            'language' => ['required', 'string', 'max:20'],
+            'mode' => ['nullable', 'string', 'in:create,update'],
+            'components' => ['required'],
+        ]);
+
+        $componentsInput = $request->input('components');
+        if (is_string($componentsInput)) {
+            $decoded = json_decode($componentsInput, true);
+            $componentsInput = is_array($decoded) ? $decoded : null;
+        }
+
+        if (!is_array($componentsInput) || empty($componentsInput)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'components must be a non-empty array.',
+            ], 422);
+        }
+
+        $mode = strtolower((string) ($validated['mode'] ?? 'create'));
+
+        try {
+            if ($mode === 'update') {
+                $result = $submissionService->submitTemplateUpdate(
+                    $validated['name'],
+                    $validated['category'],
+                    $validated['language'],
+                    $componentsInput,
+                );
+            } else {
+                $result = $submissionService->submitTemplate(
+                    $validated['name'],
+                    $validated['category'],
+                    $validated['language'],
+                    $componentsInput,
+                );
+            }
+        } catch (\Throwable $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 422);
+        }
+
+        return response()->json(['success' => true, 'data' => $result]);
     }
 
     public function audiencePreview(Request $request, EventWhatsAppService $eventWhatsAppService): JsonResponse
@@ -110,6 +192,13 @@ class EventCampaignController extends Controller
             'manual_contacts' => ['nullable', 'string', 'max:20000'],
             'template_id' => ['required', 'integer', 'exists:whatsapp_templates,id'],
         ]);
+
+        if (($validated['source_type'] ?? null) === 'event_contacts') {
+            $request->validate([
+                'event_id' => ['nullable', 'integer', 'exists:events,id'],
+                'event_ids.*' => ['integer', 'exists:events,id'],
+            ]);
+        }
 
         $preview = $eventWhatsAppService->previewTemplateForAudience($validated, 6);
 
@@ -134,6 +223,13 @@ class EventCampaignController extends Controller
             'manual_contacts' => ['nullable', 'string', 'max:20000'],
             'template_id' => ['required', 'integer', 'exists:whatsapp_templates,id'],
         ]);
+
+        if (($validated['source_type'] ?? null) === 'event_contacts') {
+            $request->validate([
+                'event_id' => ['nullable', 'integer', 'exists:events,id'],
+                'event_ids.*' => ['integer', 'exists:events,id'],
+            ]);
+        }
 
         if ($validated['source_type'] === 'manual_contacts' && trim((string) Arr::get($validated, 'manual_contacts', '')) === '') {
             throw ValidationException::withMessages([
@@ -190,20 +286,35 @@ class EventCampaignController extends Controller
         ]);
     }
 
-    protected function paginateCollection(Collection $items, int $perPage, int $page, string $pageName): LengthAwarePaginator
-    {
+    protected function paginateCollection(
+        Collection $items,
+        int $perPage,
+        int $page,
+        string $pageName,
+        ?string $path = null,
+        array $query = [],
+    ): LengthAwarePaginator {
         $page = max(1, $page);
         $total = $items->count();
         $results = $items->forPage($page, $perPage)->values();
 
-        return new LengthAwarePaginator(
+        $paginator = new LengthAwarePaginator(
             $results,
             $total,
             $perPage,
             $page,
             [
                 'pageName' => $pageName,
+                'path' => $path ?? LengthAwarePaginator::resolveCurrentPath(),
             ],
         );
+
+        // Re-append all existing query string params so pagination links stay
+        // on the correct admin URL rather than defaulting to the site root.
+        if (!empty($query)) {
+            $paginator->appends($query);
+        }
+
+        return $paginator;
     }
 }
