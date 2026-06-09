@@ -9,6 +9,7 @@ use App\Models\WhatsAppContact;
 use App\Models\WhatsAppTemplate;
 use App\Services\WhatsApp\EventWhatsAppService;
 use App\Services\WhatsApp\MetaTemplateParameterService;
+use App\Services\WhatsApp\MessageService;
 use App\Services\WhatsApp\WhatsAppNumberValidationService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
@@ -123,7 +124,7 @@ class EventBroadcastEnhancementsTest extends TestCase
                     ['type' => 'BODY', 'text' => 'Hello {{1}}'],
                 ],
             ],
-            'status' => WhatsAppTemplate::STATUS_DRAFT,
+            'status' => WhatsAppTemplate::STATUS_APPROVED,
         ]);
 
         $contact = WhatsAppContact::create([
@@ -384,6 +385,149 @@ class EventBroadcastEnhancementsTest extends TestCase
             'language' => 'en',
             'status' => WhatsAppTemplate::STATUS_PENDING,
         ]);
+    }
+
+    public function test_versioned_event_invitation_template_still_maps_meta_parameters(): void
+    {
+        $template = WhatsAppTemplate::create([
+            'name' => 'event_invitation_v2',
+            'category' => 'marketing',
+            'language' => 'en_US',
+            'template_format' => 'json',
+            'template_json' => [
+                'language' => 'en_US',
+                'components' => [
+                    [
+                        'type' => 'HEADER',
+                        'format' => 'TEXT',
+                        'text' => 'Hello {{1}},',
+                    ],
+                    [
+                        'type' => 'BODY',
+                        'text' => 'Event: {{1}} | Location: {{2}} | Register Here: {{3}}',
+                    ],
+                    [
+                        'type' => 'BUTTONS',
+                        'buttons' => [
+                            [
+                                'type' => 'URL',
+                                'text' => 'Register Now',
+                                'url' => 'https://p23africa.com/events/{{1}}',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'status' => WhatsAppTemplate::STATUS_APPROVED,
+        ]);
+
+        $payload = app(MetaTemplateParameterService::class)->buildPayload($template, [
+            'name' => 'John Mike',
+            'event_title' => 'How to win the Africa Market',
+            'event_location' => 'Location/Online',
+            'event_registration_link' => 'https://p23africa.com/events/knowing-your-customer-beyond-everybody',
+        ]);
+
+        $components = collect($payload['components'] ?? []);
+        $button = $components->firstWhere('type', 'button');
+
+        $this->assertSame('event_invitation_v2', data_get($payload, 'name'));
+        $this->assertSame('en_US', data_get($payload, 'language.code'));
+        $this->assertSame('knowing-your-customer-beyond-everybody', data_get($button, 'parameters.0.text'));
+    }
+
+    public function test_send_broadcast_rejects_non_approved_template_for_new_campaign(): void
+    {
+        $organization = Organization::factory()->create();
+        $admin = User::factory()->create(['organization_id' => $organization->id]);
+        $admin->assignRole('admin');
+
+        $pendingBase = WhatsAppTemplate::create([
+            'name' => 'event_invitation',
+            'category' => 'marketing',
+            'language' => 'en_US',
+            'template_format' => 'json',
+            'template_json' => [
+                'language' => 'en_US',
+                'components' => [
+                    ['type' => 'BODY', 'text' => 'Base {{1}}'],
+                ],
+            ],
+            'status' => WhatsAppTemplate::STATUS_PENDING,
+        ]);
+
+        WhatsAppTemplate::create([
+            'name' => 'event_invitation_v2',
+            'category' => 'marketing',
+            'language' => 'en_US',
+            'template_format' => 'json',
+            'template_json' => [
+                'language' => 'en_US',
+                'components' => [
+                    ['type' => 'BODY', 'text' => 'Revision {{1}}'],
+                ],
+            ],
+            'status' => WhatsAppTemplate::STATUS_APPROVED,
+        ]);
+
+        $contact = WhatsAppContact::create([
+            'name' => 'Pending Contact',
+            'phone' => '+2348012345699',
+            'is_whatsapp' => true,
+            'validation_status' => WhatsAppNumberValidationService::STATUS_VALID,
+            'validation_cache_until' => now()->addHours(4),
+            'unsaved_contact' => false,
+        ]);
+
+        // Audience validation endpoint fallback can return unsupported in some environments;
+        // this test is about template approval guard during campaign creation.
+        Http::fake([
+            '*contacts*' => Http::response(['error' => ['message' => 'Unsupported endpoint']], 400),
+            '*' => Http::response([], 200),
+        ]);
+
+        $response = $this->actingAs($admin)
+            ->post(orgRoute('admin.whatsapp.events.send-broadcast'), [
+                'source_type' => 'saved_contacts',
+                'saved_contact_ids' => [$contact->id],
+                // Simulate stale UI/campaign payload using base template id.
+                'template_id' => $pendingBase->id,
+            ]);
+
+        // Controller still validates template_id as approved for new broadcasts.
+        // This test confirms the guard remains active and prevents bad queueing.
+        $response->assertSessionHasErrors('template_id');
+    }
+
+    public function test_message_service_resolves_pending_base_template_to_approved_revision(): void
+    {
+        $pendingBase = WhatsAppTemplate::create([
+            'name' => 'event_invitation',
+            'category' => 'marketing',
+            'language' => 'en_US',
+            'template_format' => 'json',
+            'template_json' => ['language' => 'en_US'],
+            'status' => WhatsAppTemplate::STATUS_PENDING,
+        ]);
+
+        $approvedRevision = WhatsAppTemplate::create([
+            'name' => 'event_invitation_v2',
+            'category' => 'marketing',
+            'language' => 'en_US',
+            'template_format' => 'json',
+            'template_json' => ['language' => 'en_US'],
+            'status' => WhatsAppTemplate::STATUS_APPROVED,
+        ]);
+
+        $service = app(MessageService::class);
+        $method = new \ReflectionMethod($service, 'resolveSendTemplate');
+        $method->setAccessible(true);
+
+        /** @var WhatsAppTemplate $resolved */
+        $resolved = $method->invoke($service, $pendingBase);
+
+        $this->assertSame($approvedRevision->id, $resolved->id);
+        $this->assertSame('event_invitation_v2', $resolved->name);
     }
 
     public function test_event_contacts_page_uses_admin_route_path_for_audience_pagination_links(): void

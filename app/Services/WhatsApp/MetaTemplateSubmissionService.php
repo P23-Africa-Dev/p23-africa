@@ -13,6 +13,8 @@ use RuntimeException;
  */
 class MetaTemplateSubmissionService
 {
+    private const META_TEMPLATE_NAME_MAX = 512;
+
     public function __construct(
         protected WhatsAppService $whatsAppService,
         protected TemplateService $templateService,
@@ -127,7 +129,9 @@ class MetaTemplateSubmissionService
 
         $localStatus = match ($rawStatus) {
             'APPROVED'         => WhatsAppTemplate::STATUS_APPROVED,
-            'REJECTED', 'DISABLED' => WhatsAppTemplate::STATUS_REJECTED,
+            'REJECTED' => WhatsAppTemplate::STATUS_REJECTED,
+            'DISABLED' => WhatsAppTemplate::STATUS_DISABLED,
+            'PAUSED' => WhatsAppTemplate::STATUS_PAUSED,
             default            => WhatsAppTemplate::STATUS_PENDING,
         };
 
@@ -199,7 +203,7 @@ class MetaTemplateSubmissionService
 
         $nextVersion = max(2, $maxVersion + 1);
         $suffix = '_v' . $nextVersion;
-        $maxBaseLength = max(1, 120 - strlen($suffix));
+        $maxBaseLength = max(1, self::META_TEMPLATE_NAME_MAX - strlen($suffix));
         $trimmedBase = substr($base, 0, $maxBaseLength);
 
         return $trimmedBase . $suffix;

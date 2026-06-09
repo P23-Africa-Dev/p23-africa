@@ -16,6 +16,8 @@ class WhatsAppTemplate extends Model
     public const STATUS_PENDING = 'pending';
     public const STATUS_APPROVED = 'approved';
     public const STATUS_REJECTED = 'rejected';
+    public const STATUS_PAUSED = 'paused';
+    public const STATUS_DISABLED = 'disabled';
 
     public $timestamps = false;
 

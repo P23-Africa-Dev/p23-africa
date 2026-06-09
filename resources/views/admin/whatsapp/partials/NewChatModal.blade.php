@@ -17,10 +17,18 @@
                         <input type="text" class="form-control form-control-sm" name="phone_number"
                             placeholder="+233501234567" required>
                     </div>
+                    <div class="mb-2">
+                        <label class="form-label">Country code (optional)</label>
+                        <input type="text" class="form-control form-control-sm" name="country_code"
+                            placeholder="233">
+                    </div>
                     <div class="d-flex gap-2 mb-2">
                         <button class="btn btn-outline-secondary btn-sm" type="button" data-wa-validate-number>Validate
                             Number</button>
                         <button class="btn btn-success btn-sm" type="submit" data-wa-start-chat>Start Chat</button>
+                        <button class="btn btn-outline-primary btn-sm" type="button" data-wa-open-template-outreach>
+                            Send Template
+                        </button>
                     </div>
                     <div class="small" data-wa-validation-result></div>
                 </div>

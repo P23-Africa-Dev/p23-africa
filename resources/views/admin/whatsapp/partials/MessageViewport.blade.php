@@ -52,27 +52,20 @@
                 data-wa-send-form>
                 @csrf
                 <input type="hidden" name="type" value="text" data-wa-message-type>
-                <input type="hidden" name="template_id" value="" data-wa-template-id>
                 <div class="row g-2 mb-2">
-                    <div class="col-12 col-lg-4">
-                        <select class="form-select form-select-sm" id="waTemplatePicker">
-                            <option value="">Insert template text (optional)</option>
-                            @foreach ($templates as $template)
-                                <option value="{{ json_encode($template->template_json) }}"
-                                    data-template-id="{{ $template->id }}" data-template-name="{{ $template->name }}">
-                                    {{ $template->name }}
-                                    ({{ $template->language }})
-                                </option>
-                            @endforeach
-                        </select>
+                    <div class="col-12 col-lg-3">
+                        <button class="btn btn-outline-primary w-100" type="button" data-wa-open-template-modal>
+                            <i class="bi bi-card-text me-1"></i>Send Template Message
+                        </button>
                     </div>
-                    <div class="col-12 col-lg-8">
+                    <div class="col-12 col-lg-9">
                         <textarea name="body" id="waMessageBody" class="form-control" rows="2" placeholder="Type your reply..."
                             data-wa-message-body></textarea>
                     </div>
                 </div>
                 <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap">
-                    <small class="text-muted">Enter to send, Shift+Enter for new line.</small>
+                    <small class="text-muted">Enter to send text. Use "Send Template Message" for business-initiated
+                        outreach.</small>
                     <div class="d-flex gap-2 align-items-center">
                         <button class="btn btn-outline-secondary btn-sm" type="button" disabled
                             title="Attachment sending is a prepared placeholder."><i

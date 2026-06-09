@@ -9,12 +9,14 @@ use App\Models\WhatsAppContact;
 use App\Models\WhatsAppTemplate;
 use App\Services\WhatsApp\EventAudienceService;
 use App\Services\WhatsApp\EventWhatsAppService;
+use App\Services\WhatsApp\MetaTemplateBuilderService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
@@ -127,15 +129,17 @@ class EventCampaignController extends Controller
 
     public function submitTemplateToMeta(
         Request $request,
-        \App\Services\WhatsApp\MetaTemplateSubmissionService $submissionService
+        \App\Services\WhatsApp\MetaTemplateSubmissionService $submissionService,
+        MetaTemplateBuilderService $builderService
     ): JsonResponse {
         $this->authorize('whatsapp.manage');
 
         $validated = $request->validate([
-            'name'     => ['required', 'string', 'max:120', 'regex:/^[a-z0-9_]+$/'],
-            'category' => ['required', 'string', 'in:MARKETING,UTILITY,AUTHENTICATION'],
+            'name'     => ['required', 'string', 'max:512'],
+            'category' => ['required', 'string', 'max:80'],
             'language' => ['required', 'string', 'max:20'],
             'mode' => ['nullable', 'string', 'in:create,update'],
+            'variable_type' => ['nullable', 'string', 'in:number,named'],
             'components' => ['required'],
         ]);
 
@@ -153,21 +157,36 @@ class EventCampaignController extends Controller
         }
 
         $mode = strtolower((string) ($validated['mode'] ?? 'create'));
+        $variableType = $builderService->normalizeVariableType((string) Arr::get($validated, 'variable_type', MetaTemplateBuilderService::VARIABLE_TYPE_NUMBER));
+        $normalizedName = $builderService->normalizeTemplateName((string) $validated['name']);
+        if ($normalizedName === '') {
+            return response()->json([
+                'success' => false,
+                'message' => 'Template name is invalid. Use letters, numbers, and underscore only.',
+            ], 422);
+        }
+
+        $normalizedComponents = $builderService->validateAndNormalizeTemplateJson([
+            'components' => $componentsInput,
+        ], $variableType);
+
+        $normalizedCategory = strtoupper($builderService->normalizeCategory((string) $validated['category']));
+        $normalizedLanguage = strtolower(trim((string) $validated['language']));
 
         try {
             if ($mode === 'update') {
                 $result = $submissionService->submitTemplateUpdate(
-                    $validated['name'],
-                    $validated['category'],
-                    $validated['language'],
-                    $componentsInput,
+                    $normalizedName,
+                    $normalizedCategory,
+                    $normalizedLanguage,
+                    (array) Arr::get($normalizedComponents, 'components', []),
                 );
             } else {
                 $result = $submissionService->submitTemplate(
-                    $validated['name'],
-                    $validated['category'],
-                    $validated['language'],
-                    $componentsInput,
+                    $normalizedName,
+                    $normalizedCategory,
+                    $normalizedLanguage,
+                    (array) Arr::get($normalizedComponents, 'components', []),
                 );
             }
         } catch (\Throwable $e) {
@@ -190,7 +209,11 @@ class EventCampaignController extends Controller
             'saved_contact_ids' => ['nullable', 'array'],
             'saved_contact_ids.*' => ['integer', 'exists:whatsapp_contacts,id'],
             'manual_contacts' => ['nullable', 'string', 'max:20000'],
-            'template_id' => ['required', 'integer', 'exists:whatsapp_templates,id'],
+            'template_id' => [
+                'required',
+                'integer',
+                Rule::exists('whatsapp_templates', 'id')->where(fn($query) => $query->where('status', WhatsAppTemplate::STATUS_APPROVED)),
+            ],
         ]);
 
         if (($validated['source_type'] ?? null) === 'event_contacts') {
@@ -221,7 +244,11 @@ class EventCampaignController extends Controller
             'saved_contact_ids' => ['nullable', 'array'],
             'saved_contact_ids.*' => ['integer', 'exists:whatsapp_contacts,id'],
             'manual_contacts' => ['nullable', 'string', 'max:20000'],
-            'template_id' => ['required', 'integer', 'exists:whatsapp_templates,id'],
+            'template_id' => [
+                'required',
+                'integer',
+                Rule::exists('whatsapp_templates', 'id')->where(fn($query) => $query->where('status', WhatsAppTemplate::STATUS_APPROVED)),
+            ],
         ]);
 
         if (($validated['source_type'] ?? null) === 'event_contacts') {

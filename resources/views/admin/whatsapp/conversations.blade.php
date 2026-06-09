@@ -481,6 +481,10 @@
             <div class="d-flex align-items-center gap-2">
                 <span class="badge bg-success" data-wa-unread-total data-count="{{ $totalUnread }}">Unread:
                     {{ $totalUnread }}</span>
+                <button class="btn btn-outline-primary btn-sm wa-compact-btn" type="button"
+                    data-wa-open-template-outreach>
+                    New Template Message
+                </button>
                 <button class="btn btn-success btn-sm wa-compact-btn" type="button" data-bs-toggle="modal"
                     data-bs-target="#waNewChatModal">New Chat</button>
                 <a href="{{ orgRoute('admin.whatsapp.overview') }}"
@@ -495,8 +499,10 @@
         data-wa-status-poll-interval="{{ $statusPollIntervalMs }}"
         data-wa-sidebar-poll-url="{{ orgRoute('admin.whatsapp.poll') }}"
         data-wa-poll-interval="{{ max(3, (int) $pollInterval) }}"
+        data-wa-quick-chat-templates-url="{{ orgRoute('admin.whatsapp.quick-chat.templates') }}"
         data-wa-quick-chat-validate-url="{{ orgRoute('admin.whatsapp.quick-chat.validate') }}"
         data-wa-quick-chat-start-url="{{ orgRoute('admin.whatsapp.quick-chat.start') }}"
+        data-wa-quick-chat-start-template-url="{{ orgRoute('admin.whatsapp.quick-chat.start-template') }}"
         data-wa-save-contact-url="{{ orgRoute('admin.whatsapp.quick-chat.save-contact') }}"
         data-wa-debug-url="{{ orgRoute('admin.whatsapp.realtime-debug') }}"
         data-wa-debug-enabled="{{ $realtimeDebugEnabled ? '1' : '0' }}" data-wa-poll-cursor="{{ $pollCursor }}">
@@ -563,6 +569,7 @@
         </div>
 
         @include('admin.whatsapp.partials.NewChatModal')
+        @include('admin.whatsapp.partials.TemplateMessageModal')
         @include('admin.whatsapp.partials.SaveContactModal')
     </div>
 </x-app-layout>

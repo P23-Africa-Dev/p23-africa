@@ -54,14 +54,26 @@ class MetaTemplateSyncServiceTest extends TestCase
                         'category' => 'UTILITY',
                         'language' => 'en_GB',
                     ],
+                    [
+                        'name' => 'paused_template',
+                        'status' => 'PAUSED',
+                        'category' => 'MARKETING',
+                        'language' => 'en',
+                    ],
+                    [
+                        'name' => 'disabled_template',
+                        'status' => 'DISABLED',
+                        'category' => 'UTILITY',
+                        'language' => 'en',
+                    ],
                 ],
             ], 200);
 
         $result = app(MetaTemplateSyncService::class)->syncTemplates($account->id, false, false, 100);
 
         $this->assertSame(2, $result['pages']);
-        $this->assertSame(3, $result['fetched']);
-        $this->assertSame(3, $result['upserted']);
+        $this->assertSame(5, $result['fetched']);
+        $this->assertSame(5, $result['upserted']);
         $this->assertSame(0, $result['failed']);
 
         $this->assertDatabaseHas('whatsapp_templates', [
@@ -80,6 +92,18 @@ class MetaTemplateSyncServiceTest extends TestCase
             'name' => 'reject_template',
             'language' => 'en_GB',
             'status' => 'rejected',
+        ]);
+
+        $this->assertDatabaseHas('whatsapp_templates', [
+            'name' => 'paused_template',
+            'language' => 'en',
+            'status' => 'paused',
+        ]);
+
+        $this->assertDatabaseHas('whatsapp_templates', [
+            'name' => 'disabled_template',
+            'language' => 'en',
+            'status' => 'disabled',
         ]);
     }
 

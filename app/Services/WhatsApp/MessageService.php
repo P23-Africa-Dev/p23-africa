@@ -12,7 +12,9 @@ use App\Models\WhatsAppTemplate;
 use App\Services\WhatsApp\Hooks\FutureIntegrationBridge;
 use Carbon\Carbon;
 use RuntimeException;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class MessageService
@@ -25,6 +27,7 @@ class MessageService
         protected FutureIntegrationBridge $futureHooks,
         protected TemplateRendererService $templateRendererService,
         protected MetaTemplateParameterService $metaTemplateParameterService,
+        protected TemplateComposerService $templateComposerService,
     ) {}
 
     public function queueTextMessage(WhatsAppConversation $conversation, int $senderId, string $body, ?int $accountId = null): WhatsAppMessage
@@ -71,8 +74,13 @@ class MessageService
         return $message;
     }
 
-    public function queueTemplateMessage(WhatsAppConversation $conversation, int $senderId, int $templateId, ?int $accountId = null): WhatsAppMessage
-    {
+    public function queueTemplateMessage(
+        WhatsAppConversation $conversation,
+        int $senderId,
+        int $templateId,
+        ?int $accountId = null,
+        array $templateVariables = []
+    ): WhatsAppMessage {
         if (!$this->whatsAppService->isEnabled()) {
             throw new RuntimeException('WhatsApp module is disabled. Set WHATSAPP_ENABLED=true (or provide a valid WhatsApp account config), then clear and recache Laravel config.');
         }
@@ -84,17 +92,38 @@ class MessageService
             ]);
         }
 
+        $normalizedVariables = $this->templateComposerService->normalizeIncomingVariables($templateVariables);
+
+        $templateComponents = [];
+        if ($this->metaTemplateParameterService->supportsTemplate($template)) {
+            $templatePayload = $this->metaTemplateParameterService->buildPayload($template, $normalizedVariables);
+            $templateComponents = is_array(data_get($templatePayload, 'components'))
+                ? data_get($templatePayload, 'components')
+                : [];
+        } else {
+            $templateComponents = $this->templateComposerService->buildSendComponents($template, $normalizedVariables);
+        }
+
+        $preview = trim($this->templateComposerService->renderPreview($template, $normalizedVariables));
+        $messageBody = sprintf(
+            'Template: %s (%s)%s',
+            (string) $template->name,
+            (string) $template->language,
+            $preview !== '' ? ' - ' . Str::limit(str_replace("\n", ' ', $preview), 160) : ''
+        );
+
         $message = WhatsAppMessage::create([
             'conversation_id' => $conversation->id,
             'sender_type' => WhatsAppMessage::SENDER_ADMIN,
             'type' => 'template',
-            'body' => sprintf('Template: %s (%s)', (string) $template->name, (string) $template->language),
+            'body' => $messageBody,
             'payload' => [
                 'requested_by' => $senderId,
                 'account_id' => $accountId,
                 'template_id' => $template->id,
                 'direct_template' => true,
-                'template_components' => [],
+                'template_components' => $templateComponents,
+                'template_variables' => $normalizedVariables,
             ],
             'status' => WhatsAppMessage::STATUS_QUEUED,
             'status_dirty' => true,
@@ -202,6 +231,20 @@ class MessageService
         }
 
         if ((bool) data_get($message->payload, 'direct_template', false)) {
+            $directVariables = data_get($message->payload, 'template_variables', []);
+            if (!is_array($directVariables)) {
+                $directVariables = [];
+            }
+
+            $components = data_get($message->payload, 'template_components', []);
+            if (!is_array($components) || empty($components)) {
+                if ($this->metaTemplateParameterService->supportsTemplate($template)) {
+                    $components = (array) data_get($this->metaTemplateParameterService->buildPayload($template, $directVariables), 'components', []);
+                } else {
+                    $components = $this->templateComposerService->buildSendComponents($template, $directVariables);
+                }
+            }
+
             return $this->whatsAppService->sendTemplateMessage(
                 $message->conversation->contact->phone,
                 [
@@ -209,9 +252,7 @@ class MessageService
                     'language' => [
                         'code' => (string) ($template->language ?: 'en'),
                     ],
-                    'components' => is_array(data_get($message->payload, 'template_components'))
-                        ? data_get($message->payload, 'template_components')
-                        : [],
+                    'components' => $components,
                 ],
                 $accountId
             );
@@ -222,40 +263,112 @@ class MessageService
             $variables = [];
         }
 
-        if ($template->status === WhatsAppTemplate::STATUS_APPROVED && $this->metaTemplateParameterService->supportsTemplate($template)) {
+        $sendTemplate = $this->resolveSendTemplate($template);
+
+        if ($sendTemplate->id !== $template->id) {
+            Log::info('Event broadcast template auto-resolved to approved revision', [
+                'requested_template_id' => $template->id,
+                'requested_template_name' => $template->name,
+                'resolved_template_id' => $sendTemplate->id,
+                'resolved_template_name' => $sendTemplate->name,
+            ]);
+        } elseif ($sendTemplate->status !== WhatsAppTemplate::STATUS_APPROVED) {
+            // Local status can be stale; attempt Meta send and let Graph API decide.
+            Log::warning('Sending template with non-approved local status (possible stale sync)', [
+                'template_id' => $sendTemplate->id,
+                'template_name' => $sendTemplate->name,
+                'template_status' => $sendTemplate->status,
+            ]);
+        }
+
+        if ($this->metaTemplateParameterService->supportsTemplate($sendTemplate)) {
             return $this->whatsAppService->sendTemplateMessage(
                 $message->conversation->contact->phone,
-                $this->metaTemplateParameterService->buildPayload($template, $variables),
+                $this->metaTemplateParameterService->buildPayload($sendTemplate, $variables),
                 $accountId
             );
         }
 
-        $format = (string) ($template->template_format ?: TemplateRendererService::FORMAT_JSON);
+        // For approved templates outside of our specialized parameter mapper,
+        // dynamically map placeholders so direct/event/broadcast pathways share one engine.
+        $genericComponents = $this->templateComposerService->buildSendComponents($sendTemplate, $variables);
 
-        $sourceContent = $format === TemplateRendererService::FORMAT_JSON
-            ? ($template->template_json ?? [])
-            : (string) ($template->rendered_content ?: data_get($template->editor_metadata, 'source_content', ''));
-
-        $rendered = $this->templateRendererService->render($format, $sourceContent, $variables);
-        $textBody = (string) data_get($rendered, 'whatsapp_payload.components.0.text', '');
-        $firstMedia = data_get($rendered, 'whatsapp_payload.media.0');
-
-        if (is_array($firstMedia) && data_get($firstMedia, 'type') === 'image' && data_get($firstMedia, 'url')) {
-            return $this->whatsAppService->sendImageMessage(
-                $message->conversation->contact->phone,
-                [
-                    'link' => (string) data_get($firstMedia, 'url'),
-                    'caption' => $textBody,
-                ],
-                $accountId
-            );
-        }
-
-        return $this->whatsAppService->sendTextMessage(
+        return $this->whatsAppService->sendTemplateMessage(
             $message->conversation->contact->phone,
-            $textBody,
+            [
+                'name' => (string) $sendTemplate->name,
+                'language' => [
+                    'code' => (string) (data_get($sendTemplate->template_json, 'language') ?: $sendTemplate->language ?: 'en'),
+                ],
+                'components' => $genericComponents,
+            ],
             $accountId
         );
+    }
+
+    protected function resolveSendTemplate(WhatsAppTemplate $template): WhatsAppTemplate
+    {
+        if ($template->status === WhatsAppTemplate::STATUS_APPROVED) {
+            return $template;
+        }
+
+        $requestedName = strtolower(trim((string) $template->name));
+        $baseName = $this->extractTemplateBaseName($requestedName);
+
+        $candidates = WhatsAppTemplate::query()
+            ->where('status', WhatsAppTemplate::STATUS_APPROVED)
+            ->where(function ($query) use ($requestedName, $baseName) {
+                $query->whereRaw('LOWER(name) = ?', [$requestedName])
+                    ->orWhereRaw('LOWER(name) = ?', [$baseName])
+                    ->orWhereRaw('LOWER(name) LIKE ?', [$baseName . '_v%']);
+            })
+            ->orderByDesc('id')
+            ->get();
+
+        $matched = $this->matchTemplateByLanguage($candidates, (string) $template->language)
+            ?? $candidates->first();
+
+        return $matched instanceof WhatsAppTemplate ? $matched : $template;
+    }
+
+    protected function matchTemplateByLanguage(Collection $templates, string $language): ?WhatsAppTemplate
+    {
+        $normalize = static function (string $value): string {
+            return strtolower(str_replace('-', '_', trim($value)));
+        };
+
+        $target = $normalize($language);
+        if ($target === '') {
+            return $templates->first();
+        }
+
+        foreach ($templates as $template) {
+            if (!$template instanceof WhatsAppTemplate) {
+                continue;
+            }
+
+            $candidate = $normalize((string) ($template->language ?? ''));
+            if ($candidate === '') {
+                continue;
+            }
+
+            if ($candidate === $target || strtok($candidate, '_') === strtok($target, '_')) {
+                return $template;
+            }
+        }
+
+        return null;
+    }
+
+    protected function extractTemplateBaseName(string $name): string
+    {
+        $normalized = strtolower(trim($name));
+        if (preg_match('/^(.*)_v\d+$/', $normalized, $matches)) {
+            $base = trim((string) ($matches[1] ?? ''));
+            return $base !== '' ? $base : $normalized;
+        }
+
+        return $normalized;
     }
 
     public function markFailed(WhatsAppMessage $message, string $error): void

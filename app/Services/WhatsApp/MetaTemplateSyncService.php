@@ -140,8 +140,10 @@ class MetaTemplateSyncService
     {
         return match (strtoupper(trim($metaStatus))) {
             'APPROVED' => WhatsAppTemplate::STATUS_APPROVED,
-            'REJECTED', 'DISABLED' => WhatsAppTemplate::STATUS_REJECTED,
-            'PENDING', 'PENDING_DELETION', 'IN_APPEAL', 'PAUSED' => WhatsAppTemplate::STATUS_PENDING,
+            'REJECTED' => WhatsAppTemplate::STATUS_REJECTED,
+            'DISABLED' => WhatsAppTemplate::STATUS_DISABLED,
+            'PAUSED' => WhatsAppTemplate::STATUS_PAUSED,
+            'PENDING', 'PENDING_DELETION', 'IN_APPEAL' => WhatsAppTemplate::STATUS_PENDING,
             'DRAFT' => WhatsAppTemplate::STATUS_DRAFT,
             default => WhatsAppTemplate::STATUS_DRAFT,
         };

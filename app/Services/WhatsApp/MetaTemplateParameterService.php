@@ -20,7 +20,7 @@ class MetaTemplateParameterService
 
     public function supportsTemplate(WhatsAppTemplate $template): bool
     {
-        $name = strtolower(trim((string) $template->name));
+        $name = $this->resolveTemplateKey((string) $template->name);
 
         return in_array($name, [
             self::EVENT_REMINDER_TEMPLATE,
@@ -36,12 +36,13 @@ class MetaTemplateParameterService
             throw new RuntimeException('Meta parameter builder does not support template: ' . $template->name);
         }
 
+        $templateKey = $this->resolveTemplateKey((string) $template->name);
         $resolved = $this->normalizeVariables($variables);
 
         $templateComponents = $this->resolveTemplateComponents($template);
         $parameterFormat = strtoupper(trim((string) Arr::get($template->template_json, 'parameter_format', '')));
         $useNamedParameters = $parameterFormat === 'NAMED';
-        $components = $this->buildDynamicComponents((string) $template->name, $templateComponents, $resolved, $useNamedParameters);
+        $components = $this->buildDynamicComponents($templateKey, $templateComponents, $resolved, $useNamedParameters);
 
         // Prefer Meta's canonical language code from synced template metadata
         // (e.g. en_US). Generic DB values like "en" can be rejected by Graph.
@@ -57,7 +58,7 @@ class MetaTemplateParameterService
                 'language' => $template->language,
                 'template_id' => $template->id,
             ]);
-            $components = $this->fallbackComponents((string) $template->name, $resolved);
+            $components = $this->fallbackComponents($templateKey, $resolved);
         }
 
         if ((bool) config('whatsapp.debug_logging', false)) {
@@ -91,7 +92,7 @@ class MetaTemplateParameterService
         }
 
         $resolved = $this->normalizeVariables($variables);
-        $templateName = strtolower(trim((string) $template->name));
+        $templateName = $this->resolveTemplateKey((string) $template->name);
 
         if ($templateName === self::LATEST_EVENT_REMINDER_TEMPLATE) {
             return trim(implode("\n", [
@@ -678,5 +679,25 @@ class MetaTemplateParameterService
                 throw new RuntimeException('Missing required Meta template variable: ' . $key);
             }
         }
+    }
+
+    protected function resolveTemplateKey(string $name): string
+    {
+        $normalized = strtolower(trim($name));
+
+        foreach (
+            [
+                self::EVENT_REMINDER_TEMPLATE,
+                self::LATEST_EVENT_REMINDER_TEMPLATE,
+                self::FINAL_EVENT_REMINDER_TEMPLATE,
+                self::EVENT_INVITATION_TEMPLATE,
+            ] as $baseName
+        ) {
+            if ($normalized === $baseName || preg_match('/^' . preg_quote($baseName, '/') . '_v\d+$/', $normalized)) {
+                return $baseName;
+            }
+        }
+
+        return $normalized;
     }
 }

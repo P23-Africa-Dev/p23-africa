@@ -15,6 +15,8 @@ use App\Services\WhatsApp\ContactManagerService;
 use App\Services\WhatsApp\DeveloperPasscodeService;
 use App\Services\WhatsApp\MessageStatusSyncService;
 use App\Services\WhatsApp\MessageService;
+use App\Services\WhatsApp\MetaTemplateBuilderService;
+use App\Services\WhatsApp\TemplateComposerService;
 use App\Services\WhatsApp\TemplateService;
 use App\Services\WhatsApp\TemplateRendererService;
 use App\Services\WhatsApp\WhatsAppNumberValidationService;
@@ -65,8 +67,11 @@ class WhatsAppController extends Controller
         ]);
     }
 
-    public function conversations(Request $request, ConversationService $conversationService): View
-    {
+    public function conversations(
+        Request $request,
+        ConversationService $conversationService,
+        TemplateComposerService $templateComposerService
+    ): View {
         $this->authorize('whatsapp.view');
 
         $filters = [
@@ -98,16 +103,21 @@ class WhatsAppController extends Controller
             }
         }
 
+        $approvedTemplates = WhatsAppTemplate::query()
+            ->where('status', WhatsAppTemplate::STATUS_APPROVED)
+            ->orderBy('name')
+            ->get();
+
         return view('admin.whatsapp.conversations', [
             'conversations' => $conversations,
             'selectedConversation' => $selectedConversation,
             'filters' => $filters,
             'statuses' => WhatsAppConversation::statuses(),
             'assignees' => $conversationService->availableAssignees(),
-            'templates' => WhatsAppTemplate::query()
-                ->where('status', WhatsAppTemplate::STATUS_APPROVED)
-                ->orderBy('name')
-                ->get(),
+            'templates' => $approvedTemplates,
+            'templatePickerTemplates' => $approvedTemplates
+                ->map(fn(WhatsAppTemplate $template) => $templateComposerService->toClientTemplate($template))
+                ->values(),
             'pollInterval' => (int) config('whatsapp.poll_interval', 5),
             'statusPollIntervalMs' => max(1500, (int) config('whatsapp.status_poll_interval_ms', 3000)),
             'historyPageSize' => $initialMessageLimit,
@@ -175,6 +185,7 @@ class WhatsAppController extends Controller
                 }),
             ],
             'account_id' => ['nullable', 'integer', 'exists:whatsapp_accounts,id'],
+            'template_variables' => ['nullable'],
         ]);
 
         if ($validated['type'] === 'template') {
@@ -190,7 +201,8 @@ class WhatsAppController extends Controller
                 $conversation,
                 (int) $request->user()->id,
                 $templateId,
-                Arr::get($validated, 'account_id')
+                Arr::get($validated, 'account_id'),
+                Arr::get($validated, 'template_variables')
             );
         } else {
             if ($validated['type'] !== 'text') {
@@ -542,6 +554,26 @@ class WhatsAppController extends Controller
                 TemplateRendererService::FORMAT_RICH_TEXT,
                 TemplateRendererService::FORMAT_HTML,
             ],
+            'builderCategories' => [
+                'marketing' => 'Promotional broadcasts, offers, campaigns, and announcements.',
+                'utility' => 'Transactional updates, reminders, confirmations, and support.',
+                'authentication' => 'One-time passcodes and login/security verification messages.',
+            ],
+            'builderLanguages' => [
+                'en',
+                'en_US',
+                'en_GB',
+                'fr',
+                'pt_BR',
+                'ar',
+            ],
+            'builderButtonTypes' => [
+                'quick_reply' => 'Quick Reply',
+                'visit_website' => 'Visit Website',
+                'call_phone' => 'Call Phone',
+                'copy_coupon' => 'Copy Coupon',
+                'flow' => 'Flow',
+            ],
             'defaultVariables' => [
                 'name',
                 'location',
@@ -599,33 +631,65 @@ class WhatsAppController extends Controller
     public function storeTemplate(
         Request $request,
         TemplateService $templateService,
-        TemplateRendererService $rendererService
+        TemplateRendererService $rendererService,
+        MetaTemplateBuilderService $builderService
     ): RedirectResponse {
         $this->authorize('whatsapp.manage');
 
         $validated = $request->validate([
-            'name' => ['required', 'string', 'max:120'],
+            'name' => ['required', 'string', 'max:512'],
             'category' => ['required', 'string', 'max:80'],
             'language' => ['required', 'string', 'max:20'],
-            'template_format' => ['required', 'string', 'in:json,rich_text,html'],
+            'template_format' => ['nullable', 'string', 'in:json,rich_text,html'],
+            'builder_mode' => ['nullable', 'string', 'in:simple,advanced'],
+            'variable_type' => ['nullable', 'string', 'in:number,named'],
             'template_json' => ['nullable'],
             'rich_text_content' => ['nullable', 'string'],
             'html_content' => ['nullable', 'string'],
             'editor_metadata' => ['nullable'],
+            'buttons_config' => ['nullable'],
+            'simple_header_type' => ['nullable', 'string', 'in:none,text,image,video,document'],
+            'simple_header_text' => ['nullable', 'string'],
+            'simple_header_media_format' => ['nullable', 'string', 'in:IMAGE,VIDEO,DOCUMENT'],
+            'simple_body_text' => ['nullable', 'string'],
+            'simple_footer_text' => ['nullable', 'string'],
+            'media_sample_type' => ['nullable', 'string', 'in:image,video,document'],
+            'media_sample_file' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp,gif,mp4,pdf,doc,docx', 'max:20480'],
+            'remove_media_sample' => ['nullable', 'boolean'],
         ]);
 
+        $normalizedName = $builderService->normalizeTemplateName((string) $validated['name']);
+        if ($normalizedName === '') {
+            throw ValidationException::withMessages([
+                'name' => 'Template name is invalid. Use letters, numbers, and underscore only.',
+            ]);
+        }
+
+        $normalizedLanguage = strtolower(trim((string) $validated['language']));
+        $normalizedCategory = $builderService->normalizeCategory((string) $validated['category']);
+
         $existingTemplate = WhatsAppTemplate::query()
-            ->where('name', $validated['name'])
-            ->where('language', $validated['language'])
+            ->where('name', $normalizedName)
+            ->where('language', $normalizedLanguage)
             ->first();
 
-        $templatePayload = $this->prepareTemplatePayload($validated, $rendererService);
+        if ($existingTemplate) {
+            throw ValidationException::withMessages([
+                'name' => 'A template with this normalized name and language already exists. Load and update it instead.',
+            ]);
+        }
+
+        $editorMetadata = $this->decodeEditorMetadata(Arr::get($validated, 'editor_metadata'));
+        $editorMetadata = $this->applyMediaSampleMetadata($request, $editorMetadata);
+        $validated['editor_metadata'] = $editorMetadata;
+
+        $templatePayload = $this->prepareTemplatePayload($validated, $rendererService, $builderService);
 
         $templateService->createOrUpdate([
-            'name' => $validated['name'],
-            'category' => $validated['category'],
-            'language' => $validated['language'],
-            'status' => $existingTemplate?->status ?? WhatsAppTemplate::STATUS_DRAFT,
+            'name' => $normalizedName,
+            'category' => $normalizedCategory,
+            'language' => $normalizedLanguage,
+            'status' => WhatsAppTemplate::STATUS_DRAFT,
             'template_format' => $templatePayload['template_format'],
             'template_json' => $templatePayload['template_json'],
             'rendered_content' => $templatePayload['rendered_content'],
@@ -640,27 +704,65 @@ class WhatsAppController extends Controller
         Request $request,
         WhatsAppTemplate $template,
         TemplateService $templateService,
-        TemplateRendererService $rendererService
+        TemplateRendererService $rendererService,
+        MetaTemplateBuilderService $builderService
     ): RedirectResponse {
         $this->authorize('whatsapp.manage');
 
         $validated = $request->validate([
-            'name' => ['required', 'string', 'max:120'],
+            'name' => ['required', 'string', 'max:512'],
             'category' => ['required', 'string', 'max:80'],
             'language' => ['required', 'string', 'max:20'],
-            'template_format' => ['required', 'string', 'in:json,rich_text,html'],
+            'template_format' => ['nullable', 'string', 'in:json,rich_text,html'],
+            'builder_mode' => ['nullable', 'string', 'in:simple,advanced'],
+            'variable_type' => ['nullable', 'string', 'in:number,named'],
             'template_json' => ['nullable'],
             'rich_text_content' => ['nullable', 'string'],
             'html_content' => ['nullable', 'string'],
             'editor_metadata' => ['nullable'],
+            'buttons_config' => ['nullable'],
+            'simple_header_type' => ['nullable', 'string', 'in:none,text,image,video,document'],
+            'simple_header_text' => ['nullable', 'string'],
+            'simple_header_media_format' => ['nullable', 'string', 'in:IMAGE,VIDEO,DOCUMENT'],
+            'simple_body_text' => ['nullable', 'string'],
+            'simple_footer_text' => ['nullable', 'string'],
+            'media_sample_type' => ['nullable', 'string', 'in:image,video,document'],
+            'media_sample_file' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp,gif,mp4,pdf,doc,docx', 'max:20480'],
+            'remove_media_sample' => ['nullable', 'boolean'],
         ]);
 
-        $templatePayload = $this->prepareTemplatePayload($validated, $rendererService);
+        $normalizedName = $builderService->normalizeTemplateName((string) $validated['name']);
+        if ($normalizedName === '') {
+            throw ValidationException::withMessages([
+                'name' => 'Template name is invalid. Use letters, numbers, and underscore only.',
+            ]);
+        }
+
+        $normalizedLanguage = strtolower(trim((string) $validated['language']));
+        $normalizedCategory = $builderService->normalizeCategory((string) $validated['category']);
+
+        $duplicate = WhatsAppTemplate::query()
+            ->where('name', $normalizedName)
+            ->where('language', $normalizedLanguage)
+            ->where('id', '!=', $template->id)
+            ->exists();
+
+        if ($duplicate) {
+            throw ValidationException::withMessages([
+                'name' => 'Another template already uses this normalized name and language.',
+            ]);
+        }
+
+        $editorMetadata = $this->decodeEditorMetadata(Arr::get($validated, 'editor_metadata'));
+        $editorMetadata = $this->applyMediaSampleMetadata($request, $editorMetadata, $template);
+        $validated['editor_metadata'] = $editorMetadata;
+
+        $templatePayload = $this->prepareTemplatePayload($validated, $rendererService, $builderService);
 
         $templateService->updateTemplate($template, [
-            'name' => $validated['name'],
-            'category' => $validated['category'],
-            'language' => $validated['language'],
+            'name' => $normalizedName,
+            'category' => $normalizedCategory,
+            'language' => $normalizedLanguage,
             'template_format' => $templatePayload['template_format'],
             'template_json' => $templatePayload['template_json'],
             'rendered_content' => $templatePayload['rendered_content'],
@@ -866,22 +968,34 @@ class WhatsAppController extends Controller
         return $decoded;
     }
 
-    protected function prepareTemplatePayload(array $validated, TemplateRendererService $rendererService): array
-    {
+    protected function prepareTemplatePayload(
+        array $validated,
+        TemplateRendererService $rendererService,
+        MetaTemplateBuilderService $builderService
+    ): array {
         $format = $rendererService->normalizeFormat((string) Arr::get($validated, 'template_format', 'json'));
-        $editorMetadata = Arr::get($validated, 'editor_metadata', []);
-
-        if (is_string($editorMetadata) && trim($editorMetadata) !== '') {
-            $decodedMetadata = json_decode($editorMetadata, true);
-            $editorMetadata = is_array($decodedMetadata) ? $decodedMetadata : [];
-        }
-
-        if (!is_array($editorMetadata)) {
-            $editorMetadata = [];
-        }
+        $editorMetadata = $this->decodeEditorMetadata(Arr::get($validated, 'editor_metadata', []));
+        $builderMode = strtolower(trim((string) Arr::get($validated, 'builder_mode', 'simple')));
+        $variableType = $builderService->normalizeVariableType((string) Arr::get($validated, 'variable_type', MetaTemplateBuilderService::VARIABLE_TYPE_NUMBER));
 
         if ($format === TemplateRendererService::FORMAT_JSON) {
-            $jsonPayload = $this->decodeJsonInput(Arr::get($validated, 'template_json'));
+            if ($builderMode === 'simple') {
+                $jsonPayload = $builderService->buildSimpleTemplate([
+                    'variable_type' => $variableType,
+                    'header_type' => Arr::get($validated, 'simple_header_type', 'none'),
+                    'header_text' => Arr::get($validated, 'simple_header_text'),
+                    'header_media_format' => Arr::get($validated, 'simple_header_media_format'),
+                    'body_text' => Arr::get($validated, 'simple_body_text'),
+                    'footer_text' => Arr::get($validated, 'simple_footer_text'),
+                    'buttons' => $this->decodeButtonsConfig(Arr::get($validated, 'buttons_config')),
+                ]);
+            } else {
+                $jsonPayload = $builderService->validateAndNormalizeTemplateJson(
+                    $this->decodeJsonInput(Arr::get($validated, 'template_json')),
+                    $variableType
+                );
+            }
+
             $rendered = $rendererService->renderJson($jsonPayload);
 
             return [
@@ -889,7 +1003,10 @@ class WhatsAppController extends Controller
                 'template_json' => $jsonPayload,
                 'rendered_content' => json_encode($rendered['rendered_content'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
                 'preview_content' => (string) $rendered['preview_content'],
-                'editor_metadata' => $editorMetadata,
+                'editor_metadata' => array_merge($editorMetadata, [
+                    'builder_mode' => $builderMode,
+                    'variable_type' => $variableType,
+                ]),
             ];
         }
 
@@ -914,6 +1031,103 @@ class WhatsAppController extends Controller
                 'source_content' => (string) $content,
             ]),
         ];
+    }
+
+    protected function decodeEditorMetadata(mixed $metadata): array
+    {
+        if (is_string($metadata) && trim($metadata) !== '') {
+            $decodedMetadata = json_decode($metadata, true);
+            $metadata = is_array($decodedMetadata) ? $decodedMetadata : [];
+        }
+
+        if (!is_array($metadata)) {
+            $metadata = [];
+        }
+
+        return $metadata;
+    }
+
+    /**
+     * @return array<int, array<string, string>>
+     */
+    protected function decodeButtonsConfig(mixed $buttons): array
+    {
+        if (is_string($buttons) && trim($buttons) !== '') {
+            $decoded = json_decode($buttons, true);
+            $buttons = is_array($decoded) ? $decoded : [];
+        }
+
+        return is_array($buttons) ? $buttons : [];
+    }
+
+    /**
+     * @param array<string, mixed> $editorMetadata
+     * @return array<string, mixed>
+     */
+    protected function applyMediaSampleMetadata(
+        Request $request,
+        array $editorMetadata,
+        ?WhatsAppTemplate $template = null
+    ): array {
+        $existingMedia = Arr::get($template?->editor_metadata ?? [], 'media_sample');
+
+        if ($request->boolean('remove_media_sample')) {
+            $this->deleteMediaSampleFile($existingMedia);
+            unset($editorMetadata['media_sample']);
+
+            return $editorMetadata;
+        }
+
+        if (!$request->hasFile('media_sample_file')) {
+            if ($existingMedia && !isset($editorMetadata['media_sample'])) {
+                $editorMetadata['media_sample'] = $existingMedia;
+            }
+
+            return $editorMetadata;
+        }
+
+        $uploaded = $request->file('media_sample_file');
+        if (!$uploaded) {
+            return $editorMetadata;
+        }
+
+        $this->deleteMediaSampleFile($existingMedia);
+
+        $path = $uploaded->store('whatsapp/template-samples', 'public');
+        $mediaType = strtolower(trim((string) $request->input('media_sample_type', '')));
+        if ($mediaType === '') {
+            $mime = strtolower((string) $uploaded->getMimeType());
+            $mediaType = str_starts_with($mime, 'video/')
+                ? 'video'
+                : (str_starts_with($mime, 'image/') ? 'image' : 'document');
+        }
+
+        $editorMetadata['media_sample'] = [
+            'type' => $mediaType,
+            'disk' => 'public',
+            'path' => $path,
+            'url' => Storage::url($path),
+            'name' => $uploaded->getClientOriginalName(),
+            'mime' => $uploaded->getMimeType(),
+            'size' => $uploaded->getSize(),
+            'uploaded_at' => now()->toIso8601String(),
+        ];
+
+        return $editorMetadata;
+    }
+
+    protected function deleteMediaSampleFile(mixed $mediaSample): void
+    {
+        if (!is_array($mediaSample)) {
+            return;
+        }
+
+        $disk = (string) Arr::get($mediaSample, 'disk', 'public');
+        $path = (string) Arr::get($mediaSample, 'path', '');
+
+        if ($path !== '' && Storage::disk($disk)->exists($path)) {
+            Storage::disk($disk)->delete($path);
+        }
     }
 
     protected function response(Request $request, array $payload, int $statusCode, string $flashMessage): JsonResponse|RedirectResponse

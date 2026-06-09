@@ -186,7 +186,9 @@ function initMessaging() {
     const pollUrl = root?.getAttribute('data-wa-poll-url') || '';
     const statusPollUrl = root?.getAttribute('data-wa-status-poll-url') || '';
     const quickChatValidateUrl = root?.getAttribute('data-wa-quick-chat-validate-url') || '';
+    const quickChatTemplatesUrl = root?.getAttribute('data-wa-quick-chat-templates-url') || '';
     const quickChatStartUrl = root?.getAttribute('data-wa-quick-chat-start-url') || '';
+    const quickChatStartTemplateUrl = root?.getAttribute('data-wa-quick-chat-start-template-url') || '';
     const saveContactUrl = root?.getAttribute('data-wa-save-contact-url') || '';
     const statusPollIntervalMs = Number(root?.getAttribute('data-wa-status-poll-interval') || 3000);
     const historyUrl = listElement?.getAttribute('data-wa-history-url') || '';
@@ -198,6 +200,8 @@ function initMessaging() {
     const initialCursor = root?.getAttribute('data-wa-poll-cursor') || new Date().toISOString();
     const statusIntervalMs = Math.max(1500, statusPollIntervalMs);
     const sidebarIntervalMs = Math.max(6000, pollIntervalMs * 2);
+    const templateModal = document.querySelector('[data-wa-template-modal]');
+    const templateSendForm = templateModal?.querySelector('[data-wa-template-send-form]') || null;
     const knownMessageIds = Array.from(document.querySelectorAll('[data-message-id]'))
         .map((item) => Number(item.getAttribute('data-message-id')))
         .filter((id) => Number.isFinite(id));
@@ -444,6 +448,384 @@ function initMessaging() {
         loadSidebarUpdates();
     };
 
+    let templateCatalog = [];
+    let templateMode = 'conversation';
+    let selectedTemplate = null;
+
+    const templateContextBadge = templateModal?.querySelector('[data-wa-template-context]') || null;
+    const templateRecipientSummary = templateModal?.querySelector('[data-wa-template-recipient-summary]') || null;
+    const templateRecipientWrap = templateModal?.querySelector('[data-wa-template-recipient-wrap]') || null;
+    const templateRecipientName = templateModal?.querySelector('[data-wa-template-recipient-name]') || null;
+    const templateRecipientPhone = templateModal?.querySelector('[data-wa-template-recipient-phone]') || null;
+    const templateRecipientCountryCode = templateModal?.querySelector('[data-wa-template-recipient-country-code]') || null;
+    const templateRecipientValidation = templateModal?.querySelector('[data-wa-template-recipient-validation]') || null;
+    const templateValidateRecipientBtn = templateModal?.querySelector('[data-wa-template-validate-recipient]') || null;
+    const templateSearchInput = templateModal?.querySelector('[data-wa-template-search]') || null;
+    const templateListWrap = templateModal?.querySelector('[data-wa-template-list]') || null;
+    const templateSelectedWrap = templateModal?.querySelector('[data-wa-template-selected-wrap]') || null;
+    const templateEmptyState = templateModal?.querySelector('[data-wa-template-empty-state]') || null;
+    const templateSelectedName = templateModal?.querySelector('[data-wa-template-selected-name]') || null;
+    const templateSelectedStatus = templateModal?.querySelector('[data-wa-template-selected-status]') || null;
+    const templateSelectedCategory = templateModal?.querySelector('[data-wa-template-selected-category]') || null;
+    const templateSelectedLanguage = templateModal?.querySelector('[data-wa-template-selected-language]') || null;
+    const templateSelectedUpdated = templateModal?.querySelector('[data-wa-template-selected-updated]') || null;
+    const templateVariableFields = templateModal?.querySelector('[data-wa-template-variable-fields]') || null;
+    const templatePreview = templateModal?.querySelector('[data-wa-template-preview]') || null;
+    const templateSendResult = templateModal?.querySelector('[data-wa-template-send-result]') || null;
+    const templateSendButton = templateModal?.querySelector('[data-wa-template-send-button]') || null;
+
+    const setTemplateResult = (text, style = 'muted') => {
+        if (!templateSendResult) {
+            return;
+        }
+
+        templateSendResult.textContent = text;
+        templateSendResult.className = `small text-${style}`;
+    };
+
+    const setRecipientValidation = (text, style = 'muted') => {
+        if (!templateRecipientValidation) {
+            return;
+        }
+
+        templateRecipientValidation.textContent = text;
+        templateRecipientValidation.className = `small text-${style}`;
+    };
+
+    const renderTemplatePreview = () => {
+        if (!templatePreview || !selectedTemplate) {
+            return;
+        }
+
+        const variables = {};
+        templateVariableFields?.querySelectorAll('[data-template-variable-key]').forEach((input) => {
+            if (!(input instanceof HTMLInputElement)) {
+                return;
+            }
+
+            variables[input.getAttribute('data-template-variable-key') || ''] = input.value.trim();
+        });
+
+        const type = String(selectedTemplate.variable_type || 'named');
+        const source = String(selectedTemplate.preview_template || '');
+        const previewText = source.replace(/\{\{\s*([^\}]+?)\s*\}\}/g, (full, raw) => {
+            const key = String(raw || '').trim();
+            if (!key) {
+                return full;
+            }
+
+            if (type === 'number') {
+                return variables[key] || full;
+            }
+
+            const byKey = variables[key];
+            const byLower = variables[key.toLowerCase()];
+            return byKey || byLower || full;
+        });
+
+        templatePreview.textContent = previewText || 'No preview text available for this template.';
+    };
+
+    const renderTemplateVariables = () => {
+        if (!templateVariableFields || !selectedTemplate) {
+            return;
+        }
+
+        templateVariableFields.innerHTML = '';
+        const variables = Array.isArray(selectedTemplate.variables) ? selectedTemplate.variables : [];
+
+        if (!variables.length) {
+            templateVariableFields.innerHTML = '<div class="col-12 text-muted small">This template has no required variables.</div>';
+            renderTemplatePreview();
+            return;
+        }
+
+        variables.forEach((variable) => {
+            const key = String(variable.key || '');
+            const label = String(variable.label || key || 'Variable');
+
+            const col = document.createElement('div');
+            col.className = 'col-12 col-md-6';
+            col.innerHTML = `
+                <label class="form-label">${escapeHtml(label)}</label>
+                <input type="text" class="form-control form-control-sm" data-template-variable-key="${escapeHtml(key)}" placeholder="Enter ${escapeHtml(label.toLowerCase())}">
+            `;
+            templateVariableFields.appendChild(col);
+        });
+
+        templateVariableFields.querySelectorAll('[data-template-variable-key]').forEach((input) => {
+            input.addEventListener('input', renderTemplatePreview);
+        });
+
+        renderTemplatePreview();
+    };
+
+    const selectTemplate = (template) => {
+        selectedTemplate = template;
+
+        if (!templateSelectedWrap || !templateEmptyState) {
+            return;
+        }
+
+        templateSelectedWrap.classList.remove('d-none');
+        templateEmptyState.classList.add('d-none');
+        templateSendButton?.classList.remove('disabled');
+        if (templateSendButton) {
+            templateSendButton.disabled = false;
+        }
+
+        if (templateSelectedName) {
+            templateSelectedName.textContent = String(template.name || '');
+        }
+        if (templateSelectedStatus) {
+            templateSelectedStatus.textContent = String(template.status || 'approved').toUpperCase();
+        }
+        if (templateSelectedCategory) {
+            templateSelectedCategory.textContent = String(template.category || 'utility').toUpperCase();
+        }
+        if (templateSelectedLanguage) {
+            templateSelectedLanguage.textContent = String(template.language || 'en');
+        }
+        if (templateSelectedUpdated) {
+            templateSelectedUpdated.textContent = template.updated_at
+                ? new Date(template.updated_at).toLocaleString()
+                : '-';
+        }
+
+        renderTemplateVariables();
+    };
+
+    const renderTemplateList = () => {
+        if (!templateListWrap) {
+            return;
+        }
+
+        const query = String(templateSearchInput?.value || '').trim().toLowerCase();
+        const filtered = templateCatalog.filter((template) => {
+            const haystack = [template.name, template.category, template.language]
+                .map((value) => String(value || '').toLowerCase())
+                .join(' ');
+
+            return !query || haystack.includes(query);
+        });
+
+        if (!filtered.length) {
+            templateListWrap.innerHTML = '<div class="text-muted small">No approved templates found.</div>';
+            return;
+        }
+
+        templateListWrap.innerHTML = filtered.map((template) => {
+            return `
+                <button type="button" class="btn btn-sm btn-outline-secondary w-100 text-start mb-1" data-template-pick="${template.id}">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <strong>${escapeHtml(String(template.name || ''))}</strong>
+                        <small class="text-muted">${escapeHtml(String(template.language || 'en'))}</small>
+                    </div>
+                    <div class="small text-muted">${escapeHtml(String(template.category || 'utility').toUpperCase())}</div>
+                </button>
+            `;
+        }).join('');
+
+        templateListWrap.querySelectorAll('[data-template-pick]').forEach((button) => {
+            button.addEventListener('click', () => {
+                const id = Number(button.getAttribute('data-template-pick'));
+                const template = templateCatalog.find((item) => Number(item.id) === id);
+                if (template) {
+                    selectTemplate(template);
+                }
+            });
+        });
+    };
+
+    const loadTemplateCatalog = async () => {
+        if (!quickChatTemplatesUrl || templateCatalog.length) {
+            renderTemplateList();
+            return;
+        }
+
+        templateListWrap && (templateListWrap.innerHTML = '<div class="text-muted small">Loading templates...</div>');
+
+        try {
+            const response = await fetch(quickChatTemplatesUrl, {
+                headers: {
+                    Accept: 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+            });
+
+            const payload = await response.json().catch(() => ({}));
+            if (!response.ok || !payload.success) {
+                throw new Error(payload.message || 'Unable to load templates.');
+            }
+
+            templateCatalog = Array.isArray(payload?.data?.templates) ? payload.data.templates : [];
+            renderTemplateList();
+        } catch (error) {
+            templateListWrap && (templateListWrap.innerHTML = '<div class="text-danger small">Failed to load approved templates.</div>');
+        }
+    };
+
+    const collectTemplateVariables = () => {
+        const variables = {};
+
+        templateVariableFields?.querySelectorAll('[data-template-variable-key]').forEach((input) => {
+            if (!(input instanceof HTMLInputElement)) {
+                return;
+            }
+
+            const key = String(input.getAttribute('data-template-variable-key') || '').trim();
+            if (!key) {
+                return;
+            }
+
+            variables[key] = input.value.trim();
+        });
+
+        return variables;
+    };
+
+    const validateTemplateInputs = () => {
+        if (!selectedTemplate) {
+            throw new Error('Select an approved template first.');
+        }
+
+        const variables = collectTemplateVariables();
+        const required = Array.isArray(selectedTemplate.variables) ? selectedTemplate.variables : [];
+
+        for (const variable of required) {
+            const key = String(variable.key || '');
+            if (!key) {
+                continue;
+            }
+
+            if (!String(variables[key] || '').trim()) {
+                throw new Error(`Template variable "${variable.label || key}" is required.`);
+            }
+        }
+
+        return variables;
+    };
+
+    const validateOutreachRecipient = async () => {
+        const payload = {
+            name: String(templateRecipientName?.value || '').trim(),
+            phone_number: String(templateRecipientPhone?.value || '').trim(),
+            country_code: String(templateRecipientCountryCode?.value || '').trim(),
+        };
+
+        if (!payload.phone_number) {
+            throw new Error('Phone number is required for first outreach.');
+        }
+
+        const data = await postJson(quickChatValidateUrl, payload, csrfToken);
+        const status = String(data?.data?.validation_status || '').toLowerCase();
+        const isWhatsApp = data?.data?.is_whatsapp === true;
+
+        if (status === 'invalid' || data?.data?.is_whatsapp === false) {
+            throw new Error('This number is not registered on WhatsApp.');
+        }
+
+        if (status !== 'valid' || !isWhatsApp) {
+            throw new Error('Unable to validate recipient. Please retry.');
+        }
+
+        setRecipientValidation('Recipient is valid and WhatsApp-enabled.', 'success');
+
+        return payload;
+    };
+
+    const appendOptimisticTemplateMessage = (templateName, previewBody) => {
+        if (!listElement) {
+            return null;
+        }
+
+        const tempId = `local-template-${Date.now()}`;
+        const optimistic = {
+            id: tempId,
+            sender_type: 'admin',
+            type: 'template',
+            body: `Template: ${templateName}${previewBody ? ` - ${previewBody}` : ''}`,
+            status: 'sending',
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+        };
+
+        const html = renderer.render(optimistic, { optimistic: true, statusOverride: 'sending' });
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = html.trim();
+        const element = wrapper.firstElementChild;
+
+        if (!element) {
+            return null;
+        }
+
+        listElement.appendChild(element);
+        state.addMessage(tempId);
+        scrollManager.scrollToBottom('smooth');
+
+        return { tempId, element, optimistic };
+    };
+
+    const resetTemplateModalState = () => {
+        selectedTemplate = null;
+        templateSearchInput && (templateSearchInput.value = '');
+        templateListWrap && (templateListWrap.innerHTML = '');
+        templateSelectedWrap?.classList.add('d-none');
+        templateEmptyState?.classList.remove('d-none');
+        templateVariableFields && (templateVariableFields.innerHTML = '');
+        templatePreview && (templatePreview.textContent = '');
+        templateSendButton?.classList.add('disabled');
+        if (templateSendButton) {
+            templateSendButton.disabled = true;
+        }
+        setTemplateResult('');
+    };
+
+    const openTemplateModal = async (mode = 'conversation') => {
+        if (!templateModal || !templateSendForm) {
+            return;
+        }
+
+        templateMode = mode === 'outreach' ? 'outreach' : 'conversation';
+        resetTemplateModalState();
+
+        if (templateContextBadge) {
+            templateContextBadge.textContent = templateMode === 'outreach' ? 'First Outreach' : 'Conversation';
+        }
+
+        const name = document.querySelector('[data-wa-contact-name]')?.textContent?.trim() || '';
+        const phone = document.querySelector('[data-wa-contact-phone]')?.textContent?.trim() || '';
+
+        if (templateMode === 'outreach') {
+            templateRecipientWrap?.classList.remove('d-none');
+            if (templateRecipientSummary) {
+                templateRecipientSummary.textContent = 'Provide recipient details and validate before sending.';
+            }
+
+            const chatName = newChatForm?.querySelector('input[name="name"]')?.value?.trim() || '';
+            const chatPhone = newChatForm?.querySelector('input[name="phone_number"]')?.value?.trim() || '';
+
+            if (templateRecipientName) {
+                templateRecipientName.value = chatName;
+            }
+            if (templateRecipientPhone) {
+                templateRecipientPhone.value = chatPhone;
+            }
+            setRecipientValidation('');
+        } else {
+            templateRecipientWrap?.classList.add('d-none');
+            if (templateRecipientSummary) {
+                templateRecipientSummary.textContent = `${name || 'Contact'} ${phone ? `(${phone})` : ''}`.trim();
+            }
+        }
+
+        await loadTemplateCatalog();
+        renderTemplateList();
+
+        const modalInstance = window.bootstrap?.Modal ? window.bootstrap.Modal.getOrCreateInstance(templateModal) : null;
+        modalInstance?.show();
+    };
+
     if (listElement) {
         scrollManager.syncButtonVisibility();
         syncManager.start();
@@ -491,73 +873,29 @@ function initMessaging() {
         });
     }
 
-    const templatePicker = document.getElementById('waTemplatePicker');
-    if (templatePicker && textarea) {
-        templatePicker.addEventListener('change', function () {
-            const selectedOption = this.selectedOptions?.[0] || null;
-            const messageTypeField = sendForm?.querySelector('[data-wa-message-type]');
-            const templateIdField = sendForm?.querySelector('[data-wa-template-id]');
-
-            if (messageTypeField) {
-                messageTypeField.value = selectedOption?.dataset?.templateId ? 'template' : 'text';
-            }
-
-            if (templateIdField) {
-                templateIdField.value = selectedOption?.dataset?.templateId || '';
-            }
-
-            if (!this.value) {
-                return;
-            }
-
-            try {
-                const json = JSON.parse(this.value);
-                const text = (json.components || [])
-                    .filter((component) => component.type === 'BODY')
-                    .map((component) => component.text || '')
-                    .join('\n') || (json.body || '');
-
-                if (text) {
-                    textarea.value = text;
-                    textarea.dispatchEvent(new Event('input'));
-                }
-            } catch (error) {
-                // ignore malformed template JSON
-            }
-        });
-    }
-
     if (sendForm) {
         sendForm.addEventListener('submit', async (event) => {
             event.preventDefault();
 
             const bodyField = sendForm.querySelector('[data-wa-message-body]');
             const body = bodyField?.value.trim() || '';
-            const selectedTemplateOption = templatePicker?.selectedOptions?.[0] || null;
-            const selectedTemplateId = selectedTemplateOption?.dataset?.templateId || '';
-            const isTemplateSend = selectedTemplateId !== '';
 
             const messageTypeField = sendForm.querySelector('[data-wa-message-type]');
-            const templateIdField = sendForm.querySelector('[data-wa-template-id]');
             if (messageTypeField) {
-                messageTypeField.value = isTemplateSend ? 'template' : 'text';
-            }
-            if (templateIdField) {
-                templateIdField.value = selectedTemplateId;
+                messageTypeField.value = 'text';
             }
 
-            if ((!body && !isTemplateSend) || state.isSending) {
+            if (!body || state.isSending) {
                 return;
             }
 
             const sendButton = sendForm.querySelector('[data-wa-send-button]');
             const tempId = `local-${Date.now()}`;
-            const templateDisplayName = selectedTemplateOption?.dataset?.templateName || 'selected template';
-            const optimisticBody = isTemplateSend ? `Template: ${templateDisplayName}` : body;
+            const optimisticBody = body;
             const optimisticMessage = {
                 id: tempId,
                 sender_type: 'admin',
-                type: isTemplateSend ? 'template' : 'text',
+                type: 'text',
                 body: optimisticBody,
                 status: 'sending',
                 created_at: new Date().toISOString(),
@@ -589,10 +927,6 @@ function initMessaging() {
                     bodyField.value = '';
                     bodyField.dispatchEvent(new Event('input'));
                 }
-                if (templatePicker) {
-                    templatePicker.value = '';
-                    templatePicker.dispatchEvent(new Event('change'));
-                }
 
                 const responseMessage = data.data || {};
                 const row = listElement?.querySelector(`[data-message-id="${tempId}"]`);
@@ -601,7 +935,7 @@ function initMessaging() {
                     const finalized = {
                         id: responseMessage.id || tempId,
                         sender_type: responseMessage.sender_type || 'admin',
-                        type: responseMessage.type || (isTemplateSend ? 'template' : 'text'),
+                        type: responseMessage.type || 'text',
                         body: responseMessage.body || optimisticBody,
                         status: responseMessage.status || 'queued',
                         created_at: responseMessage.created_at || new Date().toISOString(),
@@ -623,7 +957,7 @@ function initMessaging() {
                     renderer.updateElement(row, {
                         id: tempId,
                         sender_type: 'admin',
-                        type: isTemplateSend ? 'template' : 'text',
+                        type: 'text',
                         body: optimisticBody,
                         status: 'failed',
                         created_at: new Date().toISOString(),
@@ -640,6 +974,108 @@ function initMessaging() {
             }
         });
     }
+
+    if (templateSearchInput) {
+        templateSearchInput.addEventListener('input', renderTemplateList);
+    }
+
+    templateValidateRecipientBtn?.addEventListener('click', async () => {
+        if (!quickChatValidateUrl) {
+            return;
+        }
+
+        try {
+            setRecipientValidation('Validating recipient...', 'secondary');
+            await validateOutreachRecipient();
+        } catch (error) {
+            setRecipientValidation(error instanceof Error ? error.message : 'Unable to validate recipient.', 'danger');
+        }
+    });
+
+    templateSendForm?.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        if (!selectedTemplate) {
+            setTemplateResult('Select an approved template first.', 'warning');
+            return;
+        }
+
+        const sendButton = templateSendButton;
+        if (sendButton) {
+            sendButton.disabled = true;
+            sendButton.textContent = 'Sending...';
+        }
+
+        try {
+            const variables = validateTemplateInputs();
+            const previewText = String(templatePreview?.textContent || '').trim().slice(0, 180);
+
+            if (templateMode === 'outreach') {
+                if (!quickChatStartTemplateUrl) {
+                    throw new Error('Template outreach endpoint is not available.');
+                }
+
+                const recipient = await validateOutreachRecipient();
+                const payload = {
+                    ...recipient,
+                    template_id: selectedTemplate.id,
+                    template_variables: variables,
+                };
+
+                const data = await postJson(quickChatStartTemplateUrl, payload, csrfToken);
+                const destination = data?.data?.conversation_url;
+
+                if (destination) {
+                    window.location.assign(destination);
+                    return;
+                }
+
+                window.location.reload();
+                return;
+            }
+
+            if (!conversationId || !sendForm?.action) {
+                throw new Error('No active conversation is selected.');
+            }
+
+            const optimistic = appendOptimisticTemplateMessage(String(selectedTemplate.name || 'template'), previewText);
+
+            const data = await postJson(sendForm.action, {
+                type: 'template',
+                template_id: selectedTemplate.id,
+                template_variables: variables,
+            }, csrfToken);
+
+            const responseMessage = data?.data || {};
+
+            if (optimistic?.element) {
+                const finalized = {
+                    id: responseMessage.id || optimistic.tempId,
+                    sender_type: responseMessage.sender_type || 'admin',
+                    type: responseMessage.type || 'template',
+                    body: responseMessage.body || optimistic.optimistic.body,
+                    status: responseMessage.status || 'queued',
+                    created_at: responseMessage.created_at || new Date().toISOString(),
+                    updated_at: responseMessage.updated_at || responseMessage.created_at || new Date().toISOString(),
+                };
+
+                optimistic.element.setAttribute('data-message-id', String(finalized.id));
+                state.addMessage(finalized.id);
+                renderer.updateElement(optimistic.element, finalized, { statusOverride: finalized.status });
+            }
+
+            const modalInstance = window.bootstrap?.Modal ? window.bootstrap.Modal.getOrCreateInstance(templateModal) : null;
+            modalInstance?.hide();
+            setTemplateResult('Template message queued successfully.', 'success');
+        } catch (error) {
+            setTemplateResult(error instanceof Error ? error.message : 'Failed to send template message.', 'danger');
+        } finally {
+            if (sendButton) {
+                sendButton.disabled = false;
+                sendButton.textContent = 'Send Template';
+            }
+        }
+    });
 
     if (noteForm) {
         noteForm.addEventListener('submit', async (event) => {
@@ -697,6 +1133,23 @@ function initMessaging() {
 
     initAccordionState();
     initDebouncedSearch(searchForm);
+
+    document.querySelectorAll('[data-wa-open-template-modal]').forEach((button) => {
+        button.addEventListener('click', () => {
+            void openTemplateModal('conversation');
+        });
+    });
+
+    document.querySelectorAll('[data-wa-open-template-outreach]').forEach((button) => {
+        button.addEventListener('click', () => {
+            const hostModal = button.closest('.modal');
+            if (hostModal && window.bootstrap?.Modal) {
+                window.bootstrap.Modal.getOrCreateInstance(hostModal).hide();
+            }
+
+            void openTemplateModal('outreach');
+        });
+    });
 
     if (newestButton) {
         newestButton.addEventListener('click', () => {
@@ -837,6 +1290,7 @@ function initMessaging() {
                 return;
             }
 
+            resultNode.textContent = text;
             resultNode.className = `small text-${style}`;
         };
 
@@ -846,6 +1300,7 @@ function initMessaging() {
             return {
                 name: String(formData.get('name') || '').trim(),
                 phone_number: String(formData.get('phone_number') || '').trim(),
+                country_code: String(formData.get('country_code') || '').trim(),
             };
         };
 

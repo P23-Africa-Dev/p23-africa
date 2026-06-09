@@ -602,8 +602,10 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
         Route::post('/events/send-broadcast', [\App\Http\Controllers\Admin\EventCampaignController::class, 'sendBroadcast'])->name('events.send-broadcast');
         Route::get('/events/campaign-history', [\App\Http\Controllers\Admin\EventCampaignController::class, 'campaignHistory'])->name('events.campaign-history');
         Route::post('/templates/submit-to-meta', [\App\Http\Controllers\Admin\EventCampaignController::class, 'submitTemplateToMeta'])->name('templates.submit-to-meta');
+        Route::get('/quick-chat/templates', [\App\Http\Controllers\Admin\QuickChatController::class, 'approvedTemplates'])->name('quick-chat.templates');
         Route::post('/quick-chat/validate', [\App\Http\Controllers\Admin\QuickChatController::class, 'validateNumber'])->name('quick-chat.validate');
         Route::post('/quick-chat/start', [\App\Http\Controllers\Admin\QuickChatController::class, 'start'])->name('quick-chat.start');
+        Route::post('/quick-chat/start-template', [\App\Http\Controllers\Admin\QuickChatController::class, 'startTemplate'])->name('quick-chat.start-template');
         Route::post('/quick-chat/save-contact', [\App\Http\Controllers\Admin\QuickChatController::class, 'saveContact'])->name('quick-chat.save-contact');
         Route::get('/settings', [\App\Http\Controllers\Admin\WhatsAppController::class, 'settings'])->name('settings');
         Route::post('/settings/account', [\App\Http\Controllers\Admin\WhatsAppController::class, 'saveAccount'])->name('settings.account.save');
