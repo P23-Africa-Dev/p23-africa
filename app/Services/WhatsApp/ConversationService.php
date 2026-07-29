@@ -22,10 +22,11 @@ class ConversationService
         protected ConversationResolverService $conversationResolver,
     ) {}
 
-    public function listConversations(array $filters = [], int $perPage = 25): LengthAwarePaginator
+    public function listConversations(array $filters = [], int $perPage = 25, ?int $accountId = null): LengthAwarePaginator
     {
         return WhatsAppConversation::query()
             ->with(['contact', 'assignedUser'])
+            ->when($accountId !== null, fn ($q) => $q->where('account_id', $accountId))
             ->search($filters['search'] ?? null)
             ->status($filters['status'] ?? null)
             ->when(isset($filters['assigned_to']) && $filters['assigned_to'] !== '', function ($query) use ($filters) {
@@ -59,7 +60,7 @@ class ConversationService
         return $conversation;
     }
 
-    public function findOrCreateConversationForPhone(string $phone, ?string $name = null, array $metadata = []): WhatsAppConversation
+    public function findOrCreateConversationForPhone(string $phone, ?string $name = null, array $metadata = [], ?int $accountId = null): WhatsAppConversation
     {
         $conversation = $this->conversationResolver->resolveConversation(
             $phone,
@@ -74,6 +75,7 @@ class ConversationService
                 'status' => WhatsAppConversation::STATUS_OPEN,
                 'unread_count' => 0,
             ],
+            $accountId,
         );
 
         return $conversation->load('contact', 'assignedUser');

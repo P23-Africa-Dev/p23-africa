@@ -61,7 +61,10 @@ class WebhookService
 
     public function handleWebhook(array $payload, array $headers = [], bool $signatureValid = true): WhatsAppWebhookLog
     {
+        $accountId = $this->resolveAccountIdFromPayload($payload);
+
         $log = WhatsAppWebhookLog::create([
+            'account_id' => $accountId,
             'event_type' => $this->extractEventType($payload),
             'payload' => $payload,
             'headers' => $headers,
@@ -98,6 +101,8 @@ class WebhookService
         $field = data_get($change, 'field');
         $value = (array) data_get($change, 'value', []);
 
+        $accountId = $this->resolveAccountIdFromChangeValue($value);
+
         if ($field === 'messages') {
             $contacts = (array) data_get($value, 'contacts', []);
 
@@ -106,11 +111,11 @@ class WebhookService
                 $contactPayload = array_merge([
                     'wa_id' => $from,
                 ], $this->findContactPayload($contacts, $from));
-                $this->messageService->handleIncomingMessage((array) $messagePayload, $contactPayload);
+                $this->messageService->handleIncomingMessage((array) $messagePayload, $contactPayload, $accountId);
             }
 
             foreach ((array) data_get($value, 'statuses', []) as $statusPayload) {
-                $this->messageService->handleStatusUpdate((array) $statusPayload);
+                $this->messageService->handleStatusUpdate((array) $statusPayload, $accountId);
             }
 
             return;
@@ -123,9 +128,42 @@ class WebhookService
 
         if (!empty($value['statuses'])) {
             foreach ((array) $value['statuses'] as $statusPayload) {
-                $this->messageService->handleStatusUpdate((array) $statusPayload);
+                $this->messageService->handleStatusUpdate((array) $statusPayload, $accountId);
             }
         }
+    }
+
+    /**
+     * Look at the first change with a `metadata.phone_number_id` in the payload
+     * and map it to a stored WhatsAppAccount. Used to tag webhook logs.
+     */
+    protected function resolveAccountIdFromPayload(array $payload): ?int
+    {
+        foreach ((array) data_get($payload, 'entry', []) as $entry) {
+            foreach ((array) data_get($entry, 'changes', []) as $change) {
+                $value = (array) data_get($change, 'value', []);
+                $accountId = $this->resolveAccountIdFromChangeValue($value);
+                if ($accountId !== null) {
+                    return $accountId;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    protected function resolveAccountIdFromChangeValue(array $value): ?int
+    {
+        $phoneNumberId = data_get($value, 'metadata.phone_number_id');
+        if (!$phoneNumberId) {
+            return null;
+        }
+
+        $accountId = WhatsAppAccount::query()
+            ->where('phone_number_id', (string) $phoneNumberId)
+            ->value('id');
+
+        return $accountId ? (int) $accountId : null;
     }
 
     protected function findContactPayload(array $contacts, ?string $from): array

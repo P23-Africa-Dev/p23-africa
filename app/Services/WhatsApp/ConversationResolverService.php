@@ -4,21 +4,26 @@ namespace App\Services\WhatsApp;
 
 use App\Models\WhatsAppContact;
 use App\Models\WhatsAppConversation;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
 class ConversationResolverService
 {
-    public function findExistingConversation(?string $phone = null, ?string $waId = null, ?int $contactId = null): ?WhatsAppConversation
-    {
-        if ($waId && ($conversation = $this->matchByWaId($waId))) {
+    public function findExistingConversation(
+        ?string $phone = null,
+        ?string $waId = null,
+        ?int $contactId = null,
+        ?int $accountId = null,
+    ): ?WhatsAppConversation {
+        if ($waId && ($conversation = $this->matchByWaId($waId, $accountId))) {
             return $conversation;
         }
 
-        if ($phone && ($conversation = $this->matchByPhone($phone))) {
+        if ($phone && ($conversation = $this->matchByPhone($phone, $accountId))) {
             return $conversation;
         }
 
-        if ($contactId && ($conversation = $this->matchByContact($contactId))) {
+        if ($contactId && ($conversation = $this->matchByContact($contactId, $accountId))) {
             return $conversation;
         }
 
@@ -32,6 +37,7 @@ class ConversationResolverService
         ?string $name = null,
         array $contactAttributes = [],
         array $conversationAttributes = [],
+        ?int $accountId = null,
     ): WhatsAppConversation {
         $contact = $this->resolveContact($phone, $waId, $contactId, $name, $contactAttributes);
 
@@ -39,16 +45,17 @@ class ConversationResolverService
             $phone,
             $waId,
             $contact?->id,
+            $accountId,
         );
 
         if ($conversation) {
-            return $this->syncConversationIdentity($conversation, $contact, $phone, $waId, $conversationAttributes);
+            return $this->syncConversationIdentity($conversation, $contact, $phone, $waId, $conversationAttributes, $accountId);
         }
 
-        return $this->createIfMissing($phone, $waId, $contact?->id, $name, $contactAttributes, $conversationAttributes);
+        return $this->createIfMissing($phone, $waId, $contact?->id, $name, $contactAttributes, $conversationAttributes, $accountId);
     }
 
-    public function matchByWaId(string $waId): ?WhatsAppConversation
+    public function matchByWaId(string $waId, ?int $accountId = null): ?WhatsAppConversation
     {
         $sanitizedWaId = WhatsAppConversation::sanitizeWaId($waId);
         if (!$sanitizedWaId) {
@@ -57,12 +64,13 @@ class ConversationResolverService
 
         return WhatsAppConversation::query()
             ->with(['contact', 'assignedUser'])
+            ->when($accountId !== null, fn (Builder $q) => $q->where('account_id', $accountId))
             ->where('wa_id', $sanitizedWaId)
             ->orderByDesc('updated_at')
             ->first();
     }
 
-    public function matchByPhone(string $phone): ?WhatsAppConversation
+    public function matchByPhone(string $phone, ?int $accountId = null): ?WhatsAppConversation
     {
         $candidates = WhatsAppConversation::phoneCandidates($phone);
         if ($candidates === []) {
@@ -71,6 +79,7 @@ class ConversationResolverService
 
         return WhatsAppConversation::query()
             ->with(['contact', 'assignedUser'])
+            ->when($accountId !== null, fn (Builder $q) => $q->where('account_id', $accountId))
             ->where(function ($query) use ($candidates) {
                 $query->whereIn('normalized_phone', $candidates)
                     ->orWhereHas('contact', function ($contactQuery) use ($candidates) {
@@ -81,10 +90,11 @@ class ConversationResolverService
             ->first();
     }
 
-    public function matchByContact(int $contactId): ?WhatsAppConversation
+    public function matchByContact(int $contactId, ?int $accountId = null): ?WhatsAppConversation
     {
         return WhatsAppConversation::query()
             ->with(['contact', 'assignedUser'])
+            ->when($accountId !== null, fn (Builder $q) => $q->where('account_id', $accountId))
             ->where('contact_id', $contactId)
             ->orderByDesc('updated_at')
             ->first();
@@ -97,16 +107,18 @@ class ConversationResolverService
         ?string $name = null,
         array $contactAttributes = [],
         array $conversationAttributes = [],
+        ?int $accountId = null,
     ): WhatsAppConversation {
         $contact = $this->resolveContact($phone, $waId, $contactId, $name, $contactAttributes);
         $normalizedPhone = WhatsAppConversation::normalizePhone($phone ?: $contact?->phone);
         $sanitizedWaId = WhatsAppConversation::sanitizeWaId($waId);
-        $conversationKey = WhatsAppConversation::buildConversationKey($sanitizedWaId, $normalizedPhone, $contact?->id);
+        $conversationKey = WhatsAppConversation::buildConversationKey($sanitizedWaId, $normalizedPhone, $contact?->id, $accountId);
 
-        return DB::transaction(function () use ($contact, $sanitizedWaId, $normalizedPhone, $conversationKey, $conversationAttributes) {
+        return DB::transaction(function () use ($contact, $sanitizedWaId, $normalizedPhone, $conversationKey, $conversationAttributes, $accountId) {
             $conversation = WhatsAppConversation::query()->firstOrCreate(
                 ['conversation_key' => $conversationKey],
                 array_merge([
+                    'account_id' => $accountId,
                     'contact_id' => $contact->id,
                     'wa_id' => $sanitizedWaId,
                     'normalized_phone' => $normalizedPhone,
@@ -115,7 +127,7 @@ class ConversationResolverService
                 ], $conversationAttributes)
             );
 
-            return $this->syncConversationIdentity($conversation, $contact, $normalizedPhone, $sanitizedWaId, $conversationAttributes);
+            return $this->syncConversationIdentity($conversation, $contact, $normalizedPhone, $sanitizedWaId, $conversationAttributes, $accountId);
         });
     }
 
@@ -181,12 +193,18 @@ class ConversationResolverService
         ?string $phone,
         ?string $waId,
         array $conversationAttributes = [],
+        ?int $accountId = null,
     ): WhatsAppConversation {
         $normalizedPhone = WhatsAppConversation::normalizePhone($phone ?: $contact->phone);
         $sanitizedWaId = WhatsAppConversation::sanitizeWaId($waId ?: data_get($contact->metadata, 'wa_id'));
-        $conversationKey = WhatsAppConversation::buildConversationKey($sanitizedWaId, $normalizedPhone, $contact->id);
+        $effectiveAccountId = $accountId ?? ($conversation->account_id ? (int) $conversation->account_id : null);
+        $conversationKey = WhatsAppConversation::buildConversationKey($sanitizedWaId, $normalizedPhone, $contact->id, $effectiveAccountId);
 
         $updates = [];
+
+        if ($accountId !== null && (int) $conversation->account_id !== (int) $accountId) {
+            $updates['account_id'] = $accountId;
+        }
 
         if ((int) $conversation->contact_id !== (int) $contact->id) {
             $updates['contact_id'] = $contact->id;

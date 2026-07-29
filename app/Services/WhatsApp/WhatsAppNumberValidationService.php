@@ -114,7 +114,7 @@ class WhatsAppNumberValidationService
             ->first();
     }
 
-    public function startConversation(array $validatedResult, ?string $name = null): WhatsAppConversation
+    public function startConversation(array $validatedResult, ?string $name = null, ?int $accountId = null): WhatsAppConversation
     {
         if (($validatedResult['validation_status'] ?? null) === self::STATUS_INVALID) {
             throw new RuntimeException('This number is not available on WhatsApp.');
@@ -126,7 +126,8 @@ class WhatsAppNumberValidationService
             [
                 'validated_via' => $validatedResult['source'] ?? null,
                 'validation_status' => $validatedResult['validation_status'] ?? self::STATUS_PENDING,
-            ]
+            ],
+            $accountId
         );
 
         $contact = $conversation->contact;

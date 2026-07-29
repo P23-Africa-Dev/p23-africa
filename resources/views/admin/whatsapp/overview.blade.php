@@ -15,6 +15,14 @@
     <div class="py-4">
         @include('admin.whatsapp.partials.nav')
 
+        <div class="alert alert-light border mb-3">
+            <strong>Active Sender:</strong>
+            {{ $activeAccount?->business_name ?: 'No active account' }}
+            @if ($activeAccount?->phone_number)
+                <span class="text-muted">({{ $activeAccount->phone_number }})</span>
+            @endif
+        </div>
+
         <div class="row g-3 mb-4">
             <div class="col-6 col-xl-3">
                 <div class="card h-100">

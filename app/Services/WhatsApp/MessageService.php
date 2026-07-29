@@ -42,6 +42,8 @@ class MessageService
             ]);
         }
 
+        $resolvedAccountId = $accountId ?? ($conversation->account_id ? (int) $conversation->account_id : null);
+
         $message = WhatsAppMessage::create([
             'conversation_id' => $conversation->id,
             'sender_type' => WhatsAppMessage::SENDER_ADMIN,
@@ -49,7 +51,7 @@ class MessageService
             'body' => $body,
             'payload' => [
                 'requested_by' => $senderId,
-                'account_id' => $accountId,
+                'account_id' => $resolvedAccountId,
             ],
             'status' => WhatsAppMessage::STATUS_QUEUED,
             'status_dirty' => true,
@@ -65,9 +67,9 @@ class MessageService
         ]);
 
         if ((bool) config('whatsapp.queue', true)) {
-            SendWhatsAppMessageJob::dispatch($message->id, $accountId)->onQueue('whatsapp');
+            SendWhatsAppMessageJob::dispatch($message->id, $resolvedAccountId)->onQueue('whatsapp');
         } else {
-            $this->processOutgoingMessage($message, $accountId);
+            $this->processOutgoingMessage($message, $resolvedAccountId);
             $message->refresh();
         }
 
@@ -112,6 +114,8 @@ class MessageService
             $preview !== '' ? ' - ' . Str::limit(str_replace("\n", ' ', $preview), 160) : ''
         );
 
+        $resolvedAccountId = $accountId ?? ($conversation->account_id ? (int) $conversation->account_id : null);
+
         $message = WhatsAppMessage::create([
             'conversation_id' => $conversation->id,
             'sender_type' => WhatsAppMessage::SENDER_ADMIN,
@@ -119,7 +123,7 @@ class MessageService
             'body' => $messageBody,
             'payload' => [
                 'requested_by' => $senderId,
-                'account_id' => $accountId,
+                'account_id' => $resolvedAccountId,
                 'template_id' => $template->id,
                 'direct_template' => true,
                 'template_components' => $templateComponents,
@@ -139,9 +143,9 @@ class MessageService
         ]);
 
         if ((bool) config('whatsapp.queue', true)) {
-            SendWhatsAppMessageJob::dispatch($message->id, $accountId)->onQueue('whatsapp');
+            SendWhatsAppMessageJob::dispatch($message->id, $resolvedAccountId)->onQueue('whatsapp');
         } else {
-            $this->processOutgoingMessage($message, $accountId);
+            $this->processOutgoingMessage($message, $resolvedAccountId);
             $message->refresh();
         }
 
@@ -388,7 +392,7 @@ class MessageService
         ]);
     }
 
-    public function handleIncomingMessage(array $messagePayload, array $contactPayload = []): ?WhatsAppMessage
+    public function handleIncomingMessage(array $messagePayload, array $contactPayload = [], ?int $accountId = null): ?WhatsAppMessage
     {
         $from = (string) data_get($messagePayload, 'from', '');
 
@@ -401,7 +405,7 @@ class MessageService
             'wa_id' => data_get($contactPayload, 'wa_id'),
             'raw_contact' => $contactPayload,
             'unsaved_contact' => true,
-        ]);
+        ], $accountId);
 
         $type = (string) data_get($messagePayload, 'type', 'text');
         $body = $this->extractBody($messagePayload);
@@ -448,7 +452,7 @@ class MessageService
         return $message;
     }
 
-    public function handleStatusUpdate(array $statusPayload): ?WhatsAppMessage
+    public function handleStatusUpdate(array $statusPayload, ?int $accountId = null): ?WhatsAppMessage
     {
         $message = $this->messageStatusSyncService->syncMessageStatus($statusPayload);
 

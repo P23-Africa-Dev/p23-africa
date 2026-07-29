@@ -22,6 +22,7 @@ class EventWhatsAppCampaign extends Model
     protected $fillable = [
         'event_id',
         'template_id',
+        'account_id',
         'total_contacts',
         'valid_contacts',
         'sent',
@@ -50,6 +51,11 @@ class EventWhatsAppCampaign extends Model
     public function template(): BelongsTo
     {
         return $this->belongsTo(WhatsAppTemplate::class, 'template_id');
+    }
+
+    public function account(): BelongsTo
+    {
+        return $this->belongsTo(WhatsAppAccount::class, 'account_id');
     }
 
     public function recipients(): HasMany

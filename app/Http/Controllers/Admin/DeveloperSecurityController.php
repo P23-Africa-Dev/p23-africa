@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\WhatsAppAccount;
 use App\Models\WhatsappSecurityLog;
 use App\Services\WhatsApp\DeveloperPasscodeService;
+use App\Services\WhatsApp\WhatsAppAccountService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -49,7 +50,11 @@ class DeveloperSecurityController extends Controller
         ]);
     }
 
-    public function sensitiveData(Request $request, DeveloperPasscodeService $passcodeService): JsonResponse
+    public function sensitiveData(
+        Request $request,
+        DeveloperPasscodeService $passcodeService,
+        WhatsAppAccountService $accountService
+    ): JsonResponse
     {
         $this->authorize('whatsapp.manage');
 
@@ -62,7 +67,15 @@ class DeveloperSecurityController extends Controller
             ], 403);
         }
 
-        $activeAccount = WhatsAppAccount::query()->latest('id')->first();
+        $validated = $request->validate([
+            'account_id' => ['nullable', 'integer', 'exists:whatsapp_accounts,id'],
+        ]);
+
+        $activeAccount = $this->resolveTargetAccount(
+            $request,
+            $accountService,
+            isset($validated['account_id']) ? (int) $validated['account_id'] : null
+        );
 
         if (!$activeAccount) {
             return response()->json([
@@ -76,6 +89,7 @@ class DeveloperSecurityController extends Controller
         return response()->json([
             'success' => true,
             'data' => [
+                'account_id' => (int) $activeAccount->id,
                 'phone_number_id' => (string) $activeAccount->phone_number_id,
                 'business_account_id' => (string) ($activeAccount->waba_id ?? ''),
                 'waba_id' => (string) ($activeAccount->waba_id ?? ''),
@@ -86,7 +100,11 @@ class DeveloperSecurityController extends Controller
         ]);
     }
 
-    public function saveSensitive(Request $request, DeveloperPasscodeService $passcodeService): RedirectResponse
+    public function saveSensitive(
+        Request $request,
+        DeveloperPasscodeService $passcodeService,
+        WhatsAppAccountService $accountService
+    ): RedirectResponse
     {
         $this->authorize('whatsapp.manage');
 
@@ -96,13 +114,8 @@ class DeveloperSecurityController extends Controller
             return back()->withErrors(['whatsapp_security' => 'Developer Access Required.'])->withInput();
         }
 
-        $activeAccount = WhatsAppAccount::query()->latest('id')->first();
-
-        if (!$activeAccount) {
-            return back()->withErrors(['whatsapp_security' => 'No active WhatsApp account found.'])->withInput();
-        }
-
         $validated = $request->validate([
+            'account_id' => ['nullable', 'integer', 'exists:whatsapp_accounts,id'],
             'phone_number_id' => ['required', 'string', 'max:80'],
             'business_account_id' => ['nullable', 'string', 'max:80'],
             'waba_id' => ['nullable', 'string', 'max:80'],
@@ -110,6 +123,16 @@ class DeveloperSecurityController extends Controller
             'access_token' => ['required', 'string'],
             'webhook_verify_token' => ['required', 'string', 'max:255'],
         ]);
+
+        $activeAccount = $this->resolveTargetAccount(
+            $request,
+            $accountService,
+            isset($validated['account_id']) ? (int) $validated['account_id'] : null
+        );
+
+        if (!$activeAccount) {
+            return back()->withErrors(['whatsapp_security' => 'No active WhatsApp account found.'])->withInput();
+        }
 
         $wabaId = $validated['waba_id'] ?: ($validated['business_account_id'] ?? null);
 
@@ -184,5 +207,17 @@ class DeveloperSecurityController extends Controller
         if (!$passcodeService->isDeveloperManager($request->user())) {
             abort(403, 'Developer-only area.');
         }
+    }
+
+    private function resolveTargetAccount(
+        Request $request,
+        WhatsAppAccountService $accountService,
+        ?int $requestedAccountId = null
+    ): ?WhatsAppAccount {
+        if ($requestedAccountId) {
+            return WhatsAppAccount::query()->find($requestedAccountId);
+        }
+
+        return $accountService->getActiveAccountForUser($request->user());
     }
 }

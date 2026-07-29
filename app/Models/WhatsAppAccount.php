@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Crypt;
 
@@ -37,6 +38,21 @@ class WhatsAppAccount extends Model
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('status', 'active');
+    }
+
+    public function conversations(): HasMany
+    {
+        return $this->hasMany(WhatsAppConversation::class, 'account_id');
+    }
+
+    public function campaigns(): HasMany
+    {
+        return $this->hasMany(EventWhatsAppCampaign::class, 'account_id');
+    }
+
+    public function users(): HasMany
+    {
+        return $this->hasMany(User::class, 'whatsapp_account_id');
     }
 
     protected function accessToken(): Attribute

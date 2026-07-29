@@ -6,6 +6,7 @@ use App\Models\WhatsAppAccount;
 use App\Services\AccessAuditService;
 use App\Services\LegacyContextService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use RuntimeException;
@@ -49,7 +50,18 @@ class WhatsAppService
         }
 
         if (!$account) {
-            $account = WhatsAppAccount::active()->latest('id')->first();
+            $selectedAccountId = Auth::user()?->whatsapp_account_id;
+
+            if ($selectedAccountId) {
+                $account = WhatsAppAccount::query()
+                    ->where('id', $selectedAccountId)
+                    ->where('status', 'active')
+                    ->first();
+            }
+        }
+
+        if (!$account) {
+            $account = WhatsAppAccount::active()->oldest('id')->first();
         }
 
         if ($account) {
@@ -231,11 +243,11 @@ class WhatsAppService
 
     protected function assertInteractiveAccess(): void
     {
-        if (app()->runningInConsole() || !auth()->check()) {
+        if (app()->runningInConsole() || !Auth::check()) {
             return;
         }
 
-        $user = auth()->user();
+        $user = Auth::user();
         if ($this->legacyContextService->hasLegacyWhatsAppAccess($user)) {
             return;
         }

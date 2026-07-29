@@ -10,6 +10,14 @@
     <div class="py-4">
         @include('admin.whatsapp.partials.nav')
 
+        <div class="alert alert-light border mb-3">
+            <strong>Current Account:</strong>
+            {{ $activeAccount?->business_name ?: 'No active account' }}
+            @if ($activeAccount?->phone_number)
+                <span class="text-muted">({{ $activeAccount->phone_number }})</span>
+            @endif
+        </div>
+
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif

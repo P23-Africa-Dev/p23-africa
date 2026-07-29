@@ -5,29 +5,30 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Jobs\SyncWhatsAppBusinessProfileJob;
 use App\Jobs\SyncWhatsAppTemplatesJob;
-use App\Models\WhatsAppAccount;
+use App\Services\WhatsApp\WhatsAppAccountService;
 use App\Services\WhatsApp\WhatsAppBusinessProfileService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class MetaProfileSyncController extends Controller
 {
-    public function index(): View
+    public function index(Request $request, WhatsAppAccountService $accountService): View
     {
         $this->authorize('whatsapp.view');
 
-        $account = WhatsAppAccount::query()->latest('id')->first();
+        $account = $accountService->getActiveAccountForUser($request->user());
 
         return view('admin.whatsapp.profile-sync', [
             'activeAccount' => $account,
         ]);
     }
 
-    public function syncNow(): RedirectResponse
+    public function syncNow(Request $request, WhatsAppAccountService $accountService): RedirectResponse
     {
         $this->authorize('whatsapp.manage');
 
-        $account = WhatsAppAccount::query()->latest('id')->first();
+        $account = $accountService->getActiveAccountForUser($request->user());
 
         if (! $account) {
             return back()->withErrors(['whatsapp_profile' => 'No active WhatsApp account is configured.']);
@@ -44,11 +45,15 @@ class MetaProfileSyncController extends Controller
         return back()->with('success', 'WhatsApp business profile sync queued for Meta review.');
     }
 
-    public function refreshMetaStatus(WhatsAppBusinessProfileService $service): RedirectResponse
+    public function refreshMetaStatus(
+        Request $request,
+        WhatsAppBusinessProfileService $service,
+        WhatsAppAccountService $accountService
+    ): RedirectResponse
     {
         $this->authorize('whatsapp.manage');
 
-        $account = WhatsAppAccount::query()->latest('id')->first();
+        $account = $accountService->getActiveAccountForUser($request->user());
 
         if (! $account) {
             return back()->withErrors(['whatsapp_profile' => 'No active WhatsApp account is configured.']);
@@ -59,11 +64,11 @@ class MetaProfileSyncController extends Controller
         return back()->with('success', 'Meta profile status refreshed successfully.');
     }
 
-    public function syncTemplatesNow(): RedirectResponse
+    public function syncTemplatesNow(Request $request, WhatsAppAccountService $accountService): RedirectResponse
     {
         $this->authorize('whatsapp.manage');
 
-        $account = WhatsAppAccount::query()->latest('id')->first();
+        $account = $accountService->getActiveAccountForUser($request->user());
 
         if (!$account) {
             return back()->withErrors(['whatsapp_templates' => 'No active WhatsApp account is configured.']);

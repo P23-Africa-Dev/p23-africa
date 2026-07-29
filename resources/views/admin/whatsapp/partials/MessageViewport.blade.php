@@ -52,6 +52,7 @@
                 data-wa-send-form>
                 @csrf
                 <input type="hidden" name="type" value="text" data-wa-message-type>
+                <input type="hidden" name="account_id" value="{{ $activeAccount?->id }}">
                 <div class="row g-2 mb-2">
                     <div class="col-12 col-lg-3">
                         <button class="btn btn-outline-primary w-100" type="button" data-wa-open-template-modal>

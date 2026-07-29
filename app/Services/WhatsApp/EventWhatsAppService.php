@@ -12,6 +12,7 @@ use App\Services\LegacyContextService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use RuntimeException;
 
@@ -50,6 +51,9 @@ class EventWhatsAppService
         }
 
         $campaign = DB::transaction(function () use ($payload, $template, $audience, $sourceType) {
+            $accountId = Arr::get($payload, 'account_id');
+            $accountId = $accountId !== null ? (int) $accountId : null;
+
             $filters = [
                 'event_filter' => Arr::get($payload, 'event_filter'),
                 'event_id' => (int) Arr::get($payload, 'event_id'),
@@ -59,6 +63,7 @@ class EventWhatsAppService
             $campaign = EventWhatsAppCampaign::query()->create([
                 'event_id' => $filters['event_filter'] === EventAudienceService::FILTER_SINGLE ? ($filters['event_id'] ?: null) : null,
                 'template_id' => $template->id,
+                'account_id' => $accountId,
                 'total_contacts' => $audience->count(),
                 'valid_contacts' => $audience->count(),
                 'sent' => 0,
@@ -86,7 +91,7 @@ class EventWhatsAppService
             }
 
             foreach (array_chunk($recipientIds, self::CHUNK_SIZE) as $recipientIdChunk) {
-                SendEventBroadcastJob::dispatch($campaign->id, $recipientIdChunk)->onQueue('whatsapp');
+                SendEventBroadcastJob::dispatch($campaign->id, $recipientIdChunk, $accountId)->onQueue('whatsapp');
             }
 
             return $campaign->fresh(['template']);
@@ -384,11 +389,11 @@ class EventWhatsAppService
 
     protected function assertInteractiveAccess(): void
     {
-        if (app()->runningInConsole() || !auth()->check()) {
+        if (app()->runningInConsole() || !Auth::check()) {
             return;
         }
 
-        $user = auth()->user();
+        $user = Auth::user();
         if ($this->legacyContextService->hasLegacyWhatsAppAccess($user)) {
             return;
         }

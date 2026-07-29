@@ -40,6 +40,7 @@
                         <thead>
                             <tr>
                                 <th class="ps-3">ID</th>
+                                <th>Account</th>
                                 <th>Event Type</th>
                                 <th>Signature</th>
                                 <th>Status</th>
@@ -65,6 +66,7 @@
                                 @endphp
                                 <tr>
                                     <td class="ps-3">#{{ $log->id }}</td>
+                                    <td>{{ $log->account_id ?: '-' }}</td>
                                     <td>{{ $log->event_type ?: '-' }}</td>
                                     <td>
                                         <span class="badge {{ $log->signature_valid ? 'bg-success' : 'bg-danger' }}">
@@ -96,7 +98,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="8" class="text-center py-4 text-muted">No webhook logs yet.</td>
+                                    <td colspan="9" class="text-center py-4 text-muted">No webhook logs yet.</td>
                                 </tr>
                             @endforelse
                         </tbody>

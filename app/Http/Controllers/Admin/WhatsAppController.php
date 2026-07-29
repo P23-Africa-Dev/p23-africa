@@ -16,6 +16,7 @@ use App\Services\WhatsApp\DeveloperPasscodeService;
 use App\Services\WhatsApp\MessageStatusSyncService;
 use App\Services\WhatsApp\MessageService;
 use App\Services\WhatsApp\MetaTemplateBuilderService;
+use App\Services\WhatsApp\WhatsAppAccountService;
 use App\Services\WhatsApp\TemplateComposerService;
 use App\Services\WhatsApp\TemplateService;
 use App\Services\WhatsApp\TemplateRendererService;
@@ -27,29 +28,57 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use InvalidArgumentException;
 
 class WhatsAppController extends Controller
 {
-    public function overview(): View
+    public function overview(WhatsAppAccountService $accountService): View
     {
         $this->authorize('whatsapp.view');
 
+        $activeAccount = $accountService->getActiveAccountForUser(Auth::user());
+        $activeAccountId = $activeAccount?->id;
+
         $stats = [
-            'total_conversations' => WhatsAppConversation::count(),
-            'open_conversations' => WhatsAppConversation::where('status', WhatsAppConversation::STATUS_OPEN)->count(),
-            'pending_conversations' => WhatsAppConversation::where('status', WhatsAppConversation::STATUS_PENDING)->count(),
-            'closed_conversations' => WhatsAppConversation::where('status', WhatsAppConversation::STATUS_CLOSED)->count(),
+            'total_conversations' => WhatsAppConversation::query()
+                ->when($activeAccountId !== null, fn($query) => $query->where('account_id', $activeAccountId))
+                ->count(),
+            'open_conversations' => WhatsAppConversation::query()
+                ->when($activeAccountId !== null, fn($query) => $query->where('account_id', $activeAccountId))
+                ->where('status', WhatsAppConversation::STATUS_OPEN)
+                ->count(),
+            'pending_conversations' => WhatsAppConversation::query()
+                ->when($activeAccountId !== null, fn($query) => $query->where('account_id', $activeAccountId))
+                ->where('status', WhatsAppConversation::STATUS_PENDING)
+                ->count(),
+            'closed_conversations' => WhatsAppConversation::query()
+                ->when($activeAccountId !== null, fn($query) => $query->where('account_id', $activeAccountId))
+                ->where('status', WhatsAppConversation::STATUS_CLOSED)
+                ->count(),
             'total_contacts' => WhatsAppContact::count(),
-            'total_unread' => (int) WhatsAppConversation::sum('unread_count'),
+            'total_unread' => (int) WhatsAppConversation::query()
+                ->when($activeAccountId !== null, fn($query) => $query->where('account_id', $activeAccountId))
+                ->sum('unread_count'),
             'incoming_today' => WhatsAppMessage::query()
+                ->whereHas('conversation', function ($query) use ($activeAccountId) {
+                    if ($activeAccountId !== null) {
+                        $query->where('account_id', $activeAccountId);
+                    }
+                })
                 ->where('sender_type', WhatsAppMessage::SENDER_CONTACT)
                 ->whereDate('created_at', now()->toDateString())
                 ->count(),
             'outgoing_today' => WhatsAppMessage::query()
+                ->whereHas('conversation', function ($query) use ($activeAccountId) {
+                    if ($activeAccountId !== null) {
+                        $query->where('account_id', $activeAccountId);
+                    }
+                })
                 ->where('sender_type', WhatsAppMessage::SENDER_ADMIN)
                 ->whereDate('created_at', now()->toDateString())
                 ->count(),
@@ -57,6 +86,7 @@ class WhatsAppController extends Controller
 
         $recentConversations = WhatsAppConversation::query()
             ->with(['contact', 'assignedUser'])
+            ->when($activeAccountId !== null, fn($query) => $query->where('account_id', $activeAccountId))
             ->orderByDesc('updated_at')
             ->limit(8)
             ->get();
@@ -64,15 +94,20 @@ class WhatsAppController extends Controller
         return view('admin.whatsapp.overview', [
             'stats' => $stats,
             'recentConversations' => $recentConversations,
+            'activeAccount' => $activeAccount,
         ]);
     }
 
     public function conversations(
         Request $request,
         ConversationService $conversationService,
-        TemplateComposerService $templateComposerService
+        TemplateComposerService $templateComposerService,
+        WhatsAppAccountService $accountService
     ): View {
         $this->authorize('whatsapp.view');
+
+        $activeAccount = $accountService->getActiveAccountForUser($request->user());
+        $activeAccountId = $activeAccount?->id;
 
         $filters = [
             'search' => $request->query('search'),
@@ -80,7 +115,7 @@ class WhatsAppController extends Controller
             'assigned_to' => $request->query('assigned_to'),
         ];
 
-        $conversations = $conversationService->listConversations($filters, 20);
+        $conversations = $conversationService->listConversations($filters, 20, $activeAccountId);
 
         $conversationQuery = $request->query('conversation');
         $selectedConversationId = 0;
@@ -89,17 +124,24 @@ class WhatsAppController extends Controller
         } elseif ($conversationQuery !== null && $conversationQuery !== '') {
             $selectedConversationId = (int) $conversationQuery;
         } else {
-            $selectedConversationId = (int) optional($conversations->items()[0] ?? null)->id;
+            $selectedConversationId = 0;
         }
         $selectedConversation = null;
 
         $initialMessageLimit = 30;
 
         if ($selectedConversationId > 0) {
-            $selectedConversation = $conversationService->getConversationThread($selectedConversationId, $initialMessageLimit);
-            if ($selectedConversation->unread_count > 0) {
-                $conversationService->markConversationRead($selectedConversation);
+            $conversationBelongsToScope = WhatsAppConversation::query()
+                ->whereKey($selectedConversationId)
+                ->when($activeAccountId !== null, fn($query) => $query->where('account_id', $activeAccountId))
+                ->exists();
+
+            if ($conversationBelongsToScope) {
                 $selectedConversation = $conversationService->getConversationThread($selectedConversationId, $initialMessageLimit);
+                if ($selectedConversation->unread_count > 0) {
+                    $conversationService->markConversationRead($selectedConversation);
+                    $selectedConversation = $conversationService->getConversationThread($selectedConversationId, $initialMessageLimit);
+                }
             }
         }
 
@@ -121,15 +163,27 @@ class WhatsAppController extends Controller
             'pollInterval' => (int) config('whatsapp.poll_interval', 5),
             'statusPollIntervalMs' => max(1500, (int) config('whatsapp.status_poll_interval_ms', 3000)),
             'historyPageSize' => $initialMessageLimit,
-            'totalUnread' => (int) WhatsAppConversation::sum('unread_count'),
+            'totalUnread' => (int) WhatsAppConversation::query()
+                ->when($activeAccountId !== null, fn($query) => $query->where('account_id', $activeAccountId))
+                ->sum('unread_count'),
+            'activeAccount' => $activeAccount,
             'realtimeDebugEnabled' => app()->hasDebugModeEnabled() && (bool) config('whatsapp.realtime_debug', true),
             'pollCursor' => $selectedConversation?->messages->last()?->updated_at?->toIso8601String() ?: now()->subSeconds(((int) config('whatsapp.poll_interval', 5)) + 2)->toIso8601String(),
         ]);
     }
 
-    public function conversationHistory(Request $request, WhatsAppConversation $conversation): JsonResponse
+    public function conversationHistory(
+        Request $request,
+        WhatsAppConversation $conversation,
+        WhatsAppAccountService $accountService
+    ): JsonResponse
     {
         $this->authorize('whatsapp.view');
+
+        $activeAccountId = $accountService->getActiveAccountForUser($request->user())?->id;
+        if ($activeAccountId !== null && (int) $conversation->account_id !== (int) $activeAccountId) {
+            abort(404);
+        }
 
         $validated = $request->validate([
             'limit' => ['nullable', 'integer', 'min:10', 'max:100'],
@@ -170,9 +224,15 @@ class WhatsAppController extends Controller
         ]);
     }
 
-    public function sendMessage(Request $request, WhatsAppConversation $conversation, MessageService $messageService): JsonResponse|RedirectResponse
+    public function sendMessage(
+        Request $request,
+        WhatsAppConversation $conversation,
+        MessageService $messageService,
+        WhatsAppAccountService $accountService
+    ): JsonResponse|RedirectResponse
     {
         $this->authorize('whatsapp.send');
+        $this->abortIfConversationOutOfScope($request, $conversation, $accountService);
 
         $validated = $request->validate([
             'type' => ['required', 'string', 'in:text,image,video,document,audio,template,interactive'],
@@ -188,6 +248,11 @@ class WhatsAppController extends Controller
             'template_variables' => ['nullable'],
         ]);
 
+        $accountId = Arr::get($validated, 'account_id');
+        if ($accountId === null) {
+            $accountId = $accountService->getActiveAccountForUser($request->user())?->id;
+        }
+
         if ($validated['type'] === 'template') {
             $templateId = (int) Arr::get($validated, 'template_id', 0);
 
@@ -201,7 +266,7 @@ class WhatsAppController extends Controller
                 $conversation,
                 (int) $request->user()->id,
                 $templateId,
-                Arr::get($validated, 'account_id'),
+                $accountId,
                 Arr::get($validated, 'template_variables')
             );
         } else {
@@ -226,7 +291,7 @@ class WhatsAppController extends Controller
                 $conversation,
                 (int) $request->user()->id,
                 $body,
-                Arr::get($validated, 'account_id')
+                $accountId
             );
         }
 
@@ -254,6 +319,7 @@ class WhatsAppController extends Controller
     public function updateConversation(Request $request, WhatsAppConversation $conversation, ConversationService $conversationService): JsonResponse|RedirectResponse
     {
         $this->authorize('whatsapp.manage');
+        $this->abortIfConversationOutOfScope($request, $conversation);
 
         $validated = $request->validate([
             'status' => ['nullable', 'string', 'in:open,pending,closed'],
@@ -289,6 +355,7 @@ class WhatsAppController extends Controller
     public function addNote(Request $request, WhatsAppConversation $conversation, ConversationService $conversationService): JsonResponse|RedirectResponse
     {
         $this->authorize('whatsapp.manage');
+        $this->abortIfConversationOutOfScope($request, $conversation);
 
         $validated = $request->validate([
             'note' => ['required', 'string', 'max:2000'],
@@ -316,6 +383,7 @@ class WhatsAppController extends Controller
     public function markRead(WhatsAppConversation $conversation, ConversationService $conversationService): JsonResponse
     {
         $this->authorize('whatsapp.manage');
+        $this->abortIfConversationOutOfScope(request(), $conversation);
 
         $conversationService->markConversationRead($conversation);
 
@@ -328,6 +396,7 @@ class WhatsAppController extends Controller
     public function clearConversation(Request $request, WhatsAppConversation $conversation): JsonResponse|RedirectResponse
     {
         $this->authorize('whatsapp.manage');
+        $this->abortIfConversationOutOfScope($request, $conversation);
 
         WhatsAppMessage::query()
             ->where('conversation_id', $conversation->id)
@@ -354,11 +423,16 @@ class WhatsAppController extends Controller
         );
     }
 
-    public function poll(Request $request, ?WhatsAppRealtimeDebugService $debugService = null): JsonResponse
+    public function poll(
+        Request $request,
+        WhatsAppAccountService $accountService,
+        ?WhatsAppRealtimeDebugService $debugService = null
+    ): JsonResponse
     {
         $this->authorize('whatsapp.view');
 
         $debugService ??= app(WhatsAppRealtimeDebugService::class);
+        $activeAccountId = $accountService->getActiveAccountForUser($request->user())?->id;
 
         $conversationId = (int) $request->query('conversation_id', 0);
         $scope = strtolower((string) $request->query('scope', 'messages'));
@@ -373,6 +447,7 @@ class WhatsAppController extends Controller
         if ($conversationId > 0) {
             $conversation = WhatsAppConversation::query()
                 ->with(['contact', 'assignedUser'])
+                ->when($activeAccountId !== null, fn($query) => $query->where('account_id', $activeAccountId))
                 ->find($conversationId);
 
             if (!$conversation) {
@@ -397,7 +472,9 @@ class WhatsAppController extends Controller
             return response()->json([
                 'success' => true,
                 'server_time' => now()->toIso8601String(),
-                'unread_total' => (int) WhatsAppConversation::sum('unread_count'),
+                'unread_total' => (int) WhatsAppConversation::query()
+                    ->when($activeAccountId !== null, fn($query) => $query->where('account_id', $activeAccountId))
+                    ->sum('unread_count'),
                 'conversation' => [
                     'id' => $conversation->id,
                     'status' => $conversation->status,
@@ -419,6 +496,7 @@ class WhatsAppController extends Controller
 
         $updatedConversations = WhatsAppConversation::query()
             ->with(['contact', 'assignedUser'])
+            ->when($activeAccountId !== null, fn($query) => $query->where('account_id', $activeAccountId))
             ->where('updated_at', '>=', $sinceAt)
             ->orderByDesc('updated_at')
             ->limit(100)
@@ -433,7 +511,9 @@ class WhatsAppController extends Controller
             return response()->json([
                 'success' => true,
                 'server_time' => now()->toIso8601String(),
-                'unread_total' => (int) WhatsAppConversation::sum('unread_count'),
+                'unread_total' => (int) WhatsAppConversation::query()
+                    ->when($activeAccountId !== null, fn($query) => $query->where('account_id', $activeAccountId))
+                    ->sum('unread_count'),
                 'conversations' => $updatedConversations,
             ]);
         }
@@ -458,7 +538,9 @@ class WhatsAppController extends Controller
         return response()->json([
             'success' => true,
             'server_time' => now()->toIso8601String(),
-            'unread_total' => (int) WhatsAppConversation::sum('unread_count'),
+            'unread_total' => (int) WhatsAppConversation::query()
+                ->when($activeAccountId !== null, fn($query) => $query->where('account_id', $activeAccountId))
+                ->sum('unread_count'),
             'conversations' => $updatedConversations,
             'messages' => $messages,
         ]);
@@ -467,6 +549,7 @@ class WhatsAppController extends Controller
     public function statusPoll(
         Request $request,
         MessageStatusSyncService $statusSyncService,
+        WhatsAppAccountService $accountService,
         ?WhatsAppRealtimeDebugService $debugService = null
     ): JsonResponse {
         $this->authorize('whatsapp.view');
@@ -483,7 +566,12 @@ class WhatsAppController extends Controller
             ], 422);
         }
 
-        $conversationExists = WhatsAppConversation::query()->whereKey($conversationId)->exists();
+        $activeAccountId = $accountService->getActiveAccountForUser($request->user())?->id;
+
+        $conversationExists = WhatsAppConversation::query()
+            ->whereKey($conversationId)
+            ->when($activeAccountId !== null, fn($query) => $query->where('account_id', $activeAccountId))
+            ->exists();
         if (!$conversationExists) {
             return response()->json([
                 'success' => false,
@@ -859,15 +947,19 @@ class WhatsAppController extends Controller
         return back()->with('success', 'Contact deleted successfully.');
     }
 
-    public function settings(Request $request, DeveloperPasscodeService $passcodeService): View
+    public function settings(
+        Request $request,
+        DeveloperPasscodeService $passcodeService,
+        WhatsAppAccountService $accountService
+    ): View
     {
         $this->authorize('whatsapp.view');
 
-        $activeAccount = WhatsAppAccount::query()->latest('id')->first();
+        $activeAccount = $accountService->getActiveAccountForUser($request->user());
 
         return view('admin.whatsapp.settings', [
             'activeAccount' => $activeAccount,
-            'accounts' => WhatsAppAccount::query()->orderByDesc('id')->get(),
+            'accounts' => $accountService->allAccounts(),
             'sensitiveMasked' => $passcodeService->maskedSensitiveFields($activeAccount),
             'unlocked' => $passcodeService->isUnlocked($request),
             'canManageDeveloperSecurity' => $passcodeService->isDeveloperManager($request->user()),
@@ -920,6 +1012,25 @@ class WhatsAppController extends Controller
         }
 
         return back()->with('success', 'WhatsApp business profile updated successfully.');
+    }
+
+    public function switchAccount(
+        Request $request,
+        WhatsAppAccountService $accountService
+    ): RedirectResponse {
+        $this->authorize('whatsapp.view');
+
+        $validated = $request->validate([
+            'account_id' => ['required', 'integer', 'exists:whatsapp_accounts,id'],
+        ]);
+
+        try {
+            $account = $accountService->switchAccount($request->user(), (int) $validated['account_id']);
+        } catch (InvalidArgumentException $exception) {
+            return back()->withErrors(['whatsapp_account' => $exception->getMessage()]);
+        }
+
+        return back()->with('success', 'Active WhatsApp account switched to ' . ($account->business_name ?: $account->phone_number) . '.');
     }
 
     public function accountSetup(): View
@@ -1141,5 +1252,18 @@ class WhatsAppController extends Controller
         }
 
         return back()->withErrors(['whatsapp' => $flashMessage]);
+    }
+
+    protected function abortIfConversationOutOfScope(
+        Request $request,
+        WhatsAppConversation $conversation,
+        ?WhatsAppAccountService $accountService = null
+    ): void {
+        $accountService ??= app(WhatsAppAccountService::class);
+        $activeAccountId = $accountService->getActiveAccountForUser($request->user())?->id;
+
+        if ($activeAccountId !== null && (int) $conversation->account_id !== (int) $activeAccountId) {
+            abort(404);
+        }
     }
 }

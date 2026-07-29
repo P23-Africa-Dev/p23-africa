@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\WhatsAppTemplate;
+use App\Services\WhatsApp\WhatsAppAccountService;
 use App\Services\WhatsApp\MessageService;
 use App\Services\WhatsApp\TemplateComposerService;
 use App\Services\WhatsApp\WhatsAppNumberValidationService;
@@ -62,7 +63,7 @@ class QuickChatController extends Controller
         ]);
     }
 
-    public function start(Request $request): JsonResponse
+    public function start(Request $request, WhatsAppAccountService $accountService): JsonResponse
     {
         $this->authorize('whatsapp.send');
 
@@ -78,8 +79,14 @@ class QuickChatController extends Controller
             (string) ($validated['country_code'] ?? ''),
         );
 
+        $activeAccountId = $accountService->getActiveAccountForUser($request->user())?->id;
+
         try {
-            $conversation = $this->validationService->startConversation($result, $validated['name'] ?? null);
+            $conversation = $this->validationService->startConversation(
+                $result,
+                $validated['name'] ?? null,
+                $activeAccountId
+            );
         } catch (RuntimeException $exception) {
             return response()->json([
                 'success' => false,
@@ -89,7 +96,12 @@ class QuickChatController extends Controller
 
         $initialMessage = trim((string) ($validated['message'] ?? ''));
         if ($initialMessage !== '' && $request->user()) {
-            $this->messageService->queueTextMessage($conversation, (int) $request->user()->id, $initialMessage);
+            $this->messageService->queueTextMessage(
+                $conversation,
+                (int) $request->user()->id,
+                $initialMessage,
+                $activeAccountId
+            );
         }
 
         return response()->json([
@@ -142,7 +154,7 @@ class QuickChatController extends Controller
         ]);
     }
 
-    public function startTemplate(Request $request): JsonResponse
+    public function startTemplate(Request $request, WhatsAppAccountService $accountService): JsonResponse
     {
         $this->authorize('whatsapp.send');
 
@@ -189,8 +201,14 @@ class QuickChatController extends Controller
             $this->templateComposerService->buildSendComponents($template, $variables);
         }
 
+        $activeAccountId = $accountService->getActiveAccountForUser($request->user())?->id;
+
         try {
-            $conversation = $this->validationService->startConversation($validation, $validated['name'] ?? null);
+            $conversation = $this->validationService->startConversation(
+                $validation,
+                $validated['name'] ?? null,
+                $activeAccountId
+            );
         } catch (RuntimeException $exception) {
             return response()->json([
                 'success' => false,
@@ -202,7 +220,7 @@ class QuickChatController extends Controller
             $conversation,
             (int) $request->user()->id,
             $template->id,
-            null,
+            $activeAccountId,
             $variables
         );
 

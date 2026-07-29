@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class WhatsAppWebhookLog extends Model
 {
@@ -12,6 +13,7 @@ class WhatsAppWebhookLog extends Model
     protected $table = 'whatsapp_webhook_logs';
 
     protected $fillable = [
+        'account_id',
         'event_type',
         'payload',
         'headers',
@@ -29,5 +31,10 @@ class WhatsAppWebhookLog extends Model
             'signature_valid' => 'boolean',
             'processed_at' => 'datetime',
         ];
+    }
+
+    public function account(): BelongsTo
+    {
+        return $this->belongsTo(WhatsAppAccount::class, 'account_id');
     }
 }

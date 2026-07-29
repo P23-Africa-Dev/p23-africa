@@ -89,6 +89,7 @@
                         <form method="POST" action="{{ orgRoute('admin.whatsapp.settings.sensitive.save') }}"
                             id="sensitiveSettingsForm">
                             @csrf
+                            <input type="hidden" name="account_id" value="{{ $activeAccount?->id }}">
 
                             <div class="row g-2">
                                 <div class="col-12 col-md-6">
@@ -160,9 +161,24 @@
                     <div class="card-header fw-semibold">Saved Accounts</div>
                     <div class="card-body">
                         @forelse ($accounts as $account)
-                            <div class="border rounded p-2 mb-2">
-                                <div class="fw-semibold">{{ $account->business_name }}</div>
-                                <div class="small text-muted">{{ $account->phone_number }}</div>
+                            <div class="border rounded p-2 mb-2 d-flex justify-content-between align-items-center gap-2">
+                                <div>
+                                    <div class="fw-semibold">
+                                        {{ $account->business_name }}
+                                        @if ((int) ($activeAccount?->id ?? 0) === (int) $account->id)
+                                            <span class="badge bg-success ms-1">Active</span>
+                                        @endif
+                                    </div>
+                                    <div class="small text-muted">{{ $account->phone_number }}</div>
+                                </div>
+                                <form method="POST" action="{{ orgRoute('admin.whatsapp.accounts.switch') }}">
+                                    @csrf
+                                    <input type="hidden" name="account_id" value="{{ $account->id }}">
+                                    <button class="btn btn-sm btn-outline-success" type="submit"
+                                        {{ (int) ($activeAccount?->id ?? 0) === (int) $account->id ? 'disabled' : '' }}>
+                                        Use This Account
+                                    </button>
+                                </form>
                             </div>
                         @empty
                             <div class="text-muted">No WhatsApp accounts saved yet.</div>
@@ -249,6 +265,9 @@
                     if (sensitiveForm?.elements.namedItem('phone_number_id')) {
                         sensitiveForm.elements.namedItem('phone_number_id').value = data.phone_number_id || '';
                     }
+                    if (sensitiveForm?.elements.namedItem('account_id')) {
+                        sensitiveForm.elements.namedItem('account_id').value = data.account_id || sensitiveForm.elements.namedItem('account_id').value || '';
+                    }
                     if (sensitiveForm?.elements.namedItem('business_account_id')) {
                         sensitiveForm.elements.namedItem('business_account_id').value = data.business_account_id || '';
                     }
@@ -275,7 +294,13 @@
                 }
 
                 async function fetchSensitiveData() {
-                    const response = await fetch(sensitiveDataUrl, {
+                    const accountId = sensitiveForm?.elements.namedItem('account_id')?.value || '';
+                    const url = new URL(sensitiveDataUrl, window.location.origin);
+                    if (accountId) {
+                        url.searchParams.set('account_id', accountId);
+                    }
+
+                    const response = await fetch(url.toString(), {
                         method: 'GET',
                         headers: {
                             Accept: 'application/json',

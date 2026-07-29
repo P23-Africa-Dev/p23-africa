@@ -608,6 +608,7 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
         Route::post('/quick-chat/start-template', [\App\Http\Controllers\Admin\QuickChatController::class, 'startTemplate'])->name('quick-chat.start-template');
         Route::post('/quick-chat/save-contact', [\App\Http\Controllers\Admin\QuickChatController::class, 'saveContact'])->name('quick-chat.save-contact');
         Route::get('/settings', [\App\Http\Controllers\Admin\WhatsAppController::class, 'settings'])->name('settings');
+        Route::post('/accounts/switch', [\App\Http\Controllers\Admin\WhatsAppController::class, 'switchAccount'])->name('accounts.switch');
         Route::post('/settings/account', [\App\Http\Controllers\Admin\WhatsAppController::class, 'saveAccount'])->name('settings.account.save');
         Route::get('/profile-sync', [\App\Http\Controllers\Admin\MetaProfileSyncController::class, 'index'])->name('profile-sync');
         Route::post('/profile-sync/sync', [\App\Http\Controllers\Admin\MetaProfileSyncController::class, 'syncNow'])->name('profile-sync.sync');

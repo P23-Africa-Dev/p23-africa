@@ -26,7 +26,8 @@ class User extends Authenticatable
         'suspended_at',
         'role',
         'permissions',
-        'organization_id'
+        'organization_id',
+        'whatsapp_account_id',
     ];
 
     /**
@@ -77,6 +78,14 @@ class User extends Authenticatable
     public function organization()
     {
         return $this->belongsTo(Organization::class);
+    }
+
+    /**
+     * The WhatsApp account this user has currently selected as their active sender.
+     */
+    public function whatsappAccount()
+    {
+        return $this->belongsTo(WhatsAppAccount::class, 'whatsapp_account_id');
     }
 
 

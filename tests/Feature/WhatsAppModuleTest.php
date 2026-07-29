@@ -29,6 +29,7 @@ use App\Services\WhatsApp\EventWhatsAppService;
 use App\Services\WhatsApp\MessageService;
 use App\Services\WhatsApp\MessageStatusSyncService;
 use App\Services\WhatsApp\TemplateRendererService;
+use App\Services\WhatsApp\WhatsAppAccountService;
 use App\Services\WhatsApp\WhatsAppBusinessProfileService;
 use App\Services\WhatsApp\WhatsAppNumberValidationService;
 use App\Services\WhatsApp\WebhookService;
@@ -533,7 +534,12 @@ class WhatsAppModuleTest extends TestCase
         $request->headers->set('Accept', 'application/json');
         $request->setUserResolver(fn() => $admin);
 
-        $response = app(WhatsAppController::class)->sendMessage($request, $conversation, app(MessageService::class));
+        $response = app(WhatsAppController::class)->sendMessage(
+            $request,
+            $conversation,
+            app(MessageService::class),
+            app(WhatsAppAccountService::class)
+        );
 
         $this->assertSame(200, $response->getStatusCode());
         $payload = $response->getData(true);
@@ -603,7 +609,12 @@ class WhatsAppModuleTest extends TestCase
         $request->headers->set('Accept', 'application/json');
         $request->setUserResolver(fn() => $admin);
 
-        $response = app(WhatsAppController::class)->sendMessage($request, $conversation, app(MessageService::class));
+        $response = app(WhatsAppController::class)->sendMessage(
+            $request,
+            $conversation,
+            app(MessageService::class),
+            app(WhatsAppAccountService::class)
+        );
 
         $this->assertSame(200, $response->getStatusCode());
         $payload = $response->getData(true);
@@ -696,7 +707,7 @@ class WhatsAppModuleTest extends TestCase
         ]);
         $request->headers->set('Accept', 'application/json');
 
-        $response = app(WhatsAppController::class)->poll($request);
+        $response = app(WhatsAppController::class)->poll($request, app(WhatsAppAccountService::class));
 
         Carbon::setTestNow();
 
@@ -750,7 +761,11 @@ class WhatsAppModuleTest extends TestCase
         ]);
         $request->headers->set('Accept', 'application/json');
 
-        $response = app(WhatsAppController::class)->statusPoll($request, app(MessageStatusSyncService::class));
+        $response = app(WhatsAppController::class)->statusPoll(
+            $request,
+            app(MessageStatusSyncService::class),
+            app(WhatsAppAccountService::class)
+        );
 
         Carbon::setTestNow();
 
@@ -800,7 +815,11 @@ class WhatsAppModuleTest extends TestCase
         ]);
         $request->headers->set('Accept', 'application/json');
 
-        $response = app(WhatsAppController::class)->conversationHistory($request, $conversation);
+        $response = app(WhatsAppController::class)->conversationHistory(
+            $request,
+            $conversation,
+            app(WhatsAppAccountService::class)
+        );
 
         $this->assertSame(200, $response->getStatusCode());
 
@@ -918,7 +937,8 @@ class WhatsAppModuleTest extends TestCase
         $response = app(WhatsAppController::class)->storeTemplate(
             $request,
             app(\App\Services\WhatsApp\TemplateService::class),
-            app(TemplateRendererService::class)
+            app(TemplateRendererService::class),
+            app(\App\Services\WhatsApp\MetaTemplateBuilderService::class)
         );
 
         $this->assertSame(302, $response->getStatusCode());
@@ -1003,7 +1023,8 @@ class WhatsAppModuleTest extends TestCase
 
         $blockedResponse = app(DeveloperSecurityController::class)->sensitiveData(
             $sensitiveBeforeUnlockRequest,
-            app(DeveloperPasscodeService::class)
+            app(DeveloperPasscodeService::class),
+            app(WhatsAppAccountService::class)
         );
 
         $this->assertSame(403, $blockedResponse->getStatusCode());
@@ -1025,7 +1046,8 @@ class WhatsAppModuleTest extends TestCase
 
         $allowedResponse = app(DeveloperSecurityController::class)->sensitiveData(
             $sensitiveAfterUnlockRequest,
-            app(DeveloperPasscodeService::class)
+            app(DeveloperPasscodeService::class),
+            app(WhatsAppAccountService::class)
         );
 
         $this->assertSame(200, $allowedResponse->getStatusCode());
@@ -1280,7 +1302,7 @@ class WhatsAppModuleTest extends TestCase
         $startRequest->headers->set('Accept', 'application/json');
         $startRequest->setUserResolver(fn() => $admin);
 
-        $startResponse = app(QuickChatController::class)->start($startRequest);
+        $startResponse = app(QuickChatController::class)->start($startRequest, app(WhatsAppAccountService::class));
         $this->assertSame(200, $startResponse->getStatusCode());
 
         $contact = WhatsAppContact::query()->where('phone', '+233500888777')->firstOrFail();
@@ -2061,6 +2083,329 @@ class WhatsAppModuleTest extends TestCase
         $this->assertSame('knowing-your-customer-beyond-everybody', data_get($components, '2.parameters.0.text'));
     }
 
+    public function test_webhook_routes_incoming_message_to_account_by_phone_number_id(): void
+    {
+        config(['whatsapp.webhook_secret' => '']);
+
+        $accountA = WhatsAppAccount::create([
+            'business_name' => 'Sender A',
+            'phone_number' => '+1111111111',
+            'phone_number_id' => '111',
+            'waba_id' => 'waba-111',
+            'access_token' => 'token-111',
+            'webhook_verify_token' => 'verify-111',
+            'status' => 'active',
+        ]);
+
+        $accountB = WhatsAppAccount::create([
+            'business_name' => 'Sender B',
+            'phone_number' => '+2222222222',
+            'phone_number_id' => '222',
+            'waba_id' => 'waba-222',
+            'access_token' => 'token-222',
+            'webhook_verify_token' => 'verify-222',
+            'status' => 'active',
+        ]);
+
+        $payload = [
+            'entry' => [[
+                'changes' => [[
+                    'field' => 'messages',
+                    'value' => [
+                        'metadata' => [
+                            'phone_number_id' => '222',
+                        ],
+                        'contacts' => [[
+                            'wa_id' => '15551230000',
+                            'profile' => ['name' => 'Scoped Contact'],
+                        ]],
+                        'messages' => [[
+                            'from' => '15551230000',
+                            'id' => 'wamid.account.route.1',
+                            'timestamp' => (string) now()->timestamp,
+                            'type' => 'text',
+                            'text' => ['body' => 'Hello Sender B'],
+                        ]],
+                    ],
+                ]],
+            ]],
+        ];
+
+        $request = Request::create(
+            '/api/whatsapp/webhook',
+            'POST',
+            [],
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode($payload)
+        );
+        $request->headers->set('Accept', 'application/json');
+
+        $response = app(WhatsAppWebhookController::class)->receive($request, app(WebhookService::class));
+
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertDatabaseHas('whatsapp_conversations', [
+            'account_id' => $accountB->id,
+            'wa_id' => '15551230000',
+        ]);
+        $this->assertDatabaseHas('whatsapp_webhook_logs', [
+            'account_id' => $accountB->id,
+            'event_type' => 'messages',
+        ]);
+        $this->assertDatabaseMissing('whatsapp_conversations', [
+            'account_id' => $accountA->id,
+            'wa_id' => '15551230000',
+        ]);
+    }
+
+    public function test_same_customer_on_two_accounts_creates_two_distinct_conversations(): void
+    {
+        $accountA = WhatsAppAccount::create([
+            'business_name' => 'Sender A',
+            'phone_number' => '+1111111111',
+            'phone_number_id' => '111',
+            'waba_id' => 'waba-111',
+            'access_token' => 'token-111',
+            'webhook_verify_token' => 'verify-111',
+            'status' => 'active',
+        ]);
+
+        $accountB = WhatsAppAccount::create([
+            'business_name' => 'Sender B',
+            'phone_number' => '+2222222222',
+            'phone_number_id' => '222',
+            'waba_id' => 'waba-222',
+            'access_token' => 'token-222',
+            'webhook_verify_token' => 'verify-222',
+            'status' => 'active',
+        ]);
+
+        $service = app(ConversationService::class);
+
+        $conversationA = $service->findOrCreateConversationForPhone('+15550000000', 'Same Customer', [], $accountA->id);
+        $conversationB = $service->findOrCreateConversationForPhone('+15550000000', 'Same Customer', [], $accountB->id);
+
+        $this->assertNotSame($conversationA->id, $conversationB->id);
+        $this->assertSame($accountA->id, (int) $conversationA->account_id);
+        $this->assertSame($accountB->id, (int) $conversationB->account_id);
+        $this->assertNotSame($conversationA->conversation_key, $conversationB->conversation_key);
+    }
+
+    public function test_switch_account_updates_user_selection_and_conversation_scope(): void
+    {
+        Role::findOrCreate('admin');
+
+        $accountA = WhatsAppAccount::create([
+            'business_name' => 'Sender A',
+            'phone_number' => '+1111111111',
+            'phone_number_id' => '111',
+            'waba_id' => 'waba-111',
+            'access_token' => 'token-111',
+            'webhook_verify_token' => 'verify-111',
+            'status' => 'active',
+        ]);
+
+        $accountB = WhatsAppAccount::create([
+            'business_name' => 'Sender B',
+            'phone_number' => '+2222222222',
+            'phone_number_id' => '222',
+            'waba_id' => 'waba-222',
+            'access_token' => 'token-222',
+            'webhook_verify_token' => 'verify-222',
+            'status' => 'active',
+        ]);
+
+        $user = User::factory()->create([
+            'whatsapp_account_id' => $accountA->id,
+        ]);
+        $user->assignRole('admin');
+
+        $contactA = WhatsAppContact::create(['name' => 'A', 'phone' => '+10000000001']);
+        $contactB = WhatsAppContact::create(['name' => 'B', 'phone' => '+10000000002']);
+
+        WhatsAppConversation::create([
+            'account_id' => $accountA->id,
+            'contact_id' => $contactA->id,
+            'status' => 'open',
+        ]);
+        WhatsAppConversation::create([
+            'account_id' => $accountB->id,
+            'contact_id' => $contactB->id,
+            'status' => 'open',
+        ]);
+
+        $request = Request::create('/admin/whatsapp/accounts/switch', 'POST', [
+            'account_id' => $accountB->id,
+        ]);
+        $request->setUserResolver(fn() => $user);
+
+        $response = app(WhatsAppController::class)->switchAccount($request, app(WhatsAppAccountService::class));
+        $this->assertSame(302, $response->getStatusCode());
+
+        $user->refresh();
+        $this->assertSame($accountB->id, (int) $user->whatsapp_account_id);
+
+        $scoped = app(ConversationService::class)->listConversations([], 50, $user->whatsapp_account_id);
+        $this->assertCount(1, $scoped->items());
+        $this->assertSame($accountB->id, (int) $scoped->items()[0]->account_id);
+    }
+
+    public function test_list_conversations_scoped_by_account_excludes_other_accounts(): void
+    {
+        $accountA = WhatsAppAccount::create([
+            'business_name' => 'Sender A',
+            'phone_number' => '+1111111111',
+            'phone_number_id' => '111',
+            'waba_id' => 'waba-111',
+            'access_token' => 'token-111',
+            'webhook_verify_token' => 'verify-111',
+            'status' => 'active',
+        ]);
+
+        $accountB = WhatsAppAccount::create([
+            'business_name' => 'Sender B',
+            'phone_number' => '+2222222222',
+            'phone_number_id' => '222',
+            'waba_id' => 'waba-222',
+            'access_token' => 'token-222',
+            'webhook_verify_token' => 'verify-222',
+            'status' => 'active',
+        ]);
+
+        $contactA = WhatsAppContact::create(['name' => 'A', 'phone' => '+10000000101']);
+        $contactB = WhatsAppContact::create(['name' => 'B', 'phone' => '+10000000102']);
+
+        WhatsAppConversation::create([
+            'account_id' => $accountA->id,
+            'contact_id' => $contactA->id,
+            'status' => 'open',
+        ]);
+        WhatsAppConversation::create([
+            'account_id' => $accountB->id,
+            'contact_id' => $contactB->id,
+            'status' => 'open',
+        ]);
+
+        $resultA = app(ConversationService::class)->listConversations([], 25, $accountA->id);
+        $resultB = app(ConversationService::class)->listConversations([], 25, $accountB->id);
+
+        $this->assertCount(1, $resultA->items());
+        $this->assertCount(1, $resultB->items());
+        $this->assertSame($accountA->id, (int) $resultA->items()[0]->account_id);
+        $this->assertSame($accountB->id, (int) $resultB->items()[0]->account_id);
+    }
+
+    public function test_campaign_queue_persists_and_dispatches_selected_account_id(): void
+    {
+        Queue::fake();
+
+        $account = WhatsAppAccount::create([
+            'business_name' => 'Sender Campaign',
+            'phone_number' => '+3333333333',
+            'phone_number_id' => '333',
+            'waba_id' => 'waba-333',
+            'access_token' => 'token-333',
+            'webhook_verify_token' => 'verify-333',
+            'status' => 'active',
+        ]);
+
+        $event = Event::create([
+            'title' => 'Campaign Event',
+            'subtitle' => 'Subtitle',
+            'description' => 'Description',
+            'link' => 'https://example.test/event',
+            'event_date' => now()->addDays(2)->toDateString(),
+            'event_time' => '09:00:00',
+            'venue' => 'Virtual',
+            'display' => 'open_to_all',
+            'visibility' => 'public',
+        ]);
+
+        Seat::create([
+            'event_id' => $event->id,
+            'name' => 'Recipient',
+            'email' => 'recipient@example.test',
+            'phone' => '+15554443333',
+            'seat_code' => 'ACC-001',
+        ]);
+
+        $template = \App\Models\WhatsAppTemplate::create([
+            'name' => 'account_scoped_template',
+            'category' => 'utility',
+            'language' => 'en',
+            'template_format' => 'json',
+            'template_json' => ['components' => []],
+            'status' => 'approved',
+        ]);
+
+        Http::fake([
+            'https://graph.facebook.com/*/contacts' => Http::response([
+                'contacts' => [[
+                    'input' => '15554443333',
+                    'status' => 'valid',
+                ]],
+            ], 200),
+        ]);
+
+        $campaign = app(EventWhatsAppService::class)->queueCampaign([
+            'source_type' => 'event_contacts',
+            'event_filter' => 'single',
+            'event_id' => $event->id,
+            'template_id' => $template->id,
+            'account_id' => $account->id,
+        ]);
+
+        $this->assertSame($account->id, (int) $campaign->account_id);
+
+        Queue::assertPushed(SendEventBroadcastJob::class, function (SendEventBroadcastJob $job) use ($campaign, $account) {
+            return $job->campaignId === $campaign->id
+                && $job->accountId === $account->id;
+        });
+    }
+
+    public function test_get_active_account_for_user_falls_back_to_oldest_active_account(): void
+    {
+        $oldest = WhatsAppAccount::create([
+            'business_name' => 'Oldest Active',
+            'phone_number' => '+4444444444',
+            'phone_number_id' => '444',
+            'waba_id' => 'waba-444',
+            'access_token' => 'token-444',
+            'webhook_verify_token' => 'verify-444',
+            'status' => 'active',
+        ]);
+
+        WhatsAppAccount::create([
+            'business_name' => 'Inactive',
+            'phone_number' => '+5555555555',
+            'phone_number_id' => '555',
+            'waba_id' => 'waba-555',
+            'access_token' => 'token-555',
+            'webhook_verify_token' => 'verify-555',
+            'status' => 'inactive',
+        ]);
+
+        WhatsAppAccount::create([
+            'business_name' => 'Newest Active',
+            'phone_number' => '+6666666666',
+            'phone_number_id' => '666',
+            'waba_id' => 'waba-666',
+            'access_token' => 'token-666',
+            'webhook_verify_token' => 'verify-666',
+            'status' => 'active',
+        ]);
+
+        $user = User::factory()->create([
+            'whatsapp_account_id' => null,
+        ]);
+
+        $resolved = app(WhatsAppAccountService::class)->getActiveAccountForUser($user);
+
+        $this->assertNotNull($resolved);
+        $this->assertSame($oldest->id, $resolved?->id);
+    }
+
     public function test_sync_templates_command_supports_dry_run_and_real_sync(): void
     {
         config([
@@ -2159,7 +2504,13 @@ class WhatsAppModuleTest extends TestCase
             'status' => 'active',
         ]);
 
-        $response = app(MetaProfileSyncController::class)->syncTemplatesNow();
+        $request = Request::create('/admin/whatsapp/templates/sync', 'POST');
+        $request->setUserResolver(fn() => $admin);
+
+        $response = app(MetaProfileSyncController::class)->syncTemplatesNow(
+            $request,
+            app(WhatsAppAccountService::class)
+        );
 
         $this->assertSame(302, $response->getStatusCode());
 
@@ -2186,6 +2537,12 @@ class WhatsAppModuleTest extends TestCase
 
         $this->expectException(AuthorizationException::class);
 
-        app(MetaProfileSyncController::class)->syncTemplatesNow();
+        $request = Request::create('/admin/whatsapp/templates/sync', 'POST');
+        $request->setUserResolver(fn() => $orgAdmin);
+
+        app(MetaProfileSyncController::class)->syncTemplatesNow(
+            $request,
+            app(WhatsAppAccountService::class)
+        );
     }
 }

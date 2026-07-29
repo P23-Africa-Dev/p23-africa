@@ -25,6 +25,7 @@ class SendEventBroadcastJob implements ShouldQueue
     public function __construct(
         public int $campaignId,
         public array $recipientIds,
+        public ?int $accountId = null,
     ) {}
 
     public function handle(
@@ -77,6 +78,7 @@ class SendEventBroadcastJob implements ShouldQueue
                         'contact_id' => $recipient->contact_id,
                         'unsaved_contact' => false,
                     ],
+                    $this->accountId ?? ($campaign->account_id ? (int) $campaign->account_id : null),
                 );
 
                 $message = WhatsAppMessage::create([
@@ -85,7 +87,7 @@ class SendEventBroadcastJob implements ShouldQueue
                     'type' => 'template',
                     'body' => null,
                     'payload' => [
-                        'account_id' => null,
+                        'account_id' => $this->accountId ?? ($campaign->account_id ? (int) $campaign->account_id : null),
                         'template_id' => $campaign->template_id,
                         'variables' => $variables,
                         'campaign_id' => $campaign->id,
@@ -96,7 +98,10 @@ class SendEventBroadcastJob implements ShouldQueue
                     'status_updated_at' => now(),
                 ]);
 
-                $processed = $messageService->processOutgoingMessage($message);
+                $processed = $messageService->processOutgoingMessage(
+                    $message,
+                    $this->accountId ?? ($campaign->account_id ? (int) $campaign->account_id : null)
+                );
 
                 $recipient->update([
                     'contact_id' => $recipient->contact_id ?: $conversation->contact_id,

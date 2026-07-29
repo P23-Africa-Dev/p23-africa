@@ -19,6 +19,7 @@ class WhatsAppConversation extends Model
     public const STATUS_CLOSED = 'closed';
 
     protected $fillable = [
+        'account_id',
         'contact_id',
         'wa_id',
         'normalized_phone',
@@ -47,6 +48,7 @@ class WhatsAppConversation extends Model
                 $conversation->wa_id,
                 $conversation->normalized_phone,
                 $conversation->contact_id,
+                $conversation->account_id ? (int) $conversation->account_id : null,
             );
 
             if ($conversationKey) {
@@ -97,23 +99,30 @@ class WhatsAppConversation extends Model
         ])));
     }
 
-    public static function buildConversationKey(?string $waId, ?string $normalizedPhone, ?int $contactId): ?string
+    public static function buildConversationKey(?string $waId, ?string $normalizedPhone, ?int $contactId, ?int $accountId = null): ?string
     {
+        $prefix = 'acc' . (int) ($accountId ?? 0) . '_';
+
         $sanitizedWaId = self::sanitizeWaId($waId);
         if ($sanitizedWaId) {
-            return 'wa_' . sha1($sanitizedWaId);
+            return $prefix . 'wa_' . sha1($sanitizedWaId);
         }
 
         $canonicalPhone = self::normalizePhone($normalizedPhone);
         if ($canonicalPhone) {
-            return 'ph_' . sha1($canonicalPhone);
+            return $prefix . 'ph_' . sha1($canonicalPhone);
         }
 
         if ($contactId) {
-            return 'ct_' . $contactId;
+            return $prefix . 'ct_' . $contactId;
         }
 
         return null;
+    }
+
+    public function account(): BelongsTo
+    {
+        return $this->belongsTo(WhatsAppAccount::class, 'account_id');
     }
 
     public function contact(): BelongsTo

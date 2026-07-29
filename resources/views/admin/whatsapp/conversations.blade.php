@@ -479,6 +479,10 @@
                     updates and lazy history.</p>
             </div>
             <div class="d-flex align-items-center gap-2">
+                <span class="badge text-bg-light border">
+                    Sender:
+                    {{ $activeAccount?->phone_number ?: 'None' }}
+                </span>
                 <span class="badge bg-success" data-wa-unread-total data-count="{{ $totalUnread }}">Unread:
                     {{ $totalUnread }}</span>
                 <button class="btn btn-outline-primary btn-sm wa-compact-btn" type="button"

@@ -10,6 +10,7 @@ use App\Models\WhatsAppTemplate;
 use App\Services\WhatsApp\EventAudienceService;
 use App\Services\WhatsApp\EventWhatsAppService;
 use App\Services\WhatsApp\MetaTemplateBuilderService;
+use App\Services\WhatsApp\WhatsAppAccountService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -231,7 +232,11 @@ class EventCampaignController extends Controller
         ]);
     }
 
-    public function sendBroadcast(Request $request, EventWhatsAppService $eventWhatsAppService): RedirectResponse
+    public function sendBroadcast(
+        Request $request,
+        EventWhatsAppService $eventWhatsAppService,
+        WhatsAppAccountService $accountService
+    ): RedirectResponse
     {
         $this->authorize('whatsapp.send');
 
@@ -264,18 +269,26 @@ class EventCampaignController extends Controller
             ]);
         }
 
-        $campaign = $eventWhatsAppService->queueCampaign($validated);
+        $activeAccount = $accountService->getActiveAccountForUser($request->user());
+
+        $campaign = $eventWhatsAppService->queueCampaign(array_merge($validated, [
+            'account_id' => $activeAccount?->id,
+        ]));
 
         return orgRedirect('admin.whatsapp.events.campaign-history', [
             'campaign' => $campaign->id,
         ])->with('success', 'Event broadcast queued successfully.');
     }
 
-    public function campaignHistory(Request $request): View
+    public function campaignHistory(Request $request, WhatsAppAccountService $accountService): View
     {
         $this->authorize('whatsapp.view');
 
+        $activeAccount = $accountService->getActiveAccountForUser($request->user());
+        $activeAccountId = $activeAccount?->id;
+
         $campaigns = EventWhatsAppCampaign::query()
+            ->when($activeAccountId !== null, fn($query) => $query->where('account_id', $activeAccountId))
             ->with(['event:id,title', 'template:id,name,language'])
             ->withCount([
                 'recipients as queued_count' => fn($query) => $query->where('status', 'queued'),
@@ -292,6 +305,7 @@ class EventCampaignController extends Controller
 
         if ($selectedCampaignId > 0) {
             $selectedCampaign = EventWhatsAppCampaign::query()
+                ->when($activeAccountId !== null, fn($query) => $query->where('account_id', $activeAccountId))
                 ->with(['event:id,title,event_date,event_time', 'template:id,name,language'])
                 ->find($selectedCampaignId);
         }
