@@ -117,7 +117,7 @@
                         var menu = dropdown?.nextElementSibling;
                         if (dropdown && menu) {
                             menu.addEventListener('mouseenter', function() {
-                                dropdown.setAttribute('aria-expanded', 'true');
+                                dropdown.setAttribute('aria-expande', 'true');
                                 menu.classList.add('show');
                             });
                             menu.addEventListener('mouseleave', function() {
