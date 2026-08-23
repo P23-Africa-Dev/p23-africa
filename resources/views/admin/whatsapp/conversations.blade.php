@@ -314,6 +314,11 @@
                 margin-bottom: .56rem;
             }
 
+            .wa-msg-row.wa-msg-highlight .wa-bubble {
+                outline: 2px solid #25d366;
+                box-shadow: 0 0 0 4px rgba(37, 211, 102, .18);
+            }
+
             .wa-msg-row.incoming {
                 justify-content: flex-start;
             }
@@ -498,6 +503,7 @@
     </x-slot>
 
     <div class="py-2 wa-density-compact" data-wa-root data-wa-conversation-id="{{ $selectedConversation?->id ?? '' }}"
+        data-wa-highlight-message-id="{{ $highlightMessageId ?? 0 }}"
         data-wa-poll-url="{{ orgRoute('admin.whatsapp.poll') }}"
         data-wa-status-poll-url="{{ orgRoute('admin.whatsapp.status-poll') }}"
         data-wa-status-poll-interval="{{ $statusPollIntervalMs }}"
@@ -576,4 +582,37 @@
         @include('admin.whatsapp.partials.TemplateMessageModal')
         @include('admin.whatsapp.partials.SaveContactModal')
     </div>
+
+    @if (($highlightMessageId ?? 0) > 0)
+        @push('scripts')
+            <script>
+                (function() {
+                    const messageId = {{ (int) $highlightMessageId }};
+                    const tryHighlight = () => {
+                        const target = document.querySelector('[data-message-id="' + messageId + '"]');
+                        if (!target) {
+                            return false;
+                        }
+                        target.scrollIntoView({
+                            block: 'center',
+                            behavior: 'smooth'
+                        });
+                        target.classList.add('wa-msg-highlight');
+                        window.setTimeout(() => target.classList.remove('wa-msg-highlight'), 2500);
+                        return true;
+                    };
+
+                    if (!tryHighlight()) {
+                        let attempts = 0;
+                        const timer = window.setInterval(() => {
+                            attempts += 1;
+                            if (tryHighlight() || attempts >= 20) {
+                                window.clearInterval(timer);
+                            }
+                        }, 200);
+                    }
+                })();
+            </script>
+        @endpush
+    @endif
 </x-app-layout>

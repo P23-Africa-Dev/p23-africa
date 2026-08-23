@@ -106,7 +106,17 @@ class WhatsAppController extends Controller
     ): View {
         $this->authorize('whatsapp.view');
 
-        $activeAccount = $accountService->getActiveAccountForUser($request->user());
+        $user = $request->user();
+        $requestedAccountId = (int) $request->query('account_id', 0);
+        if ($requestedAccountId > 0) {
+            try {
+                $accountService->switchAccount($user, $requestedAccountId);
+            } catch (\Throwable) {
+                // Keep the user's current account if the requested account is invalid.
+            }
+        }
+
+        $activeAccount = $accountService->getActiveAccountForUser($user);
         $activeAccountId = $activeAccount?->id;
 
         $filters = [
@@ -127,10 +137,26 @@ class WhatsAppController extends Controller
             $selectedConversationId = 0;
         }
         $selectedConversation = null;
+        $highlightMessageId = max(0, (int) $request->query('message', 0));
 
         $initialMessageLimit = 30;
 
         if ($selectedConversationId > 0) {
+            $targetConversation = WhatsAppConversation::query()
+                ->whereKey($selectedConversationId)
+                ->first();
+
+            if ($targetConversation && $activeAccountId !== null && (int) $targetConversation->account_id !== (int) $activeAccountId) {
+                try {
+                    $accountService->switchAccount($user, (int) $targetConversation->account_id);
+                    $activeAccount = $accountService->getActiveAccountForUser($user);
+                    $activeAccountId = $activeAccount?->id;
+                    $conversations = $conversationService->listConversations($filters, 20, $activeAccountId);
+                } catch (\Throwable) {
+                    // Fall through; conversation may remain out of scope.
+                }
+            }
+
             $conversationBelongsToScope = WhatsAppConversation::query()
                 ->whereKey($selectedConversationId)
                 ->when($activeAccountId !== null, fn($query) => $query->where('account_id', $activeAccountId))
@@ -153,6 +179,7 @@ class WhatsAppController extends Controller
         return view('admin.whatsapp.conversations', [
             'conversations' => $conversations,
             'selectedConversation' => $selectedConversation,
+            'highlightMessageId' => $highlightMessageId,
             'filters' => $filters,
             'statuses' => WhatsAppConversation::statuses(),
             'assignees' => $conversationService->availableAssignees(),

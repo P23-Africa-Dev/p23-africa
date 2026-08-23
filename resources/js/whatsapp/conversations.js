@@ -1427,6 +1427,20 @@ function initMessaging() {
             }
         });
     }
+
+    const highlightMessageId = Number(root?.getAttribute('data-wa-highlight-message-id') || 0);
+    if (highlightMessageId > 0 && listElement) {
+        window.setTimeout(() => {
+            const target = listElement.querySelector(`[data-message-id="${highlightMessageId}"]`);
+            if (!target) {
+                return;
+            }
+
+            target.scrollIntoView({ block: 'center', behavior: 'smooth' });
+            target.classList.add('wa-msg-highlight');
+            window.setTimeout(() => target.classList.remove('wa-msg-highlight'), 2500);
+        }, 350);
+    }
 }
 
 export function bootWhatsAppConversations() {

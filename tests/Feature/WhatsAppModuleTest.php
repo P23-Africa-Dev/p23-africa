@@ -21,6 +21,7 @@ use App\Models\WhatsAppMessage;
 use App\Models\WhatsAppSettingSecurity;
 use App\Models\WhatsappSecurityLog;
 use App\Models\User;
+use App\Notifications\WhatsAppIncomingMessageNotification;
 use App\Services\WhatsApp\DeveloperPasscodeService;
 use App\Services\WhatsApp\ConversationService;
 use App\Services\WhatsApp\ConversationMergeService;
@@ -2544,5 +2545,105 @@ class WhatsAppModuleTest extends TestCase
             $request,
             app(WhatsAppAccountService::class)
         );
+    }
+
+    public function test_incoming_whatsapp_message_notifies_all_legacy_admin_and_supervisor_users(): void
+    {
+        config(['whatsapp.webhook_secret' => '']);
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
+        Role::findOrCreate('admin');
+        Role::findOrCreate('supervisor');
+
+        $account = WhatsAppAccount::create([
+            'business_name' => 'Notify WA',
+            'phone_number' => '+233500111222',
+            'phone_number_id' => 'notif-phone-1',
+            'waba_id' => 'notif-waba-1',
+            'access_token' => 'notif-token',
+            'webhook_verify_token' => 'verify-notif',
+            'status' => 'active',
+        ]);
+
+        $admin = User::factory()->create(['organization_id' => null]);
+        $admin->assignRole('admin');
+
+        $supervisor = User::factory()->create(['organization_id' => null]);
+        $supervisor->assignRole('supervisor');
+
+        $organization = Organization::query()->create([
+            'name' => 'Tenant Org',
+            'slug' => 'tenant-org',
+        ]);
+        $orgAdmin = User::factory()->create(['organization_id' => $organization->id]);
+        $orgAdmin->assignRole('admin');
+
+        $payload = [
+            'entry' => [[
+                'changes' => [[
+                    'field' => 'messages',
+                    'value' => [
+                        'metadata' => [
+                            'phone_number_id' => 'notif-phone-1',
+                        ],
+                        'contacts' => [[
+                            'wa_id' => '15559876543',
+                            'profile' => ['name' => 'Notify Contact'],
+                        ]],
+                        'messages' => [[
+                            'from' => '15559876543',
+                            'id' => 'wamid.notify.1',
+                            'timestamp' => (string) now()->timestamp,
+                            'type' => 'text',
+                            'text' => ['body' => 'Please call me back'],
+                        ]],
+                    ],
+                ]],
+            ]],
+        ];
+
+        $request = Request::create(
+            '/api/whatsapp/webhook',
+            'POST',
+            [],
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode($payload)
+        );
+        $request->headers->set('Accept', 'application/json');
+
+        $response = app(WhatsAppWebhookController::class)->receive($request, app(WebhookService::class));
+        $this->assertSame(200, $response->getStatusCode());
+
+        $conversation = WhatsAppConversation::query()
+            ->where('account_id', $account->id)
+            ->where('wa_id', '15559876543')
+            ->firstOrFail();
+        $message = WhatsAppMessage::query()
+            ->where('whatsapp_message_id', 'wamid.notify.1')
+            ->firstOrFail();
+
+        $this->assertDatabaseHas('notifications', [
+            'notifiable_id' => $admin->id,
+            'notifiable_type' => User::class,
+            'type' => WhatsAppIncomingMessageNotification::class,
+        ]);
+        $this->assertDatabaseHas('notifications', [
+            'notifiable_id' => $supervisor->id,
+            'notifiable_type' => User::class,
+            'type' => WhatsAppIncomingMessageNotification::class,
+        ]);
+        $this->assertDatabaseMissing('notifications', [
+            'notifiable_id' => $orgAdmin->id,
+            'notifiable_type' => User::class,
+            'type' => WhatsAppIncomingMessageNotification::class,
+        ]);
+
+        $notification = $admin->notifications()->first();
+        $this->assertNotNull($notification);
+        $this->assertSame('whatsapp_incoming', $notification->data['notification_type'] ?? null);
+        $this->assertStringContainsString('conversation=' . $conversation->id, (string) ($notification->data['url'] ?? ''));
+        $this->assertStringContainsString('message=' . $message->id, (string) ($notification->data['url'] ?? ''));
+        $this->assertStringContainsString('account_id=' . $account->id, (string) ($notification->data['url'] ?? ''));
     }
 }

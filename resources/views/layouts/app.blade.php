@@ -20,7 +20,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin-ui.css') }}">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @env('local')
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @endenv
+    @env('production')
+        <link rel="stylesheet" href="{{ asset('build/assets/app-C3BKrfqT.css') }}">
+        <script src="{{ asset('build/assets/app-FDeOuEHs.js') }}" defer></script>
+        <script src="{{ asset('build/assets/conversations-B59MwHS5.js') }}" defer></script>
+    @endenv
     <x-head.tinymce-config />
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @stack('head')
@@ -62,7 +69,7 @@
                         <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
                     </div>
                 </div>
-                <div class="notif-panel-footer"><small>Auto-refreshes every 15 seconds</small></div>
+                <div class="notif-panel-footer"><small>Auto-refreshes every 8 seconds</small></div>
             </div>
         </div>
     @endauth
@@ -104,6 +111,8 @@
             $notifAllUnreadCountUrl = orgRoute('admin.notifications.all-unread-count');
             $notifAllUrl = orgRoute('admin.notifications.all');
             $notifMarkAllReadUrl = orgRoute('admin.notifications.mark-all-read');
+            $notifLatestUnreadUrl = orgRoute('admin.notifications.latest-unread');
+            $notifBrowserIcon = asset('images/Logo.svg');
 
             $layoutOrgPrefix = '';
             $layoutUser = auth()->user();
@@ -155,14 +164,114 @@
         <script>
             const NotifSystem = (function() {
                 let isOpen = false,
-                    lastCount = 0;
-                const POLL = 15000;
+                    lastCount = 0,
+                    countSeeded = false,
+                    browserPermission = ('Notification' in window) ? Notification.permission : 'denied',
+                    lastBrowserNotificationId = window.localStorage.getItem('notif:last-browser-id') || null;
+                const POLL = 8000;
+                const SEEN_KEY = 'notif:seen-browser-ids';
 
                 function esc(s) {
                     if (!s) return "";
                     const d = document.createElement("div");
                     d.textContent = s;
                     return d.innerHTML;
+                }
+
+                function getSeenIds() {
+                    try {
+                        const raw = window.localStorage.getItem(SEEN_KEY);
+                        const parsed = raw ? JSON.parse(raw) : [];
+                        return Array.isArray(parsed) ? parsed : [];
+                    } catch (e) {
+                        return [];
+                    }
+                }
+
+                function rememberSeenId(id) {
+                    if (!id) return;
+                    const seen = getSeenIds().filter(Boolean);
+                    if (!seen.includes(id)) {
+                        seen.push(id);
+                    }
+                    window.localStorage.setItem(SEEN_KEY, JSON.stringify(seen.slice(-40)));
+                    window.localStorage.setItem('notif:last-browser-id', id);
+                    lastBrowserNotificationId = id;
+                }
+
+                async function requestBrowserPermission() {
+                    if (!('Notification' in window) || browserPermission !== 'default') {
+                        return;
+                    }
+                    try {
+                        browserPermission = await Notification.requestPermission();
+                    } catch (e) {
+                        browserPermission = 'denied';
+                    }
+                }
+
+                function showBrowserNotification(notification) {
+                    if (!('Notification' in window) || browserPermission !== 'granted' || !notification) {
+                        return;
+                    }
+
+                    const seen = getSeenIds();
+                    if (seen.includes(notification.id) || notification.id === lastBrowserNotificationId) {
+                        return;
+                    }
+
+                    const title = notification.title || 'New Notification';
+                    const options = {
+                        body: notification.message || '',
+                        icon: "{{ $notifBrowserIcon }}",
+                        badge: "{{ $notifBrowserIcon }}",
+                        tag: 'notif-' + notification.id,
+                        renotify: true,
+                        requireInteraction: notification.type === 'whatsapp_incoming',
+                        data: {
+                            id: notification.id,
+                            url: notification.url || null,
+                        },
+                    };
+
+                    try {
+                        const browserNotification = new Notification(title, options);
+                        rememberSeenId(notification.id);
+
+                        browserNotification.onclick = function() {
+                            window.focus();
+                            const targetUrl = notification.url || '';
+                            if (targetUrl) {
+                                window.location.href = targetUrl;
+                            }
+                            browserNotification.close();
+                        };
+
+                        window.setTimeout(() => browserNotification.close(), 12000);
+                    } catch (e) {}
+                }
+
+                async function fetchAndShowBrowserNotifications() {
+                    if (!('Notification' in window) || browserPermission !== 'granted') {
+                        return;
+                    }
+
+                    try {
+                        const r = await fetch("{{ $notifLatestUnreadUrl }}", {
+                            headers: {
+                                "Accept": "application/json",
+                                "X-Requested-With": "XMLHttpRequest"
+                            }
+                        });
+                        if (!r.ok) return;
+                        const d = await r.json();
+                        const items = Array.isArray(d.notifications) ? d.notifications : [];
+                        if (!items.length) return;
+
+                        // Prefer WhatsApp incoming alerts, then newest unread.
+                        const preferred = items.find(n => n.type === 'whatsapp_incoming') || items[0];
+                        showBrowserNotification(preferred);
+                    } catch (e) {}
                 }
 
                 function setBadge(n) {
@@ -183,9 +292,14 @@
                         });
                         if (!r.ok) return;
                         const d = await r.json();
-                        setBadge(d.count);
+                        const nextCount = Number(d.count || 0);
+                        setBadge(nextCount);
                         if (isOpen) loadList();
-                        lastCount = d.count;
+                        if (countSeeded && nextCount > lastCount) {
+                            fetchAndShowBrowserNotifications();
+                        }
+                        countSeeded = true;
+                        lastCount = nextCount;
                     } catch (e) {}
                 }
                 async function loadList() {
@@ -216,7 +330,9 @@
                     task_created: "fas fa-tasks",
                     task_assigned: "fas fa-user-plus",
                     taskassigned: "fas fa-user-plus",
-                    task_comment: "fas fa-comment"
+                    task_comment: "fas fa-comment",
+                    whatsapp_incoming: "bi bi-whatsapp",
+                    whatsappincomingmessagenotification: "bi bi-whatsapp"
                 };
 
                 function renderList(items) {
@@ -258,6 +374,7 @@
                     if (el) el.classList.remove("unread");
                     setBadge(Math.max(0, lastCount - 1));
                     lastCount = Math.max(0, lastCount - 1);
+                    rememberSeenId(id);
                     if (url) window.location.href = url;
                 }
                 async function markAllRead() {
@@ -298,6 +415,7 @@
                     const f = document.getElementById("notif-fab-container");
                     if (f && !f.contains(e.target)) close();
                 });
+                requestBrowserPermission();
                 updateCount();
                 setInterval(updateCount, POLL);
                 return {

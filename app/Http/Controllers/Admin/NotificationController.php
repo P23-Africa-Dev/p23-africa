@@ -226,6 +226,7 @@ class NotificationController extends Controller
             'App\Notifications\TaskAssignedNotification' => 'Task Assigned',
             'App\Notifications\TaskCommentNotification' => 'New Comment',
             'App\Notifications\AdminNotification' => 'Notification',
+            'App\Notifications\WhatsAppIncomingMessageNotification' => 'New WhatsApp Message',
             default => 'New Notification',
         };
     }

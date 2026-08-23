@@ -24,14 +24,22 @@ class WhatsAppIncomingMessageNotification extends Notification
     public function toDatabase(object $notifiable): array
     {
         $contactName = $this->conversation->contact?->name ?: $this->conversation->contact?->phone;
+        $accountId = $this->conversation->account_id;
+
+        $query = http_build_query(array_filter([
+            'conversation' => $this->conversation->id,
+            'message' => $this->message->id,
+            'account_id' => $accountId,
+        ]));
 
         return [
             'notification_type' => 'whatsapp_incoming',
             'title' => 'New WhatsApp Message',
             'message' => ($contactName ?: 'Contact') . ': ' . ($this->message->body ?: '[Attachment]'),
             'icon' => 'bi bi-whatsapp',
-            'url' => '/admin/whatsapp/conversations?conversation=' . $this->conversation->id,
+            'url' => '/admin/whatsapp/conversations?' . $query,
             'conversation_id' => $this->conversation->id,
+            'account_id' => $accountId,
             'whatsapp_message_id' => $this->message->whatsapp_message_id,
             'message_id' => $this->message->id,
             'contact_name' => $contactName,
