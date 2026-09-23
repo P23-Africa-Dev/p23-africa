@@ -494,9 +494,9 @@
     }
 
     .who-we-are p{
-        line-height: 33px !important;
-        font-size: 21.5px !important;
-        max-width: 480px !important;
+        line-height: 29px !important;
+        font-size: 18px !important;
+        max-width: 520px !important;
       
     }
 
@@ -510,9 +510,7 @@
             <section class="hero content-section animate-on-scroll">
                 <div class="row hero-sec-row">
                     <div class="col-md-7 hero-text my-auto">
-                        <h1>Helping Global <span id="font">Businesses</span><br><span id="buss">Understand,
-                                Enter and</span><br><img src="{{ asset('images/dot.png') }}" loading='lazy' id="dot"
-                                alt=""><span id="fonts"> Grow Across Africa</span></h1>
+                        <h1>Helping Global <br> Businesses Enter &amp; <br><span id="fonts">Grow Across Africa</span></h1>
                         <br>
                         <p>
                           We help you understand African markets, validate opportunities, acquire customers and partners, and establish the foundations for sustainable growth.
@@ -576,7 +574,7 @@
 
 
     <section class="container-fluid p-0 who-we-are content-section animate-on-scroll">
-        <div class="row g-0">
+        <div class="row g-0 align-items-center">
             <!-- Left Column -->
             <div class="col-md-6 position-relative overflow-hidden d-flex align-items-center justify-content-center">
                 <div class="bg-overlay position-absolute top-0 start-0"></div>
@@ -585,15 +583,19 @@
             </div>
 
             <!-- Right Column -->
-            <div class="col-md-6 d-flex flex-column justify-content-center" style="">
+            <div class="col-md-6 d-flex flex-column justify-content-center my-auto" style="display: flex !important; flex-direction: column !important; justify-content: center !important;">
                 <h2 class="fw-bold mb-4">Who We Are</h2>
                 <p class="mb-3">
-                    Growing a business takes more than ambition, <span class="minor">it takes local knowledge,
-                        the right support, and solutions that work on the ground.</span>
+                    <strong>Africa is the future. Getting it right requires local understanding.</strong>
                 </p>
                 <p class="mb-3">
-                    At P23 Africa, we are a team of seasoned business consultants with a passion for empowering businesses
-                    globally to thrive in competitive markets.
+                    Africa is not a single market. Each country has its own customers, regulations, commercial environment, routes to market, competitive landscape and business culture.
+                </p>
+                <p class="mb-3">
+                    For companies looking to enter or expand, the challenge is often not identifying the opportunity, it is knowing where to focus, who to work with and how to execute successfully.
+                </p>
+                <p class="mb-4">
+                    <strong>P23 Africa bridges that gap.</strong> We combine market intelligence, commercial expertise and local networks to help businesses move from market opportunity to practical execution.
                 </p>
                 <div>
                     <a href="{{ url('about') }}" class="text-decoration-none learn-more"
