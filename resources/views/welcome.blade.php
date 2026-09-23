@@ -502,6 +502,487 @@
 
 
     }
+
+    /* ========================================================
+       NEW SECTIONS: CAPABILITIES, APPROACH, SECTORS, WHY P23, CTA
+       ======================================================== */
+
+    /* 1. Core Capabilities */
+    .capabilities-grid {
+        margin-bottom: 2rem;
+    }
+    .capability-card {
+        background-color: #ffffff;
+        border: 1px solid rgba(13, 64, 54, 0.1);
+        border-radius: 16px;
+        padding: 2.2rem 2rem;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+        position: relative;
+        overflow: hidden;
+    }
+    .capability-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: transparent;
+        transition: background 0.3s ease;
+    }
+    .capability-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 36px rgba(13, 64, 54, 0.1);
+        border-color: rgba(39, 230, 167, 0.4);
+    }
+    .capability-card:hover::before {
+        background: #27E6A7;
+    }
+    .capability-card.featured-card {
+        background: #003c32;
+        color: #ffffff;
+        border-color: #003c32;
+    }
+    .capability-card.featured-card .capability-title {
+        color: #ffffff;
+    }
+    .capability-card.featured-card .capability-desc {
+        color: #d0eee9;
+    }
+    .capability-card.featured-card .capability-link {
+        color: #27E6A7;
+    }
+    .capability-icon {
+        width: 54px;
+        height: 54px;
+        border-radius: 12px;
+        background: rgba(39, 230, 167, 0.15);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
+    .capability-card.featured-card .capability-icon {
+        background: rgba(255, 255, 255, 0.12);
+    }
+    .capability-icon img {
+        width: 28px;
+        height: 28px;
+        object-fit: contain;
+    }
+    .capability-icon i {
+        font-size: 24px;
+        color: #0d4036;
+    }
+    .capability-card.featured-card .capability-icon i {
+        color: #27E6A7;
+    }
+    .capability-title {
+        font-family: "GT Walsheim ProCB", "Montserrat", sans-serif;
+        font-size: 22px;
+        font-weight: 700;
+        color: #0d4036;
+        margin-bottom: 0.8rem;
+    }
+    .capability-desc {
+        font-family: "GT Walsheim Trial Cn Rg", sans-serif;
+        font-size: 17px;
+        line-height: 1.55;
+        color: #556461;
+        margin-bottom: 1.4rem;
+        flex-grow: 1;
+    }
+    .capability-link {
+        font-family: "GT Walsheim ProCB", sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+        color: #0d4036;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: gap 0.25s ease;
+    }
+    .capability-link:hover {
+        gap: 12px;
+        color: #27E6A7;
+    }
+
+    /* 2. Approach Section */
+    .approach-section {
+        padding: 6rem 0;
+        background-color: #f7faf9;
+        border-top: 1px solid #e7ecea;
+        border-bottom: 1px solid #e7ecea;
+    }
+    .section-eyebrow {
+        display: inline-block;
+        font-family: "GT Walsheim ProCB", sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 1.8px;
+        text-transform: uppercase;
+        color: #0d4036;
+        background: rgba(39, 230, 167, 0.2);
+        padding: 5px 14px;
+        border-radius: 20px;
+        margin-bottom: 1rem;
+    }
+    .approach-header h2 {
+        font-family: "Montserrat", sans-serif;
+        font-size: 40px;
+        font-weight: 700;
+        color: #101e1a;
+        margin-bottom: 0.5rem;
+    }
+    .approach-subline {
+        font-family: "GT Walsheim ProCB", sans-serif;
+        font-size: 22px;
+        color: #0d4036;
+        font-weight: 600;
+        margin-bottom: 2rem;
+    }
+    .approach-callout {
+        background: #ffffff;
+        border-left: 5px solid #27E6A7;
+        border-radius: 12px;
+        padding: 1.8rem 2.2rem;
+        margin-bottom: 3.5rem;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+    }
+    .approach-callout p {
+        font-family: "GT Walsheim Trial Cn Rg", sans-serif;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #1a2e29;
+        margin: 0;
+    }
+    .approach-callout p strong {
+        color: #0d4036;
+        font-family: "GT Walsheim ProCB", sans-serif;
+    }
+    .step-card {
+        background: #ffffff;
+        border: 1px solid #e4eae7;
+        border-radius: 16px;
+        padding: 2.2rem 1.8rem;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+    .step-card:hover {
+        transform: translateY(-5px);
+        border-color: #27E6A7;
+        box-shadow: 0 12px 30px rgba(13, 64, 54, 0.08);
+    }
+    .step-badge {
+        font-family: "Montserrat", sans-serif;
+        font-size: 13px;
+        font-weight: 800;
+        color: #0d4036;
+        background: #d0eee9;
+        padding: 4px 10px;
+        border-radius: 6px;
+        display: inline-block;
+        margin-bottom: 1.2rem;
+        width: fit-content;
+    }
+    .step-title {
+        font-family: "GT Walsheim ProCB", sans-serif;
+        font-size: 22px;
+        font-weight: 700;
+        color: #101e1a;
+        margin-bottom: 0.8rem;
+    }
+    .step-desc {
+        font-family: "GT Walsheim Trial Cn Rg", sans-serif;
+        font-size: 16.5px;
+        line-height: 1.55;
+        color: #556461;
+        margin: 0;
+    }
+
+    /* 3. Sectors Section */
+    .sectors-section {
+        padding: 6rem 0;
+        background-color: #ffffff;
+    }
+    .sectors-header {
+        text-align: center;
+        max-width: 780px;
+        margin: 0 auto 3.5rem auto;
+    }
+    .sectors-header h2 {
+        font-family: "Montserrat", sans-serif;
+        font-size: 38px;
+        font-weight: 700;
+        color: #101e1a;
+        margin-top: 0.8rem;
+        margin-bottom: 0.75rem;
+    }
+    .sectors-header p {
+        font-family: "GT Walsheim Trial Cn Rg", sans-serif;
+        font-size: 18px;
+        color: #60726d;
+        margin: 0;
+    }
+    .sector-card {
+        background: #fafcfb;
+        border: 1px solid #e7efe9;
+        border-radius: 14px;
+        padding: 1.8rem;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        transition: all 0.3s ease;
+    }
+    .sector-card:hover {
+        background: #ffffff;
+        border-color: #0d4036;
+        transform: translateY(-4px);
+        box-shadow: 0 10px 28px rgba(13, 64, 54, 0.08);
+    }
+    .sector-icon {
+        width: 46px;
+        height: 46px;
+        border-radius: 10px;
+        background: rgba(13, 64, 54, 0.06);
+        color: #0d4036;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        margin-bottom: 1.2rem;
+        transition: all 0.3s ease;
+    }
+    .sector-card:hover .sector-icon {
+        background: #27E6A7;
+        color: #04201a;
+    }
+    .sector-title {
+        font-family: "GT Walsheim ProCB", sans-serif;
+        font-size: 19px;
+        font-weight: 700;
+        color: #101e1a;
+        margin-bottom: 0.65rem;
+    }
+    .sector-desc {
+        font-family: "GT Walsheim Trial Cn Rg", sans-serif;
+        font-size: 15.5px;
+        line-height: 1.5;
+        color: #556461;
+        margin: 0;
+    }
+
+    /* 4. Why P23 Africa Section */
+    .why-section {
+        padding: 6.5rem 0;
+        background-color: #003c32;
+        color: #ffffff;
+        position: relative;
+        overflow: hidden;
+    }
+    .why-header {
+        margin-bottom: 3.5rem;
+    }
+    .why-header .why-eyebrow {
+        color: #27E6A7;
+        font-family: "GT Walsheim ProCB", sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 1.8px;
+        text-transform: uppercase;
+        display: inline-block;
+        margin-bottom: 0.8rem;
+    }
+    .why-header h2 {
+        font-family: "Montserrat", sans-serif;
+        font-size: 42px;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 0.6rem;
+    }
+    .why-tagline {
+        font-family: "GT Walsheim ProCB", sans-serif;
+        font-size: 22px;
+        color: #27E6A7;
+        margin-bottom: 1.4rem;
+    }
+    .why-lead {
+        font-family: "GT Walsheim Trial Cn Rg", sans-serif;
+        font-size: 19px;
+        line-height: 1.6;
+        color: #d0eee9;
+        max-width: 800px;
+        margin: 0;
+    }
+    .why-card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 16px;
+        padding: 2.2rem;
+        height: 100%;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+    }
+    .why-card:hover {
+        background: rgba(255, 255, 255, 0.09);
+        border-color: #27E6A7;
+        transform: translateY(-4px);
+    }
+    .why-card-icon {
+        font-size: 24px;
+        color: #27E6A7;
+        margin-bottom: 1.2rem;
+    }
+    .why-card-title {
+        font-family: "GT Walsheim ProCB", sans-serif;
+        font-size: 22px;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 0.8rem;
+    }
+    .why-card-desc {
+        font-family: "GT Walsheim Trial Cn Rg", sans-serif;
+        font-size: 16.5px;
+        line-height: 1.6;
+        color: #d0eee9;
+        margin: 0;
+    }
+
+    /* 5. Closing Pre-Footer CTA */
+    .cta-closing-section {
+        padding: 6.5rem 0;
+        background: linear-gradient(135deg, #022b24 0%, #001a14 100%);
+        color: #ffffff;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    .cta-closing-section::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 600px;
+        height: 350px;
+        background: radial-gradient(circle, rgba(39, 230, 167, 0.12) 0%, transparent 70%);
+        pointer-events: none;
+    }
+    .cta-closing-inner {
+        position: relative;
+        z-index: 2;
+        max-width: 820px;
+        margin: 0 auto;
+    }
+    .cta-closing-inner .cta-pill {
+        display: inline-block;
+        background: rgba(39, 230, 167, 0.15);
+        border: 1px solid rgba(39, 230, 167, 0.3);
+        color: #27E6A7;
+        font-family: "GT Walsheim ProCB", sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 1.8px;
+        text-transform: uppercase;
+        padding: 6px 18px;
+        border-radius: 20px;
+        margin-bottom: 1.5rem;
+    }
+    .cta-closing-inner h2 {
+        font-family: "Montserrat", sans-serif;
+        font-size: 42px;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 1.5rem;
+        line-height: 1.25;
+    }
+    .cta-closing-inner .cta-desc {
+        font-family: "GT Walsheim Trial Cn Rg", sans-serif;
+        font-size: 19px;
+        line-height: 1.6;
+        color: #d0eee9;
+        margin-bottom: 1.6rem;
+    }
+    .cta-closing-inner .cta-prompt {
+        font-family: "GT Walsheim ProCB", sans-serif;
+        font-size: 22px;
+        color: #27E6A7;
+        margin-bottom: 2.5rem;
+    }
+    .cta-btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background-color: #27E6A7;
+        color: #04201a !important;
+        font-family: "GT Walsheim ProCB", sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+        padding: 15px 36px;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 24px rgba(39, 230, 167, 0.3);
+    }
+    .cta-btn-primary:hover {
+        background-color: #ffffff;
+        color: #003c32 !important;
+        transform: translateY(-2px);
+    }
+    .cta-btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background-color: transparent;
+        color: #ffffff !important;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        font-family: "GT Walsheim ProCB", sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+        padding: 15px 36px;
+        border-radius: 10px;
+        text-decoration: none;
+        margin-left: 1rem;
+        transition: all 0.3s ease;
+    }
+    .cta-btn-secondary:hover {
+        border-color: #ffffff;
+        background-color: rgba(255, 255, 255, 0.08);
+        transform: translateY(-2px);
+    }
+
+    @media screen and (max-width: 768px) {
+        .approach-header h2,
+        .sectors-header h2,
+        .why-header h2,
+        .cta-closing-inner h2 {
+            font-size: 30px !important;
+        }
+        .approach-subline,
+        .why-tagline,
+        .cta-closing-inner .cta-prompt {
+            font-size: 19px !important;
+        }
+        .cta-btn-secondary {
+            margin-left: 0;
+            margin-top: 1rem;
+            width: 100%;
+            justify-content: center;
+        }
+        .cta-btn-primary {
+            width: 100%;
+            justify-content: center;
+        }
+    }
 </style>
 
 @section('content')
@@ -606,81 +1087,96 @@
                     </a>
                 </div>
             </div>
-        </div>
     </section>
 
     <section id="how_we_help" class="content-section animate-on-scroll">
         <div class="py-5 content">
-            <h2 class="section-title">How We Help Our Clients</h2>
+            <span class="section-eyebrow">OUR CAPABILITIES</span>
+            <h2 class="section-title">Commercial Solutions for African Expansion</h2>
             <div class="custom-underline"></div>
 
-            <div class="row g-4">
-                <div class="col-md-8">
-                    <div class="row g-4">
-                        <div class="col-md-6">
-                            <div class="service-card" id="one">
-                                <div class="service-icon">
-                                    {{-- <i class="bi bi-signpost-2-fill"></i> --}}
-                                    <img src="{{ asset('images/strategy.png') }}" loading='lazy' alt="">
-                                </div>
-                                <div class="service-title">Launch Support</div>
-                                <p>We help you get your product in front of the right people and make sure it’s understood
-                                    from day one.</p>
+            <div class="row g-4 capabilities-grid">
+                <!-- 1. Market Entry & Expansion -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="capability-card featured-card">
+                        <div>
+                            <div class="capability-icon">
+                                <i class="bi bi-compass"></i>
                             </div>
+                            <h3 class="capability-title">Market Entry & Expansion</h3>
+                            <p class="capability-desc">Build practical strategies for entering and developing new African markets.</p>
                         </div>
-                        <div class="col-md-6">
-                            <div class="service-card" id="two">
-                                <div class="service-icon">
-                                    {{-- <i class="bi bi-tags-fill"></i> --}}
-                                    <img src="{{ asset('images/sales.png') }}" loading='lazy' alt="">
-                                </div>
-                                <div class="service-title">Marketing and Sales</div>
-                                <p>Most businesses lose 30–50% of potential customers due to unclear messaging or poor
-                                    follow-up. We fix that.</p>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="service-card" id="three">
-                                <div class="service-icon">
-                                    {{-- <i class="bi bi-activity"></i> --}}
-                                    <img src="{{ asset('images/operation.png') }}" loading='lazy' alt="">
-                                </div>
-                                <div class="service-title">Operations and Efficiency</div>
-                                <p>
-                                    Most growing businesses lose time due to broken processes. We help fix that by building
-                                    clearer systems and workflows.
-                                </p>
-                            </div>
-                        </div>
+                        <a href="{{ url('services') }}#market" class="capability-link">
+                            Explore market entry <i class="bi bi-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
 
-                <!-- Expansion Column -->
-                <div class="col-md-4 d-flex">
-                    <div class="service-card d-flex flex-column w-100" id="four">
-                        <div class="box-four">
-                            <div class="service-icon">
-                                {{-- <i class="bi bi-fullscreen"></i> --}}
-                                <img src="{{ asset('images/expansion.png') }}" loading='lazy' alt="">
+                <!-- 2. Sales & Business Development -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="capability-card">
+                        <div>
+                            <div class="capability-icon">
+                                <i class="bi bi-graph-up-arrow"></i>
                             </div>
-                            <div class="service-title">Market Research & Insights</div>
-                            <p>We help you figure out if a market is worth entering and how to approach it.</p>
+                            <h3 class="capability-title">Sales & Business Development</h3>
+                            <p class="capability-desc">Generate opportunities, develop relationships and build commercial pipelines.</p>
                         </div>
-                        <div id="read">
-                            <a href="{{ url('services') }}" class="read-more-btn mt-0">
-                                Find out more <i class="bi bi-arrow-right mx-2"></i>
-                            </a>
-                        </div>
+                        <a href="{{ url('services') }}#sales" class="capability-link">
+                            Explore business development <i class="bi bi-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
-            </div>
-            <div class="mt-2">
-                <a href="{{ url('services') }}" class="read-more-btn-2 mt-3">
-                    Find out more <i class="bi bi-arrow-right"></i>
-                </a>
+
+                <!-- 3. Distributor & Partner Development -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="capability-card">
+                        <div>
+                            <div class="capability-icon">
+                                <i class="bi bi-diagram-3"></i>
+                            </div>
+                            <h3 class="capability-title">Distributor & Partner Development</h3>
+                            <p class="capability-desc">Find, assess and verify the right local commercial relationships.</p>
+                        </div>
+                        <a href="{{ url('services') }}" class="capability-link">
+                            Explore partner development <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 4. Operations & Market Support -->
+                <div class="col-lg-6 col-md-6">
+                    <div class="capability-card">
+                        <div>
+                            <div class="capability-icon">
+                                <i class="bi bi-gear-wide-connected"></i>
+                            </div>
+                            <h3 class="capability-title">Operations & Market Support</h3>
+                            <p class="capability-desc">Build the local capabilities and relationships required to operate effectively.</p>
+                        </div>
+                        <a href="{{ url('services') }}" class="capability-link">
+                            Explore operational support <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 5. Investment & Growth Readiness -->
+                <div class="col-lg-6 col-md-12">
+                    <div class="capability-card">
+                        <div>
+                            <div class="capability-icon">
+                                <i class="bi bi-shield-check"></i>
+                            </div>
+                            <h3 class="capability-title">Investment & Growth Readiness</h3>
+                            <p class="capability-desc">Strengthen businesses preparing for investment, partnerships or significant expansion.</p>
+                        </div>
+                        <a href="{{ url('services') }}" class="capability-link">
+                            Explore growth readiness <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-
 
         <div class="global_reach">
             <h2><strong>Global Reach.</strong> <span>Local Approach</span></h2>
@@ -706,63 +1202,177 @@
         </div>
     </section>
 
-
-    <section class="network-section">
-        {{-- <div class="network-overlay"></div> --}}
-
-        <div class="network-container">
-            <!-- Section Header -->
-            <div class="network-header">
-                <p class="network-eyebrow">Networking Opportunities For</p>
-                <h2 class="network-title">Executive Leaders</h2>
+    <!-- Methodology / Approach Section -->
+    <section id="approach" class="approach-section content-section animate-on-scroll">
+        <div class="container">
+            <div class="approach-header">
+                <span class="section-eyebrow">OUR METHODOLOGY</span>
+                <h2>A Practical Approach to African Expansion</h2>
+                <div class="approach-subline">Understand. Validate. Connect. Execute.</div>
             </div>
 
-            <!-- Section Body -->
-            <div class="network-body">
-                <!-- Column / Row 1 : Cards -->
-                <div class="network-cards">
-                    <div class="card-wrapper left-card-image">
-                        <img src="{{ asset('img/desktop-left.png') }}" loading="lazy" alt="" />
+            <div class="approach-callout">
+                <p>
+                    <strong>We don’t believe in producing market reports that sit on a shelf.</strong>
+                    Our approach is designed to help businesses make better-informed commercial decisions and take practical action.
+                </p>
+            </div>
 
-                    </div>
-
-                    <div class="card-wrapper right-card-image">
-
-                        <img class="" src="{{ asset('img/desktop-right.png') }}" loading="lazy"
-                            alt="" />
-                       
-
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6">
+                    <div class="step-card">
+                        <span class="step-badge">STAGE 01</span>
+                        <h3 class="step-title">Understand</h3>
+                        <p class="step-desc">We research the market, sector, customer landscape and competitive environment.</p>
                     </div>
                 </div>
 
-                <!-- Column / Row 2 : Content -->
-                <div class="network-content">
-
-                    <div class="network-content-top">
-                        <p class="match-text">
-                            <span>It’s a </span> <span>Business Match</span>
-                        </p>
+                <div class="col-lg-3 col-md-6">
+                    <div class="step-card">
+                        <span class="step-badge">STAGE 02</span>
+                        <h3 class="step-title">Validate</h3>
+                        <p class="step-desc">We test assumptions and gather real-world feedback from customers, partners and market participants.</p>
                     </div>
+                </div>
 
-                    <div class="network-content-bottom">
-                        <h3 class="content-title">Join NOEL</h3>
-                        <p class="content-desc">
-                            A private network for vetted African CEOs who are matched for
-                            strategic deals and partnerships.
-                        </p>
-
-                        <a href="{{ url('noel54/interest-form') }}" class="cta-button">
-                            Register Your Interest
-                            <img src="{{ asset('img/right-colored-r.png') }}" loading="lazy" alt="" />
-                        </a>
+                <div class="col-lg-3 col-md-6">
+                    <div class="step-card">
+                        <span class="step-badge">STAGE 03</span>
+                        <h3 class="step-title">Connect</h3>
+                        <p class="step-desc">We identify relevant customers, distributors, partners, investors and other stakeholders.</p>
                     </div>
+                </div>
 
-
-
+                <div class="col-lg-3 col-md-6">
+                    <div class="step-card">
+                        <span class="step-badge">STAGE 04</span>
+                        <h3 class="step-title">Execute</h3>
+                        <p class="step-desc">We support the commercial activity required to turn the opportunity into a functioning market presence.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Sectors Section -->
+    <section id="sectors" class="sectors-section content-section animate-on-scroll">
+        <div class="container">
+            <div class="sectors-header">
+                <span class="section-eyebrow">SECTOR EXPERTISE</span>
+                <h2>We Work with Businesses Across Key Sectors</h2>
+                <p>Specialized commercial strategies tailored to industry realities across Africa.</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6">
+                    <div class="sector-card">
+                        <div class="sector-icon"><i class="bi bi-tools"></i></div>
+                        <h3 class="sector-title">Industrial & Equipment</h3>
+                        <p class="sector-desc">Helping manufacturers test demand, identify customers and verify distributors before committing to a market.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="sector-card">
+                        <div class="sector-icon"><i class="bi bi-cpu"></i></div>
+                        <h3 class="sector-title">Technology & Digital</h3>
+                        <p class="sector-desc">Supporting technology companies seeking customers, partners and routes to market across Africa.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="sector-card">
+                        <div class="sector-icon"><i class="bi bi-cart3"></i></div>
+                        <h3 class="sector-title">FMCG & Consumer</h3>
+                        <p class="sector-desc">Helping brands understand consumer markets, identify distribution opportunities and develop routes to market.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="sector-card">
+                        <div class="sector-icon"><i class="bi bi-heart-pulse"></i></div>
+                        <h3 class="sector-title">Healthcare & Life Sciences</h3>
+                        <p class="sector-desc">Supporting companies navigating market opportunities, commercial relationships and local market requirements.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="sector-card">
+                        <div class="sector-icon"><i class="bi bi-tree"></i></div>
+                        <h3 class="sector-title">Agriculture & Agribusiness</h3>
+                        <p class="sector-desc">Identifying opportunities across agricultural value chains and supporting commercial development.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="sector-card">
+                        <div class="sector-icon"><i class="bi bi-lightning-charge"></i></div>
+                        <h3 class="sector-title">Energy & Infrastructure</h3>
+                        <p class="sector-desc">Supporting businesses operating in sectors where local relationships, market knowledge and long-term commercial development are critical.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-12">
+                    <div class="sector-card">
+                        <div class="sector-icon"><i class="bi bi-briefcase"></i></div>
+                        <h3 class="sector-title">Professional & Business Services</h3>
+                        <p class="sector-desc">Helping service businesses identify opportunities, develop partnerships and build their presence across African markets.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why P23 Africa Section -->
+    <section id="why_p23" class="why-section content-section animate-on-scroll">
+        <div class="container">
+            <div class="why-header">
+                <span class="why-eyebrow">THE P23 ADVANTAGE</span>
+                <h2>Why P23 Africa?</h2>
+                <div class="why-tagline">Local insight. International perspective. Commercial focus.</div>
+                <p class="why-lead">
+                    African market expansion can be complex. We help simplify the process by combining an understanding of international business requirements with knowledge of African markets and commercial environments.
+                </p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="why-card">
+                        <div class="why-card-icon"><i class="bi bi-bullseye"></i></div>
+                        <h3 class="why-card-title">Practical, not theoretical</h3>
+                        <p class="why-card-desc">Our focus is on information and activity that can lead to commercial decisions and measurable progress.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="why-card">
+                        <div class="why-card-icon"><i class="bi bi-people-fill"></i></div>
+                        <h3 class="why-card-title">Relationship-led</h3>
+                        <p class="why-card-desc">Strong local relationships are fundamental to successful business development across Africa.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="why-card">
+                        <div class="why-card-icon"><i class="bi bi-sliders"></i></div>
+                        <h3 class="why-card-title">Flexible engagement</h3>
+                        <p class="why-card-desc">From a focused market validation project to ongoing commercial support, our involvement can adapt to your requirements.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="why-card">
+                        <div class="why-card-icon"><i class="bi bi-crosshair"></i></div>
+                        <h3 class="why-card-title">Built around your objectives</h3>
+                        <p class="why-card-desc">We don’t apply a one-size-fits-all market-entry model. We start with your business, proposition and objectives.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+ 
 
 
 
@@ -997,15 +1607,23 @@
     </section>
     <hr id="horiz">
 
-    <!-- Stats Section -->
-    <section class="px-4 content-section animate-on-scroll">
-        <div class="stats-section2">
-            <div class="">
-                <div id="stats_img_desktop">
-                    <img src="{{ asset('images/frame_desktop.png') }}" loading='lazy' alt="Card image">
-                </div>
-                <div id="stats_img_mobile">
-                    <img src="{{ asset('images/frame_mobile.png') }}" loading='lazy' alt="Card image">
+    <!-- Closing Conversion CTA Section -->
+    <section class="cta-closing-section content-section animate-on-scroll">
+        <div class="container">
+            <div class="cta-closing-inner">
+                <span class="cta-pill">START YOUR EXPANSION</span>
+                <h2>Ready to Explore the African Market?</h2>
+                <p class="cta-desc">
+                    Whether you’re considering Africa for the first time, looking to expand into additional markets, searching for customers or distributors, or preparing an established business for its next stage of growth, P23 Africa can help.
+                </p>
+                <div class="cta-prompt">Let’s discuss what you’re trying to achieve.</div>
+                <div class="d-flex justify-content-center flex-wrap">
+                    <a href="{{ url('book-consultation') }}" class="cta-btn-primary">
+                        Book a Consultation <i class="bi bi-arrow-right"></i>
+                    </a>
+                    <a href="{{ url('contact') }}" class="cta-btn-secondary">
+                        Contact Our Team
+                    </a>
                 </div>
             </div>
         </div>
