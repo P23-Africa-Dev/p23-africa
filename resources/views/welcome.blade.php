@@ -510,19 +510,13 @@
             <section class="hero content-section animate-on-scroll">
                 <div class="row hero-sec-row">
                     <div class="col-md-7 hero-text my-auto">
-                        <h1>Driving <span id="font">Successful</span><br><span id="buss">Businesses
-                                Across</span><br><img src="{{ asset('images/dot.png') }}" loading='lazy' id="dot"
-                                alt=""><span id="fonts"> Global Markets</span></h1>
+                        <h1>Helping Global <span id="font">Businesses</span><br><span id="buss">Understand,
+                                Enter and</span><br><img src="{{ asset('images/dot.png') }}" loading='lazy' id="dot"
+                                alt=""><span id="fonts"> Grow Across Africa</span></h1>
                         <br>
                         <p>
-                          We work with businesses at any stage, helping them grow and solve critical challenges.
+                          We help you understand African markets, validate opportunities, acquire customers and partners, and establish the foundations for sustainable growth.
                         </p>
-                        {{-- <p class="">
-                            We work with businesses at any stage, helping them <br> grow and solve critical challenges.
-                        </p> --}}
-                       {{--  <p class="mobile">
-                            We work with businesses at any stage, helping them  grow and solve critical challenges.
-                        </p> --}}
                         <br>
                         <div>
                             <a href="{{ url('contact') }}" class="d-flex justify-content-between"><span>Contact Us</span>
