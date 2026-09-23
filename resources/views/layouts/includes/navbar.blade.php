@@ -12,13 +12,11 @@
 
                 <div class="collapse navbar-collapse main-nav">
                     <ul class="navbar-nav me-auto ms-auto mb-2 mb-lg-0" id="nav">
-                        <li class="nav-item dropdown position-static">
-                            <a class="nav-link active" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-                                data-target="submenu1" aria-current="page" href="#">Who we are <i
-                                    class="fa-solid fa-chevron-down mx-2"></i></a>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('about') }}">Who we are</a>
 
-                            <div class="dropdown-menu dropdown-mega">
-                            <div class="container py-4" style="width: 70%; padding-left: 84px;">
+                            {{-- <div class="dropdown-menu dropdown-mega">
+                                <div class="container py-4" style="width: 70%; padding-left: 84px;">
                                     <div class="row justify-content-left">
                                         <div class="col-md-6  line">
                                             <a href="{{ url('about') }}" class="d-block mb-3 mt-3"><b>About Us</b></a>
@@ -30,20 +28,9 @@
                                                     Network</b></a>
                                             <p>Where top CEOs meet, connect, and grow through trusted referrals.</p>
                                         </div>
-                                        {{-- <div class="col-md-3 line">
-                                            <a href="{{ route('student') }}" class="d-block mb-3"><b>University
-                                                    Partnership</b></a>
-                                            <p>Connecting students with real-world research opportunities</p>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <a href="https://the54thpitch.co.uk" class="d-block mb-3"><b>The 54th
-                                                    Pitch</b></a>
-                                            <p>Helping established businesses secure grant funding through expert pitch
-                                                programs</p>
-                                        </div>
-                                    </div> --}}
+                                    </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('services') }}">What we do </a>
@@ -132,8 +119,7 @@
             <div id="mainMenu" class="main-menu">
                 <ul class="navbar-nav me-auto ms-auto mb-2 mb-lg-0" id="nav">
                     <li class="nav-item">
-                        <a class="nav-link active" data-target="submenu1" aria-current="page" href="#">Who We Are
-                            <i class="fa-solid fa-chevron-right mx-1"></i></a>
+                        <a class="nav-link" href="{{ url('about') }}">Who We Are</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('services') }}">What We Do</a>
@@ -169,7 +155,7 @@
             </div>
 
             <!-- Submenus -->
-            <div class="submenu" id="submenu1">
+            {{-- <div class="submenu" id="submenu1">
                 <a class="nav-link text-primary" id="backBtn1"><i class="bi bi-chevron-left"></i> Back</a>
                 <ul class="list-unstyled mt-2">
                     <li>
@@ -189,26 +175,8 @@
                             </p>
                         </a>
                     </li>
-                    {{-- <hr>
-                    <li>
-                        <a href="{{ route('student') }}" class="nav-link">
-                            <h5>University Partnership</h5>
-                            <p>
-                                Connecting students with real-world research opportunities
-                            </p>
-                        </a>
-                    </li>
-                    <hr>
-                    <li>
-                        <a href="https://the54thpitch.co.uk" class="nav-link">
-                            <h5>The 54th Pitch</h5>
-                            <p>
-                                Helping established businesses secure grant funding through expert pitch programs
-                            </p>
-                        </a>
-                    </li> --}}
                 </ul>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>
