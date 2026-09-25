@@ -983,6 +983,141 @@
             justify-content: center;
         }
     }
+
+    /* Enhanced Service-Based Testimonials Styles */
+    .testimonial-eyebrow {
+        color: #27E6A7;
+        font-family: "GT Walsheim ProCB", sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 1.8px;
+        text-transform: uppercase;
+        display: inline-block;
+        margin-bottom: 0.6rem;
+    }
+    .testimonial-sublead {
+        color: #d0eee9;
+        font-family: "GT Walsheim Trial Cn Rg", sans-serif;
+        font-size: 18px;
+        max-width: 720px;
+        margin: 0;
+        line-height: 1.5;
+    }
+    .testimonial-service-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #e8f5f2;
+        color: #07483e;
+        font-family: "GT Walsheim ProCB", sans-serif;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        padding: 5px 14px;
+        border-radius: 20px;
+        margin: 4px auto 14px;
+        border: 1px solid rgba(13, 64, 54, 0.12);
+        transition: all 0.3s ease;
+    }
+    .testimonial-service-tag i {
+        font-size: 13px;
+        color: #19867d;
+        transition: color 0.3s ease;
+    }
+    .testimonial-card:hover .testimonial-service-tag {
+        background: rgba(255, 255, 255, 0.2);
+        color: #ffffff;
+        border-color: rgba(255, 255, 255, 0.35);
+    }
+    .testimonial-card:hover .testimonial-service-tag i {
+        color: #27E6A7;
+    }
+    .testimonial-card .testimonial-quote {
+        font-family: "GT Walsheim Trial Cn Rg", sans-serif;
+        font-size: 16.5px !important;
+        line-height: 1.6 !important;
+        color: #3d4f4b;
+        margin: 6px 0 16px;
+        transition: color 0.3s ease;
+    }
+    .testimonial-card .testimonial-quote strong {
+        font-weight: 700;
+        color: #07483e;
+        transition: color 0.3s ease;
+    }
+    .testimonial-card:hover .testimonial-quote {
+        color: #eaf5f2 !important;
+    }
+    .testimonial-card:hover .testimonial-quote strong {
+        color: #ffffff !important;
+    }
+    .testimonial-metric-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        background: #f4faf8;
+        border: 1px solid rgba(13, 64, 54, 0.08);
+        border-radius: 12px;
+        padding: 10px 8px;
+        margin-bottom: 14px;
+        transition: all 0.3s ease;
+    }
+    .testimonial-card:hover .testimonial-metric-row {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.25);
+    }
+    .testimonial-metric-box {
+        text-align: center;
+        flex: 1;
+    }
+    .testimonial-metric-num {
+        font-family: "GT Walsheim ProCB", "Montserrat", sans-serif;
+        font-size: 18px;
+        font-weight: 800;
+        color: #07483e;
+        line-height: 1.1;
+        transition: color 0.3s ease;
+    }
+    .testimonial-card:hover .testimonial-metric-num {
+        color: #ffffff;
+    }
+    .testimonial-metric-label {
+        font-family: "GT Walsheim Trial Cn Rg", sans-serif;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #6a7c78;
+        margin-top: 3px;
+        line-height: 1.1;
+        transition: color 0.3s ease;
+    }
+    .testimonial-card:hover .testimonial-metric-label {
+        color: #d0eee9;
+    }
+    .testimonial-metric-divider {
+        width: 1px;
+        height: 24px;
+        background: rgba(13, 64, 54, 0.12);
+        transition: background 0.3s ease;
+    }
+    .testimonial-card:hover .testimonial-metric-divider {
+        background: rgba(255, 255, 255, 0.25);
+    }
+    .testimonial-card h5 {
+        font-size: 22px !important;
+        margin-top: 6px !important;
+        margin-bottom: 2px !important;
+        transition: color 0.3s ease;
+    }
+    .testimonial-card h4 {
+        font-size: 14px !important;
+        color: #6a7c78;
+        transition: color 0.3s ease;
+    }
+    .testimonial-card:hover h4 {
+        color: #d0eee9 !important;
+    }
 </style>
 
 @section('content')
@@ -1112,23 +1247,7 @@
                     </div>
                 </div>
 
-                <!-- 2. Sales & Business Development -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="capability-card">
-                        <div>
-                            <div class="capability-icon">
-                                <i class="bi bi-graph-up-arrow"></i>
-                            </div>
-                            <h3 class="capability-title">Sales & Business Development</h3>
-                            <p class="capability-desc">Generate opportunities, develop relationships and build commercial pipelines.</p>
-                        </div>
-                        <a href="{{ url('services') }}#sales" class="capability-link">
-                            Explore business development <i class="bi bi-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- 3. Distributor & Partner Development -->
+                 <!-- 3. Distributor & Partner Development -->
                 <div class="col-lg-4 col-md-6">
                     <div class="capability-card">
                         <div>
@@ -1143,6 +1262,24 @@
                         </a>
                     </div>
                 </div>
+
+                <!-- 2. Sales & Business Development -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="capability-card">
+                        <div>
+                            <div class="capability-icon">
+                                <i class="bi bi-graph-up-arrow"></i>
+                            </div>
+                            <h3 class="capability-title">Outbound Sales Demand Testing</h3>
+                            <p class="capability-desc">Generate opportunities, develop relationships and build commercial pipelines.</p>
+                        </div>
+                        <a href="{{ url('services') }}#sales" class="capability-link">
+                            Explore business development <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+               
 
                 <!-- 4. Operations & Market Support -->
                 <div class="col-lg-6 col-md-6">
@@ -1378,45 +1515,107 @@
 
     <section class="testimonial-section content-section animate-on-scroll">
         <div class="container">
-            <h2>What Our Clients Say About Us</h2>
+            <span class="testimonial-eyebrow">CLIENT IMPACT &amp; METRICS</span>
+            <h2>Proven Results Across African Markets</h2>
+            <p class="testimonial-sublead">
+                Real feedback from business leaders leveraging our services to test demand, establish local partners, and scale commercial operations.
+            </p>
         </div>
     </section>
 
     <div class="testimonial-section-main">
         <div class="container testimonial-container">
             <div class="testimonial-wrapper">
+                <!-- 1. Market Entry & Expansion -->
                 <div class="testimonial">
                     <div class="testimonial-card text-center">
-                        <img src="{{ asset('images/testimonial01.png') }}" loading='lazy' alt="Chioma Ike">
-                        <p>
-                            Working with this team was a game-changer. Their insights and strategies helped us grow and
-                            navigate new markets with confidence.
+                        <img src="{{ asset('images/testimonial01.png') }}" loading='lazy' alt="Chioma Chukwu">
+                        <span class="testimonial-service-tag">
+                            <i class="bi bi-compass"></i> Market Entry &amp; Expansion
+                        </span>
+                        <div class="testimonial-metric-row">
+                            <div class="testimonial-metric-box">
+                                <div class="testimonial-metric-num">3</div>
+                                <div class="testimonial-metric-label">Markets Entered</div>
+                            </div>
+                            <div class="testimonial-metric-divider"></div>
+                            <div class="testimonial-metric-box">
+                                <div class="testimonial-metric-num">-45%</div>
+                                <div class="testimonial-metric-label">Launch Time</div>
+                            </div>
+                            <div class="testimonial-metric-divider"></div>
+                            <div class="testimonial-metric-box">
+                                <div class="testimonial-metric-num">$1.2M</div>
+                                <div class="testimonial-metric-label">Year 1 ARR</div>
+                            </div>
+                        </div>
+                        <p class="testimonial-quote">
+                            "P23 Africa engineered our cross-border expansion into <strong>3 new markets in 6 months</strong>. Their practical regulatory and market guidance cut our launch time by <strong>45%</strong> and unlocked <strong>$1.2M</strong> in first-year revenue."
                         </p>
                         <h5><b>Chioma Chukwu</b></h5>
-                        <h4>C.E.0</h4>
+                        <h4>CEO, Horizon FinTech Group</h4>
                     </div>
                 </div>
+
+                <!-- 2. Outbound Sales Demand Testing -->
                 <div class="testimonial">
                     <div class="testimonial-card text-center">
-                        <img src="{{ asset('images/testimonial3.png') }}" loading='lazy' alt="Charles">
-                        <p>
-                            Their expertise and tailored approach transformed our business operations and boosted our
-                            efficiency. Highly recommended.
+                        <img src="{{ asset('images/testimonial3.png') }}" loading='lazy' alt="John Blakey">
+                        <span class="testimonial-service-tag">
+                            <i class="bi bi-graph-up-arrow"></i> Outbound Sales Demand Testing
+                        </span>
+                        <div class="testimonial-metric-row">
+                            <div class="testimonial-metric-box">
+                                <div class="testimonial-metric-num">140+</div>
+                                <div class="testimonial-metric-label">B2B Leads</div>
+                            </div>
+                            <div class="testimonial-metric-divider"></div>
+                            <div class="testimonial-metric-box">
+                                <div class="testimonial-metric-num">$680K</div>
+                                <div class="testimonial-metric-label">Pipeline Closed</div>
+                            </div>
+                            <div class="testimonial-metric-divider"></div>
+                            <div class="testimonial-metric-box">
+                                <div class="testimonial-metric-num">+38%</div>
+                                <div class="testimonial-metric-label">Win Rate</div>
+                            </div>
+                        </div>
+                        <p class="testimonial-quote">
+                            "Their outbound sales demand testing delivered <strong>140+ verified B2B leads</strong> in <strong>90 days</strong>. We closed <strong>$680K in new contracts</strong> and lifted our sales conversion rate by <strong>38%</strong>."
                         </p>
                         <h5><b>John Blakey</b></h5>
-                        <h4>C.E.0</h4>
+                        <h4>Commercial Director, Apex Industrial</h4>
                     </div>
                 </div>
+
+                <!-- 3. Distributor & Partner Development -->
                 <div class="testimonial">
                     <div class="testimonial-card text-center">
-                        <img src="{{ asset('images/testimonial03.png') }}" loading='lazy' alt="Family Guy">
-                        <p class="">
-                            A true partner in our success. They provided the guidance we needed to scale our business while
-                            overcoming challenges.
+                        <img src="{{ asset('images/testimonial03.png') }}" loading='lazy' alt="Emily Nguyen">
+                        <span class="testimonial-service-tag">
+                            <i class="bi bi-diagram-3"></i> Distributor &amp; Partner Development
+                        </span>
+                        <div class="testimonial-metric-row">
+                            <div class="testimonial-metric-box">
+                                <div class="testimonial-metric-num">35+</div>
+                                <div class="testimonial-metric-label">Partners Vetted</div>
+                            </div>
+                            <div class="testimonial-metric-divider"></div>
+                            <div class="testimonial-metric-box">
+                                <div class="testimonial-metric-num">4</div>
+                                <div class="testimonial-metric-label">Tier-1 Partners</div>
+                            </div>
+                            <div class="testimonial-metric-divider"></div>
+                            <div class="testimonial-metric-box">
+                                <div class="testimonial-metric-num">+160%</div>
+                                <div class="testimonial-metric-label">Volume Growth</div>
+                            </div>
+                        </div>
+                        <p class="testimonial-quote">
+                            "Finding reliable distributors across Africa was our toughest barrier. P23 screened <strong>35+ candidates</strong> and secured <strong>4 tier-1 partners</strong>, driving a <strong>160% volume increase</strong> in under <strong>8 months</strong>."
                         </p>
-
                         <h5><b>Emily Nguyen</b></h5>
-                        <h4>Managing Director</h4>
+                        <h4>Managing Director, Vitalis Consumer Goods</h4>
                     </div>
                 </div>
             </div>
