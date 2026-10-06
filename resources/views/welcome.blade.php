@@ -1,13 +1,29 @@
 @extends('layouts.master')
-@section('title', 'Business Consulting & Growth Solutions for Africa | P23 Africa')
+@section('title', 'Helping Global Businesses Enter & Grow Across Africa | P23 Africa')
 @section('meta')
     <meta name="description"
-        content="Expand and grow your business in Africa with expert business consulting. P23 Africa helps entrepreneurs, SMEs, and international businesses with strategy, expansion, marketing, operational efficiency and tailored solutions to thrive in African markets. Get started today!">
+        content="P23 Africa helps global businesses understand African markets, validate opportunities, acquire customers and partners, and build sustainable commercial growth.">
     <meta name="keywords"
-        content="Expand and grow your business in Africa with expert business consulting. P23 Africa helps entrepreneurs, SMEs, and international businesses with strategy, expansion, marketing, operational efficiency and tailored solutions to thrive in African markets. Get started today!">
+        content="market entry Africa, African business expansion, commercial solutions Africa, business consulting Africa, distributor development Africa, outbound sales demand testing, Nigeria Ghana Kenya South Africa business expansion, P23 Africa">
     <meta name="author" content="Nurudeen O. Daniju">
-    <meta name="generator" content="Business Consulting & Growth Solutions for Africa | P23 Africa">
+    <meta name="generator" content="P23 Africa - Helping Global Businesses Enter & Grow Across Africa">
+    <link rel="canonical" href="{{ url()->current() }}">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="Helping Global Businesses Enter & Grow Across Africa | P23 Africa">
+    <meta property="og:description"
+        content="We help you understand African markets, validate opportunities, acquire customers and partners, and establish the foundations for sustainable growth.">
     <meta property="og:image" content="https://p23africa.com/images/homepage-thumbnail-og.png">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ url()->current() }}">
+    <meta name="twitter:title" content="Helping Global Businesses Enter & Grow Across Africa | P23 Africa">
+    <meta name="twitter:description"
+        content="We help you understand African markets, validate opportunities, acquire customers and partners, and establish the foundations for sustainable growth.">
+    <meta name="twitter:image" content="https://p23africa.com/images/homepage-thumbnail-og.png">
 @endsection
 
 <style>

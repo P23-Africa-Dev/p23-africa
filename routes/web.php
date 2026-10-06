@@ -77,7 +77,7 @@ Route::get('/our-sales', function () {
 
     $click->increment('click_count');
 
-    return redirect()->route($routeName);
+    return redirect()->route($routeName)->header('X-Robots-Tag', 'noindex, nofollow');
 })->name('redirect.with.count');
 
 
@@ -119,7 +119,9 @@ Route::get('/market-entry/ghana', fn() => redirect()->route('services.market-ent
 
 Route::get('/sales', function () {
     ClickTracker::track('Sales_Page');
-    return view('sales');
+    return response()
+        ->view('sales')
+        ->header('X-Robots-Tag', 'noindex, nofollow');
 })->name('sales');
 
 Route::get('/quiz', function () {

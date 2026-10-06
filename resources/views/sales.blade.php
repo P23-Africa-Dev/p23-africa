@@ -1,6 +1,8 @@
 @extends('layouts.sales-layout')
 @section('title', 'Sales | P23 Africa')
 @section('meta')
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
     <meta name="description"
         content="Expand and grow your business in Africa with expert business consulting. P23 Africa helps entrepreneurs, SMEs, and international businesses with strategy, expansion, marketing, operational efficiency and tailored solutions to thrive in African markets. Get started today!">
     <meta name="keywords"
