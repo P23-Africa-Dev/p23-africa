@@ -9,6 +9,7 @@
     <meta name="author" content="Nurudeen O. Daniju">
     <meta name="generator" content="Business Consulting & Growth Solutions for Africa | P23 Africa">
     <meta property="og:image" content="{{ asset('images/servces-bg.png') }}">
+    <link rel="stylesheet" href="{{ asset('css/market-entry.css') }}">
 @endsection
 
 
@@ -74,13 +75,29 @@
                              </div>
                         </div>
                     
-                        <div class=" col-12 col-lg-4 scroll-offset" id="market">
-                            <div class="services-content bg-color2 ">
-                                <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
-                                    <img src="{{ asset('images/target-03.png') }}" loading='lazy' alt="">
-                                    <h4 class="text-left">Market Entry</h4>
+                        <div class="col-12 col-lg-4 scroll-offset" id="market">
+                            <div class="services-content bg-market-featured">
+                                <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left position-relative" style="z-index: 2;">
+                                    <span class="featured-pill-tag">
+                                        <i class="fas fa-star me-1" style="color: var(--p23-bright-green);"></i> Flagship Solution
+                                    </span>
+                                    <img src="{{ asset('images/target-03.png') }}" loading='lazy' alt="Market Entry" style="filter: brightness(0) invert(1);">
+                                    <h4 class="text-left text-white mt-2">Market Entry &amp; Expansion</h4>
         
-                                    <p>We help you successfully enter and grow in a variety of markets. Our team provides expert guidance on local regulations, business culture, and market opportunities across the continent. We develop tailored entry strategies, connect you with trusted local partners, and support you through every step—from market research to launch. Whether you’re expanding into one country or across multiple regions, we make your move into Africa, Europe and America smooth, strategic, and successful.</p>
+                                    <p class="text-white-50">
+                                        Enter Africa with confidence. Build with local knowledge. We help businesses move from market opportunity to practical execution across Nigeria, Ghana, Kenya, and South Africa through demand testing, distributor vetting, and local operational oversight.
+                                    </p>
+
+                                    <div class="d-flex flex-wrap gap-2 mb-2">
+                                        <span class="p23-dossier-tag py-1 px-3" style="font-size: 0.72rem;">Nigeria</span>
+                                        <span class="p23-dossier-tag py-1 px-3" style="font-size: 0.72rem;">Ghana</span>
+                                        <span class="p23-dossier-tag py-1 px-3" style="font-size: 0.72rem;">Kenya</span>
+                                        <span class="p23-dossier-tag py-1 px-3" style="font-size: 0.72rem;">South Africa</span>
+                                    </div>
+
+                                    <a href="{{ route('services.market-entry') }}" class="market-card-cta-btn">
+                                        Explore Market Entry Flow <i class="fas fa-arrow-right ms-1"></i>
+                                    </a>
                                 </div>
                              </div>
                         </div>
