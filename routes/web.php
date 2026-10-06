@@ -77,7 +77,7 @@ Route::get('/our-sales', function () {
 
     $click->increment('click_count');
 
-    return redirect()->route($routeName);
+    return redirect()->route($routeName)->header('X-Robots-Tag', 'noindex, nofollow');
 })->name('redirect.with.count');
 
 
@@ -95,9 +95,33 @@ Route::get('/services', function () {
     ClickTracker::track('Service_Page');
     return view('services');
 });
+
+// Market Entry & Expansion Flow
+Route::get('/services/market-entry', function () {
+    ClickTracker::track('Market_Entry_Page');
+    return view('market-entry.index');
+})->name('services.market-entry');
+
+Route::get('/services/market-entry/nigeria', function () {
+    ClickTracker::track('Market_Entry_Nigeria_Page');
+    return view('market-entry.nigeria');
+})->name('services.market-entry.nigeria');
+
+Route::get('/services/market-entry/ghana', function () {
+    ClickTracker::track('Market_Entry_Ghana_Page');
+    return view('market-entry.ghana');
+})->name('services.market-entry.ghana');
+
+// Convenience aliases
+Route::get('/market-entry', fn() => redirect()->route('services.market-entry'));
+Route::get('/market-entry/nigeria', fn() => redirect()->route('services.market-entry.nigeria'));
+Route::get('/market-entry/ghana', fn() => redirect()->route('services.market-entry.ghana'));
+
 Route::get('/sales', function () {
     ClickTracker::track('Sales_Page');
-    return view('sales');
+    return response()
+        ->view('sales')
+        ->header('X-Robots-Tag', 'noindex, nofollow');
 })->name('sales');
 
 Route::get('/quiz', function () {
