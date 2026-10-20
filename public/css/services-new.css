@@ -1377,3 +1377,51 @@ body.p23-black-navbar-page #navbar .navbar-toggler img {
 
 
 
+
+/* Mobile drawer uses a light surface, independently of the dark desktop header. */
+@media (max-width: 991px) {
+    body.p23-black-navbar-page #navbar #sidebar {
+        color: #1a293b;
+        background: #fff;
+        height: 100dvh;
+        max-width: calc(100vw - 32px);
+        border-radius: 10px 0 0 10px;
+    }
+    body.p23-black-navbar-page #navbar #sidebar #nav {
+        align-items: stretch;
+        gap: 12px;
+        margin: 20px 0 28px !important;
+    }
+    body.p23-black-navbar-page #navbar #sidebar #nav li .nav-link,
+    body.p23-black-navbar-page #navbar #sidebar .social-icons a {
+        color: #1a293b !important;
+        opacity: 1 !important;
+    }
+    body.p23-black-navbar-page #navbar #sidebar .contact {
+        display: block !important;
+        margin-bottom: 16px;
+    }
+    body.p23-black-navbar-page #navbar #sidebar .contact #btn,
+    body.p23-black-navbar-page #navbar #sidebar .subscribe #btn {
+        color: #1a293b !important;
+        border: 1px solid #1a293b !important;
+        background: #fff !important;
+    }
+    body.p23-black-navbar-page #navbar #sidebar .social-icons {
+        margin: 24px 0 0;
+    }
+}
+#navbar #closeBtn {
+    display: grid;
+    place-items: center;
+    margin-left: auto;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: #1a293b;
+    font: 32px/1 sans-serif;
+    cursor: pointer;
+}
