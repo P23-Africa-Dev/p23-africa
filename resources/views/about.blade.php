@@ -1,173 +1,92 @@
 @extends('layouts.master')
 @section('title', 'About | P23 Africa')
+@section('body_class', 'p23-black-navbar-page about-page')
 @section('meta')
-    <meta name="description"
-        content="Expand and grow your business in Africa with expert business consulting. P23 Africa helps entrepreneurs, SMEs, and international businesses with strategy, expansion, marketing, operational efficiency and tailored solutions to thrive in African markets. Get started today!">
-    <meta name="keywords"
-        content="Expand and grow your business in Africa with expert business consulting. P23 Africa helps entrepreneurs, SMEs, and international businesses with strategy, expansion, marketing, operational efficiency and tailored solutions to thrive in African markets. Get started today!">
-    <meta name="author" content="Nurudeen O. Daniju">
-    <meta name="generator" content="Business Consulting & Growth Solutions for Africa | P23 Africa">
-    <meta property="og:image" content="{{ asset('images/about-header.jpg') }}">
+<meta name="description" content="Africa-focused, globally relevant. Meet P23 Africa and explore how local knowledge, trusted relationships, and practical execution help businesses grow.">
+<meta property="og:image" content="{{ asset('images/about/hero.png') }}">
+<link rel="stylesheet" href="{{ asset('css/services-new.css') }}">
+<link rel="stylesheet" href="{{ asset('css/about-new.css') }}">
+<script src="{{ asset('js/about-case-studies.js') }}" defer></script>
 @endsection
-
-
 @section('content')
-    <section class="hero-section animate-on-scroll">
-        {{-- <div class="hero-overlay"></div> --}}
-        <div class="container hero-content">
-            <div class="hero-content-block">
-                <div class="left-block">
-                    <!-- Visual Line -->
-                    <div class="line-connector"></div>
-
-                    <!-- Highlighted Box -->
-
-                    <div class="main-box">
-                        <h6>KNOW ABOUT US</h6>
-                        <h1>EMPOWERING BUSINESSES.<br>TRANSFORMING MARKETS</h1>
-                    </div>
-
-                    <!-- Subdescription -->
-                    <p class="descriptions">
-                        {{-- <p class="descriptions"> --}}
-                        <b>Africa-focused, globally relevant</b> <br> P23 Africa are a team of seasoned professionals
-                        helping businesses across sectors scale in a competitive and rapidly-changing market.
-                    </p>
-
-                    <!-- Contact Button -->
-                    <div class="c-btn">
-
-                        <a href="{{ url('contact') }}" class="contact-btn">
-                            Contact Us <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-                {{-- <div class="right-block text-left" > --}}
-                <div class="text-left">
-                    <!-- Secondary Label -->
-                    <div class="info-tag">
-                        EXPANSION. BRAND. SALES
-                    </div>
-                </div>
+<div class="about-new">
+    <section class="ab-hero ab-container" aria-labelledby="about-title">
+        <div class="ab-intro">
+            <p class="ab-eyebrow">About us</p>
+            <div class="ab-hero-copy">
+                <h1 id="about-title">Our team is ready<br>to assist you</h1>
+                <p><span>Africa-focused,</span> globally relevant. P23 Africa are a team of seasoned professionals helping businesses across sectors scale in a competitive and rapidly-changing market.</p>
+            </div>
+            <div class="ab-actions">
+                <a href="{{ url('contact') }}" class="ab-talk">Talk to Us</a>
+                <a href="{{ route('case-studies') }}" class="ab-case-link">
+                    <img src="{{ asset('images/about/stars.svg') }}" width="98" height="18" alt="Five stars">
+                    <span><strong>Click Here to</strong> <em>Read Case Studies</em></span>
+                </a>
             </div>
         </div>
-
-
-        <section id="mission_vision" class="animate-on-scroll">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 mb-md-0 mb-5">
-                        <h5>Our Mission <span></span></h5>
-                        <strong class="my-2">Business Empowerment</strong>
-                        <p>
-                            Our mission is to empower global businesses to thrive and innovate through strategic guidance
-                            and transformative solutions. We are committed to fostering sustainable growth, driving
-                            impactful change, and unlocking the full potential of businesses across the continent.
-                        </p>
-                    </div>
-                    <div class="col-md-6">
-                        <div id="h5">
-                            <h5>Our Vision <span></span></h5>
-                        </div>
-                        <strong class="my-2">Excellence, Integrity, and Collaboration</strong>
-                        <p>
-                            With a vision rooted in excellence, integrity, and collaboration, we aspire to be the catalyst
-                            for economic advancement, empowering clients to navigate challenges, seize
-                            opportunities, and shape a prosperous future for generations to come.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </section>
-
-
-
-    <section class="growth-section animate-on-scroll">
-        <div class="container">
-            <h5 class="my-auto"><img src="{{ asset('images/line.png') }}" loading='lazy' alt=""> Our Three pillars
-                to ensure success</h5>
-            <h2>Empowering your growth <br> through;</h2>
+        <div class="ab-hero-image">
+            <img src="{{ asset('images/about/hero.png') }}" alt="P23 Africa professionals connecting at a business event" width="4096" height="2878" fetchpriority="high">
         </div>
     </section>
-
-
-    <div class="container growth-container animate-on-scroll">
-        <div class="row justify-content-center g-2">
-            <div class="col-md-4">
-                <img src="{{ asset('images/knowledge_expert.png') }}" loading='lazy' alt="">
-                {{-- <div class="growth-card text-center">
-                    <img src="{{ asset('images/icon_mark.png') }}" alt="Chioma Ike">
-                    <h5>The Knowledge of Experts</h5>
-                    <p>
-                        Tap into decades of combined experience from industry specialists. We provide strategic insights tailored to your unique business journey.
-                    </p>
-                </div> --}}
-            </div>
-            <div class="col-md-4">
-                <img src="{{ asset('images/simple_execution.png') }}" loading='lazy' alt="">
-                {{-- <div class="growth-card text-center">
-                    <img src="{{ asset('images/icon_bulb.png') }}" alt="Charles">
-                    <h5>Simple Execution</h5>
-                    <p>
-                        We strip away complexity to deliver clear, actionable steps. Our streamlined processes turn big ideas into tangible outcomes.
-                    </p>
-                </div> --}}
-            </div>
-            <div class="col-md-4">
-                <img src="{{ asset('images/practical_guidance.png') }}" loading='lazy' alt="">
-                {{-- <div class="growth-card text-center">
-                    <img src="{{ asset('images/icon_technical-support-2.png') }}" alt="Family Guy">
-                    <h5>Practical Guidance</h5>
-                    <p>
-                        Beyond theory, we walk with you through implementation. Expect hands-on support to navigate real-world challenges with confidence.
-                    </p>
-                </div> --}}
-            </div>
-        </div>
-    </div>
-
-
-    <section class="commitment animate-on-scroll">
-        <div class="container py-5">
-            <div class="row g-0 align-items-stretch">
-
-                <img class="img-fluid" src="{{ asset('images/Commitment.png') }}" loading='lazy' alt="">
-                <img class="img-fluid2" src="{{ asset('images/about_frame.png') }}" loading='lazy' alt="">
-                {{-- <div class="col-lg-6 commitment-box">
-                <div class="py-4 px-2">
-                    <h4>OUR COMMITMENT</h4>
-                    <p class="mt-4">
-                        With a commitment to excellence, integrity, and collaboration, we partner closely with our clients to understand their unique needs, goals, and aspirations. Through personalised consulting services, actionable insights, and hands-on support, we strive to empower businesses and entrepreneurs to thrive in dynamic and competitive markets.                    
-                    </p>
-                </div>
-              </div> --}}
-
-                {{-- <div class="col-lg-6 position-relative">
-                <img src="{{ asset('images/about.jpg') }}" alt="Team discussion" class="team-image" />
-        
-                <div class="overlay-card">
-                  <p>Expansion, Brand, Sales</p>
-                  <br><br>
-                  <p><strong>P23 Africa.</strong></p>
-                </div>
-              </div> --}}
-            </div>
+    <section class="ab-trusted ab-container" aria-label="Trusted businesses">
+        <p>Trusted by 25k+ businesses</p>
+        <div class="ab-logos">
+            @foreach (['walmart' => ['Walmart', 117.328], 'cisco' => ['Cisco', 224], 'volvo' => ['Volvo', 53.328], 'deloitte' => ['Deloitte', 224], 'okta' => ['Okta', 73]] as $logo => [$name, $width])
+            <div><img src="{{ asset('images/about/'.$logo.'.svg') }}" alt="{{ $name }}" width="{{ $width }}" height="64" loading="lazy"></div>
+            @endforeach
         </div>
     </section>
-
-
-    <!-- Stats Section -->
-    <section class="px-2 animate-on-scroll">
-        <div class="stats-section3">
-            <div class="">
-                <div id="stats_img_desktop">
-                    <img src="{{ asset('images/about-desktop.png') }}" loading='lazy' alt="Card image">
+    <section class="ab-spotlight" aria-labelledby="spotlight-title">
+        <div class="ab-spotlight-heading ab-container">
+            <h2 id="spotlight-title">Executives<br>Spotlight.</h2>
+            <p>Real success stories from CEOs who’ve grown through the power of referral-based networking.</p>
+        </div>
+        <div class="ab-executives">
+            @foreach (['executive_one', 'executive_two', 'executive_two'] as $portrait)
+            <article class="ab-executive ab-executive-{{ $loop->iteration }}">
+                <div class="ab-executive-copy">
+                    <h3>Fullname, Title</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
                 </div>
-                <div id="stats_img_mobile">
-                    <img src="{{ asset('images/about-mobile.png') }}" loading='lazy' alt="Card image">
-                </div>
-            </div>
+                <img src="{{ asset('images/about/'.$portrait.'.png') }}" alt="Executive portrait" width="896" height="1200" loading="lazy">
+            </article>
+            @endforeach
         </div>
     </section>
+    <section class="ab-case-studies ab-container" aria-labelledby="case-studies-title">
+        <div class="ab-case-heading">
+            <h2 id="case-studies-title">Our Case Studies</h2>
+            <div class="ab-case-controls" aria-label="Browse case study cards">
+                <button type="button" data-case-direction="-1" aria-label="Previous case study cards">←</button>
+                <button type="button" data-case-direction="1" aria-label="Next case study cards">→</button>
+            </div>
+        </div>
+        <div class="ab-case-cards" id="about-case-cards" tabindex="0" aria-label="Case studies">
+            @foreach ($caseStudies as $study)
+            <article class="ab-case-card">
+                <h3>{{ $study['title'] }}</h3>
+                @if ($study['illustrative'])<span class="ab-example">Illustrative example</span>@endif
+                <p>{{ $study['summary'] }}</p>
+                <a href="{{ route('case-studies.show', $study['slug']) }}" aria-label="Read more: {{ $study['title'] }}">Read More <img src="{{ asset('images/about/chevron.svg') }}" width="16" height="16" alt=""></a>
+            </article>
+            @endforeach
+        </div>
+        <a href="{{ route('case-studies', ['all' => 1]) }}#case-library" class="ab-view-all">View all case studies</a>
+    </section>
+    <section class="ab-statistics" aria-labelledby="growth-statistic">
+        <div class="ab-stat-content">
+            <h2 id="growth-statistic">57%</h2>
+            <p>of organizations say operational inefficiencies<br>hold back their growth</p>
+            <dl>
+                <div><dt>68%</dt><dd>Start-ups</dd></div>
+                <div><dt>59%</dt><dd>MSMEs</dd></div>
+                <div><dt>46%</dt><dd>Enterprises</dd></div>
+            </dl>
+        </div>
+    </section>
+</div>
+@endsection
+@section('footer')
+@include('layouts.includes.footer3')
 @endsection
