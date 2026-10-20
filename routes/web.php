@@ -83,13 +83,16 @@ Route::get('/our-sales', function () {
 
 Route::get('/', [SliderController::class, 'showSlider'])->name('homepage');
 
+Route::get('/case-studies', [\App\Http\Controllers\CaseStudyController::class, 'show'])->name('case-studies');
+Route::get('/case-studies/{slug}', [\App\Http\Controllers\CaseStudyController::class, 'show'])->name('case-studies.show');
+
 Route::get('/contact', function () {
     ClickTracker::track('Contact_Page');
     return view('contact');
 });
 Route::get('/about', function () {
     ClickTracker::track('About_Page');
-    return view('about');
+    return view('about', ['caseStudies' => \App\Support\CaseStudies::all()]);
 });
 Route::get('/services', function () {
     ClickTracker::track('Service_Page');

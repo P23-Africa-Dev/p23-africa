@@ -1,0 +1,167 @@
+[
+  {
+    "slug": "thermoflow-hvac",
+    "title": "HVAC Manufacturer",
+    "client": "Thermoflow HVAC",
+    "sector": "Commercial HVAC & Refrigeration Equipment Manufacturer",
+    "market": "Nigeria (Lagos & Abuja)",
+    "service": "Distributor Vetting + Demand Testing",
+    "result": "2 of 3 shortlisted distributors eliminated; 47 qualified buyer signals generated",
+    "timeline": "10 weeks",
+    "summary": "An HVAC manufacturer wanted to explore the Nigerian market before committing significant capital. Rather than relying on high-level surveys, P23 was engaged to generate genuine commercial signal from real businesses.",
+    "image": "images/case-studies/thermoflow.png",
+    "image_alt": "Commercial cooling and ventilation equipment at an industrial facility",
+    "illustrative": false,
+    "challenge": "The client had been approached by three Nigerian distributors claiming established HVAC networks. They had no way to verify whether these partners actually had field sales teams, real customer relationships, or just procurement contacts. Committing to a distribution agreement without validation risked years of poor market coverage.",
+    "process": [
+      {
+        "icon": "understand",
+        "title": "Understand",
+        "description": "Mapped the addressable buyer universe across hospitals, hotels, and commercial property developers in Lagos and Abuja (312 target accounts)."
+      },
+      {
+        "icon": "validate",
+        "title": "Validate",
+        "description": "Conducted structured interviews with each distributor’s referenced customers. Simultaneously ran direct outbound demand testing via LinkedIn and email to the mapped account list to gauge independent market appetite."
+      },
+      {
+        "icon": "connect",
+        "title": "Connect",
+        "description": "Developed a distributor scoring framework covering territory coverage, technical capability, existing brand conflicts, and CRM/lead tracking maturity."
+      },
+      {
+        "icon": "execute",
+        "title": "Execute",
+        "description": "Presented validated findings with a recommended path."
+      }
+    ],
+    "metrics": [
+      {
+        "value": "312",
+        "label": "Accounts Created"
+      },
+      {
+        "value": "89",
+        "label": "Responses"
+      },
+      {
+        "value": "47",
+        "label": "Qualified Opportunities"
+      }
+    ],
+    "validation": "Distributor validation: Distributor A (strongest claimed network) only 4 of 12 referenced customers confirmed active purchasing relationship. Distributor B 9 of 10 references confirmed. Distributor C no verifiable field sales activity.",
+    "outcome": "The client selected Distributor B for a structured trial agreement with staged exclusivity: 6-month territory-based exclusivity contingent on monthly pipeline reporting and minimum quarterly order thresholds. Distributors A and C were disqualified. The 47 qualified buyer signals were handed over as a warm pipeline for the new distributor to work, with a 90-day follow-up protocol.",
+    "cta_heading": "If you’re evaluating African distributors based on presentations rather than verified field activity, you’re making a decision on incomplete information.",
+    "cta_description": "Book a Discovery Call to design your distributor validation process."
+  },
+  {
+    "slug": "consumer-goods-expansion",
+    "title": "Consumer Goods Expansion",
+    "client": "Consumer Goods Brand",
+    "sector": "Packaged Consumer Goods",
+    "market": "Ghana (Accra & Kumasi)",
+    "service": "Market Entry Research + Retail Demand Testing",
+    "result": "A focused route to market and a shortlist of retail partners",
+    "timeline": "8 weeks",
+    "summary": "A consumer goods brand explores a new West African market. Follow an illustrative journey from understanding local buying habits to testing retail demand and choosing the right distribution partners.",
+    "image": "images/market-entry/hero-handshake.png",
+    "image_alt": "Business partners shaking hands",
+    "illustrative": true,
+    "challenge": "A growing consumer goods brand wanted to expand into Ghana but needed to understand where its products would fit. Broad market estimates could not explain which retailers to approach, what buyers expected, or how to build a practical launch plan.",
+    "process": [
+      {
+        "icon": "understand",
+        "title": "Understand",
+        "description": "Mapped retail channels, customer segments, and competing products in Accra and Kumasi."
+      },
+      {
+        "icon": "validate",
+        "title": "Validate",
+        "description": "Tested the proposed offer through structured retailer conversations and buyer feedback."
+      },
+      {
+        "icon": "connect",
+        "title": "Connect",
+        "description": "Compared potential distribution partners on coverage, relevant experience, and reporting capability."
+      },
+      {
+        "icon": "execute",
+        "title": "Execute",
+        "description": "Built a phased pilot plan with clear stock, pricing, and review checkpoints."
+      }
+    ],
+    "metrics": [
+      {
+        "value": "2",
+        "label": "Cities Mapped"
+      },
+      {
+        "value": "3",
+        "label": "Retail Channels"
+      },
+      {
+        "value": "1",
+        "label": "Pilot Roadmap"
+      }
+    ],
+    "validation": "Illustrative scenario: channel fit is assessed through retailer conversations, competitor mapping, and partner capability reviews before a full launch commitment.",
+    "outcome": "The example ends with a focused pilot across two cities, a prioritised retail channel strategy, and clear criteria for selecting a distribution partner. Progress is reviewed against sell-through, retailer feedback, and replenishment signals before expansion.",
+    "cta_heading": "A strong market entry plan starts with the people who will buy, stock, and sell your product.",
+    "cta_description": "Book a Discovery Call to explore your next African market."
+  },
+  {
+    "slug": "business-services-demand",
+    "title": "Business Services Demand",
+    "client": "B2B Services Company",
+    "sector": "Business Services & Technology",
+    "market": "Kenya (Nairobi)",
+    "service": "Buyer Mapping + Sales Demand Testing",
+    "result": "A prioritised buyer segment and a practical sales pilot",
+    "timeline": "6 weeks",
+    "summary": "A business services company tests its proposition in Nairobi. This illustrative example shows how focused buyer research and direct conversations can turn a broad expansion idea into a practical sales pilot.",
+    "image": "images/about/hero.png",
+    "image_alt": "Business professionals discussing a commercial opportunity",
+    "illustrative": true,
+    "challenge": "A B2B services company saw an opportunity in Kenya but had limited evidence of local demand. It needed to identify decision-makers, understand procurement requirements, and test its value proposition before investing in a permanent local team.",
+    "process": [
+      {
+        "icon": "understand",
+        "title": "Understand",
+        "description": "Defined target account segments and mapped the buying committee for each service category."
+      },
+      {
+        "icon": "validate",
+        "title": "Validate",
+        "description": "Tested the proposition in direct buyer conversations and documented objections and buying triggers."
+      },
+      {
+        "icon": "connect",
+        "title": "Connect",
+        "description": "Identified local ecosystem partners who could support introductions and delivery."
+      },
+      {
+        "icon": "execute",
+        "title": "Execute",
+        "description": "Created a sales pilot with outreach priorities, qualification criteria, and follow-up steps."
+      }
+    ],
+    "metrics": [
+      {
+        "value": "3",
+        "label": "Buyer Segments"
+      },
+      {
+        "value": "2",
+        "label": "Offers Tested"
+      },
+      {
+        "value": "1",
+        "label": "Sales Pilot"
+      }
+    ],
+    "validation": "Illustrative scenario: buyer feedback is compared across segments to distinguish general interest from an actionable business need and a realistic procurement path.",
+    "outcome": "The example produces a clear priority segment, refined messaging, and a sales pilot tailored to local buying requirements. The team can use the pilot to assess demand, build relationships, and decide when a local presence is justified.",
+    "cta_heading": "Before building a local sales team, find out which buyers have a reason to talk to you.",
+    "cta_description": "Book a Discovery Call to design your demand testing pilot."
+  }
+]
