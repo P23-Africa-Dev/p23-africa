@@ -25,7 +25,7 @@
 /* Section 1: Hero Container */
 .services-hero-section {
     width: 100%;
-    padding-top: clamp(100px, 12vw, 150px);
+    padding-top: clamp(145px, 13vw, 175px);
     padding-bottom: clamp(40px, 6vw, 70px);
     position: relative;
     background: #FFFFFF;
@@ -1198,6 +1198,180 @@
     .footer3-col-brand,
     .footer3-col-subscribe {
         grid-column: span 1;
+    }
+}
+
+/* ==========================================================================
+   Navbar Specification for Services and Market Entry Pages
+   Figma Spec:
+   background: #000000; width: 1512; height: 123; top: -2px; gap: 10px;
+   padding-top: 19px; padding-right: 10px; padding-bottom: 19px; padding-left: 10px;
+   ========================================================================== */
+body.p23-black-navbar-page #navbar.navbar-full,
+body.p23-black-navbar-page #navbar.bg-scrolling {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    top: -2px !important;
+    height: auto !important;
+    min-height: 123px !important;
+    padding: 0 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 1050 !important;
+    transition: background-color 0.3s ease !important;
+}
+
+body.p23-black-navbar-page #navbar > div {
+    width: 100% !important;
+    max-width: 1512px !important;
+    margin: 0 auto !important;
+    padding: 0 clamp(10px, 2vw, 24px) !important;
+    box-sizing: border-box !important;
+}
+
+body.p23-black-navbar-page #navbar .navbar {
+    padding-top: 19px !important;
+    padding-bottom: 19px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    gap: 10px !important;
+    min-height: 123px !important;
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+body.p23-black-navbar-page #navbar .navbar-brand.logo {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin-right: clamp(16px, 2.5vw, 36px);
+}
+
+body.p23-black-navbar-page #navbar .navbar-brand.logo img {
+    filter: none !important;
+    -webkit-filter: none !important;
+    max-height: 44px !important;
+    width: auto !important;
+}
+
+body.p23-black-navbar-page #navbar #nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(8px, 1.2vw, 20px);
+}
+
+body.p23-black-navbar-page #navbar #nav li .nav-link,
+body.p23-black-navbar-page #navbar.bg-scrolling #nav li a {
+    color: #FFFFFF !important;
+    font-family: var(--font-sans, "Montserrat", sans-serif) !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    letter-spacing: -0.02em !important;
+    padding: 8px 12px !important;
+    transition: color 0.2s ease, opacity 0.2s ease !important;
+    opacity: 0.9;
+}
+
+body.p23-black-navbar-page #navbar #nav li .nav-link:hover,
+body.p23-black-navbar-page #navbar.bg-scrolling #nav li a:hover {
+    color: #FFFFFF !important;
+    opacity: 1 !important;
+}
+
+body.p23-black-navbar-page #navbar .contact #btn,
+body.p23-black-navbar-page #navbar.bg-scrolling .contact #btn {
+    border: 1px solid rgba(255, 255, 255, 0.75) !important;
+    background-color: transparent !important;
+    color: #FFFFFF !important;
+    border-radius: 6px !important;
+    font-family: var(--font-sans, "Montserrat", sans-serif) !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    padding: 8px 18px !important;
+    transition: all 0.25s ease !important;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body.p23-black-navbar-page #navbar .contact #btn:hover,
+body.p23-black-navbar-page #navbar.bg-scrolling .contact #btn:hover {
+    border-color: #FFFFFF !important;
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    color: #FFFFFF !important;
+}
+
+body.p23-black-navbar-page #navbar .subscribe #btn,
+body.p23-black-navbar-page #navbar.bg-scrolling .subscribe #btn {
+    border: 1px solid #FFFFFF !important;
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    border-radius: 6px !important;
+    font-family: var(--font-sans, "Montserrat", sans-serif) !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    padding: 8px 18px !important;
+    transition: all 0.25s ease !important;
+}
+
+body.p23-black-navbar-page #navbar .subscribe #btn:hover,
+body.p23-black-navbar-page #navbar.bg-scrolling .subscribe #btn:hover {
+    background-color: rgba(255, 255, 255, 0.85) !important;
+    color: #000000 !important;
+}
+
+body.p23-black-navbar-page #navbar .social-icons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 12px;
+}
+
+body.p23-black-navbar-page #navbar .social-icons a,
+body.p23-black-navbar-page #navbar.bg-scrolling .social-icons a {
+    color: #FFFFFF !important;
+    font-size: 16px !important;
+    opacity: 0.85 !important;
+    transition: opacity 0.2s ease, transform 0.2s ease !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body.p23-black-navbar-page #navbar .social-icons a:hover,
+body.p23-black-navbar-page #navbar.bg-scrolling .social-icons a:hover {
+    opacity: 1 !important;
+    transform: translateY(-1px);
+}
+
+body.p23-black-navbar-page #navbar .navbar-toggler {
+    border: none !important;
+    background: transparent !important;
+    padding: 8px !important;
+}
+
+body.p23-black-navbar-page #navbar .navbar-toggler img {
+    filter: invert(1) brightness(2) !important;
+    -webkit-filter: invert(1) brightness(2) !important;
+    width: 28px !important;
+    height: auto !important;
+}
+
+@media (max-width: 991px) {
+    body.p23-black-navbar-page #navbar.navbar-full,
+    body.p23-black-navbar-page #navbar.bg-scrolling {
+        min-height: 80px !important;
+    }
+
+    body.p23-black-navbar-page #navbar .navbar {
+        min-height: 80px !important;
+        padding-top: 12px !important;
+        padding-bottom: 12px !important;
     }
 }
 

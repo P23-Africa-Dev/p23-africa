@@ -1,5 +1,6 @@
 @extends('layouts.master')
 @section('title', 'Services | P23 Africa')
+@section('body_class', 'p23-black-navbar-page')
 
 @section('meta')
     <meta name="description"

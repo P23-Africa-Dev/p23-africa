@@ -1,5 +1,6 @@
 @extends('layouts.master')
 @section('title', 'Market Entry & Expansion across Nigeria, Ghana, Kenya & South Africa | P23 Africa')
+@section('body_class', 'p23-black-navbar-page')
 
 @section('meta')
     <meta name="description"
@@ -8,621 +9,528 @@
         content="Market entry Africa, expand business to Nigeria, expand to Ghana, African business expansion, distributor due diligence Africa, demand validation Africa">
     <meta property="og:title" content="Market Entry & Expansion | P23 Africa">
     <meta property="og:description" content="Move from market opportunity to practical execution across Nigeria, Ghana, Kenya, and South Africa.">
-    <meta property="og:image" content="{{ asset('images/servces-bg.png') }}">
-    <link rel="stylesheet" href="{{ asset('css/market-entry.css') }}">
+    <meta property="og:image" content="{{ asset('images/market-entry/hero-office-woman.png') }}">
+    <link rel="stylesheet" href="{{ asset('css/market-entry-new.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/services-new.css') }}">
 @endsection
 
 @section('content')
+<div class="market-entry-page">
 
-    <!-- Dossier Breadcrumbs Bar -->
-    <div class="p23-dossier-nav-bar">
-        <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
-            <ul class="p23-breadcrumb">
-                <li><a href="{{ route('homepage') }}">Home</a></li>
-                <li class="separator">/</li>
-                <li><a href="{{ url('services') }}">What We Do</a></li>
-                <li class="separator">/</li>
-                <li class="current">Market Entry &amp; Expansion</li>
-            </ul>
-            <div class="p23-dossier-id-tag">
-                P23 // COMMERCIAL ADVISORY // 2026
-            </div>
-        </div>
-    </div>
-
-    <!-- Hero Section (C-Suite Editorial Design) -->
-    <section class="market-entry-hero">
-        <div class="container position-relative">
-            <div class="row align-items-center">
-                <div class="col-12 col-lg-9">
-                    <div class="hero-editorial-badge">
-                        <span class="pulse-dot"></span>
-                        <span>Commercial Intelligence &amp; Practical Execution</span>
-                    </div>
-
-                    <h1>
-                        Enter Africa with confidence. <br>
-                        <span class="accent-editorial">Build with local knowledge.</span>
+    {{-- ==========================================
+         SECTION 1: HERO SECTION
+         ========================================== --}}
+    <section class="me-hero-section" id="hero">
+        <div class="me-hero-container">
+            <div class="me-hero-grid">
+                
+                {{-- Left Column: Copy & Actions --}}
+                <div class="me-hero-content">
+                    <h1 class="me-hero-headline">
+                        Enter Africa with confidence. Build with local knowledge.
                     </h1>
 
-                    <p class="hero-subtitle">
+                    <p class="me-hero-description">
                         Expanding into Africa presents significant opportunities, but successful market entry requires more than a market report. You need to understand the market, test the opportunity, find the right people, build the right relationships and execute locally.
                     </p>
 
-                    <div class="market-country-strip">
-                        <span class="strip-label">Primary Footprint:</span>
-                        <a href="{{ route('services.market-entry.nigeria') }}" class="market-pill-item">
-                            <i class="fas fa-landmark me-1" style="color: var(--p23-mint-bright);"></i> Nigeria
+                    <div class="me-hero-cta-group">
+                        <a href="{{ url('contact') }}" class="me-hero-btn" id="me-hero-talk-to-us-btn">
+                            Talk to Us
                         </a>
-                        <a href="{{ route('services.market-entry.ghana') }}" class="market-pill-item">
-                            <i class="fas fa-chart-line me-1" style="color: var(--p23-mint-bright);"></i> Ghana
-                        </a>
-                        <span class="market-pill-item">
-                            <i class="fas fa-network-wired me-1"></i> Kenya
-                        </span>
-                        <span class="market-pill-item">
-                            <i class="fas fa-city me-1"></i> South Africa
-                        </span>
-                    </div>
 
-                    <div class="hero-cta-group">
-                        <a href="{{ url('book-consultation') }}" class="p23-btn-brand">
-                            Talk to P23 Africa <i class="fas fa-arrow-right ms-1"></i>
-                        </a>
-                        <a href="#case-studies" class="p23-btn-outline-light">
-                            Explore Case Studies <i class="fas fa-chevron-down ms-1"></i>
-                        </a>
+                        <div class="me-hero-proof">
+                            <div class="me-hero-stars" aria-label="5 star rating">
+                                <svg width="98" height="18" viewBox="0 0 98 18" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="5 stars rating">
+                                    <path d="M9 0L11.0206 6.21885H17.5595L12.2694 10.0623L14.2901 16.2812L9 12.4377L3.70993 16.2812L5.73056 10.0623L0.440492 6.21885H6.97937L9 0Z" fill="#390908"/>
+                                    <path d="M29 0L31.0206 6.21885H37.5595L32.2694 10.0623L34.2901 16.2812L29 12.4377L23.7099 16.2812L25.7306 10.0623L20.4405 6.21885H26.9794L29 0Z" fill="#390908"/>
+                                    <path d="M49 0L51.0206 6.21885H57.5595L52.2694 10.0623L54.2901 16.2812L49 12.4377L43.7099 16.2812L45.7306 10.0623L40.4405 6.21885H46.9794L49 0Z" fill="#390908"/>
+                                    <path d="M69 0L71.0206 6.21885H77.5595L72.2694 10.0623L74.2901 16.2812L69 12.4377L63.7099 16.2812L65.7306 10.0623L60.4405 6.21885H66.9794L69 0Z" fill="#390908"/>
+                                    <path d="M89 0L91.0206 6.21885H97.5595L92.2694 10.0623L94.2901 16.2812L89 12.4377L83.7099 16.2812L85.7306 10.0623L80.4405 6.21885H86.9794L89 0Z" fill="#390908"/>
+                                </svg>
+                            </div>
+                            <a href="{{ url('case-studies') }}" class="me-hero-case-studies-link">
+                                <strong>Click Here to</strong> <em>Read Case Studies</em>
+                            </a>
+                        </div>
                     </div>
                 </div>
+
+                {{-- Right Column: Two Stacked Visuals (470px and 643px) --}}
+                <div class="me-hero-visuals">
+                    <div class="me-visual-top">
+                        <img src="{{ asset('images/market-entry/hero-office-woman.png') }}" 
+                             alt="Professional consultant leading enterprise growth in Africa" 
+                             loading="eager">
+                    </div>
+
+                    <div class="me-visual-bottom">
+                        <img src="{{ asset('images/market-entry/hero-handshake.png') }}" 
+                             alt="Trusted business partnership handshake in African market" 
+                             loading="eager">
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
 
-    <!-- Executive Stat Bar Strip (Inspired by Reference 2) -->
-    <section class="p23-executive-stat-bar">
-        <div class="container">
-            <div class="row text-center align-items-center">
-                <div class="col-12 col-md-3 p23-stat-item">
-                    <div class="p23-stat-number">4 <span class="accent">Key Hubs</span></div>
-                    <div class="p23-stat-label">Nigeria • Ghana • Kenya • South Africa</div>
-                </div>
-                <div class="col-12 col-md-3 p23-stat-item">
-                    <div class="p23-stat-number">01 <span class="accent">Approach</span></div>
-                    <div class="p23-stat-label">Outbound Demand Validation First</div>
-                </div>
-                <div class="col-12 col-md-3 p23-stat-item">
-                    <div class="p23-stat-number">10 <span class="accent">Point</span></div>
-                    <div class="p23-stat-label">Distributor Due Diligence Framework</div>
-                </div>
-                <div class="col-12 col-md-3 p23-stat-item">
-                    <div class="p23-stat-number">100% <span class="accent">Ground</span></div>
-                    <div class="p23-stat-label">Operational Visibility &amp; Tech Tracking</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Value Narrative & Positioning -->
-    <section class="p23-section p23-section-white">
-        <div class="container">
-            <div class="row align-items-center justify-content-between g-5">
-                <div class="col-12 col-lg-6">
-                    <span class="p23-eyebrow">The Execution Imperative</span>
-                    <h2 class="p23-section-title">
-                        P23 Africa helps businesses move from market opportunity to practical execution.
+    {{-- ==========================================
+         SECTION 2: OUR EXECUTION METHODOLOGY
+         ========================================== --}}
+    <section class="me-methodology-section" id="execution-methodology">
+        <div class="me-methodology-container">
+            <div class="me-methodology-grid">
+                
+                {{-- Left Title Column --}}
+                <div class="me-methodology-title-block">
+                    <h2 class="me-methodology-title">
+                        Our<br>Execution<br>Methodology
                     </h2>
-                    <p class="p23-section-desc mb-4">
-                        We combine market intelligence, commercial expertise, local networks and technology to help businesses enter and grow sustainably across our target regional corridors.
-                    </p>
-                    <p class="p23-section-desc mb-4">
-                        Rather than hand over static theoretical binders, we sit with you on the frontline: qualifying commercial demand, screening reliable partners, and building transparent operational channels that safeguard your capital.
-                    </p>
-                    <a href="{{ url('book-consultation') }}" class="p23-dossier-link">
-                        Book a confidential market exploration session <span>→</span>
+                </div>
+
+                {{-- Right 5-Step Strip --}}
+                <div class="me-methodology-steps">
+
+                    {{-- Step 01 --}}
+                    <div class="me-methodology-step">
+                        <div class="me-step-header">
+                            <img src="{{ asset('images/market-entry/step-01-lightbulb.png') }}" 
+                                 alt="Understand the opportunity" 
+                                 class="me-step-icon">
+                            <span class="me-step-number">01</span>
+                        </div>
+                        <h3 class="me-step-title">Understand the opportunity</h3>
+                        <p class="me-step-desc">
+                            Before entering a market, you need to know where the opportunity actually exists.
+                        </p>
+                    </div>
+
+                    {{-- Step 02 --}}
+                    <div class="me-methodology-step">
+                        <div class="me-step-header">
+                            <img src="{{ asset('images/market-entry/step-02-validate.png') }}" 
+                                 alt="Validate demand" 
+                                 class="me-step-icon">
+                            <span class="me-step-number">02</span>
+                        </div>
+                        <h3 class="me-step-title">Validate demand</h3>
+                        <p class="me-step-desc">
+                            Market research can tell you what a market looks like. Direct engagement tells you how the market responds.
+                        </p>
+                    </div>
+
+                    {{-- Step 03 --}}
+                    <div class="me-methodology-step">
+                        <div class="me-step-header">
+                            <img src="{{ asset('images/market-entry/step-03-people.png') }}" 
+                                 alt="Find the right people" 
+                                 class="me-step-icon">
+                            <span class="me-step-number">03</span>
+                        </div>
+                        <h3 class="me-step-title">Find the right people</h3>
+                        <p class="me-step-desc">
+                            Successful market entry is often built around relationships and commercial introductions.
+                        </p>
+                    </div>
+
+                    {{-- Step 04 --}}
+                    <div class="me-methodology-step">
+                        <div class="me-step-header">
+                            <img src="{{ asset('images/market-entry/step-04-route.png') }}" 
+                                 alt="Build the route to market" 
+                                 class="me-step-icon">
+                            <span class="me-step-number">04</span>
+                        </div>
+                        <h3 class="me-step-title">Build the route to market</h3>
+                        <p class="me-step-desc">
+                            There is no single way to enter an African market. We determine the approach that fits.
+                        </p>
+                    </div>
+
+                    {{-- Step 05 --}}
+                    <div class="me-methodology-step">
+                        <div class="me-step-header">
+                            <img src="{{ asset('images/market-entry/step-05-lock.png') }}" 
+                                 alt="Execute locally" 
+                                 class="me-step-icon">
+                            <span class="me-step-number">05</span>
+                        </div>
+                        <h3 class="me-step-title">Execute locally</h3>
+                        <p class="me-step-desc">
+                            Our role doesn't end once the strategy is delivered. We support the practical execution.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    {{-- ==========================================
+         SECTION 3: PRACTICAL EXECUTION
+         ========================================== --}}
+    <section class="me-execution-section" id="practical-execution">
+        <div class="me-execution-grid">
+            
+            {{-- Left: Visual with 100% Ground Operational Visibility Badge --}}
+            <div class="me-execution-visual">
+                <img src="{{ asset('images/market-entry/practical-execution-handshake.png') }}" 
+                     alt="P23 Africa frontline execution and commercial partnerships" 
+                     loading="lazy">
+            </div>
+
+            {{-- Right: Content & Link --}}
+            <div class="me-execution-content">
+                <h2 class="me-execution-headline">
+                    P23 Africa helps businesses move from market opportunity to practical execution.
+                </h2>
+
+                <p class="me-execution-desc">
+                    We combine market intelligence, commercial expertise, local networks and technology to help businesses enter and grow sustainably across our target regional corridors. Rather than hand over static theoretical binders, we sit with you on the frontline: qualifying commercial demand, screening reliable partners, and building transparent operational channels that safeguard your capital.
+                </p>
+
+                <a href="{{ url('book-consultation') }}" class="me-execution-link" id="me-execution-cta-link">
+                    Book a confidential market exploration session→
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    {{-- ==========================================
+         SECTION 4: MARKET ENTRY MOMENTUM IN AFRICA
+         ========================================== --}}
+    <section class="me-momentum-section" id="market-momentum">
+        <div class="me-momentum-container">
+            
+            {{-- Top Header Row: Headline, Button, and Comparative Narrative --}}
+            <div class="me-momentum-header">
+                
+                <div class="me-momentum-title-group">
+                    <h2 class="me-momentum-title">
+                        Market Entry Momentum In Africa
+                    </h2>
+                    <a href="{{ url('contact') }}" class="me-momentum-btn" id="me-momentum-talk-btn">
+                        Talk to Us
                     </a>
                 </div>
-                <div class="col-12 col-lg-5">
-                    <div class="p23-dossier-data-box">
-                        <div class="box-title">
-                            <i class="fas fa-shield-alt me-2" style="color: var(--p23-mint-bright);"></i> Why Generic Reports Fail
-                        </div>
-                        <p class="mb-3" style="font-size: 0.96rem; line-height: 1.6; color: rgba(244, 250, 248, 0.88);">
-                            Secondary desk research rarely uncovers what buyers are willing to pay today, which distributors actually maintain functional cold chains or warehouses, or where currency and regulatory bottlenecks create friction.
-                        </p>
-                        <div class="p23-outcome-pill mb-2">
-                            <i class="fas fa-check-circle" style="color: var(--p23-mint-glow);"></i> Direct engagement replaces assumptions with verified signals
-                        </div>
-                        <div class="p23-outcome-pill mb-2">
-                            <i class="fas fa-check-circle" style="color: var(--p23-mint-glow);"></i> On-the-ground reference checks mitigate distributor default
-                        </div>
-                        <div class="p23-outcome-pill">
-                            <i class="fas fa-check-circle" style="color: var(--p23-mint-glow);"></i> Proprietary tracking technology delivers remote oversight
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Case Studies Section: "From market opportunity to market presence" -->
-    <!-- (Inspired by Reference 1: Executive Editorial Dossier Sheet & Reference 2: Tabbed Showcase) -->
-    <section class="p23-section p23-section-cream" id="case-studies">
-        <div class="container">
-            <div class="p23-section-header text-center">
-                <span class="p23-eyebrow">Proven Field Outcomes</span>
-                <h2 class="p23-section-title">From market opportunity to market presence</h2>
-                <p class="p23-section-desc">
-                    Examine how multinational manufacturers and scale-ups successfully entered African markets without risking unvetted capital.
-                </p>
-
-                <!-- Interactive Dossier Switcher Tabs -->
-                <div class="p23-case-tabs-wrapper mt-4">
-                    <div class="p23-case-tabs" role="tablist">
-                        <button class="p23-case-tab-btn active" id="tab-ng-btn" onclick="switchCaseDossier('nigeria')">
-                            Nigeria: HVAC Manufacturer
-                        </button>
-                        <button class="p23-case-tab-btn" id="tab-gh-btn" onclick="switchCaseDossier('ghana')">
-                            Ghana: Construction Platform
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- DOSSIER 1: NIGERIA CASE (Default Active) -->
-            <div id="dossier-nigeria" class="p23-dossier-frame">
-                <div class="p23-dossier-folio">
-                    <div class="folio-left">
-                        <div class="binder-punches">
-                            <span class="punch-hole"></span>
-                            <span class="punch-hole"></span>
-                            <span class="punch-hole"></span>
-                        </div>
-                        <span class="folio-category">Executive Dossier // Case Brief</span>
-                    </div>
-                    <div class="folio-right">
-                        REF: P23-DOSSIER-NG-HVAC
-                    </div>
-                </div>
-
-                <div class="p23-dossier-body">
-                    <div class="d-flex align-items-center gap-2 mb-3 flex-wrap">
-                        <span class="p23-dossier-tag"><i class="fas fa-flag me-1"></i> NIGERIA</span>
-                        <span class="p23-dossier-meta">SECTOR: INDUSTRIAL HVAC MANUFACTURING</span>
-                    </div>
-
-                    <h3 class="p23-dossier-headline">
-                        HVAC Manufacturer: Testing demand and vetting distributors before committing capital.
-                    </h3>
-
-                    <div class="p23-dossier-overview-row">
-                        <div>
-                            <p class="p23-dossier-lead">
-                                An HVAC manufacturer wanted to explore the Nigerian market before committing significant capital. Rather than relying on high-level surveys, P23 was engaged to generate genuine commercial signal from real businesses.
-                            </p>
-                            <p class="p23-dossier-lead">
-                                P23 tested demand through direct commercial outreach, gathered customer and pricing intelligence, identified potential distributors, and carried out rigorous distributor due diligence. We then facilitated the relationship with a vetted distributor and implemented tracking technology to give the client full visibility over activity on the ground.
-                            </p>
-                        </div>
-                        <div class="p23-dossier-data-box">
-                            <div class="box-title">
-                                <i class="fas fa-chart-line text-success me-2"></i> Engagement Scope
-                            </div>
-                            <div class="data-box-metrics">
-                                <div class="data-box-metric-item">
-                                    <div class="data-box-metric-val">Pre</div>
-                                    <div class="data-box-metric-sub">Capital Risk</div>
-                                </div>
-                                <div class="data-box-metric-item">
-                                    <div class="data-box-metric-val">100%</div>
-                                    <div class="data-box-metric-sub">Verified Intel</div>
-                                </div>
-                            </div>
-                            <div style="font-size: 0.88rem; color: rgba(244, 250, 248, 0.88); line-height: 1.55;">
-                                <strong>Outcome:</strong> Replaced market assumptions with direct commercial feedback, preventing misallocated capital and establishing a functioning channel.
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 3 Highlights Cards (Inspired by Reference 1 - Clarify Health Highlights) -->
-                    <div class="p23-highlights-header">
-                        <i class="fas fa-star" style="color: var(--p23-mint-deep);"></i>
-                        <h4>Highlights</h4>
-                    </div>
-
-                    <div class="p23-highlights-grid">
-                        <div class="p23-highlight-card">
-                            <div class="p23-highlight-icon">
-                                <i class="fas fa-bullseye"></i>
-                            </div>
-                            <h5>Direct Outbound Demand Testing</h5>
-                            <p>
-                                Replaced surveys with targeted outreach across potential buyers and contractors to ascertain real purchasing requirements and current pricing benchmarks.
-                            </p>
-                        </div>
-
-                        <div class="p23-highlight-card">
-                            <div class="p23-highlight-icon">
-                                <i class="fas fa-user-check"></i>
-                            </div>
-                            <h5>Distributor Due Diligence</h5>
-                            <p>
-                                Evaluated candidate distributors on commercial capacity, storage facilities, complementary brand conflicts, and reference checks with existing suppliers.
-                            </p>
-                        </div>
-
-                        <div class="p23-highlight-card">
-                            <div class="p23-highlight-icon">
-                                <i class="fas fa-laptop-code"></i>
-                            </div>
-                            <h5>Ground Visibility Software</h5>
-                            <p>
-                                Deployed P23 tracking software to monitor agent and distributor performance, ensuring transparency over stock movements and sales pipeline opportunities.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="p23-dossier-action-footer">
-                        <a href="{{ route('services.market-entry.nigeria') }}" class="p23-dossier-link">
-                            Read the complete Nigeria HVAC case study <span>→</span>
-                        </a>
-                        <a href="{{ url('book-consultation') }}" class="p23-btn-outline-dark">
-                            Discuss Nigeria Market Entry <i class="fas fa-arrow-right ms-1"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- DOSSIER 2: GHANA CASE (Initially Hidden) -->
-            <div id="dossier-ghana" class="p23-dossier-frame" style="display: none;">
-                <div class="p23-dossier-folio">
-                    <div class="folio-left">
-                        <div class="binder-punches">
-                            <span class="punch-hole"></span>
-                            <span class="punch-hole"></span>
-                            <span class="punch-hole"></span>
-                        </div>
-                        <span class="folio-category">Executive Dossier // Case Brief</span>
-                    </div>
-                    <div class="folio-right">
-                        REF: P23-DOSSIER-GH-PROPTECH
-                    </div>
-                </div>
-
-                <div class="p23-dossier-body">
-                    <div class="d-flex align-items-center gap-2 mb-3 flex-wrap">
-                        <span class="p23-dossier-tag"><i class="fas fa-flag me-1"></i> GHANA</span>
-                        <span class="p23-dossier-meta">SECTOR: CONSTRUCTION EQUIPMENT PLATFORM</span>
-                    </div>
-
-                    <h3 class="p23-dossier-headline">
-                        Construction Equipment Platform: From multi-country testing to 5,000 contractors in six months.
-                    </h3>
-
-                    <div class="p23-dossier-overview-row">
-                        <div>
-                            <p class="p23-dossier-lead">
-                                A South African construction company wanted to determine which market offered the strongest potential for its equipment-hire platform before committing to a full-scale launch.
-                            </p>
-                            <p class="p23-dossier-lead">
-                                P23 tested the opportunity across Ghana, Nigeria, and Botswana, with Ghana emerging as the strongest market. We then helped establish the local operation, assemble the frontline team, launch multi-channel acquisition campaigns, and continuously optimise the go-to-market strategy.
-                            </p>
-                        </div>
-                        <div class="p23-dossier-data-box">
-                            <div class="box-title">
-                                <i class="fas fa-trophy me-2" style="color: var(--p23-mint-bright);"></i> 6 Months Post-Launch
-                            </div>
-                            <div class="data-box-metrics">
-                                <div class="data-box-metric-item">
-                                    <div class="data-box-metric-val">2,000+</div>
-                                    <div class="data-box-metric-sub">Vendors</div>
-                                </div>
-                                <div class="data-box-metric-item">
-                                    <div class="data-box-metric-val">5,000+</div>
-                                    <div class="data-box-metric-sub">Contractors</div>
-                                </div>
-                            </div>
-                            <div style="font-size: 0.88rem; color: rgba(244, 250, 248, 0.88); line-height: 1.55;">
-                                <strong>Traction:</strong> Over <strong>2,150+ contractors</strong> actively completed equipment rentals through the platform in the first 6 months.
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 3 Highlights Cards -->
-                    <div class="p23-highlights-header">
-                        <i class="fas fa-star" style="color: var(--p23-mint-deep);"></i>
-                        <h4>Highlights</h4>
-                    </div>
-
-                    <div class="p23-highlights-grid">
-                        <div class="p23-highlight-card">
-                            <div class="p23-highlight-icon">
-                                <i class="fas fa-map-marked-alt"></i>
-                            </div>
-                            <h5>Cross-Border Opportunity Testing</h5>
-                            <p>
-                                Compared Ghana, Nigeria, and Botswana side-by-side to identify the exact market with the highest willingness-to-rent and least operational friction.
-                            </p>
-                        </div>
-
-                        <div class="p23-highlight-card">
-                            <div class="p23-highlight-icon">
-                                <i class="fas fa-users-cog"></i>
-                            </div>
-                            <h5>Two-Sided Marketplace Growth</h5>
-                            <p>
-                                Synchronised contractor demand with vendor equipment supply through coordinated online campaigns, ground sales, and prospecting software.
-                            </p>
-                        </div>
-
-                        <div class="p23-highlight-card">
-                            <div class="p23-highlight-icon">
-                                <i class="fas fa-shield-virus"></i>
-                            </div>
-                            <h5>Value-Add Strategic Partnerships</h5>
-                            <p>
-                                Negotiated integrated insurance partnerships to safeguard rented machinery, boosting platform trust and customer retention.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="p23-dossier-action-footer">
-                        <a href="{{ route('services.market-entry.ghana') }}" class="p23-dossier-link">
-                            Read the complete Ghana Marketplace case study <span>→</span>
-                        </a>
-                        <a href="{{ url('book-consultation') }}" class="p23-btn-outline-dark">
-                            Discuss Ghana Market Entry <i class="fas fa-arrow-right ms-1"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Methodology Stepper: "What we do" -->
-    <section class="p23-section p23-section-white" id="what-we-do">
-        <div class="container">
-            <div class="p23-section-header text-center">
-                <span class="p23-eyebrow">Our Execution Methodology</span>
-                <h2 class="p23-section-title">What we do</h2>
-                <p class="p23-section-desc">
-                    A rigorous five-stage approach designed to protect capital, validate commercial traction, and establish resilient operating presence.
-                </p>
-            </div>
-
-            <div class="p23-methodology-stepper">
-
-                <!-- Step 01 -->
-                <div class="p23-step-card">
-                    <div class="p23-step-card-header">
-                        <div class="p23-step-number-badge">01</div>
-                        <div class="flex-grow-1">
-                            <h3 class="p23-step-title">Understand the opportunity</h3>
-                            <p class="p23-step-lead">
-                                Before entering a market, you need to know where the opportunity actually exists. The objective is to give you the information needed to make informed commercial decisions.
-                            </p>
-                            <div class="p23-checklist-grid">
-                                <div class="p23-check-item"><i class="fas fa-check"></i> Market and sector dynamics</div>
-                                <div class="p23-check-item"><i class="fas fa-check"></i> Customer segments</div>
-                                <div class="p23-check-item"><i class="fas fa-check"></i> Competitors &amp; alternatives</div>
-                                <div class="p23-check-item"><i class="fas fa-check"></i> Pricing structures</div>
-                                <div class="p23-check-item"><i class="fas fa-check"></i> Viable routes to market</div>
-                                <div class="p23-check-item"><i class="fas fa-check"></i> Potential regulatory barriers</div>
-                                <div class="p23-check-item"><i class="fas fa-check"></i> Relevant local businesses &amp; stakeholders</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Step 02 -->
-                <div class="p23-step-card">
-                    <div class="p23-step-card-header">
-                        <div class="p23-step-number-badge">02</div>
-                        <div class="flex-grow-1">
-                            <h3 class="p23-step-title">Validate demand</h3>
-                            <p class="p23-step-lead">
-                                Market research can tell you what a market looks like. Direct engagement can tell you how the market responds to your proposition. This helps replace assumptions with real market feedback.
-                            </p>
-                            <div class="p23-checklist-grid">
-                                <div class="p23-check-item"><i class="fas fa-check"></i> Who is genuinely interested</div>
-                                <div class="p23-check-item"><i class="fas fa-check"></i> What specs they look for</div>
-                                <div class="p23-check-item"><i class="fas fa-check"></i> What they currently buy</div>
-                                <div class="p23-check-item"><i class="fas fa-check"></i> What price points they pay</div>
-                                <div class="p23-check-item"><i class="fas fa-check"></i> What objections &amp; friction exist</div>
-                                <div class="p23-check-item"><i class="fas fa-check"></i> Where demand clusters strongest</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Step 03 -->
-                <div class="p23-step-card">
-                    <div class="p23-step-card-header">
-                        <div class="p23-step-number-badge">03</div>
-                        <div class="flex-grow-1">
-                            <h3 class="p23-step-title">Find the right people</h3>
-                            <p class="p23-step-lead">
-                                Successful market entry is often built around relationships. Where appropriate, we help take those relationships beyond an introduction and into commercial discussions.
-                            </p>
-                            <div class="p23-checklist-grid">
-                                <div class="p23-check-item"><i class="fas fa-check"></i> Target enterprise customers</div>
-                                <div class="p23-check-item"><i class="fas fa-check"></i> Established distributors</div>
-                                <div class="p23-check-item"><i class="fas fa-check"></i> Commissioned commercial agents</div>
-                                <div class="p23-check-item"><i class="fas fa-check"></i> Strategic industry partners</div>
-                                <div class="p23-check-item"><i class="fas fa-check"></i> Local suppliers &amp; logistics</div>
-                                <div class="p23-check-item"><i class="fas fa-check"></i> Regional investors &amp; stakeholders</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Step 04 -->
-                <div class="p23-step-card">
-                    <div class="p23-step-card-header">
-                        <div class="p23-step-number-badge">04</div>
-                        <div class="flex-grow-1">
-                            <h3 class="p23-step-title">Build the route to market</h3>
-                            <p class="p23-step-lead">
-                                There is no single way to enter an African market. We help determine and execute the specific approach that fits your proposition, financial capacity, and long-term objectives.
-                            </p>
-                            <div class="p23-checklist-grid">
-                                <div class="p23-check-item"><i class="fas fa-check"></i> Direct sales structure</div>
-                                <div class="p23-check-item"><i class="fas fa-check"></i> Master distributor agreements</div>
-                                <div class="p23-check-item"><i class="fas fa-check"></i> Local JV &amp; operating partners</div>
-                                <div class="p23-check-item"><i class="fas fa-check"></i> In-country dedicated team</div>
-                                <div class="p23-check-item"><i class="fas fa-check"></i> Strategic channel partnerships</div>
-                                <div class="p23-check-item"><i class="fas fa-check"></i> Phased capital deployment</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Step 05 -->
-                <div class="p23-step-card">
-                    <div class="p23-step-card-header">
-                        <div class="p23-step-number-badge">05</div>
-                        <div class="flex-grow-1">
-                            <h3 class="p23-step-title">Execute locally</h3>
-                            <p class="p23-step-lead">
-                                Our role doesn’t end once the strategy document is delivered. We support the practical work required to establish, de-risk, and develop your presence in-market.
-                            </p>
-                            <div class="p23-checklist-grid">
-                                <div class="p23-check-item"><i class="fas fa-check"></i> Sales &amp; business development</div>
-                                <div class="p23-check-item"><i class="fas fa-check"></i> Marketing &amp; GTM campaigns</div>
-                                <div class="p23-check-item"><i class="fas fa-check"></i> Local team hiring &amp; onboarding</div>
-                                <div class="p23-check-item"><i class="fas fa-check"></i> Partner &amp; distributor management</div>
-                                <div class="p23-check-item"><i class="fas fa-check"></i> Customer acquisition pipelines</div>
-                                <div class="p23-check-item"><i class="fas fa-check"></i> Ground operational oversight</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Philosophy Matrix: "Africa is not one market" -->
-    <section class="p23-pan-africa-section">
-        <div class="container">
-            <div class="p23-section-header text-center">
-                <span class="p23-eyebrow">Local Nuance vs Standardization</span>
-                <h2 class="p23-section-title">Africa is not one market.</h2>
-                <p class="p23-section-desc" style="max-width: 740px; margin: 0 auto;">
+                <p class="me-momentum-desc">
                     Nigeria is different from Ghana. Ghana is different from Kenya. Kenya is different from South Africa. The opportunity, customer psychology, competitive environment and route to market vary dramatically across borders.
                 </p>
+
             </div>
 
-            <div class="p23-country-matrix-grid">
-                <!-- Nigeria Card -->
-                <div class="p23-country-matrix-card">
-                    <div class="matrix-flag"><i class="fas fa-landmark"></i></div>
-                    <div class="matrix-country-name">Nigeria</div>
-                    <p class="matrix-desc">
-                        High volume, dynamic enterprise demand, fragmented distribution networks, and critical distributor vetting requirements.
-                    </p>
-                    <a href="{{ route('services.market-entry.nigeria') }}" class="matrix-tag text-decoration-none">
-                        View Nigeria Strategy <i class="fas fa-arrow-right ms-1"></i>
-                    </a>
+            {{-- Bottom Row: 4 Momentum Stat Cards (Nigeria, Ghana, Kenya, South Africa) --}}
+            <div class="me-momentum-cards-grid">
+                
+                {{-- Card 1: Nigeria +9% --}}
+                <div class="me-momentum-card" id="card-nigeria">
+                    <img src="{{ asset('images/market-entry/momentum-nigeria.png') }}" 
+                         alt="Market entry growth momentum Nigeria +9%" 
+                         loading="lazy">
                 </div>
 
-                <!-- Ghana Card -->
-                <div class="p23-country-matrix-card">
-                    <div class="matrix-flag"><i class="fas fa-chart-line"></i></div>
-                    <div class="matrix-country-name">Ghana</div>
-                    <p class="matrix-desc">
-                        Stable commercial hub, early adopter ecosystem for digital platforms and tech-enabled marketplaces, strong regional gateway.
-                    </p>
-                    <a href="{{ route('services.market-entry.ghana') }}" class="matrix-tag text-decoration-none">
-                        View Ghana Strategy <i class="fas fa-arrow-right ms-1"></i>
-                    </a>
+                {{-- Card 2: Ghana +14% --}}
+                <div class="me-momentum-card" id="card-ghana">
+                    <img src="{{ asset('images/market-entry/momentum-ghana.png') }}" 
+                         alt="Market entry growth momentum Ghana +14%" 
+                         loading="lazy">
                 </div>
 
-                <!-- Kenya Card -->
-                <div class="p23-country-matrix-card">
-                    <div class="matrix-flag"><i class="fas fa-network-wired"></i></div>
-                    <div class="matrix-country-name">Kenya</div>
-                    <p class="matrix-desc">
-                        East Africa's financial and tech anchor, high mobile money penetration, structured corporate routes and regional integration.
-                    </p>
-                    <span class="matrix-tag">East Africa Hub</span>
+                {{-- Card 3: Kenya +17% (Dark Accent Card) --}}
+                <div class="me-momentum-card" id="card-kenya">
+                    <img src="{{ asset('images/market-entry/momentum-kenya.png') }}" 
+                         alt="Market entry growth momentum Kenya +17%" 
+                         loading="lazy">
                 </div>
 
-                <!-- South Africa Card -->
-                <div class="p23-country-matrix-card">
-                    <div class="matrix-flag"><i class="fas fa-city"></i></div>
-                    <div class="matrix-country-name">South Africa</div>
-                    <p class="matrix-desc">
-                        Sophisticated institutional retail, formal supply chains, stringent compliance standards, and pan-continental expansion capital.
-                    </p>
-                    <span class="matrix-tag">Southern Africa Hub</span>
+                {{-- Card 4: South Africa +5% --}}
+                <div class="me-momentum-card" id="card-south-africa">
+                    <img src="{{ asset('images/market-entry/momentum-south-africa.png') }}" 
+                         alt="Market entry growth momentum South Africa +5%" 
+                         loading="lazy">
                 </div>
+
             </div>
 
-            <div class="text-center mt-4">
-                <p style="color: rgba(244, 250, 248, 0.75); max-width: 650px; margin: 0 auto; font-size: 1.02rem;">
-                    That’s why we build our approach around your business and the specific market you’re entering, rather than applying a standard expansion playbook.
-                </p>
-            </div>
         </div>
     </section>
 
-    <!-- Closing Executive CTA Section -->
-    <section class="p23-section p23-section-cream">
-        <div class="container">
-            <div class="p23-cta-banner-wrapper">
-                <div class="row align-items-center">
-                    <div class="col-12 col-lg-8">
-                        <span class="p23-eyebrow mb-2 d-inline-block">Take The Next Step</span>
-                        <h2 class="p23-cta-title">Ready to explore your next market?</h2>
-                        <p class="p23-cta-desc">
-                            Whether you’re testing your first African market, looking for a new route to market or expanding an existing operation, P23 can help you understand the opportunity and turn it into action.
+    {{-- ==========================================
+         SECTION 5: FROM MARKET OPPORTUNITY TO MARKET PRESENCE (CASE STUDIES & TABS)
+         ========================================== --}}
+    <section class="me-casestudy-section" id="case-studies">
+        
+        {{-- Section Header --}}
+        <div class="me-casestudy-header">
+            <h2 class="me-casestudy-title">
+                From market opportunity to market presence
+            </h2>
+            <p class="me-casestudy-subtitle">
+                Examine how multinational manufacturers and scale-ups successfully entered African markets without risking unvetted capital.
+            </p>
+        </div>
+
+        {{-- Animated Tabs Bar --}}
+        <div class="me-tabs-wrapper">
+            <div class="me-tabs-container" role="tablist" aria-label="Case Study Industry Tabs">
+                <button type="button" 
+                        class="me-tab-btn active" 
+                        role="tab" 
+                        aria-selected="true" 
+                        aria-controls="pane-bld" 
+                        data-target="#pane-bld"
+                        id="tab-bld">
+                    BLD Manufacturer
+                </button>
+                <button type="button" 
+                        class="me-tab-btn" 
+                        role="tab" 
+                        aria-selected="false" 
+                        aria-controls="pane-fmcg" 
+                        data-target="#pane-fmcg"
+                        id="tab-fmcg">
+                    FMCG Manufacturer
+                </button>
+                <button type="button" 
+                        class="me-tab-btn" 
+                        role="tab" 
+                        aria-selected="false" 
+                        aria-controls="pane-fintech" 
+                        data-target="#pane-fintech"
+                        id="tab-fintech">
+                    FINTECH Scale-up
+                </button>
+            </div>
+        </div>
+
+        {{-- Proof Stars & Read Case Studies Link --}}
+        <div class="me-casestudy-proof">
+            <div class="me-casestudy-proof-stars">
+                <img src="{{ asset('images/market-entry/stars-black.png') }}" 
+                     alt="5 stars rating" 
+                     width="90" 
+                     height="18" 
+                     loading="lazy">
+            </div>
+            <a href="{{ url('case-studies') }}" class="me-casestudy-proof-link">
+                <strong>Click Here to</strong> <em>Read Case Studies</em>
+            </a>
+        </div>
+
+        {{-- Case Study Showcase Panes --}}
+        <div class="me-case-panes-wrapper">
+            
+            {{-- Pane 1: BLD Manufacturer (Default Active) --}}
+            <div class="me-case-pane active" id="pane-bld" role="tabpanel" aria-labelledby="tab-bld">
+                <div class="me-case-visual">
+                    <img src="{{ asset('images/market-entry/case-study-architecture.jpg') }}" 
+                         alt="Case study architectural structure for multinational manufacturing" 
+                         loading="lazy">
+                </div>
+
+                <div class="me-case-article">
+                    <div class="me-case-meta">
+                        <span class="me-case-meta-item">
+                            <img src="{{ asset('images/market-entry/icon-calendar.png') }}" alt="Calendar date" width="16" height="16">
+                            Apr 8, 2026
+                        </span>
+                        <span class="me-case-meta-item">
+                            <img src="{{ asset('images/market-entry/icon-user.png') }}" alt="Author" width="16" height="16">
+                            Mike Yukhtenko
+                        </span>
+                    </div>
+
+                    <h3 class="me-case-heading">
+                        Building on the corner of the sea
+                    </h3>
+
+                    <div class="me-case-body">
+                        <p>
+                            Cognitive bias (also known as “cognitive illusion” or “cognitive distortion”) refers to errors in thinking that can lead to incorrect perception and decision-making. They are an inherent part of our psychology and can affect [...]
                         </p>
-                        <div class="d-flex flex-wrap gap-3">
-                            <a href="{{ url('book-consultation') }}" class="p23-btn-brand">
-                                Talk to P23 Africa <i class="fas fa-calendar-check ms-1"></i>
-                            </a>
-                            <a href="{{ url('contact') }}" class="p23-btn-outline-light">
-                                Start a conversation <i class="fas fa-comments ms-1"></i>
-                            </a>
-                        </div>
+                        <p>
+                            In my opinion, Ui/Ux design is the foundation of a product, its face and soul. You can create an infinitely high-quality heart, and organize the simulation of breathing, but we won’t fall in love with a product just because its heart beats [...]
+                        </p>
                     </div>
-                    <div class="col-12 col-lg-4 text-center mt-4 mt-lg-0">
-                        <div class="p-4 rounded-4" style="background: var(--p23-grad-silk-pill); border: 1px solid rgba(82, 204, 180, 0.35); box-shadow: var(--p23-shadow-silk-pill);">
-                            <div class="mb-2" style="font-size: 2.2rem; color: var(--p23-mint-glow);">
-                                <i class="fas fa-handshake"></i>
-                            </div>
-                            <h4 class="text-white" style="font-family: 'GT Walsheim ConB', 'Montserrat', sans-serif;">Direct Advisory</h4>
-                            <p style="font-size: 0.92rem; color: rgba(244, 250, 248, 0.8);" class="mb-0">
-                                Meet our cross-border advisory team to discuss timeline, country scope, and testing feasibility.
-                            </p>
-                        </div>
-                    </div>
+
+                    <a href="{{ url('case-studies') }}" class="me-case-continue-btn" id="btn-continue-reading-bld">
+                        Continue Reading
+                    </a>
                 </div>
             </div>
+
+            {{-- Pane 2: FMCG Manufacturer --}}
+            <div class="me-case-pane" id="pane-fmcg" role="tabpanel" aria-labelledby="tab-fmcg">
+                <div class="me-case-visual">
+                    <img src="{{ asset('images/market-entry/case-study-architecture.jpg') }}" 
+                         alt="FMCG distributor vetting and commercial supply chain case study" 
+                         loading="lazy">
+                </div>
+
+                <div class="me-case-article">
+                    <div class="me-case-meta">
+                        <span class="me-case-meta-item">
+                            <img src="{{ asset('images/market-entry/icon-calendar.png') }}" alt="Calendar date" width="16" height="16">
+                            May 14, 2026
+                        </span>
+                        <span class="me-case-meta-item">
+                            <img src="{{ asset('images/market-entry/icon-user.png') }}" alt="Author" width="16" height="16">
+                            Sarah Jenkins
+                        </span>
+                    </div>
+
+                    <h3 class="me-case-heading">
+                        Scaling FMCG distribution through local network validation
+                    </h3>
+
+                    <div class="me-case-body">
+                        <p>
+                            Rapid expansion across West and East Africa requires navigating localized tier-1 and tier-2 distribution bottlenecks without compromising brand equity or credit terms [...]
+                        </p>
+                        <p>
+                            By implementing in-country verification and direct retail engagement, we helped establish reliable retail channels across 14 major commercial hubs within 6 months [...]
+                        </p>
+                    </div>
+
+                    <a href="{{ url('case-studies') }}" class="me-case-continue-btn" id="btn-continue-reading-fmcg">
+                        Continue Reading
+                    </a>
+                </div>
+            </div>
+
+            {{-- Pane 3: FINTECH Scale-up --}}
+            <div class="me-case-pane" id="pane-fintech" role="tabpanel" aria-labelledby="tab-fintech">
+                <div class="me-case-visual">
+                    <img src="{{ asset('images/market-entry/case-study-architecture.jpg') }}" 
+                         alt="Fintech regional compliance and financial rails integration" 
+                         loading="lazy">
+                </div>
+
+                <div class="me-case-article">
+                    <div class="me-case-meta">
+                        <span class="me-case-meta-item">
+                            <img src="{{ asset('images/market-entry/icon-calendar.png') }}" alt="Calendar date" width="16" height="16">
+                            Jun 2, 2026
+                        </span>
+                        <span class="me-case-meta-item">
+                            <img src="{{ asset('images/market-entry/icon-user.png') }}" alt="Author" width="16" height="16">
+                            David Olatunji
+                        </span>
+                    </div>
+
+                    <h3 class="me-case-heading">
+                        Accelerating commercial adoption for cross-border payments
+                    </h3>
+
+                    <div class="me-case-body">
+                        <p>
+                            Navigating complex regulatory frameworks and establishing tier-one banking partnerships while maintaining aggressive customer acquisition timelines [...]
+                        </p>
+                        <p>
+                            We structured bilateral commercial agreements and localized compliance workflows, paving the way for seamless regulatory approval and rapid volume scaling [...]
+                        </p>
+                    </div>
+
+                    <a href="{{ url('case-studies') }}" class="me-case-continue-btn" id="btn-continue-reading-fintech">
+                        Continue Reading
+                    </a>
+                </div>
+            </div>
+
         </div>
+
     </section>
 
-    <!-- Dossier Switcher Script -->
+    {{-- Interactive Tab Animation Script --}}
     <script>
-        function switchCaseDossier(country) {
-            const ngDossier = document.getElementById('dossier-nigeria');
-            const ghDossier = document.getElementById('dossier-ghana');
-            const ngBtn = document.getElementById('tab-ng-btn');
-            const ghBtn = document.getElementById('tab-gh-btn');
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabButtons = document.querySelectorAll('.me-tab-btn');
+            const panes = document.querySelectorAll('.me-case-pane');
 
-            if (country === 'nigeria') {
-                ngDossier.style.display = 'block';
-                ghDossier.style.display = 'none';
-                ngBtn.classList.add('active');
-                ghBtn.classList.remove('active');
-            } else {
-                ngDossier.style.display = 'none';
-                ghDossier.style.display = 'block';
-                ghBtn.classList.add('active');
-                ngBtn.classList.remove('active');
-            }
-        }
+            tabButtons.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    if (this.classList.contains('active')) return;
+
+                    // Update Tab active states
+                    tabButtons.forEach(b => {
+                        b.classList.remove('active');
+                        b.setAttribute('aria-selected', 'false');
+                    });
+                    this.classList.add('active');
+                    this.setAttribute('aria-selected', 'true');
+
+                    const targetId = this.getAttribute('data-target');
+                    const targetPane = document.querySelector(targetId);
+
+                    // Smooth animated transition
+                    panes.forEach(pane => {
+                        pane.style.opacity = '0';
+                        pane.style.transform = 'translateY(12px)';
+                        setTimeout(() => {
+                            pane.classList.remove('active');
+                            if (pane === targetPane) {
+                                pane.classList.add('active');
+                                setTimeout(() => {
+                                    pane.style.opacity = '1';
+                                    pane.style.transform = 'translateY(0)';
+                                }, 30);
+                            }
+                        }, 200);
+                    });
+                });
+            });
+        });
     </script>
 
+    {{-- ==========================================
+         SECTION 6: READY TO EXPLORE YOUR NEXT MARKET (CTA & STATISTICS)
+         Sitting seamlessly on top of footer3 with zero margin/space
+         ========================================== --}}
+    <section class="me-cta-section" id="explore-cta">
+        <div class="me-cta-container">
+            <div class="me-cta-grid">
+                
+                {{-- Left Column: Copy & Actions --}}
+                <div class="me-cta-content">
+                    <h2 class="me-cta-headline">
+                        Ready to explore your next market?
+                    </h2>
+
+                    <p class="me-cta-desc">
+                        Whether you’re testing your first African market, looking for a new route to market or expanding an existing operation, P23 can help you understand the opportunity and turn it into action.
+                    </p>
+
+                    <div class="me-cta-actions">
+                        <a href="{{ url('contact') }}" class="me-cta-btn" id="btn-talk-to-p23-africa">
+                            Talk to P23 Africa
+                        </a>
+
+                        <a href="{{ url('book-consultation') }}" class="me-cta-link" id="link-book-market-exploration">
+                            Book a confidential market exploration session→
+                        </a>
+                    </div>
+                </div>
+
+                {{-- Right Column: Statistics Media Prowess Donut Card --}}
+                <div class="me-cta-visual">
+                    <div class="me-cta-chart-card">
+                        <img src="{{ asset('images/market-entry/statistics-media-prowess.png') }}" 
+                             alt="P23 Africa market media prowess statistics 147K users" 
+                             loading="lazy">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</div>
+@endsection
+
+@section('footer')
+    @include('layouts.includes.footer3')
 @endsection
