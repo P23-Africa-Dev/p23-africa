@@ -197,7 +197,7 @@
                             <p class="plan-card-desc">
                                 Build practical strategies for entering and developing new African markets.
                             </p>
-                            <a href="{{ url('contact') }}" class="plan-explore-btn" aria-label="Explore Market Entry & Expansion">
+                            <a href="{{ url('market-entry') }}" class="plan-explore-btn" aria-label="Explore Market Entry & Expansion">
                                 Explore <span class="btn-arrow">→</span>
                             </a>
                         </div>

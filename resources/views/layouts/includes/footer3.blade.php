@@ -32,7 +32,7 @@
             <div class="footer3-col">
                 <h3 class="footer3-heading">What We Do</h3>
                 <ul class="footer3-nav-list">
-                    <li><a href="{{ url('services') }}#hero" class="footer3-nav-link">Market Entry &amp; Expansion</a></li>
+                    <li><a href="{{ url('market-entry') }}" class="footer3-nav-link">Market Entry &amp; Expansion</a></li>
                     <li><a href="{{ url('services') }}#growth-plan" class="footer3-nav-link">Verify Distributors</a></li>
                     <li><a href="{{ url('services') }}#growth-plan" class="footer3-nav-link">Sales Demand Testing</a></li>
                     <li><a href="{{ url('services') }}#growth-plan" class="footer3-nav-link">Operations/Market Support</a></li>

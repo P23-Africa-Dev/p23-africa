@@ -1257,7 +1257,7 @@
                             <h3 class="capability-title">Market Entry & Expansion</h3>
                             <p class="capability-desc">Build practical strategies for entering and developing new African markets.</p>
                         </div>
-                        <a href="{{ url('services') }}#market" class="capability-link">
+                        <a href="{{ url('market-entry') }}" class="capability-link">
                             Explore market entry <i class="bi bi-arrow-right"></i>
                         </a>
                     </div>
