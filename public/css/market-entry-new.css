@@ -1,0 +1,1145 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
+/* ==========================================================================
+   P23 AFRICA - NEW MARKET ENTRY PAGE STYLESHEET
+   Principal Frontend Engineering Implementation
+   ========================================================================== */
+
+:root {
+    --color-maroon-hero: #390908;
+    --color-maroon-hover: #4d0d0c;
+    --color-text-black: #000000;
+    --color-dark-bg: #1A283F;
+    --font-serif: "Times New Roman", Times, Georgia, serif;
+    --font-sans: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Page Scaffolding */
+.market-entry-page {
+    width: 100%;
+    background-color: #FFFFFF;
+    color: var(--color-text-black);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+}
+
+/* ==========================================================================
+   Section 1: Hero Section
+   ========================================================================== */
+.me-hero-section {
+    width: 100%;
+    padding-top: clamp(145px, 13vw, 175px);
+    padding-bottom: clamp(40px, 6vw, 70px);
+    background-color: #FFFFFF;
+    position: relative;
+}
+
+.me-hero-container {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.me-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    gap: clamp(32px, 5vw, 64px);
+    align-items: center;
+}
+
+/* Left Column: Copy & CTAs */
+.me-hero-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 540px;
+}
+
+.me-hero-headline {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(38px, 4.6vw, 64px);
+    line-height: clamp(40px, 4.4vw, 55px);
+    letter-spacing: -0.04em;
+    color: var(--color-text-black);
+    margin: 0 0 clamp(16px, 2.2vw, 28px) 0;
+    max-width: 530px;
+}
+
+.me-hero-description {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-style: normal;
+    font-size: clamp(15px, 1.35vw, 18px);
+    line-height: 1.5;
+    letter-spacing: -0.04em;
+    color: var(--color-text-black);
+    margin: 0 0 clamp(24px, 3vw, 36px) 0;
+    max-width: 534px;
+}
+
+/* Action Group */
+.me-hero-cta-group {
+    display: flex;
+    align-items: center;
+    gap: clamp(16px, 2.5vw, 28px);
+    flex-wrap: wrap;
+}
+
+.me-hero-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 172px;
+    height: 44px;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: var(--color-maroon-hero);
+    color: #EEEEEE !important;
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    text-decoration: none;
+    box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.3);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    border: none;
+}
+
+.me-hero-btn:hover {
+    background-color: var(--color-maroon-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 14px 18px rgba(57, 9, 8, 0.4);
+    color: #FFFFFF !important;
+}
+
+.me-hero-btn:active {
+    transform: translateY(0);
+}
+
+/* Rating / Case Studies Proof Group */
+.me-hero-proof {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.me-hero-stars {
+    display: flex;
+    align-items: center;
+}
+
+.me-hero-stars svg {
+    display: block;
+    height: 18px;
+    width: 98px;
+}
+
+.me-hero-case-studies-link {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: #000000;
+    text-decoration: none;
+    display: inline-flex;
+    gap: 4px;
+}
+
+.me-hero-case-studies-link strong {
+    font-weight: 700;
+}
+
+.me-hero-case-studies-link em {
+    font-weight: 400;
+    font-style: italic;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+}
+
+.me-hero-case-studies-link:hover em {
+    color: var(--color-maroon-hero);
+}
+
+/* Right Column: Stacked Images */
+.me-hero-visuals {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(16px, 2vw, 24px);
+    width: 100%;
+}
+
+.me-visual-top {
+    width: 100%;
+    max-width: 470px;
+    height: 298px;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
+}
+
+.me-visual-top img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.me-visual-top:hover img {
+    transform: scale(1.03);
+}
+
+.me-visual-bottom {
+    width: 100%;
+    max-width: 643px;
+    height: 298px;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
+}
+
+.me-visual-bottom img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 35%;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.me-visual-bottom:hover img {
+    transform: scale(1.03);
+}
+
+/* Responsive Breakpoints for Hero */
+@media (max-width: 1024px) {
+    .me-hero-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+    }
+
+    .me-hero-content {
+        max-width: 100%;
+        text-align: left;
+    }
+
+    .me-visual-top,
+    .me-visual-bottom {
+        max-width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 9;
+    }
+}
+
+@media (max-width: 576px) {
+    .me-hero-section {
+        padding-top: 105px;
+    }
+
+    .me-hero-cta-group {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .me-visual-top,
+    .me-visual-bottom {
+        border-radius: 16px;
+    }
+}
+
+/* ==========================================================================
+   Section 2: Our Execution Methodology Banner
+   ========================================================================== */
+.me-methodology-section {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto clamp(40px, 6vw, 70px) auto;
+    padding: 0 clamp(16px, 2.5vw, 36px);
+    box-sizing: border-box;
+}
+
+.me-methodology-container {
+    background-color: var(--color-maroon-hero);
+    border-radius: 20px;
+    min-height: 267px;
+    padding: clamp(32px, 3vw, 44px) clamp(24px, 3.2vw, 48px);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 16px 36px rgba(57, 9, 8, 0.15);
+}
+
+.me-methodology-grid {
+    display: flex;
+    align-items: flex-start;
+    gap: clamp(24px, 2.8vw, 44px);
+    width: 100%;
+}
+
+/* Title block on the left */
+.me-methodology-title-block {
+    flex: 0 0 clamp(150px, 13vw, 175px);
+    padding-top: 4px;
+}
+
+.me-methodology-title {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: clamp(20px, 1.75vw, 24px);
+    line-height: 1.15;
+    letter-spacing: 0;
+    color: #FFFFFF;
+    margin: 0;
+}
+
+/* 5 Steps horizontal layout */
+.me-methodology-steps {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: clamp(14px, 1.8vw, 26px);
+    flex: 1;
+    align-items: stretch;
+}
+
+.me-methodology-step {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-left: clamp(12px, 1.4vw, 20px);
+    border-left: 1px solid rgba(255, 255, 255, 0.22);
+    min-width: 0;
+}
+
+.me-step-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.me-step-icon {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    display: block;
+}
+
+.me-step-number {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.65);
+    letter-spacing: 0.05em;
+}
+
+.me-step-title {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: clamp(14px, 1.15vw, 16px);
+    line-height: 1.25;
+    letter-spacing: 0;
+    color: #FFFFFF;
+    margin: 0 0 8px 0;
+    min-height: 38px;
+}
+
+.me-step-desc {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: clamp(12px, 0.95vw, 14px);
+    line-height: 1.35;
+    letter-spacing: 0;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+}
+
+/* Responsive adjustments for Methodology section */
+@media (max-width: 1200px) {
+    .me-methodology-grid {
+        flex-direction: column;
+        gap: 28px;
+    }
+
+    .me-methodology-title-block {
+        flex: 0 0 auto;
+        width: 100%;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        padding-bottom: 16px;
+    }
+
+    .me-methodology-title br {
+        display: none;
+    }
+
+    .me-methodology-steps {
+        width: 100%;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .me-methodology-container {
+        padding: 28px 20px;
+        border-radius: 16px;
+    }
+
+    .me-methodology-steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+    }
+
+    .me-step-title {
+        min-height: auto;
+    }
+}
+
+@media (max-width: 500px) {
+    .me-methodology-steps {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .me-methodology-step {
+        padding-left: 16px;
+    }
+}
+
+/* ==========================================================================
+   Section 3: Practical Execution (Two-Column Feature)
+   ========================================================================== */
+.me-execution-section {
+    width: 100%;
+    max-width: 1346px;
+    margin: 0 auto clamp(60px, 8vw, 100px) auto;
+    padding: 0 clamp(16px, 2.5vw, 36px);
+    box-sizing: border-box;
+}
+
+.me-execution-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: clamp(32px, 5vw, 64px);
+    align-items: center;
+}
+
+.me-execution-visual {
+    width: 100%;
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
+}
+
+.me-execution-visual img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.me-execution-visual:hover img {
+    transform: scale(1.02);
+}
+
+.me-execution-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 440px;
+}
+
+.me-execution-headline {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(26px, 2.3vw, 32px);
+    line-height: clamp(28px, 2.4vw, 32px);
+    letter-spacing: -0.04em;
+    color: var(--color-text-black);
+    margin: 0 0 clamp(16px, 2vw, 24px) 0;
+    max-width: 375px;
+}
+
+.me-execution-desc {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: clamp(15px, 1.3vw, 18px);
+    line-height: 1.4;
+    letter-spacing: -0.04em;
+    color: var(--color-text-black);
+    margin: 0 0 clamp(24px, 3vw, 32px) 0;
+    max-width: 399px;
+}
+
+.me-execution-link {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: clamp(17px, 1.45vw, 20px);
+    line-height: 1.2;
+    letter-spacing: -0.04em;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    color: var(--color-text-black);
+    max-width: 324px;
+    display: inline-block;
+    transition: color 0.25s ease;
+}
+
+.me-execution-link:hover {
+    color: var(--color-maroon-hero);
+}
+
+/* ==========================================================================
+   Section 4: Market Entry Momentum In Africa (Yellow Part)
+   Figma: width: 1346; height: 758; border-radius: 27px; background: #F9F4EA;
+   padding: 115px 43px 58px 42px; gap: 10px;
+   ========================================================================== */
+.me-momentum-section {
+    width: 100%;
+    max-width: 1346px;
+    margin: 0 auto clamp(60px, 8vw, 100px) auto;
+    padding: 0 clamp(16px, 2.5vw, 36px);
+    box-sizing: border-box;
+}
+
+.me-momentum-container {
+    background-color: #F9F4EA;
+    border-radius: 27px;
+    min-height: 758px;
+    padding: clamp(48px, 6vw, 115px) clamp(24px, 3vw, 43px) clamp(36px, 4vw, 58px) clamp(24px, 3vw, 42px);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: clamp(40px, 5vw, 64px);
+}
+
+.me-momentum-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(24px, 4vw, 48px);
+    align-items: flex-start;
+}
+
+.me-momentum-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(20px, 2.5vw, 32px);
+    max-width: 594px;
+}
+
+.me-momentum-title {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: clamp(32px, 3.5vw, 48px);
+    line-height: clamp(38px, 4vw, 55px);
+    letter-spacing: -0.04em;
+    color: var(--color-text-black);
+    margin: 0;
+}
+
+.me-momentum-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 172px;
+    height: 44px;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: var(--color-maroon-hero);
+    color: #FFFFFF !important;
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    text-decoration: none;
+    box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.3);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    border: none;
+}
+
+.me-momentum-btn:hover {
+    background-color: var(--color-maroon-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 14px 18px rgba(57, 9, 8, 0.4);
+}
+
+.me-momentum-desc {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: clamp(15px, 1.3vw, 18px);
+    line-height: 1.4;
+    letter-spacing: -0.04em;
+    color: var(--color-text-black);
+    margin: 0;
+    max-width: 526px;
+}
+
+/* 4 Momentum Cards Grid */
+.me-momentum-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(16px, 2vw, 24px);
+    width: 100%;
+}
+
+.me-momentum-card {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    background-color: transparent;
+}
+
+#card-kenya {
+    background-color: #390908;
+}
+
+.me-momentum-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.12);
+}
+
+.me-momentum-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 20px;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 1100px) {
+    .me-execution-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .me-execution-content {
+        max-width: 100%;
+    }
+
+    .me-momentum-header {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .me-momentum-cards-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .me-momentum-cards-grid {
+        grid-template-columns: 1fr;
+        max-width: 320px;
+        margin: 0 auto;
+    }
+
+    .me-momentum-container {
+        padding: 36px 20px;
+        border-radius: 20px;
+    }
+}
+
+/* ==========================================================================
+   Section 5: From Market Opportunity to Market Presence (Tabs & Case Study)
+   ========================================================================== */
+.me-casestudy-section {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto clamp(60px, 8vw, 100px) auto;
+    padding: 0 clamp(16px, 2.5vw, 36px);
+    box-sizing: border-box;
+}
+
+.me-casestudy-header {
+    text-align: center;
+    max-width: 580px;
+    margin: 0 auto clamp(24px, 3.5vw, 36px) auto;
+}
+
+.me-casestudy-title {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(26px, 2.4vw, 32px);
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    color: #000000;
+    margin: 0 0 16px 0;
+}
+
+.me-casestudy-subtitle {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: clamp(15px, 1.3vw, 18px);
+    line-height: 1.35;
+    letter-spacing: -0.04em;
+    color: #000000;
+    margin: 0;
+}
+
+/* Tabs Bar */
+.me-tabs-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: clamp(24px, 3.2vw, 36px) auto 16px auto;
+}
+
+.me-tabs-container {
+    width: 100%;
+    max-width: 769px;
+    height: 66px;
+    border-radius: 300px;
+    background-color: #783B3A;
+    padding: 8px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    box-shadow: 0 8px 24px rgba(120, 59, 58, 0.2);
+    position: relative;
+    gap: 8px;
+}
+
+.me-tab-btn {
+    flex: 1;
+    height: 50px;
+    border-radius: 200px;
+    border: none;
+    background: transparent;
+    color: #FFFFFF;
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: clamp(13px, 1.15vw, 15px);
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: capitalize;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 16px;
+    white-space: nowrap;
+}
+
+.me-tab-btn.active {
+    background-color: #000000;
+    color: #E6E6E6;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+}
+
+.me-tab-btn:hover:not(.active) {
+    color: #FFFFFF;
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+/* Star Proof & Link Under Tabs */
+.me-casestudy-proof {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin: 0 auto clamp(36px, 4.5vw, 56px) auto;
+}
+
+.me-casestudy-proof-stars {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.me-casestudy-proof-stars img {
+    width: 90px;
+    height: 18px;
+    object-fit: contain;
+    display: block;
+}
+
+.me-casestudy-proof-link {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: #000000;
+    text-decoration: none;
+    display: inline-flex;
+    gap: 3px;
+    transition: opacity 0.2s ease;
+}
+
+.me-casestudy-proof-link strong {
+    font-weight: 700;
+}
+
+.me-casestudy-proof-link em {
+    font-weight: 400;
+    font-style: italic;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.me-casestudy-proof-link:hover {
+    opacity: 0.8;
+}
+
+/* Two-Column Case Study Showcase Container */
+.me-case-panes-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.me-case-pane {
+    display: none;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.me-case-pane.active {
+    display: grid;
+    opacity: 1;
+    transform: translateY(0);
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: clamp(32px, 5vw, 64px);
+    align-items: center;
+}
+
+.me-case-visual {
+    width: 100%;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
+    position: relative;
+}
+
+.me-case-visual img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    border-radius: 28px;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.me-case-visual:hover img {
+    transform: scale(1.02);
+}
+
+.me-case-article {
+    display: flex;
+    flex-direction: column;
+    max-width: 440px;
+}
+
+.me-case-meta {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 16px;
+}
+
+.me-case-meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    color: #656565;
+}
+
+.me-case-meta-item img {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    display: block;
+}
+
+.me-case-heading {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1.25;
+    letter-spacing: 0;
+    color: #333333;
+    margin: 0 0 18px 0;
+}
+
+.me-case-body {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0;
+    color: #333333;
+    margin: 0 0 24px 0;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.me-case-body p {
+    margin: 0;
+}
+
+.me-case-continue-btn {
+    width: 100%;
+    max-width: 352px;
+    height: 42px;
+    border-radius: 20px;
+    background-color: #000000;
+    color: #E6E6E6 !important;
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: capitalize;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    text-decoration: none;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    border: none;
+}
+
+.me-case-continue-btn:hover {
+    background-color: #222222;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    color: #FFFFFF !important;
+}
+
+/* Responsive Media Queries for Case Study */
+@media (max-width: 991px) {
+    .me-case-pane.active {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .me-case-article {
+        max-width: 100%;
+    }
+
+    .me-case-body {
+        max-width: 100%;
+    }
+
+    .me-tabs-container {
+        height: auto;
+        border-radius: 24px;
+        flex-direction: column;
+        gap: 8px;
+        padding: 12px;
+    }
+
+    .me-tab-btn {
+        width: 100%;
+        height: 44px;
+    }
+}
+
+/* ==========================================================================
+   Section 6: Ready to Explore Your Next Market (CTA & Statistics)
+   Directly atop footer3 with zero margin or gap
+   ========================================================================== */
+.me-cta-section {
+    width: 100%;
+    background-color: #000000;
+    color: #FFFFFF;
+    padding-top: clamp(64px, 8vw, 100px);
+    padding-bottom: clamp(60px, 7vw, 90px);
+    margin-bottom: 0 !important;
+    position: relative;
+    border-bottom: 1px solid #FFFFFF;
+}
+
+.me-cta-container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 clamp(16px, 2.5vw, 36px);
+    box-sizing: border-box;
+}
+
+.me-cta-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    gap: clamp(32px, 5vw, 64px);
+    align-items: center;
+}
+
+.me-cta-content {
+    display: flex;
+    flex-direction: column;
+    max-width: 680px;
+    width: 100%;
+}
+
+.me-cta-headline {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(28px, 2.6vw, 32px);
+    line-height: clamp(30px, 2.8vw, 32px);
+    letter-spacing: -0.04em;
+    color: #FFFFFF;
+    margin: 0 0 clamp(16px, 2vw, 24px) 0;
+}
+
+.me-cta-desc {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: clamp(15px, 1.3vw, 18px);
+    line-height: 1.4;
+    letter-spacing: -0.04em;
+    color: #FFFFFF;
+    margin: 0 0 clamp(24px, 3.2vw, 36px) 0;
+    max-width: 576px;
+}
+
+.me-cta-actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: clamp(16px, 2.2vw, 32px);
+    flex-wrap: nowrap;
+}
+
+.me-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    flex-shrink: 0;
+    height: 44px;
+    border-radius: 10px;
+    padding: 10px 22px;
+    background-color: var(--color-maroon-hero);
+    color: #FFFFFF !important;
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    text-decoration: none;
+    box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.4);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    border: none;
+}
+
+.me-cta-btn:hover {
+    background-color: var(--color-maroon-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 14px 18px rgba(57, 9, 8, 0.5);
+}
+
+.me-cta-link {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: clamp(15px, 1.15vw, 17px);
+    line-height: 1.25;
+    letter-spacing: -0.04em;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    color: #FFFFFF;
+    max-width: 275px;
+    flex-shrink: 0;
+    transition: color 0.2s ease, opacity 0.2s ease;
+    display: inline-block;
+}
+
+.me-cta-link:hover {
+    color: #E6E6E6;
+    opacity: 0.9;
+}
+
+/* Right Column: Statistics Chart Card */
+.me-cta-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.me-cta-chart-card {
+    max-width: 440px;
+    width: 100%;
+    border-radius: 32px;
+    overflow: hidden;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.me-cta-chart-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 28px 60px rgba(0, 0, 0, 0.7);
+}
+
+.me-cta-chart-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 32px;
+}
+
+/* Ensure seamless connection to footer3 with balanced spacing around white divider */
+body.p23-black-navbar-page .footer3 {
+    padding-top: clamp(48px, 6vw, 72px) !important;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+    .me-cta-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+    }
+
+    .me-cta-content {
+        max-width: 100%;
+    }
+
+    .me-cta-chart-card {
+        max-width: 380px;
+    }
+}
+
+@media (max-width: 768px) {
+    .me-cta-actions {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .me-cta-btn {
+        width: auto;
+    }
+
+    .me-cta-link {
+        max-width: 100%;
+    }
+}
+
+
+
+
