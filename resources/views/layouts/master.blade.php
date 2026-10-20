@@ -80,7 +80,11 @@
 
 
 
-    @include('layouts.includes.footer')
+    @hasSection('footer')
+        @yield('footer')
+    @else
+        @include('layouts.includes.footer')
+    @endif
 
 
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}

@@ -3,227 +3,388 @@
 
 @section('meta')
     <meta name="description"
-        content="Business Strategy | Marketing & Sales | Operation & Efficiency | Expansion">
+        content="Business Strategy | Market Access | Growth. Your next market is full of opportunity. Let's make it yours.">
     <meta name="keywords"
         content="Expand and grow your business in Africa with expert business consulting. P23 Africa helps entrepreneurs, SMEs, and international businesses with strategy, expansion, marketing, operational efficiency and tailored solutions to thrive in African markets. Get started today!">
-    <meta name="author" content="Nurudeen O. Daniju">
-    <meta name="generator" content="Business Consulting & Growth Solutions for Africa | P23 Africa">
+    <meta name="author" content="P23 Africa">
     <meta property="og:image" content="{{ asset('images/servces-bg.png') }}">
-    <link rel="stylesheet" href="{{ asset('css/market-entry.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/services-new.css') }}">
 @endsection
-
 
 @section('content')
-    <section class="services-hero about animate-on-scroll">
-        <div class="hero-overlay"></div>
-        <div class="container hero-content">
-            <div class="hero position-relative">
-                <div class="top-image">
-                    <img src="{{ asset('images/service-box.png') }}" loading='lazy' alt="">
-                </div>
-                    <div class="left-content">
-                        <h2>Our Services</h2>
-                         <a href="{{ url('contact') }}" class="read-more">Contact Us <span>→</span></a>
-                    </div>
-                  <div class="right-content">
-                     <div class="content bg-color1">
-                        <div class="icon-box" >
-                            <img src="{{ asset('images/strategy.png') }}" loading='lazy' alt="">
-                            <h4>Business Strategy</h4>
-                        </div>
-                     </div>
-                     <div class="content bg-color2">
-                        <div class="icon-box" >
-                            <img src="{{ asset('images/sale-tag-02.png') }}" loading='lazy' alt="">
-                            <h4>Marketing & Sales</h4>
-                        </div>
-                     </div>
-                     <div class="content bg-color3">
-                        <div class="icon-box" >
-                            <img src="{{ asset('images/activity-03.png') }}" loading='lazy' alt="">
-                            <h4>Operation & Efficiency</h4>
-                        </div>
-                     </div>
-                     <div class="content bg-color4">
-                        <div class="icon-box" >
-                            <img src="{{ asset('images/arrow-expand.png') }}" loading='lazy' alt="">
-                            <h4>Expansion</h4>
-                        </div>
-                     </div>
-                  </div>
-            </div>
-        </div>
-    </section>
-
-
-    <section class="services animate-on-scroll">
-        <div class="">
-             <div class="service-top-content">
-                <div class="container position-relative">
-                    <div class="top-image">
-                        <img src="{{ asset('images/service-group.png') }}" loading='lazy' alt="">
-                    </div>
-                    <div class="row g-5 g-sm-4 g-md-3 g-lg-4 g-xl-0">   
-                        <div class="col-12  col-lg-4 scroll-offset" id="strategy">
-                            <div class="services-content bg-color1 roundedtop">
-                                <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
-                                    <img src="{{ asset('images/strategy.png') }}" loading='lazy' alt="">
-                                    <h4 class="text-left">Business Strategy</h4>
-        
-                                    <p>We help you build a clear plan for growth and success. Our team works closely with you to understand your goals, challenges, and the market you’re in. We create tailored strategies that show you the best steps to take, whether you’re starting a new business, growing an existing one, or expanding into new markets. With expert advice, market insights, and practical solutions, we give you the tools to make confident decisions and achieve lasting success.</p>
-                                </div>
-                             </div>
-                        </div>
+<div class="services-page-wrapper">
+    {{-- ==========================================
+         SECTION 1: HERO SECTION
+         ========================================== --}}
+    <section class="services-hero-section" id="hero">
+        <div class="services-hero-container">
+            <div class="services-hero-grid">
+                
+                {{-- Left Column: Copy & CTAs --}}
+                <div class="services-hero-content">
+                    <p class="hero-eyebrow">STRATEGY · MARKET ACCESS · GROWTH</p>
                     
-                        <div class="col-12 col-lg-4 scroll-offset" id="market">
-                            <div class="services-content bg-market-featured">
-                                <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left position-relative" style="z-index: 2;">
-                                    <span class="featured-pill-tag">
-                                        <i class="fas fa-star me-1" style="color: var(--p23-bright-green);"></i> Flagship Solution
-                                    </span>
-                                    <img src="{{ asset('images/target-03.png') }}" loading='lazy' alt="Market Entry" style="filter: brightness(0) invert(1);">
-                                    <h4 class="text-left text-white mt-2">Market Entry &amp; Expansion</h4>
-        
-                                    <p class="text-white-50">
-                                        Enter Africa with confidence. Build with local knowledge. We help businesses move from market opportunity to practical execution across Nigeria, Ghana, Kenya, and South Africa through demand testing, distributor vetting, and local operational oversight.
-                                    </p>
-
-                                    <div class="d-flex flex-wrap gap-2 mb-2">
-                                        <span class="p23-dossier-tag py-1 px-3" style="font-size: 0.72rem;">Nigeria</span>
-                                        <span class="p23-dossier-tag py-1 px-3" style="font-size: 0.72rem;">Ghana</span>
-                                        <span class="p23-dossier-tag py-1 px-3" style="font-size: 0.72rem;">Kenya</span>
-                                        <span class="p23-dossier-tag py-1 px-3" style="font-size: 0.72rem;">South Africa</span>
-                                    </div>
-
-                                    <a href="{{ route('services.market-entry') }}" class="market-card-cta-btn">
-                                        Explore Market Entry Flow <i class="fas fa-arrow-right ms-1"></i>
-                                    </a>
-                                </div>
-                             </div>
-                        </div>
+                    <h1 class="hero-headline">Your next market is full of opportunity. <em>Let's make it yours.</em></h1>
                     
-                        <div class=" col-12 col-lg-4 scroll-offset" id="research">
-                            <div class="services-content bg-color3 roundedbottom ">
-                                <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
-                                    <img src="{{ asset('images/share-knowledge.png') }}" loading='lazy' alt="">
-                                    <h4 class="text-left">Business Research</h4>
-        
-                                    <p>We help you make smarter business decisions with reliable research and insights. Our team gathers and analyzes information about markets, industries, customers, and competitors, giving you a clear understanding of the opportunities and challenges ahead. Whether you’re entering a new market, launching a product, or planning for growth, we provide the data and analysis you need to build strong, informed strategies.</p>
-                                </div>
-                             </div>
-                        </div>
-                    </div>
-                </div>
-             </div>
-             <div class="service-middle-content"></div>
-             <div class="service-bottom-content">
-                 <div class="container">
-                    <div class="row g-5 g-sm-4  g-md-3 g-lg-4 g-xl-0">
-                        <div class="col-md-4 scroll-offset" id="sales">
-                            <div class="services-content bg-color4 ">
-                                <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
-                                    <img src="{{ asset('images/sale-tag-4.png') }}" loading='lazy' alt="">
-                                    <h4 class="text-left">Sales</h4>
-        
-                                    <p>We help you grow your sales, reach more customers, and build stronger sales teams. Our experts work closely with you to understand your products, services, and target market. We create clear sales strategies, improve your processes, and provide hands-on training to boost your team’s skills and confidence. Whether you need help closing more deals, entering new markets, or increasing revenue, we give you the tools, support, and training to grow your business successfully.</p>
-                                </div>
-                             </div>
-                        </div>
-                    
-                        <div class="col-md-4 scroll-offset" id="marketing">
-                            <div class="services-content bg-color5 ">
-                                <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
-                                    <img src="{{ asset('images/marketing.png') }}" loading='lazy' alt="">
-                                    <h4 class="text-left">Marketing</h4>
-        
-                                    <p>We help you connect with the right customers and grow your brand. Our team works with you to understand your business, your audience, and your goals. We create custom marketing strategies that include branding, social media, advertising, and more. Whether you’re launching a new product, reaching new markets, or building your online presence, we give you the tools and support to promote your business effectively and drive real results.</p>
-                                </div>
-                             </div>
-                        </div>
-                    
-                        <div class="col-md-4 scroll-offset" id="audit">
-                            <div class="services-content bg-color6 ">
-                                <div class="icon-box d-flex flex-column justify-content-start align-items-start text-left" >
-                                    <img src="{{ asset('images/teaching6.png') }}" loading='lazy' alt="">
-                                    <h4 class="text-left">Business Audit</h4>
-        
-                                    <p>We help you take a closer look at your business to find strengths, weaknesses, & new opportunities. Our team reviews your operations, finances, strategy, & performance to give you a full picture of where you stand. We provide clear reports & practical recommendations to help you improve efficiency, reduce risks, & drive growth. Whether you’re preparing for expansion or just want a health check, our audits give you the insights you need to move forward with confidence.</p>
-                                </div>
-                             </div>
-                        </div> 
-                    </div>
-                 </div>
-             </div>
-        </div>
-    </section>
-
-
-    <section class="research animate-on-scroll">
-        <div class="container">
-            <div class="row g-10">
-                <!-- Left Column -->
-                <div class="col-12 col-md-6 px-4">
-                    <div class="resarch-image">
-                        <img src="{{ asset('images/research-image.png') }}" loading='lazy' alt="People"
-                        class="img-fluid">
-                    </div>
-                </div>
-    
-                <!-- Right Column -->
-                <div class="col-12 col-md-6 px-4 research-content d-flex flex-column justify-content-start " >
-                    <h2 class="">Global Reach. <span>Local Approach.</span> </h2>
-                    <p class="">
-                        We partner with entrepreneurs and businesses to understand their unique  needs, align them with their goals, and set a clear path to execution and results. 
-                        <br><br>
-                        Our consulting services come with personalised and hands-on support, and our team is committed to excellence, intergrity and collaboration.Let's help you thrive in the dynamic and unpredictable global market.
+                    <p class="hero-description">
+                        Entering a new market or scaling an existing business takes more than ambition. It takes the right insight, the right relationships, and a strategy built for execution.
                     </p>
-                    <div id="contact">
-                        <a href="{{ url('contact') }}" class="read-more">Contact Us <span>→</span></a>
+                    
+                    <div class="hero-cta-group">
+                        <a href="{{ url('contact') }}" class="hero-cta-btn" id="hero-talk-to-us-btn">
+                            Talk to Us
+                        </a>
+                        
+                        <div class="hero-rating-box" aria-label="Rating: 4.9 out of 5 from over 25,000 clients">
+                            <div class="hero-stars" aria-hidden="true">
+                                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                            </div>
+                            <div class="hero-rating-meta">
+                                <strong>4.9/5 RATING</strong>
+                                <span>FROM 25K+ CLIENTS</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
+                {{-- Right Column: 2x2 Showcase Mosaic --}}
+                <div class="services-hero-showcase">
+                    <div class="hero-mosaic-grid">
+                        
+                        {{-- Tile 1 (Top Left): Blue Corporate Architecture --}}
+                        <div class="mosaic-tile mosaic-tile-building">
+                            <img src="{{ asset('images/services/hero-building.png') }}" 
+                                 alt="P23 modern corporate towers representing African enterprise" 
+                                 loading="eager">
+                        </div>
 
-        <div class="global_reach">
-            <div class="row justify-content-center text-center stats me-auto ms-auto mt-5">
-                <div class="col-6 col-md-3 stat-box">
-                    <div class="number" id="countries"></div>
-                    <div class="label">Countries</div>
-                </div>
-                <div class="col-6 col-md-3 stat-box">
-                    <div class="number" id="businesses"></div>
-                    <div class="label">Businesses</div>
-                </div>
-                <div class="col-6 col-md-3 stat-box">
-                    <div class="number" id="partnership"></div>
-                    <div class="label">Partnership</div>
-                </div>
-                <div class="col-6 col-md-3 stat-box">
-                    <div class="number" id="network"></div>
-                    <div class="label">Expert Network</div>
-                </div>
-            </div>
-        </div>
+                        {{-- Tile 2 (Top Right): 20+ Countries Maroon Arch Card --}}
+                        <div class="mosaic-tile mosaic-tile-countries">
+                            <img src="{{ asset('images/services/hero-countries-card.png') }}" 
+                                 alt="Over 20 countries market presence across Africa" 
+                                 loading="eager">
+                        </div>
 
-        <div id="contact2" class="container">
-            <a href="{{ url('contact') }}" class="read-more">Contact Us <span>→</span></a>
-        </div>
-    </section>
+                        {{-- Tile 3 (Bottom Left): Strategic Advisory Team with Arched Dome --}}
+                        <div class="mosaic-tile mosaic-tile-team">
+                            <img src="{{ asset('images/services/hero-team.png') }}" 
+                                 alt="P23 multidisciplinary consulting professionals" 
+                                 loading="lazy">
+                        </div>
 
+                        {{-- Tile 4 (Bottom Right): 5000+ Expert Network Metric --}}
+                        <div class="mosaic-tile mosaic-tile-stat">
+                            <div class="stat-number">5000+</div>
+                            <div class="stat-label">Expert Network</div>
+                        </div>
 
-
-        
-    <section class="px-2 animate-on-scroll">
-        <div class="stats-section4">
-            <div class="">
-                <div id="stats_img_desktop">
-                    <img src="{{ asset('images/service-desktop.png') }}" loading='lazy' alt="Card image">
+                    </div>
                 </div>
-                <div id="stats_img_mobile">
-                    <img src="{{ asset('images/service-mobile.png') }}" loading='lazy' alt="Card image">
-                </div>
+
             </div>
         </div>
     </section>
+
+    {{-- ==========================================
+         SECTION 1 BOTTOM: SOCIAL PROOF / LOGO BAR
+         ========================================== --}}
+    <section class="services-social-proof" id="trusted-by" aria-label="Trusted by leading organizations">
+        <div class="social-proof-container">
+            <p class="social-proof-title">Trusted by 25k+ businesses</p>
+
+            <div class="social-proof-logos">
+                
+                {{-- Logo 1: Walmart --}}
+                <div class="logo-item" title="Walmart">
+                    <svg width="118" height="64" viewBox="0 0 118 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Walmart logo">
+                        <g clip-path="url(#clip0_walmart)">
+                            <path d="M67.7274 34.9473C67.7274 32.1822 66.5439 29.7393 62.5408 29.7393C60.4871 29.7393 58.8557 30.3246 57.971 30.8369L58.6194 33.0552C59.4338 32.5443 60.7333 32.1236 61.9598 32.1236C63.9864 32.1208 64.3184 33.2671 64.3184 34.0041V34.1816C59.8946 34.1744 57.0981 35.703 57.0981 38.8158C57.0981 40.7178 58.5178 42.5011 60.9994 42.5011C62.5136 42.5011 63.793 41.8899 64.5574 40.9253H64.6318C64.6318 40.9253 65.1357 43.0335 67.9221 42.2276C67.7803 41.3446 67.7274 40.4144 67.7274 39.2838V34.9473ZM64.4272 37.8669C64.4272 38.0902 64.4086 38.3221 64.3428 38.521C64.088 39.3726 63.2092 40.0852 62.1158 40.0852C61.1928 40.0852 60.4685 39.5628 60.4685 38.4679C60.4685 36.7935 62.3175 36.3327 64.4272 36.3442" fill="#050038"/>
+                            <path d="M0 25.9775C0 25.9775 2.88953 37.799 3.34894 39.714C3.88992 41.9523 4.85884 42.7796 7.65537 42.2285L9.4615 34.8981C9.91805 33.0819 10.2286 31.7795 10.5234 29.929H10.5735C10.7782 31.7981 11.073 33.0819 11.4465 34.9038C11.4465 34.9038 12.1836 38.2342 12.5657 39.9788C12.9378 41.7234 13.9854 42.824 16.729 42.2285L21.0283 25.9775H17.5576L16.0821 33.0075C15.6914 35.0441 15.3365 36.6484 15.0603 38.5147H15.0101C14.7612 36.6684 14.4448 35.1299 14.0384 33.1348L12.5099 25.9775H8.88904L7.25748 32.9516C6.79233 35.0813 6.35728 36.7887 6.0839 38.5962H6.03669C5.75476 36.9003 5.37264 34.7406 4.96758 32.6912C4.96758 32.6912 3.99868 27.6979 3.65665 25.9775" fill="#050038"/>
+                            <path d="M30.6996 34.9473C30.6996 32.1822 29.5131 29.7393 25.5101 29.7393C23.462 29.7393 21.8277 30.3246 20.9432 30.8369L21.5914 33.0552C22.403 32.5443 23.7011 32.1236 24.9318 32.1236C26.9584 32.1208 27.2904 33.2671 27.2904 34.0041V34.1816C22.8667 34.1744 20.0674 35.703 20.0674 38.8158C20.0674 40.7178 21.4928 42.5011 23.9629 42.5011C25.4914 42.5011 26.7595 41.8899 27.5237 40.9253H27.601C27.601 40.9253 28.1077 43.0335 30.8913 42.2276C30.7482 41.3446 30.6996 40.4144 30.6996 39.2838V34.9473ZM27.3964 37.8669C27.3964 38.0902 27.3779 38.3221 27.3148 38.521C27.0571 39.3726 26.1784 40.0852 25.0822 40.0852C24.1648 40.0852 23.4378 39.5628 23.4378 38.4679C23.4378 36.7935 25.2868 36.3327 27.3964 36.3442" fill="#050038"/>
+                            <path d="M32.501 25.9775V42.2228H35.8042V38.778V25.9775H32.501Z" fill="#050038"/>
+                            <path d="M77.8652 25.9775V37.9637C77.8652 39.6181 78.1758 40.7717 78.844 41.4786C79.4309 42.0983 80.3911 42.5019 81.5347 42.5019C82.5165 42.5019 83.4767 42.3129 83.9304 42.1484L83.8904 39.568C83.5512 39.6467 83.1634 39.714 82.6309 39.714C81.5032 39.714 81.1311 38.9998 81.1311 37.5142V32.9259H84.0078V29.8216H81.1311V25.9775" fill="#050038"/>
+                            <path d="M69.3281 30.021V42.2275H72.7429V35.9761C72.7429 35.6398 72.7642 35.3492 72.8173 35.0801C73.072 33.762 74.0724 32.9277 75.5136 32.9277C75.9158 32.9277 76.1892 32.9721 76.4926 33.0193V29.8192C76.2378 29.7734 76.0646 29.749 75.7512 29.749C74.4731 29.749 73.0248 30.5605 72.4137 32.328H72.3293V30.021" fill="#050038"/>
+                            <path d="M37.7227 30.021V42.2275H41.0501V35.0631C41.0501 34.7267 41.0873 34.3832 41.2061 34.0726C41.4766 33.347 42.1478 32.5069 43.2255 32.5069C44.565 32.5069 45.1977 33.6375 45.1977 35.269V42.2275H48.5166V34.9772C48.5166 34.6608 48.561 34.273 48.6539 33.9924C48.9202 33.1695 49.6472 32.5069 50.6519 32.5069C52.0058 32.5069 52.6613 33.6133 52.6613 35.5368V42.2275H55.9772V35.0301C55.9772 31.249 54.0538 29.749 51.8698 29.749C50.9095 29.749 50.1453 29.9851 49.4583 30.4089C48.8772 30.7651 48.3678 31.2675 47.9111 31.9244H47.8611C47.3358 30.6106 46.1022 29.749 44.4906 29.749C42.424 29.749 41.4852 30.7923 40.9328 31.674H40.8826V30.021" fill="#050038"/>
+                            <path d="M101.879 29.4737C102.532 29.4737 103.081 29.133 103.153 28.6951L103.8 21.3674C103.8 20.6418 102.945 20.0479 101.879 20.0479C100.807 20.0479 99.9585 20.6418 99.9585 21.3674L100.611 28.6951C100.68 29.133 101.226 29.4737 101.879 29.4737Z" fill="#050038"/>
+                            <path d="M97.9096 31.7669C98.233 31.1944 98.2143 30.559 97.8653 30.2755L91.8256 26.0523C91.1973 25.6859 90.2571 26.1224 89.719 27.0469C89.1822 27.97 89.291 29.0061 89.9065 29.3653L96.5928 32.4653C97.0208 32.6256 97.5804 32.3279 97.9096 31.7612" fill="#050038"/>
+                            <path d="M105.847 31.76C106.189 32.3268 106.748 32.6245 107.165 32.4728L113.851 29.3643C114.473 28.9979 114.566 27.9717 114.04 27.0487C113.504 26.124 112.558 25.6905 111.931 26.0496L105.89 30.2688C105.555 30.5565 105.531 31.1947 105.854 31.7658" fill="#050038"/>
+                            <path d="M101.879 38.626C102.532 38.626 103.081 38.9666 103.153 39.4046L103.8 46.7321C103.8 47.4578 102.945 48.046 101.879 48.046C100.807 48.046 99.9585 47.4578 99.9585 46.7321L100.611 39.4046C100.68 38.9666 101.226 38.626 101.879 38.626Z" fill="#050038"/>
+                            <path d="M105.847 36.3405C106.189 35.7723 106.748 35.4688 107.165 35.6335L113.851 38.7363C114.473 39.0955 114.566 40.1302 114.04 41.0547C113.504 41.9721 112.558 42.4086 111.931 42.0495L105.89 37.8246C105.555 37.5398 105.531 36.9044 105.854 36.3405" fill="#050038"/>
+                            <path d="M97.9096 36.3344C98.233 36.9054 98.2143 37.5394 97.8653 37.8257L91.8256 42.0433C91.1973 42.4097 90.2571 41.9718 89.719 41.0545C89.1822 40.1313 89.291 39.0951 89.9065 38.7359L96.5928 35.6331C97.0208 35.4699 97.5804 35.7704 97.9096 36.3344Z" fill="#050038"/>
+                            <path d="M115.808 41.4061H115.891C116.004 41.4061 116.05 41.4418 116.063 41.5321C116.087 41.6322 116.1 41.6995 116.124 41.7281H116.339C116.32 41.7066 116.296 41.6522 116.283 41.5263C116.259 41.4175 116.203 41.3559 116.124 41.3345V41.3145C116.233 41.2902 116.296 41.2171 116.296 41.127C116.296 41.0454 116.259 40.9868 116.221 40.9496C116.15 40.9152 116.081 40.888 115.93 40.888C115.795 40.888 115.696 40.8994 115.618 40.9181V41.7281H115.808V41.4061ZM115.814 41.0369L115.911 41.0239C116.025 41.0239 116.087 41.0769 116.087 41.1513C116.087 41.2343 116.004 41.273 115.898 41.273H115.814V41.0369ZM115.935 40.4873C115.466 40.4873 115.094 40.8537 115.094 41.303C115.094 41.7639 115.466 42.1303 115.935 42.1303C116.41 42.1303 116.771 41.7639 116.771 41.303C116.771 40.8537 116.41 40.4873 115.935 40.4873ZM115.935 40.6518C116.296 40.6518 116.564 40.9438 116.564 41.303C116.564 41.6651 116.296 41.9656 115.935 41.9599C115.575 41.9599 115.301 41.6651 115.301 41.303C115.301 40.9438 115.575 40.6518 115.93 40.6518" fill="#050038"/>
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_walmart">
+                                <rect width="117.328" height="63.9972" fill="white" transform="translate(0 0.000976562)"/>
+                            </clipPath>
+                        </defs>
+                    </svg>
+                </div>
+
+                {{-- Logo 2: Cisco --}}
+                <div class="logo-item" title="Cisco">
+                    <svg width="224" height="64" viewBox="0 0 224 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cisco logo">
+                        <path d="M97.7555 49.0962V37.0112H100.964V49.0962H97.7555ZM112.37 39.9384C112.324 39.9251 111.013 39.5736 109.936 39.5736C108.688 39.5736 108.01 39.9789 108.01 40.5538C108.01 41.2829 108.926 41.5376 109.438 41.6949L110.296 41.9603C112.317 42.5838 113.237 43.9263 113.237 45.3845C113.237 48.3916 110.513 49.403 108.13 49.403C106.474 49.403 104.923 49.1064 104.77 49.0756V46.3196C105.045 46.3867 106.349 46.7648 107.71 46.7648C109.259 46.7648 109.971 46.3257 109.971 45.6478C109.971 45.0407 109.354 44.6902 108.582 44.456C108.395 44.3935 108.111 44.3069 107.917 44.247C106.184 43.7146 104.738 42.7247 104.738 40.7444C104.738 38.5048 106.466 37.002 109.336 37.002C110.852 37.002 112.277 37.3591 112.369 37.3827V39.9379L112.37 39.9384ZM141.978 43.2017C141.978 46.6275 139.254 49.402 135.46 49.402C131.665 49.402 128.944 46.6275 128.944 43.2007C128.944 39.7822 131.666 37.0046 135.46 37.0046C139.254 37.0046 141.978 39.7821 141.978 43.2017ZM135.46 40.0537C133.613 40.0537 132.241 41.4643 132.241 43.2017C132.241 44.9443 133.613 46.3524 135.46 46.3524C137.304 46.3524 138.68 44.9443 138.68 43.2017C138.68 41.4643 137.304 40.0537 135.46 40.0537ZM93.1715 40.6481C93.0462 40.5845 92.0458 40.0096 90.5561 40.0096C88.5406 40.0096 87.1445 41.3685 87.1445 43.2023C87.1445 44.9812 88.4824 46.3974 90.5576 46.3974C92.0203 46.3974 93.0379 45.8333 93.1715 45.7626V48.9757C92.7852 49.0818 91.7224 49.402 90.3319 49.402C86.8346 49.402 83.7637 47.0594 83.7637 43.2007C83.7637 39.6274 86.544 37.0046 90.333 37.0046C91.7977 37.0046 92.8788 37.3489 93.1715 37.4339V40.6481ZM125.666 40.6481C125.539 40.5845 124.536 40.0096 123.049 40.0096C121.034 40.0096 119.639 41.3685 119.639 43.2023C119.639 44.9812 120.974 46.3974 123.048 46.3974C124.511 46.3974 125.529 45.8333 125.666 45.7626V48.9757C125.276 49.0818 124.211 49.402 122.83 49.402C119.328 49.402 116.254 47.0594 116.254 43.2007C116.254 39.6274 119.035 37.0046 122.83 37.0046C124.289 37.0046 125.372 37.3489 125.666 37.4339V40.6481Z" fill-rule="evenodd" clip-rule="evenodd" fill="#050038"/>
+                        <path d="M148 20.6704C147.998 19.8419 147.307 19.1712 146.458 19.1722C145.607 19.1712 144.917 19.8419 144.915 20.6709V23.8133C144.901 24.358 145.192 24.8673 145.675 25.1429C146.158 25.4196 146.756 25.4196 147.24 25.1429C147.723 24.8662 148.013 24.3569 147.999 23.8133V20.6704H148ZM139.522 16.5463C139.522 15.7208 138.834 15.0486 137.962 15.0486C137.113 15.0471 136.424 15.7167 136.422 16.5442V16.5453V23.8138C136.422 24.6413 137.11 25.312 137.959 25.312H137.962C138.833 25.312 139.522 24.6423 139.522 23.8128V16.5437V16.5458V16.5463ZM131.029 10.9025C131.028 10.0745 130.338 9.40426 129.489 9.40528H129.488C128.639 9.40374 127.949 10.0734 127.947 10.9014V10.9019V26.7989C127.921 27.3502 128.209 27.8713 128.696 28.1531C129.184 28.4355 129.792 28.4344 130.279 28.1506C130.765 27.8693 131.053 27.3502 131.028 26.8V10.9025H131.029ZM122.533 16.5463C122.532 15.7188 121.842 15.0486 120.993 15.0496C120.144 15.0481 119.454 15.7183 119.452 16.5458V16.5463V23.8133C119.454 24.6408 120.143 25.311 120.993 25.3095C121.842 25.311 122.532 24.6408 122.533 23.8133V16.5442V16.5463ZM114.04 20.6704C114.038 19.8444 113.35 19.1763 112.503 19.1773C111.655 19.1753 110.965 19.8424 110.959 20.6694V23.8138C110.96 24.6413 111.65 25.3115 112.499 25.31C113.349 25.312 114.039 24.6418 114.04 23.8143V23.8138V20.6709V20.6704ZM105.561 16.5463C105.559 15.7152 104.867 15.0435 104.015 15.0445C103.163 15.0435 102.47 15.7152 102.469 16.5463V23.8133C102.47 24.6434 103.162 25.3151 104.014 25.3141H104.015C104.866 25.3156 105.558 24.6439 105.56 23.8138V23.8133V16.5442V16.5463H105.561ZM97.0704 10.9025C97.0704 10.0775 96.3762 9.40733 95.525 9.40733C94.6728 9.40733 93.9786 10.076 93.9786 10.9025V26.7989C93.9802 27.6295 94.6723 28.3017 95.5245 28.3002C96.3767 28.3017 97.0688 27.6295 97.0704 26.7989V10.9025ZM88.5813 16.5463C88.5798 15.7152 87.8877 15.0435 87.0349 15.0445C86.1827 15.0435 85.4906 15.7152 85.4891 16.5463V23.8133C85.4906 24.6434 86.1822 25.3151 87.0339 25.3141H87.0344C87.8866 25.3156 88.5782 24.6439 88.5803 23.8138V23.8133V16.5442V16.5463H88.5813ZM80.0912 20.6709C80.0912 19.8465 79.3971 19.1768 78.5459 19.1768C77.6947 19.1768 77 19.8465 77 20.6699V23.8128C77.0016 24.6434 77.6936 25.3156 78.5459 25.3141C79.3976 25.3156 80.0902 24.6439 80.0917 23.8133V20.6704L80.0912 20.6709Z" fill-rule="evenodd" clip-rule="evenodd" fill="#050038"/>
+                    </svg>
+                </div>
+
+                {{-- Logo 3: Volvo --}}
+                <div class="logo-item" title="Volvo">
+                    <svg width="54" height="64" viewBox="0 0 54 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Volvo logo">
+                        <g clip-path="url(#clip0_volvo)">
+                            <path d="M24.1587 36.6874H30.6311V34.5268H29.9204C29.9204 35.3533 29.3159 35.9626 28.3925 35.9626H27.3961V32.737H28.4705V32.0215H24.1587V32.737H25.245V35.9626H24.1587V36.6852V36.6874Z" fill="#050038"/>
+                            <path d="M33.744 36.6898L36.261 36.6922L38.398 32.7393H39.4701V32.0215H36.2469V32.7393H37.1796L35.6211 35.6154L34.0438 32.7393H35.1749V32.0215H30.4995L30.4971 32.7393H31.5691L33.744 36.6898Z" fill="#050038"/>
+                            <path d="M11.2706 32.0215H6.59513L6.59277 32.7393H7.66246L9.83959 36.6898L12.3568 36.6922L14.4938 32.7393H15.5658V32.0215H12.3426V32.7393H13.273L11.7168 35.6154L10.1395 32.7393H11.2706V32.0215Z" fill="#050038"/>
+                            <path d="M16.1922 34.3587C16.1922 35.7331 17.2997 36.8263 19.5193 36.8263C21.739 36.8263 22.8346 35.7331 22.8346 34.3587C22.8346 33.0034 21.6729 31.9219 19.5052 31.9219C17.3398 31.9219 16.1899 33.0034 16.1899 34.3587H16.1922ZM20.6622 34.3706C20.648 35.2182 20.2962 36.1015 19.4839 36.0872C18.6929 36.0731 18.3457 35.1994 18.36 34.3304C18.3765 33.4308 18.8062 32.6467 19.5477 32.6586C20.2891 32.6727 20.6787 33.4709 20.6646 34.3706H20.6622Z" fill="#050038"/>
+                            <path d="M40.0884 34.3587C40.0884 35.7331 41.1959 36.8263 43.4155 36.8263C45.6352 36.8263 46.7308 35.7331 46.7308 34.3587C46.7308 33.0034 45.569 31.9219 43.4037 31.9219C41.2384 31.9219 40.0884 33.0034 40.0884 34.3587ZM43.4438 32.6586C44.1829 32.6727 44.5749 33.4709 44.5583 34.3706C44.5418 35.2182 44.1924 36.1015 43.3801 36.0872C42.5891 36.0731 42.2419 35.1994 42.256 34.3304C42.2726 33.4308 42.7024 32.6467 43.4438 32.6586Z" fill="#050038"/>
+                            <path d="M48.6055 19.5158L45.897 22.2242C48.2182 25.8063 49.5689 30.0779 49.5689 34.666C49.5689 47.3156 39.3136 57.5708 26.6641 57.5708C14.0145 57.5708 3.75923 47.3156 3.75923 34.666C3.75923 22.0165 14.0145 11.7612 26.6641 11.7612C31.2616 11.7612 35.5427 13.1166 39.1319 15.4496L41.8403 12.7411C37.5333 9.75405 32.3028 8.00195 26.6641 8.00195C11.9388 8.00195 0 19.9384 0 34.666C0 49.3912 11.9365 61.3301 26.6641 61.3301C41.3893 61.3301 53.3281 49.3936 53.3281 34.666C53.3281 29.039 51.5831 23.8181 48.6078 19.5158H48.6055Z" fill="#050038"/>
+                            <path d="M40.0742 9.05176V9.8003C41.6916 10.6763 43.2123 11.7106 44.622 12.8724L40.8226 16.6717C42.256 17.7957 43.55 19.0897 44.6764 20.5206L48.471 16.7261C49.6351 18.1381 50.6694 19.6611 51.5455 21.2551H52.2751V9.05176H40.0718H40.0742Z" fill="#050038"/>
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_volvo">
+                                <rect width="53.3281" height="63.9938" fill="white" transform="translate(0 0.00292969)"/>
+                            </clipPath>
+                        </defs>
+                    </svg>
+                </div>
+
+                {{-- Logo 4: Deloitte --}}
+                <div class="logo-item" title="Deloitte">
+                    <svg width="224" height="64" viewBox="0 0 224 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Deloitte logo">
+                        <path d="M154.912 40.4565C154.912 39.0517 156.053 37.9121 157.457 37.9121C158.861 37.9121 160 39.0518 160 40.4565C160 41.8612 158.861 43.0001 157.457 43.0001C156.053 43.0001 154.912 41.8612 154.912 40.4565Z" fill="#050038"/>
+                        <path d="M73.7654 33.7182C73.7654 32.1066 73.454 30.911 72.8312 30.132C72.2075 29.3538 71.263 28.9651 69.993 28.9651H68.642V38.8203H69.6756C71.0862 38.8203 72.1198 38.4021 72.7781 37.5628C73.4356 36.725 73.7654 35.4432 73.7654 33.7182ZM78.5833 33.5503C78.5833 36.4864 77.794 38.7488 76.2156 40.3369C74.6371 41.9257 72.4181 42.7201 69.5578 42.7201H64V25.1264H69.9458C72.7038 25.1264 74.833 25.8486 76.3333 27.2924C77.8331 28.7369 78.5833 30.8219 78.5833 33.5503ZM93.9784 42.7199H98.401V25.0525H93.9784V42.7199ZM104.614 36.1299C104.614 37.2563 104.761 38.1155 105.055 38.706C105.349 39.2972 105.843 39.5924 106.536 39.5924C107.222 39.5924 107.707 39.2972 107.99 38.706C108.273 38.1155 108.413 37.2564 108.413 36.1299C108.413 35.0093 108.271 34.1642 107.984 33.5936C107.697 33.0215 107.207 32.7351 106.513 32.7351C105.834 32.7351 105.349 33.02 105.055 33.5869C104.761 34.1546 104.614 35.002 104.614 36.1299ZM112.915 36.1299C112.915 38.276 112.352 39.9502 111.224 41.1502C110.097 42.351 108.519 42.9518 106.491 42.9518C104.546 42.9518 102.998 42.3378 101.848 41.1097C100.698 39.8817 100.123 38.2222 100.123 36.1299C100.123 33.9904 100.686 32.328 101.814 31.1426C102.942 29.9573 104.523 29.3646 106.56 29.3646C107.818 29.3646 108.931 29.6392 109.895 30.1877C110.861 30.7363 111.606 31.5218 112.129 32.5452C112.653 33.567 112.915 34.7627 112.915 36.1299ZM114.671 42.72H119.094V35.9584V29.5966H114.671V42.72ZM114.671 28.0093H119.094V25.0518H114.671V28.0093ZM128.056 39.3727C128.653 39.3727 129.364 39.221 130.194 38.9199V42.2219C129.597 42.484 129.03 42.6718 128.492 42.783C127.953 42.8956 127.32 42.9516 126.597 42.9516C125.112 42.9516 124.041 42.5783 123.384 41.8332C122.729 41.0881 122.401 39.944 122.401 38.4002V32.9904H120.852V29.5978H122.401V26.2465L126.858 25.4712V29.5978H129.68V32.9904H126.858V38.0983C126.858 38.9479 127.258 39.3727 128.056 39.3727ZM138.293 39.3727C138.89 39.3727 139.601 39.221 140.431 38.9199V42.2219C139.835 42.484 139.267 42.6718 138.729 42.783C138.189 42.8956 137.559 42.9516 136.834 42.9516C135.349 42.9516 134.278 42.5783 133.622 41.8332C132.966 41.0881 132.638 39.944 132.638 38.4002V32.9904H131.088V29.5978H132.638V26.1957L137.094 25.4712V29.5978H139.918V32.9904H137.094V38.0983C137.094 38.9479 137.494 39.3727 138.293 39.3727ZM146.012 34.5312C146.072 33.8126 146.278 33.2862 146.628 32.9497C146.98 32.614 147.414 32.4462 147.934 32.4462C148.501 32.4462 148.952 32.6346 149.286 33.0145C149.622 33.3922 149.797 33.898 149.812 34.5312H146.012ZM152.249 30.9118C151.198 29.8811 149.706 29.365 147.777 29.365C145.748 29.365 144.188 29.9577 143.093 31.143C142 32.3284 141.453 34.0291 141.453 36.2451C141.453 38.3912 142.044 40.0462 143.224 41.208C144.404 42.3698 146.061 42.9514 148.196 42.9514C149.22 42.9514 150.102 42.8815 150.842 42.7424C151.576 42.6047 152.288 42.3558 152.977 41.9966L152.298 39.0391C151.796 39.2438 151.319 39.4014 150.869 39.5052C150.218 39.6561 149.504 39.7319 148.726 39.7319C147.874 39.7319 147.201 39.5236 146.707 39.1069C146.214 38.6894 145.951 38.1137 145.921 37.3804H153.827V35.3653C153.827 33.4268 153.301 31.9418 152.249 30.9118ZM84.4531 34.5312C84.5135 33.8126 84.719 33.2862 85.0693 32.9497C85.4205 32.614 85.8556 32.4462 86.3761 32.4462C86.9415 32.4462 87.3922 32.6346 87.7271 33.0145C88.0636 33.3922 88.238 33.898 88.2535 34.5312H84.4531ZM90.6913 30.9118C89.6393 29.8811 88.1484 29.365 86.2179 29.365C84.1889 29.365 82.6288 29.9577 81.5354 31.143C80.4421 32.3284 79.8944 34.0291 79.8944 36.2451C79.8944 38.3912 80.4848 40.0462 81.6658 41.208C82.8452 42.3698 84.5025 42.9514 86.6368 42.9514C87.6616 42.9514 88.5437 42.8815 89.2828 42.7424C90.0176 42.6047 90.7288 42.3558 91.4193 41.9966L90.739 39.0391C90.2376 39.2438 89.7605 39.4014 89.3107 39.5052C88.6584 39.6561 87.9451 39.7319 87.1674 39.7319C86.3156 39.7319 85.642 39.5236 85.1487 39.1069C84.6546 38.6894 84.3926 38.1137 84.3624 37.3804H92.2681V35.3653C92.2681 33.4268 91.7424 31.9418 90.6911 30.9118" fill="#050038"/>
+                    </svg>
+                </div>
+
+                {{-- Logo 5: Okta --}}
+                <div class="logo-item" title="Okta">
+                    <svg width="73" height="64" viewBox="0 0 73 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Okta logo">
+                        <g clip-path="url(#clip0_okta)">
+                            <path d="M20.0771 32.9162C20.0771 29.2245 20.0828 25.5299 20.0686 21.841C20.0686 21.3278 20.4078 21.0086 20.921 21.0086C21.8703 21.0029 22.8253 21 23.7746 21.0086C24.3134 21.0143 24.627 21.3421 24.6213 21.8467C24.607 25.1137 24.6127 28.3863 24.6127 31.6533V31.8329C24.6184 32.1949 24.7781 32.4601 25.1116 32.6026C25.4337 32.7394 25.7359 32.6682 25.9982 32.3888C26.956 31.3625 27.911 30.3334 28.8632 29.3043C29.4476 28.6714 30.0406 28.0471 30.6193 27.4114C30.8388 27.1719 31.0925 27.0579 31.4203 27.0636C32.6148 27.0721 33.815 27.0721 35.0094 27.0636C35.3629 27.0636 35.6423 27.1719 35.7906 27.4997C35.9416 27.839 35.8704 28.1412 35.6167 28.4177C33.8235 30.4018 32.0361 32.3888 30.2458 34.3729C30.1033 34.5326 29.9636 34.6979 29.8524 34.8804C29.6529 35.2025 29.6529 35.5189 29.8382 35.8468C30.0377 36.2003 30.3199 36.4853 30.5993 36.7733C32.7687 39.0026 34.9439 41.2319 37.119 43.4555C37.3813 43.7263 37.4582 44.0228 37.3271 44.3706C37.2017 44.6955 36.9537 44.8438 36.546 44.8438C35.2175 44.8438 33.8862 44.8381 32.5578 44.8438C32.2585 44.8438 32.0275 44.7497 31.8137 44.5216C29.8838 42.4948 27.9395 40.4793 26.001 38.4609C25.7245 38.1701 25.4166 38.096 25.0973 38.23C24.7752 38.3583 24.607 38.632 24.607 39.0282V43.9971C24.607 44.533 24.3362 44.8096 23.8059 44.8124H20.8868C20.3024 44.8124 20.0743 44.5815 20.0743 44.0057L20.0771 32.9162ZM38.1909 29.2016C38.1909 26.7585 38.1994 24.3126 38.1823 21.8695C38.1766 21.3164 38.4988 21 39.0604 21C39.984 21.0057 40.902 21 41.8228 21C42.3616 21 42.6694 21.3022 42.6694 21.8381C42.6751 23.2635 42.6751 24.6917 42.678 26.1171C42.678 26.7329 42.9944 27.0522 43.6045 27.0522H47.4388C47.8436 27.0522 48.1087 27.2717 48.1885 27.6679C48.2284 27.8589 48.2142 28.0499 48.2199 28.2466V30.6099C48.2199 31.2285 47.9434 31.5051 47.3247 31.5051C46.0989 31.5051 44.8731 31.4994 43.6473 31.4994C43.0201 31.4994 42.6979 31.8158 42.6922 32.4344C42.6865 33.6916 42.6666 34.9431 42.6837 36.2003C42.7094 38.116 44.1775 39.8806 46.0847 40.331C46.6463 40.465 47.2164 40.4878 47.7866 40.408C48.2512 40.3424 48.5876 40.5904 48.6418 41.058C48.7587 42.0529 48.8641 43.0507 48.9668 44.0456C49.0067 44.4247 48.7302 44.7725 48.3396 44.8352C47.2877 45.0148 46.2357 44.9521 45.2009 44.7183C41.5063 43.8916 38.7924 40.9382 38.2622 37.1952C38.208 36.8246 38.1909 36.454 38.1909 36.0862V29.2016ZM70.9946 40.8755C70.9946 40.5363 70.7352 40.2997 70.396 40.2826C70.165 40.274 69.937 40.2655 69.7061 40.2455C68.5259 40.1571 67.9186 39.6041 67.7048 38.441C67.5395 37.5544 67.5452 36.6535 67.5395 35.7527C67.5309 33.1671 67.5338 30.5814 67.5338 27.9958C67.5338 27.9188 67.5338 27.8475 67.5281 27.7734C67.4967 27.3544 67.1945 27.055 66.7698 27.055C65.7749 27.0493 64.7771 27.0493 63.7822 27.055C63.3318 27.055 63.0125 27.3772 62.9925 27.8219C62.9868 27.9302 62.9925 28.0414 62.9925 28.1697C62.907 28.1241 62.8414 28.0927 62.7787 28.0613C60.9827 27.1177 59.0784 26.8127 57.0772 27.1462C51.9829 28.0015 48.6617 33.1043 49.9275 38.1103C51.5353 44.4618 59.1497 46.9904 64.244 42.8568C64.3637 42.7599 64.4122 42.7627 64.5063 42.8939C65.0308 43.6436 65.7236 44.1853 66.5845 44.5131C67.5338 44.8751 68.523 44.9236 69.5265 44.8523C69.8828 44.8267 70.2363 44.7754 70.5613 44.6129C70.7922 44.496 70.9804 44.3221 70.9861 44.057C71.006 42.9965 71.0003 41.936 70.9946 40.8755ZM58.5995 40.4165C56.1222 40.408 54.1523 38.3925 54.1609 35.8667C54.1694 33.4778 56.1935 31.4937 58.6223 31.4994C61.1139 31.5051 63.0809 33.5063 63.0752 36.0378C63.0667 38.4239 61.0284 40.4194 58.5995 40.4165ZM8.95061 27.018C4.21835 27.0265 0.107548 30.6812 0.00207018 35.7584C-0.106259 41.0095 4.053 44.7668 8.6969 44.8837C13.6629 45.0091 17.7766 41.0893 17.8621 36.1376C17.9448 31.0974 13.9965 27.075 8.95061 27.018ZM8.91926 40.4165C6.47615 40.4165 4.47207 38.4096 4.46636 35.958C4.46066 33.5034 6.4619 31.4994 8.92781 31.4908C11.388 31.4851 13.3807 33.4835 13.3807 35.9523C13.3807 38.421 11.388 40.4165 8.91926 40.4165Z" fill="#050038"/>
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_okta">
+                                <rect width="73" height="64" fill="white"/>
+                            </clipPath>
+                        </defs>
+                    </svg>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    {{-- ==========================================
+         SECTION 2: "Growth is a goal. Getting there takes a plan."
+         ========================================== --}}
+    <section class="services-plan-section" id="growth-plan">
+        <div class="plan-section-card">
+            
+            <h2 class="plan-section-title">
+                Growth is a goal.<br>
+                Getting there takes a plan.
+            </h2>
+
+            <div class="plan-cards-grid">
+                
+                {{-- Column 1: Market Entry & Expansion (Tall 805px Card with 3D Illustration) --}}
+                <div class="plan-col-tall">
+                    <div class="plan-card plan-card-market-entry">
+                        <div class="plan-card-body">
+                            <h3 class="plan-card-title">Market Entry &amp; Expansion</h3>
+                            <p class="plan-card-desc">
+                                Build practical strategies for entering and developing new African markets.
+                            </p>
+                            <a href="{{ url('contact') }}" class="plan-explore-btn" aria-label="Explore Market Entry & Expansion">
+                                Explore <span class="btn-arrow">→</span>
+                            </a>
+                        </div>
+                        <div class="plan-card-illustration">
+                            <img src="{{ asset('images/services/lightbulb-road.png') }}" 
+                                 alt="3D roadmap pointing upward to an illuminated lightbulb" 
+                                 loading="lazy">
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Column 2: Distributor (Top, 332px) & Operations (Bottom, 449px) --}}
+                <div class="plan-col-stacked">
+                    {{-- Distributor Card --}}
+                    <div class="plan-card plan-card-distributor">
+                        <h3 class="plan-card-title">Distributor &amp; Partner Development</h3>
+                        <p class="plan-card-desc">
+                            Find, assess and verify the right local commercial relationships.
+                        </p>
+                        <a href="{{ url('contact') }}" class="plan-explore-btn" aria-label="Explore Distributor & Partner Development">
+                            Explore <span class="btn-arrow">→</span>
+                        </a>
+                    </div>
+
+                    {{-- Operations Card --}}
+                    <div class="plan-card plan-card-operations">
+                        <h3 class="plan-card-title">Operations &amp; Market Support</h3>
+                        <p class="plan-card-desc">
+                            Build the local capabilities and relationships required to operate effectively.
+                        </p>
+                        <a href="{{ url('contact') }}" class="plan-explore-btn" aria-label="Explore Operations & Market Support">
+                            Explore <span class="btn-arrow">→</span>
+                        </a>
+                    </div>
+                </div>
+
+                {{-- Column 3: Investment (Top, 449px) & Outbound Sales (Bottom, 332px) --}}
+                <div class="plan-col-stacked">
+                    {{-- Investment Card --}}
+                    <div class="plan-card plan-card-investment">
+                        <h3 class="plan-card-title">Investment &amp; Growth Readiness</h3>
+                        <p class="plan-card-desc">
+                            Strengthen businesses preparing for investment, partnerships or significant expansion.
+                        </p>
+                        <a href="{{ url('contact') }}" class="plan-explore-btn" aria-label="Explore Investment & Growth Readiness">
+                            Explore <span class="btn-arrow">→</span>
+                        </a>
+                    </div>
+
+                    {{-- Outbound Sales Card --}}
+                    <div class="plan-card plan-card-outbound">
+                        <h3 class="plan-card-title">Outbound Sales Demand Testing</h3>
+                        <p class="plan-card-desc">
+                            Generate opportunities, develop relationships and build commercial pipelines.
+                        </p>
+                        <a href="{{ url('contact') }}" class="plan-explore-btn" aria-label="Explore Outbound Sales Demand Testing">
+                            Explore <span class="btn-arrow">→</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            {{-- Center Aligned Divider Line --}}
+            <div class="plan-divider" role="separator" aria-hidden="true"></div>
+
+            {{-- Bottom Metrics Grid (3 Stats) --}}
+            <div class="plan-metrics-grid">
+                
+                {{-- Metric 1: 5,000+ --}}
+                <div class="plan-metric-item">
+                    <div class="plan-metric-number">5,000+</div>
+                    <div class="plan-metric-label">Loved by 5,000+ Expert Network</div>
+                </div>
+
+                {{-- Metric 2: 25,000+ --}}
+                <div class="plan-metric-item">
+                    <div class="plan-metric-number">25,000+</div>
+                    <div class="plan-metric-label">Trusted by 25,000+ customers</div>
+                </div>
+
+                {{-- Metric 3: 24 hrs --}}
+                <div class="plan-metric-item">
+                    <div class="plan-metric-number">24 hrs</div>
+                    <div class="plan-metric-label">Available 24/7</div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    {{-- ==========================================
+         SECTION 3: GLOBAL REACH. LOCAL APPROACH.
+         ========================================== --}}
+    <section class="services-reach-section" id="global-reach">
+        <div class="reach-container">
+            <div class="reach-grid">
+                
+                {{-- Left Column: Executive Photo with Top-Right Arch --}}
+                <div class="reach-media">
+                    <img src="{{ asset('images/services/global-reach-executive.jpg') }}" 
+                         alt="P23 strategic leadership consulting and advisory" 
+                         loading="lazy">
+                </div>
+
+                {{-- Right Column: Typography & Contact CTA --}}
+                <div class="reach-content">
+                    <h2 class="reach-title">
+                        Global Reach.<br>
+                        Local Approach.
+                    </h2>
+                    
+                    <div class="reach-description">
+                        <p>
+                            We partner with entrepreneurs and businesses to understand their unique needs, align them with their goals, and set a clear path to execution and results.
+                        </p>
+                        <p>
+                            Our consulting services come with personalised and hands-on support, and our team is committed to excellence, intergrity and collaboration. Let's help you thrive in the dynamic and unpredictable global market.
+                        </p>
+                    </div>
+
+                    <a href="{{ url('contact') }}" class="reach-contact-btn" id="reach-contact-btn">
+                        Contact Us <span class="btn-arrow">→</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    {{-- ==========================================
+         SECTION 4: 57% OPERATIONAL INEFFICIENCIES STAT
+         ========================================== --}}
+    <section class="services-inefficiency-section" id="inefficiencies" aria-label="Operational Inefficiencies Growth Impact">
+        <div class="inefficiency-card">
+            
+            <div class="inefficiency-content-wrapper">
+                
+                {{-- Architectural Left Bracket Accent --}}
+                <div class="inefficiency-bracket" aria-hidden="true"></div>
+
+                {{-- Headline Number & Callout Statement --}}
+                <div class="inefficiency-hero-stat">
+                    <div class="inefficiency-percent">57%</div>
+                    <p class="inefficiency-statement">
+                        of organizations say operational inefficiencies hold back their growth
+                    </p>
+                </div>
+
+                {{-- Centered 3-Column Breakdown Box --}}
+                <div class="inefficiency-breakdown-box">
+                    
+                    {{-- Item 1: Start-ups --}}
+                    <div class="breakdown-item">
+                        <div class="breakdown-number">68%</div>
+                        <div class="breakdown-label">Start-ups</div>
+                    </div>
+
+                    {{-- Item 2: MSMEs --}}
+                    <div class="breakdown-item">
+                        <div class="breakdown-number">59%</div>
+                        <div class="breakdown-label">MSMEs</div>
+                    </div>
+
+                    {{-- Item 3: Enterprises --}}
+                    <div class="breakdown-item">
+                        <div class="breakdown-number">46%</div>
+                        <div class="breakdown-label">Enterprises</div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    {{-- ==========================================
+         SUBSEQUENT SECTIONS CONTAINER (Ready for Section 5+)
+         ========================================== --}}
+    <div id="services-subsequent-sections">
+        {{-- Additional sections will be mounted here if any --}}
+    </div>
+</div>
 @endsection
+
+@section('footer')
+    @include('layouts.includes.footer3')
+@endsection
+
