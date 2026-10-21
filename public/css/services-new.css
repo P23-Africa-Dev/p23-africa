@@ -79,7 +79,7 @@
     font-family: var(--font-sans);
     font-weight: 400;
     font-size: 14px;
-    line-height: 1.5;
+    line-height: 2.0;
     letter-spacing: -0.04em;
     color: var(--color-text-dark);
     margin: 0 0 clamp(24px, 3vw, 40px) 0;
@@ -496,7 +496,7 @@
     font-family: var(--font-sans);
     font-weight: 400;
     font-size: 14px;
-    line-height: 1.5;
+    line-height: 2.0;
     letter-spacing: -0.04em;
     margin: 0 0 28px 0;
 }
@@ -764,7 +764,7 @@
     font-family: var(--font-sans);
     font-weight: 500;
     font-size: 14px;
-    line-height: 1.5;
+    line-height: 2.0;
     letter-spacing: -0.03em;
     color: rgba(0, 0, 0, 0.45);
     margin: 0 0 clamp(24px, 3vw, 36px) 0;
