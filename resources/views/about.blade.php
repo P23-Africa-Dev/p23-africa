@@ -10,82 +10,9 @@
 @endsection
 
 @section('navbar')
-<header class="ab-navbar-wrapper" id="navbar">
-    <div class="ab-navbar-container">
-        {{-- Left: Logo + Nav Links (Figma Frame 55: gap 106px) --}}
-        <div class="ab-nav-left">
-            <a href="{{ route('homepage') }}" class="ab-nav-logo" aria-label="P23 Africa Homepage">
-                <img src="{{ asset('images/p23-logo-white.png') }}" alt="P23 Africa" width="62" height="30">
-            </a>
-
-            <nav class="ab-nav-links" id="abNavLinks" aria-label="Main Navigation">
-                <a href="{{ url('about') }}" class="ab-nav-link active">Who We Are</a>
-                <a href="{{ url('services') }}" class="ab-nav-link">What We Do</a>
-                <a href="{{ route('event') }}" class="ab-nav-link">Events</a>
-                <a href="{{ route('resource-hub') }}" class="ab-nav-link">Resource Hub</a>
-                <a href="{{ route('brn') }}" class="ab-nav-link">Business Network</a>
-            </nav>
-        </div>
-
-        {{-- Right: Book Consultation + Social Media (Figma Group 427318900: gap 36px) --}}
-        <div class="ab-nav-right">
-            <a href="{{ url('book-consultation') }}" class="ab-nav-consult-btn">Book Consultation</a>
-
-            <div class="ab-nav-socials" aria-label="Social Media">
-                <a href="https://linkedin.com/company/p23-africa/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                    <img src="{{ asset('images/about/icon-linkedin.svg') }}" alt="LinkedIn" width="20" height="20">
-                </a>
-                <a href="https://facebook.com/p23africa" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                    <img src="{{ asset('images/about/icon-facebook.svg') }}" alt="Facebook" width="20" height="20">
-                </a>
-                <a href="https://instagram.com/p23africa" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                    <img src="{{ asset('images/about/icon-instagram.svg') }}" alt="Instagram" width="20" height="20">
-                </a>
-                <a href="https://youtube.com/@p23africa" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-                    <img src="{{ asset('images/about/icon-youtube.svg') }}" alt="YouTube" width="20" height="20">
-                </a>
-            </div>
-        </div>
-
-        {{-- Mobile Hamburger Toggle --}}
-        <button type="button" class="ab-nav-toggle" id="abMenuToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="abMobileDrawer">
-            <img src="{{ asset('images/hamburger.png') }}" alt="" width="26" height="26">
-        </button>
-    </div>
-
-    {{-- Mobile Drawer --}}
-    <div class="ab-mobile-drawer" id="abMobileDrawer" aria-hidden="true">
-        <div class="ab-mobile-drawer-header">
-            <img src="{{ asset('images/p23-logo-white.png') }}" alt="P23 Africa" width="62" height="30">
-            <button type="button" class="ab-mobile-drawer-close" id="abMenuClose" aria-label="Close navigation menu">&times;</button>
-        </div>
-        <nav class="ab-mobile-links">
-            <a href="{{ url('about') }}" class="ab-mobile-link active">Who We Are</a>
-            <a href="{{ url('services') }}" class="ab-mobile-link">What We Do</a>
-            <a href="{{ route('event') }}" class="ab-mobile-link">Events</a>
-            <a href="{{ route('resource-hub') }}" class="ab-mobile-link">Resource Hub</a>
-            <a href="{{ route('brn') }}" class="ab-mobile-link">Business Network</a>
-        </nav>
-        <div class="ab-mobile-cta">
-            <a href="{{ url('book-consultation') }}" class="ab-nav-consult-btn">Book Consultation</a>
-        </div>
-        <div class="ab-mobile-socials">
-            <a href="https://linkedin.com/company/p23-africa/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                <img src="{{ asset('images/about/icon-linkedin.svg') }}" alt="LinkedIn" width="22" height="22">
-            </a>
-            <a href="https://facebook.com/p23africa" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                <img src="{{ asset('images/about/icon-facebook.svg') }}" alt="Facebook" width="22" height="22">
-            </a>
-            <a href="https://instagram.com/p23africa" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                <img src="{{ asset('images/about/icon-instagram.svg') }}" alt="Instagram" width="22" height="22">
-            </a>
-            <a href="https://youtube.com/@p23africa" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-                <img src="{{ asset('images/about/icon-youtube.svg') }}" alt="YouTube" width="22" height="22">
-            </a>
-        </div>
-    </div>
-</header>
+    @include('layouts.includes.navbar-v2', ['theme' => 'light', 'active' => 'who-we-are'])
 @endsection
+
 
 @section('content')
 <div class="about-new">

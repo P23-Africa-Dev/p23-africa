@@ -16,6 +16,7 @@
 
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/navbar-v2.css') }}">
     <script src="https://kit.fontawesome.com/3df60fe6e2.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
         crossorigin="anonymous">
