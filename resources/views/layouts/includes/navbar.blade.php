@@ -5,10 +5,10 @@
                 <a href="{{ route('homepage') }}" class="navbar-brand logo">
                     <img src="{{ asset('images/logo.png') }}" loading='lazy' alt="">
                 </a>
-                <div class="navbar-toggler" id="menuToggle">
+                <button type="button" class="navbar-toggler" id="menuToggle" aria-label="Open navigation menu" aria-controls="sidebar" aria-expanded="false">
                     {{-- <span class="fa-solid fa-bars-staggered"></span> --}}
                     <img src="{{ asset('images/hamburger.png') }}" loading='lazy' alt="">
-                </div>
+                </button>
 
                 <div class="collapse navbar-collapse main-nav">
                     <ul class="navbar-nav me-auto ms-auto mb-2 mb-lg-0" id="nav">
@@ -45,7 +45,7 @@
                                             <p>Insights on how we bring about growth in Africa</p>
                                         </div>
                                         <div class="col-md-3 line">
-                                            <a href="{{ url('services') }}#market" class="d-block mb-3"><b>Market
+                                            <a href="{{ url('market-entry') }}" class="d-block mb-3"><b>Market
                                                     Entry</b></a>
                                             <p>Wanna know how we have become great</p>
                                         </div>
@@ -112,9 +112,7 @@
         <div class="sidebar" id="sidebar">
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <span class="fw-bold"> </span>
-                <span class="close-btn" id="closeBtn">
-                    {{-- &times; --}}
-                </span>
+                <button type="button" class="close-btn" id="closeBtn" aria-label="Close navigation menu">&times;</button>
             </div>
             <div id="mainMenu" class="main-menu">
                 <ul class="navbar-nav me-auto ms-auto mb-2 mb-lg-0" id="nav">

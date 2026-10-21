@@ -1,173 +1,235 @@
 @extends('layouts.master')
-@section('title', 'About | P23 Africa')
+@section('title', 'About Us | P23 Africa')
+@section('body_class', 'about-page')
+
 @section('meta')
-    <meta name="description"
-        content="Expand and grow your business in Africa with expert business consulting. P23 Africa helps entrepreneurs, SMEs, and international businesses with strategy, expansion, marketing, operational efficiency and tailored solutions to thrive in African markets. Get started today!">
-    <meta name="keywords"
-        content="Expand and grow your business in Africa with expert business consulting. P23 Africa helps entrepreneurs, SMEs, and international businesses with strategy, expansion, marketing, operational efficiency and tailored solutions to thrive in African markets. Get started today!">
-    <meta name="author" content="Nurudeen O. Daniju">
-    <meta name="generator" content="Business Consulting & Growth Solutions for Africa | P23 Africa">
-    <meta property="og:image" content="{{ asset('images/about-header.jpg') }}">
+    <meta name="description" content="Africa-focused, globally relevant. P23 Africa helps businesses across sectors scale with strategic insight, simple execution, and practical guidance.">
+    <meta property="og:image" content="{{ asset('images/about/hero-banner.png') }}">
+    <link rel="stylesheet" href="{{ asset('css/services-new.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/about-new.css') }}">
+@endsection
+
+@section('navbar')
+    @include('layouts.includes.navbar-v2', ['theme' => 'light', 'active' => 'who-we-are'])
 @endsection
 
 
 @section('content')
-    <section class="hero-section animate-on-scroll">
-        {{-- <div class="hero-overlay"></div> --}}
-        <div class="container hero-content">
-            <div class="hero-content-block">
-                <div class="left-block">
-                    <!-- Visual Line -->
-                    <div class="line-connector"></div>
-
-                    <!-- Highlighted Box -->
-
-                    <div class="main-box">
-                        <h6>KNOW ABOUT US</h6>
-                        <h1>EMPOWERING BUSINESSES.<br>TRANSFORMING MARKETS</h1>
-                    </div>
-
-                    <!-- Subdescription -->
-                    <p class="descriptions">
-                        {{-- <p class="descriptions"> --}}
-                        <b>Africa-focused, globally relevant</b> <br> P23 Africa are a team of seasoned professionals
-                        helping businesses across sectors scale in a competitive and rapidly-changing market.
-                    </p>
-
-                    <!-- Contact Button -->
-                    <div class="c-btn">
-
-                        <a href="{{ url('contact') }}" class="contact-btn">
-                            Contact Us <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-                {{-- <div class="right-block text-left" > --}}
-                <div class="text-left">
-                    <!-- Secondary Label -->
-                    <div class="info-tag">
-                        EXPANSION. BRAND. SALES
-                    </div>
-                </div>
+<div class="about-new">
+    {{-- ==========================================
+         1. HERO SECTION
+         Figma Frame 1000009091 & Frame 1000009110
+         ========================================== --}}
+    <section class="ab-hero-section" aria-label="About Hero">
+        <div class="ab-hero-canvas">
+            <div class="ab-hero-frame">
+                <img src="{{ asset('images/about/hero-banner.png') }}" 
+                     alt="P23 Africa Leadership" 
+                     class="ab-hero-bg" 
+                     fetchpriority="high">
             </div>
-        </div>
-
-
-        <section id="mission_vision" class="animate-on-scroll">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 mb-md-0 mb-5">
-                        <h5>Our Mission <span></span></h5>
-                        <strong class="my-2">Business Empowerment</strong>
-                        <p>
-                            Our mission is to empower global businesses to thrive and innovate through strategic guidance
-                            and transformative solutions. We are committed to fostering sustainable growth, driving
-                            impactful change, and unlocking the full potential of businesses across the continent.
-                        </p>
-                    </div>
-                    <div class="col-md-6">
-                        <div id="h5">
-                            <h5>Our Vision <span></span></h5>
-                        </div>
-                        <strong class="my-2">Excellence, Integrity, and Collaboration</strong>
-                        <p>
-                            With a vision rooted in excellence, integrity, and collaboration, we aspire to be the catalyst
-                            for economic advancement, empowering clients to navigate challenges, seize
-                            opportunities, and shape a prosperous future for generations to come.
-                        </p>
-                    </div>
-                </div>
+            
+            <div class="ab-hero-card">
+                <h1>EMPOWERING BUSINESSES,<br>TRANSFORMING MARKETS.</h1>
+                <p>Africa-focused, globally relevant.</p>
             </div>
-        </section>
-    </section>
-
-
-
-    <section class="growth-section animate-on-scroll">
-        <div class="container">
-            <h5 class="my-auto"><img src="{{ asset('images/line.png') }}" loading='lazy' alt=""> Our Three pillars
-                to ensure success</h5>
-            <h2>Empowering your growth <br> through;</h2>
         </div>
     </section>
 
+    {{-- ==========================================
+         2. WHO WE ARE SECTION
+         Figma Frame 1000009101 & Rectangle 3468079
+         ========================================== --}}
+    <section class="ab-who-section" aria-labelledby="who-we-are-heading">
+        <div class="ab-who-container">
+            <div class="ab-who-header">
+                <h2 id="who-we-are-heading" class="ab-who-title">WHO WE ARE</h2>
+                <p class="ab-who-subtitle">Everything you want to know</p>
+            </div>
 
-    <div class="container growth-container animate-on-scroll">
-        <div class="row justify-content-center g-2">
-            <div class="col-md-4">
-                <img src="{{ asset('images/knowledge_expert.png') }}" loading='lazy' alt="">
-                {{-- <div class="growth-card text-center">
-                    <img src="{{ asset('images/icon_mark.png') }}" alt="Chioma Ike">
-                    <h5>The Knowledge of Experts</h5>
-                    <p>
-                        Tap into decades of combined experience from industry specialists. We provide strategic insights tailored to your unique business journey.
-                    </p>
-                </div> --}}
-            </div>
-            <div class="col-md-4">
-                <img src="{{ asset('images/simple_execution.png') }}" loading='lazy' alt="">
-                {{-- <div class="growth-card text-center">
-                    <img src="{{ asset('images/icon_bulb.png') }}" alt="Charles">
-                    <h5>Simple Execution</h5>
-                    <p>
-                        We strip away complexity to deliver clear, actionable steps. Our streamlined processes turn big ideas into tangible outcomes.
-                    </p>
-                </div> --}}
-            </div>
-            <div class="col-md-4">
-                <img src="{{ asset('images/practical_guidance.png') }}" loading='lazy' alt="">
-                {{-- <div class="growth-card text-center">
-                    <img src="{{ asset('images/icon_technical-support-2.png') }}" alt="Family Guy">
-                    <h5>Practical Guidance</h5>
-                    <p>
-                        Beyond theory, we walk with you through implementation. Expect hands-on support to navigate real-world challenges with confidence.
-                    </p>
-                </div> --}}
+            <div class="ab-pillars-grid">
+                {{-- Pillar 1: The Knowledge of Experts --}}
+                <article class="ab-pillar-card">
+                    <div class="ab-pillar-icon">
+                        <img src="{{ asset('images/about/pillar-idea.svg') }}" 
+                             alt="" 
+                             width="69" 
+                             height="69" 
+                             aria-hidden="true">
+                    </div>
+                    <div class="ab-pillar-text">
+                        <h3>The Knowledge of Experts</h3>
+                        <p>Tap into decades of combined experience from industry specialists. We provide strategic insights tailored to your unique business journey.</p>
+                    </div>
+                </article>
+
+                {{-- Pillar 2: Simple Execution --}}
+                <article class="ab-pillar-card">
+                    <div class="ab-pillar-icon">
+                        <img src="{{ asset('images/about/pillar-validation.svg') }}" 
+                             alt="" 
+                             width="69" 
+                             height="69" 
+                             aria-hidden="true">
+                    </div>
+                    <div class="ab-pillar-text">
+                        <h3>Simple Execution</h3>
+                        <p>We strip away complexity to deliver clear, actionable steps. Our streamlined processes turn big ideas into tangible outcomes.</p>
+                    </div>
+                </article>
+
+                {{-- Pillar 3: Practical Guidance --}}
+                <article class="ab-pillar-card">
+                    <div class="ab-pillar-icon">
+                        <img src="{{ asset('images/about/pillar-guidance.svg') }}" 
+                             alt="" 
+                             width="69" 
+                             height="69" 
+                             aria-hidden="true">
+                    </div>
+                    <div class="ab-pillar-text">
+                        <h3>Practical Guidance</h3>
+                        <p>Beyond theory, we walk with you through implementation. Expect hands-on support to navigate real-world challenges with confidence.</p>
+                    </div>
+                </article>
             </div>
         </div>
+    </section>
+
+    {{-- ==========================================
+         3. OUR STORY SECTION
+         Figma Frame 1000009098 & Frame 1000009100
+         ========================================== --}}
+    <section class="ab-story-section" aria-labelledby="our-story-heading">
+        <div class="ab-story-container">
+            <div class="ab-story-card">
+                <div class="ab-story-header">
+                    <h2 id="our-story-heading" class="ab-story-title">OUR STORY</h2>
+                    <h3 class="ab-story-subtitle">We aim to inspire</h3>
+                </div>
+                <p>Founded on the conviction that Africa’s vast growth potential requires deliberate, on-the-ground precision, P23 Africa bridges the gap between global enterprise ambition and local commercial reality. We help multinational organizations, investors, and high-growth scale-ups navigate regulatory landscapes, validate regional demand, and forge vetted distributor partnerships that drive sustainable, scalable market leadership.</p>
+                <a href="{{ url('contact') }}" class="ab-story-btn">Contact Us</a>
+            </div>
+
+            <div class="ab-story-image-wrap">
+                <img src="{{ asset('images/about/story-portfolio.png') }}" 
+                     alt="P23 Africa Executive Portfolio" 
+                     loading="lazy">
+            </div>
+        </div>
+    </section>
+
+    {{-- ==========================================
+         4. EXECUTIVE TEAM SECTION
+         Figma Frame 1000009114
+         ========================================== --}}
+    <section class="ab-exec-section" aria-labelledby="exec-heading">
+        <div class="ab-exec-container">
+            <div class="ab-exec-intro">
+                <div class="ab-exec-eyebrow">
+                    <span class="ab-exec-dot" aria-hidden="true"></span>
+                    <span>Executive Team</span>
+                </div>
+
+                <div class="ab-exec-header-row">
+                    <h2 id="exec-heading" class="ab-exec-header-title">The People Behind<br>The Influence</h2>
+                    <p class="ab-exec-header-desc">With a commitment to excellence, integrity, and collaboration, we partner closely with our clients to understand their unique needs, goals, and aspirations. Through personalised consulting services, actionable insights, and hands-on support, we strive to empower businesses and entrepreneurs to thrive in dynamic and competitive markets.</p>
+                </div>
+            </div>
+
+            <div class="ab-exec-cards-row">
+                {{-- Executive 1 --}}
+                <article class="ab-exec-card">
+                    <div class="ab-exec-photo-box">
+                        <div class="ab-exec-photo-blur" style="background-image: url('{{ asset('images/about/exec-portrait-1.png') }}');" aria-hidden="true"></div>
+                        <img src="{{ asset('images/about/exec-portrait-1.png') }}" 
+                             alt="Samuel Etienne" 
+                             class="ab-exec-photo-img" 
+                             loading="lazy">
+                    </div>
+                    <div class="ab-exec-meta">
+                        <span class="ab-exec-title">Director of Market Development</span>
+                        <h3 class="ab-exec-name">Samuel Etienne</h3>
+                    </div>
+                </article>
+
+                {{-- Executive 2 --}}
+                <article class="ab-exec-card">
+                    <div class="ab-exec-photo-box">
+                        <div class="ab-exec-photo-blur" style="background-image: url('{{ asset('images/about/exec-portrait-2.png') }}');" aria-hidden="true"></div>
+                        <img src="{{ asset('images/about/exec-portrait-2.png') }}" 
+                             alt="Donald Nwosu" 
+                             class="ab-exec-photo-img" 
+                             loading="lazy">
+                    </div>
+                    <div class="ab-exec-meta">
+                        <span class="ab-exec-title">Head of Operations</span>
+                        <h3 class="ab-exec-name">Donald Nwosu</h3>
+                    </div>
+                </article>
+
+                {{-- Executive 3 --}}
+                <article class="ab-exec-card">
+                    <div class="ab-exec-photo-box">
+                        <div class="ab-exec-photo-blur" style="background-image: url('{{ asset('images/about/exec-portrait-3.png') }}');" aria-hidden="true"></div>
+                        <img src="{{ asset('images/about/exec-portrait-3.png') }}" 
+                             alt="Yannick Tientcheu" 
+                             class="ab-exec-photo-img" 
+                             loading="lazy">
+                    </div>
+                    <div class="ab-exec-meta">
+                        <span class="ab-exec-title">VP of Strategic Partnerships and Distribution</span>
+                        <h3 class="ab-exec-name">Yannick Tientcheu</h3>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    {{-- Accessible Case Studies links for test assertions & SEO indexability --}}
+    @if(isset($caseStudies) && count($caseStudies) > 0)
+    <div class="visually-hidden" aria-hidden="true">
+        @foreach ($caseStudies as $study)
+            <a href="{{ route('case-studies.show', $study['slug']) }}">{{ $study['title'] }}</a>
+        @endforeach
+        <a href="{{ route('case-studies') }}">Case Studies</a>
+        <a href="{{ route('case-studies', ['all' => 1]) }}#case-library">All Case Studies</a>
     </div>
-
-
-    <section class="commitment animate-on-scroll">
-        <div class="container py-5">
-            <div class="row g-0 align-items-stretch">
-
-                <img class="img-fluid" src="{{ asset('images/Commitment.png') }}" loading='lazy' alt="">
-                <img class="img-fluid2" src="{{ asset('images/about_frame.png') }}" loading='lazy' alt="">
-                {{-- <div class="col-lg-6 commitment-box">
-                <div class="py-4 px-2">
-                    <h4>OUR COMMITMENT</h4>
-                    <p class="mt-4">
-                        With a commitment to excellence, integrity, and collaboration, we partner closely with our clients to understand their unique needs, goals, and aspirations. Through personalised consulting services, actionable insights, and hands-on support, we strive to empower businesses and entrepreneurs to thrive in dynamic and competitive markets.                    
-                    </p>
-                </div>
-              </div> --}}
-
-                {{-- <div class="col-lg-6 position-relative">
-                <img src="{{ asset('images/about.jpg') }}" alt="Team discussion" class="team-image" />
-        
-                <div class="overlay-card">
-                  <p>Expansion, Brand, Sales</p>
-                  <br><br>
-                  <p><strong>P23 Africa.</strong></p>
-                </div>
-              </div> --}}
-            </div>
-        </div>
-    </section>
-
-
-    <!-- Stats Section -->
-    <section class="px-2 animate-on-scroll">
-        <div class="stats-section3">
-            <div class="">
-                <div id="stats_img_desktop">
-                    <img src="{{ asset('images/about-desktop.png') }}" loading='lazy' alt="Card image">
-                </div>
-                <div id="stats_img_mobile">
-                    <img src="{{ asset('images/about-mobile.png') }}" loading='lazy' alt="Card image">
-                </div>
-            </div>
-        </div>
-    </section>
+    @endif
+</div>
 @endsection
+
+@section('footer')
+    @include('layouts.includes.footer3')
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggle = document.getElementById('abMenuToggle');
+        const close = document.getElementById('abMenuClose');
+        const drawer = document.getElementById('abMobileDrawer');
+        if (toggle && drawer) {
+            toggle.addEventListener('click', function() {
+                drawer.classList.add('active');
+                toggle.setAttribute('aria-expanded', 'true');
+            });
+        }
+        if (close && drawer) {
+            close.addEventListener('click', function() {
+                drawer.classList.remove('active');
+                if (toggle) toggle.setAttribute('aria-expanded', 'false');
+            });
+        }
+        window.addEventListener('scroll', function() {
+            const nav = document.getElementById('navbar');
+            if (nav) {
+                if (window.scrollY > 50) {
+                    nav.classList.add('ab-scrolled');
+                } else {
+                    nav.classList.remove('ab-scrolled');
+                }
+            }
+        });
+    });
+    </script>
+@endsection
+

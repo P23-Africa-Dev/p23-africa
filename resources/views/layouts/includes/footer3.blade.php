@@ -32,7 +32,7 @@
             <div class="footer3-col">
                 <h3 class="footer3-heading">What We Do</h3>
                 <ul class="footer3-nav-list">
-                    <li><a href="{{ url('services') }}#hero" class="footer3-nav-link">Market Entry &amp; Expansion</a></li>
+                    <li><a href="{{ url('market-entry') }}" class="footer3-nav-link">Market Entry &amp; Expansion</a></li>
                     <li><a href="{{ url('services') }}#growth-plan" class="footer3-nav-link">Verify Distributors</a></li>
                     <li><a href="{{ url('services') }}#growth-plan" class="footer3-nav-link">Sales Demand Testing</a></li>
                     <li><a href="{{ url('services') }}#growth-plan" class="footer3-nav-link">Operations/Market Support</a></li>
@@ -97,8 +97,8 @@
         {{-- Bottom Legal / Copyright Row --}}
         <div class="footer3-bottom">
             <p class="footer3-legal-text">
-                &copy;P23 Africa {{ date('Y') }} &middot; 
-                <a href="{{ url('privacy-policy') }}">Privacy Policy</a> &middot; 
+                &copy;P23 Africa 2025 &bull; 
+                <a href="{{ url('privacy-policy') }}">Privacy Policy</a> &bull; 
                 <a href="{{ url('terms-and-conditions') }}">Terms &amp; Conditions</a>
             </p>
         </div>

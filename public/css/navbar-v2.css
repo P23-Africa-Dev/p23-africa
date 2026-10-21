@@ -1,0 +1,387 @@
+/* ==========================================================================
+   P23 AFRICA - GLOBAL NAVBAR V2
+   Pixel-Perfect Implementation of Figma Frame 410 / Frame 1000009053
+   Supports Light & Dark themes with 100% precision across viewports
+   ========================================================================== */
+
+/* Reset & Container */
+.p23-navbar-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 123px;
+    padding: 19px 10px;
+    z-index: 1050;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease, height 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.p23-navbar-wrapper * {
+    box-sizing: border-box;
+}
+
+.p23-navbar-container {
+    width: 100%;
+    max-width: 1211px;
+    height: 48px;
+    margin: 0 auto;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* ==========================================================================
+   LEFT GROUP (Figma Frame 55: 788.4px × 30px)
+   Logo + 106px gap + 5 Nav Links
+   ========================================================================== */
+.p23-nav-left {
+    display: flex;
+    align-items: center;
+    gap: clamp(20px, 6vw, 106px);
+}
+
+.p23-nav-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.p23-nav-logo img {
+    width: 62px;
+    height: 30px;
+    object-fit: contain;
+    display: block;
+}
+
+/* Nav Links (Figma Frame 54: GT Walsheim Trial / Montserrat 400 16px) */
+.p23-nav-links {
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 1.5vw, 24px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.p23-nav-link {
+    font-family: 'GT Walsheim Trial', 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    text-decoration: none;
+    white-space: nowrap;
+    padding: 6px 4px;
+    transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.p23-nav-link:hover {
+    opacity: 0.7;
+}
+
+.p23-nav-link.active {
+    font-weight: 600;
+    opacity: 1;
+}
+
+/* ==========================================================================
+   RIGHT GROUP (Figma Group 427318899: 319.5px × 48px)
+   Book Consultation Button + 36px gap + Social Icons
+   ========================================================================== */
+.p23-nav-right {
+    display: flex;
+    align-items: center;
+    gap: clamp(16px, 2.4vw, 36px);
+    flex-shrink: 0;
+}
+
+/* Book Consultation Button (Figma Button: 155px × 48px, radius 10px, border 0.7px) */
+.p23-nav-consult-btn {
+    width: 155px;
+    height: 48px;
+    border-radius: 10px;
+    font-family: 'Montserrat', -apple-system, sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 11px;
+    line-height: 46px; /* 48px minus border */
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    display: inline-block;
+    padding: 0 14px;
+    transition: all 0.25s ease;
+}
+
+/* Social Media (Figma Frame 56: 128px × 20px, gap 16px) */
+.p23-nav-socials {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.p23-nav-socials a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    text-decoration: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.p23-nav-socials a:hover {
+    opacity: 0.7;
+    transform: translateY(-1px);
+}
+
+.p23-nav-socials a img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    display: block;
+}
+
+/* Mobile Toggle Button */
+.p23-nav-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+/* ==========================================================================
+   THEME 1: DARK THEME (Black text on Light background)
+   Used for: Service Page, Market Entry Page
+   ========================================================================== */
+.p23-navbar--dark {
+    background: transparent;
+}
+
+.p23-navbar--dark .p23-nav-link {
+    color: #000000;
+}
+
+.p23-navbar--dark .p23-nav-consult-btn {
+    border: 0.7px solid #000000;
+    color: #000000;
+    background: transparent;
+}
+
+.p23-navbar--dark .p23-nav-consult-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #000000;
+}
+
+.p23-navbar--dark .p23-nav-toggle {
+    color: #000000;
+}
+
+.p23-navbar--dark.p23-nav--scrolled {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* ==========================================================================
+   THEME 2: LIGHT THEME (White text on Dark background)
+   Used for: About Us Page, Dark Heroes
+   ========================================================================== */
+.p23-navbar--light {
+    background: linear-gradient(2.09deg, rgba(255, 255, 255, 0) -6.23%, rgba(153, 153, 153, 0.1) 125.95%);
+}
+
+.p23-navbar--light .p23-nav-link {
+    color: #FFFFFF;
+}
+
+.p23-navbar--light .p23-nav-consult-btn {
+    border: 0.7px solid #FFFFFF;
+    color: #FFFFFF;
+    background: transparent;
+}
+
+.p23-navbar--light .p23-nav-consult-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #FFFFFF;
+}
+
+.p23-navbar--light .p23-nav-toggle {
+    color: #FFFFFF;
+}
+
+.p23-navbar--light.p23-nav--scrolled {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 80px;
+    background: rgba(40, 55, 73, 0.96);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ==========================================================================
+   MOBILE DRAWER & BACKDROP
+   ========================================================================== */
+.p23-nav-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1999;
+}
+
+.p23-nav-backdrop.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.p23-mobile-drawer {
+    position: fixed;
+    top: 0;
+    right: -320px;
+    width: 300px;
+    max-width: 85vw;
+    height: 100vh;
+    height: 100dvh;
+    box-shadow: -5px 0 30px rgba(0, 0, 0, 0.25);
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    z-index: 2000;
+    transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.p23-mobile-drawer.active {
+    right: 0;
+}
+
+.p23-mobile-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+}
+
+.p23-mobile-drawer-close {
+    background: transparent;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    padding: 4px 8px;
+    line-height: 1;
+}
+
+.p23-mobile-links {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.p23-mobile-link {
+    font-family: 'GT Walsheim Trial', 'Montserrat', sans-serif;
+    font-size: 18px;
+    text-decoration: none;
+    padding: 8px 0;
+    transition: opacity 0.2s ease;
+}
+
+.p23-mobile-link:hover,
+.p23-mobile-link.active {
+    font-weight: 600;
+}
+
+.p23-mobile-cta {
+    margin-bottom: 24px;
+}
+
+.p23-mobile-cta .p23-nav-consult-btn {
+    width: 100%;
+}
+
+.p23-mobile-socials {
+    display: flex;
+    gap: 18px;
+    margin-top: auto;
+    padding-top: 16px;
+}
+
+.p23-mobile-socials a img {
+    width: 22px;
+    height: 22px;
+}
+
+/* Mobile Drawer Theme Styles */
+.p23-navbar--dark .p23-mobile-drawer {
+    background: #FFFFFF;
+    color: #000000;
+    border-left: 1px solid #ECECEB;
+}
+
+.p23-navbar--dark .p23-mobile-link {
+    color: #000000;
+}
+
+.p23-navbar--dark .p23-mobile-drawer-close {
+    color: #000000;
+}
+
+.p23-navbar--light .p23-mobile-drawer {
+    background: #283749;
+    color: #FFFFFF;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.p23-navbar--light .p23-mobile-link {
+    color: #FFFFFF;
+}
+
+.p23-navbar--light .p23-mobile-drawer-close {
+    color: #FFFFFF;
+}
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 991px) {
+    .p23-navbar-wrapper {
+        height: 72px;
+        padding: 10px 16px;
+    }
+
+    .p23-nav-links,
+    .p23-nav-right {
+        display: none !important;
+    }
+
+    .p23-nav-toggle {
+        display: inline-flex !important;
+    }
+}

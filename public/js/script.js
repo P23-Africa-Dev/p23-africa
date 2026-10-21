@@ -11,6 +11,8 @@ function openSidebar() {
     overlay.classList.add("active");
     mainMenu.classList.remove("hide");
     submenuElements.forEach((sm) => sm.classList.remove("active"));
+    menuToggle.setAttribute("aria-expanded", "true");
+    closeBtn.focus();
 }
 
 function closeSidebar() {
@@ -18,11 +20,16 @@ function closeSidebar() {
     overlay.classList.remove("active");
     submenuElements.forEach((sm) => sm.classList.remove("active"));
     mainMenu.classList.remove("hide");
+    menuToggle.setAttribute("aria-expanded", "false");
+    menuToggle.focus();
 }
 
 if (menuToggle) menuToggle.addEventListener("click", openSidebar);
 if (closeBtn) closeBtn.addEventListener("click", closeSidebar);
 if (overlay) overlay.addEventListener("click", closeSidebar);
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && sidebar?.classList.contains("active")) closeSidebar();
+});
 
 document.querySelectorAll("[data-target]").forEach((item) => {
     item.addEventListener("click", () => {

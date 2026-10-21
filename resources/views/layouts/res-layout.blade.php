@@ -159,7 +159,7 @@
                     <div class="col-md-2 footer-links strategy">
                         <p>What We Do</p>
                         <a href="{{ url('services') }}#strategy">Business Strategy</a>
-                        <a href="{{ url('services') }}#market">Market Entry</a>
+                        <a href="{{ url('market-entry') }}">Market Entry</a>
                         <a href="{{ url('services') }}#research">Business Research</a>
                         <a href="{{ url('services') }}#sales">Sales</a>
                         <a href="{{ url('services') }}#marketing">Marketing</a>

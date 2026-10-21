@@ -14,6 +14,10 @@
     <link rel="stylesheet" href="{{ asset('css/services-new.css') }}">
 @endsection
 
+@section('navbar')
+    @include('layouts.includes.navbar-v2', ['theme' => 'dark', 'active' => 'what-we-do'])
+@endsection
+
 @section('content')
 <div class="market-entry-page">
 
@@ -340,20 +344,20 @@
                         </span>
                         <span class="me-case-meta-item">
                             <img src="{{ asset('images/market-entry/icon-user.png') }}" alt="Author" width="16" height="16">
-                            Mike Yukhtenko
+                            Marcus Sterling
                         </span>
                     </div>
 
                     <h3 class="me-case-heading">
-                        Building on the corner of the sea
+                        De-risking regional market entry for heavy building material manufacturers
                     </h3>
 
                     <div class="me-case-body">
                         <p>
-                            Cognitive bias (also known as “cognitive illusion” or “cognitive distortion”) refers to errors in thinking that can lead to incorrect perception and decision-making. They are an inherent part of our psychology and can affect [...]
+                            Entering high-growth infrastructure corridors across Sub-Saharan Africa requires rigorous distributor vetting, local standards compliance, and structured credit terms to protect multi-million-dollar capital investments  
                         </p>
                         <p>
-                            In my opinion, Ui/Ux design is the foundation of a product, its face and soul. You can create an infinitely high-quality heart, and organize the simulation of breathing, but we won’t fall in love with a product just because its heart beats [...]
+                            Through hands-on commercial due diligence and verified introductions to pre-screened regional distributors, we established verified distribution coverage across three core commercial hubs in under seven months  
                         </p>
                     </div>
 
@@ -389,10 +393,10 @@
 
                     <div class="me-case-body">
                         <p>
-                            Rapid expansion across West and East Africa requires navigating localized tier-1 and tier-2 distribution bottlenecks without compromising brand equity or credit terms [...]
+                            Rapid expansion across West and East Africa requires navigating localized tier-1 and tier-2 distribution bottlenecks without compromising brand equity or credit terms  
                         </p>
                         <p>
-                            By implementing in-country verification and direct retail engagement, we helped establish reliable retail channels across 14 major commercial hubs within 6 months [...]
+                            By implementing in-country verification and direct retail engagement, we helped establish reliable retail channels across 14 major commercial hubs within 6 months  
                         </p>
                     </div>
 
@@ -428,10 +432,10 @@
 
                     <div class="me-case-body">
                         <p>
-                            Navigating complex regulatory frameworks and establishing tier-one banking partnerships while maintaining aggressive customer acquisition timelines [...]
+                            Navigating complex regulatory frameworks and establishing tier-one banking partnerships while maintaining aggressive customer acquisition timelines  
                         </p>
                         <p>
-                            We structured bilateral commercial agreements and localized compliance workflows, paving the way for seamless regulatory approval and rapid volume scaling [...]
+                            We structured bilateral commercial agreements and localized compliance workflows, paving the way for seamless regulatory approval and rapid volume scaling  
                         </p>
                     </div>
 

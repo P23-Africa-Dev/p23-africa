@@ -1,0 +1,506 @@
+[
+  {
+    "slug": "thermoflow-hvac",
+    "title": "HVAC Distributor Vetting",
+    "client": "Thermoflow HVAC",
+    "sector": "Commercial HVAC & Refrigeration Equipment Manufacturer",
+    "market": "Nigeria (Lagos & Abuja)",
+    "service": "Distributor Vetting + Demand Testing",
+    "result": "2 of 3 shortlisted distributors eliminated; 47 qualified buyer signals generated",
+    "timeline": "10 weeks",
+    "summary": "How a European HVAC Manufacturer Validated Distributor Claims in Nigeria Before Committing Capital.",
+    "image": "images/case-studies/thermoflow.png",
+    "image_alt": "Rooftop commercial HVAC units on a city building",
+    "illustrative": false,
+    "challenge": "The client had been approached by three Nigerian distributors claiming established HVAC networks. They had no way to verify whether these partners actually had field sales teams, real customer relationships, or just procurement contacts. Committing to a distribution agreement without validation risked years of poor market coverage.",
+    "process": [
+      {
+        "icon": "understand",
+        "title": "Understand",
+        "description": "Mapped the addressable buyer universe across hospitals, hotels, and commercial property developers in Lagos and Abuja (312 target accounts)."
+      },
+      {
+        "icon": "validate",
+        "title": "Validate",
+        "description": "Conducted structured interviews with each distributor’s referenced customers. Simultaneously ran direct outbound demand testing via LinkedIn and email to the mapped account list to gauge independent market appetite."
+      },
+      {
+        "icon": "connect",
+        "title": "Connect",
+        "description": "Developed a distributor scoring framework covering territory coverage, technical capability, existing brand conflicts, and CRM/lead tracking maturity."
+      },
+      {
+        "icon": "execute",
+        "title": "Execute",
+        "description": "Presented validated findings with a recommended path."
+      }
+    ],
+    "metrics": [
+      {
+        "value": "312",
+        "label": "Accounts Contacted"
+      },
+      {
+        "value": "89",
+        "label": "Responses"
+      },
+      {
+        "value": "47",
+        "label": "Qualified Opportunities"
+      }
+    ],
+    "validation": "Distributor validation: Distributor A (strongest claimed network): only 4 of 12 referenced customers confirmed an active purchasing relationship. Distributor B: 9 of 10 references confirmed. Distributor C: no verifiable field sales activity. The 47 qualified opportunities were buyers who confirmed active HVAC sourcing needs within 6 months.",
+    "outcome": "The client selected Distributor B for a structured trial agreement with staged exclusivity: 6-month territory-based exclusivity contingent on monthly pipeline reporting and minimum quarterly order thresholds. Distributors A and C were disqualified. The 47 qualified buyer signals were handed over as a warm pipeline for the new distributor to work, with a 90-day follow-up protocol.",
+    "quote": "We were about to sign with the biggest name in the room. P23 showed us that the name meant nothing without field activity. We saved ourselves at least two years of slow sales.",
+    "cta_heading": "If you’re evaluating African distributors based on presentations rather than verified field activity, you’re making a decision on incomplete information.",
+    "cta_description": "Book a Discovery Call to design your distributor validation process."
+  },
+  {
+    "slug": "coolair-systems",
+    "title": "HVAC Market Entry",
+    "client": "Coolair Systems",
+    "sector": "HVAC Equipment Manufacturer (Commercial AC & Cold Room Systems)",
+    "market": "Kenya & Tanzania",
+    "service": "Distributor & Partner Development + Market Entry & Expansion",
+    "result": "2 distributors signed; 15 qualified opportunities in first 90 days",
+    "timeline": "14 weeks",
+    "summary": "How an Asian HVAC Brand Built Verified Distributor Coverage in Two East African Markets Before Committing Inventory.",
+    "image": "images/case-studies/coolair.png",
+    "image_alt": "An engineer inspecting industrial equipment on a factory floor",
+    "illustrative": false,
+    "challenge": "The client had no African presence but wanted to enter East Africa. They had received inbound interest from two Nairobi-based companies claiming to be “HVAC distributors.” However, the client had no framework for evaluating whether these were genuine field sales operations or just order-takers with a shopfront. They needed structured market entry, not opportunistic entry.",
+    "process": [
+      {
+        "icon": "understand",
+        "title": "Understand",
+        "description": "Compared Kenya and Tanzania market entry viability using infrastructure spend, import duty structures, and competitive intensity. Kenya scored higher for speed-to-market."
+      },
+      {
+        "icon": "validate",
+        "title": "Validate",
+        "description": "Expanded the distributor search beyond the two inbound inquiries. Sourced 11 additional candidates through industry networks, trade show exhibitor lists, and refrigeration contractor associations."
+      },
+      {
+        "icon": "connect",
+        "title": "Connect",
+        "description": "Ran a structured vetting process including company registration verification, site visits, reference customer interviews, and field sales capability assessment (number of sales staff, territory coverage, lead tracking methods)."
+      },
+      {
+        "icon": "execute",
+        "title": "Execute",
+        "description": "Negotiated a trial order structure and 6-month performance review clause with the two selected distributors."
+      }
+    ],
+    "metrics": [
+      {
+        "value": "13",
+        "label": "Distributors Screened"
+      },
+      {
+        "value": "5",
+        "label": "Shortlisted"
+      },
+      {
+        "value": "2",
+        "label": "Signed"
+      }
+    ],
+    "validation": "Vetting elimination: 4 candidates eliminated for having no field sales staff (order-takers only); 2 eliminated for representing competing HVAC brands with exclusive agreements. First 90 days post-signing: Distributor 1 (Kenya) generated 9 qualified opportunities; Distributor 2 (Tanzania) generated 6. Both distributors required Factory 23 setup and training before consistent lead logging began (weeks 3–4).",
+    "outcome": "Coolair Systems entered Kenya and Tanzania with a staged distribution model: trial order quantities with a 6-month performance review before full container commitments. Both distributors are now operating with Factory 23 for pipeline visibility. The client has clear data on field activity for the first time in any African market.",
+    "quote": null,
+    "cta_heading": "If you’re receiving inbound distributor interest in Africa but have no way to separate serious field operations from order-takers, you need a structured vetting process.",
+    "cta_description": "Book a Discovery Call to build your distributor qualification framework."
+  },
+  {
+    "slug": "packline-industrial-machinery",
+    "title": "Packaging Machinery Sales",
+    "client": "Packline Industrial Machinery Inc.",
+    "sector": "Industrial Packaging Machinery Manufacturer",
+    "market": "Nigeria",
+    "service": "Sales & Business Development + Ongoing Sales Management (Factory 23)",
+    "result": "3× increase in qualified pipeline within 6 months; 100% field activity visibility",
+    "timeline": "6 months",
+    "summary": "How a Packaging Machinery Manufacturer Turned a Passive Nigerian Distributor into a Data-Visible Sales Channel.",
+    "image": "images/case-studies/packline.png",
+    "image_alt": "Operators running an automated packaging production line",
+    "illustrative": false,
+    "challenge": "Packline Industrial Machinery had a Nigerian distributor for two years. Sales were flat. The distributor claimed to be “working the market,” but the manufacturer had zero visibility into field activity, lead sources, or pipeline status. They couldn’t tell if the problem was market demand or distributor effort. The distributor’s sales team operated entirely on WhatsApp and individual memory, with no CRM and no central lead tracking.",
+    "process": [
+      {
+        "icon": "understand",
+        "title": "Understand",
+        "description": "Mapped the addressable buyer universe for packaging machinery in Nigeria: FMCG factories, pharmaceutical manufacturers, and food processing companies across Lagos, Ogun, and Oyo states."
+      },
+      {
+        "icon": "validate",
+        "title": "Validate",
+        "description": "Conducted a 2-day field assessment with the distributor’s sales team. Found 3 salespeople, all working from personal WhatsApp contacts, with no territory assignment, no target account lists, and no visit logging."
+      },
+      {
+        "icon": "connect",
+        "title": "Connect",
+        "description": "Deployed the Factory 23 field sales management system. Assigned territories per salesperson. Built target account lists (127 accounts). Trained the team on lead logging, visit tracking, and opportunity stages."
+      },
+      {
+        "icon": "execute",
+        "title": "Execute",
+        "description": "Ran a joint outbound campaign with the distributor’s team. Weekly pipeline reviews for the first 8 weeks, then bi-weekly. Monitored coverage gaps and unworked accounts."
+      }
+    ],
+    "metrics": [
+      {
+        "value": "58",
+        "label": "Qualified Opportunities"
+      },
+      {
+        "value": "12",
+        "label": "Proposals"
+      },
+      {
+        "value": "4",
+        "label": "Closed"
+      }
+    ],
+    "validation": "Target accounts identified: 127, of which only 23 (18% coverage) had been worked by the distributor before P23. Field activity visibility: 0% before Factory 23; after, 100% of visits logged with timestamps, account names, and visit notes. Territory coverage increased from 18% to 67% of mapped accounts.",
+    "outcome": "Sales pipeline increased 3× within 6 months compared to the prior comparable period. The manufacturer now receives weekly field activity reports showing visits logged, accounts worked, and pipeline movement. The distributor’s sales team shifted from memory-based selling to structured territory management. The client can now have fact-based performance conversations with the distributor for the first time.",
+    "quote": null,
+    "cta_heading": "If your African distributor claims to be “working the market” but you can’t see the activity, you’re managing a black box.",
+    "cta_description": "Book a Discovery Call to deploy field sales visibility in your distributor network."
+  },
+  {
+    "slug": "cmppower",
+    "title": "Industrial Equipment Market Entry",
+    "client": "CmpPower",
+    "sector": "Compact Industrial Equipment Manufacturer",
+    "market": "Ghana (selected over Nigeria)",
+    "service": "Market Entry & Expansion",
+    "result": "Distributor signed in 5 months; first order within 60 days of agreement",
+    "timeline": "5 months",
+    "summary": "How a UK Equipment Manufacturer Selected Ghana Over Nigeria for First African Entry and Why It Mattered.",
+    "image": "images/case-studies/liftmasters.png",
+    "image_alt": "Industrial generators and power equipment in a plant hall",
+    "illustrative": false,
+    "challenge": "CmpPower wanted to enter West Africa but was paralysed by the choice between Nigeria (large market, high complexity) and Ghana (smaller market, reportedly easier). They had no African operating experience and were receiving conflicting advice. They needed a structured comparison, not anecdotes.",
+    "process": [
+      {
+        "icon": "understand",
+        "title": "Understand",
+        "description": "Built a market entry scorecard comparing Nigeria and Ghana across 8 criteria: import duty structure, ease of company registration, distributor availability, infrastructure quality, currency stability, competitive intensity, addressable customer universe size, and time-to-first-revenue estimate."
+      },
+      {
+        "icon": "validate",
+        "title": "Validate",
+        "description": "Conducted 14 distributor interviews across both markets. Assessed field sales capability, existing brand portfolios, and willingness to commit to a trial structure."
+      },
+      {
+        "icon": "connect",
+        "title": "Connect",
+        "description": "Selected Ghana as the recommended entry market based on faster time-to-revenue, a simpler import process, lower distributor conflict risk, and existing distributor candidates with strong technical sales teams."
+      },
+      {
+        "icon": "execute",
+        "title": "Execute",
+        "description": "Negotiated a staged exclusivity agreement: 12-month exclusive territory rights in Ghana, contingent on minimum quarterly order volumes and monthly pipeline reporting via Factory 23."
+      }
+    ],
+    "metrics": [
+      {
+        "value": "23",
+        "label": "Customer Visits"
+      },
+      {
+        "value": "11",
+        "label": "Qualified Opportunities"
+      },
+      {
+        "value": "3",
+        "label": "Closed Orders"
+      }
+    ],
+    "validation": "Scorecard outcome: Ghana ranked higher on 5 of 8 criteria (time-to-revenue, import simplicity, distributor quality, currency stability, ease of registration); Nigeria ranked higher on market size and long-term ceiling. Distributor candidates: 8 interviewed across both markets → 3 shortlisted in Ghana → 1 signed. First order placed 60 days after signing: a ₵180,000 initial order for demonstration units and trial inventory. Visits, opportunities, and orders above cover the first 90 days.",
+    "outcome": "CmpPower entered Ghana with a low-risk, verifiable structure: staged exclusivity, trial order quantities, and mandatory pipeline reporting. They now have an operating base in West Africa with data on actual field activity and sales performance. Nigeria remains on the 18-month roadmap, with the Ghana operation serving as the regional proof point.",
+    "quote": null,
+    "cta_heading": "If you’re comparing African markets on size alone, you’re missing the criteria that determine whether you’ll actually get to revenue.",
+    "cta_description": "Book a Discovery Call to build a market entry scorecard for your product."
+  },
+  {
+    "slug": "liftmasters-international",
+    "title": "Multi-Market Demand Testing",
+    "client": "Liftmasters International",
+    "sector": "Industrial Equipment Manufacturer (Material Handling)",
+    "market": "Nigeria, Kenya, South Africa (tested)",
+    "service": "Market Research & Insights + Demand Testing",
+    "result": "1 market recommended for entry; 2 deprioritised based on buyer signal data",
+    "timeline": "8 weeks",
+    "summary": "How a European Equipment Manufacturer Tested Demand in Three African Markets Before Committing to Any.",
+    "image": "images/case-studies/liftmasters.png",
+    "image_alt": "Industrial generators and power equipment in a plant hall",
+    "illustrative": false,
+    "challenge": "Liftmasters’ board had approved “Africa expansion” but wanted evidence before committing capital. They had no African presence and no clear view of which market offered the best demand signal relative to entry cost. They needed a go/no-go case for at least one market, not a continent-wide strategy document.",
+    "process": [
+      {
+        "icon": "understand",
+        "title": "Understand",
+        "description": "Defined the target buyer profile: manufacturing plants, warehouses, and logistics companies using or planning to acquire material handling equipment."
+      },
+      {
+        "icon": "validate",
+        "title": "Validate",
+        "description": "Ran parallel outbound demand testing in Nigeria, Kenya, and South Africa. Identical messaging and an identical offer (technical consultation + equipment assessment), sent to matched buyer profiles in each market."
+      },
+      {
+        "icon": "connect",
+        "title": "Connect",
+        "description": "Tracked response rates, qualification rates, and buyer intent signals (stated timelines, budget confirmation, decision-maker access)."
+      },
+      {
+        "icon": "execute",
+        "title": "Execute",
+        "description": "Delivered a market prioritisation recommendation with the underlying signal data."
+      }
+    ],
+    "metrics": [
+      {
+        "value": "450",
+        "label": "Accounts Contacted"
+      },
+      {
+        "value": "14%",
+        "label": "Nigeria Response Rate"
+      },
+      {
+        "value": "21",
+        "label": "Nigeria Qualified Opportunities"
+      }
+    ],
+    "validation": "Accounts contacted: 150 per market. Response rates: Nigeria 14%, Kenya 9%, South Africa 7%. Qualified opportunities (confirmed active need within 6 months): Nigeria 21, Kenya 9, South Africa 4. Decision-maker access: in Nigeria 67% of respondents were operations or procurement decision-makers, against 44% in Kenya and 38% in South Africa.",
+    "outcome": "The board approved Nigeria as the initial entry market based on demand signal strength and decision-maker access. Kenya was flagged as a secondary opportunity requiring a different channel strategy (stronger distributor dependency). South Africa was deprioritised due to lower response signal and higher competitive saturation. The 21 qualified Nigerian opportunities were handed to the sales team as a warm pipeline to pursue during market entry setup.",
+    "quote": null,
+    "cta_heading": "If your Africa expansion decision is based on market size reports rather than direct buyer signal, you’re guessing.",
+    "cta_description": "Book a Discovery Call to design a demand testing campaign for your priority markets."
+  },
+  {
+    "slug": "gp-equipment",
+    "title": "Regulatory & Partner Mapping",
+    "client": "GP Equipment Ltd",
+    "sector": "Power Equipment Manufacturer (Industrial Generators)",
+    "market": "Kenya",
+    "service": "Market Research & Insights",
+    "result": "Full regulatory roadmap delivered; 11 distributor candidates mapped and scored",
+    "timeline": "6 weeks",
+    "summary": "How an Equipment Manufacturer Mapped Kenya’s Regulatory Pathway and Distributor Landscape in 6 Weeks.",
+    "image": "images/case-studies/gp-equipment.png",
+    "image_alt": "A large industrial manufacturing hall",
+    "illustrative": false,
+    "challenge": "GP Equipment wanted to enter Kenya but was blocked by uncertainty: What licences were required? What were the import procedures? Who were the credible distributors? They had received partial information from a local contact but couldn’t validate it. The lack of a clear roadmap was delaying board approval.",
+    "process": [
+      {
+        "icon": "understand",
+        "title": "Understand",
+        "description": "Compiled Kenya’s regulatory requirements for industrial equipment import and distribution: KEBS certification, import declaration forms, tax registration, and any sector-specific requirements for power equipment."
+      },
+      {
+        "icon": "validate",
+        "title": "Validate",
+        "description": "Verified each regulatory step directly through Kenyan government portals and interviews with two licensed customs agents and one KEBS-registered importer."
+      },
+      {
+        "icon": "connect",
+        "title": "Connect",
+        "description": "Mapped the distributor landscape through industry associations, trade show exhibitor lists, and LinkedIn research. Identified 11 potential distribution partners."
+      },
+      {
+        "icon": "execute",
+        "title": "Execute",
+        "description": "Scored each distributor on field sales staff count, territory coverage, existing brand conflicts, technical capability, and reference customer validation."
+      }
+    ],
+    "metrics": [
+      {
+        "value": "7",
+        "label": "Regulatory Steps Documented"
+      },
+      {
+        "value": "11",
+        "label": "Distributors Mapped"
+      },
+      {
+        "value": "2",
+        "label": "Recommended"
+      }
+    ],
+    "validation": "Regulatory pathway: 7 required steps, an estimated 4–6 week timeline for full compliance, and an approximate cost range for each step. Distributor mapping: 11 candidates identified → 6 contacted → 4 provided detailed capability information → 2 recommended for final evaluation. The top-ranked candidate had 7 field sales staff, 3 technical support engineers, existing relationships with 40+ industrial buyers, and no directly competing generator brand. Risk flag: one candidate had an undisclosed exclusive agreement with a European competitor, which only surfaced through direct verification and would have disqualified them.",
+    "outcome": "The client received a complete Kenya entry roadmap: regulatory steps, timeline, cost estimates, and two validated distributor candidates with full scoring data. Board approval was granted within 2 weeks of receiving the report. The client is now in negotiation with the top-ranked distributor using a trial order structure.",
+    "quote": null,
+    "cta_heading": "If regulatory uncertainty or distributor opacity is blocking your African market entry decision, you need structured mapping, not more anecdotes.",
+    "cta_description": "Book a Discovery Call to build your market entry roadmap."
+  },
+  {
+    "slug": "cloudworks-analytics",
+    "title": "SaaS Market Entry",
+    "client": "CloudWorks Analytics",
+    "sector": "B2B SaaS (Supply Chain Analytics)",
+    "market": "Nigeria & Kenya",
+    "service": "Market Entry & Expansion + Distributor & Partner Development",
+    "result": "2 channel partners signed; 18 qualified enterprise leads in 90 days",
+    "timeline": "12 weeks",
+    "summary": "How a B2B SaaS Company Validated Demand and Signed Two Channel Partners in Nigeria and Kenya.",
+    "image": "images/case-studies/cloudworks.png",
+    "image_alt": "Tractors and harvesters working a field at sunset",
+    "illustrative": false,
+    "challenge": "CloudWorks had strong traction in Europe but no African presence. They wanted to enter Nigeria and Kenya but had no local relationships, no understanding of enterprise procurement cycles, and no clear channel strategy. They were considering a direct sales model but lacked the on-ground sales capacity to make it work.",
+    "process": [
+      {
+        "icon": "understand",
+        "title": "Understand",
+        "description": "Mapped the enterprise buyer universe for supply chain software in Lagos, Abuja, Nairobi, and Mombasa, targeting manufacturers, logistics companies, and large distributors."
+      },
+      {
+        "icon": "validate",
+        "title": "Validate",
+        "description": "Ran a demand-testing campaign to assess interest in a supply chain analytics solution. Simultaneously interviewed potential channel partners (IT consultancies, ERP resellers, and systems integrators) in both markets."
+      },
+      {
+        "icon": "connect",
+        "title": "Connect",
+        "description": "Identified two partners with existing enterprise relationships and the technical capability to resell and support the software."
+      },
+      {
+        "icon": "execute",
+        "title": "Execute",
+        "description": "Negotiated partner agreements with a 6-month trial structure, including joint pipeline reviews and Factory 23 deployment for activity tracking."
+      }
+    ],
+    "metrics": [
+      {
+        "value": "280",
+        "label": "Accounts Contacted"
+      },
+      {
+        "value": "52",
+        "label": "Responses"
+      },
+      {
+        "value": "18",
+        "label": "Qualified Opportunities"
+      }
+    ],
+    "validation": "The 18 qualified opportunities were enterprise buyers with active supply chain digitisation budgets. Channel partner candidates: 9 screened → 3 shortlisted → 2 signed. First 90 days post-signing: Partner 1 (Nigeria) logged 14 client meetings and Partner 2 (Kenya) logged 11, with a combined pipeline value of $340,000.",
+    "outcome": "CloudWorks entered Nigeria and Kenya through a channel model rather than direct sales. Both partners are now actively selling, with pipeline visibility through Factory 23. The client avoided the cost of hiring direct sales staff and gained immediate market access through partners with existing relationships.",
+    "quote": null,
+    "cta_heading": "If you’re a software company considering African market entry, the channel model may be your fastest route to revenue.",
+    "cta_description": "Book a Discovery Call to design your partner-led entry strategy."
+  },
+  {
+    "slug": "finedge-software",
+    "title": "Financial Software Sales",
+    "client": "FinEdge Software",
+    "sector": "Financial Software for Microfinance Institutions",
+    "market": "Ghana",
+    "service": "Sales & Business Development + Ongoing Sales Management (Factory 23)",
+    "result": "12 deals closed in 6 months; pipeline visibility established",
+    "timeline": "6 months",
+    "summary": "How a Financial Software Vendor Turned a Passive Ghanaian Reseller into a Structured Sales Channel.",
+    "image": "images/case-studies/finedge.png",
+    "image_alt": "A software team working together in a modern office",
+    "illustrative": false,
+    "challenge": "FinEdge had a Ghanaian reseller for 18 months. Sales were sporadic and unpredictable. The reseller claimed to be “working the market” but provided no reports, no pipeline updates, and no visibility into field activity. FinEdge couldn’t tell if the reseller was ineffective or if the market was simply slow.",
+    "process": [
+      {
+        "icon": "understand",
+        "title": "Understand",
+        "description": "Mapped the target buyer universe: microfinance institutions, rural banks, and fintech lenders across Ghana."
+      },
+      {
+        "icon": "validate",
+        "title": "Validate",
+        "description": "Conducted a field assessment with the reseller’s team. Found 2 salespeople, no CRM, leads tracked in a notebook, no territory assignment, and no follow-up process."
+      },
+      {
+        "icon": "connect",
+        "title": "Connect",
+        "description": "Deployed Factory 23 to manage leads, track field visits, and log pipeline stages. Trained the reseller’s team on structured selling."
+      },
+      {
+        "icon": "execute",
+        "title": "Execute",
+        "description": "Ran a joint outbound campaign targeting 120 microfinance institutions. Weekly pipeline reviews for the first 12 weeks."
+      }
+    ],
+    "metrics": [
+      {
+        "value": "34",
+        "label": "Qualified Opportunities"
+      },
+      {
+        "value": "19",
+        "label": "Proposals"
+      },
+      {
+        "value": "12",
+        "label": "Closed Deals"
+      }
+    ],
+    "validation": "Target accounts identified: 120, of which only 17 (14% coverage) had been worked before P23. Field activity visibility: 0% before; after, 100% of visits logged with timestamps and notes. Territory coverage increased from 14% to 58%.",
+    "outcome": "FinEdge saw a 4× increase in closed deals compared to the prior comparable period. The reseller’s team shifted from ad-hoc selling to structured territory management. FinEdge now receives weekly activity reports and can forecast revenue with confidence.",
+    "quote": "We had no idea what our reseller was doing. Now we see every visit, every lead, every deal. It changed how we manage the partnership.",
+    "cta_heading": "If your African software reseller is a black box, you’re leaving revenue on the table.",
+    "cta_description": "Book a Discovery Call to deploy field sales visibility."
+  },
+  {
+    "slug": "agrimech-international",
+    "title": "Agricultural After-Sales Network",
+    "client": "AgriMech International",
+    "sector": "Agricultural Machinery (Tractors & Irrigation Systems)",
+    "market": "Tanzania",
+    "service": "Operations & Market Support",
+    "result": "Service network established; 45% reduction in downtime complaints",
+    "timeline": "8 months",
+    "summary": "How an Agricultural Machinery Manufacturer Built an After-Sales Service Network in Tanzania.",
+    "image": "images/case-studies/agrimech.png",
+    "image_alt": "A presentation to a team in a glass-walled boardroom",
+    "illustrative": false,
+    "challenge": "AgriMech had sold equipment into Tanzania through a local distributor, but after-sales support was almost non-existent. Customers complained about long downtimes, lack of spare parts, and no local technical support. This was damaging the brand and limiting repeat sales. The distributor had no service infrastructure.",
+    "process": [
+      {
+        "icon": "understand",
+        "title": "Understand",
+        "description": "Assessed the existing after-sales gaps: no spare parts inventory, no trained technicians, and no service scheduling system."
+      },
+      {
+        "icon": "validate",
+        "title": "Validate",
+        "description": "Interviewed 15 existing customers to quantify downtime impact and identify priority service needs."
+      },
+      {
+        "icon": "connect",
+        "title": "Connect",
+        "description": "Identified and vetted two local technical service providers with agricultural machinery experience."
+      },
+      {
+        "icon": "execute",
+        "title": "Execute",
+        "description": "Set up a service network with spare parts consignment stock, a technician training programme, and a service request tracking system integrated with Factory 23 for visibility."
+      }
+    ],
+    "metrics": [
+      {
+        "value": "45%",
+        "label": "Less Downtime"
+      },
+      {
+        "value": "4",
+        "label": "Technicians Trained"
+      },
+      {
+        "value": "45",
+        "label": "Critical Parts Stocked"
+      }
+    ],
+    "validation": "Customer interviews: 15 customers reported an average downtime of 12 days per breakdown. Service network: 2 service providers contracted and 4 technicians trained, with an initial consignment stock of 45 critical parts. Average downtime fell to 6.5 days within 6 months (a 45% reduction). Repeat sales: 3 customers who had delayed purchases over service concerns placed new orders within 8 months.",
+    "outcome": "AgriMech now has a functioning after-sales service network in Tanzania. Customer complaints dropped significantly. The distributor is now selling with confidence, knowing that service support exists. Repeat sales are increasing.",
+    "quote": null,
+    "cta_heading": "If your African distributor sells equipment but can’t support it, your brand suffers.",
+    "cta_description": "Book a Discovery Call to build your after-sales operations."
+  }
+]

@@ -12,6 +12,10 @@
     <link rel="stylesheet" href="{{ asset('css/services-new.css') }}">
 @endsection
 
+@section('navbar')
+    @include('layouts.includes.navbar-v2', ['theme' => 'dark', 'active' => 'what-we-do'])
+@endsection
+
 @section('content')
 <div class="services-page-wrapper">
     {{-- ==========================================
@@ -36,14 +40,19 @@
                             Talk to Us
                         </a>
                         
-                        <div class="hero-rating-box" aria-label="Rating: 4.9 out of 5 from over 25,000 clients">
+                        <div class="hero-casestudy-proof" aria-label="5 stars rating. Click Here to Read Case Studies">
                             <div class="hero-stars" aria-hidden="true">
-                                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                                <svg width="98" height="18" viewBox="0 0 98 18" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="5 stars rating">
+                                    <path d="M9 0L11.0206 6.21885H17.5595L12.2694 10.0623L14.2901 16.2812L9 12.4377L3.70993 16.2812L5.73056 10.0623L0.440492 6.21885H6.97937L9 0Z" fill="#390908"/>
+                                    <path d="M29 0L31.0206 6.21885H37.5595L32.2694 10.0623L34.2901 16.2812L29 12.4377L23.7099 16.2812L25.7306 10.0623L20.4405 6.21885H26.9794L29 0Z" fill="#390908"/>
+                                    <path d="M49 0L51.0206 6.21885H57.5595L52.2694 10.0623L54.2901 16.2812L49 12.4377L43.7099 16.2812L45.7306 10.0623L40.4405 6.21885H46.9794L49 0Z" fill="#390908"/>
+                                    <path d="M69 0L71.0206 6.21885H77.5595L72.2694 10.0623L74.2901 16.2812L69 12.4377L63.7099 16.2812L65.7306 10.0623L60.4405 6.21885H66.9794L69 0Z" fill="#390908"/>
+                                    <path d="M89 0L91.0206 6.21885H97.5595L92.2694 10.0623L94.2901 16.2812L89 12.4377L83.7099 16.2812L85.7306 10.0623L80.4405 6.21885H86.9794L89 0Z" fill="#390908"/>
+                                </svg>
                             </div>
-                            <div class="hero-rating-meta">
-                                <strong>4.9/5 RATING</strong>
-                                <span>FROM 25K+ CLIENTS</span>
-                            </div>
+                            <a href="{{ url('case-studies') }}" class="hero-casestudy-link">
+                                <strong>Click Here to</strong> <span>Read Case Studies</span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -197,7 +206,7 @@
                             <p class="plan-card-desc">
                                 Build practical strategies for entering and developing new African markets.
                             </p>
-                            <a href="{{ url('contact') }}" class="plan-explore-btn" aria-label="Explore Market Entry & Expansion">
+                            <a href="{{ url('market-entry') }}" class="plan-explore-btn" aria-label="Explore Market Entry & Expansion">
                                 Explore <span class="btn-arrow">→</span>
                             </a>
                         </div>
@@ -316,7 +325,7 @@
                             We partner with entrepreneurs and businesses to understand their unique needs, align them with their goals, and set a clear path to execution and results.
                         </p>
                         <p>
-                            Our consulting services come with personalised and hands-on support, and our team is committed to excellence, intergrity and collaboration. Let's help you thrive in the dynamic and unpredictable global market.
+                            Our consulting services come with personalised and hands-on support, and our team is committed to excellence, integrity and collaboration. Let's help you thrive in the dynamic and unpredictable global market.
                         </p>
                     </div>
 
@@ -342,7 +351,10 @@
 
                 {{-- Headline Number & Callout Statement --}}
                 <div class="inefficiency-hero-stat">
-                    <div class="inefficiency-percent">57%</div>
+                    <div class="inefficiency-percent-wrap">
+                        <div class="inefficiency-percent-backdrop" aria-hidden="true"></div>
+                        <div class="inefficiency-percent">57%</div>
+                    </div>
                     <p class="inefficiency-statement">
                         of organizations say operational inefficiencies hold back their growth
                     </p>
