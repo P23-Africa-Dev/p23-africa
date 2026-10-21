@@ -143,13 +143,13 @@
                     <div class="ab-exec-photo-box">
                         <div class="ab-exec-photo-blur" style="background-image: url('{{ asset('images/about/exec-portrait-1.png') }}');" aria-hidden="true"></div>
                         <img src="{{ asset('images/about/exec-portrait-1.png') }}" 
-                             alt="Executive portrait" 
+                             alt="Samuel Etienne" 
                              class="ab-exec-photo-img" 
                              loading="lazy">
                     </div>
                     <div class="ab-exec-meta">
-                        <span class="ab-exec-title">Full Title</span>
-                        <h3 class="ab-exec-name">Executive’s Name</h3>
+                        <span class="ab-exec-title">Director of Market Development</span>
+                        <h3 class="ab-exec-name">Samuel Etienne</h3>
                     </div>
                 </article>
 
@@ -158,13 +158,13 @@
                     <div class="ab-exec-photo-box">
                         <div class="ab-exec-photo-blur" style="background-image: url('{{ asset('images/about/exec-portrait-2.png') }}');" aria-hidden="true"></div>
                         <img src="{{ asset('images/about/exec-portrait-2.png') }}" 
-                             alt="Executive portrait" 
+                             alt="Donald Nwosu" 
                              class="ab-exec-photo-img" 
                              loading="lazy">
                     </div>
                     <div class="ab-exec-meta">
-                        <span class="ab-exec-title">Full Title</span>
-                        <h3 class="ab-exec-name">Executive’s Name</h3>
+                        <span class="ab-exec-title">Head of Operations</span>
+                        <h3 class="ab-exec-name">Donald Nwosu</h3>
                     </div>
                 </article>
 
@@ -173,13 +173,13 @@
                     <div class="ab-exec-photo-box">
                         <div class="ab-exec-photo-blur" style="background-image: url('{{ asset('images/about/exec-portrait-3.png') }}');" aria-hidden="true"></div>
                         <img src="{{ asset('images/about/exec-portrait-3.png') }}" 
-                             alt="Executive portrait" 
+                             alt="Yannick Tientcheu" 
                              class="ab-exec-photo-img" 
                              loading="lazy">
                     </div>
                     <div class="ab-exec-meta">
-                        <span class="ab-exec-title">Full Title</span>
-                        <h3 class="ab-exec-name">Executive’s Name</h3>
+                        <span class="ab-exec-title">VP of Strategic Partnerships and Distribution</span>
+                        <h3 class="ab-exec-name">Yannick Tientcheu</h3>
                     </div>
                 </article>
             </div>
