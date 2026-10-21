@@ -71,7 +71,11 @@
 
 <body class="@yield('body_class')">
     {{-- NAVBAR --}}
-    @include('layouts.includes.navbar')
+    @hasSection('navbar')
+        @yield('navbar')
+    @else
+        @include('layouts.includes.navbar')
+    @endif
 
 
     <main class="">
