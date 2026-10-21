@@ -695,23 +695,23 @@ body.about-page {
 
 /* Photo Box with Ambient Blurred Backdrop */
 .ab-exec-photo-box {
-    width: 268px;
-    height: 293px;
+    width: 258px;
+    height: 263px;
     position: relative;
     border-radius: 0px;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    box-shadow: -8px -8px 24px rgba(0, 0, 0, 0.3), 0 12px 30px rgba(0, 0, 0, 0.4);
 }
 
 .ab-exec-photo-blur {
     position: absolute;
-    width: 268px;
-    height: 293px;
-    left: -20px;
-    top: -15px;
+    width: 258px;
+    height: 263px;
+    left: -56px;
+    top: -36px;
     background-size: cover;
     background-position: center;
-    opacity: 0.17;
-    filter: blur(4.3px);
+    opacity: 0.32;
+    filter: blur(8px);
     z-index: 0;
     pointer-events: none;
 }
@@ -732,7 +732,7 @@ body.about-page {
 }
 
 .ab-exec-meta {
-    width: 268px;
+    width: 258px;
     margin-top: 16px;
     display: flex;
     flex-direction: column;
@@ -1108,17 +1108,19 @@ body.about-page .footer3-legal-text a:hover {
     }
 
     .ab-exec-photo-box {
-        width: 280px;
-        height: 306px;
+        width: 258px;
+        height: 283px;
     }
 
     .ab-exec-photo-blur {
-        width: 280px;
-        height: 306px;
+        width: 258px;
+        height: 283px;
+        left: -48px;
+        top: -30px;
     }
 
     .ab-exec-meta {
-        width: 280px;
+        width: 258px;
     }
 
     body.about-page .footer3-grid {
@@ -1199,17 +1201,19 @@ body.about-page .footer3-legal-text a:hover {
     }
 
     .ab-exec-photo-box {
-        width: 250px;
-        height: 273px;
+        width: 240px;
+        height: 263px;
     }
 
     .ab-exec-photo-blur {
-        width: 250px;
-        height: 273px;
+        width: 240px;
+        height: 263px;
+        left: -38px;
+        top: -24px;
     }
 
     .ab-exec-meta {
-        width: 250px;
+        width: 240px;
     }
 
     body.about-page .footer3-legal-text {
