@@ -124,39 +124,51 @@
     transform: translateY(0);
 }
 
-/* Rating Sub-widget */
-.hero-rating-box {
+/* Proof Sub-widget (Figma 7814:9306 / Frame 1000009023) */
+.hero-casestudy-proof {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 4px;
 }
 
-.hero-stars {
+.hero-casestudy-proof .hero-stars {
     display: flex;
-    gap: 3px;
-    color: var(--color-maroon-dark);
-    font-size: 14px;
+    align-items: center;
     line-height: 1;
 }
 
-.hero-rating-meta {
-    font-family: var(--font-sans);
+.hero-casestudy-proof .hero-stars svg {
+    display: block;
+    width: 98px;
+    height: 18px;
+}
+
+.hero-casestudy-link {
+    font-family: 'Montserrat', var(--font-sans);
     font-size: 11px;
-    line-height: 1.2;
-    display: flex;
+    line-height: 13px;
+    color: #000000;
+    text-decoration: none;
+    display: inline-flex;
     align-items: center;
-    gap: 6px;
-    letter-spacing: 0.02em;
+    gap: 4px;
+    white-space: nowrap;
+    transition: opacity 0.2s ease;
 }
 
-.hero-rating-meta strong {
+.hero-casestudy-link strong {
     font-weight: 700;
-    color: #111111;
+    color: #000000;
 }
 
-.hero-rating-meta span {
-    font-weight: 500;
-    color: #666666;
+.hero-casestudy-link span {
+    font-weight: 400;
+    color: #000000;
+}
+
+.hero-casestudy-link:hover {
+    opacity: 0.75;
 }
 
 /* Right Column: 2x2 Showcase Mosaic */
@@ -484,7 +496,7 @@
     font-family: var(--font-sans);
     font-weight: 400;
     font-size: 14px;
-    line-height: 24px;
+    line-height: 1.5;
     letter-spacing: -0.04em;
     margin: 0 0 28px 0;
 }
@@ -752,7 +764,7 @@
     font-family: var(--font-sans);
     font-weight: 500;
     font-size: 14px;
-    line-height: 24px;
+    line-height: 1.5;
     letter-spacing: -0.03em;
     color: rgba(0, 0, 0, 0.45);
     margin: 0 0 clamp(24px, 3vw, 36px) 0;

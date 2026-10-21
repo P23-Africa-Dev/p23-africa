@@ -107,7 +107,7 @@
                     <h2 id="our-story-heading" class="ab-story-title">OUR STORY</h2>
                     <h3 class="ab-story-subtitle">We aim to inspire</h3>
                 </div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
+                <p>Founded on the conviction that Africa’s vast growth potential requires deliberate, on-the-ground precision, P23 Africa bridges the gap between global enterprise ambition and local commercial reality. We help multinational organizations, investors, and high-growth scale-ups navigate regulatory landscapes, validate regional demand, and forge vetted distributor partnerships that drive sustainable, scalable market leadership.</p>
                 <a href="{{ url('contact') }}" class="ab-story-btn">Contact Us</a>
             </div>
 
