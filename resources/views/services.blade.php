@@ -12,6 +12,10 @@
     <link rel="stylesheet" href="{{ asset('css/services-new.css') }}">
 @endsection
 
+@section('navbar')
+    @include('layouts.includes.navbar-v2', ['theme' => 'dark', 'active' => 'what-we-do'])
+@endsection
+
 @section('content')
 <div class="services-page-wrapper">
     {{-- ==========================================
