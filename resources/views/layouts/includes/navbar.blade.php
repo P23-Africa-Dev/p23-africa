@@ -45,7 +45,7 @@
                                             <p>Insights on how we bring about growth in Africa</p>
                                         </div>
                                         <div class="col-md-3 line">
-                                            <a href="{{ url('services') }}#market" class="d-block mb-3"><b>Market
+                                            <a href="{{ url('market-entry') }}" class="d-block mb-3"><b>Market
                                                     Entry</b></a>
                                             <p>Wanna know how we have become great</p>
                                         </div>
