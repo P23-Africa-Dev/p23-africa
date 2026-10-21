@@ -4,7 +4,7 @@
 @section('meta')
 <meta name="description" content="{{ $caseStudy['summary'] }}">
 <link rel="stylesheet" href="{{ asset('css/services-new.css') }}">
-<link rel="stylesheet" href="{{ asset('css/case-studies.css') }}?v=2">
+<link rel="stylesheet" href="{{ asset('css/case-studies.css') }}?v=3">
 @endsection
 @section('content')
 <section class="cs-hero" aria-labelledby="case-title">
@@ -57,6 +57,12 @@
         <div class="cs-outcome">
             <h2>The Outcome:</h2>
             <p>{{ $caseStudy['outcome'] }}</p>
+            @if ($caseStudy['quote'] ?? null)
+                <blockquote class="cs-quote">
+                    <p>“{{ $caseStudy['quote'] }}”</p>
+                    <footer>Client review, {{ $caseStudy['client'] }}</footer>
+                </blockquote>
+            @endif
         </div>
     </section>
     <nav class="cs-navigation" aria-label="Browse case studies">
