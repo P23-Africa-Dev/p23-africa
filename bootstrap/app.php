@@ -14,6 +14,10 @@
             health: '/up',
         )
         ->withMiddleware(function (Middleware $middleware) {
+            if (getenv('VERCEL') || getenv('VERCEL_ENV')) {
+                $middleware->trustProxies(at: '*');
+            }
+
             $middleware->web(append: [
                 \App\Http\Middleware\VerifyCsrfToken::class,
             ]);

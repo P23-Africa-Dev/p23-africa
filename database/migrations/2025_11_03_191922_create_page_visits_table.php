@@ -11,11 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('page_visits')) {
+            return;
+        }
+
         Schema::create('page_visits', function (Blueprint $table) {
             $table->id();
             $table->string('route_name');
             $table->string('page_title')->nullable();
-            $table->string('page_url');
+            $table->text('page_url');
             $table->string('device_type');
             $table->string('ip_address');
             $table->text('user_agent');
