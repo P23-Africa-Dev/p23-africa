@@ -4,7 +4,7 @@
 @section('meta')
 <meta name="description" content="{{ $caseStudy['summary'] }}">
 <link rel="stylesheet" href="{{ asset('css/services-new.css') }}">
-<link rel="stylesheet" href="{{ asset('css/case-studies.css') }}?v=3">
+<link rel="stylesheet" href="{{ asset('css/case-studies.css') }}?v=5">
 @endsection
 @section('content')
 <section class="cs-hero" aria-labelledby="case-title">
@@ -29,7 +29,9 @@
         </figure>
     </section>
     <section class="cs-challenge" aria-labelledby="challenge-title">
-        <h2 id="challenge-title">The Challenge for<br>{{ $caseStudy['client'] }}</h2>
+        <h2 id="challenge-title">The Challenge for<br>
+        {{ $caseStudy['client'] }}
+    </h2>
         <p>{{ $caseStudy['challenge'] }}</p>
     </section>
     <section class="cs-process" aria-labelledby="process-title">
@@ -57,12 +59,12 @@
         <div class="cs-outcome">
             <h2>The Outcome:</h2>
             <p>{{ $caseStudy['outcome'] }}</p>
-            @if ($caseStudy['quote'] ?? null)
+            <!-- @if ($caseStudy['quote'] ?? null)
                 <blockquote class="cs-quote">
                     <p>“{{ $caseStudy['quote'] }}”</p>
                     <footer>Client review, {{ $caseStudy['client'] }}</footer>
                 </blockquote>
-            @endif
+            @endif -->
         </div>
     </section>
     <nav class="cs-navigation" aria-label="Browse case studies">
