@@ -4,7 +4,7 @@
 @section('meta')
 <meta name="description" content="{{ $caseStudy['summary'] }}">
 <link rel="stylesheet" href="{{ asset('css/services-new.css') }}">
-<link rel="stylesheet" href="{{ asset('css/case-studies.css') }}?v=4">
+<link rel="stylesheet" href="{{ asset('css/case-studies.css') }}?v=5">
 @endsection
 @section('content')
 <section class="cs-hero" aria-labelledby="case-title">
@@ -29,7 +29,9 @@
         </figure>
     </section>
     <section class="cs-challenge" aria-labelledby="challenge-title">
-        <h2 id="challenge-title">The Challenge for<br>{{ $caseStudy['client'] }}</h2>
+        <h2 id="challenge-title">The Challenge for<br>
+        {{ $caseStudy['client'] }}
+    </h2>
         <p>{{ $caseStudy['challenge'] }}</p>
     </section>
     <section class="cs-process" aria-labelledby="process-title">

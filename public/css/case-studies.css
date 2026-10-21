@@ -148,7 +148,7 @@ body.case-study-page #navbar .subscribe #btn {
 }
 
 .cs-challenge h2 {
-    font-size: 48px;
+    font-size: 45px;
     line-height: 41px;
     font-weight: bold;
     font-style: italic;
@@ -199,7 +199,7 @@ body.case-study-page #navbar .subscribe #btn {
     border-radius: 50%;
     display: grid;
     place-items: center;
-    background: #ebebeb;
+    background: #f4f8f9;
 }
 
 .cs-icon img {
@@ -264,7 +264,14 @@ body.case-study-page #navbar .subscribe #btn {
     letter-spacing: .34px;
 }
 
+/* Stretch the validation box so its bottom border lines up with the outcome box. */
+.cs-data {
+    display: flex;
+    flex-direction: column;
+}
+
 .cs-validation {
+    flex: 1 0 auto;
     border: 1px solid white;
     border-radius: 10px;
     padding: 17px 16px;
@@ -671,7 +678,7 @@ body.case-study-page #navbar .navbar-toggler img {
 .cs-quote p,
 .cs-discovery p {
     font-size: 14px;
-    line-height: 1.6;
+    line-height: 1.3;
     font-weight: 400;
     font-style: normal;
 }
