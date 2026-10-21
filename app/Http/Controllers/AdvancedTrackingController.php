@@ -47,29 +47,38 @@ class AdvancedTrackingController extends Controller
             ->where('created_at', '>=', now()->subDay())
             ->exists();
 
-        // Create visit record
-        $visit = PageVisit::create([
-            'route_name' => $routeName,
-            'page_title' => $this->getPageTitle($routeName),
-            'page_url' => $request->input('url'),
-            'device_type' => $agent->isMobile() ? 'mobile' : ($agent->isTablet() ? 'tablet' : 'desktop'),
-            'ip_address' => $ipAddress,
-            'user_agent' => $request->userAgent(),
-            'browser' => $agent->browser(),
-            'browser_version' => $agent->version($agent->browser()),
-            'platform' => $agent->platform(),
-            'platform_version' => $agent->version($agent->platform()),
-            'referrer' => $request->input('referrer'),
-            'session_id' => session()->getId(),
-            'country' => $country,
-            'city' => $city,
-            'timezone' => $request->input('timezone'),
-            'is_unique_visitor' => $isUniqueVisitor,
-            'screen_width' => $request->input('screen_width'),
-            'screen_height' => $request->input('screen_height'),
-        ]);
+        try {
+            // Create visit record
+            $visit = PageVisit::create([
+                'route_name' => $routeName,
+                'page_title' => $this->getPageTitle($routeName),
+                'page_url' => $request->input('url'),
+                'device_type' => $agent->isMobile() ? 'mobile' : ($agent->isTablet() ? 'tablet' : 'desktop'),
+                'ip_address' => $ipAddress,
+                'user_agent' => $request->userAgent(),
+                'browser' => $agent->browser(),
+                'browser_version' => $agent->version($agent->browser()),
+                'platform' => $agent->platform(),
+                'platform_version' => $agent->version($agent->platform()),
+                'referrer' => $request->input('referrer'),
+                'session_id' => session()->getId(),
+                'country' => $country,
+                'city' => $city,
+                'timezone' => $request->input('timezone'),
+                'is_unique_visitor' => $isUniqueVisitor,
+                'screen_width' => $request->input('screen_width'),
+                'screen_height' => $request->input('screen_height'),
+            ]);
 
-        return response()->json(['visit_id' => $visit->id]);
+            return response()->json(['visit_id' => $visit->id]);
+        } catch (\Throwable $e) {
+            Log::warning('Advanced page visit tracking failed', [
+                'route_name' => $routeName,
+                'error' => $e->getMessage(),
+            ]);
+
+            return response()->json(['error' => 'Tracking failed'], 500);
+        }
     }
 
     private function handleTimeUpdate(Request $request)

@@ -72,6 +72,16 @@
         "test": [
             "@php artisan config:clear --ansi",
             "@php artisan test"
+        ],
+        "vercel": [
+            "mkdir -p bootstrap/cache storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs",
+            "@php database/build-preview-sqlite.php",
+            "rm -rf vendor/google/apiclient-services",
+            "composer dump-autoload --no-dev --optimize --no-interaction --no-scripts",
+            "@php artisan package:discover --ansi",
+            "npm ci --include=dev",
+            "npm run build",
+            "rm -rf node_modules"
         ]
     },
     "extra": {

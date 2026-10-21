@@ -15,67 +15,77 @@ class ClickTracker
 {
     public static function track($routeName, $pageTitle = null, $additionalData = [])
     {
-        $agent = new Agent();
-        $request = Request::instance();
+        try {
+            $agent = new Agent();
+            $request = Request::instance();
 
-        // Get device information
-        $deviceType = $agent->isMobile() ? 'mobile' : ($agent->isTablet() ? 'tablet' : 'desktop');
+            // Get device information
+            $deviceType = $agent->isMobile() ? 'mobile' : ($agent->isTablet() ? 'tablet' : 'desktop');
 
-        // Get location data (you may want to integrate with a GeoIP service)
-        $ipAddress = $request->ip();
-        $rawCountry = self::getCountryFromIP($ipAddress);
-        $country = self::normalizeCountry($rawCountry);
-        $city = self::getCityFromIP($ipAddress);
+            // Get location data (you may want to integrate with a GeoIP service)
+            $ipAddress = $request->ip();
+            $rawCountry = self::getCountryFromIP($ipAddress);
+            $country = self::normalizeCountry($rawCountry);
+            $city = self::getCityFromIP($ipAddress);
 
-        // Check if this is a unique visitor
-        $sessionId = Session::getId();
-        $isUniqueVisitor = !PageVisit::where('ip_address', $ipAddress)
-            ->where('route_name', $routeName)
-            ->where('created_at', '>=', now()->subDay())
-            ->exists();
+            // Check if this is a unique visitor
+            $sessionId = Session::getId();
+            $isUniqueVisitor = !PageVisit::where('ip_address', $ipAddress)
+                ->where('route_name', $routeName)
+                ->where('created_at', '>=', now()->subDay())
+                ->exists();
 
-        // Create detailed visit record
-        $visitData = [
-            'route_name' => $routeName,
-            'page_title' => $pageTitle ?? self::getPageTitle($routeName),
-            'page_url' => $request->fullUrl(),
-            'device_type' => $deviceType,
-            'ip_address' => $ipAddress,
-            'user_agent' => $request->userAgent(),
-            'browser' => $agent->browser(),
-            'browser_version' => $agent->version($agent->browser()),
-            'platform' => $agent->platform(),
-            'platform_version' => $agent->version($agent->platform()),
-            'referrer' => $request->header('referer'),
-            'session_id' => $sessionId,
-            'country' => $country,
-            'city' => $city,
-            'is_unique_visitor' => $isUniqueVisitor,
-            'screen_width' => $additionalData['screen_width'] ?? null,
-            'screen_height' => $additionalData['screen_height'] ?? null,
-        ];
-
-        $pageVisit = PageVisit::create($visitData);
-
-        // Update the aggregate clicks table for backward compatibility
-        $clicks = Click::where('route_name', $routeName)
-            ->where('device_type', $deviceType)
-            ->first();
-
-        if ($clicks) {
-            $clicks->increment('click_count');
-            $clicks->touch();
-        } else {
-            $clicks = Click::create([
+            // Create detailed visit record
+            $visitData = [
                 'route_name' => $routeName,
+                'page_title' => $pageTitle ?? self::getPageTitle($routeName),
+                'page_url' => $request->fullUrl(),
                 'device_type' => $deviceType,
-                'click_count' => 1,
+                'ip_address' => $ipAddress,
+                'user_agent' => $request->userAgent(),
+                'browser' => $agent->browser(),
+                'browser_version' => $agent->version($agent->browser()),
+                'platform' => $agent->platform(),
+                'platform_version' => $agent->version($agent->platform()),
+                'referrer' => $request->header('referer'),
+                'session_id' => $sessionId,
+                'country' => $country,
+                'city' => $city,
+                'is_unique_visitor' => $isUniqueVisitor,
+                'screen_width' => $additionalData['screen_width'] ?? null,
+                'screen_height' => $additionalData['screen_height'] ?? null,
+            ];
+
+            $pageVisit = PageVisit::create($visitData);
+
+            // Update the aggregate clicks table for backward compatibility
+            $clicks = Click::where('route_name', $routeName)
+                ->where('device_type', $deviceType)
+                ->first();
+
+            if ($clicks) {
+                $clicks->increment('click_count');
+                $clicks->touch();
+            } else {
+                $clicks = Click::create([
+                    'route_name' => $routeName,
+                    'device_type' => $deviceType,
+                    'click_count' => 1,
+                ]);
+            }
+
+            event(new AdminClicksEvent($clicks));
+
+            return $pageVisit;
+        } catch (\Throwable $e) {
+            // Never let analytics take down a public page (e.g. long social URLs)
+            Log::warning('Page visit tracking failed', [
+                'route_name' => $routeName,
+                'error' => $e->getMessage(),
             ]);
+
+            return null;
         }
-
-        event(new AdminClicksEvent($clicks));
-
-        return $pageVisit;
     }
 
     private static function getPageTitle($routeName)
