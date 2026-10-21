@@ -861,8 +861,8 @@
 /* Bracket Graphic on the Left: Figma Vector 9: 71px x 224px, 2px solid #FFFFFF */
 .inefficiency-bracket {
     position: absolute;
-    left: -81px;
-    top: 3px;
+    left: -80px;
+    top: 58px;
     width: 71px;
     height: 224px;
     border-left: 2px solid #FFFFFF;
@@ -871,6 +871,7 @@
     border-right: none;
     pointer-events: none;
     box-sizing: border-box;
+    z-index: 2;
 }
 
 /* Top Stat & Statement */
@@ -883,14 +884,34 @@
     margin-bottom: 28px;
 }
 
+.inefficiency-percent-wrap {
+    position: relative;
+    display: inline-block;
+    margin: 0 0 16px 0;
+}
+
+/* Black half-background: Figma Rectangle 3468071: 275px x 68px, fill #0E1623 */
+.inefficiency-percent-backdrop {
+    position: absolute;
+    left: -10px;
+    bottom: 4px;
+    width: 275px;
+    height: 68px;
+    background-color: #0E1623;
+    z-index: 0;
+    pointer-events: none;
+}
+
 .inefficiency-percent {
+    position: relative;
     font-family: "GT Walsheim Pro", "GT Walsheim Trial", var(--font-sans);
     font-weight: 800;
     font-size: clamp(64px, 8.5vw, 117px);
     line-height: 1;
     color: #FFFFFF;
     letter-spacing: -0.02em;
-    margin: 0 0 16px 0;
+    margin: 0;
+    z-index: 1;
 }
 
 .inefficiency-statement {
@@ -908,6 +929,7 @@
 .inefficiency-breakdown-box {
     width: 100%;
     max-width: 646px;
+    height: 122px;
     min-height: 122px;
     margin-left: 17px;
     background-color: #141E30;
@@ -967,17 +989,25 @@
         min-height: auto;
     }
 
+    .inefficiency-percent-backdrop {
+        width: clamp(160px, 45vw, 240px);
+        height: clamp(38px, 10vw, 56px);
+        left: -6px;
+        bottom: 2px;
+    }
+
     .inefficiency-breakdown-box {
         padding: 16px 12px;
         gap: 8px;
         min-height: auto;
+        height: auto;
     }
 
     .inefficiency-hero-stat {
         margin-bottom: 24px;
     }
 
-    .inefficiency-percent {
+    .inefficiency-percent-wrap {
         margin-bottom: 12px;
     }
 }

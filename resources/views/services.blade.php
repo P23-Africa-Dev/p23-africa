@@ -346,7 +346,10 @@
 
                 {{-- Headline Number & Callout Statement --}}
                 <div class="inefficiency-hero-stat">
-                    <div class="inefficiency-percent">57%</div>
+                    <div class="inefficiency-percent-wrap">
+                        <div class="inefficiency-percent-backdrop" aria-hidden="true"></div>
+                        <div class="inefficiency-percent">57%</div>
+                    </div>
                     <p class="inefficiency-statement">
                         of organizations say operational inefficiencies hold back their growth
                     </p>
