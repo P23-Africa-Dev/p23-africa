@@ -20,7 +20,7 @@
 
             <nav class="p23-nav-links" id="p23NavLinks" aria-label="Main Navigation">
                 <a href="{{ url('about') }}" class="p23-nav-link {{ $active === 'who-we-are' ? 'active' : '' }}">Who We Are</a>
-                <a href="{{ url('services') }}" class="p23-nav-link {{ $active === 'what-we-do' ? 'active' : '' }}">What We Do</a>
+                <a href="{{ url('services') }}" class="p23-nav-link {{ in_array($active, ['what-we-do', 'services']) ? 'active' : '' }}">Services</a>
                 <a href="{{ route('event') }}" class="p23-nav-link {{ $active === 'events' ? 'active' : '' }}">Events</a>
                 <a href="{{ route('resource-hub') }}" class="p23-nav-link {{ $active === 'resource-hub' ? 'active' : '' }}">Resource Hub</a>
                 <a href="{{ route('brn') }}" class="p23-nav-link {{ $active === 'business-network' ? 'active' : '' }}">Business Network</a>
@@ -70,7 +70,7 @@
         </div>
         <nav class="p23-mobile-links">
             <a href="{{ url('about') }}" class="p23-mobile-link {{ $active === 'who-we-are' ? 'active' : '' }}">Who We Are</a>
-            <a href="{{ url('services') }}" class="p23-mobile-link {{ $active === 'what-we-do' ? 'active' : '' }}">What We Do</a>
+            <a href="{{ url('services') }}" class="p23-mobile-link {{ in_array($active, ['what-we-do', 'services']) ? 'active' : '' }}">Services</a>
             <a href="{{ route('event') }}" class="p23-mobile-link {{ $active === 'events' ? 'active' : '' }}">Events</a>
             <a href="{{ route('resource-hub') }}" class="p23-mobile-link {{ $active === 'resource-hub' ? 'active' : '' }}">Resource Hub</a>
             <a href="{{ route('brn') }}" class="p23-mobile-link {{ $active === 'business-network' ? 'active' : '' }}">Business Network</a>

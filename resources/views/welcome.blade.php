@@ -96,6 +96,94 @@
 
     }
 
+    /* ==========================================================================
+       Partner / Client Logos Section - Infinite Marquee with Breathing Space
+       ========================================================================== */
+    .partner-logos-section {
+        width: 100%;
+        padding: clamp(50px, 6vw, 90px) 0;
+        /* margin: clamp(40px, 5vw, 75px) 0; */
+        background: #FFFFFF;
+        position: relative;
+        overflow: hidden;
+        z-index: 2;
+    }
+
+    .partner-logos-container {
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 0 24px;
+    }
+
+    .partner-logos-title {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: clamp(15px, 1.4vw, 18px);
+    line-height: 24px;
+    letter-spacing: 0%;
+    text-align: center;
+    color: var(--color-navy-muted);
+    margin: 0 0 clamp(24px, 3.5vw, 40px) 0;
+}
+
+    .partner-marquee-wrapper {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        padding: 12px 0;
+        mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+    }
+
+    .partner-marquee-track {
+        display: flex;
+        width: max-content;
+        animation: partnerMarqueeScroll 28s linear infinite;
+        will-change: transform;
+    }
+
+    .partner-marquee-track:hover {
+        animation-play-state: paused;
+    }
+
+    .partner-marquee-group {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+    }
+
+    .partner-logo-item {
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 clamp(28px, 4.5vw, 56px);
+        transition: transform 0.35s ease;
+    }
+
+    .partner-logo-item:hover {
+        transform: translateY(-4px) scale(1.06);
+    }
+
+    .partner-logo-item img {
+        height: clamp(55px, 6vw, 85px);
+        width: auto;
+        max-width: 190px;
+        object-fit: contain;
+        display: block;
+        mix-blend-mode: multiply;
+        filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.04));
+    }
+
+    @keyframes partnerMarqueeScroll {
+        0% {
+            transform: translate3d(0, 0, 0);
+        }
+        100% {
+            transform: translate3d(-50%, 0, 0);
+        }
+    }
+
     #highlight a {
         padding: 15px 40px;
         /* height: 64px;
@@ -628,6 +716,37 @@
         gap: 12px;
         color: #27E6A7;
     }
+    .capability-tags {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 5px 8px;
+        margin: 1.1rem 0 1.5rem 0;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(13, 64, 54, 0.08);
+    }
+    .capability-tags .tag-item {
+        font-family: "GT Walsheim Trial Cn Rg", "Montserrat", sans-serif;
+        font-size: 13.5px;
+        font-weight: 500;
+        color: #485c57;
+        line-height: 1.35;
+    }
+    .capability-tags .tag-dot {
+        color: #27E6A7;
+        font-weight: 700;
+        font-size: 13px;
+        user-select: none;
+    }
+    .capability-card.featured-card .capability-tags {
+        border-top-color: rgba(255, 255, 255, 0.15);
+    }
+    .capability-card.featured-card .capability-tags .tag-item {
+        color: #c9e8e1;
+    }
+    .capability-card.featured-card .capability-tags .tag-dot {
+        color: #27E6A7;
+    }
 
     /* 2. Approach Section */
     .approach-section {
@@ -750,51 +869,77 @@
         margin: 0;
     }
     .sector-card {
-        background: #fafcfb;
-        border: 1px solid #e7efe9;
-        border-radius: 14px;
-        padding: 1.8rem;
+        background: #ffffff;
+        border: 1px solid rgba(13, 64, 54, 0.1);
+        border-radius: 18px;
+        padding: clamp(2rem, 3.5vw, 2.8rem);
         height: 100%;
         display: flex;
         flex-direction: column;
-        transition: all 0.3s ease;
+        justify-content: space-between;
+        transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
     }
     .sector-card:hover {
         background: #ffffff;
-        border-color: #0d4036;
-        transform: translateY(-4px);
-        box-shadow: 0 10px 28px rgba(13, 64, 54, 0.08);
+        border-color: rgba(39, 230, 167, 0.45);
+        transform: translateY(-5px);
+        box-shadow: 0 16px 36px rgba(13, 64, 54, 0.09);
     }
     .sector-icon {
-        width: 46px;
-        height: 46px;
-        border-radius: 10px;
-        background: rgba(13, 64, 54, 0.06);
+        width: 52px;
+        height: 52px;
+        border-radius: 12px;
+        background: rgba(39, 230, 167, 0.15);
         color: #0d4036;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 20px;
-        margin-bottom: 1.2rem;
+        font-size: 24px;
+        margin-bottom: 1.4rem;
         transition: all 0.3s ease;
     }
     .sector-card:hover .sector-icon {
-        background: #27E6A7;
-        color: #04201a;
+        background: #0d4036;
+        color: #27E6A7;
     }
     .sector-title {
-        font-family: "GT Walsheim ProCB", sans-serif;
-        font-size: 19px;
+        font-family: "GT Walsheim ProCB", "Montserrat", sans-serif;
+        font-size: clamp(21px, 1.8vw, 24px);
         font-weight: 700;
-        color: #101e1a;
-        margin-bottom: 0.65rem;
+        color: #0d4036;
+        margin-bottom: 0.8rem;
     }
     .sector-desc {
-        font-family: "GT Walsheim Trial Cn Rg", sans-serif;
-        font-size: 15.5px;
-        line-height: 1.5;
+        font-family: "GT Walsheim Trial Cn Rg", "Inter", sans-serif;
+        font-size: 16.5px;
+        line-height: 1.6;
         color: #556461;
         margin: 0;
+    }
+    .sector-verticals {
+        list-style: none;
+        padding: 0;
+        margin: 1.3rem 0 0 0;
+        padding-top: 1.3rem;
+        border-top: 1px solid rgba(13, 64, 54, 0.08);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .sector-verticals li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: "GT Walsheim Trial Cn Rg", "Montserrat", sans-serif;
+        font-size: 15px;
+        font-weight: 500;
+        color: #273e38;
+    }
+    .sector-verticals li i {
+        color: #27E6A7;
+        font-size: 16px;
+        flex-shrink: 0;
     }
 
     /* 4. Why P23 Africa Section */
@@ -1131,8 +1276,518 @@
         color: #6a7c78;
         transition: color 0.3s ease;
     }
-    .testimonial-card:hover h4 {
-        color: #d0eee9 !important;
+    /* ==========================================
+       PARTNER LOGOS MARQUEE SECTION
+       ========================================== */
+    .partner-logos-section {
+        position: relative;
+        width: 100%;
+        margin: clamp(55px, 6.5vw, 90px) 0;
+        padding: clamp(38px, 4.5vw, 58px) 0;
+        background: #fafcfb;
+        border-top: 1px solid rgba(13, 64, 54, 0.07);
+        border-bottom: 1px solid rgba(13, 64, 54, 0.07);
+        overflow: hidden;
+    }
+
+    .partner-logos-container {
+        max-width: 1320px;
+        margin: 0 auto;
+        padding: 0 24px;
+        text-align: center;
+    }
+
+    .partner-logos-title {
+        font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        font-weight: 400;
+        font-size: clamp(15px, 1.4vw, 18px);
+        line-height: 24px;
+        letter-spacing: 0%;
+        text-align: center;
+        text-transform: none;
+        color: rgba(5, 0, 56, 0.6);
+        margin: 0 0 clamp(24px, 3.5vw, 40px) 0;
+    }
+
+    .partner-marquee-wrapper {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+        padding: 14px 0 18px 0;
+    }
+
+    .partner-marquee-track {
+        display: flex;
+        align-items: center;
+        width: max-content;
+        animation: partnerMarqueeScroll 38s linear infinite;
+        will-change: transform;
+    }
+
+    .partner-marquee-wrapper:hover .partner-marquee-track {
+        animation-play-state: paused;
+    }
+
+    .partner-marquee-group {
+        display: flex;
+        align-items: center;
+        gap: clamp(40px, 5.5vw, 75px);
+        padding-right: clamp(40px, 5.5vw, 75px);
+        flex-shrink: 0;
+    }
+
+    .partner-logo-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-width: 155px;
+        padding: 0 12px;
+        gap: 12px;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+        opacity: 0.92;
+    }
+
+    .partner-logo-item:hover {
+        transform: translateY(-3px);
+        opacity: 1;
+    }
+
+    .partner-logo-item img {
+        height: 50px;
+        max-height: 50px;
+        max-width: 130px;
+        width: auto;
+        object-fit: contain;
+        display: block;
+        user-select: none;
+        pointer-events: none;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .partner-logo-item:hover img {
+        transform: scale(1.06);
+    }
+
+    .partner-logo-name {
+        font-family: "Montserrat", "GT Walsheim ProCB", sans-serif;
+        font-size: clamp(12.5px, 1.05vw, 13.5px);
+        font-weight: 600;
+        line-height: 1.25;
+        letter-spacing: -0.01em;
+        color: #1a3832;
+        text-align: center;
+        white-space: nowrap;
+        transition: color 0.3s ease;
+    }
+
+    .partner-logo-item:hover .partner-logo-name {
+        color: #07483e;
+    }
+
+    @keyframes partnerMarqueeScroll {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .partner-logos-section {
+            margin: 38px 0;
+            padding: 28px 0;
+        }
+        .partner-marquee-track {
+            animation-duration: 25s;
+        }
+        .partner-logo-item {
+            min-width: 125px;
+            padding: 0 8px;
+            gap: 8px;
+        }
+        .partner-logo-item img {
+            height: 38px;
+            max-height: 38px;
+            max-width: 95px;
+        }
+        .partner-logo-name {
+            font-size: 11.5px;
+        }
+    }
+
+    /* ========================================================
+       HOMEPAGE FEATURED CASE STUDIES (COMMERCIAL RESULTS)
+       ======================================================== */
+    .home-casestudy-section {
+        position: relative;
+        width: 100%;
+        padding: clamp(65px, 7vw, 105px) 0;
+        background: #f8faf9;
+        border-top: 1px solid rgba(13, 64, 54, 0.06);
+        border-bottom: 1px solid rgba(13, 64, 54, 0.06);
+    }
+
+    .home-casestudy-container {
+        max-width: 1220px;
+        margin: 0 auto;
+        padding: 0 clamp(20px, 3.5vw, 36px);
+    }
+
+    .home-casestudy-header {
+        text-align: center;
+        max-width: 780px;
+        margin: 0 auto clamp(32px, 4vw, 44px);
+    }
+
+    .home-casestudy-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-family: "GT Walsheim ProCB", "Montserrat", sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #003c32;
+        background: rgba(39, 230, 167, 0.16);
+        border: 1px solid rgba(39, 230, 167, 0.38);
+        padding: 6px 16px;
+        border-radius: 100px;
+        margin-bottom: 16px;
+    }
+
+    .home-casestudy-title {
+        font-family: "GT Walsheim ProCB", "Montserrat", sans-serif;
+        font-size: clamp(28px, 3.5vw, 42px);
+        font-weight: 700;
+        line-height: 1.22;
+        color: #07483e;
+        margin: 0 0 14px 0;
+        letter-spacing: -0.02em;
+    }
+
+    .home-casestudy-subtitle {
+        font-family: "GT Walsheim Trial Cn Rg", "Inter", sans-serif;
+        font-size: clamp(16px, 1.25vw, 18.5px);
+        line-height: 1.6;
+        color: #4e635e;
+        margin: 0;
+    }
+
+    /* Tabs Bar (matching market-entry capsule with homepage dark teal theme) */
+    .home-tabs-wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin: 0 auto clamp(28px, 3.5vw, 40px);
+    }
+
+    .home-tabs-container {
+        width: 100%;
+        max-width: 520px;
+        height: 56px;
+        border-radius: 100px;
+        background-color: #07483e;
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 6px;
+        box-shadow: 0 10px 28px rgba(7, 72, 62, 0.18);
+        position: relative;
+    }
+
+    .home-tab-btn {
+        flex: 1;
+        height: 46px;
+        border-radius: 100px;
+        border: none;
+        background: transparent;
+        color: #d0eee9;
+        font-family: "GT Walsheim ProCB", "Montserrat", sans-serif;
+        font-weight: 600;
+        font-size: clamp(13px, 1.1vw, 14.5px);
+        letter-spacing: 0.02em;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 8px 16px;
+        white-space: nowrap;
+        user-select: none;
+    }
+
+    .home-tab-btn:hover:not(.active) {
+        color: #ffffff;
+        background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .home-tab-btn.active {
+        background-color: #ffffff;
+        color: #07483e;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+    }
+
+    .home-tab-btn .tab-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background-color: #27E6A7;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .home-tab-btn.active .tab-dot {
+        opacity: 1;
+        background-color: #07483e;
+    }
+
+    /* Panes and Cards */
+    .home-case-panes-wrapper {
+        position: relative;
+        min-height: 420px;
+    }
+
+    .home-case-pane {
+        display: none;
+        opacity: 0;
+        transform: translateY(12px);
+        transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .home-case-pane.active {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .home-case-card {
+        background: #ffffff;
+        border: 1px solid rgba(13, 64, 54, 0.1);
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 16px 44px rgba(13, 64, 54, 0.07);
+        display: grid;
+        grid-template-columns: 46% 54%;
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease;
+    }
+
+    .home-case-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 24px 54px rgba(13, 64, 54, 0.12);
+        border-color: rgba(39, 230, 167, 0.45);
+    }
+
+    .home-case-visual {
+        position: relative;
+        overflow: hidden;
+        min-height: 380px;
+        background: #02241e;
+    }
+
+    .home-case-visual img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .home-case-card:hover .home-case-visual img {
+        transform: scale(1.05);
+    }
+
+    .home-case-badge {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background: rgba(7, 72, 62, 0.9);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        color: #ffffff;
+        font-family: "GT Walsheim ProCB", "Montserrat", sans-serif;
+        font-size: 12.5px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        padding: 6px 14px;
+        border-radius: 100px;
+        border: 1px solid rgba(39, 230, 167, 0.4);
+        z-index: 2;
+    }
+
+    .home-case-article {
+        padding: clamp(28px, 4vw, 44px);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .home-case-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-bottom: 16px;
+        font-family: "GT Walsheim ProCB", "Montserrat", sans-serif;
+        font-size: 13.5px;
+        color: #6a7f7a;
+    }
+
+    .home-case-meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .home-case-meta i {
+        color: #07483e;
+        font-size: 14px;
+    }
+
+    .home-case-heading {
+        font-family: "GT Walsheim ProCB", "Montserrat", sans-serif;
+        font-size: clamp(22px, 2.3vw, 29px);
+        font-weight: 700;
+        line-height: 1.3;
+        color: #07483e;
+        margin: 0 0 16px 0;
+        letter-spacing: -0.01em;
+    }
+
+    .home-case-description {
+        font-family: "GT Walsheim Trial Cn Rg", "Inter", sans-serif;
+        font-size: clamp(16px, 1.2vw, 17.5px);
+        line-height: 1.6;
+        color: #405550;
+        margin: 0 0 24px 0;
+    }
+
+    .home-case-metrics {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        padding: 16px 18px;
+        background: #f4faf8;
+        border: 1px solid rgba(13, 64, 54, 0.08);
+        border-radius: 14px;
+        margin-bottom: 26px;
+    }
+
+    .home-metric-item {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .home-metric-value {
+        font-family: "GT Walsheim ProCB", "Montserrat", sans-serif;
+        font-size: clamp(18px, 1.7vw, 22px);
+        font-weight: 700;
+        color: #07483e;
+        line-height: 1.1;
+    }
+
+    .home-metric-label {
+        font-family: "GT Walsheim Trial Cn Rg", "Inter", sans-serif;
+        font-size: 12.5px;
+        color: #637772;
+        line-height: 1.3;
+    }
+
+    .home-case-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 8px;
+    }
+
+    .home-case-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-family: "GT Walsheim ProCB", "Montserrat", sans-serif;
+        font-size: 15.5px;
+        font-weight: 700;
+        color: #07483e;
+        text-decoration: none;
+        padding: 12px 24px;
+        background: rgba(13, 64, 54, 0.06);
+        border-radius: 100px;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .home-case-link:hover {
+        background: #07483e;
+        color: #ffffff !important;
+        transform: translateX(4px);
+        box-shadow: 0 8px 20px rgba(7, 72, 62, 0.2);
+    }
+
+    .home-case-link .arrow {
+        transition: transform 0.3s ease;
+    }
+
+    .home-case-link:hover .arrow {
+        transform: translateX(4px);
+    }
+
+    .home-casestudy-all-link {
+        text-align: center;
+        margin-top: clamp(28px, 3.5vw, 40px);
+    }
+
+    .home-casestudy-all-link a {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-family: "GT Walsheim ProCB", "Montserrat", sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+        color: #07483e;
+        text-decoration: none;
+        border-bottom: 2px solid rgba(39, 230, 167, 0.7);
+        padding-bottom: 3px;
+        transition: all 0.25s ease;
+    }
+
+    .home-casestudy-all-link a:hover {
+        color: #00221c;
+        border-bottom-color: #07483e;
+        transform: translateX(2px);
+    }
+
+    @media (max-width: 991px) {
+        .home-case-card {
+            grid-template-columns: 1fr;
+        }
+        .home-case-visual {
+            min-height: 260px;
+            max-height: 320px;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .home-tabs-container {
+            height: auto;
+            border-radius: 18px;
+            flex-direction: column;
+            padding: 6px;
+        }
+        .home-tab-btn {
+            width: 100%;
+            height: 42px;
+            border-radius: 12px;
+        }
+        .home-case-metrics {
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
     }
 </style>
 
@@ -1142,14 +1797,14 @@
             <section class="hero content-section animate-on-scroll">
                 <div class="row hero-sec-row">
                     <div class="col-md-7 hero-text my-auto">
-                        <h1>Helping Global <br> Businesses Enter &amp; <br><span id="fonts">Grow Across Africa</span></h1>
+                        <h1>Enter African Markets <br> With Evidence <br><span id="fonts">Not Assumptions</span></h1>
                         <br>
                         <p>
-                          We help you understand African markets, validate opportunities, acquire customers and partners, and establish the foundations for sustainable growth.
+                          We help international businesses validate demand, verify distribution partners and build the sales operations needed to grow in Africa.<br>From testing real buyer interest to strengthening local sales teams and channel performance, we turn market-entry plans into commercial action.
                         </p>
                         <br>
                         <div>
-                            <a href="{{ url('contact') }}" class="d-flex justify-content-between"><span>Contact Us</span>
+                            <a href="{{ url('contact') }}" class="d-flex justify-content-between"><span>Discuss Your Market Entry</span>
                                 <span>→</span></a>
                         </div>
                     </div>
@@ -1185,60 +1840,242 @@
         </div>
     </header>
 
-    <div style="background-color: #003c32;" id="space">
+    {{-- ==========================================
+         PARTNER LOGOS MARQUEE (RIGHT TO LEFT LOOP)
+         ========================================== --}}
+    @php
+        $partnerLogos = [
+            [
+                'name' => 'CoolAir Systems',
+                'src' => asset('images/partner-logos/coolair-systems.png'),
+            ],
+            [
+                'name' => 'PackLine Machinery',
+                'src' => asset('images/partner-logos/packline-machinery.png'),
+            ],
+            [
+                'name' => 'CompactPower Equipment',
+                'src' => asset('images/partner-logos/compactpower-equipment.png'),
+            ],
+            [
+                'name' => 'Liftmasters International',
+                'src' => asset('images/partner-logos/liftmasters-international.png'),
+            ],
+            [
+                'name' => 'Agrimech International',
+                'src' => asset('images/partner-logos/agrimech-international.png'),
+            ],
+            [
+                'name' => 'Cloudworks Analytics',
+                'src' => asset('images/partner-logos/cloudworks-analytics.png'),
+            ],
+            [
+                'name' => 'Finedge Software',
+                'src' => asset('images/partner-logos/finedge-software.png'),
+            ],
+        ];
+    @endphp
 
-    </div>
-    <section id="highlight"
-        class="position-relative overflow-hidden content-section d-flex align-items-center justify-content-center">
-        <div class="highlight-overlay top-0 start-0"></div>
-        <div class="me-auto ms-auto text-center" style="width: 60%;">
-            <h3>
-                We help you identify what’s holding your business back and map a clear path forward.
-            </h3>
-            <div class="book">
-                <a href="{{ url('book-consultation') }}" class="">Book a Consultation</a>
+    <section class="partner-logos-section" id="trusted-partners" aria-label="Trusted by leading organizations">
+        <div class="partner-logos-container">
+            <p class="partner-logos-title">Trusted by 25k+ businesses</p>
+        </div>
+
+        <div class="partner-marquee-wrapper">
+            <div class="partner-marquee-track">
+                {{-- Group 1 --}}
+                <div class="partner-marquee-group">
+                    @foreach ($partnerLogos as $logo)
+                        <div class="partner-logo-item" title="{{ $logo['name'] }}">
+                            <img src="{{ $logo['src'] }}" alt="{{ $logo['name'] }}" loading="lazy">
+                            <span class="partner-logo-name">{{ $logo['name'] }}</span>
+                        </div>
+                    @endforeach
+                    @foreach ($partnerLogos as $logo)
+                        <div class="partner-logo-item" title="{{ $logo['name'] }}">
+                            <img src="{{ $logo['src'] }}" alt="{{ $logo['name'] }}" loading="lazy">
+                            <span class="partner-logo-name">{{ $logo['name'] }}</span>
+                        </div>
+                    @endforeach
+                </div>
+                {{-- Group 2 (Duplicate for seamless continuous loop) --}}
+                <div class="partner-marquee-group" aria-hidden="true">
+                    @foreach ($partnerLogos as $logo)
+                        <div class="partner-logo-item" title="{{ $logo['name'] }}">
+                            <img src="{{ $logo['src'] }}" alt="{{ $logo['name'] }}" loading="lazy">
+                            <span class="partner-logo-name">{{ $logo['name'] }}</span>
+                        </div>
+                    @endforeach
+                    @foreach ($partnerLogos as $logo)
+                        <div class="partner-logo-item" title="{{ $logo['name'] }}">
+                            <img src="{{ $logo['src'] }}" alt="{{ $logo['name'] }}" loading="lazy">
+                            <span class="partner-logo-name">{{ $logo['name'] }}</span>
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
     </section>
-    <div style="background-color: #003c32;" class="py-3">
 
-    </div>
-
-
-    <section class="container-fluid p-0 who-we-are content-section animate-on-scroll">
-        <div class="row g-0 align-items-center">
-            <!-- Left Column -->
-            <div class="col-md-6 position-relative overflow-hidden d-flex align-items-center justify-content-center">
-                <div class="bg-overlay position-absolute top-0 start-0"></div>
-                <img src="{{ asset('images/about.jpg') }}" loading='lazy' alt="People"
-                    class="img-fluid position-relative z-2 p-3 p-md-5">
+    {{-- ==========================================
+         FEATURED CASE STUDIES (COMMERCIAL RESULTS)
+         ========================================== --}}
+    <section class="home-casestudy-section" id="featured-case-studies" aria-label="Featured Case Studies">
+        <div class="home-casestudy-container">
+            
+            {{-- Section Header --}}
+            <div class="home-casestudy-header">
+                <span class="home-casestudy-kicker">CASE STUDIES</span>
+                <h2 class="home-casestudy-title">Commercial Results in Real Markets</h2>
+                <p class="home-casestudy-subtitle">
+                    Examine how international manufacturers and platforms validate real buyer demand and execute successful market expansion across Africa.
+                </p>
             </div>
 
-            <!-- Right Column -->
-            <div class="col-md-6 d-flex flex-column justify-content-center my-auto" style="display: flex !important; flex-direction: column !important; justify-content: center !important;">
-                <h2 class="fw-bold mb-4">Who We Are</h2>
-                <p class="mb-3">
-                    <strong>Africa is the future. Getting it right requires local understanding.</strong>
-                </p>
-                <p class="mb-3">
-                    Africa is not a single market. Each country has its own customers, regulations, commercial environment, routes to market, competitive landscape and business culture.
-                </p>
-                <p class="mb-3">
-                    For companies looking to enter or expand, the challenge is often not identifying the opportunity, it is knowing where to focus, who to work with and how to execute successfully.
-                </p>
-                <p class="mb-4">
-                    <strong>P23 Africa bridges that gap.</strong> We combine market intelligence, commercial expertise and local networks to help businesses move from market opportunity to practical execution.
-                </p>
-                <div>
-                    <a href="{{ url('about') }}" class="text-decoration-none learn-more"
-                        title="Learn more about P23 Africa">
-                        Learn more
-                        {{-- Learn more about P23 Africa --}}
-                        <img src="{{ asset('images/arrow.png') }}" loading='lazy' alt="">
-                    </a>
+            {{-- Tabs Bar (Inspired by market-entry lines 282-312, aligned with homepage design system) --}}
+            <div class="home-tabs-wrapper">
+                <div class="home-tabs-container" role="tablist" aria-label="Case Study Industry Tabs">
+                    <button type="button" 
+                            class="home-tab-btn active" 
+                            role="tab" 
+                            aria-selected="true" 
+                            aria-controls="home-pane-industrial" 
+                            data-target="#home-pane-industrial"
+                            id="tab-industrial"
+                            onclick="switchHomeCaseTab('home-pane-industrial', this)">
+                        <span class="tab-dot"></span>
+                        Industrial Equipment
+                    </button>
+                    <button type="button" 
+                            class="home-tab-btn" 
+                            role="tab" 
+                            aria-selected="false" 
+                            aria-controls="home-pane-construction" 
+                            data-target="#home-pane-construction"
+                            id="tab-construction"
+                            onclick="switchHomeCaseTab('home-pane-construction', this)">
+                        <span class="tab-dot"></span>
+                        Construction Equipment
+                    </button>
                 </div>
             </div>
+
+            {{-- Case Study Showcase Panes --}}
+            <div class="home-case-panes-wrapper">
+                
+                {{-- Pane 1: Industrial Equipment Manufacturer --}}
+                <div class="home-case-pane active" id="home-pane-industrial" role="tabpanel" aria-labelledby="tab-industrial">
+                    <div class="home-case-card">
+                        <div class="home-case-visual">
+                            <img src="{{ asset('images/case-studies/thermoflow.png') }}" 
+                                 alt="Testing Demand for an Industrial Equipment Manufacturer" 
+                                 loading="lazy">
+                            <span class="home-case-badge">Industrial Equipment</span>
+                        </div>
+
+                        <div class="home-case-article">
+                            <div>
+                                <div class="home-case-meta">
+                                    <span><i class="bi bi-geo-alt"></i> Nigeria (Lagos & Abuja)</span>
+                                    <span><i class="bi bi-clock"></i> 10-Week Demand Testing</span>
+                                </div>
+
+                                <h3 class="home-case-heading">
+                                    Testing Demand for an Industrial Equipment Manufacturer
+                                </h3>
+
+                                <p class="home-case-description">
+                                    Validated buyer interest, gathered market pricing insights and identified potential distribution partners in Nigeria.
+                                </p>
+
+                                <div class="home-case-metrics">
+                                    <div class="home-metric-item">
+                                        <span class="home-metric-value">312</span>
+                                        <span class="home-metric-label">Target Accounts</span>
+                                    </div>
+                                    <div class="home-metric-item">
+                                        <span class="home-metric-value">47</span>
+                                        <span class="home-metric-label">Qualified Opportunities</span>
+                                    </div>
+                                    <div class="home-metric-item">
+                                        <span class="home-metric-value">Verified</span>
+                                        <span class="home-metric-label">Distribution Route</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="home-case-footer">
+                                <a href="{{ url('case-studies/thermoflow-hvac') }}" class="home-case-link" id="btn-read-case-industrial">
+                                    Read the case study <span class="arrow">→</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Pane 2: Construction Equipment Platform --}}
+                <div class="home-case-pane" id="home-pane-construction" role="tabpanel" aria-labelledby="tab-construction">
+                    <div class="home-case-card">
+                        <div class="home-case-visual">
+                            <img src="{{ asset('images/case-studies/construction-platform.png') }}" 
+                                 alt="Supporting a Construction Equipment Platform's Market Expansion" 
+                                 loading="lazy">
+                            <span class="home-case-badge">Equipment Platform</span>
+                        </div>
+
+                        <div class="home-case-article">
+                            <div>
+                                <div class="home-case-meta">
+                                    <span><i class="bi bi-geo-alt"></i> East & West Africa</span>
+                                    <span><i class="bi bi-clock"></i> Multi-Market Expansion</span>
+                                </div>
+
+                                <h3 class="home-case-heading">
+                                    Supporting a Construction Equipment Platform's Market Expansion
+                                </h3>
+
+                                <p class="home-case-description">
+                                    Tested demand across multiple African markets, developed local partnerships and supported commercial launch execution.
+                                </p>
+
+                                <div class="home-case-metrics">
+                                    <div class="home-metric-item">
+                                        <span class="home-metric-value">3+</span>
+                                        <span class="home-metric-label">African Markets</span>
+                                    </div>
+                                    <div class="home-metric-item">
+                                        <span class="home-metric-value">Direct</span>
+                                        <span class="home-metric-label">Partner Validation</span>
+                                    </div>
+                                    <div class="home-metric-item">
+                                        <span class="home-metric-value">De-risked</span>
+                                        <span class="home-metric-label">Market Execution</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="home-case-footer">
+                                <a href="{{ url('case-studies/liftmasters-international') }}" class="home-case-link" id="btn-read-case-construction">
+                                    Read the case study <span class="arrow">→</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            {{-- All Case Studies Link --}}
+            <div class="home-casestudy-all-link">
+                <a href="{{ url('case-studies') }}" id="link-explore-all-case-studies">
+                    Explore all verified market case studies <span>→</span>
+                </a>
+            </div>
+
+        </div>
     </section>
+
+
 
     <section id="how_we_help" class="content-section animate-on-scroll">
         <div class="py-5 content">
@@ -1247,84 +2084,77 @@
             <div class="custom-underline"></div>
 
             <div class="row g-4 capabilities-grid">
-                <!-- 1. Market Entry & Expansion -->
+                <!-- 1. Distributor Verification -->
                 <div class="col-lg-4 col-md-6">
                     <div class="capability-card featured-card">
                         <div>
                             <div class="capability-icon">
-                                <i class="bi bi-compass"></i>
+                                <i class="bi bi-shield-check"></i>
                             </div>
-                            <h3 class="capability-title">Market Entry & Expansion</h3>
-                            <p class="capability-desc">Build practical strategies for entering and developing new African markets.</p>
+                            <h3 class="capability-title">Distributor Verification</h3>
+                            <p class="capability-desc">Assess prospective distribution partners before committing to a commercial relationship. Verify their capabilities, market coverage, customer access and suitability for your business.</p>
+                            <div class="capability-tags">
+                                <span class="tag-item">Partner due diligence</span>
+                                <span class="tag-dot">·</span>
+                                <span class="tag-item">Capability assessment</span>
+                                <span class="tag-dot">·</span>
+                                <span class="tag-item">Market coverage</span>
+                                <span class="tag-dot">·</span>
+                                <span class="tag-item">Commercial fit</span>
+                            </div>
                         </div>
-                        <a href="{{ url('market-entry') }}" class="capability-link">
-                            Explore market entry <i class="bi bi-arrow-right"></i>
+                        <a href="{{ url('services') }}#partner-dev" class="capability-link">
+                            Explore partner verification <i class="bi bi-arrow-right"></i>
                         </a>
                     </div>
                 </div>
 
-                 <!-- 3. Distributor & Partner Development -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="capability-card">
-                        <div>
-                            <div class="capability-icon">
-                                <i class="bi bi-diagram-3"></i>
-                            </div>
-                            <h3 class="capability-title">Distributor & Partner Development</h3>
-                            <p class="capability-desc">Find, assess and verify the right local commercial relationships.</p>
-                        </div>
-                        <a href="{{ url('services') }}" class="capability-link">
-                            Explore partner development <i class="bi bi-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- 2. Sales & Business Development -->
+                <!-- 2. Outbound Demand Testing -->
                 <div class="col-lg-4 col-md-6">
                     <div class="capability-card">
                         <div>
                             <div class="capability-icon">
                                 <i class="bi bi-graph-up-arrow"></i>
                             </div>
-                            <h3 class="capability-title">Outbound Sales Demand Testing</h3>
-                            <p class="capability-desc">Generate opportunities, develop relationships and build commercial pipelines.</p>
+                            <h3 class="capability-title">Outbound Demand Testing</h3>
+                            <p class="capability-desc">Test your proposition with real prospective buyers and distributors before making significant market-entry investments. Gather direct feedback, assess buying interest and identify viable opportunities.</p>
+                            <div class="capability-tags">
+                                <span class="tag-item">Target buyer identification</span>
+                                <span class="tag-dot">·</span>
+                                <span class="tag-item">Direct outreach</span>
+                                <span class="tag-dot">·</span>
+                                <span class="tag-item">Demand validation</span>
+                                <span class="tag-dot">·</span>
+                                <span class="tag-item">Sales opportunity reporting</span>
+                            </div>
                         </div>
                         <a href="{{ url('services') }}#sales" class="capability-link">
-                            Explore business development <i class="bi bi-arrow-right"></i>
+                            Explore demand testing <i class="bi bi-arrow-right"></i>
                         </a>
                     </div>
                 </div>
 
-               
-
-                <!-- 4. Operations & Market Support -->
-                <div class="col-lg-6 col-md-6">
+                <!-- 3. Sales & Commercial Operations -->
+                <div class="col-lg-4 col-md-12">
                     <div class="capability-card">
                         <div>
                             <div class="capability-icon">
                                 <i class="bi bi-gear-wide-connected"></i>
                             </div>
-                            <h3 class="capability-title">Operations & Market Support</h3>
-                            <p class="capability-desc">Build the local capabilities and relationships required to operate effectively.</p>
-                        </div>
-                        <a href="{{ url('services') }}" class="capability-link">
-                            Explore operational support <i class="bi bi-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- 5. Investment & Growth Readiness -->
-                <div class="col-lg-6 col-md-12">
-                    <div class="capability-card">
-                        <div>
-                            <div class="capability-icon">
-                                <i class="bi bi-shield-check"></i>
+                            <h3 class="capability-title">Sales & Commercial Operations</h3>
+                            <p class="capability-desc">Build and support the local sales operation that turns market opportunity into revenue, including sales teams, channel partner performance, CRM systems and commercial reporting.</p>
+                            <div class="capability-tags">
+                                <span class="tag-item">Sales team setup</span>
+                                <span class="tag-dot">·</span>
+                                <span class="tag-item">Partner management</span>
+                                <span class="tag-dot">·</span>
+                                <span class="tag-item">CRM and reporting</span>
+                                <span class="tag-dot">·</span>
+                                <span class="tag-item">Ongoing execution</span>
                             </div>
-                            <h3 class="capability-title">Investment & Growth Readiness</h3>
-                            <p class="capability-desc">Strengthen businesses preparing for investment, partnerships or significant expansion.</p>
                         </div>
-                        <a href="{{ url('services') }}" class="capability-link">
-                            Explore growth readiness <i class="bi bi-arrow-right"></i>
+                        <a href="{{ url('services') }}#operations" class="capability-link">
+                            Explore commercial operations <i class="bi bi-arrow-right"></i>
                         </a>
                     </div>
                 </div>
@@ -1355,121 +2185,47 @@
         </div>
     </section>
 
-    <!-- Methodology / Approach Section -->
-    <section id="approach" class="approach-section content-section animate-on-scroll">
-        <div class="container">
-            <div class="approach-header">
-                <span class="section-eyebrow">OUR METHODOLOGY</span>
-                <h2>A Practical Approach to African Expansion</h2>
-                <div class="approach-subline">Understand. Validate. Connect. Execute.</div>
-            </div>
 
-            <div class="approach-callout">
-                <p>
-                    <strong>We don’t believe in producing market reports that sit on a shelf.</strong>
-                    Our approach is designed to help businesses make better-informed commercial decisions and take practical action.
-                </p>
-            </div>
 
-            <div class="row g-4">
-                <div class="col-lg-3 col-md-6">
-                    <div class="step-card">
-                        <span class="step-badge">STAGE 01</span>
-                        <h3 class="step-title">Understand</h3>
-                        <p class="step-desc">We research the market, sector, customer landscape and competitive environment.</p>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="step-card">
-                        <span class="step-badge">STAGE 02</span>
-                        <h3 class="step-title">Validate</h3>
-                        <p class="step-desc">We test assumptions and gather real-world feedback from customers, partners and market participants.</p>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="step-card">
-                        <span class="step-badge">STAGE 03</span>
-                        <h3 class="step-title">Connect</h3>
-                        <p class="step-desc">We identify relevant customers, distributors, partners, investors and other stakeholders.</p>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="step-card">
-                        <span class="step-badge">STAGE 04</span>
-                        <h3 class="step-title">Execute</h3>
-                        <p class="step-desc">We support the commercial activity required to turn the opportunity into a functioning market presence.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sectors Section -->
+    <!-- Who We Help Section -->
     <section id="sectors" class="sectors-section content-section animate-on-scroll">
         <div class="container">
             <div class="sectors-header">
-                <span class="section-eyebrow">SECTOR EXPERTISE</span>
-                <h2>We Work with Businesses Across Key Sectors</h2>
+                <span class="section-eyebrow">WHO WE HELP</span>
+                <h2>Built for International Businesses Expanding into Africa</h2>
                 <p>Specialized commercial strategies tailored to industry realities across Africa.</p>
             </div>
 
-            <div class="row g-4">
-                <div class="col-lg-3 col-md-6">
+            <div class="row g-4 justify-content-center">
+                <!-- 1. Equipment and industrial manufacturers -->
+                <div class="col-lg-6 col-md-6">
                     <div class="sector-card">
-                        <div class="sector-icon"><i class="bi bi-tools"></i></div>
-                        <h3 class="sector-title">Industrial & Equipment</h3>
-                        <p class="sector-desc">Helping manufacturers test demand, identify customers and verify distributors before committing to a market.</p>
+                        <div>
+                            <div class="sector-icon"><i class="bi bi-tools"></i></div>
+                            <h3 class="sector-title">Equipment and Industrial Manufacturers</h3>
+                            <p class="sector-desc">Helping international manufacturers test market demand, identify target enterprise customers, and verify reliable distribution partners before committing to a market.</p>
+                            <ul class="sector-verticals">
+                                <li><i class="bi bi-check-circle-fill"></i> Heavy equipment & industrial machinery</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Construction & infrastructure platforms</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Agricultural & manufacturing equipment</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-md-6">
+                <!-- 2. Software and SaaS companies -->
+                <div class="col-lg-6 col-md-6">
                     <div class="sector-card">
-                        <div class="sector-icon"><i class="bi bi-cpu"></i></div>
-                        <h3 class="sector-title">Technology & Digital</h3>
-                        <p class="sector-desc">Supporting technology companies seeking customers, partners and routes to market across Africa.</p>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="sector-card">
-                        <div class="sector-icon"><i class="bi bi-cart3"></i></div>
-                        <h3 class="sector-title">FMCG & Consumer</h3>
-                        <p class="sector-desc">Helping brands understand consumer markets, identify distribution opportunities and develop routes to market.</p>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="sector-card">
-                        <div class="sector-icon"><i class="bi bi-heart-pulse"></i></div>
-                        <h3 class="sector-title">Healthcare & Life Sciences</h3>
-                        <p class="sector-desc">Supporting companies navigating market opportunities, commercial relationships and local market requirements.</p>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <div class="sector-card">
-                        <div class="sector-icon"><i class="bi bi-tree"></i></div>
-                        <h3 class="sector-title">Agriculture & Agribusiness</h3>
-                        <p class="sector-desc">Identifying opportunities across agricultural value chains and supporting commercial development.</p>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <div class="sector-card">
-                        <div class="sector-icon"><i class="bi bi-lightning-charge"></i></div>
-                        <h3 class="sector-title">Energy & Infrastructure</h3>
-                        <p class="sector-desc">Supporting businesses operating in sectors where local relationships, market knowledge and long-term commercial development are critical.</p>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-12">
-                    <div class="sector-card">
-                        <div class="sector-icon"><i class="bi bi-briefcase"></i></div>
-                        <h3 class="sector-title">Professional & Business Services</h3>
-                        <p class="sector-desc">Helping service businesses identify opportunities, develop partnerships and build their presence across African markets.</p>
+                        <div>
+                            <div class="sector-icon"><i class="bi bi-cpu"></i></div>
+                            <h3 class="sector-title">Software and SaaS Companies</h3>
+                            <p class="sector-desc">Supporting technology companies and software platforms seeking enterprise clients, commercial partnerships, and routes to market across Africa.</p>
+                            <ul class="sector-verticals">
+                                <li><i class="bi bi-check-circle-fill"></i> Fintech and financial technology</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Logistics and supply chain businesses</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Compliance and RegTech providers</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1529,122 +2285,7 @@
 
 
 
-    <section class="testimonial-section content-section animate-on-scroll">
-        <div class="container">
-            <span class="testimonial-eyebrow">CLIENT IMPACT &amp; METRICS</span>
-            <h2>Proven Results Across African Markets</h2>
-            <p class="testimonial-sublead">
-                Real feedback from business leaders leveraging our services to test demand, establish local partners, and scale commercial operations.
-            </p>
-        </div>
-    </section>
 
-    <div class="testimonial-section-main">
-        <div class="container testimonial-container">
-            <div class="testimonial-wrapper">
-                <!-- 1. Market Entry & Expansion -->
-                <div class="testimonial">
-                    <div class="testimonial-card text-center">
-                        <img src="{{ asset('images/testimonial01.png') }}" loading='lazy' alt="Chioma Chukwu">
-                        <span class="testimonial-service-tag">
-                            <i class="bi bi-compass"></i> Market Entry &amp; Expansion
-                        </span>
-                        <div class="testimonial-metric-row">
-                            <div class="testimonial-metric-box">
-                                <div class="testimonial-metric-num">3</div>
-                                <div class="testimonial-metric-label">Markets Entered</div>
-                            </div>
-                            <div class="testimonial-metric-divider"></div>
-                            <div class="testimonial-metric-box">
-                                <div class="testimonial-metric-num">-45%</div>
-                                <div class="testimonial-metric-label">Launch Time</div>
-                            </div>
-                            <div class="testimonial-metric-divider"></div>
-                            <div class="testimonial-metric-box">
-                                <div class="testimonial-metric-num">$1.2M</div>
-                                <div class="testimonial-metric-label">Year 1 ARR</div>
-                            </div>
-                        </div>
-                        <p class="testimonial-quote">
-                            "P23 Africa engineered our cross-border expansion into <strong>3 new markets in 6 months</strong>. Their practical regulatory and market guidance cut our launch time by <strong>45%</strong> and unlocked <strong>$1.2M</strong> in first-year revenue."
-                        </p>
-                        <h5><b>Chioma Chukwu</b></h5>
-                        <h4>CEO, Horizon FinTech Group</h4>
-                    </div>
-                </div>
-
-                <!-- 2. Outbound Sales Demand Testing -->
-                <div class="testimonial">
-                    <div class="testimonial-card text-center">
-                        <img src="{{ asset('images/testimonial3.png') }}" loading='lazy' alt="John Blakey">
-                        <span class="testimonial-service-tag">
-                            <i class="bi bi-graph-up-arrow"></i> Outbound Sales Demand Testing
-                        </span>
-                        <div class="testimonial-metric-row">
-                            <div class="testimonial-metric-box">
-                                <div class="testimonial-metric-num">140+</div>
-                                <div class="testimonial-metric-label">B2B Leads</div>
-                            </div>
-                            <div class="testimonial-metric-divider"></div>
-                            <div class="testimonial-metric-box">
-                                <div class="testimonial-metric-num">$680K</div>
-                                <div class="testimonial-metric-label">Pipeline Closed</div>
-                            </div>
-                            <div class="testimonial-metric-divider"></div>
-                            <div class="testimonial-metric-box">
-                                <div class="testimonial-metric-num">+38%</div>
-                                <div class="testimonial-metric-label">Win Rate</div>
-                            </div>
-                        </div>
-                        <p class="testimonial-quote">
-                            "Their outbound sales demand testing delivered <strong>140+ verified B2B leads</strong> in <strong>90 days</strong>. We closed <strong>$680K in new contracts</strong> and lifted our sales conversion rate by <strong>38%</strong>."
-                        </p>
-                        <h5><b>John Blakey</b></h5>
-                        <h4>Commercial Director, Apex Industrial</h4>
-                    </div>
-                </div>
-
-                <!-- 3. Distributor & Partner Development -->
-                <div class="testimonial">
-                    <div class="testimonial-card text-center">
-                        <img src="{{ asset('images/testimonial03.png') }}" loading='lazy' alt="Emily Nguyen">
-                        <span class="testimonial-service-tag">
-                            <i class="bi bi-diagram-3"></i> Distributor &amp; Partner Development
-                        </span>
-                        <div class="testimonial-metric-row">
-                            <div class="testimonial-metric-box">
-                                <div class="testimonial-metric-num">35+</div>
-                                <div class="testimonial-metric-label">Partners Vetted</div>
-                            </div>
-                            <div class="testimonial-metric-divider"></div>
-                            <div class="testimonial-metric-box">
-                                <div class="testimonial-metric-num">4</div>
-                                <div class="testimonial-metric-label">Tier-1 Partners</div>
-                            </div>
-                            <div class="testimonial-metric-divider"></div>
-                            <div class="testimonial-metric-box">
-                                <div class="testimonial-metric-num">+160%</div>
-                                <div class="testimonial-metric-label">Volume Growth</div>
-                            </div>
-                        </div>
-                        <p class="testimonial-quote">
-                            "Finding reliable distributors across Africa was our toughest barrier. P23 screened <strong>35+ candidates</strong> and secured <strong>4 tier-1 partners</strong>, driving a <strong>160% volume increase</strong> in under <strong>8 months</strong>."
-                        </p>
-                        <h5><b>Emily Nguyen</b></h5>
-                        <h4>Managing Director, Vitalis Consumer Goods</h4>
-                    </div>
-                </div>
-            </div>
-
-            <div class="slider-controls">
-                <span class="arrow left"><i><img src="{{ asset('images/left.png') }}" loading='lazy'
-                            alt=""></i></span>
-                <span class="arrow right"><i><img src="{{ asset('images/right.png') }}" loading='lazy'
-                            alt=""></i></span>
-            </div>
-        </div>
-    </div>
-    <hr id="horiz">
 
     <section class="insight-section content-section animate-on-scroll">
         <div class="">
@@ -1845,53 +2486,49 @@
     </section>
 
 
+
+
+
+
     <script>
-        $(function() {
-            const $wrapper = $('.testimonial-wrapper');
-            const $testimonials = $('.testimonial');
-            const total = $testimonials.length;
-            let currentIndex = 0;
+        // Featured Case Studies Tab Switcher
+        function switchHomeCaseTab(paneId, btn) {
+            const buttons = document.querySelectorAll('.home-tab-btn');
+            const panes = document.querySelectorAll('.home-case-pane');
 
-            function updateWidths() {
-                const screenWidth = $(window).width();
-                if (screenWidth < 580) {
-                    // Set for small screens
-                    $wrapper.css('width', `${total * 100}%`);
-                    $testimonials.css('width', `${100 / total}%`);
-                } else {
-                    // Set for larger screens (still full width per testimonial)
-                    $wrapper.css('width', `100%`);
-                    $testimonials.css('width', `100%`);
-                }
-                // Reposition to current index after width change
-                updateSlider(currentIndex);
-            }
-
-            function updateSlider(index) {
-                const offset = -index * (100 / total);
-                $wrapper.css('transform', `translateX(${offset}%)`);
-            }
-
-            $('.arrow.left').click(function() {
-                currentIndex = (currentIndex - 1 + total) % total;
-                updateSlider(currentIndex);
+            buttons.forEach(b => {
+                b.classList.remove('active');
+                b.setAttribute('aria-selected', 'false');
             });
 
-            $('.arrow.right').click(function() {
-                currentIndex = (currentIndex + 1) % total;
-                updateSlider(currentIndex);
+            if (btn) {
+                btn.classList.add('active');
+                btn.setAttribute('aria-selected', 'true');
+            }
+
+            panes.forEach(pane => {
+                pane.classList.remove('active');
             });
 
-            // Init on load
-            updateWidths();
+            const target = document.getElementById(paneId);
+            if (target) {
+                target.classList.add('active');
+            }
+        }
 
-            // Recalculate on window resize
-            $(window).resize(function() {
-                updateWidths();
+        // Attach event listeners
+        document.addEventListener('DOMContentLoaded', function () {
+            const homeTabButtons = document.querySelectorAll('.home-tab-btn');
+            homeTabButtons.forEach(btn => {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('data-target') ? this.getAttribute('data-target').replace('#', '') : '';
+                    if (targetId) {
+                        switchHomeCaseTab(targetId, this);
+                    }
+                });
             });
         });
-
-
 
         // Report Pop Up
         document.addEventListener('DOMContentLoaded', function() {
@@ -1903,31 +2540,35 @@
 
             viewButtons.forEach(button => {
                 button.addEventListener('click', function(e) {
-                    e.preventDefault(); // Prevent any default behavior
-                    e.stopPropagation(); // Stop event bubbling
+                    e.preventDefault();
+                    e.stopPropagation();
 
                     const pdfUrl = this.getAttribute('data-pdf');
-                    pdfViewer.src = pdfUrl;
-                    downloadBtn.href = pdfUrl;
-                    popup.style.display = 'block';
+                    if (pdfViewer) pdfViewer.src = pdfUrl;
+                    if (downloadBtn) downloadBtn.href = pdfUrl;
+                    if (popup) popup.style.display = 'block';
                     document.body.style.overflow = 'hidden';
                 });
             });
 
-            closeBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                popup.style.display = 'none';
-                pdfViewer.src = '';
-                document.body.style.overflow = 'auto';
-            });
-
-            popup.addEventListener('click', function(e) {
-                if (e.target === popup) {
-                    popup.style.display = 'none';
-                    pdfViewer.src = '';
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (popup) popup.style.display = 'none';
+                    if (pdfViewer) pdfViewer.src = '';
                     document.body.style.overflow = 'auto';
-                }
-            });
+                });
+            }
+
+            if (popup) {
+                popup.addEventListener('click', function(e) {
+                    if (e.target === popup) {
+                        popup.style.display = 'none';
+                        if (pdfViewer) pdfViewer.src = '';
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            }
         });
     </script>
 @endsection
