@@ -8,8 +8,9 @@
     <meta property="og:title" content="Outbound Sales Demand Testing | P23 Africa">
     <meta property="og:description" content="Evidence of demand (or the lack of it) before you hire a team, open an office or sign a distributor.">
     <meta property="og:image" content="{{ asset('images/market-entry/hero-office-woman.png') }}">
+    {{-- services-new.css carries the shared footer3 + navbar styles used across the service pages --}}
+    <link rel="stylesheet" href="{{ asset('css/services-new.css') }}">
     <link rel="stylesheet" href="{{ asset('css/service-detail.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/footer3.css') }}">
 @endsection
 
 @section('navbar')
