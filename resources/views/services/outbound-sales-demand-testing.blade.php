@@ -7,7 +7,7 @@
         content="Find out if Africa will buy before you commit capital. P23 Africa runs a real sales test in your target country and reports what actually happens.">
     <meta property="og:title" content="Outbound Sales Demand Testing | P23 Africa">
     <meta property="og:description" content="Evidence of demand (or the lack of it) before you hire a team, open an office or sign a distributor.">
-    <meta property="og:image" content="{{ asset('images/market-entry/hero-office-woman.png') }}">
+    <meta property="og:image" content="{{ asset('images/services/sd-outbound-hero.jpg') }}">
     {{-- services-new.css carries the shared footer3 + navbar styles used across the service pages --}}
     <link rel="stylesheet" href="{{ asset('css/services-new.css') }}">
     <link rel="stylesheet" href="{{ asset('css/service-detail.css') }}">
@@ -50,7 +50,7 @@
 
             <div class="sd-hero__visual" style="--ox: 791; --vw: 666; --vh: 536; --ar: 666 / 536;">
                 <div class="sd-hero__img" style="--x: 791; --y: 0; --w: 666; --h: 536; --bg: #D9D9D9;">
-                    <img src="{{ asset('images/market-entry/hero-office-woman.png') }}" alt="P23 Africa consultant leading an outbound sales test" loading="eager">
+                    <img src="{{ asset('images/services/sd-outbound-hero.jpg') }}" alt="P23 Africa consultant reviewing a sales test with a client" loading="eager" fetchpriority="high">
                 </div>
             </div>
         </div>
