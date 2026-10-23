@@ -115,6 +115,17 @@ Route::get('/market-entry/ghana', function () {
     return view('market-entry.ghana');
 })->name('services.market-entry.ghana');
 
+// Service detail pages
+Route::get('/distributor-partner-development', function () {
+    ClickTracker::track('Distributor_Partner_Page');
+    return view('services.distributor-partner-development');
+})->name('services.distributor-partner');
+
+Route::get('/outbound-sales-demand-testing', function () {
+    ClickTracker::track('Outbound_Sales_Page');
+    return view('services.outbound-sales-demand-testing');
+})->name('services.outbound-sales');
+
 // Convenience aliases / redirects from legacy /services/market-entry
 Route::get('/services/market-entry', fn() => redirect()->route('services.market-entry'));
 Route::get('/services/market-entry/nigeria', fn() => redirect()->route('services.market-entry.nigeria'));
