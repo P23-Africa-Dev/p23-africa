@@ -226,7 +226,7 @@
                         <p class="plan-card-desc">
                             Find, assess and verify the right local commercial relationships.
                         </p>
-                        <a href="{{ url('contact') }}" class="plan-explore-btn" aria-label="Explore Distributor & Partner Development">
+                        <a href="{{ route('services.distributor-partner') }}" class="plan-explore-btn" aria-label="Explore Distributor & Partner Development">
                             Explore <span class="btn-arrow">→</span>
                         </a>
                     </div>
@@ -262,7 +262,7 @@
                         <p class="plan-card-desc">
                             Generate opportunities, develop relationships and build commercial pipelines.
                         </p>
-                        <a href="{{ url('contact') }}" class="plan-explore-btn" aria-label="Explore Outbound Sales Demand Testing">
+                        <a href="{{ route('services.outbound-sales') }}" class="plan-explore-btn" aria-label="Explore Outbound Sales Demand Testing">
                             Explore <span class="btn-arrow">→</span>
                         </a>
                     </div>
