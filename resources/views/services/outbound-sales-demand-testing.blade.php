@@ -20,10 +20,10 @@
     $check = '<svg viewBox="196 2846 21 20" fill="none" aria-hidden="true" focusable="false"><path opacity=".1" d="M206.358 2846C200.656 2846 196.033 2850.48 196.033 2856C196.033 2861.52 200.656 2866 206.358 2866C212.061 2866 216.684 2861.52 216.684 2856C216.677 2850.48 212.058 2846.01 206.358 2846Z" fill="#fff"/><path d="M211.811 2852.83L205.921 2860.57C205.781 2860.75 205.571 2860.87 205.34 2860.9C205.109 2860.93 204.875 2860.87 204.691 2860.73L200.485 2857.47C200.114 2857.19 200.054 2856.66 200.351 2856.3C200.648 2855.94 201.189 2855.89 201.561 2856.17L205.068 2858.89L210.426 2851.85C210.601 2851.59 210.908 2851.45 211.223 2851.48C211.539 2851.51 211.812 2851.7 211.935 2851.99C212.058 2852.27 212.01 2852.59 211.811 2852.83Z" fill="#fff"/></svg>';
 
     $faqs = [
-        ['q' => 'How long does a test take?', 'a' => 'Most tests take four to six weeks, from defining the target market and building the list through outreach, follow-up and the final demand assessment.'],
-        ['q' => 'How do you choose who to contact?', 'a' => 'We look for companies showing signs they’re ready to buy, such as hiring, expansion, tenders, regulatory changes or trade-show activity, then verify contacts and aim for a named decision-maker rather than an info@ address.'],
-        ['q' => 'Do you only test demand via email?', 'a' => 'No. Calls are a big part of the test, alongside email, LinkedIn, SMS and, where deal size justifies it, in-person outreach by our local team. We test channels against each other so you learn how your buyers like to be reached.'],
-        ['q' => 'What do we need to provide?', 'a' => 'Your product, target country, buyer type and the deal size you want, plus any pricing, case studies or materials we can use in outreach. We handle the research, list building, outreach and reporting.'],
+        ['q' => 'How long does a test take?', 'a' => '8 to 12 weeks from scoping to final report. One market usually takes around 8 weeks. Two markets, or in-person outreach in several cities, can take up to 12. We confirm your timeline on the scoping call.'],
+        ['q' => 'How do you choose who to contact?', 'a' => 'We target companies showing buying signals, such as hiring, expansion, tenders or regulatory pressure, instead of working through a generic list.'],
+        ['q' => 'Do you only test demand via email?', 'a' => 'No. Calls, SMS, LinkedIn and in-person outreach are central, alongside email.'],
+        ['q' => 'What do we need to provide?', 'a' => 'Product and pricing information, any case studies or reference installs, and a point of contact to handle replies that turn into real conversations.'],
         ['q' => 'Can you test more than one country or segment?', 'a' => 'Yes. We recommend starting with one country and two or three buyer segments so the results stay clear, then expanding based on what the first test shows.'],
     ];
     $openFaq = 4;
