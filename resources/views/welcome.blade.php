@@ -1963,7 +1963,7 @@
                             id="tab-industrial"
                             onclick="switchHomeCaseTab('home-pane-industrial', this)">
                         <span class="tab-dot"></span>
-                        Industrial Equipment
+                        Manufacturers
                     </button>
                     <button type="button" 
                             class="home-tab-btn" 
@@ -1993,14 +1993,14 @@
             {{-- Case Study Showcase Panes --}}
             <div class="home-case-panes-wrapper">
                 
-                {{-- Pane 1: Industrial Equipment Manufacturer --}}
+                {{-- Pane 1: Manufacturers --}}
                 <div class="home-case-pane active" id="home-pane-industrial" role="tabpanel" aria-labelledby="tab-industrial">
                     <div class="home-case-card">
                         <div class="home-case-visual">
                             <img src="{{ asset('images/case-studies/thermoflow.png') }}" 
                                  alt="Testing Demand for an Industrial Equipment Manufacturer" 
                                  loading="lazy">
-                            <span class="home-case-badge">Industrial Equipment</span>
+                            <span class="home-case-badge">Manufacturers</span>
                         </div>
 
                         <div class="home-case-article">
@@ -2047,7 +2047,7 @@
                 <div class="home-case-pane" id="home-pane-software" role="tabpanel" aria-labelledby="tab-software">
                     <div class="home-case-card">
                         <div class="home-case-visual">
-                            <img src="{{ asset('images/case-studies/cloudworks.png') }}" 
+                            <img src="{{ asset('images/case-studies/finedge.png') }}" 
                                  alt="Enterprise Client Acquisition & Partner Routes for B2B SaaS" 
                                  loading="lazy">
                             <span class="home-case-badge">Software &amp; SaaS</span>
