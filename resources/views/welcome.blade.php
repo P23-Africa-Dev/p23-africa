@@ -1959,7 +1959,7 @@
                             role="tab" 
                             aria-selected="true" 
                             aria-controls="home-pane-industrial" 
-                            data-target="#home-pane-industrial"
+                            data-pane="home-pane-industrial"
                             id="tab-industrial"
                             onclick="switchHomeCaseTab('home-pane-industrial', this)">
                         <span class="tab-dot"></span>
@@ -1970,7 +1970,7 @@
                             role="tab" 
                             aria-selected="false" 
                             aria-controls="home-pane-software" 
-                            data-target="#home-pane-software"
+                            data-pane="home-pane-software"
                             id="tab-software"
                             onclick="switchHomeCaseTab('home-pane-software', this)">
                         <span class="tab-dot"></span>
@@ -1981,7 +1981,7 @@
                             role="tab" 
                             aria-selected="false" 
                             aria-controls="home-pane-verification" 
-                            data-target="#home-pane-verification"
+                            data-pane="home-pane-verification"
                             id="tab-verification"
                             onclick="switchHomeCaseTab('home-pane-verification', this)">
                         <span class="tab-dot"></span>
@@ -2097,7 +2097,7 @@
                 <div class="home-case-pane" id="home-pane-verification" role="tabpanel" aria-labelledby="tab-verification">
                     <div class="home-case-card">
                         <div class="home-case-visual">
-                            <img src="{{ asset('images/case-studies/coolair.png') }}" 
+                            <img src="{{ asset('images/case-studies/distributor-verification.png') }}" 
                                  alt="Verifying Local Distribution Partners Before Market Entry" 
                                  loading="lazy">
                             <span class="home-case-badge">Distributor Verification</span>
@@ -2609,7 +2609,8 @@
             homeTabButtons.forEach(btn => {
                 btn.addEventListener('click', function (e) {
                     e.preventDefault();
-                    const targetId = this.getAttribute('data-target') ? this.getAttribute('data-target').replace('#', '') : '';
+                    e.stopPropagation();
+                    const targetId = this.getAttribute('data-pane') || (this.getAttribute('data-target') ? this.getAttribute('data-target').replace('#', '') : '');
                     if (targetId) {
                         switchHomeCaseTab(targetId, this);
                     }

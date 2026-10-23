@@ -613,6 +613,8 @@
 .me-momentum-card img {
     width: 100%;
     height: auto;
+    max-height: 330px;
+    object-fit: contain;
     display: block;
     border-radius: 20px;
 }
@@ -636,19 +638,127 @@
     .me-momentum-cards-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 20px;
+        max-width: 540px;
+        margin: 0 auto;
+    }
+
+    .me-momentum-card img {
+        max-height: 245px;
+        width: auto;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .me-momentum-container {
+        padding: 40px 20px 32px 20px;
+        border-radius: 22px;
+        min-height: auto;
+        gap: 28px;
+    }
+
+    .me-momentum-cards-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        max-width: 440px;
+        margin: 0 auto;
+    }
+
+    .me-momentum-card {
+        border-radius: 14px;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+    }
+
+    .me-momentum-card img {
+        max-height: 185px;
+        border-radius: 14px;
     }
 }
 
 @media (max-width: 600px) {
-    .me-momentum-cards-grid {
-        grid-template-columns: 1fr;
-        max-width: 320px;
-        margin: 0 auto;
+    .me-momentum-section {
+        padding: 0 14px;
+        margin-bottom: 50px;
     }
 
     .me-momentum-container {
-        padding: 36px 20px;
+        padding: 30px 16px 24px 16px;
         border-radius: 20px;
+        min-height: auto;
+        gap: 22px;
+    }
+
+    .me-momentum-title {
+        font-size: clamp(24px, 5.5vw, 32px);
+        line-height: 1.25;
+    }
+
+    .me-momentum-btn {
+        width: 140px;
+        height: 38px;
+        font-size: 15px;
+    }
+
+    .me-momentum-desc {
+        font-size: 13.5px;
+        line-height: 1.6;
+    }
+
+    /* Country cards sit on a clean 2-column structure adequately reduced */
+    .me-momentum-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .me-momentum-card {
+        border-radius: 13px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .me-momentum-card img {
+        max-height: 165px;
+        border-radius: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .me-momentum-section {
+        padding: 0 10px;
+    }
+
+    .me-momentum-container {
+        padding: 24px 12px 20px 12px;
+        border-radius: 16px;
+        gap: 18px;
+    }
+
+    .me-momentum-cards-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .me-momentum-card {
+        border-radius: 11px;
+    }
+
+    .me-momentum-card img {
+        max-height: 150px;
+        border-radius: 11px;
+    }
+}
+
+@media (max-width: 360px) {
+    .me-momentum-cards-grid {
+        gap: 6px;
+    }
+
+    .me-momentum-card img {
+        max-height: 135px;
+        border-radius: 9px;
     }
 }
 
