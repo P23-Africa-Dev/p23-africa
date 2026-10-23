@@ -8,8 +8,9 @@
     <meta property="og:title" content="Distributor & Partner Development | P23 Africa">
     <meta property="og:description" content="Choose your African distributor with evidence, before you commit stock, exclusivity or your brand.">
     <meta property="og:image" content="{{ asset('images/market-entry/hero-handshake.png') }}">
+    {{-- services-new.css carries the shared footer3 + navbar styles used across the service pages --}}
+    <link rel="stylesheet" href="{{ asset('css/services-new.css') }}">
     <link rel="stylesheet" href="{{ asset('css/service-detail.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/footer3.css') }}">
 @endsection
 
 @section('navbar')
@@ -24,9 +25,9 @@
 <div class="sd-page sd-page--distributor">
 
     {{-- ==========================================
-         HERO + WHO THIS IS FOR / WHY PARTNERS DECIDE
+         HERO
          ========================================== --}}
-    <section class="sd-hero" id="hero" style="--hero-h: 764;">
+    <section class="sd-hero" id="hero" style="--hero-h: 564;">
         <div class="sd-inner">
             <div class="sd-hero__content">
                 <h1 class="sd-hero__title">
@@ -35,43 +36,37 @@
                 <p class="sd-hero__desc">
                     Most market entries fail on the partner, not the product. We find, verify and reference-check local distributors, importers and resellers, then help you structure the partnership so it starts well. You choose with evidence, before you commit stock, exclusivity or your brand.
                 </p>
-                <a href="{{ url('case-studies') }}" class="sd-hero__btn" id="sd-hero-case-studies-btn">Check out case studies</a>
+                <div class="sd-hero__actions">
+                    <a href="{{ url('contact') }}" class="sd-hero__btn" id="sd-hero-get-in-touch-btn">Get in Touch</a>
+                    <div class="sd-hero__proof">
+                        <svg class="sd-hero__stars" viewBox="374 552 98 17" fill="none" role="img" aria-label="5 star rating">
+                            <path d="M383 552L385.021 558.219H391.56L386.269 562.062L388.29 568.281L383 564.438L377.71 568.281L379.731 562.062L374.44 558.219H380.979L383 552Z" fill="#390908"/>
+                            <path d="M403 552L405.021 558.219H411.56L406.269 562.062L408.29 568.281L403 564.438L397.71 568.281L399.731 562.062L394.44 558.219H400.979L403 552Z" fill="#390908"/>
+                            <path d="M423 552L425.021 558.219H431.56L426.269 562.062L428.29 568.281L423 564.438L417.71 568.281L419.731 562.062L414.44 558.219H420.979L423 552Z" fill="#390908"/>
+                            <path d="M443 552L445.021 558.219H451.56L446.269 562.062L448.29 568.281L443 564.438L437.71 568.281L439.731 562.062L434.44 558.219H440.979L443 552Z" fill="#390908"/>
+                            <path d="M463 552L465.021 558.219H471.56L466.269 562.062L468.29 568.281L463 564.438L457.71 568.281L459.731 562.062L454.44 558.219H460.979L463 552Z" fill="#390908"/>
+                        </svg>
+                        <a href="{{ url('case-studies') }}" class="sd-hero__proof-link"><strong>Click Here to</strong> <em>Check out case studies</em></a>
+                    </div>
+                </div>
             </div>
 
-            <div class="sd-hero__visual" style="--ox: 791; --vw: 691; --vh: 764; --ar: 691 / 764;">
+            <div class="sd-hero__visual" style="--ox: 791; --vw: 697; --vh: 564; --ar: 697 / 564;">
                 <div class="sd-hero__img" style="--x: 791; --y: 0; --w: 666; --h: 515; --bg: #D9D9D9;">
                     <img src="{{ asset('images/market-entry/hero-handshake.png') }}" alt="Business partners shaking hands on a distribution agreement" loading="eager">
                 </div>
-                <div class="sd-hero__img" style="--x: 1016; --y: 187; --w: 466; --h: 577; --bg: #8B8B8B;">
+                <div class="sd-hero__img" style="--x: 1022; --y: 298; --w: 466; --h: 266; --bg: #8B8B8B;">
                     <img src="{{ asset('images/services/global-reach-executive.jpg') }}" alt="P23 Africa executive reviewing partner verification" loading="eager">
                 </div>
             </div>
 
-            <div class="sd-who">
-                <div class="sd-who__col">
-                    <h2 class="sd-who__title">Who This Is For</h2>
-                    <div class="sd-who__body">
-                        <ul class="sd-list">
-                            <li>Global Equipment and machinery manufacturers looking for distributors or importers</li>
-                            <li>Software and infrastructure companies building a reseller or channel network</li>
-                        </ul>
-                        <p>If you’re asking “who should we sell through, and can we trust them?”, this is where we start.</p>
-                    </div>
-                </div>
-                <div class="sd-who__col">
-                    <h2 class="sd-who__title">Why Partners <br class="sd-br-d">Decide The Outcome</h2>
-                    <p class="sd-who__body">
-                        A distributor is hard to undo. Exclusivity, stock on credit and your brand reputation are all in their hands, and many “distribution companies” are one-person operations. A few weeks of checking costs far less than a year with the wrong partner.
-                    </p>
-                </div>
-            </div>
         </div>
     </section>
 
     {{-- ==========================================
          STAGE 1: FIND AND VERIFY
          ========================================== --}}
-    <section class="sd-stage" id="stage-1" style="--stage-gap: 70;">
+    <section class="sd-stage" id="stage-1" style="--stage-gap: 20;">
         <div class="sd-inner">
             <h2 class="sd-stage__title">Stage 1: Find and verify</h2>
 
@@ -153,7 +148,7 @@
     {{-- ==========================================
          STAGE 2: STRUCTURE AND ACTIVATE
          ========================================== --}}
-    <section class="sd-stage" id="stage-2" style="--stage-gap: 113;">
+    <section class="sd-stage" id="stage-2" style="--stage-gap: 45;">
         <div class="sd-inner">
             <h2 class="sd-stage__title">Stage 2: Structure and activate</h2>
 
@@ -177,7 +172,7 @@
     {{-- ==========================================
          WHAT YOU GET + PRICING
          ========================================== --}}
-    <section class="sd-get sd-get--d" id="what-you-get" style="--get-gap: 47;">
+    <section class="sd-get sd-get--d sd-get--dark" id="what-you-get" style="--get-gap: 76;">
         <div class="sd-get__band">
             <div class="sd-inner">
                 <h2 class="sd-get__title">What you get</h2>
@@ -193,15 +188,11 @@
             </div>
         </div>
 
-        <div class="sd-pricing" id="pricing">
+        <div class="sd-pricing sd-pricing--v2" id="pricing">
             <div class="sd-inner">
                 {{-- Stage 1 --}}
-                <article class="sd-price" style="--h: 981;">
+                <article class="sd-price sd-price--navy" style="--h: 981;">
                     <span class="sd-price__badge">Stage 1: Find &amp; Verify</span>
-                    <div class="sd-price__row">
-                        <span class="sd-price__amount">£5,000</span>
-                        <span class="sd-price__per">per market</span>
-                    </div>
                     <p class="sd-price__desc">We identify, assess and verify potential distributors, importers and commercial partners in your target African market.</p>
                     <h3 class="sd-price__included">What's included;</h3>
                     <ul class="sd-checks">
@@ -216,16 +207,16 @@
                         <li>{!! $check !!}A comparative report covering candidate suitability, verification findings, identified risks and our recommendation.</li>
                     </ul>
                     <p class="sd-price__note">You’ll have a clear basis for deciding which distributor to pursue, what concerns need resolving and what to confirm before signing an agreement or committing stock.</p>
+                    <div class="sd-price__foot" style="--gap: 40;">
+                        <span class="sd-price__value">£5,000</span>
+                        <span class="sd-price__unit">per market</span>
+                    </div>
                 </article>
 
                 <div class="sd-pricing__stack">
                     {{-- Stage 2 --}}
-                    <article class="sd-price" style="--h: 719;">
+                    <article class="sd-price sd-price--sand" style="--h: 719;">
                         <span class="sd-price__badge">Stage 2: Structure &amp; Activate</span>
-                        <div class="sd-price__row">
-                            <span class="sd-price__amount">£2,890</span>
-                            <span class="sd-price__per">per partner</span>
-                        </div>
                         <p class="sd-price__desc">Once you’ve selected your preferred distributor, we help establish the commercial relationship and prepare them to start selling.</p>
                         <h3 class="sd-price__included">What's included;</h3>
                         <ul class="sd-checks">
@@ -237,21 +228,63 @@
                             <li>{!! $check !!}Product onboarding and training coordination, where required.</li>
                             <li>{!! $check !!}A performance review at 60–90 days, with recommendations to continue, adjust or replace the partner.</li>
                         </ul>
+                        <div class="sd-price__foot" style="--gap: 38;">
+                            <span class="sd-price__value">£2,890</span>
+                            <span class="sd-price__unit">per partner</span>
+                        </div>
                     </article>
 
                     {{-- Additional markets --}}
-                    <article class="sd-price" style="--h: 243;">
+                    <article class="sd-price sd-price--slate" style="--h: 243;">
                         <span class="sd-price__badge">Additional markets</span>
-                        <div class="sd-price__row">
-                            <span class="sd-price__amount">£3,500</span>
-                            <span class="sd-price__per">per additional market</span>
+                        <div class="sd-price__foot" style="--gap: 38;">
+                            <span class="sd-price__value">£3,500</span>
+                            <span class="sd-price__unit">per additional market</span>
                         </div>
-                        <p class="sd-price__desc sd-price__desc--auto">Extend the sourcing and verification process into another African country, with market-specific research, screening and partner assessments.</p>
+                        <p class="sd-price__desc sd-price__desc--auto" style="margin-top: calc(35 * var(--u)) !important;">Extend the sourcing and verification process into another African country, with market-specific research, screening and partner assessments.</p>
                     </article>
                 </div>
             </div>
         </div>
     </section>
+
+    {{-- ==========================================
+         WHO THIS IS FOR / WHY PARTNERS DECIDE
+         ========================================== --}}
+    <section class="sd-whosec" id="who-this-is-for">
+        <div class="sd-inner">
+                <div class="sd-who sd-who--static">
+                    <div class="sd-who__col">
+                        <h2 class="sd-who__title">Who This Is For</h2>
+                        <div class="sd-who__body">
+                            <ul class="sd-list">
+                                <li>Global Equipment and machinery manufacturers looking for distributors or importers</li>
+                                <li>Software and infrastructure companies building a reseller or channel network</li>
+                            </ul>
+                            <p>If you’re asking “who should we sell through, and can we trust them?”, this is where we start.</p>
+                        </div>
+                    </div>
+                    <div class="sd-who__col">
+                        <h2 class="sd-who__title">Why Partners <br class="sd-br-d">Decide The Outcome</h2>
+                        <p class="sd-who__body">
+                            A distributor is hard to undo. Exclusivity, stock on credit and your brand reputation are all in their hands, and many “distribution companies” are one-person operations. A few weeks of checking costs far less than a year with the wrong partner.
+                        </p>
+                    </div>
+                </div>
+
+            <a href="{{ url('contact') }}" class="sd-whosec__btn" id="sd-who-get-in-touch-btn">
+                Get in Touch
+                <svg viewBox="1220.5 3451.64 16 12.72" fill="none" aria-hidden="true"><path d="M1229.41 3451.98C1229.62 3451.76 1229.91 3451.64 1230.21 3451.64C1230.52 3451.64 1230.81 3451.76 1231.02 3451.98L1236.17 3457.19C1236.38 3457.41 1236.5 3457.7 1236.5 3458.01C1236.5 3458.31 1236.38 3458.61 1236.17 3458.83L1231.02 3464.04C1230.81 3464.25 1230.52 3464.37 1230.22 3464.36C1229.92 3464.36 1229.63 3464.24 1229.42 3464.02C1229.21 3463.81 1229.09 3463.52 1229.09 3463.22C1229.08 3462.91 1229.2 3462.62 1229.41 3462.4L1232.5 3459.17H1221.64C1221.34 3459.17 1221.05 3459.04 1220.83 3458.83C1220.62 3458.61 1220.5 3458.31 1220.5 3458.01C1220.5 3457.7 1220.62 3457.41 1220.83 3457.19C1221.05 3456.97 1221.34 3456.85 1221.64 3456.85H1232.5L1229.41 3453.61C1229.19 3453.4 1229.07 3453.1 1229.07 3452.79C1229.07 3452.49 1229.19 3452.19 1229.41 3451.98Z" fill="currentColor"/></svg>
+            </a>
+        </div>
+    </section>
+
+    {{-- ==========================================
+         CASE STUDIES (same block as the homepage)
+         ========================================== --}}
+    <div class="sd-cases-embed">
+        @include('include.featured-case-studies')
+    </div>
 
 </div>
 @endsection
