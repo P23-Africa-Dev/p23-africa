@@ -20,7 +20,7 @@
             <ul class="p23-breadcrumb">
                 <li><a href="{{ route('homepage') }}">Home</a></li>
                 <li class="separator">/</li>
-                <li><a href="{{ url('services') }}">What We Do</a></li>
+                <li><a href="{{ url('services') }}">Services</a></li>
                 <li class="separator">/</li>
                 <li><a href="{{ route('services.market-entry') }}">Market Entry &amp; Expansion</a></li>
                 <li class="separator">/</li>

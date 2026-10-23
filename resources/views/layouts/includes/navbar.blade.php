@@ -33,7 +33,7 @@
                             </div> --}}
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('services') }}">What we do </a>
+                            <a class="nav-link" href="{{ url('services') }}">Services</a>
 
 
                             {{-- <div class="dropdown-menu dropdown-mega">
@@ -120,7 +120,7 @@
                         <a class="nav-link" href="{{ url('about') }}">Who We Are</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('services') }}">What We Do</a>
+                        <a class="nav-link" href="{{ url('services') }}">Services</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('event') }}">Events</a>

@@ -74,7 +74,7 @@
                 <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                     <ul class="navbar-nav pt-md-0 pt-3">
                         <li class="nav-item"><a class="nav-link" href="{{ url('about') }}">Who we are</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url('services') }}">What we do</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url('services') }}">Services</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('event') }}">Events</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('resource-hub') }}">Resource hub</a>
                         </li>

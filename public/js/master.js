@@ -12,65 +12,66 @@ const pauseTime = 5000;
 const heightRem = 2.5;
 
 function createNumberList(id, values) {
-    const container = document.getElementById(id);
-    if (container) {
+    const containers = document.querySelectorAll(`#${id}`);
+    containers.forEach((container) => {
         container.style.overflow = "hidden";
         container.style.height = `${heightRem}rem`;
-    }
 
-    const span = document.createElement("span");
-    span.classList.add("slide");
-    span.style.display = "block";
+        if (container.querySelector(".slide")) return;
 
-    values.forEach((val) => {
-        const div = document.createElement("div");
-        div.textContent = `${val}+`;
-        div.style.height = `${heightRem}rem`;
-        div.style.lineHeight = `${heightRem}rem`;
-        span.appendChild(div);
-    });
+        const span = document.createElement("span");
+        span.classList.add("slide");
+        span.style.display = "block";
 
-    if (container) {
+        values.forEach((val) => {
+            const div = document.createElement("div");
+            div.textContent = `${val}+`;
+            div.style.height = `${heightRem}rem`;
+            div.style.lineHeight = `${heightRem}rem`;
+            span.appendChild(div);
+        });
+
         container.appendChild(span);
-    }
+    });
 }
 
 function animateSlide(id, values) {
-    const container = document.getElementById(id);
-    if (!container) return;
-    const slide = container.querySelector(".slide");
-    if (!slide) return;
-    const steps = values.length;
-    const interval = totalDuration / (steps - 1);
-    let index = 0;
+    const containers = document.querySelectorAll(`#${id}`);
+    containers.forEach((container) => {
+        const slide = container.querySelector(".slide");
+        if (!slide) return;
+        const steps = values.length;
+        const interval = totalDuration / (steps - 1);
+        let index = 0;
 
-    // Set transition style
-    slide.style.transition = `transform ${interval}ms ease-in-out`;
-    slide.style.transform = "translateY(0)"; // Start at first value
+        // Set transition style
+        slide.style.transition = `transform ${interval}ms ease-in-out`;
+        slide.style.transform = "translateY(0)"; // Start at first value
 
-    function step() {
-        index++;
-        if (index < steps) {
-            slide.style.transform = `translateY(-${index * heightRem}rem)`;
-            setTimeout(step, interval);
-        } else {
-            // At the end, reset after pause
-            setTimeout(() => {
-                slide.style.transition = "none";
-                slide.style.transform = "translateY(0)";
-                index = 0;
-                void slide.offsetWidth; // force reflow
-                slide.style.transition = `transform ${interval}ms ease-in-out`;
+        function step() {
+            index++;
+            if (index < steps) {
+                slide.style.transform = `translateY(-${index * heightRem}rem)`;
                 setTimeout(step, interval);
-            }, pauseTime);
+            } else {
+                // At the end, reset after pause
+                setTimeout(() => {
+                    slide.style.transition = "none";
+                    slide.style.transform = "translateY(0)";
+                    index = 0;
+                    void slide.offsetWidth; // force reflow
+                    slide.style.transition = `transform ${interval}ms ease-in-out`;
+                    setTimeout(step, interval);
+                }, pauseTime);
+            }
         }
-    }
 
-    // Start first step shortly after load to allow rendering
-    setTimeout(step, interval);
+        // Start first step shortly after load to allow rendering
+        setTimeout(step, interval);
+    });
 }
 
-window.onload = () => {
+function initCounters() {
     for (let id in slides) {
         createNumberList(id, slides[id]);
     }
@@ -78,4 +79,10 @@ window.onload = () => {
     for (let id in slides) {
         animateSlide(id, slides[id]);
     }
-};
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initCounters);
+} else {
+    initCounters();
+}
