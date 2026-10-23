@@ -4,7 +4,7 @@
 @section('meta')
 <meta name="description" content="{{ $caseStudy['summary'] }}">
 <link rel="stylesheet" href="{{ asset('css/services-new.css') }}">
-<link rel="stylesheet" href="{{ asset('css/case-studies.css') }}?v=5">
+<link rel="stylesheet" href="{{ asset('css/case-studies.css') }}?v=7">
 @endsection
 @section('content')
 <section class="cs-hero" aria-labelledby="case-title">
