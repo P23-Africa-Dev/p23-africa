@@ -282,7 +282,7 @@ Route::get('/feedback/thank-you', function () {
 
 
 Route::get('/book-consultation', function () {
-    return view('consultation.index');
+    return redirect('/contact');
 })->name('consultation.index');
 Route::get('/book', function () {
     return view('consultation.schedule');

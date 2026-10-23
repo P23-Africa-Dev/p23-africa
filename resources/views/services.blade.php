@@ -233,7 +233,7 @@
 
                     {{-- Operations Card --}}
                     <div class="plan-card plan-card-operations">
-                        <h3 class="plan-card-title">Operations &amp; Market Support</h3>
+                        <h3 class="plan-card-title">Sales &amp; Market Support</h3>
                         <p class="plan-card-desc">
                             Build the local capabilities and relationships required to operate effectively.
                         </p>

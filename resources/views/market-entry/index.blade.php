@@ -195,7 +195,7 @@
                     We combine market intelligence, commercial expertise, local networks and technology to help businesses enter and grow sustainably across our target regional corridors. Rather than hand over static theoretical binders, we sit with you on the frontline: qualifying commercial demand, screening reliable partners, and building transparent operational channels that safeguard your capital.
                 </p>
 
-                <a href="{{ url('book-consultation') }}" class="me-execution-link" id="me-execution-cta-link">
+                <a href="{{ url('contact') }}" class="me-execution-link" id="me-execution-cta-link">
                     Book a confidential market exploration session→
                 </a>
             </div>
@@ -513,7 +513,7 @@
                             Talk to P23 Africa
                         </a>
 
-                        <a href="{{ url('book-consultation') }}" class="me-cta-link" id="link-book-market-exploration">
+                        <a href="{{ url('contact') }}" class="me-cta-link" id="link-book-market-exploration">
                             Book a confidential market exploration session→
                         </a>
                     </div>

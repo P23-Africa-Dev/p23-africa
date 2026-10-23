@@ -344,7 +344,7 @@
                             If you’re considering Ghana, or trying to determine which African market should come first, P23 can help you test the opportunity, build the operation and develop the route to growth.
                         </p>
                         <div class="d-flex flex-wrap gap-3">
-                            <a href="{{ url('book-consultation') }}" class="p23-btn-brand">
+                            <a href="{{ url('contact') }}" class="p23-btn-brand">
                                 Start a conversation with P23 Africa <i class="fas fa-calendar-check ms-1"></i>
                             </a>
                             <a href="{{ route('services.market-entry') }}" class="p23-btn-outline-light">

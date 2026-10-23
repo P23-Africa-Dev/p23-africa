@@ -588,23 +588,31 @@ section.visible{
 }
 
 .hero-text a {
-    margin-top: 5px;
-    padding: 20px 50px;
-    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 15px;
+    padding: 15px 28px;
+    border-radius: 12px;
     background-color: #0D4036;
     color: #fff;
-    border: 1px solid #fff;
-    font-size: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    font-size: 17px;
     cursor: pointer;
     text-decoration: none;
-    transition: 500ms;
-    font-family: "GT Walsheim Con";
-    font-weight: 400;
-    width: 45%;
+    transition: all 0.3s ease;
+    font-family: "GT Walsheim Con", sans-serif;
+    font-weight: 500;
+    width: 100%;
+    max-width: 330px;
+    box-sizing: border-box;
+    gap: 16px;
 }
 .hero-text a:hover {
     background-color: #fff;
     color: #003c32;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
 }
 
 .animated-images {
@@ -738,19 +746,24 @@ section.visible{
         display: block;
     }
     .hero-text a {
-        margin-top: -15px;
-        padding: 20px 60px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 10px;
+        padding: 14px 20px;
         border-radius: 10px;
         background-color: #0D4036;
         color: #fff;
         border: 1px solid #fff;
-        font-size: 20px;
+        font-size: 15px;
         cursor: pointer;
         text-decoration: none;
-        transition: 500ms;
-        font-family: "GT Walsheim Con";
-        font-weight: 400;
-        width: 80%;
+        transition: all 0.3s ease;
+        font-family: "GT Walsheim Con", sans-serif;
+        font-weight: 500;
+        width: 100%;
+        max-width: 320px;
+        box-sizing: border-box;
     }
     .hero-text button {
         margin-top: 10px;

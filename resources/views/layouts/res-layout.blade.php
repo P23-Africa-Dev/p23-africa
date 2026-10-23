@@ -102,7 +102,7 @@
 
                 <div class="d-flex align-items-right desktop">
                     <button class="subscribe-btn me-3">
-                          <a href="/book-consultation" class="btn  me-3" id="btn" style="color: #fff;">Book a Consultation</a>
+                          <a href="{{ url('contact') }}" class="btn  me-3" id="btn" style="color: #fff;">Book a Consultation</a>
                         
                         </button>
                     <div class="social-icons">

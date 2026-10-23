@@ -29,7 +29,7 @@
 
         {{-- Right: Book Consultation + Gap 36px + Social Icons (Figma Group 427318899 / 427318900) --}}
         <div class="p23-nav-right">
-            <a href="{{ url('book-consultation') }}" class="p23-nav-consult-btn">Book Consultation</a>
+            <a href="{{ url('contact') }}" class="p23-nav-consult-btn">Book Consultation</a>
 
             <div class="p23-nav-socials" aria-label="Social Media">
                 <a href="https://linkedin.com/company/p23-africa/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
@@ -76,7 +76,7 @@
             <a href="{{ route('brn') }}" class="p23-mobile-link {{ $active === 'business-network' ? 'active' : '' }}">Business Network</a>
         </nav>
         <div class="p23-mobile-cta">
-            <a href="{{ url('book-consultation') }}" class="p23-nav-consult-btn">Book Consultation</a>
+            <a href="{{ url('contact') }}" class="p23-nav-consult-btn">Book Consultation</a>
         </div>
         <div class="p23-mobile-socials">
             <a href="https://linkedin.com/company/p23-africa/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">

@@ -90,7 +90,7 @@
 
 
                     <div class="subscribe">
-                        <a href="/book-consultation" class="btn" id="btn">Book a Consultation</a>
+                        <a href="{{ url('contact') }}" class="btn" id="btn">Book a Consultation</a>
                     </div>
 
                     <div class="social-icons">

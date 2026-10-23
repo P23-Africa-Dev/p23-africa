@@ -66,7 +66,7 @@
                     </div>
 
                     <div class="hero-cta-group">
-                        <a href="{{ url('book-consultation') }}" class="p23-btn-brand">
+                        <a href="{{ url('contact') }}" class="p23-btn-brand">
                             Talk to P23 Africa <i class="fas fa-arrow-right ms-1"></i>
                         </a>
                         <a href="#case-studies" class="p23-btn-outline-light">
@@ -117,7 +117,7 @@
                     <p class="p23-section-desc mb-4">
                         Rather than hand over static theoretical binders, we sit with you on the frontline: qualifying commercial demand, screening reliable partners, and building transparent operational channels that safeguard your capital.
                     </p>
-                    <a href="{{ url('book-consultation') }}" class="p23-dossier-link">
+                    <a href="{{ url('contact') }}" class="p23-dossier-link">
                         Book a confidential market exploration session <span>→</span>
                     </a>
                 </div>
@@ -265,7 +265,7 @@
                         <a href="{{ route('services.market-entry.nigeria') }}" class="p23-dossier-link">
                             Read the complete Nigeria HVAC case study <span>→</span>
                         </a>
-                        <a href="{{ url('book-consultation') }}" class="p23-btn-outline-dark">
+                        <a href="{{ url('contact') }}" class="p23-btn-outline-dark">
                             Discuss Nigeria Market Entry <i class="fas fa-arrow-right ms-1"></i>
                         </a>
                     </div>
@@ -369,7 +369,7 @@
                         <a href="{{ route('services.market-entry.ghana') }}" class="p23-dossier-link">
                             Read the complete Ghana Marketplace case study <span>→</span>
                         </a>
-                        <a href="{{ url('book-consultation') }}" class="p23-btn-outline-dark">
+                        <a href="{{ url('contact') }}" class="p23-btn-outline-dark">
                             Discuss Ghana Market Entry <i class="fas fa-arrow-right ms-1"></i>
                         </a>
                     </div>
@@ -579,7 +579,7 @@
                             Whether you’re testing your first African market, looking for a new route to market or expanding an existing operation, P23 can help you understand the opportunity and turn it into action.
                         </p>
                         <div class="d-flex flex-wrap gap-3">
-                            <a href="{{ url('book-consultation') }}" class="p23-btn-brand">
+                            <a href="{{ url('contact') }}" class="p23-btn-brand">
                                 Talk to P23 Africa <i class="fas fa-calendar-check ms-1"></i>
                             </a>
                             <a href="{{ url('contact') }}" class="p23-btn-outline-light">

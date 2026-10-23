@@ -86,7 +86,7 @@
     <section class="cs-discovery" id="discovery" aria-label="Book a discovery call">
         <h2>{{ $caseStudy['cta_heading'] }}</h2>
         <p>{{ $caseStudy['cta_description'] }}</p>
-        <a href="{{ url('book-consultation') }}" class="cs-discovery-link">Book a Discovery Call</a>
+        <a href="{{ url('contact') }}" class="cs-discovery-link">Book a Discovery Call</a>
     </section>
     @include('layouts.includes.footer3')
 </div>

@@ -407,7 +407,7 @@
                             If you’re exploring the Nigerian market and want to understand the opportunity before committing significant resources, let’s talk.
                         </p>
                         <div class="d-flex flex-wrap gap-3">
-                            <a href="{{ url('book-consultation') }}" class="p23-btn-brand">
+                            <a href="{{ url('contact') }}" class="p23-btn-brand">
                                 Start a conversation with P23 Africa <i class="fas fa-calendar-check ms-1"></i>
                             </a>
                             <a href="{{ route('services.market-entry') }}" class="p23-btn-outline-light">

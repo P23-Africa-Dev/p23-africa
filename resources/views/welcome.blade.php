@@ -84,104 +84,45 @@
     }
 
     .hero-text a {
-        margin-top: 5px;
-        padding: 20px 40px !important;
-        border-radius: 10px;
-        font-size: 20px;
-        font-weight: 400;
-        width: 38% !important;
-    }
-    .hero.content-section a{
-        font-size: 20px;
-
-    }
-
-    /* ==========================================================================
-       Partner / Client Logos Section - Infinite Marquee with Breathing Space
-       ========================================================================== */
-    .partner-logos-section {
-        width: 100%;
-        padding: clamp(50px, 6vw, 90px) 0;
-        /* margin: clamp(40px, 5vw, 75px) 0; */
-        background: #FFFFFF;
-        position: relative;
-        overflow: hidden;
-        z-index: 2;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        margin-top: 15px;
+        padding: 15px 28px !important;
+        border-radius: 12px;
+        background-color: #0D4036;
+        color: #ffffff !important;
+        border: 1px solid rgba(255, 255, 255, 0.85);
+        font-family: 'GT Walsheim Con', var(--font-sans), sans-serif;
+        font-size: clamp(15px, 1.25vw, 17.5px) !important;
+        font-weight: 500;
+        line-height: 1.25;
+        width: 100% !important;
+        max-width: 330px !important;
+        min-width: 260px;
+        box-sizing: border-box;
+        text-decoration: none;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        gap: 16px;
     }
 
-    .partner-logos-container {
-        max-width: 1140px;
-        margin: 0 auto;
-        padding: 0 24px;
+    .hero-text a:hover {
+        background-color: #ffffff !important;
+        color: #003c32 !important;
+        border-color: #ffffff;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+        transform: translateY(-2px);
     }
 
-    .partner-logos-title {
-    font-family: var(--font-sans);
-    font-weight: 400;
-    font-size: clamp(15px, 1.4vw, 18px);
-    line-height: 24px;
-    letter-spacing: 0%;
-    text-align: center;
-    color: var(--color-navy-muted);
-    margin: 0 0 clamp(24px, 3.5vw, 40px) 0;
-}
-
-    .partner-marquee-wrapper {
-        position: relative;
-        width: 100%;
-        overflow: hidden;
-        padding: 12px 0;
-        mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-        -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-    }
-
-    .partner-marquee-track {
-        display: flex;
-        width: max-content;
-        animation: partnerMarqueeScroll 28s linear infinite;
-        will-change: transform;
-    }
-
-    .partner-marquee-track:hover {
-        animation-play-state: paused;
-    }
-
-    .partner-marquee-group {
-        display: flex;
-        align-items: center;
+    .hero-text a .hero-btn-arrow {
         flex-shrink: 0;
+        font-size: 18px;
+        line-height: 1;
+        transition: transform 0.3s ease;
     }
 
-    .partner-logo-item {
-        flex: 0 0 auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0 clamp(28px, 4.5vw, 56px);
-        transition: transform 0.35s ease;
-    }
-
-    .partner-logo-item:hover {
-        transform: translateY(-4px) scale(1.06);
-    }
-
-    .partner-logo-item img {
-        height: clamp(55px, 6vw, 85px);
-        width: auto;
-        max-width: 190px;
-        object-fit: contain;
-        display: block;
-        mix-blend-mode: multiply;
-        filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.04));
-    }
-
-    @keyframes partnerMarqueeScroll {
-        0% {
-            transform: translate3d(0, 0, 0);
-        }
-        100% {
-            transform: translate3d(-50%, 0, 0);
-        }
+    .hero-text a:hover .hero-btn-arrow {
+        transform: translateX(4px);
     }
 
     #highlight a {
@@ -214,21 +155,40 @@
         color: #003c32;
     }
 
+    @media (max-width: 991px) {
+        .hero-text a {
+            max-width: 320px !important;
+            padding: 14px 24px !important;
+            font-size: 16px !important;
+            margin-top: 10px;
+        }
+    }
+
     @media screen and (max-width: 580px) {
         .hero-text a {
-            margin-top: -15px;
-            padding: 20px 50px !important;
+            margin-top: 8px !important;
+            padding: 13px 20px !important;
             border-radius: 10px;
-            font-size: 20px;
-            width: 70% !important;
+            font-size: 15px !important;
+            width: 100% !important;
+            max-width: 320px !important;
+            min-width: 0 !important;
         }
 
         #how_we_help {
             margin-bottom: 0rem !important;
         }
-            .hero.content-section a{
-        font-size: 16px;
+        .hero.content-section a {
+            font-size: 15px;
+        }
+    }
 
+    @media screen and (max-width: 380px) {
+        .hero-text a {
+            padding: 12px 14px !important;
+            font-size: 13.5px !important;
+            gap: 8px;
+        }
     }
 
 
@@ -941,6 +901,52 @@
         font-size: 16px;
         flex-shrink: 0;
     }
+    .sectors-cta-wrap {
+        text-align: center;
+        margin-top: 3.5rem;
+    }
+    .sectors-cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 38px;
+        background-color: #0d4036;
+        color: #ffffff !important;
+        font-family: "GT Walsheim ProCB", "Montserrat", sans-serif;
+        font-weight: 600;
+        font-size: 16.5px;
+        border-radius: 12px;
+        text-decoration: none;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 0 10px 24px rgba(13, 64, 54, 0.15);
+        border: 1px solid transparent;
+    }
+    .sectors-cta-btn i {
+        font-size: 17px;
+        line-height: 1;
+        transition: transform 0.3s ease;
+    }
+    .sectors-cta-btn:hover {
+        background-color: #072b24;
+        color: #27E6A7 !important;
+        transform: translateY(-2px);
+        box-shadow: 0 14px 28px rgba(13, 64, 54, 0.22);
+    }
+    .sectors-cta-btn:hover i {
+        transform: translateX(4px);
+    }
+    @media (max-width: 580px) {
+        .sectors-cta-wrap {
+            margin-top: 2.2rem;
+        }
+        .sectors-cta-btn {
+            width: 100%;
+            max-width: 320px;
+            justify-content: center;
+            padding: 14px 24px;
+            font-size: 15.5px;
+        }
+    }
 
     /* 4. Why P23 Africa Section */
     .why-section {
@@ -1282,8 +1288,8 @@
     .partner-logos-section {
         position: relative;
         width: 100%;
-        margin: clamp(55px, 6.5vw, 90px) 0;
-        padding: clamp(38px, 4.5vw, 58px) 0;
+        margin: 0;
+        padding: 16px 0 14px 0;
         background: #fafcfb;
         border-top: 1px solid rgba(13, 64, 54, 0.07);
         border-bottom: 1px solid rgba(13, 64, 54, 0.07);
@@ -1291,22 +1297,22 @@
     }
 
     .partner-logos-container {
-        max-width: 1320px;
+        max-width: 1200px;
         margin: 0 auto;
-        padding: 0 24px;
+        padding: 0 20px;
         text-align: center;
     }
 
     .partner-logos-title {
         font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        font-weight: 400;
-        font-size: clamp(15px, 1.4vw, 18px);
-        line-height: 24px;
-        letter-spacing: 0%;
+        font-weight: 500;
+        font-size: clamp(11.5px, 0.95vw, 13px);
+        line-height: 16px;
+        letter-spacing: 0.02em;
         text-align: center;
         text-transform: none;
-        color: rgba(5, 0, 56, 0.6);
-        margin: 0 0 clamp(24px, 3.5vw, 40px) 0;
+        color: rgba(5, 0, 56, 0.55);
+        margin: 0 0 10px 0;
     }
 
     .partner-marquee-wrapper {
@@ -1315,7 +1321,7 @@
         overflow: hidden;
         mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
         -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-        padding: 14px 0 18px 0;
+        padding: 2px 0 4px 0;
     }
 
     .partner-marquee-track {
@@ -1333,8 +1339,8 @@
     .partner-marquee-group {
         display: flex;
         align-items: center;
-        gap: clamp(40px, 5.5vw, 75px);
-        padding-right: clamp(40px, 5.5vw, 75px);
+        gap: clamp(28px, 3.5vw, 48px);
+        padding-right: clamp(28px, 3.5vw, 48px);
         flex-shrink: 0;
     }
 
@@ -1343,22 +1349,22 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        min-width: 155px;
-        padding: 0 12px;
-        gap: 12px;
+        min-width: 110px;
+        padding: 0 6px;
+        gap: 5px;
         transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
         opacity: 0.92;
     }
 
     .partner-logo-item:hover {
-        transform: translateY(-3px);
+        transform: translateY(-2px);
         opacity: 1;
     }
 
     .partner-logo-item img {
-        height: 50px;
-        max-height: 50px;
-        max-width: 130px;
+        height: 30px;
+        max-height: 30px;
+        max-width: 85px;
         width: auto;
         object-fit: contain;
         display: block;
@@ -1368,14 +1374,14 @@
     }
 
     .partner-logo-item:hover img {
-        transform: scale(1.06);
+        transform: scale(1.05);
     }
 
     .partner-logo-name {
         font-family: "Montserrat", "GT Walsheim ProCB", sans-serif;
-        font-size: clamp(12.5px, 1.05vw, 13.5px);
+        font-size: clamp(10.5px, 0.82vw, 11.5px);
         font-weight: 600;
-        line-height: 1.25;
+        line-height: 1.2;
         letter-spacing: -0.01em;
         color: #1a3832;
         text-align: center;
@@ -1398,24 +1404,35 @@
 
     @media (max-width: 768px) {
         .partner-logos-section {
-            margin: 38px 0;
-            padding: 28px 0;
+            margin: 0;
+            padding: 12px 0 10px 0;
+        }
+        .partner-logos-title {
+            font-size: 11px;
+            margin: 0 0 6px 0;
+        }
+        .partner-marquee-wrapper {
+            padding: 2px 0;
         }
         .partner-marquee-track {
             animation-duration: 25s;
         }
+        .partner-marquee-group {
+            gap: 22px;
+            padding-right: 22px;
+        }
         .partner-logo-item {
-            min-width: 125px;
-            padding: 0 8px;
-            gap: 8px;
+            min-width: 90px;
+            padding: 0 4px;
+            gap: 4px;
         }
         .partner-logo-item img {
-            height: 38px;
-            max-height: 38px;
-            max-width: 95px;
+            height: 24px;
+            max-height: 24px;
+            max-width: 65px;
         }
         .partner-logo-name {
-            font-size: 11.5px;
+            font-size: 9.5px;
         }
     }
 
@@ -1488,7 +1505,7 @@
 
     .home-tabs-container {
         width: 100%;
-        max-width: 520px;
+        max-width: 680px;
         height: 56px;
         border-radius: 100px;
         background-color: #07483e;
@@ -1510,7 +1527,7 @@
         color: #d0eee9;
         font-family: "GT Walsheim ProCB", "Montserrat", sans-serif;
         font-weight: 600;
-        font-size: clamp(13px, 1.1vw, 14.5px);
+        font-size: clamp(12.5px, 1.05vw, 14.5px);
         letter-spacing: 0.02em;
         cursor: pointer;
         transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1518,7 +1535,7 @@
         align-items: center;
         justify-content: center;
         gap: 8px;
-        padding: 8px 16px;
+        padding: 8px 14px;
         white-space: nowrap;
         user-select: none;
     }
@@ -1772,7 +1789,7 @@
         }
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
         .home-tabs-container {
             height: auto;
             border-radius: 18px;
@@ -1803,9 +1820,11 @@
                           We help international businesses validate demand, verify distribution partners and build the sales operations needed to grow in Africa.<br>From testing real buyer interest to strengthening local sales teams and channel performance, we turn market-entry plans into commercial action.
                         </p>
                         <br>
-                        <div>
-                            <a href="{{ url('contact') }}" class="d-flex justify-content-between"><span>Discuss Your Market Entry</span>
-                                <span>→</span></a>
+                        <div class="hero-cta-wrapper">
+                            <a href="{{ url('contact') }}" class="d-flex justify-content-between align-items-center">
+                                <span class="hero-btn-label">Discuss Your Market Entry</span>
+                                <span class="hero-btn-arrow" aria-hidden="true">→</span>
+                            </a>
                         </div>
                     </div>
                     <div class="col-md-5 animated-images mt-5 mt-md-0">
@@ -1950,12 +1969,23 @@
                             class="home-tab-btn" 
                             role="tab" 
                             aria-selected="false" 
-                            aria-controls="home-pane-construction" 
-                            data-target="#home-pane-construction"
-                            id="tab-construction"
-                            onclick="switchHomeCaseTab('home-pane-construction', this)">
+                            aria-controls="home-pane-software" 
+                            data-target="#home-pane-software"
+                            id="tab-software"
+                            onclick="switchHomeCaseTab('home-pane-software', this)">
                         <span class="tab-dot"></span>
-                        Construction Equipment
+                        Software &amp; SaaS
+                    </button>
+                    <button type="button" 
+                            class="home-tab-btn" 
+                            role="tab" 
+                            aria-selected="false" 
+                            aria-controls="home-pane-verification" 
+                            data-target="#home-pane-verification"
+                            id="tab-verification"
+                            onclick="switchHomeCaseTab('home-pane-verification', this)">
+                        <span class="tab-dot"></span>
+                        Distributor Verification
                     </button>
                 </div>
             </div>
@@ -1976,7 +2006,7 @@
                         <div class="home-case-article">
                             <div>
                                 <div class="home-case-meta">
-                                    <span><i class="bi bi-geo-alt"></i> Nigeria (Lagos & Abuja)</span>
+                                    <span><i class="bi bi-geo-alt"></i> Nigeria (Lagos &amp; Abuja)</span>
                                     <span><i class="bi bi-clock"></i> 10-Week Demand Testing</span>
                                 </div>
 
@@ -2013,49 +2043,99 @@
                     </div>
                 </div>
 
-                {{-- Pane 2: Construction Equipment Platform --}}
-                <div class="home-case-pane" id="home-pane-construction" role="tabpanel" aria-labelledby="tab-construction">
+                {{-- Pane 2: Software & SaaS Companies --}}
+                <div class="home-case-pane" id="home-pane-software" role="tabpanel" aria-labelledby="tab-software">
                     <div class="home-case-card">
                         <div class="home-case-visual">
-                            <img src="{{ asset('images/case-studies/construction-platform.png') }}" 
-                                 alt="Supporting a Construction Equipment Platform's Market Expansion" 
+                            <img src="{{ asset('images/case-studies/cloudworks.png') }}" 
+                                 alt="Enterprise Client Acquisition & Partner Routes for B2B SaaS" 
                                  loading="lazy">
-                            <span class="home-case-badge">Equipment Platform</span>
+                            <span class="home-case-badge">Software &amp; SaaS</span>
                         </div>
 
                         <div class="home-case-article">
                             <div>
                                 <div class="home-case-meta">
-                                    <span><i class="bi bi-geo-alt"></i> East & West Africa</span>
-                                    <span><i class="bi bi-clock"></i> Multi-Market Expansion</span>
+                                    <span><i class="bi bi-geo-alt"></i> Nigeria &amp; Kenya</span>
+                                    <span><i class="bi bi-clock"></i> 12-Week Market Entry</span>
                                 </div>
 
                                 <h3 class="home-case-heading">
-                                    Supporting a Construction Equipment Platform's Market Expansion
+                                    Enterprise Client Acquisition &amp; Partner Routes for B2B SaaS
                                 </h3>
 
                                 <p class="home-case-description">
-                                    Tested demand across multiple African markets, developed local partnerships and supported commercial launch execution.
+                                    Supporting technology companies and software platforms seeking enterprise clients, commercial partnerships, and routes to market across Africa.
                                 </p>
 
                                 <div class="home-case-metrics">
                                     <div class="home-metric-item">
-                                        <span class="home-metric-value">3+</span>
-                                        <span class="home-metric-label">African Markets</span>
+                                        <span class="home-metric-value">280</span>
+                                        <span class="home-metric-label">Target Accounts</span>
                                     </div>
                                     <div class="home-metric-item">
-                                        <span class="home-metric-value">Direct</span>
-                                        <span class="home-metric-label">Partner Validation</span>
+                                        <span class="home-metric-value">18</span>
+                                        <span class="home-metric-label">Qualified Leads</span>
                                     </div>
                                     <div class="home-metric-item">
-                                        <span class="home-metric-value">De-risked</span>
-                                        <span class="home-metric-label">Market Execution</span>
+                                        <span class="home-metric-value">2 Signed</span>
+                                        <span class="home-metric-label">Channel Partners</span>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="home-case-footer">
-                                <a href="{{ url('case-studies/liftmasters-international') }}" class="home-case-link" id="btn-read-case-construction">
+                                <a href="{{ url('case-studies/cloudworks-analytics') }}" class="home-case-link" id="btn-read-case-software">
+                                    Read the case study <span class="arrow">→</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Pane 3: Distributor Verification --}}
+                <div class="home-case-pane" id="home-pane-verification" role="tabpanel" aria-labelledby="tab-verification">
+                    <div class="home-case-card">
+                        <div class="home-case-visual">
+                            <img src="{{ asset('images/case-studies/coolair.png') }}" 
+                                 alt="Verifying Local Distribution Partners Before Market Entry" 
+                                 loading="lazy">
+                            <span class="home-case-badge">Distributor Verification</span>
+                        </div>
+
+                        <div class="home-case-article">
+                            <div>
+                                <div class="home-case-meta">
+                                    <span><i class="bi bi-geo-alt"></i> Kenya &amp; Tanzania</span>
+                                    <span><i class="bi bi-clock"></i> 14-Week Partner Verification</span>
+                                </div>
+
+                                <h3 class="home-case-heading">
+                                    Verifying Local Distribution Partners Before Market Entry
+                                </h3>
+
+                                <p class="home-case-description">
+                                    Assessing prospective distribution partners before committing capital. Verifying on-ground sales capabilities, customer access, and territory coverage to establish reliable commercial routes.
+                                </p>
+
+                                <div class="home-case-metrics">
+                                    <div class="home-metric-item">
+                                        <span class="home-metric-value">13</span>
+                                        <span class="home-metric-label">Distributors Screened</span>
+                                    </div>
+                                    <div class="home-metric-item">
+                                        <span class="home-metric-value">5</span>
+                                        <span class="home-metric-label">Shortlisted</span>
+                                    </div>
+                                    <div class="home-metric-item">
+                                        <span class="home-metric-value">2 Signed</span>
+                                        <span class="home-metric-label">Verified Partners</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="home-case-footer">
+                                <a href="{{ url('case-studies/coolair-systems') }}" class="home-case-link" id="btn-read-case-verification">
                                     Read the case study <span class="arrow">→</span>
                                 </a>
                             </div>
@@ -2205,9 +2285,9 @@
                             <h3 class="sector-title">Equipment and Industrial Manufacturers</h3>
                             <p class="sector-desc">Helping international manufacturers test market demand, identify target enterprise customers, and verify reliable distribution partners before committing to a market.</p>
                             <ul class="sector-verticals">
-                                <li><i class="bi bi-check-circle-fill"></i> Heavy equipment & industrial machinery</li>
-                                <li><i class="bi bi-check-circle-fill"></i> Construction & infrastructure platforms</li>
-                                <li><i class="bi bi-check-circle-fill"></i> Agricultural & manufacturing equipment</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Heavy Equipment &amp; Industrial Machinery</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Construction, Infrastructure &amp; HVAC Equipment</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Agricultural, Manufacturing &amp; Medical Equipment</li>
                             </ul>
                         </div>
                     </div>
@@ -2228,6 +2308,13 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="sectors-cta-wrap">
+                <a href="{{ url('contact') }}" class="sectors-cta-btn">
+                    <span>Contact Us</span>
+                    <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                </a>
             </div>
         </div>
     </section>
@@ -2297,7 +2384,7 @@
                     <div class="bottom-bar"></div>
                 </div>
                 <div class="col-md-6 insight-text">
-                    <p class="date">17th November 2025</p>
+                    <p class="date">17th October 2026</p>
                     <h3><b> Essential Guide to Doing Business in Africa</b></h3>
                     <p class="description">
                         Our essential guide helps foreign investors navigate Africa’s diverse markets, build local
@@ -2341,7 +2428,7 @@
             <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/funding.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
-                    <div class="date">2nd November 2025</div>
+                    <div class="date">2nd October 2026</div>
                     <h5>State of Funding 2025</h5>
                     <p>Africa’s funding landscape in 2025 shows steady growth, but challenges like tighter global capital
                         and cautious investor sentiment remain.</p>
@@ -2351,7 +2438,7 @@
             <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/girl.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
-                    <div class="date">10th November 2025</div>
+                    <div class="date">10th October 2026</div>
                     <h5>Understanding buyer habits</h5>
                     <p>Buyer habits in Africa are evolving fast, driven by digital adoption and a growing middle class, but
                         differences across regions and trust issues still pose challenges.</p>
@@ -2361,7 +2448,7 @@
             <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/plant.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
-                    <div class="date">22nd October 2025</div>
+                    <div class="date">22nd September 2026</div>
                     <h5>Top Agri sectors to watch</h5>
                     <p>Africa’s agriculture sector is full of opportunity, with agri-tech, food processing, and sustainable
                         farming emerging as key areas to watch.</p>
@@ -2371,7 +2458,7 @@
             <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/carousel00.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
-                    <div class="date">9th October 2025</div>
+                    <div class="date">9th September 2026</div>
                     <h5>Business trends 2025</h5>
                     <p>Business trends in Africa are evolving rapidly, with growth in digital transformation, green energy,
                         and emerging markets driving new opportunities across the continent.</p>
@@ -2409,7 +2496,7 @@
             <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/funding.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
-                    <div class="date">2nd November 2025</div>
+                    <div class="date">2nd October 2026</div>
                     <h5>State of Funding 2025</h5>
                     <p>Africa’s funding landscape in 2025 shows steady growth, but challenges like tighter global capital
                         and cautious investor sentiment remain.</p>
@@ -2419,7 +2506,7 @@
             <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/girl.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
-                    <div class="date">10th November 2025</div>
+                    <div class="date">10th October 2026</div>
                     <h5>Understanding buyer habits</h5>
                     <p>Buyer habits in Africa are evolving fast, driven by digital adoption and a growing middle class, but
                         differences across regions and trust issues still pose challenges.</p>
@@ -2429,7 +2516,7 @@
             <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/plant.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
-                    <div class="date">22nd October 2025</div>
+                    <div class="date">22nd September 2026</div>
                     <h5>Top Agri sectors to watch</h5>
                     <p>Africa’s agriculture sector is full of opportunity, with agri-tech, food processing, and sustainable
                         farming emerging as key areas to watch.</p>
@@ -2439,7 +2526,7 @@
             <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/carousel00.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
-                    <div class="date">9th October 2025</div>
+                    <div class="date">9th September 2026</div>
                     <h5>Business trends 2025</h5>
                     <p>Business trends in Africa are evolving rapidly, with growth in digital transformation, green energy,
                         and emerging markets driving new opportunities across the continent.</p>
@@ -2474,7 +2561,7 @@
                 </p>
                 <div class="cta-prompt">Let’s discuss what you’re trying to achieve.</div>
                 <div class="d-flex justify-content-center flex-wrap">
-                    <a href="{{ url('book-consultation') }}" class="cta-btn-primary">
+                    <a href="{{ url('contact') }}" class="cta-btn-primary">
                         Book a Consultation <i class="bi bi-arrow-right"></i>
                     </a>
                     <a href="{{ url('contact') }}" class="cta-btn-secondary">

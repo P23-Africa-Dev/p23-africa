@@ -145,7 +145,7 @@
                     <a href="#" class="btn register-btn my-auto">Register</a> --}}
 
                     <div class="subscribe brn-consult">
-                        <a href="/book-consultation" class="btn" id="btn">Book a Consultation</a>
+                        <a href="{{ url('contact') }}" class="btn" id="btn">Book a Consultation</a>
                     </div>
 
                     <div class="social-icons brn-consult">
@@ -165,7 +165,7 @@
                 <span class="mx-3"></span>
                 <a href="#" class="btn register-btn my-auto">Register</a> --}}
                 <div class="subscribe brn-consult">
-                    <a href="/book-consultation" class="btn" id="btn">Book a Consultation</a>
+                    <a href="{{ url('contact') }}" class="btn" id="btn">Book a Consultation</a>
                 </div>
 
                 <div class="social-icons brn-consult">
