@@ -288,7 +288,7 @@
                         aria-controls="pane-bld" 
                         data-target="#pane-bld"
                         id="tab-bld">
-                    BLD Manufacturer
+                    HVAC Manufacturer
                 </button>
                 <button type="button" 
                         class="me-tab-btn" 
@@ -297,7 +297,7 @@
                         aria-controls="pane-fmcg" 
                         data-target="#pane-fmcg"
                         id="tab-fmcg">
-                    FMCG Manufacturer
+                    Industrial Machinery
                 </button>
                 <button type="button" 
                         class="me-tab-btn" 
