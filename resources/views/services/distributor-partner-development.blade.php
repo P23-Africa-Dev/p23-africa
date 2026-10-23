@@ -7,7 +7,7 @@
         content="Find the right partner in Africa, and set them up to sell. P23 Africa finds, verifies and reference-checks local distributors, importers and resellers, then helps you structure the partnership.">
     <meta property="og:title" content="Distributor & Partner Development | P23 Africa">
     <meta property="og:description" content="Choose your African distributor with evidence, before you commit stock, exclusivity or your brand.">
-    <meta property="og:image" content="{{ asset('images/market-entry/hero-handshake.png') }}">
+    <meta property="og:image" content="{{ asset('images/services/sd-distributor-hero-1.jpg') }}">
     {{-- services-new.css carries the shared footer3 + navbar styles used across the service pages --}}
     <link rel="stylesheet" href="{{ asset('css/services-new.css') }}">
     <link rel="stylesheet" href="{{ asset('css/service-detail.css') }}">
@@ -53,10 +53,10 @@
 
             <div class="sd-hero__visual" style="--ox: 791; --vw: 697; --vh: 564; --ar: 697 / 564;">
                 <div class="sd-hero__img" style="--x: 791; --y: 0; --w: 666; --h: 515; --bg: #D9D9D9;">
-                    <img src="{{ asset('images/market-entry/hero-handshake.png') }}" alt="Business partners shaking hands on a distribution agreement" loading="eager">
+                    <img src="{{ asset('images/services/sd-distributor-hero-1.jpg') }}" alt="P23 Africa consultant in a partner verification meeting" loading="eager" fetchpriority="high">
                 </div>
                 <div class="sd-hero__img" style="--x: 1022; --y: 298; --w: 466; --h: 266; --bg: #8B8B8B;">
-                    <img src="{{ asset('images/services/global-reach-executive.jpg') }}" alt="P23 Africa executive reviewing partner verification" loading="eager">
+                    <img src="{{ asset('images/services/sd-distributor-hero-2.jpg') }}" alt="P23 Africa consultant meeting a prospective distributor" loading="eager">
                 </div>
             </div>
 
