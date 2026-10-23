@@ -1034,14 +1034,232 @@ body.p23-black-navbar-page.sd-body .footer3 {
     height: auto;
 }
 
+/* --------------------------------------------------------------------------
+   Case studies block (shared include) re-themed to this page's design
+   language. Scoped to .sd-cases-embed so the homepage version is untouched.
+   -------------------------------------------------------------------------- */
 .sd-cases-embed {
-    max-width: 1512px;
-    margin: calc(58 * var(--u)) auto calc(15 * var(--u));
-    padding: 0 calc(59 * var(--u)) 0 calc(54 * var(--u));
+    margin-top: calc(103 * var(--u));
 }
 
 .sd-cases-embed .home-casestudy-section {
+    padding: 0 0 calc(110 * var(--u));
+    background: #FFFFFF;
+    border: 0;
+}
+
+.sd-cases-embed .home-casestudy-container {
+    max-width: 1512px;
+    padding: 0 calc(120 * var(--u));
+}
+
+.sd-cases-embed .home-casestudy-header {
+    max-width: calc(760 * var(--u));
+    margin: 0 0 calc(32 * var(--u));
+    text-align: left;
+}
+
+.sd-cases-embed .home-casestudy-kicker {
+    gap: 0;
+    padding: 0 calc(16 * var(--u));
+    height: max(24px, calc(27 * var(--u)));
+    margin-bottom: calc(18 * var(--u));
+    border: 0;
+    border-radius: 999px;
+    background: #F1F0FA;
+    color: #141E30;
+    font-family: var(--sd-sans);
+    font-size: max(10px, calc(10 * var(--u)));
+    font-weight: 400;
+    letter-spacing: 0.833px;
+    text-transform: none;
+}
+
+.sd-cases-embed .home-casestudy-title {
+    margin: 0;
+    font-family: var(--sd-sans);
+    font-weight: 800;
+    font-size: max(24px, calc(32 * var(--u)));
+    line-height: 1.15;
+    letter-spacing: 0;
+    color: var(--sd-ink);
+}
+
+.sd-cases-embed .home-casestudy-subtitle {
+    margin-top: calc(10 * var(--u));
+    font-family: var(--sd-serif);
+    font-style: italic;
+    font-size: max(18px, calc(24 * var(--u)));
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+    color: var(--sd-ink);
+}
+
+/* Tabs */
+.sd-cases-embed .home-tabs-wrapper {
+    justify-content: flex-start;
+    margin: 0 0 calc(32 * var(--u));
+}
+
+.sd-cases-embed .home-tabs-container {
+    max-width: 480px;
+    border-radius: 10px;
+    background-color: #1A283F;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+}
+
+.sd-cases-embed .home-tab-btn {
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.75);
+    font-family: var(--sd-sans);
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: -0.02em;
+}
+
+.sd-cases-embed .home-tab-btn:hover:not(.active) {
+    color: #FFFFFF;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.sd-cases-embed .home-tab-btn.active {
+    background-color: #FFFFFF;
+    color: #141E30;
+    box-shadow: none;
+}
+
+.sd-cases-embed .home-tab-btn .tab-dot,
+.sd-cases-embed .home-tab-btn.active .tab-dot {
+    background-color: var(--sd-maroon);
+}
+
+/* Card */
+.sd-cases-embed .home-case-panes-wrapper {
+    min-height: 0;
+}
+
+.sd-cases-embed .home-case-card {
+    border: 0;
+    border-radius: 0;
+    background: var(--sd-cream);
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+}
+
+.sd-cases-embed .home-case-card:hover {
+    transform: translateY(-4px);
+    border-color: transparent;
+    box-shadow: 0 16px 20px rgba(0, 0, 0, 0.28);
+}
+
+.sd-cases-embed .home-case-visual {
+    background: var(--sd-ink);
+}
+
+.sd-cases-embed .home-case-badge {
+    top: 20px;
+    left: 20px;
+    padding: 0 16px;
+    height: 27px;
+    display: inline-flex;
+    align-items: center;
+    border: 0;
+    border-radius: 999px;
+    background: #F1F0FA;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    color: #141E30;
+    font-family: var(--sd-sans);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.833px;
+    text-transform: none;
+}
+
+.sd-cases-embed .home-case-article {
+    padding: clamp(28px, calc(44 * var(--u)), 44px);
+}
+
+.sd-cases-embed .home-case-meta {
+    font-family: var(--sd-sans);
+    font-size: 13px;
+    color: var(--sd-steel);
+}
+
+.sd-cases-embed .home-case-meta i {
+    color: var(--sd-maroon);
+}
+
+.sd-cases-embed .home-case-heading {
+    font-family: var(--sd-serif);
+    font-weight: 700;
+    font-size: max(22px, calc(28 * var(--u)));
+    line-height: 1.17;
+    letter-spacing: 0;
+    color: var(--sd-ink);
+}
+
+.sd-cases-embed .home-case-description {
+    font-family: var(--sd-sans);
+    font-size: max(14px, calc(15 * var(--u)));
+    line-height: 1.45;
+    color: var(--sd-navy);
+}
+
+.sd-cases-embed .home-case-metrics {
+    border: 0;
+    border-radius: 0;
+    background: #FFFFFF;
+}
+
+.sd-cases-embed .home-metric-value {
+    font-family: var(--sd-serif);
+    font-weight: 700;
+    font-size: max(20px, calc(24 * var(--u)));
+    color: var(--sd-maroon);
+}
+
+.sd-cases-embed .home-metric-label {
+    font-family: var(--sd-sans);
+    font-size: 12px;
+    color: var(--sd-steel);
+}
+
+.sd-cases-embed .home-case-link {
+    padding: 0 28px;
+    min-height: 48px;
+    border-radius: 0;
+    background: var(--sd-maroon);
+    color: #EEEEEE !important;
+    font-family: var(--sd-sans);
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+}
+
+.sd-cases-embed .home-case-link:hover {
+    background: #4d0d0c;
+    color: #FFFFFF !important;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+}
+
+.sd-cases-embed .home-casestudy-all-link {
+    text-align: left;
+    margin-top: calc(36 * var(--u));
+}
+
+.sd-cases-embed .home-casestudy-all-link a {
+    font-family: var(--sd-sans);
+    font-size: max(14px, calc(15 * var(--u)));
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    color: var(--sd-ink) !important;
+    border-bottom: 1px solid var(--sd-ink);
+}
+
+.sd-cases-embed .home-casestudy-all-link a:hover {
+    color: var(--sd-maroon) !important;
+    border-bottom-color: var(--sd-maroon);
 }
 
 /* Small helpers */
@@ -1394,8 +1612,19 @@ body.p23-black-navbar-page.sd-body .footer3 {
     }
 
     .sd-cases-embed {
-        margin: 56px 0 0;
-        padding: 0;
+        margin-top: 64px;
+    }
+
+    .sd-cases-embed .home-casestudy-section {
+        padding-bottom: 72px;
+    }
+
+    .sd-cases-embed .home-casestudy-container {
+        padding: 0 32px;
+    }
+
+    .sd-cases-embed .home-casestudy-header {
+        max-width: 640px;
     }
 }
 
@@ -1460,6 +1689,14 @@ body.p23-black-navbar-page.sd-body .footer3 {
 
     .sd-pill {
         width: 100%;
+    }
+
+    .sd-cases-embed .home-casestudy-container {
+        padding: 0 20px;
+    }
+
+    .sd-cases-embed .home-tabs-container {
+        max-width: none;
     }
 
     .sd-pricing .sd-inner {
