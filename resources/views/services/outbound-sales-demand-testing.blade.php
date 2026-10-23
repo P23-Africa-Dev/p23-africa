@@ -45,7 +45,7 @@
                 <p class="sd-hero__desc">
                     We run a real sales test in your target country. We find companies already showing signs they’re ready to buy, reach their decision-makers, and report what actually happens. You get evidence of demand (or the lack of it) before you hire a team, open an office or sign a distributor.
                 </p>
-                <a href="{{ url('book-consultation') }}" class="sd-hero__btn" id="sd-hero-scoping-btn">Book a scoping call</a>
+                <a href="{{ url('contact') }}" class="sd-hero__btn" id="sd-hero-scoping-btn">Book a scoping call</a>
             </div>
 
             <div class="sd-hero__visual" style="--ox: 791; --vw: 666; --vh: 536; --ar: 666 / 536;">
@@ -253,10 +253,10 @@
                 <h2 class="sd-cta__title">Ready to test a market?</h2>
                 <p class="sd-cta__desc">Tell us your product, target country and buyer type, and we’ll scope the test.</p>
                 <div class="sd-cta__actions">
-                    <a href="{{ url('book-consultation') }}" class="sd-cta__btn" id="sd-cta-scoping-btn">Book a scoping call</a>
+                    <a href="{{ url('contact') }}" class="sd-cta__btn" id="sd-cta-scoping-btn">Book a scoping call</a>
                     <div class="sd-cta__alt">
                         <span>Already know the market is there?</span>
-                        <a href="{{ url('contact') }}">See our Prospecting Partner</a>
+                        <a href="{{ url('distributor-partner-development') }}">See our Prospecting Partner</a>
                     </div>
                 </div>
             </div>

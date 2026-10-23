@@ -176,7 +176,7 @@
         <div class="sd-get__band">
             <div class="sd-inner">
                 <h2 class="sd-get__title">What you get</h2>
-                <p class="sd-get__sub">Discover the features, benefits and value <br class="sd-br-d">you’ll receive.</p>
+                <p class="sd-get__sub my-3">Discover the features, benefits and value <br class="sd-br-d">you’ll receive.</p>
 
                 <ul class="sd-pills">
                     <li class="sd-pill" style="--w: 291;">A sourced, screened longlist</li>

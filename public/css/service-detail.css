@@ -1047,8 +1047,8 @@ body.p23-black-navbar-page.sd-body .footer3 {
 
 .sd-cases-embed .home-casestudy-section {
     background: #FFFFFF;
-    /* border-color: rgba(40, 55, 73, 0.08); */
-    /* box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3); */
+    border-color: rgba(40, 55, 73, 0.08);
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
 }
 
 .sd-cases-embed .home-casestudy-kicker {
