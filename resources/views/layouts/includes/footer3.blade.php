@@ -35,7 +35,7 @@
                     <li><a href="{{ url('market-entry') }}" class="footer3-nav-link">Market Entry &amp; Expansion</a></li>
                     <li><a href="{{ url('services') }}#growth-plan" class="footer3-nav-link">Verify Distributors</a></li>
                     <li><a href="{{ url('services') }}#growth-plan" class="footer3-nav-link">Sales Demand Testing</a></li>
-                    <li><a href="{{ url('services') }}#growth-plan" class="footer3-nav-link">Operations/Market Support</a></li>
+                    <li><a href="{{ url('services') }}#growth-plan" class="footer3-nav-link">Sales/Market Support</a></li>
                     <li><a href="{{ url('services') }}#growth-plan" class="footer3-nav-link">Investment Readiness</a></li>
                 </ul>
             </div>

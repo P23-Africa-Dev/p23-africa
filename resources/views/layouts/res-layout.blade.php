@@ -74,7 +74,7 @@
                 <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                     <ul class="navbar-nav pt-md-0 pt-3">
                         <li class="nav-item"><a class="nav-link" href="{{ url('about') }}">Who we are</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url('services') }}">What we do</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url('services') }}">Services</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('event') }}">Events</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('resource-hub') }}">Resource hub</a>
                         </li>
@@ -102,7 +102,7 @@
 
                 <div class="d-flex align-items-right desktop">
                     <button class="subscribe-btn me-3">
-                          <a href="/book-consultation" class="btn  me-3" id="btn" style="color: #fff;">Book a Consultation</a>
+                          <a href="{{ url('contact') }}" class="btn  me-3" id="btn" style="color: #fff;">Book a Consultation</a>
                         
                         </button>
                     <div class="social-icons">

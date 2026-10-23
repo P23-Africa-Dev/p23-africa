@@ -668,7 +668,7 @@ body.case-study-page #navbar .navbar-toggler img {
     font-display: swap;
 }
 
-/* Supporting text: 14px regular across all breakpoints. */
+/* Supporting text: 15px regular across all breakpoints. */
 .cs-summary ul,
 .cs-challenge p,
 .cs-card p,
@@ -677,7 +677,7 @@ body.case-study-page #navbar .navbar-toggler img {
 .cs-outcome p,
 .cs-quote p,
 .cs-discovery p {
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.3;
     font-weight: 400;
     font-style: normal;

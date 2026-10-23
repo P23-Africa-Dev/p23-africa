@@ -132,7 +132,7 @@
             <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                 <ul class="navbar-nav pt-md-0 pt-3">
                     <li class="nav-item"><a class="nav-link" href="{{ url('about') }}">Who we are</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('services') }}">What we do</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('services') }}">Services</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('event') }}">Events</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('resource-hub') }}">Resource hub</a>
                     </li>
@@ -145,7 +145,7 @@
                     <a href="#" class="btn register-btn my-auto">Register</a> --}}
 
                     <div class="subscribe brn-consult">
-                        <a href="/book-consultation" class="btn" id="btn">Book a Consultation</a>
+                        <a href="{{ url('contact') }}" class="btn" id="btn">Book a Consultation</a>
                     </div>
 
                     <div class="social-icons brn-consult">
@@ -165,7 +165,7 @@
                 <span class="mx-3"></span>
                 <a href="#" class="btn register-btn my-auto">Register</a> --}}
                 <div class="subscribe brn-consult">
-                    <a href="/book-consultation" class="btn" id="btn">Book a Consultation</a>
+                    <a href="{{ url('contact') }}" class="btn" id="btn">Book a Consultation</a>
                 </div>
 
                 <div class="social-icons brn-consult">

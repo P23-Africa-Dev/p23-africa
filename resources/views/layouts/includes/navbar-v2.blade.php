@@ -20,7 +20,7 @@
 
             <nav class="p23-nav-links" id="p23NavLinks" aria-label="Main Navigation">
                 <a href="{{ url('about') }}" class="p23-nav-link {{ $active === 'who-we-are' ? 'active' : '' }}">Who We Are</a>
-                <a href="{{ url('services') }}" class="p23-nav-link {{ $active === 'what-we-do' ? 'active' : '' }}">What We Do</a>
+                <a href="{{ url('services') }}" class="p23-nav-link {{ in_array($active, ['what-we-do', 'services']) ? 'active' : '' }}">Services</a>
                 <a href="{{ route('event') }}" class="p23-nav-link {{ $active === 'events' ? 'active' : '' }}">Events</a>
                 <a href="{{ route('resource-hub') }}" class="p23-nav-link {{ $active === 'resource-hub' ? 'active' : '' }}">Resource Hub</a>
                 <a href="{{ route('brn') }}" class="p23-nav-link {{ $active === 'business-network' ? 'active' : '' }}">Business Network</a>
@@ -29,7 +29,7 @@
 
         {{-- Right: Book Consultation + Gap 36px + Social Icons (Figma Group 427318899 / 427318900) --}}
         <div class="p23-nav-right">
-            <a href="{{ url('book-consultation') }}" class="p23-nav-consult-btn">Book Consultation</a>
+            <a href="{{ url('contact') }}" class="p23-nav-consult-btn">Book Consultation</a>
 
             <div class="p23-nav-socials" aria-label="Social Media">
                 <a href="https://linkedin.com/company/p23-africa/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
@@ -70,13 +70,13 @@
         </div>
         <nav class="p23-mobile-links">
             <a href="{{ url('about') }}" class="p23-mobile-link {{ $active === 'who-we-are' ? 'active' : '' }}">Who We Are</a>
-            <a href="{{ url('services') }}" class="p23-mobile-link {{ $active === 'what-we-do' ? 'active' : '' }}">What We Do</a>
+            <a href="{{ url('services') }}" class="p23-mobile-link {{ in_array($active, ['what-we-do', 'services']) ? 'active' : '' }}">Services</a>
             <a href="{{ route('event') }}" class="p23-mobile-link {{ $active === 'events' ? 'active' : '' }}">Events</a>
             <a href="{{ route('resource-hub') }}" class="p23-mobile-link {{ $active === 'resource-hub' ? 'active' : '' }}">Resource Hub</a>
             <a href="{{ route('brn') }}" class="p23-mobile-link {{ $active === 'business-network' ? 'active' : '' }}">Business Network</a>
         </nav>
         <div class="p23-mobile-cta">
-            <a href="{{ url('book-consultation') }}" class="p23-nav-consult-btn">Book Consultation</a>
+            <a href="{{ url('contact') }}" class="p23-nav-consult-btn">Book Consultation</a>
         </div>
         <div class="p23-mobile-socials">
             <a href="https://linkedin.com/company/p23-africa/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">

@@ -31,11 +31,11 @@ document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && sidebar?.classList.contains("active")) closeSidebar();
 });
 
-document.querySelectorAll("[data-target]").forEach((item) => {
+document.querySelectorAll("#sidebar [data-target]").forEach((item) => {
     item.addEventListener("click", () => {
-        const target = document.getElementById(
-            item.getAttribute("data-target"),
-        );
+        const targetId = item.getAttribute("data-target");
+        const target = document.getElementById(targetId);
+        if (!target || !mainMenu) return;
         mainMenu.classList.add("hide");
         submenuElements.forEach((sm) => sm.classList.remove("active"));
         target.classList.add("active");
