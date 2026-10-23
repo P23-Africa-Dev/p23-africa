@@ -331,37 +331,26 @@
             {{-- Pane 1: BLD Manufacturer (Default Active) --}}
             <div class="me-case-pane active" id="pane-bld" role="tabpanel" aria-labelledby="tab-bld">
                 <div class="me-case-visual">
-                    <img src="{{ asset('images/market-entry/case-study-architecture.jpg') }}" 
-                         alt="Case study architectural structure for multinational manufacturing" 
+                    <img src="{{ asset('images/case-studies/thermoflow.png') }}" 
+                         alt="Commercial HVAC units and industrial installations in Nigeria" 
                          loading="lazy">
                 </div>
 
                 <div class="me-case-article">
-                    <div class="me-case-meta">
-                        <span class="me-case-meta-item">
-                            <img src="{{ asset('images/market-entry/icon-calendar.png') }}" alt="Calendar date" width="16" height="16">
-                            Apr 8, 2026
-                        </span>
-                        <span class="me-case-meta-item">
-                            <img src="{{ asset('images/market-entry/icon-user.png') }}" alt="Author" width="16" height="16">
-                            Marcus Sterling
-                        </span>
-                    </div>
-
                     <h3 class="me-case-heading">
-                        De-risking regional market entry for heavy building material manufacturers
+                        Validating HVAC distributor claims in Nigeria before committing capital
                     </h3>
 
                     <div class="me-case-body">
                         <p>
-                            Entering high-growth infrastructure corridors across Sub-Saharan Africa requires rigorous distributor vetting, local standards compliance, and structured credit terms to protect multi-million-dollar capital investments  
+                            The client had been approached by three Nigerian distributors claiming established HVAC networks, but had no way to independently verify whether these partners possessed active field sales teams, real customer relationships, or just procurement contacts.
                         </p>
                         <p>
-                            Through hands-on commercial due diligence and verified introductions to pre-screened regional distributors, we established verified distribution coverage across three core commercial hubs in under seven months  
+                            Through structured due diligence across 312 target commercial accounts, 2 of 3 claimed distributors were eliminated, protecting millions in unvetted capital and establishing a verified commercial distribution channel with 47 qualified buyer opportunities.
                         </p>
                     </div>
 
-                    <a href="{{ url('case-studies') }}" class="me-case-continue-btn" id="btn-continue-reading-bld">
+                    <a href="{{ route('case-studies.show', 'thermoflow-hvac') }}" class="me-case-continue-btn" id="btn-continue-reading-bld">
                         Continue Reading
                     </a>
                 </div>
@@ -370,37 +359,26 @@
             {{-- Pane 2: FMCG Manufacturer --}}
             <div class="me-case-pane" id="pane-fmcg" role="tabpanel" aria-labelledby="tab-fmcg">
                 <div class="me-case-visual">
-                    <img src="{{ asset('images/market-entry/case-study-architecture.jpg') }}" 
-                         alt="FMCG distributor vetting and commercial supply chain case study" 
+                    <img src="{{ asset('images/case-studies/packline.png') }}" 
+                         alt="Automated packaging production line in an FMCG manufacturing plant" 
                          loading="lazy">
                 </div>
 
                 <div class="me-case-article">
-                    <div class="me-case-meta">
-                        <span class="me-case-meta-item">
-                            <img src="{{ asset('images/market-entry/icon-calendar.png') }}" alt="Calendar date" width="16" height="16">
-                            May 14, 2026
-                        </span>
-                        <span class="me-case-meta-item">
-                            <img src="{{ asset('images/market-entry/icon-user.png') }}" alt="Author" width="16" height="16">
-                            Sarah Jenkins
-                        </span>
-                    </div>
-
                     <h3 class="me-case-heading">
-                        Scaling FMCG distribution through local network validation
+                        Transforming a passive Nigerian distributor into a data-visible sales channel
                     </h3>
 
                     <div class="me-case-body">
                         <p>
-                            Rapid expansion across West and East Africa requires navigating localized tier-1 and tier-2 distribution bottlenecks without compromising brand equity or credit terms  
+                            Packline Industrial Machinery had an established Nigerian distributor for two years, but flat sales and zero visibility into field activity or customer pipeline left leadership blind to actual market demand.
                         </p>
                         <p>
-                            By implementing in-country verification and direct retail engagement, we helped establish reliable retail channels across 14 major commercial hubs within 6 months  
+                            P23 mapped 127 target FMCG and food processing factories, deployed structured territory management with Factory 23 activity tracking, and drove a 3× pipeline increase within six months with 100% verified field visibility.
                         </p>
                     </div>
 
-                    <a href="{{ url('case-studies') }}" class="me-case-continue-btn" id="btn-continue-reading-fmcg">
+                    <a href="{{ route('case-studies.show', 'packline-industrial-machinery') }}" class="me-case-continue-btn" id="btn-continue-reading-fmcg">
                         Continue Reading
                     </a>
                 </div>
@@ -409,37 +387,26 @@
             {{-- Pane 3: FINTECH Scale-up --}}
             <div class="me-case-pane" id="pane-fintech" role="tabpanel" aria-labelledby="tab-fintech">
                 <div class="me-case-visual">
-                    <img src="{{ asset('images/market-entry/case-study-architecture.jpg') }}" 
-                         alt="Fintech regional compliance and financial rails integration" 
+                    <img src="{{ asset('images/case-studies/finedge.png') }}" 
+                         alt="Financial software and enterprise technology team collaborating in a modern office" 
                          loading="lazy">
                 </div>
 
                 <div class="me-case-article">
-                    <div class="me-case-meta">
-                        <span class="me-case-meta-item">
-                            <img src="{{ asset('images/market-entry/icon-calendar.png') }}" alt="Calendar date" width="16" height="16">
-                            Jun 2, 2026
-                        </span>
-                        <span class="me-case-meta-item">
-                            <img src="{{ asset('images/market-entry/icon-user.png') }}" alt="Author" width="16" height="16">
-                            David Olatunji
-                        </span>
-                    </div>
-
                     <h3 class="me-case-heading">
-                        Accelerating commercial adoption for cross-border payments
+                        Accelerating commercial adoption for B2B financial software in West Africa
                     </h3>
 
                     <div class="me-case-body">
                         <p>
-                            Navigating complex regulatory frameworks and establishing tier-one banking partnerships while maintaining aggressive customer acquisition timelines  
+                            FinEdge had an established Ghanaian reseller for 18 months, but sporadic sales and zero visibility into field visits or pipeline status made it impossible to forecast revenue or assess true market demand.
                         </p>
                         <p>
-                            We structured bilateral commercial agreements and localized compliance workflows, paving the way for seamless regulatory approval and rapid volume scaling  
+                            By mapping 120 target institutions, instituting an outbound sales cadence, and tracking every field engagement through Factory 23, the team closed 12 enterprise contracts in six months—a 4× increase in closed deals.
                         </p>
                     </div>
 
-                    <a href="{{ url('case-studies') }}" class="me-case-continue-btn" id="btn-continue-reading-fintech">
+                    <a href="{{ route('case-studies.show', 'finedge-software') }}" class="me-case-continue-btn" id="btn-continue-reading-fintech">
                         Continue Reading
                     </a>
                 </div>
