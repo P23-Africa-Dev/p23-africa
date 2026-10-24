@@ -59,7 +59,7 @@
                     </div>
                     <div class="ab-pillar-text">
                         <h3>{{ __('about.experts') }}</h3>
-                        <p>Tap into decades of combined experience from industry specialists. We provide strategic insights tailored to your unique business journey.</p>
+                        <p>{{ __('about.experts_body') }}</p>
                     </div>
                 </article>
 
@@ -74,7 +74,7 @@
                     </div>
                     <div class="ab-pillar-text">
                         <h3>{{ __('about.execution') }}</h3>
-                        <p>We strip away complexity to deliver clear, actionable steps. Our streamlined processes turn big ideas into tangible outcomes.</p>
+                        <p>{{ __('about.execution_body') }}</p>
                     </div>
                 </article>
 
@@ -89,7 +89,7 @@
                     </div>
                     <div class="ab-pillar-text">
                         <h3>{{ __('about.guidance') }}</h3>
-                        <p>Beyond theory, we walk with you through implementation. Expect hands-on support to navigate real-world challenges with confidence.</p>
+                        <p>{{ __('about.guidance_body') }}</p>
                     </div>
                 </article>
             </div>
@@ -128,12 +128,12 @@
             <div class="ab-exec-intro">
                 <div class="ab-exec-eyebrow">
                     <span class="ab-exec-dot" aria-hidden="true"></span>
-                    <span>Executive Team</span>
+                    <span>{{ __('about.exec_team') }}</span>
                 </div>
 
                 <div class="ab-exec-header-row">
                     <h2 id="exec-heading" class="ab-exec-header-title">{!! __('about.people') !!}</h2>
-                    <p class="ab-exec-header-desc">With a commitment to excellence, integrity, and collaboration, we partner closely with our clients to understand their unique needs, goals, and aspirations. Through personalised consulting services, actionable insights, and hands-on support, we strive to empower businesses and entrepreneurs to thrive in dynamic and competitive markets.</p>
+                    <p class="ab-exec-header-desc">{{ __('about.exec_body') }}</p>
                 </div>
             </div>
 
@@ -148,7 +148,7 @@
                              loading="lazy">
                     </div>
                     <div class="ab-exec-meta">
-                        <span class="ab-exec-title">Director of Market Development</span>
+                        <span class="ab-exec-title">{{ __('about.role_market') }}</span>
                         <h3 class="ab-exec-name">Samuel Etienne</h3>
                     </div>
                 </article>
@@ -163,7 +163,7 @@
                              loading="lazy">
                     </div>
                     <div class="ab-exec-meta">
-                        <span class="ab-exec-title">Head of Operations</span>
+                        <span class="ab-exec-title">{{ __('about.role_ops') }}</span>
                         <h3 class="ab-exec-name">Donald Nwosu</h3>
                     </div>
                 </article>
@@ -178,7 +178,7 @@
                              loading="lazy">
                     </div>
                     <div class="ab-exec-meta">
-                        <span class="ab-exec-title">VP of Strategic Partnerships and Distribution</span>
+                        <span class="ab-exec-title">{{ __('about.role_vp') }}</span>
                         <h3 class="ab-exec-name">Yannick Tientcheu</h3>
                     </div>
                 </article>
@@ -192,8 +192,8 @@
         @foreach ($caseStudies as $study)
             <a href="{{ locale_route('case-studies.show', ['slug' => $study['slug']]) }}">{{ $study['title'] }}</a>
         @endforeach
-        <a href="{{ locale_route('case-studies') }}">Case Studies</a>
-        <a href="{{ locale_route('case-studies', ['all' => 1]) }}#case-library">All Case Studies</a>
+        <a href="{{ locale_route('case-studies') }}">{{ __('about.case_studies') }}</a>
+        <a href="{{ locale_route('case-studies', ['all' => 1]) }}#case-library">{{ __('about.all_case_studies') }}</a>
     </div>
     @endif
 </div>

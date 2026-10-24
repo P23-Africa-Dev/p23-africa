@@ -1,13 +1,13 @@
 @extends('layouts.quiz-layout')
-@section('title', 'Start Quiz | P23 Africa')
+@section('title', __('quiz.start_title'))
 
 @section('meta')
     <meta name="description"
-        content="Expand and grow your business in Africa with expert business consulting. P23 Africa helps entrepreneurs, SMEs, and international businesses with strategy, expansion, marketing, operational efficiency and tailored solutions to thrive in African markets. Get started today!">
+        content="{{ __('quiz.meta') }}">
     <meta name="keywords"
-        content="Expand and grow your business in Africa with expert business consulting. P23 Africa helps entrepreneurs, SMEs, and international businesses with strategy, expansion, marketing, operational efficiency and tailored solutions to thrive in African markets. Get started today!">
+        content="{{ __('quiz.meta') }}">
     <meta name="author" content="Nurudeen O. Daniju">
-    <meta name="generator" content="Business Consulting & Growth Solutions for Africa | P23 Africa">
+    <meta name="generator" content="{{ __('quiz.meta_generator') }}">
     <meta property="og:image" content="{{ asset('images/intro-bg.png') }}">
 @endsection
 
@@ -25,7 +25,7 @@
                         <div class="question-number-circle" id="questionNumber">01</div>
                         <div class="progress-container">
                             <div class="progress-bar-fill" id="progressBar" style="width: 0%"></div>
-                            <span class="progress-text" id="progressText">1 of 8</span>
+                            <span class="progress-text" id="progressText">{{ __('quiz.progress', ['current' => 1, 'total' => 8]) }}</span>
                         </div>
                         <h2 class="question-text" id="questionText"></h2>
                     </div>
@@ -44,10 +44,10 @@
 
                             <!-- Add this hidden form in your HTML -->
                             <div id="emailFormWrapper" style="display: none; text-align: center;">
-                                <h4>Almost There! Enter your details to see your result.</h4>
-                                <input type="text" id="userName" class="form-control mb-2" placeholder="Full name" required />
-                                <input type="email" class="form-control mb-4" id="userEmail" placeholder="Your Email" required />
-                                <button class="btn next-question-btn" id="submitQuizBtn">Submit & See Results</button>
+                                <h4>{{ __('quiz.almost') }}</h4>
+                                <input type="text" id="userName" class="form-control mb-2" placeholder="{{ __('quiz.full_name') }}" required />
+                                <input type="email" class="form-control mb-4" id="userEmail" placeholder="{{ __('quiz.email') }}" required />
+                                <button class="btn next-question-btn" id="submitQuizBtn">{{ __('quiz.submit_results') }}</button>
                             </div>
                         </div>
                     </div>

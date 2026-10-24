@@ -39,12 +39,12 @@
                     </p>
 
                     <div class="me-hero-cta-group">
-                        <a href="{{ url('contact') }}" class="me-hero-btn" id="me-hero-talk-to-us-btn">
-                            Talk to Us
+                        <a href="{{ locale_route('contact') }}" class="me-hero-btn" id="me-hero-talk-to-us-btn">
+                            {{ __('market.talk') }}
                         </a>
 
                         <div class="me-hero-proof">
-                            <div class="me-hero-stars" aria-label="5 star rating">
+                            <div class="me-hero-stars" aria-label="{{ __('market.stars') }}">
                                 <svg width="98" height="18" viewBox="0 0 98 18" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="5 stars rating">
                                     <path d="M9 0L11.0206 6.21885H17.5595L12.2694 10.0623L14.2901 16.2812L9 12.4377L3.70993 16.2812L5.73056 10.0623L0.440492 6.21885H6.97937L9 0Z" fill="#390908"/>
                                     <path d="M29 0L31.0206 6.21885H37.5595L32.2694 10.0623L34.2901 16.2812L29 12.4377L23.7099 16.2812L25.7306 10.0623L20.4405 6.21885H26.9794L29 0Z" fill="#390908"/>
@@ -53,8 +53,8 @@
                                     <path d="M89 0L91.0206 6.21885H97.5595L92.2694 10.0623L94.2901 16.2812L89 12.4377L83.7099 16.2812L85.7306 10.0623L80.4405 6.21885H86.9794L89 0Z" fill="#390908"/>
                                 </svg>
                             </div>
-                            <a href="{{ url('case-studies') }}" class="me-hero-case-studies-link">
-                                <strong>Click Here to</strong> <em>Read Case Studies</em>
+                            <a href="{{ locale_route('case-studies') }}" class="me-hero-case-studies-link">
+                                <strong>{{ __('market.click_here') }}</strong> <em>{{ __('market.read_cases') }}</em>
                             </a>
                         </div>
                     </div>
@@ -100,13 +100,13 @@
                     <div class="me-methodology-step">
                         <div class="me-step-header">
                             <img src="{{ asset('images/market-entry/step-01-lightbulb.png') }}" 
-                                 alt="Understand the opportunity" 
+                                 alt="{{ __('market.step1_title') }}" 
                                  class="me-step-icon">
                             <span class="me-step-number">01</span>
                         </div>
-                        <h3 class="me-step-title">Understand the opportunity</h3>
+                        <h3 class="me-step-title">{{ __('market.step1_title') }}</h3>
                         <p class="me-step-desc">
-                            Before entering a market, you need to know where the opportunity actually exists.
+                            {{ __('market.step1_body') }}
                         </p>
                     </div>
 
@@ -114,13 +114,13 @@
                     <div class="me-methodology-step">
                         <div class="me-step-header">
                             <img src="{{ asset('images/market-entry/step-02-validate.png') }}" 
-                                 alt="Validate demand" 
+                                 alt="{{ __('market.step2_title') }}" 
                                  class="me-step-icon">
                             <span class="me-step-number">02</span>
                         </div>
-                        <h3 class="me-step-title">Validate demand</h3>
+                        <h3 class="me-step-title">{{ __('market.step2_title') }}</h3>
                         <p class="me-step-desc">
-                            Market research can tell you what a market looks like. Direct engagement tells you how the market responds.
+                            {{ __('market.step2_body') }}
                         </p>
                     </div>
 
@@ -128,13 +128,13 @@
                     <div class="me-methodology-step">
                         <div class="me-step-header">
                             <img src="{{ asset('images/market-entry/step-03-people.png') }}" 
-                                 alt="Find the right people" 
+                                 alt="{{ __('market.step3_title') }}" 
                                  class="me-step-icon">
                             <span class="me-step-number">03</span>
                         </div>
-                        <h3 class="me-step-title">Find the right people</h3>
+                        <h3 class="me-step-title">{{ __('market.step3_title') }}</h3>
                         <p class="me-step-desc">
-                            Successful market entry is often built around relationships and commercial introductions.
+                            {{ __('market.step3_body') }}
                         </p>
                     </div>
 
@@ -142,13 +142,13 @@
                     <div class="me-methodology-step">
                         <div class="me-step-header">
                             <img src="{{ asset('images/market-entry/step-04-route.png') }}" 
-                                 alt="Build the route to market" 
+                                 alt="{{ __('market.step4_title') }}" 
                                  class="me-step-icon">
                             <span class="me-step-number">04</span>
                         </div>
-                        <h3 class="me-step-title">Build the route to market</h3>
+                        <h3 class="me-step-title">{{ __('market.step4_title') }}</h3>
                         <p class="me-step-desc">
-                            There is no single way to enter an African market. We determine the approach that fits.
+                            {{ __('market.step4_body') }}
                         </p>
                     </div>
 
@@ -156,13 +156,13 @@
                     <div class="me-methodology-step">
                         <div class="me-step-header">
                             <img src="{{ asset('images/market-entry/step-05-lock.png') }}" 
-                                 alt="Execute locally" 
+                                 alt="{{ __('market.step5_title') }}" 
                                  class="me-step-icon">
                             <span class="me-step-number">05</span>
                         </div>
-                        <h3 class="me-step-title">Execute locally</h3>
+                        <h3 class="me-step-title">{{ __('market.step5_title') }}</h3>
                         <p class="me-step-desc">
-                            Our role doesn't end once the strategy is delivered. We support the practical execution.
+                            {{ __('market.step5_body') }}
                         </p>
                     </div>
 
@@ -192,11 +192,11 @@
                 </h2>
 
                 <p class="me-execution-desc">
-                    We combine market intelligence, commercial expertise, local networks and technology to help businesses enter and grow sustainably across our target regional corridors. Rather than hand over static theoretical binders, we sit with you on the frontline: qualifying commercial demand, screening reliable partners, and building transparent operational channels that safeguard your capital.
+                    {{ __('market.execution_body') }}
                 </p>
 
-                <a href="{{ url('contact') }}" class="me-execution-link" id="me-execution-cta-link">
-                    Book a confidential market exploration session→
+                <a href="{{ locale_route('contact') }}" class="me-execution-link" id="me-execution-cta-link">
+                    {{ __('market.book_session') }}
                 </a>
             </div>
 
@@ -217,12 +217,12 @@
                         {{ __('market.momentum') }}
                     </h2>
                     <a href="{{ locale_route('contact') }}" class="me-momentum-btn" id="me-momentum-talk-btn">
-                        Talk to Us
+                        {{ __('market.talk') }}
                     </a>
                 </div>
 
                 <p class="me-momentum-desc">
-                    Nigeria is different from Ghana. Ghana is different from Kenya. Kenya is different from South Africa. The opportunity, customer psychology, competitive environment and route to market vary dramatically across borders.
+                    {{ __('market.momentum_body') }}
                 </p>
 
             </div>
@@ -288,7 +288,7 @@
                         aria-controls="pane-bld" 
                         data-target="#pane-bld"
                         id="tab-bld">
-                    HVAC Manufacturer
+                    {{ __('market.tab_hvac') }}
                 </button>
                 <button type="button" 
                         class="me-tab-btn" 
@@ -297,7 +297,7 @@
                         aria-controls="pane-fmcg" 
                         data-target="#pane-fmcg"
                         id="tab-fmcg">
-                    Industrial Machinery
+                    {{ __('market.tab_machinery') }}
                 </button>
                 <button type="button" 
                         class="me-tab-btn" 
@@ -306,7 +306,7 @@
                         aria-controls="pane-fintech" 
                         data-target="#pane-fintech"
                         id="tab-fintech">
-                    FINTECH Scale-up
+                    {{ __('market.tab_fintech') }}
                 </button>
             </div>
         </div>
@@ -315,13 +315,13 @@
         <div class="me-casestudy-proof">
             <div class="me-casestudy-proof-stars">
                 <img src="{{ asset('images/market-entry/stars-black.png') }}" 
-                     alt="5 stars rating" 
+                     alt="{{ __('market.stars') }}" 
                      width="90" 
                      height="18" 
                      loading="lazy">
             </div>
-            <a href="{{ url('case-studies') }}" class="me-casestudy-proof-link">
-                <strong>Click Here to</strong> <em>Read Case Studies</em>
+            <a href="{{ locale_route('case-studies') }}" class="me-casestudy-proof-link">
+                <strong>{{ __('market.click_here') }}</strong> <em>{{ __('market.read_cases') }}</em>
             </a>
         </div>
 
@@ -338,20 +338,20 @@
 
                 <div class="me-case-article">
                     <h3 class="me-case-heading">
-                        Validating HVAC distributor claims in Nigeria before committing capital
+                        {{ __('market.case1_title') }}
                     </h3>
 
                     <div class="me-case-body">
                         <p>
-                            The client had been approached by three Nigerian distributors claiming established HVAC networks, but had no way to independently verify whether these partners possessed active field sales teams, real customer relationships, or just procurement contacts.
+                            {{ __('market.case1_p1') }}
                         </p>
                         <p>
-                            Through structured due diligence across 312 target commercial accounts, 2 of 3 claimed distributors were eliminated, protecting millions in unvetted capital and establishing a verified commercial distribution channel with 47 qualified buyer opportunities.
+                            {{ __('market.case1_p2') }}
                         </p>
                     </div>
 
                     <a href="{{ locale_route('case-studies.show', ['slug' => 'thermoflow-hvac']) }}" class="me-case-continue-btn" id="btn-continue-reading-bld">
-                        Continue Reading
+                        {{ __('market.continue') }}
                     </a>
                 </div>
             </div>
@@ -366,20 +366,20 @@
 
                 <div class="me-case-article">
                     <h3 class="me-case-heading">
-                        Transforming a passive Nigerian distributor into a data-visible sales channel
+                        {{ __('market.case2_title') }}
                     </h3>
 
                     <div class="me-case-body">
                         <p>
-                            Packline Industrial Machinery had an established Nigerian distributor for two years, but flat sales and zero visibility into field activity or customer pipeline left leadership blind to actual market demand.
+                            {{ __('market.case2_p1') }}
                         </p>
                         <p>
-                            P23 mapped 127 target FMCG and food processing factories, deployed structured territory management with Factory 23 activity tracking, and drove a 3× pipeline increase within six months with 100% verified field visibility.
+                            {{ __('market.case2_p2') }}
                         </p>
                     </div>
 
                     <a href="{{ locale_route('case-studies.show', ['slug' => 'packline-industrial-machinery']) }}" class="me-case-continue-btn" id="btn-continue-reading-fmcg">
-                        Continue Reading
+                        {{ __('market.continue') }}
                     </a>
                 </div>
             </div>
@@ -394,20 +394,20 @@
 
                 <div class="me-case-article">
                     <h3 class="me-case-heading">
-                        Accelerating commercial adoption for B2B financial software in West Africa
+                        {{ __('market.case3_title') }}
                     </h3>
 
                     <div class="me-case-body">
                         <p>
-                            FinEdge had an established Ghanaian reseller for 18 months, but sporadic sales and zero visibility into field visits or pipeline status made it impossible to forecast revenue or assess true market demand.
+                            {{ __('market.case3_p1') }}
                         </p>
                         <p>
-                            By mapping 120 target institutions, instituting an outbound sales cadence, and tracking every field engagement through Factory 23, the team closed 12 enterprise contracts in six months—a 4× increase in closed deals.
+                            {{ __('market.case3_p2') }}
                         </p>
                     </div>
 
                     <a href="{{ locale_route('case-studies.show', ['slug' => 'finedge-software']) }}" class="me-case-continue-btn" id="btn-continue-reading-fintech">
-                        Continue Reading
+                        {{ __('market.continue') }}
                     </a>
                 </div>
             </div>
@@ -472,16 +472,16 @@
                     </h2>
 
                     <p class="me-cta-desc">
-                        Whether you’re testing your first African market, looking for a new route to market or expanding an existing operation, P23 can help you understand the opportunity and turn it into action.
+                        {{ __('market.cta_body') }}
                     </p>
 
                     <div class="me-cta-actions">
-                        <a href="{{ url('contact') }}" class="me-cta-btn" id="btn-talk-to-p23-africa">
-                            Talk to P23 Africa
+                        <a href="{{ locale_route('contact') }}" class="me-cta-btn" id="btn-talk-to-p23-africa">
+                            {{ __('market.talk_p23') }}
                         </a>
 
-                        <a href="{{ url('contact') }}" class="me-cta-link" id="link-book-market-exploration">
-                            Book a confidential market exploration session→
+                        <a href="{{ locale_route('contact') }}" class="me-cta-link" id="link-book-market-exploration">
+                            {{ __('market.book_session') }}
                         </a>
                     </div>
                 </div>

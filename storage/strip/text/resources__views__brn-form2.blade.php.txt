@@ -1,0 +1,328 @@
+5: <meta name="description"
+6: content="Join an exclusive referral network designed for industry leaders who value trusted relationships and measurable growth.">
+7: <meta name="keywords"
+8: content="Join an exclusive referral network designed for industry leaders who value trusted relationships and measurable growth.">
+9: Nurudeen O. Daniju
+10: <meta name="generator"
+11: content="Join an exclusive referral network designed for industry leaders who value trusted relationships and measurable growth | P23 Africa">
+12: {{ asset('images/brn-form-meta.png') }}
+13: {{ csrf_token() }}
+24: <form id="brnForm" action=" " method="POST" enctype="multipart/form-data"
+25: novalidate>
+32: Personal Information
+35: Let's start with your basic details
+44: <img id="progress-image" src=" "
+45: alt="Form Progress" class="progress-image">
+48: Personal Information
+49: Let's start with your basic details
+52: Company Information
+53: Tell us about your business
+56: Choose Interest
+57: What would you like to get from this
+58: solution
+66: <input type="text" name="name" class="form-control"
+67: placeholder="Full Name" />
+71: <input type="email" name="email" class="form-control"
+72: placeholder="Enter your valid email address" />
+73: <div id="email-status"
+74: style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); display: none;">
+75: <svg id="email-checkmark"
+76: style="width: 20px; height: 20px; color: #10b981; display: none;"
+77: fill="currentColor" viewBox="0 0 20 20">
+78: <path fill-rule="evenodd"
+79: d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+80: clip-rule="evenodd">
+82: <svg id="email-spinner"
+83: style="width: 20px; height: 20px; color: #6b7280; display: none; animation: spin 1s linear infinite;"
+84: fill="none" viewBox="0 0 24 24">
+85: <circle style="opacity: 0.25;" cx="12" cy="12" r="10"
+86: stroke="currentColor" stroke-width="4">
+87: <path style="opacity: 0.75;" fill="currentColor"
+88: d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+95: <select name="country_code" class="form-control country-code-select"
+96: style="flex: 0 0 120px; border-right: none; border-top-right-radius: 0; border-bottom-right-radius: 0;">
+276: <input type="tel" name="phone" class="form-control"
+277: placeholder="Enter phone number"
+278: style="flex: 1; border-left: none; border-top-left-radius: 0; border-bottom-left-radius: 0;" />
+282: <input type="url" name="linkedin" class="form-control"
+283: placeholder="Enter your linkedin profile (e.g., https://linkedin.com/in/yourname)" />
+287: Next <span
+288: class="ms-2">
+308: Company Information
+311: Let's start with your basic details
+321: <img id="progress-image" src=" "
+322: alt="Form Progress" class="progress-image">
+325: Personal Information
+326: Let's start with your basic details
+329: Company Information
+330: Tell us about your business
+333: Choose Interest
+334: What would you like to get from this
+335: solution
+343: <input type="text" name="company_name" class="form-control"
+344: placeholder="Company Name" />
+349: Select Country
+350: Afghanistan
+351: Albania
+352: Algeria
+353: Andorra
+354: Angola
+355: Argentina
+356: Armenia
+357: Australia
+358: Austria
+359: Azerbaijan
+360: Bahamas
+361: Bahrain
+362: Bangladesh
+363: Barbados
+364: Belarus
+365: Belgium
+366: Belize
+367: Benin
+368: Bhutan
+369: Bolivia
+370: Bosnia and Herzegovina
+371: Botswana
+372: Brazil
+373: Brunei
+374: Bulgaria
+375: Burkina Faso
+376: Burundi
+377: Cambodia
+378: Cameroon
+379: Canada
+380: Cape Verde
+381: Central African Republic
+382: Chad
+383: Chile
+384: China
+385: Colombia
+386: Comoros
+387: Congo
+388: Costa Rica
+389: Croatia
+390: Cuba
+391: Cyprus
+392: Czech Republic
+393: Denmark
+394: Djibouti
+395: Dominica
+396: Dominican Republic
+397: East Timor
+398: Ecuador
+399: Egypt
+400: El Salvador
+401: Equatorial Guinea
+402: Eritrea
+403: Estonia
+404: Ethiopia
+405: Fiji
+406: Finland
+407: France
+408: Gabon
+409: Gambia
+410: Georgia
+411: Germany
+412: Ghana
+413: Greece
+414: Grenada
+415: Guatemala
+416: Guinea
+417: Guinea-Bissau
+418: Guyana
+419: Haiti
+420: Honduras
+421: Hungary
+422: Iceland
+423: India
+424: Indonesia
+425: Iran
+426: Iraq
+427: Ireland
+428: Israel
+429: Italy
+430: Ivory Coast
+431: Jamaica
+432: Japan
+433: Jordan
+434: Kazakhstan
+435: Kenya
+436: Kiribati
+437: North Korea
+438: South Korea
+439: Kuwait
+440: Kyrgyzstan
+441: Laos
+442: Latvia
+443: Lebanon
+444: Lesotho
+445: Liberia
+446: Libya
+447: Liechtenstein
+448: Lithuania
+449: Luxembourg
+450: Macedonia
+451: Madagascar
+452: Malawi
+453: Malaysia
+454: Maldives
+455: Mali
+456: Malta
+457: Marshall Islands
+458: Mauritania
+459: Mauritius
+460: Mexico
+461: Micronesia
+462: Moldova
+463: Monaco
+464: Mongolia
+465: Montenegro
+466: Morocco
+467: Mozambique
+468: Myanmar
+469: Namibia
+470: Nauru
+471: Nepal
+472: Netherlands
+473: New Zealand
+474: Nicaragua
+475: Niger
+476: Nigeria
+477: Norway
+478: Oman
+479: Pakistan
+480: Palau
+481: Panama
+482: Papua New Guinea
+483: Paraguay
+484: Peru
+485: Philippines
+486: Poland
+487: Portugal
+488: Qatar
+489: Romania
+490: Russia
+491: Rwanda
+492: Saint Kitts and Nevis
+493: Saint Lucia
+494: Saint Vincent and the
+495: Grenadines
+496: Samoa
+497: San Marino
+498: Sao Tome and Principe
+499: Saudi Arabia
+500: Senegal
+501: Serbia
+502: Seychelles
+503: Sierra Leone
+504: Singapore
+505: Slovakia
+506: Slovenia
+507: Solomon Islands
+508: Somalia
+509: South Africa
+510: South Sudan
+511: Spain
+512: Sri Lanka
+513: Sudan
+514: Suriname
+515: Swaziland
+516: Sweden
+517: Switzerland
+518: Syria
+519: Taiwan
+520: Tajikistan
+521: Tanzania
+522: Thailand
+523: Togo
+524: Tonga
+525: Trinidad and Tobago
+526: Tunisia
+527: Turkey
+528: Turkmenistan
+529: Tuvalu
+530: Uganda
+531: Ukraine
+532: United Arab Emirates
+533: United Kingdom
+534: United States
+535: Uruguay
+536: Uzbekistan
+537: Vanuatu
+538: Vatican City
+539: Venezuela
+540: Vietnam
+541: Yemen
+542: Zambia
+543: Zimbabwe
+547: <input type="text" name="position" class="form-control"
+548: placeholder="Position in the business" />
+553: Select your business years of
+554: operation
+557: <input type="radio" value="0-5" name="years_of_operation"
+558: id="years0-5" class="brn-input-checked-checkbox" />
+562: <input type="radio" value="6-10" name="years_of_operation"
+563: id="years6-10" class="brn-input-checked-checkbox" />
+567: <input type="radio" value="11-Above" name="years_of_operation"
+568: id="years11-above" class="brn-input-checked-checkbox" />
+569: <label for="years11-above"
+570: class="brn-input-checked-text">11-Above
+576: Select your number of
+577: employees
+580: <input type="radio" value="1-10" name="number_of_employees"
+581: id="employees1-10" class="brn-input-checked-checkbox" />
+582: <label for="employees1-10"
+583: class="brn-input-checked-text">1-10
+586: <input type="radio" value="11-50" name="number_of_employees"
+587: id="employees11-50" class="brn-input-checked-checkbox" />
+588: <label for="employees11-50"
+589: class="brn-input-checked-text">11-50
+592: <input type="radio" value="50-200" name="number_of_employees"
+593: id="employees50-200" class="brn-input-checked-checkbox" />
+594: <label for="employees50-200"
+595: class="brn-input-checked-text">50-200
+598: <input type="radio" value="200+" name="number_of_employees"
+599: id="employees200-plus" class="brn-input-checked-checkbox" />
+600: <label for="employees200-plus"
+601: class="brn-input-checked-text">200+
+610: <span
+611: class="">
+612: Back
+613: Next <span
+614: class="">
+637: What You Want To Gain
+640: What outcomes matter most for you?
+650: <img id="progress-image" src=" "
+651: alt="Form Progress" class="progress-image">
+654: Personal Information
+655: Let's start with your basic details
+658: Company Information
+659: Tell us about your business
+662: Choose Interest
+663: What would you like to get from this
+664: solution
+671: <input type="text" name="goals" class="form-control"
+672: placeholder="Input reason for joining" />
+677: What outcome matter most to you?
+682: <img src=" "
+683: alt="" />
+684: Network with like minds
+686: <div class="brn-form-icons-card"
+687: data-value="No more jump one platform for another">
+688: <img src=" "
+689: alt="" />
+690: No more jump one platform for
+691: another
+696: <img src=" "
+697: alt="" />
+698: Grow and Scale 100%
+701: <img src=" "
+702: alt="" />
+703: All you need is here
+715: <span
+716: class="">
+717: Back
+720: Submit
+721: <span class="spinner-border spinner-border-sm d-none" role="status"
+722: aria-hidden="true">

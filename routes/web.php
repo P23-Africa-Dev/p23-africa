@@ -82,12 +82,12 @@ Route::get('/our-sales', function () {
 
 
 
-Route::get("/en", fn () => redirect("/", 301));
-Route::get("/en/{path}", fn (string $path) => redirect("/" . $path, 301))->where("path", ".*");
+Route::get("/en", fn() => redirect("/", 301));
+Route::get("/en/{path}", fn(string $path) => redirect("/" . $path, 301))->where("path", ".*");
 
 $registerPublicRoutes = require __DIR__ . "/public.php";
 
-Route::middleware("locale")->group(function () use ($registerPublicRoutes) {
+Route::middleware(["locale", "browser-locale"])->group(function () use ($registerPublicRoutes) {
     $registerPublicRoutes(false);
 });
 

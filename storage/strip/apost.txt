@@ -1,0 +1,81 @@
+FILE brn
+---
+                          Real success stories from CEOs who’ve grown through the power of referral-based               
+---
+                           This community has opened doors I’d struggled to unlock for years. The calibre of            
+---
+">                                         I love that I don’t waste time here. The matching tool introduced me to found
+---
+s                                         intentional, and I’ve already seen a clear ROI through new partnerships.      
+---
+FILE form
+---
+k"></span>                                             I don’t have a LinkedIn account.                                 
+---
+                                        If your business isn’t eligible for the CEO Referral                            
+---
+ss!                 responseMessage.innerHTML = `     <p>You’ve just taken a big step toward meaningful business growth!
+---
+FILE idx
+---
+      <div class="left-content">                     <h3>Let’s help you unlock growth clarity for your business.</h3>   
+---
+ <a href="{{ route('consultation.application-forms') }}">Let’s get started                                     <div>    
+---
+FILE sch
+---
+       Pick a convenient date and time for your session. You’ll                             receive a confirmation email
+---
+                        receive a confirmation email once it’s booked.                         </p>                     
+---
+FILE sales
+---
+ the training and toolkit, our team now has a rhythm, and we’ve seen a                                         40% incre
+---
+ap of faith to further improve my team's performance, and it’s been                                         absolutely w
+---
+FILE stu
+---
+: 'GT Walsheim Con';">                         Thank you, we’ll get back as soon we review <br> your request            
+---
+FILE fund
+---
+s="text-content-upper">                         <h2>When You’re Ready to Raise...</h2>                         <p>Get Ac
+---
+                    <p>                             Once you’ve completed your free guide, take the next step.          
+---
+FILE ult
+---
+  <div class="book-header">                     <h3>What you’ll Find in Our Funding Directory</h3>                     <
+---
+ory</h3>                     <p>                         You’ve prepared your business. Now it’s time to find the right 
+---
+                       You’ve prepared your business. Now it’s time to find the right partners to fund your growth.     
+---
+FILE rc
+---
+  @section('meta')     <meta name="description" content="You’re on the path—but a little clarity could make your next st
+---
+r next step a leap.">     <meta name="keywords" content="You’re on the path—but a little clarity could make your next st
+---
+                 <p>                                     Let’s review your business together. Our audit can show you wha
+---
+s review your business together. Our audit can show you what’s working, what’s                                     not—a
+---
+siness together. Our audit can show you what’s working, what’s                                     not—and how to scale 
+---
+ Climber";             const subtitle =                 "You’re on the path—but a little clarity could make your next st
+---
+FILE fb
+---
+egend class="float-none w-auto px-3">                 <h2>We’d love your feedback</h2>             </legend>            
+---
+FILE live
+---
+eat->name }}</h2>             <p class="text-muted mb-5">You’ve joined the live session!</p>              <div class="d-
+---
+FILE book
+---
+FILE sum
+---
+FILE pay

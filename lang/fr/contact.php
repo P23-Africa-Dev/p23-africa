@@ -15,6 +15,13 @@ return [
     'send' => 'Envoyer',
     'sending' => 'Envoi...',
     'location' => 'Adresse',
+    'heading' => 'Contactez-nous',
+    'ready' => 'Prêt à développer votre activité ?',
+    'ready_body' => 'Contactez P23 Africa et faisons grandir votre entreprise.',
+    'london' => 'Londres, Royaume-Uni',
+    'social' => 'Réseaux sociaux',
+    'subscribe' => 'S’abonner',
+    'newsletter' => 'à notre lettre d’information',
     'services' => [
         'verify_distributors' => 'Vérifier les distributeurs',
         'sales' => 'Ventes',

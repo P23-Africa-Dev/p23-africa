@@ -230,32 +230,32 @@
     @endphp
     <section class="payment-selection-container">
         <div class="payment-wrapper">
-            <a href="{{ route('consultation.consultation-summary', $bookingQuery) }}" class="back-link">
+            <a href="{{ locale_route('consultation.consultation-summary', $bookingQuery) }}" class="back-link">
                 <i class="fa-solid fa-arrow-left"></i>
-                Back to Summary
+                {{ __('consultation.back_summary') }}
             </a>
 
             <div class="payment-header">
                 <h1>{{ __('consultation.payment_method') }}</h1>
-                <p>Choose your preferred payment method to complete your consultation booking</p>
+                <p>{{ __('consultation.pay_intro') }}</p>
             </div>
 
             <div class="consultation-details">
-                <h3>Consultation Details</h3>
+                <h3>{{ __('consultation.details') }}</h3>
                 <div class="detail-row">
-                    <span>Consultation Type:</span>
-                    <span>1-on-1 Business Strategy Session</span>
+                    <span>{{ __('consultation.type_label') }}</span>
+                    <span>{{ __('consultation.type_value') }}</span>
                 </div>
                 <div class="detail-row">
-                    <span>Duration:</span>
-                    <span>90 minutes</span>
+                    <span>{{ __('consultation.duration_label') }}</span>
+                    <span>{{ __('consultation.duration_value') }}</span>
                 </div>
                 <div class="detail-row">
-                    <span>Consultant:</span>
-                    <span>P23 Africa Expert</span>
+                    <span>{{ __('consultation.consultant_label') }}</span>
+                    <span>{{ __('consultation.expert') }}</span>
                 </div>
                 <div class="detail-row">
-                    <span>Total Amount:</span>
+                    <span>{{ __('consultation.total_label') }}</span>
                     <span><strong id="paymentAmountLabel">GBP 75.00</strong></span>
                 </div>
             </div>
@@ -266,7 +266,7 @@
                 @csrf
 
                 <div class="payment-methods">
-                    <h3>Choose Payment Method</h3>
+                    <h3>{{ __('consultation.choose_method') }}</h3>
 
                     <div class="payment-options">
                         <label class="payment-option" for="stripe" data-gateway="stripe">
@@ -275,7 +275,7 @@
                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                             <div style="display:none; font-size: 2rem; color: #635bff;">💳</div>
                             <h4>Stripe</h4>
-                            <p>Secure payment processing with major credit cards and digital wallets <b>Globally</b></p>
+                            <p>{{ __('consultation.stripe_help') }}</p>
                         </label>
                     </div>
 
@@ -288,7 +288,7 @@
 
                 <button type="button" class="proceed-payment-btn" id="proceedBtn" disabled onclick="processPayment()">
                     <i class="fa-solid fa-lock"></i>
-                    Secure Payment - <span id="proceedAmountLabel">GBP 75.00</span>
+                    {{ __('consultation.secure_pay') }} <span id="proceedAmountLabel">GBP 75.00</span>
                     <i class="fa-solid fa-arrow-right"></i>
                 </button>
             </form>
@@ -344,7 +344,7 @@
 
         function processPayment() {
             if (!selectedPaymentMethod) {
-                alert('Please select a payment method');
+                alert(@json(__('consultation.select_method')));
                 return;
             }
 
@@ -353,7 +353,7 @@
             // Disable button during processing
             const proceedBtn = document.getElementById('proceedBtn');
             proceedBtn.disabled = true;
-            proceedBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+            proceedBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> ' + @json(__('consultation.processing'));
 
             if (selectedPaymentMethod === 'stripe') {
                 processStripePayment();
@@ -384,14 +384,14 @@
 
             modalContent.innerHTML = `
                 <div style="text-align: center; margin-bottom: 20px;">
-                    <h3 style="color: #591044; margin: 0 0 10px 0;">Complete Payment</h3>
-                    <p id="stripeAmountCopy" style="color: #6c757d; margin: 0;">Enter your card details to complete the payment in your local currency</p>
+                    <h3 style="color: #591044; margin: 0 0 10px 0;">{{ __('consultation.complete_payment') }}</h3>
+                    <p id="stripeAmountCopy" style="color: #6c757d; margin: 0;">{{ __('consultation.card_details') }}</p>
                 </div>
                 <div id="stripe-card-element" style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 20px;"></div>
                 <div id="stripe-card-errors" style="color: #dc3545; margin-bottom: 15px; font-size: 14px;"></div>
                 <div style="display: flex; gap: 10px;">
-                    <button id="stripe-cancel-btn" style="flex: 1; padding: 12px; border: 1px solid #ddd; background: white; border-radius: 8px; cursor: pointer;">Cancel</button>
-                    <button id="stripe-pay-btn" style="flex: 2; padding: 12px; background: #591044; color: white; border: none; border-radius: 8px; cursor: pointer;">Pay ${BASE_DISPLAY_AMOUNT}</button>
+                    <button id="stripe-cancel-btn" style="flex: 1; padding: 12px; border: 1px solid #ddd; background: white; border-radius: 8px; cursor: pointer;">{{ __('consultation.cancel') }}</button>
+                    <button id="stripe-pay-btn" style="flex: 2; padding: 12px; background: #591044; color: white; border: none; border-radius: 8px; cursor: pointer;">{{ __('consultation.pay_word') }} ${BASE_DISPLAY_AMOUNT}</button>
                 </div>
             `;
 
@@ -530,7 +530,7 @@
                         document.body.removeChild(modal);
                         console.error('Stripe payment error:', error);
                         handlePaymentError(
-                            error.message || 'Payment processing failed',
+                            error.message || @json(__('consultation.pay_failed')),
                             error.details || ''
                         );
                     });
@@ -658,7 +658,7 @@
                 .catch(fetchErr => {
                     console.error('Fetch fallback also failed:', fetchErr);
                     alert(
-                        'Payment was processed but we had trouble updating your record. Please contact support at contact@p23africa.com with your transaction reference.'
+                        @json(__('consultation.pay_record'))
                     );
                     if (status === 'successful' || status === 'success' || status === 'pending' || status ===
                         'pending_verification') {
@@ -690,7 +690,7 @@
         function handlePaymentError(message, details = '') {
             const banner = document.getElementById('paymentErrorBanner');
             if (banner) {
-                const safeMessage = message || 'Payment failed. Please try again.';
+                const safeMessage = message || @json(__('consultation.pay_failed_again'));
                 banner.textContent = details ? `${safeMessage} (${details})` : safeMessage;
                 banner.style.display = 'block';
                 banner.scrollIntoView({
@@ -699,7 +699,7 @@
                 });
             }
 
-            alert('Payment Error: ' + message);
+            alert(@json(__('consultation.pay_error')) + message);
             resetPaymentButton();
         }
 
@@ -731,7 +731,7 @@
                 return 'The card security code is incorrect. Please check and try again.';
             }
 
-            return fallbackMessage || 'Payment failed. Please try again or use another card.';
+            return fallbackMessage || @json(__('consultation.pay_failed_card'));
         }
 
         function clearPaymentError() {
@@ -751,7 +751,7 @@
             }
 
             proceedBtn.innerHTML =
-                '<i class="fa-solid fa-lock"></i> Secure Payment - <span id="proceedAmountLabel">' +
+                '<i class="fa-solid fa-lock"></i> {{ __('consultation.secure_pay') }} <span id="proceedAmountLabel">' +
                 (proceedLabel ? proceedLabel.textContent : BASE_DISPLAY_AMOUNT) +
                 '</span> <i class="fa-solid fa-arrow-right"></i>';
         }

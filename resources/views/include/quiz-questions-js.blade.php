@@ -23,71 +23,12 @@
 </style>
 
 <script>
-    const questions = [{
-            question: "How do you track potential leads and follow-ups?",
-            options: {
-                A: "We don’t track them",
-                B: "Sometimes—manually or in spreadsheets",
-                C: "We have a structured system"
-            }
-        },
-        {
-            question: "How consistently does your team follow up with warm leads?",
-            options: {
-                A: "Rarely",
-                B: "Occasionally",
-                C: "Always—on a clear schedule"
-            }
-        },
-        {
-            question: "Do you know exactly where your sales drop off in the customer journey?",
-            options: {
-                A: "No idea",
-                B: "A rough idea",
-                C: "Yes—we’ve analysed it"
-            }
-        },
-        {
-            question: "Are your team’s targets clear and regularly reviewed?",
-            options: {
-                A: "No",
-                B: "Kind Of",
-                C: "Yes—targets are tracked and discussed"
-            }
-        },
-        {
-            question: "Do you have simple tools to help your team stay organised?",
-            options: {
-                A: "Not Really",
-                B: "We try—but it’s messy",
-                C: "Yes—everyone uses them"
-            }
-        },
-        {
-            question: "How often do you review your sales and marketing performance?",
-            options: {
-                A: "Rarely or never",
-                B: "Occasionally",
-                C: "Monthly or weekly"
-            }
-        },
-        {
-            question: "Do you feel confident that your business is structured for growth?",
-            options: {
-                A: "Not at all",
-                B: "Somewhat",
-                C: "Definitely"
-            }
-        },
-        {
-            question: "What’s your biggest challenge right now? (optional)",
-            options: {
-                A: "Challenge 1: Type in your first challenge here",
-                B: "Challenge 2: Type in your second challenge here",
-                C: "Challenge 3: Type in your third challenge here"
-            }
-        }
-    ];
+    const questions = @json(array_map(function ($item) {
+        return [
+            'question' => $item['question'],
+            'options' => ['A' => $item['a'], 'B' => $item['b'], 'C' => $item['c']],
+        ];
+    }, __('quiz.questions')));
 
     let currentQuestion = 0;
     let selectedAnswers = [];
@@ -96,7 +37,7 @@
         const q = questions[currentQuestion];
         document.getElementById("questionText").innerText = q.question;
         document.getElementById("questionNumber").innerText = String(currentQuestion + 1).padStart(2, '0');
-        document.getElementById("progressText").innerText = `${currentQuestion + 1} of ${questions.length}`;
+        document.getElementById("progressText").innerText = @json(__('quiz.progress')).replace(':current', currentQuestion + 1).replace(':total', questions.length);
         document.getElementById("progressBar").style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
 
         const answerContainer = document.getElementById("answerOptions");
@@ -127,21 +68,21 @@
             answerContainer.innerHTML = `
                 <div class="challenge-wrapper">
                     <div class="challenge-box">
-                        <span class="challenge-label">Challenge 1:</span>
-                        <input type="text" id="challenge1" placeholder="Type in your first challenge here" class="challenge-input-with-label" />
+                        <span class="challenge-label">${@json(__('quiz.ch1'))}</span>
+                        <input type="text" id="challenge1" placeholder="${@json(__('quiz.ch1_ph'))}" class="challenge-input-with-label" />
                     </div>
                     <div class="challenge-box">
-                        <span class="challenge-label">Challenge 2:</span>
-                        <input type="text" id="challenge2" placeholder="Type in your second challenge here" class="challenge-input-with-label" />
+                        <span class="challenge-label">${@json(__('quiz.ch2'))}</span>
+                        <input type="text" id="challenge2" placeholder="${@json(__('quiz.ch2_ph'))}" class="challenge-input-with-label" />
                     </div>
                     <div class="challenge-box">
-                        <span class="challenge-label">Challenge 3:</span>
-                        <input type="text" id="challenge3" placeholder="Type in your third challenge here" class="challenge-input-with-label" />
+                        <span class="challenge-label">${@json(__('quiz.ch3'))}</span>
+                        <input type="text" id="challenge3" placeholder="${@json(__('quiz.ch3_ph'))}" class="challenge-input-with-label" />
                     </div>
                 </div>
             `;
             nextBtn.disabled = false;
-            nextBtn.textContent = "See Results →";
+            nextBtn.textContent = @json(__('quiz.see_results'));
         }
     }
 
@@ -151,7 +92,7 @@
             loadQuestion();
 
             if (currentQuestion === questions.length - 1) {
-                this.textContent = "Continue →";
+                this.textContent = @json(__('quiz.continue_btn'));
             }
         } else {
             // Hide quiz and show email input
@@ -166,17 +107,17 @@
         const name = document.getElementById("userName").value.trim();
 
         if (!validateEmail(email)) {
-            alert("Please enter a valid email address.");
+            alert(@json(__('quiz.invalid_email')));
             return;
         }
 
         if (name.length < 2) {
-            alert("Please enter your full name.");
+            alert(@json(__('quiz.invalid_name')));
             return;
         }
 
         this.disabled = true;
-        this.innerHTML = `<span class="spinner"></span> Analysing...`;
+        this.innerHTML = `<span class="spinner"></span> {{ __('quiz.analysing') }}`;
 
         const challenge1 = document.getElementById("challenge1")?.value ?? '';
         const challenge2 = document.getElementById("challenge2")?.value ?? '';

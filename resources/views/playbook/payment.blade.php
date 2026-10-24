@@ -472,35 +472,35 @@
           </span>
         </div>
 
-        <h2 class="payment-title">Payment Success!</h2>
+        <h2 class="payment-title">{{ __('playbook.pay_success') }}</h2>
 
         <div class="payment-details">
 
           <div class="payment-divider first" ></div>
 
           <div class="payment-row">
-            <span>References Number</span>
+            <span>{{ __('playbook.ref_number') }}</span>
             <p>000085752257</p>
           </div>
 
           <div class="payment-row">
-            <span>Date</span>
+            <span>{{ __('playbook.date') }}</span>
             <p>Mar 22, 2023</p>
           </div>
 
           <div class="payment-row">
-            <span>Time</span>
+            <span>{{ __('playbook.time') }}</span>
             <p>07:80 AM</p>
           </div>
 
           <div class="payment-row">
-            <span>Payment Method</span>
-            <p>Credit Card</p>
+            <span>{{ __('playbook.method') }}</span>
+            <p>{{ __('playbook.card') }}</p>
           </div>
 
 
           <div class="payment-row">
-            <span>Amount</span>
+            <span>{{ __('playbook.amount') }}</span>
             <p class="amount">$10.1</p>
           </div>
 
@@ -509,12 +509,12 @@
         </div>
 
         <div class="payment-info-box">
-          Your Guide has been sent to customer@example.com
+          {{ __('playbook.guide_sent') }}
         </div>
 
       </div>
 
-        <button class="payment-footer-btn">Back to Home</button>
+        <button class="payment-footer-btn">{{ __('playbook.back_home') }}</button>
 
     </section>
 

@@ -1,14 +1,14 @@
 @extends('layouts.sales-layout')
-@section('title', 'Sales | P23 Africa')
+@section('title', __('sales_page.title'))
 @section('meta')
     <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
     <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
     <meta name="description"
-        content="Expand and grow your business in Africa with expert business consulting. P23 Africa helps entrepreneurs, SMEs, and international businesses with strategy, expansion, marketing, operational efficiency and tailored solutions to thrive in African markets. Get started today!">
+        content="{{ __('sales_page.meta') }}">
     <meta name="keywords"
-        content="Expand and grow your business in Africa with expert business consulting. P23 Africa helps entrepreneurs, SMEs, and international businesses with strategy, expansion, marketing, operational efficiency and tailored solutions to thrive in African markets. Get started today!">
+        content="{{ __('sales_page.meta') }}">
     <meta name="author" content="Nurudeen O. Daniju">
-    <meta name="generator" content="Business Consulting & Growth Solutions for Africa | P23 Africa">
+    <meta name="generator" content="{{ __('sales_page.meta_generator') }}">
     <meta property="og:image" content="{{ asset('images/intro-bg.png') }}">
 @endsection
 
@@ -26,29 +26,29 @@
                     <div class="row">
                         <div class="col-12 col-lg-8 text-left text-lg-start mb-4 mb-lg-0">
                             <h1 class="fw-bold text-white">
-                                Stop Losing <span>Leads.</span>
+                                {{ __('sales_page.stop') }} <span>{{ __('sales_page.leads') }}</span>
                             </h1>
-                            <h2 class="text-white">Start Closing <span>More Deals.</span></h2>
+                            <h2 class="text-white">{{ __('sales_page.start_closing') }} <span>{{ __('sales_page.deals') }}</span></h2>
                         </div>
                         <div class="col-12 col-lg-4 text-left text-lg-start">
                             <div class="sales-divider"></div>
                             <div class="sales-toolkit-info text-white d-flex flex-column align-items-start">
                                 <p class="lead-sm mb-3">
-                                    <strong>Sales Growth Toolkit for African Businesses</strong>
-                                    – Train your team. Track leads. Close more deals.
+                                    <strong>{{ __('sales_page.toolkit') }}</strong>
+                                    {{ __('sales_page.toolkit_line') }}
                                 </p>
                                 <div class="row text-center stats-row">
                                     <div class="col-4">
                                         <h3 class="fw-bold mb-0 numbers" id="countries">05 +</h3>
-                                        <p class="text-uppercase">Countries</p>
+                                        <p class="text-uppercase">{{ __('sales_page.countries') }}</p>
                                     </div>
                                     <div class="col-4">
                                         <h3 class="fw-bold mb-0 numbers" id="businessess">1000 +</h3>
-                                        <p class="text-uppercase">Businesses</p>
+                                        <p class="text-uppercase">{{ __('sales_page.businesses') }}</p>
                                     </div>
                                     <div class="col-4">
                                         <h3 class="fw-bold mb-0 numbers" id="partnerships">100 +</h3>
-                                        <p class="text-uppercase">Partnership</p>
+                                        <p class="text-uppercase">{{ __('sales_page.partnership') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -65,15 +65,15 @@
                         <div class="video-fade-overlay video-fade-left"></div> --}}
 
                         <div class="video-container position-relative">
-                            <img src="{{ asset('images/intro-bg.png') }}" alt="Sales Growth Video"
+                            <img src="{{ asset('images/intro-bg.png') }}" alt="{{ __('sales_page.alt_video') }}"
                                 class="img-fluid d-none d-md-block">
-                            <img src="{{ asset('images/intro-bg-mobile.png') }}" alt="Sales Growth Video"
+                            <img src="{{ asset('images/intro-bg-mobile.png') }}" alt="{{ __('sales_page.alt_video') }}"
                                 class="img-fluid d-block d-md-none">
 
                             <div class="overlay d-flex justify-content-center align-items-center">
                                 <!-- Desktop Play Button -->
                                 <button class="play-button btn bg-transparent border-0 p-0 d-none d-md-block"
-                                    aria-label="Play video" id="play-video-desktop">
+                                    aria-label="{{ __('sales_page.play') }}" id="play-video-desktop">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="#fff"
                                         class="bi bi-play-circle-fill" viewBox="0 0 16 16">
                                         <path
@@ -83,7 +83,7 @@
 
                                 <!-- Mobile Play Button -->
                                 <button class="play-button btn bg-transparent border-0 p-0 d-block d-md-none"
-                                    aria-label="Play video" id="play-video-mobile">
+                                    aria-label="{{ __('sales_page.play') }}" id="play-video-mobile">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="#fff"
                                         class="bi bi-play-circle-fill" viewBox="0 0 16 16">
                                         <path
@@ -100,7 +100,7 @@
                                 <div class="modal-content bg-dark border-0">
                                     <div class="modal-header border-0">
                                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
+                                            aria-label="{{ __('sales_page.close') }}"></button>
                                     </div>
                                     <div class="modal-body p-0">
                                         <div class="ratio ratio-16x9">
@@ -120,31 +120,31 @@
             <div class="container py-lg-5">
                 <div class="row text-left mb-5 works-heading">
                     <div class="col-12">
-                        <p class="text-uppercase mb-2">How It Works</p>
-                        <h2 class="">Simple, Trusted & Effective</h2>
+                        <p class="text-uppercase mb-2">{{ __('sales_page.how') }}</p>
+                        <h2 class="">{{ __('sales_page.simple') }}</h2>
                     </div>
                 </div>
 
                 <div class="mobile">
-                    <img src="{{ asset('images/work-card-mobile.png') }}" loading="lazy" alt="Work Card">
+                    <img src="{{ asset('images/work-card-mobile.png') }}" loading="lazy" alt="{{ __('sales_page.alt_card') }}">
                 </div>
 
                 <div class="desktop">
                     <div class="row justify-content-center g-2 pb-5">
                         <div class="col-12 col-md-6 col-lg-3 d-flex">
-                            <img src="{{ asset('images/work-card1.png') }}" loading="lazy" alt="Work Card">
+                            <img src="{{ asset('images/work-card1.png') }}" loading="lazy" alt="{{ __('sales_page.alt_card') }}">
                         </div>
 
                         <div class="col-12 col-md-6 col-lg-3 d-flex">
-                            <img src="{{ asset('images/work-card2.png') }}" loading="lazy" alt="Work Card">
+                            <img src="{{ asset('images/work-card2.png') }}" loading="lazy" alt="{{ __('sales_page.alt_card') }}">
                         </div>
 
                         <div class="col-12 col-md-6 col-lg-3 position-relative">
-                            <img src="{{ asset('images/work-card3.png') }}" loading="lazy" alt="Work Card">
+                            <img src="{{ asset('images/work-card3.png') }}" loading="lazy" alt="{{ __('sales_page.alt_card') }}">
                         </div>
 
                         <div class="col-12 col-md-6 col-lg-3 d-flex">
-                            <img src="{{ asset('images/work-card4.png') }}" loading="lazy" alt="Work Card">
+                            <img src="{{ asset('images/work-card4.png') }}" loading="lazy" alt="{{ __('sales_page.alt_card') }}">
                         </div>
                     </div>
                 </div>
@@ -156,15 +156,13 @@
                 <div class="row d-flex flex-lg-row flex-column align-items-start">
                     <div class="col-12 col-lg-6 mb-5 mb-lg-0 text-left text-lg-start">
                         <div class="text-section">
-                            <h1>START WITH A FREE BUSINESS AUDIT</h1>
+                            <h1>{{ __('sales_page.audit_title') }}</h1>
                             <p>
-                                Let's show you what's leaking in your sales process. We'll audit
-                                your current setup and show you where leads are slipping
-                                through. No pressure. Just clarity.
+                                {{ __('sales_page.audit_body') }}
                             </p>
                             <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3tzdnFU-zme-lCpKoHGZktqjUVs4rll_QJtcUzK71d9-l3M0WIFvjtnJpLmosUraV8XkUJeD_k"
                                 target="_blank" class="btn custom-button">
-                                Yes, I Want My Free Audit
+                                {{ __('sales_page.audit_cta') }}
                             </a>
                         </div>
                     </div>
@@ -172,7 +170,7 @@
                     <div class="col-12 col-lg-6 d-flex justify-content-center">
                         <div class="image-container">
                             <img src="{{ asset('images/business-audit.png') }}" loading="lazy"
-                                alt="Business team collaborating" class="img-fluid" />
+                                alt="{{ __('sales_page.alt_team') }}" class="img-fluid" />
                             {{-- <p class="image-description">
                                 Built for African Teams. Proven to Grow Sales. Our clients have
                                 seen up to 68% increase in sales using this system. We built
@@ -186,13 +184,13 @@
 
         <section class="offer-section reveal-section">
             <div class="container">
-                <h2>This offer is perfect for</h2>
+                <h2>{{ __('sales_page.offer') }}</h2>
                 <div class="row justify-content-center">
                     <div class="desktop">
-                        <img src="{{ asset('images/sales-count-desktop.png') }}" loading="lazy" alt="Offer">
+                        <img src="{{ asset('images/sales-count-desktop.png') }}" loading="lazy" alt="{{ __('sales_page.alt_offer') }}">
                     </div>
                     <div class="mobile">
-                        <img src="{{ asset('images/sales-count-mobile.png') }}" loading="lazy" alt="Offer">
+                        <img src="{{ asset('images/sales-count-mobile.png') }}" loading="lazy" alt="{{ __('sales_page.alt_offer') }}">
                     </div>
                     {{-- <div class="col-6 col-md-6 col-lg-3">
                         <div class="offer-item">
@@ -228,7 +226,7 @@
 
         <section class="clients-section reveal-section">
             <div class="container">
-                <h2>Our Happy Clients Say</h2>
+                <h2>{{ __('sales_page.clients') }}</h2>
             </div>
         </section>
 
@@ -238,7 +236,7 @@
                     <div class="clients">
                         <div class="client-card">
                             <div class="mobile">
-                                <img src="{{ asset('images/test1.png') }}" loading="lazy" alt="Testimonial">
+                                <img src="{{ asset('images/test1.png') }}" loading="lazy" alt="{{ __('sales_page.alt_testimonial') }}">
                             </div>
                             <div class="image-wrapper">
                                 <img src="{{ asset('images/testimony-3.png') }}" loading="lazy" alt="Client 1"
@@ -250,22 +248,20 @@
                                         <span class="fa fa-star"></span>
                                         <span class="fa fa-star"></span>
                                         <span class="fa fa-star"></span> <br><br>
-                                        "Before this, our sales process was scattered—leads fell through the cracks every
-                                        week. After the training and toolkit, our team now has a rhythm, and we’ve seen a
-                                        40% increase in closed deals."
+                                        {{ __('sales_page.quote_juliet') }}
                                     </div>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between my-auto align-items-center w-full px-md-2 px-4">
                                 <h4>Juliet Chukwudi</h4>
-                                <p>Sales Manager</p>
+                                <p>{{ __('sales_page.role_juliet') }}</p>
                             </div>
                         </div>
                     </div>
                     <div class="clients">
                         <div class="client-card">
                             <div class="mobile">
-                                <img src="{{ asset('images/test2.png') }}" loading="lazy" alt="Testimonial">
+                                <img src="{{ asset('images/test2.png') }}" loading="lazy" alt="{{ __('sales_page.alt_testimonial') }}">
                             </div>
                             <div class="image-wrapper">
                                 <img src="{{ asset('images/testimony-4.png') }}" loading="lazy" alt="Client 2"
@@ -277,22 +273,20 @@
                                         <span class="fa fa-star"></span>
                                         <span class="fa fa-star"></span>
                                         <span class="fa fa-star"></span> <br><br>
-                                        "As someone with seven years of experience in manufacturing and sales, this training
-                                        and toolkit have equipped me better than ever before. My outputs are now more
-                                        organized, intentional, and productive."
+                                        {{ __('sales_page.quote_james') }}
                                     </div>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between my-auto align-items-center w-full px-md-2 px-4">
                                 <h4>James Owoicho</h4>
-                                <p>Marketing Manager</p>
+                                <p>{{ __('sales_page.role_james') }}</p>
                             </div>
                         </div>
                     </div>
                     <div class="clients">
                         <div class="client-card last">
                             <div class="mobile">
-                                <img src="{{ asset('images/test3.png') }}" loading="lazy" alt="Testimonial">
+                                <img src="{{ asset('images/test3.png') }}" loading="lazy" alt="{{ __('sales_page.alt_testimonial') }}">
                             </div>
                             <div class="image-wrapper">
                                 <img src="{{ asset('images/client-last.jpg') }}" loading="lazy" alt="Client 3"
@@ -304,16 +298,13 @@
                                         <span class="fa fa-star"></span>
                                         <span class="fa fa-star"></span>
                                         <span class="fa fa-star"></span> <br><br>
-                                        "I took this leap of faith to further improve my team's performance, and it’s been
-                                        absolutely worth it. My team is now in sync and performing better than ever,
-                                        recording up to a 30% increase in productivity in just our first month of
-                                        implementing it."
+                                        {{ __('sales_page.quote_vera') }}
                                     </div>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between my-auto align-items-center w-full px-md-2 px-4">
                                 <h4>Vera Agugam</h4>
-                                <p>Team Lead</p>
+                                <p>{{ __('sales_page.role_vera') }}</p>
                             </div>
                         </div>
                     </div>
@@ -331,7 +322,7 @@
         <section class="trained-teams-section reveal-section">
             <div class="container">
                 <div class="line-top"></div>
-                <h2>Trained <strong>3000+ Teams</strong></h2>
+                <h2>{{ __('sales_page.trained') }} <strong>{{ __('sales_page.teams') }}</strong></h2>
                 <div class="line-bottom"></div>
             </div>
         </section>
@@ -342,18 +333,18 @@
                     <div class="col-md-6 col-lg-5 d-none d-md-block">
                         <div class="image-box">
                             <img src="{{ asset('images/cta-bg.png') }}" loading="lazy" class="image1"
-                                alt="Business People" />
+                                alt="{{ __('sales_page.alt_people') }}" />
                         </div>
                         <div class="image-box2">
                             <img src="{{ asset('images/cta-bg.png') }}" loading="lazy" class="image2"
-                                alt="Business People" />
+                                alt="{{ __('sales_page.alt_people') }}" />
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-7">
                         <div class="content-box">
                             <div class="pricing">
                                 <div id="pack">
-                                    <h2>Packages</h2>
+                                    <h2>{{ __('sales_page.packages') }}</h2>
                                     {{-- <hr> --}}
                                 </div>
                                 <div class="price">
@@ -361,29 +352,27 @@
                                         <div class="col-6">
                                             <div class="card px-2 px-md-4 py-3 mx-0 d-flex flex-column h-100 w-100">
                                                 <div>
-                                                    <strong>Standard</strong>
+                                                    <strong>{{ __('sales_page.standard') }}</strong>
                                                     <p>
-                                                        Perfect for startups and small teams looking to build a basic but
-                                                        effective
-                                                        sales system.
+                                                        {{ __('sales_page.standard_body') }}
                                                     </p>
-                                                    <b>Includes:</b>
+                                                    <b>{{ __('sales_page.includes') }}</b>
                                                     <ul class="para">
-                                                        <li>Half-day Sales Training Sales script templates (email, call, DM)
+                                                        <li>{{ __('sales_page.std_1') }}
                                                         </li>
-                                                        <li>Sales tracking spreadsheet (editable)</li>
-                                                        <li>Lead qualification checklist</li>
-                                                        <li>30-minute onboarding session</li>
-                                                        <li>Email support (7 days post-purchase)</li>
+                                                        <li>{{ __('sales_page.std_2') }}</li>
+                                                        <li>{{ __('sales_page.std_3') }}</li>
+                                                        <li>{{ __('sales_page.std_4') }}</li>
+                                                        <li>{{ __('sales_page.std_5') }}</li>
                                                     </ul>
                                                 </div>
 
 
                                                 <div class="mt-auto">
                                                     <span class="d-flex">
-                                                        <h1>$280</h1><small>/one-time</small>
+                                                        <h1>$280</h1><small>{{ __('sales_page.one_time') }}</small>
                                                     </span>
-                                                    <a href="#" class="btn w-100">Standard</a>
+                                                    <a href="#" class="btn w-100">{{ __('sales_page.standard') }}</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -392,29 +381,27 @@
                                             <div class="card px-2 px-md-4 py-3 mx-0 d-flex flex-column h-100 w-100"
                                                 id="pro">
                                                 <div>
-                                                    <strong>Pro</strong>
+                                                    <strong>{{ __('sales_page.pro') }}</strong>
                                                     <p>
-                                                        For businesses ready to optimise and scale their sales process.
+                                                        {{ __('sales_page.pro_body') }}
                                                     </p>
 
-                                                    <b>Includes:</b>
+                                                    <b>{{ __('sales_page.includes') }}</b>
                                                     <ul>
-                                                        <li>Full-day sales training Customised sales playbook tailored to
-                                                            your
-                                                            business</li>
-                                                        <li>Objection-handling guide</li>
-                                                        <li>1x 60-minute strategy call</li>
-                                                        <li>Sales process audit + recommendations</li>
-                                                        <li>30 days of email + WhatsApp support</li>
-                                                        <li>Bonus: Lead pipeline tracker (advanced version)</li>
+                                                        <li>{{ __('sales_page.pro_1') }}</li>
+                                                        <li>{{ __('sales_page.pro_2') }}</li>
+                                                        <li>{{ __('sales_page.pro_3') }}</li>
+                                                        <li>{{ __('sales_page.pro_4') }}</li>
+                                                        <li>{{ __('sales_page.pro_5') }}</li>
+                                                        <li>{{ __('sales_page.pro_6') }}</li>
                                                     </ul>
                                                 </div>
 
                                                 <div class="mt-auto">
                                                     <div class="d-flex">
-                                                        <h1>$500</h1><small>/one-time</small>
+                                                        <h1>$500</h1><small>{{ __('sales_page.one_time') }}</small>
                                                     </div>
-                                                    <a href="#" class="btn w-100">Pro</a>
+                                                    <a href="#" class="btn w-100">{{ __('sales_page.pro') }}</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -423,14 +410,13 @@
                             </div>
                             {{-- <small>Starting from: </small>
                             <h1>$280</h1><br> --}}
-                            <h2>Ready To Turn Leads Into Revenue?</h2>
+                            <h2>{{ __('sales_page.ready') }}</h2>
                             <p>
-                                No guesswork. No CRM overwhelm. Just real systems that deliver
-                                results.
+                                {{ __('sales_page.ready_body') }}
                             </p>
                             <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3tzdnFU-zme-lCpKoHGZktqjUVs4rll_QJtcUzK71d9-l3M0WIFvjtnJpLmosUraV8XkUJeD_k"
                                 target="_blank" class="cta-btn">
-                                Claim My Free Sales Audit!
+                                {{ __('sales_page.claim') }}
                                 <span>→</span>
                             </a>
                         </div>

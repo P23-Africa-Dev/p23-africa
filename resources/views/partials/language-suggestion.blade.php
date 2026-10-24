@@ -4,11 +4,11 @@
 @if ($suggestedLocale)
     <div class="locale-suggestion" role="status">
         <a href="{{ \App\Support\LocaleUrl::switch($suggestedLocale) }}"
-            onclick="document.cookie='locale_prompt=1;path=/;max-age=31536000;SameSite=Lax'">
-            {{ __('nav.suggest.'.$suggestedLocale) }}
+            onclick="document.cookie='locale_choice={{ $suggestedLocale }};path=/;max-age=31536000;SameSite=Lax'">
+            {{ __('nav.suggest.' . $suggestedLocale) }}
         </a>
         <button type="button" aria-label="{{ __('nav.suggest.dismiss') }}"
-            onclick="document.cookie='locale_prompt=1;path=/;max-age=31536000;SameSite=Lax'; this.parentElement.remove();">&times;</button>
+            onclick="document.cookie='locale_choice=en;path=/;max-age=31536000;SameSite=Lax'; this.parentElement.remove();">&times;</button>
     </div>
     @once
         <style>

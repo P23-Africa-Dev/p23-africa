@@ -1759,39 +1759,35 @@
                                 <h1>{{ __('brn.basic') }}</h1>
                                 <div class="subtitle">
                                     <span class="line"></span>
-                                    <p>Let's start with your basic details</p>
+                                    <p>{{ __('brn.start_basic') }}</p>
                                 </div>
                             </div>
 
                             <div class="description">
                                 <p>
-                                    NOEL transforms executive networking from casual connections
-                                    to strategic growth. Our platform facilitates verified,
-                                    high-value introductions between senior leaders and
-                                    investors. Focus on building relationships that drive real
-                                    business outcomes.
+                                    {{ __('brn.intro_body') }}
                                 </p>
                             </div>
                             <div class="progress-step-container">
                                 <div class="progress-stepper">
                                     <div class="step active">
                                         <div class="circle">1</div>
-                                        <div class="label">Basic Information</div>
+                                        <div class="label">{{ __('brn.basic') }}</div>
                                     </div>
 
                                     <div class="step">
                                         <div class="circle">2</div>
-                                        <div class="label">Credibility Check</div>
+                                        <div class="label">{{ __('brn.credibility') }}</div>
                                     </div>
 
                                     <div class="step">
                                         <div class="circle">3</div>
-                                        <div class="label">Industry Preference</div>
+                                        <div class="label">{{ __('brn.preference') }}</div>
                                     </div>
 
                                     <div class="step">
                                         <div class="circle">4</div>
-                                        <div class="label">Industry Insight</div>
+                                        <div class="label">{{ __('brn.insight') }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -1805,39 +1801,35 @@
                                 <h1>{{ __('brn.credibility') }}</h1>
                                 <div class="subtitle">
                                     <span class="line"></span>
-                                    <p>Stand out among other businesses</p>
+                                    <p>{{ __('brn.stand_out') }}</p>
                                 </div>
                             </div>
 
                             <div class="description">
                                 <p>
-                                    NOEL transforms executive networking from casual connections
-                                    to strategic growth. Our platform facilitates verified,
-                                    high-value introductions between senior leaders and
-                                    investors. Focus on building relationships that drive real
-                                    business outcomes.
+                                    {{ __('brn.intro_body') }}
                                 </p>
                             </div>
                             <div class="progress-step-container">
                                 <div class="progress-stepper">
                                     <div class="step active">
                                         <div class="circle">1</div>
-                                        <div class="label">Basic Information</div>
+                                        <div class="label">{{ __('brn.basic') }}</div>
                                     </div>
 
                                     <div class="step">
                                         <div class="circle">2</div>
-                                        <div class="label">Credibility Check</div>
+                                        <div class="label">{{ __('brn.credibility') }}</div>
                                     </div>
 
                                     <div class="step">
                                         <div class="circle">3</div>
-                                        <div class="label">Industry Preference</div>
+                                        <div class="label">{{ __('brn.preference') }}</div>
                                     </div>
 
                                     <div class="step">
                                         <div class="circle">4</div>
-                                        <div class="label">Industry Insight</div>
+                                        <div class="label">{{ __('brn.insight') }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -1851,39 +1843,35 @@
                                 <h1>{{ __('brn.preference') }}</h1>
                                 <div class="subtitle">
                                     <span class="line"></span>
-                                    <p>Boost visibility for your matches</p>
+                                    <p>{{ __('brn.boost') }}</p>
                                 </div>
                             </div>
 
                             <div class="description">
                                 <p>
-                                    NOEL transforms executive networking from casual connections
-                                    to strategic growth. Our platform facilitates verified,
-                                    high-value introductions between senior leaders and
-                                    investors. Focus on building relationships that drive real
-                                    business outcomes.
+                                    {{ __('brn.intro_body') }}
                                 </p>
                             </div>
                             <div class="progress-step-container">
                                 <div class="progress-stepper">
                                     <div class="step active">
                                         <div class="circle">1</div>
-                                        <div class="label">Basic Information</div>
+                                        <div class="label">{{ __('brn.basic') }}</div>
                                     </div>
 
                                     <div class="step">
                                         <div class="circle">2</div>
-                                        <div class="label">Credibility Check</div>
+                                        <div class="label">{{ __('brn.credibility') }}</div>
                                     </div>
 
                                     <div class="step">
                                         <div class="circle">3</div>
-                                        <div class="label">Industry Preference</div>
+                                        <div class="label">{{ __('brn.preference') }}</div>
                                     </div>
 
                                     <div class="step">
                                         <div class="circle">4</div>
-                                        <div class="label">Industry Insight</div>
+                                        <div class="label">{{ __('brn.insight') }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -1897,39 +1885,35 @@
                                 <h1>{{ __('brn.insight') }}</h1>
                                 <div class="subtitle">
                                     <span class="line"></span>
-                                    <p>Stand out among other businesses</p>
+                                    <p>{{ __('brn.stand_out') }}</p>
                                 </div>
                             </div>
 
                             <div class="description">
                                 <p>
-                                    NOEL transforms executive networking from casual connections
-                                    to strategic growth. Our platform facilitates verified,
-                                    high-value introductions between senior leaders and
-                                    investors. Focus on building relationships that drive real
-                                    business outcomes.
+                                    {{ __('brn.intro_body') }}
                                 </p>
                             </div>
                             <div class="progress-step-container">
                                 <div class="progress-stepper">
                                     <div class="step active">
                                         <div class="circle">1</div>
-                                        <div class="label">Basic Information</div>
+                                        <div class="label">{{ __('brn.basic') }}</div>
                                     </div>
 
                                     <div class="step">
                                         <div class="circle">2</div>
-                                        <div class="label">Credibility Check</div>
+                                        <div class="label">{{ __('brn.credibility') }}</div>
                                     </div>
 
                                     <div class="step">
                                         <div class="circle">3</div>
-                                        <div class="label">Industry Preference</div>
+                                        <div class="label">{{ __('brn.preference') }}</div>
                                     </div>
 
                                     <div class="step">
                                         <div class="circle">4</div>
-                                        <div class="label">Industry Insight</div>
+                                        <div class="label">{{ __('brn.insight') }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -1945,15 +1929,15 @@
                             <!-- First Stage Form -->
                             <div class="first-stage-form-container hidden">
                                 <div class="interest-form-group">
-                                    <label for="fullName">Full Name</label>
-                                    <input type="text" id="fullName" name="name" placeholder="Full name" />
+                                    <label for="fullName">{{ __('brn.full_name') }}</label>
+                                    <input type="text" id="fullName" name="name" placeholder="{{ __('brn.ph_name') }}" />
                                 </div>
 
                                 <div class="interest-form-group">
-                                    <label for="title">Title</label>
+                                    <label for="title">{{ __('brn.title_label') }}</label>
                                     <div class="custom-select" id="customSelect" data-select="title">
                                         <div class="custom-select-trigger">
-                                            <span class="custom-select-text">Title, e.g CEO</span>
+                                            <span class="custom-select-text">{{ __('brn.title_eg') }}</span>
                                             <img class="custom-select-arrow" src="{{ asset('img/arrown.png') }}"
                                                 alt="" />
 
@@ -1962,48 +1946,47 @@
                                             <span class="custom-option" data-value="CEO">CEO</span>
                                             <span class="custom-option" data-value="CTO">CTO</span>
                                             <span class="custom-option" data-value="CFO">CFO</span>
-                                            <span class="custom-option" data-value="CFO">Founder</span>
-                                            <span class="custom-option" data-value="CFO">Investor</span>
-                                            <span class="custom-option" data-value="Manager">Managing Director</span>
-                                            <span class="custom-option" data-value="Director">Director</span>
-                                            {{-- <span class="custom-option" data-value="Other">Other</span> --}}
+                                            <span class="custom-option" data-value="CFO">{{ __('brn.founder') }}</span>
+                                            <span class="custom-option" data-value="CFO">{{ __('brn.investor') }}</span>
+                                            <span class="custom-option" data-value="Manager">{{ __('brn.md') }}</span>
+                                            <span class="custom-option" data-value="Director">{{ __('brn.director') }}</span>
+                                            {{-- <span class="custom-option" data-value="Other">{{ __('brn.other') }}</span> --}}
                                         </div>
                                     </div>
 
                                     <!-- Hidden native select for form submission -->
                                     <select id="title" name="position" style="display: none">
-                                        <option value="">Title, e.g CEO</option>
+                                        <option value="">{{ __('brn.title_eg') }}</option>
                                         <option value="CEO">CEO</option>
                                         <option value="CTO">CTO</option>
                                         <option value="CFO">CFO</option>
-                                        <option value="Manager">Manager</option>
-                                        <option value="Director">Director</option>
-                                        <option value="Other">Other</option>
+                                        <option value="Manager">{{ __('brn.manager') }}</option>
+                                        <option value="Director">{{ __('brn.director') }}</option>
+                                        <option value="Other">{{ __('brn.other') }}</option>
                                     </select>
                                 </div>
 
                                 <div class="interest-form-group">
-                                    <label for="businessName">Official Business Name</label>
+                                    <label for="businessName">{{ __('brn.business_name') }}</label>
                                     <input type="text" id="businessName" name="company_name"
-                                        placeholder="Business Name" />
+                                        placeholder="{{ __('brn.ph_business') }}" />
                                 </div>
 
                                 <div class="interest-form-group">
-                                    <label for="emailAddress">Email Address</label>
+                                    <label for="emailAddress">{{ __('brn.email') }}</label>
                                     <input type="email" id="emailAddress" name="email"
-                                        placeholder="Email Address" />
+                                        placeholder="{{ __('brn.ph_email') }}" />
                                     <!-- Email validation status -->
                                     <div id="email-status" style="display: none; margin-top: 8px; font-size: 0.875rem;">
-                                        <span id="email-checkmark" style="color: #10b981; display: none;">✓ Email
-                                            available</span>
+                                        <span id="email-checkmark" style="color: #10b981; display: none;">✓ {{ __('brn.email_ok') }}</span>
                                         <span id="email-spinner" style="color: #ffff; display: none;">⏳
-                                            Validating...</span>
+                                            {{ __('brn.validating') }}</span>
                                     </div>
                                 </div>
 
                                 {{-- Phone Number --}}
                                 <div class="interest-form-group">
-                                    <label for="phoneNumber">Phone Number</label>
+                                    <label for="phoneNumber">{{ __('brn.phone') }}</label>
                                     <div class="phone-input-container">
 
                                         <!-- Country Selector -->
@@ -2022,7 +2005,7 @@
                                             <!-- Dropdown -->
                                             <div class="country-dropdown" id="countryDropdown">
                                                 <input type="text" id="countrySearch" autofocus class="country-search"
-                                                    placeholder="Search country...">
+                                                    placeholder="{{ __('brn.ph_search_country') }}">
                                                 <ul class="country-list" id="countryList">
                                                     <li data-code="+93" data-flag="af"><img
                                                             src="https://flagcdn.com/w40/af.png"><span>Afghanistan
@@ -2593,7 +2576,7 @@
                                             <div class="phone-prefix" id="phonePrefix">--</div>
                                             <!-- Phone Input -->
                                             <input type="tel" id="phoneNumber" name="phone"
-                                                placeholder="Select country code first" disabled>
+                                                placeholder="{{ __('brn.ph_code_first') }}" disabled>
                                         </div>
 
                                     </div>
@@ -2605,7 +2588,7 @@
 
                                 <div class="interest-form-actions">
                                     <button type="button" class="interest-form-proceed-button" data-next="form2">
-                                        Proceed
+                                        {{ __('brn.proceed') }}
                                     </button>
                                 </div>
                             </div>
@@ -2613,22 +2596,22 @@
                             <!-- Second Form -->
                             <div class="second-stage-form-container hidden">
                                 <div class="interest-form-group">
-                                    <label for="regNumber">Company Registration Number</label>
+                                    <label for="regNumber">{{ __('brn.reg_number') }}</label>
                                     <input type="text" id="regNumber" name="reg_number"
-                                        placeholder="Input you company Reg. Number" />
+                                        placeholder="{{ __('brn.ph_reg') }}" />
                                 </div>
 
                                 <div class="interest-form-group">
-                                    <label for="countryReg">Country Of Registration</label>
+                                    <label for="countryReg">{{ __('brn.country_reg') }}</label>
                                     <div class="custom-select" id="countryRegSelect" data-select="country">
                                         <div class="custom-select-trigger">
-                                            <span class="custom-select-text">Select your country</span>
+                                            <span class="custom-select-text">{{ __('brn.select_country') }}</span>
                                             <img class="custom-select-arrow" src="{{ asset('img/arrown.png') }}"
                                                 alt="" />
                                         </div>
                                         <div class="custom-options countryReg-options" id="countryReg-options">
                                             <input type="text" autofocus class="country-search" id="countrySearchReg"
-                                                placeholder="Search countries..." autocomplete="off">
+                                                placeholder="{{ __('brn.ph_search_countries') }}" autocomplete="off">
                                             <div class="custom-options-scrollable">
                                                 <span class="custom-option" data-value="Afghanistan">Afghanistan</span>
                                                 <span class="custom-option" data-value="Albania">Albania</span>
@@ -2858,7 +2841,7 @@
 
                                     <!-- Hidden native select for form submission -->
                                     <select id="country" name="country" style="display: none">
-                                        <option value="">Select your country</option>
+                                        <option value="">{{ __('brn.select_country') }}</option>
                                         <option value="Afghanistan">Afghanistan</option>
                                         <option value="Albania">Albania</option>
                                         <option value="Algeria">Algeria</option>
@@ -3058,38 +3041,38 @@
 
 
                                 <div class="interest-form-group">
-                                    <label for="website">Company Website or Social Handle</label>
+                                    <label for="website">{{ __('brn.website') }}</label>
                                     <input type="text" id="website" name="website"
-                                        placeholder="Input your company website/socials" />
+                                        placeholder="{{ __('brn.ph_website') }}" />
                                 </div>
 
                                 <div class="interest-form-group">
-                                    <label for="linkedin">LinkedIn Profile</label>
+                                    <label for="linkedin">{{ __('brn.linkedin') }}</label>
                                     <input type="url" id="linkedin" name="linkedin"
-                                        placeholder="Add your profile Url (Optional)" />
+                                        placeholder="{{ __('brn.ph_profile') }}" />
 
                                     <div class="checkbox-wrapper">
                                         <label class="checkbox-container" for="no_linkedin">
                                             <input type="checkbox" id="no_linkedin" name="no_linkedin" />
                                             <span class="checkmark"></span>
-                                            I don’t have a LinkedIn account.
+                                            {{ __('brn.no_linkedin') }}
                                         </label>
                                     </div>
                                 </div>
 
                                 <div class="interest-form-group">
-                                    <label for="yearEst">Year of Establishment</label>
+                                    <label for="yearEst">{{ __('brn.year') }}</label>
                                     <input type="number" id="yearEst" name="year_established"
-                                        placeholder="Input year of establishment" pattern="[0-9]{4}" min="1900"
+                                        placeholder="{{ __('brn.ph_year') }}" pattern="[0-9]{4}" min="1900"
                                         max="2100" />
                                 </div>
 
                                 <div class="interest-form-actions">
                                     <button type="button" class="interest-form-return-button" data-prev="form1">
-                                        Return
+                                        {{ __('brn.return') }}
                                     </button>
                                     <button type="button" class="interest-form-proceed-button" data-next="form3">
-                                        Proceed
+                                        {{ __('brn.proceed') }}
                                     </button>
                                 </div>
                             </div>
@@ -3098,65 +3081,65 @@
                             <div class="third-stage-form-container hidden">
                                 <!-- Industries -->
                                 <div class="interest-form-group" id="industry-selects-group">
-                                    <label for="industry">What industry does your business operate in?</label>
+                                    <label for="industry">{{ __('brn.industry_q') }}</label>
                                     <div class="custom-select" data-select="industry">
                                         <div class="custom-select-trigger">
-                                            <span class="custom-select-text">Select your industry</span>
+                                            <span class="custom-select-text">{{ __('brn.select_industry') }}</span>
                                             <img class="custom-select-arrow" src="{{ asset('img/arrown.png') }}"
                                                 alt="" />
                                         </div>
                                         <div class="custom-options">
                                             <span class="custom-option" data-value="Technology & Digital Services">
-                                                Technology & Digital Services
+                                                {{ __('brn.ind_tech') }}
                                             </span>
 
                                             <span class="custom-option" data-value="Financial & Professional Services">
-                                                Financial & Professional Services
+                                                {{ __('brn.ind_finance') }}
                                             </span>
 
                                             <span class="custom-option" data-value="Manufacturing & Industrial">
-                                                Manufacturing & Industrial
+                                                {{ __('brn.ind_mfg') }}
                                             </span>
 
                                             <span class="custom-option" data-value="Healthcare & Pharmaceuticals">
-                                                Healthcare & Pharmaceuticals
+                                                {{ __('brn.ind_health') }}
                                             </span>
 
                                             <span class="custom-option" data-value="Energy & Utilities">
-                                                Energy & Utilities
+                                                {{ __('brn.ind_energy') }}
                                             </span>
 
                                             <span class="custom-option" data-value="Retail & Consumer Goods">
-                                                Retail & Consumer Goods
+                                                {{ __('brn.ind_retail') }}
                                             </span>
 
                                             <span class="custom-option" data-value="Logistics & Transportation">
-                                                Logistics & Transportation
+                                                {{ __('brn.ind_logistics') }}
                                             </span>
 
                                             <span class="custom-option" data-value="Agriculture & Food Processing">
-                                                Agriculture & Food Processing
+                                                {{ __('brn.ind_agri') }}
                                             </span>
 
                                             <span class="custom-option" data-value="Real Estate & Construction">
-                                                Real Estate & Construction
+                                                {{ __('brn.ind_property') }}
                                             </span>
 
                                             <span class="custom-option" data-value="Media & Communications">
-                                                Media & Communications
+                                                {{ __('brn.ind_media') }}
                                             </span>
 
                                             <span class="custom-option" data-value="Education & Training">
-                                                Education & Training
+                                                {{ __('brn.ind_edu') }}
                                             </span>
 
                                             <span class="custom-option" data-value="Government & Public Services">
-                                                Government & Public Services
+                                                {{ __('brn.ind_gov') }}
                                             </span>
 
                                             <span class="custom-option"
                                                 data-value="Environmental & Specialized Services">
-                                                Environmental & Specialized Services
+                                                {{ __('brn.ind_env') }}
                                             </span>
                                         </div>
 
@@ -3165,25 +3148,23 @@
                                     {{-- <p class="industry-message">kindly select your industry first</p> --}}
 
                                     <select name="industry" id="industry" style="display: none">
-                                        <option value="Technology & Digital Services"> Technology & Digital Services
+                                        <option value="Technology & Digital Services"> {{ __('brn.ind_tech') }}
                                         </option>
-                                        <option value="Financial & Professional Services"> Financial & Professional
-                                            Services</option>
-                                        <option value="Manufacturing & Industrial"> Manufacturing & Industrial</option>
-                                        <option value="Healthcare & Pharmaceuticals"> Healthcare & Pharmaceuticals
+                                        <option value="Financial & Professional Services"> {{ __('brn.ind_finance') }}</option>
+                                        <option value="Manufacturing & Industrial"> {{ __('brn.ind_mfg') }}</option>
+                                        <option value="Healthcare & Pharmaceuticals"> {{ __('brn.ind_health') }}
                                         </option>
-                                        <option value="Energy & Utilities"> Energy & Utilities</option>
-                                        <option value="Retail & Consumer Goods"> Retail & Consumer Goods</option>
-                                        <option value="Logistics & Transportation"> Logistics & Transportation</option>
-                                        <option value="Agriculture & Food Processing"> Agriculture & Food Processing
+                                        <option value="Energy & Utilities"> {{ __('brn.ind_energy') }}</option>
+                                        <option value="Retail & Consumer Goods"> {{ __('brn.ind_retail') }}</option>
+                                        <option value="Logistics & Transportation"> {{ __('brn.ind_logistics') }}</option>
+                                        <option value="Agriculture & Food Processing"> {{ __('brn.ind_agri') }}
                                         </option>
-                                        <option value="Real Estate & Construction"> Real Estate & Construction</option>
-                                        <option value="Media & Communications"> Media & Communications</option>
-                                        <option value="Education & Training"> Education & Training</option>
-                                        <option value="Government & Public Services"> Government & Public Services
+                                        <option value="Real Estate & Construction"> {{ __('brn.ind_property') }}</option>
+                                        <option value="Media & Communications"> {{ __('brn.ind_media') }}</option>
+                                        <option value="Education & Training"> {{ __('brn.ind_edu') }}</option>
+                                        <option value="Government & Public Services"> {{ __('brn.ind_gov') }}
                                         </option>
-                                        <option value="Environmental & Specialized Services"> Environmental & Specialized
-                                            Services</option>
+                                        <option value="Environmental & Specialized Services"> {{ __('brn.ind_env') }}</option>
 
                                     </select>
                                 </div>
@@ -3198,11 +3179,11 @@
 
                                 <!-- Employees Custom Select -->
                                 <div class="interest-form-group">
-                                    <label for="employees">Numbers of Employees</label>
+                                    <label for="employees">{{ __('brn.employees') }}</label>
 
                                     <div class="custom-select" data-select="employees">
                                         <div class="custom-select-trigger">
-                                            <span class="custom-select-text">Select Employees range</span>
+                                            <span class="custom-select-text">{{ __('brn.select_employees') }}</span>
                                             <img class="custom-select-arrow" src="{{ asset('img/arrown.png') }}"
                                                 alt="" />
                                         </div>
@@ -3217,7 +3198,7 @@
 
                                     <!-- Hidden native select -->
                                     <select id="employees" name="number_of_employees" style="display: none">
-                                        <option value="">Select Employees range</option>
+                                        <option value="">{{ __('brn.select_employees') }}</option>
                                         <option value="1-10">1-10</option>
                                         <option value="11-50">11-50</option>
                                         <option value="50-200">50-200</option>
@@ -3229,40 +3210,40 @@
                                 <div class="interest-form-group">
                                     <label for="revenue">
                                         <span>
-                                            Approximate annual revenue
+                                            {{ __('brn.revenue') }}
                                         </span>
-                                        <span class="interest-form-sublabel">(confidential – for internal use only)</span>
+                                        <span class="interest-form-sublabel">{{ __('brn.confidential') }}</span>
                                     </label>
 
                                     <div class="custom-select" data-select="revenue">
                                         <div class="custom-select-trigger">
-                                            <span class="custom-select-text">Select revenue range</span>
+                                            <span class="custom-select-text">{{ __('brn.select_revenue') }}</span>
                                             <img class="custom-select-arrow" src="{{ asset('img/arrown.png') }}"
                                                 alt="" />
                                         </div>
 
                                         <div class="custom-options">
-                                            <span class="custom-option" data-value="Below $1M">Below $1M</span>
-                                            <span class="custom-option" data-value="$1M - $5M">$1M - $5M</span>
-                                            <span class="custom-option" data-value="$5M+">$5M+</span>
+                                            <span class="custom-option" data-value="Below $1M">{{ __('brn.rev_1') }}</span>
+                                            <span class="custom-option" data-value="$1M - $5M">{{ __('brn.rev_2') }}</span>
+                                            <span class="custom-option" data-value="$5M+">{{ __('brn.rev_3') }}</span>
                                         </div>
                                     </div>
 
                                     <!-- Hidden native select -->
                                     <select id="revenue" name="annual_revenue" style="display: none">
-                                        <option value="">Select revenue range</option>
-                                        <option value="Below $1M">Below $1M</option>
-                                        <option value="$1M - $5M">$1M - $5M</option>
-                                        <option value="$5M+">$5M+</option>
+                                        <option value="">{{ __('brn.select_revenue') }}</option>
+                                        <option value="Below $1M">{{ __('brn.rev_1') }}</option>
+                                        <option value="$1M - $5M">{{ __('brn.rev_2') }}</option>
+                                        <option value="$5M+">{{ __('brn.rev_3') }}</option>
                                     </select>
                                 </div>
 
                                 <div class="interest-form-actions">
                                     <button type="button" class="interest-form-return-button" data-prev="form2">
-                                        Return
+                                        {{ __('brn.return') }}
                                     </button>
                                     <button type="button" class="interest-form-proceed-button" data-next="form4">
-                                        Proceed
+                                        {{ __('brn.proceed') }}
                                     </button>
                                 </div>
                             </div>
@@ -3270,25 +3251,21 @@
                             <!-- fourth Form -->
                             <div class="fourth-stage-form-container">
                                 <div class="interest-form-group">
-                                    <label class="value-offer" for="offerValue">What value can your company offer to
-                                        other CEOs in the
-                                        network?</label>
-                                    <textarea id="offerValue" name="offer_value" rows="1" placeholder="Enter your value"></textarea>
+                                    <label class="value-offer" for="offerValue">{{ __('brn.offer_q') }}</label>
+                                    <textarea id="offerValue" name="offer_value" rows="1" placeholder="{{ __('brn.ph_value') }}"></textarea>
                                 </div>
 
                                 <div class="interest-form-group">
-                                    <label for="companyDescription" class="company-desc">Briefly describe what your
-                                        company does and who your
-                                        clients/customers are (max 150 words)</label>
-                                    <textarea id="companyDescription" name="goals" rows="5" placeholder="Enter your description"></textarea>
+                                    <label for="companyDescription" class="company-desc">{{ __('brn.describe') }}</label>
+                                    <textarea id="companyDescription" name="goals" rows="5" placeholder="{{ __('brn.ph_desc') }}"></textarea>
                                 </div>
 
                                 <div class="interest-form-group">
-                                    <label for="interest">What are you most interested in from this network?</label>
+                                    <label for="interest">{{ __('brn.interest_q') }}</label>
 
                                     <div class="custom-select" data-select="interest">
                                         <div class="custom-select-trigger">
-                                            <span class="custom-select-text">Select interest</span>
+                                            <span class="custom-select-text">{{ __('brn.select_interest') }}</span>
                                             <span class="custom-select-arrow">
                                                 <img class="custom-select-arrow" src="{{ asset('img/arrown.png') }}"
                                                     alt="" />
@@ -3297,67 +3274,65 @@
 
                                         <div class="custom-options">
                                             <div class="custom-option" data-value="Networking">
-                                                Networking
+                                                {{ __('brn.networking') }}
                                             </div>
                                             <div class="custom-option" data-value="Verified Business Leads">
-                                                Verified Business Leads
+                                                {{ __('brn.leads') }}
                                             </div>
                                             <div class="custom-option" data-value="Automated Sales Tools">
-                                                Automated Sales Tools
+                                                {{ __('brn.tools') }}
                                             </div>
                                             <div class="custom-option" data-value="Consulting Support">
-                                                Consulting Support
+                                                {{ __('brn.consulting') }}
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- hidden select to sync value -->
                                     <select name="selected_outcome" id="selectedOutcome" style="display: none">
-                                        <option value="">Select interest</option>
-                                        <option value="Networking">Networking</option>
-                                        <option value="Verified Business Leads">Verified Business Leads</option>
-                                        <option value="Automated Sales Tools">Automated Sales Tools</option>
-                                        <option value="Consulting Support">Consulting Support</option>
+                                        <option value="">{{ __('brn.select_interest') }}</option>
+                                        <option value="Networking">{{ __('brn.networking') }}</option>
+                                        <option value="Verified Business Leads">{{ __('brn.leads') }}</option>
+                                        <option value="Automated Sales Tools">{{ __('brn.tools') }}</option>
+                                        <option value="Consulting Support">{{ __('brn.consulting') }}</option>
                                     </select>
                                 </div>
 
                                 <div class="interest-form-group">
                                     <p class="interest-form-question">
-                                        If your business isn’t eligible for the CEO Referral
-                                        Network at this time, would you be interested in joining
-                                        our B2B platform to access:
+                                        {{ __('brn.fallback_q') }}
                                     </p>
                                     <ul class="interest-form-list">
-                                        <li>Verified business leads</li>
-                                        <li>Automated sales tools</li>
-                                        <li>Growth audits and consulting support?</li>
+                                        <li>{{ __('brn.fb_leads') }}</li>
+                                        <li>{{ __('brn.fb_tools') }}</li>
+                                        <li>{{ __('brn.fb_audits') }}</li>
                                     </ul>
 
                                     <div class="interest-form-option-buttons">
                                         <div class="interest-form-option">
                                             <input type="radio" id="opt-yes" name="b2b_interest" value="yes"
                                                 checked />
-                                            <label for="opt-yes">Yes, I'm interested</label>
+                                            <label for="opt-yes">{{ __('brn.yes') }}</label>
                                         </div>
                                         <div class="interest-form-option">
                                             <input type="radio" id="opt-maybe" name="b2b_interest"
                                                 value="maybe" />
-                                            <label for="opt-maybe">Maybe, send me more information</label>
+                                            <label for="opt-maybe">{{ __('brn.maybe') }}</label>
                                         </div>
                                         <div class="interest-form-option">
                                             <input type="radio" id="opt-no" name="b2b_interest"
                                                 value="no" />
-                                            <label for="opt-no">No, not interested</label>
+                                            <label for="opt-no">{{ __('brn.no') }}</label>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="interest-form-actions">
                                     <button type="button" class="interest-form-return-button" data-prev="form3">
-                                        Return
+                                        {{ __('brn.return') }}
                                     </button>
                                     <button type="submit" class="interest-form-submit-button" id="submitBtn">
-                                        <span class="btn-text">Submit</span>
+                                        <span class="btn-text">{{ __('brn.submit') }}</span>
                                         <div class="spinner-border spinner-border-sm d-none" role="status"
                                             aria-hidden="true"></div>
                                     </button>
@@ -3376,7 +3351,7 @@
                                 <div id="responseMessage">
 
                                 </div>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Done</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('brn.done') }}</button>
                             </div>
                         </div>
                     </div>
@@ -3393,39 +3368,35 @@
                                 <h1>{{ __('brn.basic') }}</h1>
                                 <div class="subtitle">
                                     <span class="line"></span>
-                                    <p>Let's start with your basic details</p>
+                                    <p>{{ __('brn.start_basic') }}</p>
                                 </div>
                             </div>
 
                             <div class="description">
                                 <p>
-                                    NOEL transforms executive networking from casual connections
-                                    to strategic growth. Our platform facilitates verified,
-                                    high-value introductions between senior leaders and
-                                    investors. Focus on building relationships that drive real
-                                    business outcomes.
+                                    {{ __('brn.intro_body') }}
                                 </p>
                             </div>
                             <div class="progress-step-container">
                                 <div class="progress-stepper ">
                                     <div class="step ">
                                         <div class="circle">1</div>
-                                        <div class="label">Basic Information</div>
+                                        <div class="label">{{ __('brn.basic') }}</div>
                                     </div>
 
                                     <div class="step">
                                         <div class="circle">2</div>
-                                        <div class="label">Credibility Check</div>
+                                        <div class="label">{{ __('brn.credibility') }}</div>
                                     </div>
 
                                     <div class="step">
                                         <div class="circle">3</div>
-                                        <div class="label">Industry Preference</div>
+                                        <div class="label">{{ __('brn.preference') }}</div>
                                     </div>
 
                                     <div class="step">
                                         <div class="circle">4</div>
-                                        <div class="label">Industry Insight</div>
+                                        <div class="label">{{ __('brn.insight') }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -3439,39 +3410,35 @@
                                 <h1>{{ __('brn.credibility') }}</h1>
                                 <div class="subtitle">
                                     <span class="line"></span>
-                                    <p>Stand out among other businesses</p>
+                                    <p>{{ __('brn.stand_out') }}</p>
                                 </div>
                             </div>
 
                             <div class="description">
                                 <p>
-                                    NOEL transforms executive networking from casual connections
-                                    to strategic growth. Our platform facilitates verified,
-                                    high-value introductions between senior leaders and
-                                    investors. Focus on building relationships that drive real
-                                    business outcomes.
+                                    {{ __('brn.intro_body') }}
                                 </p>
                             </div>
                             <div class="progress-step-container">
                                 <div class="progress-stepper">
                                     <div class="step active">
                                         <div class="circle">1</div>
-                                        <div class="label">Basic Information</div>
+                                        <div class="label">{{ __('brn.basic') }}</div>
                                     </div>
 
                                     <div class="step">
                                         <div class="circle">2</div>
-                                        <div class="label">Credibility Check</div>
+                                        <div class="label">{{ __('brn.credibility') }}</div>
                                     </div>
 
                                     <div class="step">
                                         <div class="circle">3</div>
-                                        <div class="label">Industry Preference</div>
+                                        <div class="label">{{ __('brn.preference') }}</div>
                                     </div>
 
                                     <div class="step">
                                         <div class="circle">4</div>
-                                        <div class="label">Industry Insight</div>
+                                        <div class="label">{{ __('brn.insight') }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -3485,39 +3452,35 @@
                                 <h1>{{ __('brn.preference') }}</h1>
                                 <div class="subtitle">
                                     <span class="line"></span>
-                                    <p>Boost visibility for your matches</p>
+                                    <p>{{ __('brn.boost') }}</p>
                                 </div>
                             </div>
 
                             <div class="description">
                                 <p>
-                                    NOEL transforms executive networking from casual connections
-                                    to strategic growth. Our platform facilitates verified,
-                                    high-value introductions between senior leaders and
-                                    investors. Focus on building relationships that drive real
-                                    business outcomes.
+                                    {{ __('brn.intro_body') }}
                                 </p>
                             </div>
                             <div class="progress-step-container">
                                 <div class="progress-stepper">
                                     <div class="step active">
                                         <div class="circle">1</div>
-                                        <div class="label">Basic Information</div>
+                                        <div class="label">{{ __('brn.basic') }}</div>
                                     </div>
 
                                     <div class="step">
                                         <div class="circle">2</div>
-                                        <div class="label">Credibility Check</div>
+                                        <div class="label">{{ __('brn.credibility') }}</div>
                                     </div>
 
                                     <div class="step">
                                         <div class="circle">3</div>
-                                        <div class="label">Industry Preference</div>
+                                        <div class="label">{{ __('brn.preference') }}</div>
                                     </div>
 
                                     <div class="step">
                                         <div class="circle">4</div>
-                                        <div class="label">Industry Insight</div>
+                                        <div class="label">{{ __('brn.insight') }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -3531,39 +3494,35 @@
                                 <h1>{{ __('brn.insight') }}</h1>
                                 <div class="subtitle">
                                     <span class="line"></span>
-                                    <p>Stand out among other businesses</p>
+                                    <p>{{ __('brn.stand_out') }}</p>
                                 </div>
                             </div>
 
                             <div class="description">
                                 <p>
-                                    NOEL transforms executive networking from casual connections
-                                    to strategic growth. Our platform facilitates verified,
-                                    high-value introductions between senior leaders and
-                                    investors. Focus on building relationships that drive real
-                                    business outcomes.
+                                    {{ __('brn.intro_body') }}
                                 </p>
                             </div>
                             <div class="progress-step-container">
                                 <div class="progress-stepper">
                                     <div class="step active">
                                         <div class="circle">1</div>
-                                        <div class="label">Basic Information</div>
+                                        <div class="label">{{ __('brn.basic') }}</div>
                                     </div>
 
                                     <div class="step">
                                         <div class="circle">2</div>
-                                        <div class="label">Credibility Check</div>
+                                        <div class="label">{{ __('brn.credibility') }}</div>
                                     </div>
 
                                     <div class="step">
                                         <div class="circle">3</div>
-                                        <div class="label">Industry Preference</div>
+                                        <div class="label">{{ __('brn.preference') }}</div>
                                     </div>
 
                                     <div class="step">
                                         <div class="circle">4</div>
-                                        <div class="label">Industry Insight</div>
+                                        <div class="label">{{ __('brn.insight') }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -3574,7 +3533,7 @@
                 <!-- footer -->
                 <section class="interest-form-footer">
                     <div class="form-footer">
-                        <h2>Contact Information</h2>
+                        <h2>{{ __('brn.contact_info') }}</h2>
 
                         <div class="interest-form-footer-contact-row">
                             <div>
@@ -3608,6 +3567,7 @@
 <script>
     // FORM MANAGEMENT AND VALIDATION
     document.addEventListener('DOMContentLoaded', function() {
+        const brnCat = @json(__('brn.categories'));
         const form = document.getElementById('brnForm');
         const submitBtn = document.getElementById('submitBtn');
         const btnText = submitBtn.querySelector('.btn-text');
@@ -4044,7 +4004,7 @@
         noCountryItem.style.justifyContent = "center";
         noCountryItem.style.padding = "8px";
         noCountryItem.style.color = "#6b7280";
-        noCountryItem.textContent = "No country found";
+        noCountryItem.textContent = @json(__('brn.no_country'));
         list.appendChild(noCountryItem);
 
         // Helper function to check if dropdown is open
@@ -4103,7 +4063,7 @@
                 countryCodeInput.value = "";
                 phonePrefix.textContent = "--";
                 phoneInput.disabled = true;
-                phoneInput.placeholder = "Select country code first";
+                phoneInput.placeholder = @json(__('brn.ph_code_first'));
             }
         });
 
@@ -4118,7 +4078,7 @@
                 phonePrefix.textContent = code;
 
                 phoneInput.disabled = false;
-                phoneInput.placeholder = `Enter phone number`;
+                phoneInput.placeholder = @json(__('brn.ph_phone'));
 
                 countryDropdown.style.display = "none";
                 countryDropdown.classList.remove("open");
@@ -4146,7 +4106,7 @@
         // Create a "no results" element
         const noResults = document.createElement('span');
         noResults.className = 'no-results';
-        noResults.textContent = 'No results found';
+        noResults.textContent = @json(__('brn.no_results'));
         noResults.style.display = 'none';
         noResults.style.color = '#ffff';
         noResults.style.fontSize = '12px';
@@ -4389,7 +4349,7 @@
                         d="m4.5 12.75 6 6 9-13.5"/>
                 </svg>
             </span>
-            <span>${category}</span>
+            <span>${brnCat[category] || category}</span>
         `;
 
                 // Prevent clicks on default tags
@@ -4437,7 +4397,7 @@
           <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/>
         </svg>
       </span>
-      <span>${category}</span>
+      <span>${brnCat[category] || category}</span>
     `;
 
 
@@ -4709,15 +4669,15 @@
                 const companyName = currentStage.querySelector('input[name="company_name"]');
 
                 if (!name.value.trim()) {
-                    showError(name, 'Full name is required');
+                    showError(name, @json(__('brn.err_name')));
                     isValid = false;
                 }
 
                 if (!email.value.trim()) {
-                    showError(email, 'Email address is required');
+                    showError(email, @json(__('brn.err_email')));
                     isValid = false;
                 } else if (!isValidEmail(email.value.trim())) {
-                    showError(email, 'Please enter a valid email address');
+                    showError(email, @json(__('brn.err_email_invalid')));
                     isValid = false;
                 }
 
@@ -4736,7 +4696,7 @@
                         error.style.color = "#ef4444";
                         error.style.fontSize = "0.875rem";
                         error.style.marginTop = "6px";
-                        error.textContent = "Phone number is required";
+                        error.textContent = @json(__('brn.err_phone'));
 
                         // append error message after the phone container
                         phoneContainer.parentNode.insertBefore(error, phoneContainer.nextSibling);
@@ -4750,12 +4710,12 @@
 
                 if (!position.value.trim()) {
                     const customSelect = currentStage.querySelector('[data-select="title"]');
-                    showError(customSelect || position.parentNode, 'Please select your title');
+                    showError(customSelect || position.parentNode, @json(__('brn.err_title')));
                     isValid = false;
                 }
 
                 if (!companyName.value.trim()) {
-                    showError(companyName, 'Company name is required');
+                    showError(companyName, @json(__('brn.err_company')));
                     isValid = false;
                 }
 
@@ -4770,18 +4730,18 @@
                 const noLinkedIn = currentStage.querySelector('input[name="no_linkedin"]')?.checked || false;
 
                 if (!regNumber.value.trim()) {
-                    showError(regNumber, 'Company registration number is required');
+                    showError(regNumber, @json(__('brn.err_reg')));
                     isValid = false;
                 }
 
                 if (!country.value.trim()) {
                     const customSelect = currentStage.querySelector('[data-select="country"]');
-                    showError(customSelect || country.parentNode, 'Country of registration is required');
+                    showError(customSelect || country.parentNode, @json(__('brn.err_country')));
                     isValid = false;
                 }
 
                 if (!website.value.trim()) {
-                    showError(website, 'Company website or social handle is required');
+                    showError(website, @json(__('brn.err_website')));
                     isValid = false;
                 }
 
@@ -4789,7 +4749,7 @@
                 //     showError(linkedin, 'LinkedIn profile is required');
                 //     isValid = false;
                 // } else if (!linkedin.value.toLowerCase().includes('linkedin')) {
-                //     showError(linkedin, 'Please enter a valid LinkedIn profile URL');
+                //     showError(linkedin, @json(__('brn.err_linkedin')));
                 //     isValid = false;
                 // }
 
@@ -4797,7 +4757,7 @@
                 //     // showError(linkedin, 'LinkedIn profile is required');
                 //     isValid = true;
                 // } else if (!linkedin.value.toLowerCase().includes('linkedin')) {
-                //     showError(linkedin, 'Please enter a valid LinkedIn profile URL');
+                //     showError(linkedin, @json(__('brn.err_linkedin')));
                 //     isValid = false;
                 // }
 
@@ -4809,7 +4769,7 @@
                         // isValid = false;
 
                     } else if (!linkedin.value.toLowerCase().includes('linkedin')) {
-                        showError(linkedin, 'Please enter a valid LinkedIn profile URL');
+                        showError(linkedin, @json(__('brn.err_linkedin')));
                         isValid = false;
                     }
                 } else {
@@ -4818,11 +4778,11 @@
                 }
 
                 if (!yearEstablished.value.trim()) {
-                    showError(yearEstablished, 'Year established is required');
+                    showError(yearEstablished, @json(__('brn.err_year')));
                     isValid = false;
                 } else if (isNaN(yearEstablished.value) || yearEstablished.value < 1800 || yearEstablished
                     .value > new Date().getFullYear()) {
-                    showError(yearEstablished, 'Please enter a valid year');
+                    showError(yearEstablished, @json(__('brn.err_year_invalid')));
                     isValid = false;
                 }
 
@@ -4841,13 +4801,13 @@
 
                 if (!employees.value.trim()) {
                     const customSelect = currentStage.querySelector('[data-select="employees"]');
-                    showError(customSelect || employees.parentNode, 'Please select number of employees');
+                    showError(customSelect || employees.parentNode, @json(__('brn.err_employees')));
                     isValid = false;
                 }
 
                 if (!revenue.value.trim()) {
                     const customSelect = currentStage.querySelector('[data-select="revenue"]');
-                    showError(customSelect || revenue.parentNode, 'Please select revenue range');
+                    showError(customSelect || revenue.parentNode, @json(__('brn.err_revenue_select')));
                     isValid = false;
                 }
 
@@ -4858,13 +4818,13 @@
                 const b2bInterest = currentStage.querySelector('input[name="b2b_interest"]:checked');
 
                 if (!goals.value.trim()) {
-                    showError(goals, 'Please describe your company');
+                    showError(goals, @json(__('brn.err_goals')));
                     isValid = false;
                 }
 
                 if (!selectedOutcome.value.trim()) {
                     const customSelect = currentStage.querySelector('[data-select="interest"]');
-                    showError(customSelect || selectedOutcome.parentNode, 'Please select your interest');
+                    showError(customSelect || selectedOutcome.parentNode, @json(__('brn.err_interest')));
                     isValid = false;
                 }
 
@@ -5181,8 +5141,8 @@
 
                 // Success!
                 responseMessage.innerHTML = `
-    <p>You’ve just taken a big step toward meaningful business growth!</p>
-    <h4>Check your email for next steps and more details from NOEL.</h4>
+    <p>{{ __('brn.thanks_title') }}</p>
+    <h4>{{ __('brn.thanks_body') }}</h4>
 `;
                 // responseMessage.style.color = '#059669';
                 modal.show();
@@ -5198,7 +5158,7 @@
                 // Clear custom selects
                 document.querySelectorAll('.custom-select-text').forEach(text => {
                     const defaultText = text.closest('.custom-select').querySelector(
-                        '.custom-option')?.textContent || 'Select option';
+                        '.custom-option')?.textContent || @json(__('brn.select_option'));
                     text.textContent = defaultText;
                     text.classList.remove('selected');
                 });
@@ -5212,12 +5172,12 @@
                 hiddenCategoryInput.value = '';
 
             } catch (error) {
-                let errorMessage = 'Something went wrong. Please try again.';
+                let errorMessage = @json(__('brn.err_generic'));
                 let showRefreshButton = false;
 
                 if (error.status === 419 || error.status === 'NO_TOKEN') {
                     errorMessage =
-                        'Your session has expired. Click the button below to refresh and try again.';
+                        @json(__('brn.err_session'));
                     showRefreshButton = true;
                 } else if (error.status === 422) {
                     if (error.data?.errors) {
@@ -5240,18 +5200,18 @@
                         }
 
                         errorMessage = error.data?.message ||
-                            'Please correct the errors below and try again.';
+                            @json(__('brn.err_correct'));
                     } else if (error.data?.message) {
                         errorMessage = error.data.message;
                     }
                 } else if (error.status === 403) {
-                    errorMessage = 'Access denied. Please refresh the page and try again.';
+                    errorMessage = @json(__('brn.err_denied'));
                     showRefreshButton = true;
                 } else if (error.status === 429) {
-                    errorMessage = 'Too many attempts. Please wait a few minutes and try again.';
+                    errorMessage = @json(__('brn.err_rate'));
                 } else if (error.name === 'TypeError' || error.message?.includes('network')) {
                     errorMessage =
-                        'Network error. Please check your internet connection and try again.';
+                        @json(__('brn.err_network'));
                 } else if (error.message) {
                     errorMessage = error.message;
                 }
@@ -5263,7 +5223,7 @@
                         <button onclick="location.reload()" 
                                 style="padding: 10px 25px; background: #137077; color: white; border: none; 
                                        border-radius: 20px; cursor: pointer; font-weight: 500;">
-                            Refresh Page
+                            {{ __('brn.refresh') }}
                         </button>
                     `;
                 } else {

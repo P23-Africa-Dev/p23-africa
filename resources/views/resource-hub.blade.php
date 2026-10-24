@@ -1,14 +1,14 @@
 @extends('layouts.res-layout')
-@section('title', 'Resource Hub | P23 Africa')
+@section('title', __('nav.resource_hub_title').' | P23 Africa')
 
 @section('meta')
     <meta name="description"
-        content="Explore Expert Articles, Market Trends, And Practical Advice To Scale Your Business Across Africa And Beyond.">
+        content="{{ __('resources.meta') }}">
     <meta name="keywords"
-        content="Explore Expert Articles, Market Trends, And Practical Advice To Scale Your Business Across Africa And Beyond.">
+        content="{{ __('resources.meta') }}">
     <meta name="author" content="Nurudeen O. Daniju">
     <meta name="generator"
-        content="Explore Expert Articles, Market Trends, And Practical Advice To Scale Your Business Across Africa And Beyond | P23 Africa">
+        content="{{ __('resources.meta_generator') }}">
     <meta property="og:image" content="{{ asset('images/resource-header.png') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
@@ -29,11 +29,10 @@
                         <div class="blog-date">1st May 2025</div>
                         <h2 class="blog-title">{{ __('events.buyer_habits') }}</h2>
                         <p class="blog-description">
-                            Buyer habits in Africa are evolving fast, driven by digital adoption and a growing middle class,
-                            but differences across regions and trust issues still pose challenges.
+                            {{ __('resources.buyer_body') }}
                         </p>
                         <a href="#" class="btn btn-custom mt-4">
-                            Read Blog
+                            {{ __('resources.read_blog') }}
                             <span>&rarr;</span>
                         </a>
                     </div>
@@ -252,7 +251,7 @@
 
         <section class="mind-behind-insight reveal-section">
             <div class="container py-5">
-                <div class="section-title">Minds Behind the Insights</div>
+                <div class="section-title">{{ __('resources.minds') }}</div>
 
                 <!-- Desktop View -->
                 <div class="row carousel-desktop">
@@ -315,12 +314,8 @@
                 <div class="row2">
                     <div class="column">
                         <div class="py-5">
-                            <div class="blog-title text-uppercase mb-2">Our Most Recent Blogs</div>
-                            <div class="blog-subtitle">Explore Expert Articles, Market Trends, And Practical Advice To
-                                Scale
-                                Your
-                                Business
-                                Across Africa And Beyond.</div>
+                            <div class="blog-title text-uppercase mb-2">{{ __('resources.recent') }}</div>
+                            <div class="blog-subtitle">{{ __('resources.explore') }}</div>
                         </div>
 
                         @foreach ($recentBlogs->take(3) as $index => $blog)
@@ -350,7 +345,7 @@
                                         </button>
                                     </div>
                                 @else --}}
-                                    <a href="{{ locale_route('resource-show', ['slug' => $blog->slug]) }}" class="read-more-btn">Read More
+                                    <a href="{{ locale_route('resource-show', ['slug' => $blog->slug]) }}" class="read-more-btn">{{ __('resources.read_more') }}
                                         →</a>
                                 {{-- @endif --}}
                             </div>
@@ -383,7 +378,7 @@
                                         </button>
                                     </div>
                                 @else --}}
-                                    <a href="{{ locale_route('resource-show', ['slug' => $blog->slug]) }}" class="read-more-btn">Read More
+                                    <a href="{{ locale_route('resource-show', ['slug' => $blog->slug]) }}" class="read-more-btn">{{ __('resources.read_more') }}
                                         →</a>
                                 {{-- @endif --}}
                             </div>
@@ -391,7 +386,7 @@
                         @endforeach
 
                         <div class="">
-                            <a href="{{ locale_route('archive-page') }}" class="btn btn-archive"><span>View Archived Blogs
+                            <a href="{{ locale_route('archive-page') }}" class="btn btn-archive"><span>{{ __('resources.archived') }}
                                 </span> <span class="mx-2"></span>
                                 <span> →</span></a>
                         </div>
@@ -401,7 +396,7 @@
                 <div class="playbook-download-section">
                     <a href="{{ locale_route('playbook.landing') }}" class="btn-playbook"
                         style="text-decoration: none; display: inline-block;">
-                        📥 Download the P23 Africa's Founders Playbook
+                        📥 {{ __('resources.playbook') }}
                     </a>
                 </div>
             </div>
@@ -410,7 +405,7 @@
                 <div class="pdf-popup-content">
                     <span class="close-popup">&times;</span>
                     <a href="" class="download-btn" id="downloadPdf" download>
-                        📥 Download PDF
+                        📥 {{ __('resources.download_pdf') }}
                     </a>
                     <iframe class="pdf-viewer" id="pdfViewer" src="" frameborder="0"></iframe>
                 </div>

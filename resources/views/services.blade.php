@@ -37,12 +37,12 @@
                     
                     <div class="hero-cta-group">
                         <a href="{{ locale_route('contact') }}" class="hero-cta-btn" id="hero-talk-to-us-btn">
-                            Talk to Us
+                            {{ __('services.talk') }}
                         </a>
                         
-                        <div class="hero-casestudy-proof" aria-label="5 stars rating. Click Here to Read Case Studies">
+                        <div class="hero-casestudy-proof" aria-label="{{ __('services.proof_label') }}">
                             <div class="hero-stars" aria-hidden="true">
-                                <svg width="98" height="18" viewBox="0 0 98 18" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="5 stars rating">
+                                <svg width="98" height="18" viewBox="0 0 98 18" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="{{ __('services.stars_label') }}">
                                     <path d="M9 0L11.0206 6.21885H17.5595L12.2694 10.0623L14.2901 16.2812L9 12.4377L3.70993 16.2812L5.73056 10.0623L0.440492 6.21885H6.97937L9 0Z" fill="#390908"/>
                                     <path d="M29 0L31.0206 6.21885H37.5595L32.2694 10.0623L34.2901 16.2812L29 12.4377L23.7099 16.2812L25.7306 10.0623L20.4405 6.21885H26.9794L29 0Z" fill="#390908"/>
                                     <path d="M49 0L51.0206 6.21885H57.5595L52.2694 10.0623L54.2901 16.2812L49 12.4377L43.7099 16.2812L45.7306 10.0623L40.4405 6.21885H46.9794L49 0Z" fill="#390908"/>
@@ -50,8 +50,8 @@
                                     <path d="M89 0L91.0206 6.21885H97.5595L92.2694 10.0623L94.2901 16.2812L89 12.4377L83.7099 16.2812L85.7306 10.0623L80.4405 6.21885H86.9794L89 0Z" fill="#390908"/>
                                 </svg>
                             </div>
-                            <a href="{{ url('case-studies') }}" class="hero-casestudy-link">
-                                <strong>Click Here to</strong> <span>Read Case Studies</span>
+                            <a href="{{ locale_route('case-studies') }}" class="hero-casestudy-link">
+                                <strong>{{ __('services.click_here') }}</strong> <span>{{ __('services.read_cases') }}</span>
                             </a>
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                         {{-- Tile 4 (Bottom Right): 5000+ Expert Network Metric --}}
                         <div class="mosaic-tile mosaic-tile-stat">
                             <div class="stat-number">5000+</div>
-                            <div class="stat-label">Expert Network</div>
+                            <div class="stat-label">{{ __('services.expert_network') }}</div>
                         </div>
 
                     </div>
@@ -131,9 +131,9 @@
         ];
     @endphp
 
-    <section class="partner-logos-section" id="trusted-partners" aria-label="Trusted by leading organizations">
+    <section class="partner-logos-section" id="trusted-partners" aria-label="{{ __('services.trusted_label') }}">
         <div class="partner-logos-container">
-            <p class="partner-logos-title">Trusted by 25k+ businesses</p>
+            <p class="partner-logos-title">{{ __('services.trusted') }}</p>
         </div>
 
         <div class="partner-marquee-wrapper">
@@ -191,10 +191,10 @@
                         <div class="plan-card-body">
                             <h3 class="plan-card-title">{{ __('services.market_entry') }}</h3>
                             <p class="plan-card-desc">
-                                Build practical strategies for entering and developing new African markets.
+                                {{ __('services.entry_body') }}
                             </p>
-                            <a href="{{ url('market-entry') }}" class="plan-explore-btn" aria-label="Explore Market Entry & Expansion">
-                                Explore <span class="btn-arrow">→</span>
+                            <a href="{{ locale_route('services.market-entry') }}" class="plan-explore-btn" aria-label="{{ __('services.explore_entry') }}">
+                                {{ __('services.explore') }} <span class="btn-arrow">→</span>
                             </a>
                         </div>
                         <div class="plan-card-illustration">
@@ -211,10 +211,10 @@
                     <div class="plan-card plan-card-distributor">
                         <h3 class="plan-card-title">{{ __('services.distributor') }}</h3>
                         <p class="plan-card-desc">
-                            Find, assess and verify the right local commercial relationships.
+                            {{ __('services.distributor_body') }}
                         </p>
-                        <a href="{{ route('services.distributor-partner') }}" class="plan-explore-btn" aria-label="Explore Distributor & Partner Development">
-                            Explore <span class="btn-arrow">→</span>
+                        <a href="{{ locale_route('services.distributor-partner') }}" class="plan-explore-btn" aria-label="{{ __('services.explore_distributor') }}">
+                            {{ __('services.explore') }} <span class="btn-arrow">→</span>
                         </a>
                     </div>
 
@@ -222,10 +222,10 @@
                     <div class="plan-card plan-card-operations">
                         <h3 class="plan-card-title">{{ __('services.sales_support') }}</h3>
                         <p class="plan-card-desc">
-                            Build the local capabilities and relationships required to operate effectively.
+                            {{ __('services.sales_body') }}
                         </p>
-                        <a href="{{ url('contact') }}" class="plan-explore-btn" aria-label="Explore Operations & Market Support">
-                            Explore <span class="btn-arrow">→</span>
+                        <a href="{{ locale_route('contact') }}" class="plan-explore-btn" aria-label="{{ __('services.explore_sales') }}">
+                            {{ __('services.explore') }} <span class="btn-arrow">→</span>
                         </a>
                     </div>
                 </div>
@@ -236,10 +236,10 @@
                     <div class="plan-card plan-card-investment">
                         <h3 class="plan-card-title">{{ __('services.investment') }}</h3>
                         <p class="plan-card-desc">
-                            Strengthen businesses preparing for investment, partnerships or significant expansion.
+                            {{ __('services.investment_body') }}
                         </p>
-                        <a href="{{ url('contact') }}" class="plan-explore-btn" aria-label="Explore Investment & Growth Readiness">
-                            Explore <span class="btn-arrow">→</span>
+                        <a href="{{ locale_route('contact') }}" class="plan-explore-btn" aria-label="{{ __('services.explore_investment') }}">
+                            {{ __('services.explore') }} <span class="btn-arrow">→</span>
                         </a>
                     </div>
 
@@ -247,10 +247,10 @@
                     <div class="plan-card plan-card-outbound">
                         <h3 class="plan-card-title">{{ __('services.outbound') }}</h3>
                         <p class="plan-card-desc">
-                            Generate opportunities, develop relationships and build commercial pipelines.
+                            {{ __('services.outbound_body') }}
                         </p>
-                        <a href="{{ route('services.outbound-sales') }}" class="plan-explore-btn" aria-label="Explore Outbound Sales Demand Testing">
-                            Explore <span class="btn-arrow">→</span>
+                        <a href="{{ locale_route('services.outbound-sales') }}" class="plan-explore-btn" aria-label="{{ __('services.explore_outbound') }}">
+                            {{ __('services.explore') }} <span class="btn-arrow">→</span>
                         </a>
                     </div>
                 </div>
@@ -266,19 +266,19 @@
                 {{-- Metric 1: 5,000+ --}}
                 <div class="plan-metric-item">
                     <div class="plan-metric-number">5,000+</div>
-                    <div class="plan-metric-label">Loved by 5,000+ Expert Network</div>
+                    <div class="plan-metric-label">{{ __('services.loved') }}</div>
                 </div>
 
                 {{-- Metric 2: 25,000+ --}}
                 <div class="plan-metric-item">
                     <div class="plan-metric-number">25,000+</div>
-                    <div class="plan-metric-label">Trusted by 25,000+ customers</div>
+                    <div class="plan-metric-label">{{ __('services.trusted_customers') }}</div>
                 </div>
 
                 {{-- Metric 3: 24 hrs --}}
                 <div class="plan-metric-item">
                     <div class="plan-metric-number">24 hrs</div>
-                    <div class="plan-metric-label">Available 24/7</div>
+                    <div class="plan-metric-label">{{ __('services.available') }}</div>
                 </div>
 
             </div>
@@ -311,12 +311,12 @@
                             {{ __('services.reach_body') }}
                         </p>
                         <p>
-                            Our consulting services come with personalised and hands-on support, and our team is committed to excellence, integrity and collaboration. Let's help you thrive in the dynamic and unpredictable global market.
+                            {{ __('services.reach_extra') }}
                         </p>
                     </div>
 
-                    <a href="{{ url('contact') }}" class="reach-contact-btn" id="reach-contact-btn">
-                        Contact Us <span class="btn-arrow">→</span>
+                    <a href="{{ locale_route('contact') }}" class="reach-contact-btn" id="reach-contact-btn">
+                        {{ __('services.contact') }} <span class="btn-arrow">→</span>
                     </a>
                 </div>
 
@@ -342,7 +342,7 @@
                         <div class="inefficiency-percent">57%</div>
                     </div>
                     <p class="inefficiency-statement">
-                        of organizations say operational inefficiencies hold back their growth
+                        {{ __('services.inefficiency') }}
                     </p>
                 </div>
 
@@ -352,19 +352,19 @@
                     {{-- Item 1: Start-ups --}}
                     <div class="breakdown-item">
                         <div class="breakdown-number">68%</div>
-                        <div class="breakdown-label">Start-ups</div>
+                        <div class="breakdown-label">{{ __('services.startups') }}</div>
                     </div>
 
                     {{-- Item 2: MSMEs --}}
                     <div class="breakdown-item">
                         <div class="breakdown-number">59%</div>
-                        <div class="breakdown-label">MSMEs</div>
+                        <div class="breakdown-label">{{ __('services.msmes') }}</div>
                     </div>
 
                     {{-- Item 3: Enterprises --}}
                     <div class="breakdown-item">
                         <div class="breakdown-number">46%</div>
-                        <div class="breakdown-label">Enterprises</div>
+                        <div class="breakdown-label">{{ __('services.enterprises') }}</div>
                     </div>
 
                 </div>

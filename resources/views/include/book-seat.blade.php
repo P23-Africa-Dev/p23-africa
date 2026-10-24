@@ -45,12 +45,10 @@
         <div class="modal-content rounded-4 py-3 px-5">
             <div class="modal-header border-0">
                 {{-- <h5 class="modal-title text-success" id="seatModalLabel">Book a Seat</h5> --}}
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ __('events.close') }}"></button>
             </div>
             <div class="modal-body text-center">
-                <p class="mb-2" style="color: #0D4036; font-weight: 500; font-family: 'GT Walsheim Con';"><em>Book
-                        your seat to be a part of this exclusive event and gain valuable insights from trusted
-                        experts.</em></p><br>
+                <p class="mb-2" style="color: #0D4036; font-weight: 500; font-family: 'GT Walsheim Con';"><em>{{ __('events.book_intro') }}</em></p><br>
                 <form id="seatForm">
                     @csrf
                     <input type="hidden" name="event_id" id="event_id">
@@ -61,7 +59,7 @@
                     <button type="submit" class="btn w-50" id="submitBtn">
                         <span class="spinner-border spinner-border-sm me-2 d-none" role="status"
                             id="submitSpinner"></span>
-                        Submit <i class="bi bi-arrow-right ms-2"></i>
+                        {{ __('events.submit') }} <i class="bi bi-arrow-right ms-2"></i>
                     </button>
                 </form>
             </div>
@@ -76,12 +74,12 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content text-center p-4 border-0 shadow rounded-4">
             <h5 class="mb-3" style="color: #0D4036; font-weight: 500; font-family: 'GT Walsheim Con';">
-                Thank you for signing up. We've sent event details to your email <br>
-                <span class="">— please check your inbox.</span>
+                {{ __('events.signup_thanks') }} <br>
+                <span class="">{{ __('events.check_inbox') }}</span>
             </h5>
             <a href="{{ locale_route('events.all-events') }}" class="btn mt-3"
                 style="background-color: #0D4036; color: #fff; font-family: 'GT Walsheim Con';">
-                View Other Events <i class="bi bi-arrow-right ms-2"></i>
+                {{ __('events.view_other') }} <i class="bi bi-arrow-right ms-2"></i>
             </a>
         </div>
     </div>

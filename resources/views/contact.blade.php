@@ -1324,9 +1324,9 @@
                     <div class="intro-container animate-on-scroll">
                         <!--COntent -->
                         <div class="intro-content">
-                            <h2>Contact Us</h2>
-                            <h4>Ready to expand your business?</h4>
-                            <p>Contact P23 Africa and let’s make growth happen.</p>
+                            <h2>{{ __('contact.heading') }}</h2>
+                            <h4>{{ __('contact.ready') }}</h4>
+                            <p>{{ __('contact.ready_body') }}</p>
                         </div>
                         <!-- Vertical desktop image -->
                         <div class="intro-vrt-image">
@@ -1357,7 +1357,7 @@
                             </div>
                             <div class="icon location">
                                 <img src="{{ asset('./img/address.png') }}" loading="lazy" alt="" />
-                                <p>London UK</p>
+                                <p>{{ __('contact.london') }}</p>
                             </div>
                         </div>
                     </div>
@@ -2043,7 +2043,7 @@
 
                             <!-- <div class="form-group2 field">
                                                                                                 <div class="contact-info-form__group name-field">
-                                                                                                                            <label class="floating-label">Phone Number</label>
+                                                                                                                            <label class="floating-label">{{ __('contact.phone') }}</label>
                                                                                                                             <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
                                                                                                                                 placeholder="+1234567890" value="{{ old('phone') }}" />
                                                                                                                             @error('phone')
@@ -2142,7 +2142,7 @@
 
                     <!-- Social Media -->
                     <div class="contact-info-socials">
-                        <h3>Social Media</h3>
+                        <h3>{{ __('contact.social') }}</h3>
 
                         <div class="socials">
                             <a href="https://linkedin.com/company/p23-africa/" target="_blank"
@@ -2164,8 +2164,8 @@
             <div class="news-letter">
                 <div class="contact-news-letter-container">
                     <div class="contact-news-letter__content">
-                        <h2 class="contact-news-letter__title">Subscribe</h2>
-                        <p class="contact-news-letter__text">to our Newsletter</p>
+                        <h2 class="contact-news-letter__title">{{ __('contact.subscribe') }}</h2>
+                        <p class="contact-news-letter__text">{{ __('contact.newsletter') }}</p>
                     </div>
                     <form class="contact-news-letter__form">
                         <input type="email" placeholder="Email" class="contact-news-letter__input" required />

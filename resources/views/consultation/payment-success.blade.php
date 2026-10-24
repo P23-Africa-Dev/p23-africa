@@ -274,13 +274,13 @@
                         </div>
                         <div class="details-row">
                             <div class="detail-item">
-                                <span class="label">Reference Number</span>
+                                <span class="label">{{ __('consultation.reference') }}</span>
                                 <span class="value">{{ Str::limit($latestPayment->payment_reference ?? 'N/A', 10) }}</span>
                             </div>
                             <div class="divider"></div>
 
                             <div class="detail-item">
-                                <span class="label">Payment Method</span>
+                                <span class="label">{{ __('consultation.pay_method_label') }}</span>
                                 <span class="value">{{ ucfirst($latestPayment->payment_method ?? 'N/A') }}</span>
                             </div>
                         </div>
@@ -289,17 +289,16 @@
 
                     @if (session('is_pending_verification'))
                         <p class="thank-you-message">
-                            Thank you {{ $application->name }}! Your bank transfer payment is being processed. You can
-                            proceed to schedule your consultation - we'll confirm your payment shortly.
+                            {{ __('consultation.thanks_pending', ['name' => $application->name]) }}
                         </p>
                     @else
                         <p class="thank-you-message">
-                            Thank you {{ $application->name }} for booking your consultation with us.
+                            {{ __('consultation.thanks_booked', ['name' => $application->name]) }}
                         </p>
                     @endif
 
                     <a href="{{ locale_route('consultation.schedule-consultation', ['booking' => $application->booking_token]) }}" class="proceed-button">
-                        Proceed to scheduling your session
+                        {{ __('consultation.proceed_schedule') }}
                     </a>
                 </div>
             </div>

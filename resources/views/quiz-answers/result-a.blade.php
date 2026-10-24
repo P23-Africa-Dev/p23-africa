@@ -1,11 +1,11 @@
 @extends('layouts.quiz-layout')
-@section('title', 'Quiz Result (FRAGILE FUNNEL) | P23 Africa')
+@section('title', __('quiz.a_title'))
 
 @section('meta')
-    <meta name="description" content="Your Revenue Stream Is Vulnerable—Small Cracks Today Could Become Big Breaks Tomorrow.">
-    <meta name="keywords" content="Your Revenue Stream Is Vulnerable—Small Cracks Today Could Become Big Breaks Tomorrow.">
+    <meta name="description" content="{{ __('quiz.a_sub') }}">
+    <meta name="keywords" content="{{ __('quiz.a_sub') }}">
     <meta name="author" content="Nurudeen O. Daniju">
-    <meta name="generator" content="Business Consulting & Growth Solutions for Africa | P23 Africa">
+    <meta name="generator" content="{{ __('quiz.meta_generator') }}">
     <meta property="og:image" content="{{ asset('images/fragile_funnel.png') }}">
 @endsection
 
@@ -18,7 +18,7 @@
                 <div class="col-lg-6 left-column">
                     <div class="header-section mb-4">
                         <h1>
-                            <span>YOU ARE THE</span>
+                            <span>{{ __('quiz.you_are') }}</span>
                             <span id="typing-title" class="typing-text"></span>
                         </h1>
                         <p id="typing-subtitle" class="typing-text">
@@ -35,15 +35,15 @@
                             <div class="legend d-flex gap-2 flex-column">
                                 <li>
                                     <div class="color-box purple"></div>
-                                    Leads going cold
+                                    {{ __('quiz.a_m1') }}
                                 </li>
                                 <li>
                                     <div class="color-box dark-green"></div>
-                                    Lack of structure & tracking
+                                    {{ __('quiz.a_m2') }}
                                 </li>
                                 <li>
                                     <div class="color-box green"></div>
-                                    Missed sales & bad CX
+                                    {{ __('quiz.a_m3') }}
                                 </li>
                             </div>
                         </ul>
@@ -58,7 +58,7 @@
                             </div>
                             <div class="metric-item purple">
                                 <div class="color-box purple"></div>
-                                <p>Leads going cold <span>35%</span></p>
+                                <p>{{ __('quiz.a_m1') }} <span>35%</span></p>
                             </div>
                         </div>
                         <div class="metric">
@@ -67,7 +67,7 @@
                             </div>
                             <div class="metric-item green">
                                 <div class="color-box"></div>
-                                <p>Lack of structure & tracking <span>35%</span></p>
+                                <p>{{ __('quiz.a_m2') }} <span>35%</span></p>
                             </div>
                         </div>
                         <div class="metric">
@@ -76,7 +76,7 @@
                             </div>
                             <div class="metric-item yellow">
                                 <div class="color-box"></div>
-                                <p>Missed sales & bad CX <span>30%</span></p>
+                                <p>{{ __('quiz.a_m3') }} <span>30%</span></p>
                             </div>
                         </div>
                     </div>
@@ -85,47 +85,44 @@
 
                         <div class="right-panel-container">
                             <div class=" common-risks-section mb-2">
-                                <h3 class="mb-3">Common Risks At This Stage:</h3>
+                                <h3 class="mb-3">{{ __('quiz.risks') }}</h3>
                                 <div class="risk-list">
                                     <ul>
-                                        <li>Leads Going Cold Due To Lack Of Follow-Up</li>
-                                        <li>Team Confusion Around Goals And Responsibilities</li>
+                                        <li>{{ __('quiz.a_r1') }}</li>
+                                        <li>{{ __('quiz.a_r2') }}</li>
                                         <li>
-                                            Missed Sales Opportunities And Poor Customer Experience
+                                            {{ __('quiz.a_r3') }}
                                         </li>
-                                        <li>Marketing Spend With Little To No Return</li>
-                                        <li>No Way To Measure Or Replicate Success</li>
+                                        <li>{{ __('quiz.a_r4') }}</li>
+                                        <li>{{ __('quiz.a_r5') }}</li>
                                     </ul>
                                 </div>
                             </div>
 
                             <div class=" solution-section mb-2">
-                                <h3 class="mb-3">What You Need:</h3>
+                                <h3 class="mb-3">{{ __('quiz.need') }}</h3>
                                 <p>
-                                    Foundational Systems And Tools. You Don't Need A CRM To Get
-                                    Started—You Need A Basic, Consistent Sales Process, Clearer
-                                    Accountability, And A Simple Way To Track Performance.
+                                    {{ __('quiz.a_need') }}
                                 </p>
                             </div>
 
                             <div class=" next-step-section">
-                                <h3 class="mb-3">Next Step:</h3>
+                                <h3 class="mb-3">{{ __('quiz.next') }}</h3>
                                 <p>
-                                    Book Your Free Business Audit. We'll Walk You Through The Top
-                                    3 Things To Fix Fast.
+                                    {{ __('quiz.a_next') }}
                                 </p>
                             </div>
                         </div>
 
                         <div class="buttons-group gap-3">
                             <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3tzdnFU-zme-lCpKoHGZktqjUVs4rll_QJtcUzK71d9-l3M0WIFvjtnJpLmosUraV8XkUJeD_k"
-                                target="_blank" class="btn btn-purple-outline">Book Business Audit Now!</a>
+                                target="_blank" class="btn btn-purple-outline">{{ __('quiz.book_audit') }}</a>
                             <button class="btn btn-dark-green" id="play-video-btn">
-                                Get Growth Tips
+                                {{ __('quiz.tips') }}
                                 <i class="bi bi-arrow-right"></i>
                             </button>
                             <button class="btn btn-dark-green" id="play-video-btn2">
-                                Get Growth Tips
+                                {{ __('quiz.tips') }}
                                 <i class="bi bi-arrow-right"></i>
                             </button>
                         </div>
@@ -140,7 +137,7 @@
                 <div class="modal-content bg-dark text-white">
                     <div class="modal-header border-0">
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
+                            aria-label="{{ __('quiz.close') }}"></button>
                     </div>
                     <div class="modal-body p-0 text-center">
                         <div class="ratio ratio-16x9" id="youtubePlayerContainer">
@@ -150,7 +147,7 @@
                         <!-- Hidden Appointment Button -->
                         <div id="appointmentButtonContainer" class="py-3" style="display: none;">
                             <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3tzdnFU-zme-lCpKoHGZktqjUVs4rll_QJtcUzK71d9-l3M0WIFvjtnJpLmosUraV8XkUJeD_k"
-                                target="_blank" class="btn btn-success animate-pop-in">Book Business Audit Now!</a>
+                                target="_blank" class="btn btn-success animate-pop-in">{{ __('quiz.book_audit') }}</a>
                         </div>
                     </div>
                 </div>
@@ -178,9 +175,8 @@
 
 
         document.addEventListener("DOMContentLoaded", () => {
-            const title = "FRAGILE FUNNEL";
-            const subtitle =
-                "Your Revenue Stream Is Vulnerable—Small Cracks Today Could Become Big Breaks Tomorrow.";
+            const title = @json(__('quiz.a_name'));
+            const subtitle = @json(__('quiz.a_sub'));
 
             const titleEl = document.getElementById("typing-title");
             const subtitleEl = document.getElementById("typing-subtitle");

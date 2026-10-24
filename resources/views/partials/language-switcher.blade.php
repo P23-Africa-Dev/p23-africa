@@ -174,6 +174,6 @@
         <a href="{{ \App\Support\LocaleUrl::switch($code) }}"
             class="{{ app()->getLocale() === $code ? 'is-active' : '' }}" hreflang="{{ $code }}"
             lang="{{ $code }}"
-            onclick="document.cookie='locale_prompt=1;path=/;max-age=31536000;SameSite=Lax'">{{ $label }}</a>
+            onclick="document.cookie='locale_choice={{ $code }};path=/;max-age=31536000;SameSite=Lax'">{{ $label }}</a>
     @endforeach
 </nav>

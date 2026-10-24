@@ -15,6 +15,13 @@ return [
     'send' => 'Send',
     'sending' => 'Sending...',
     'location' => 'Location',
+    'heading' => 'Contact Us',
+    'ready' => 'Ready to expand your business?',
+    'ready_body' => 'Contact P23 Africa and let’s make growth happen.',
+    'london' => 'London, UK',
+    'social' => 'Social Media',
+    'subscribe' => 'Subscribe',
+    'newsletter' => 'to our Newsletter',
     'services' => [
         'verify_distributors' => 'Verify Distributors',
         'sales' => 'Sales',

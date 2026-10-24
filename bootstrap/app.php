@@ -18,6 +18,11 @@
                 $middleware->trustProxies(at: '*');
             }
 
+            $middleware->encryptCookies(except: [
+                'locale_choice',
+                'locale_prompt',
+            ]);
+
             $middleware->web(append: [
                 \App\Http\Middleware\VerifyCsrfToken::class,
             ]);
@@ -32,6 +37,7 @@
                 'legacy.analytics' => \App\Http\Middleware\EnsureLegacyAnalyticsAccess::class,
                 'legacy.whatsapp' => \App\Http\Middleware\EnsureLegacyWhatsAppAccess::class,
                 'locale' => \App\Http\Middleware\SetLocale::class,
+                'browser-locale' => \App\Http\Middleware\RedirectBrowserLocale::class,
             ]);
 
             // $middleware->append(CheckSuspended::class);

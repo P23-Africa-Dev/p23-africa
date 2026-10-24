@@ -1,3 +1,28 @@
 <?php
 
-return ['hub' => 'Ressourcen', 'archive' => 'Archiv'];
+return [
+    'hub' => 'Ressourcen',
+    'archive' => 'Archiv',
+    'archive_title' => 'Archiv | P23 Africa',
+    'list_title' => 'Archivliste | P23 Africa',
+    'meta' => 'Entdecken Sie Fachartikel, Markttrends und praktischen Rat, um Ihr Geschäft in Afrika und darüber hinaus zu skalieren.',
+    'meta_generator' => 'Fachartikel, Markttrends und praktischer Rat | P23 Africa',
+    'hero' => 'Entdecken Sie unser Archiv aus <span>Fachbeiträgen</span> und <span>Berichten</span>',
+    'search_ph' => 'Suchen Sie den gewünschten Beitrag',
+    'view_all' => 'Alle archivierten Beiträge ansehen',
+    'no_category' => 'Keine Kategorie',
+    'written_by' => 'Geschrieben von :name',
+    'other_categories' => 'Weitere Kategorien:',
+    'latest' => 'Neueste Einblicke erhalten →',
+    'buyer_body' => 'Kaufgewohnheiten in Afrika ändern sich schnell, getrieben von Digitalisierung und einer wachsenden Mittelschicht. Regionale Unterschiede und Vertrauensfragen bleiben jedoch Herausforderungen.',
+    'read_blog' => 'Artikel lesen',
+    'minds' => 'Die Köpfe hinter den Einblicken',
+    'recent' => 'Unsere neuesten Beiträge',
+    'explore' => 'Entdecken Sie Fachartikel, Markttrends und praktischen Rat, um Ihr Geschäft in Afrika und darüber hinaus zu skalieren.',
+    'read_more' => 'Weiterlesen',
+    'archived' => 'Archivierte Beiträge ansehen',
+    'playbook' => 'Das P23-Africa-Gründerhandbuch herunterladen',
+    'download_pdf' => 'PDF herunterladen',
+    'empty' => 'Zu dieser Suche gibt es noch keine Artikel.',
+    'no_results' => 'Keine Ergebnisse',
+];

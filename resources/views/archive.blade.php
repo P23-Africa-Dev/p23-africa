@@ -1,13 +1,13 @@
 @extends('layouts.res-layout')
-@section('title', 'Archive | P23 Africa')
+@section('title', __('resources.archive_title'))
 
 @section('meta')
     <meta name="description"
-        content="Explore Expert Articles, Market Trends, And Practical Advice To Scale Your Business Across Africa And Beyond.">
+        content="{{ __('resources.meta') }}">
     <meta name="keywords"
-        content="Explore Expert Articles, Market Trends, And Practical Advice To Scale Your Business Across Africa And Beyond.">
+        content="{{ __('resources.meta') }}">
     <meta name="author" content="Nurudeen O. Daniju">
-    <meta name="generator" content="Explore Expert Articles, Market Trends, And Practical Advice To Scale Your Business Across Africa And Beyond | P23 Africa">
+    <meta name="generator" content="{{ __('resources.meta_generator') }}">
     <meta property="og:image" content="{{ asset('images/archive-header.png') }}">
 @endsection
 
@@ -53,11 +53,11 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-6 my-md-auto my-4">
-                        <h1>Explore Our Archive of Business <span>Blogs</span> And <span>Reports</span></h1>
+                        <h1>{!! __('resources.hero') !!}</h1>
 
                         <div class="search desktop">
                             <div class="search-bar">
-                                <input type="text" id="searchInput" placeholder="Search your preferred Blog"
+                                <input type="text" id="searchInput" placeholder="{{ __('resources.search_ph') }}"
                                     autocomplete="off">
                                 <div id="searchResults" class="search-dropdown d-none"></div>
                             </div>
@@ -68,7 +68,7 @@
                     </div>
                     <div class="search mobile">
                         <div class="search-bar">
-                            <input type="text" id="searchInput" placeholder="Search your preferred Blog"
+                            <input type="text" id="searchInput" placeholder="{{ __('resources.search_ph') }}"
                                 autocomplete="off">
                             <div id="searchResults" class="search-dropdown d-none"></div>
                         </div>
@@ -153,7 +153,7 @@
             </div>
 
             <div class="container btn-cd">
-                <a href="{{ locale_route('archive-list') }}" class="btn">View all Archived Blogs</a>
+                <a href="{{ locale_route('archive-list') }}" class="btn">{{ __('resources.view_all') }}</a>
             </div>
         </section>
     </section>
@@ -179,7 +179,7 @@
                     if (response.html) {
                         $('#searchResults').html(response.html).removeClass('d-none');
                     } else {
-                        $('#searchResults').html('<div class="p-2">No results found</div>')
+                        $('#searchResults').html('<div class="p-2">{{ __('resources.no_results') }}</div>')
                             .removeClass('d-none');
                     }
                 }

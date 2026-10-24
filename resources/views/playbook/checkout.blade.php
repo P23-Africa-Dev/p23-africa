@@ -775,8 +775,8 @@
             <div class="form-container">
                 <div class="form-content">
                     <h1>
-                        The Ultimate Funding Directory for
-                        <span> African Entrepreneurs</span>
+                        {{ __('playbook.uf_for') }}
+                        <span> {{ __('playbook.uf_span') }}</span>
                     </h1>
 
                     <div class="form-info">
@@ -784,23 +784,23 @@
                             @csrf
                             <div class="input-fields">
                                 <div>
-                                    <input type="text" name="name" placeholder="Enter Your Full name" required />
+                                    <input type="text" name="name" placeholder="{{ __('playbook.ph_your_name') }}" required />
                                     <div class="error-message" id="nameError"></div>
                                 </div>
 
                                 <div>
-                                    <input type="email" name="email" placeholder="Enter Your Email" required />
+                                    <input type="email" name="email" placeholder="{{ __('playbook.ph_your_email') }}" required />
                                     <div class="error-message" id="emailError"></div>
                                 </div>
 
                                 <div>
-                                    <input type="text" name="company" placeholder="Company/Startup name" required />
+                                    <input type="text" name="company" placeholder="{{ __('playbook.ph_startup') }}" required />
                                     <div class="error-message" id="companyError"></div>
                                 </div>
 
                                 <div>
                                     <select name="country" required>
-                                        <option value="">Select your country</option>
+                                        <option value="">{{ __('playbook.select_country') }}</option>
                                         <option value="Nigeria">Nigeria</option>
                                         <option value="Kenya">Kenya</option>
                                         <option value="South Africa">South Africa</option>
@@ -819,8 +819,8 @@
                                         <option value="Senegal">Senegal</option>
                                         <option value="Ivory Coast">Ivory Coast</option>
                                         <option value="Cameroon">Cameroon</option>
-                                        <option value="Other African Country">Other African Country</option>
-                                        <option value="International">International</option>
+                                        <option value="Other African Country">{{ __('playbook.other_african') }}</option>
+                                        <option value="International">{{ __('playbook.international') }}</option>
                                     </select>
                                     <div class="error-message" id="countryError"></div>
                                 </div>
@@ -829,13 +829,12 @@
                             <div class="summary-card">
                                 <div class="pattern top"></div>
                                 <div class="summary-item">
-                                    <span class="item-description">1x Ultimate Funding Directory for African
-                                        Entrepreneurs</span>
+                                    <span class="item-description">{{ __('playbook.item_desc') }}</span>
                                     <span class="item-price">$50.00</span>
                                 </div>
 
                                 <div class="summary-price">
-                                    <span class="total-label">Total</span>
+                                    <span class="total-label">{{ __('playbook.total') }}</span>
                                     <span class="item-price">$50.00</span>
                                 </div>
                                 <div class="pattern bottom"></div>
@@ -850,18 +849,17 @@
                                         <path
                                             d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
                                     </svg>
-                                    <span>Alternative Payment Method</span>
+                                    <span>{{ __('playbook.alt_pay') }}</span>
                                 </div>
-                                <p>Card payment unavailable. Click below to pay with Flutterwave (supports mobile money,
-                                    bank transfer, and other options).</p>
+                                <p>{{ __('playbook.flutter_note') }}</p>
                                 <button type="button" class="fallback-button" id="flutterwaveFallbackBtn">
-                                    Pay with Flutterwave - $50
+                                    {{ __('playbook.pay_flutter') }}
                                 </button>
                             </div>
 
                             <div>
                                 <button type="submit" class="payment-button" id="submitBtn">
-                                    <span class="btn-text">Proceed to Payment - $50</span>
+                                    <span class="btn-text">{{ __('playbook.proceed_50') }}</span>
                                     <span class="spinner">
                                         <div></div>
                                     </span>
@@ -872,10 +870,10 @@
                 </div>
 
                 <div class="form-image desktop">
-                    <img src="{{ asset('./img/desktop-fund.png') }}" loading="lazy" alt="Entrepreneur using laptop" />
+                    <img src="{{ asset('./img/desktop-fund.png') }}" loading="lazy" alt="{{ __('playbook.alt_laptop') }}" />
                 </div>
                 <div class="form-image mobile">
-                    <img src="{{ asset('./img/mobile-fund.png') }}" loading="lazy" alt="Entrepreneur using laptop" />
+                    <img src="{{ asset('./img/mobile-fund.png') }}" loading="lazy" alt="{{ __('playbook.alt_laptop') }}" />
                 </div>
             </div>
         </div>
@@ -893,13 +891,13 @@
             </span>
         </div>
 
-        <h2 class="payment-title">Payment Success!</h2>
+        <h2 class="payment-title">{{ __('playbook.pay_success') }}</h2>
 
         <div class="payment-info-box" id="successMessage">
-            Your Ultimate Funding Directory has been sent to your email
+            {{ __('playbook.sent_box') }}
         </div>
 
-        <button class="payment-footer-btn" id="closeSuccessPopup">Back to Directory Page</button>
+        <button class="payment-footer-btn" id="closeSuccessPopup">{{ __('playbook.back_dir') }}</button>
     </div>
 
     <!-- STRIPE PAYMENT MODAL -->
@@ -913,8 +911,8 @@
                         d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                 </svg>
             </button>
-            <h3>Ultimate Funding Directory</h3>
-            <p>Complete your secure payment</p>
+            <h3>{{ __('playbook.modal_title') }}</h3>
+            <p>{{ __('playbook.modal_sub') }}</p>
             <div class="amount">$50.00</div>
         </div>
         <div class="stripe-modal-body">
@@ -924,14 +922,14 @@
                     <path
                         d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z" />
                 </svg>
-                <span>Secured by Stripe - Your payment information is encrypted</span>
+                <span>{{ __('playbook.secured') }}</span>
             </div>
             <div id="stripe-payment-element"></div>
             <div id="stripe-card-errors" role="alert"></div>
         </div>
         <div class="stripe-modal-footer">
             <button type="button" class="stripe-pay-btn" id="stripePayBtn">
-                <span class="btn-text">Pay $50.00</span>
+                <span class="btn-text">{{ __('playbook.pay_50') }}</span>
                 <span class="btn-spinner"></span>
             </button>
             <div class="stripe-powered">
@@ -1073,7 +1071,7 @@
                 showError('emailError', 'Email address is required.');
                 hasErrors = true;
             } else if (!isValidEmail(email)) {
-                showError('emailError', 'Please enter a valid email address.');
+                showError('emailError', @json(__('playbook.err_email_dot')));
                 hasErrors = true;
             }
 
@@ -1083,7 +1081,7 @@
             }
 
             if (!country) {
-                showError('countryError', 'Please select your country.');
+                showError('countryError', @json(__('playbook.err_country')));
                 hasErrors = true;
             }
 
@@ -1157,14 +1155,14 @@
                         });
                     } else {
                         showError('emailError', data.message ||
-                            'An error occurred. Please try again.');
+                            @json(__('playbook.err_generic')));
                     }
                     setLoading(false);
                 }
             } catch (error) {
                 console.error('Error:', error);
                 showError('emailError',
-                    'Network error. Please check your connection and try again.');
+                    @json(__('playbook.err_network')));
                 setLoading(false);
             }
         });
@@ -1250,7 +1248,7 @@
                     showFlutterwaveFallback();
                     // Show user-friendly message
                     alert(
-                        'Card payment is temporarily unavailable. Please use the alternative Flutterwave payment option shown below.'
+                        @json(__('playbook.card_down'))
                         );
                 }
             } catch (error) {
@@ -1260,7 +1258,7 @@
                 showFlutterwaveFallback();
                 // Show user-friendly message
                 alert(
-                    'Card payment is temporarily unavailable. Please use the alternative Flutterwave payment option shown below.'
+                    @json(__('playbook.card_down'))
                     );
             }
         }
@@ -1268,7 +1266,7 @@
         // Handle Stripe Payment
         async function handleStripePayment() {
             if (!clientSecret || !elements) {
-                stripeCardErrors.textContent = 'Payment session expired. Please refresh and try again.';
+                stripeCardErrors.textContent = @json(__('playbook.session_pay'));
                 return;
             }
 
@@ -1307,12 +1305,12 @@
                 } else if (paymentIntent && paymentIntent.status === 'requires_action') {
                     // 3D Secure or additional authentication needed - handled by Stripe
                     stripeCardErrors.textContent =
-                        'Additional authentication required. Please complete the verification.';
+                        @json(__('playbook.auth_required'));
                     setStripePayLoading(false);
                 }
             } catch (error) {
                 console.error('Payment processing error:', error);
-                stripeCardErrors.textContent = 'Payment processing failed. Please try again.';
+                stripeCardErrors.textContent = @json(__('playbook.pay_failed'));
                 setStripePayLoading(false);
             }
         }
@@ -1342,13 +1340,13 @@
                 } else {
                     setStripePayLoading(false);
                     stripeCardErrors.textContent = data.message ||
-                        'Payment verification failed. Please contact support.';
+                        @json(__('playbook.verify_fail'));
                 }
             } catch (error) {
                 console.error('Verification error:', error);
                 setStripePayLoading(false);
                 stripeCardErrors.textContent =
-                    'Payment verification failed. Please contact support with your transaction reference.';
+                    @json(__('playbook.verify_ref'));
             }
         }
 
@@ -1410,7 +1408,7 @@
                         verifyFlutterwavePayment(data.transaction_id, data.tx_ref);
                     } else {
                         setLoading(false);
-                        showError('emailError', 'Payment was not successful. Please try again.');
+                        showError('emailError', @json(__('playbook.pay_not_ok')));
                     }
                 },
                 onclose: function() {
@@ -1443,13 +1441,13 @@
                 } else {
                     setLoading(false);
                     showError('emailError', data.message ||
-                        'Payment verification failed. Please contact support.');
+                        @json(__('playbook.verify_fail')));
                 }
             } catch (error) {
                 console.error('Verification error:', error);
                 setLoading(false);
                 showError('emailError',
-                    'Payment verification failed. Please contact support with your transaction reference.'
+                    @json(__('playbook.verify_ref'))
                 );
             }
         }
