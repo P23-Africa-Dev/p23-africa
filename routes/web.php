@@ -256,7 +256,7 @@ Route::get('/test-email', function () {
 // Route::post('/submit-challenge', function (Request $request) {
 //     $data = $request->only(['challenge1', 'challenge2', 'challenge3', 'label']);
 
-//     Mail::to('nurudeen@p23africa.com')->send(new ChallengeSubmission($data));
+//     Mail::to('contact@p23africa.com')->send(new ChallengeSubmission($data));
 
 //     return response()->json(['status' => 'success']);
 // });

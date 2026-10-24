@@ -630,14 +630,33 @@
     .contact-info-form__tags {
         margin-top: 15px;
         display: flex;
-        flex-wrap: wrap;
+        flex-direction: column;
         gap: 10px;
         font-family: "GT Walsheim Con";
+    }
+
+    .contact-info-form__tags-row {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .contact-info-form__tags-row:last-child .tag {
+        flex: 1 1 0;
+        min-width: 0;
+        justify-content: center;
+        padding-left: 10px;
+        padding-right: 10px;
     }
 
     .tag {
         display: flex;
         align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        flex: 0 1 auto;
         gap: 8px;
         padding: 11px 22px;
         background: #ffffff;
@@ -645,6 +664,8 @@
         border-radius: 30px;
         cursor: pointer;
         font-size: 13px;
+        line-height: 1.2;
+        white-space: nowrap;
         transition: all 0.25s ease;
         border: 2px solid transparent;
         font-weight: 500;
@@ -669,6 +690,7 @@
         width: 100%;
         height: 120px;
         margin-top: 20px;
+        margin-bottom: 8px;
         padding: 14px;
         border-radius: 12px;
         border: 1px solid rgba(255, 255, 255, 0.3);
@@ -687,6 +709,7 @@
 
     .contact-info-form__btn {
         width: 100%;
+        margin-top: 24px;
         margin-bottom: 20px;
         background: #22c58b;
         color: #fff;
@@ -705,6 +728,61 @@
         background: #1eae79;
         transform: translateY(-2px);
         box-shadow: 0 6px 12px rgba(34, 197, 139, 0.3);
+    }
+
+    @media (max-width: 767px) {
+        .contact-info-form__tags-row {
+            gap: 8px;
+        }
+
+        .tag {
+            padding: 10px 12px;
+            font-size: 12px;
+            gap: 6px;
+        }
+
+        .contact-info-form__tags-row:last-child .tag {
+            flex: 1 1 0;
+            min-width: 0;
+            padding: 10px 8px;
+            justify-content: center;
+        }
+
+        .tag-icon {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+
+        .contact-info-form__textarea {
+            margin-top: 24px;
+            margin-bottom: 0;
+        }
+
+        .contact-info-form__btn {
+            margin-top: 28px;
+        }
+    }
+
+    @media (max-width: 380px) {
+        .contact-info-form__tags-row {
+            gap: 6px;
+        }
+
+        .tag {
+            padding: 8px 8px;
+            font-size: 11px;
+            gap: 4px;
+        }
+
+        .contact-info-form__tags-row:last-child .tag {
+            padding: 8px 6px;
+        }
+
+        .tag-icon {
+            width: 14px;
+            height: 14px;
+        }
     }
 
     .contact-info-location {
@@ -911,7 +989,7 @@
         }
 
         .contact-info-form__btn {
-            margin-top: 15px;
+            margin-top: 24px;
         }
 
         .form_group_field {
@@ -920,15 +998,14 @@
         }
 
         .tag {
-            gap: 10px;
-            padding: 8px 25px 8px 25px;
-
-            font-size: 15px;
+            gap: 8px;
+            padding: 10px 16px;
+            font-size: 14px;
         }
 
         .tag-icon {
-            width: 28px;
-            height: 28px;
+            width: 22px;
+            height: 22px;
         }
 
 
@@ -1272,7 +1349,7 @@
                             <div class="icon phone">
                                 <img src="{{ asset('./img/phone.png') }}" loading="lazy"src="{{ asset('./img/phone.png') }}"
                                     loading="lazy" alt="" />
-                                <p><a href="tel:+447535659835"> +44 7535 659835</a></p>
+                                <p><a href="tel:+447498006410"> +44 7498 006410</a></p>
                             </div>
                             <div class="icon email">
                                 <img src="{{ asset('./img/email.png') }}" loading="lazy" alt="" />
@@ -1965,16 +2042,16 @@
                             </div>
 
                             <!-- <div class="form-group2 field">
-                                                                                    <div class="contact-info-form__group name-field">
-                                                                                                                <label class="floating-label">Phone Number</label>
-                                                                                                                <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
-                                                                                                                    placeholder="+1234567890" value="{{ old('phone') }}" />
-                                                                                                                @error('phone')
+                                                                                                <div class="contact-info-form__group name-field">
+                                                                                                                            <label class="floating-label">Phone Number</label>
+                                                                                                                            <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
+                                                                                                                                placeholder="+1234567890" value="{{ old('phone') }}" />
+                                                                                                                            @error('phone')
         <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
-                                                                                                                                                                                                        {{ $message }}</div>
+                                                                                                                                                                                                                                {{ $message }}</div>
     @enderror
-                                                                                                            </div>
-                                                                                                            </div> -->
+                                                                                                                        </div>
+                                                                                                                        </div> -->
 
 
 
@@ -1986,41 +2063,33 @@
                             </p>
 
                             <div class="contact-info-form__tags">
-                                <div class="tag" data-value="Advise">
-                                    <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
-                                    Advise
-                                </div>
+                                <div class="contact-info-form__tags-row">
+                                    <div class="tag" data-value="Verify Distributors">
+                                        <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
+                                        Verify Distributors
+                                    </div>
 
-                                <div class="tag" data-value="Marketing">
-                                    <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
-                                    Marketing
-                                </div>
-
-                                <div class="d-flex gap-2">
                                     <div class="tag" data-value="Sales">
                                         <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
                                         Sales
+                                    </div>
+                                </div>
+
+                                <div class="contact-info-form__tags-row">
+                                    <div class="tag" data-value="Expansion">
+                                        <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
+                                        Expansion
+                                    </div>
+
+                                    <div class="tag" data-value="Operations">
+                                        <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
+                                        Operations
                                     </div>
 
                                     <div class="tag" data-value="Launch">
                                         <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
                                         Launch
                                     </div>
-
-                                    <div class="tag" data-value="Expansion">
-                                        <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
-                                        Expansion
-                                    </div>
-                                </div>
-
-                                <div class="tag" data-value="Mentorship">
-                                    <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
-                                    Mentorship
-                                </div>
-
-                                <div class="tag" data-value="Operations">
-                                    <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
-                                    Operations
                                 </div>
                             </div>
 
@@ -2038,29 +2107,6 @@
                                     {{ $message }}</div>
                             @enderror
 
-
-                            <!-- PRICE RANGE  -->
-                            <div class="form-price-container">
-                                <h2>Indicate your budget for support</h2>
-                                <p>Move toggle to your most preferred budget.</p>
-
-                                <div class="form-group price-range-group">
-
-                                    <div class="range-wrapper">
-                                        <span class="range-label">$100</span>
-                                        <div class="range-value" id="rangeValue">Please select budget</div>
-                                        <input type="range" id="priceRange" name="budget_range" min="100"
-                                            max="5000" value="{{ old('budget_range', 100) }}" step="50"
-                                            data-touched="{{ old('budget_range') ? 'true' : 'false' }}" />
-                                        <span class="range-label">$Max</span>
-                                    </div>
-                                </div>
-                                @error('budget_range')
-                                    <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
 
                             <!-- reCAPTCHA v3 - Invisible -->
                             <input type="hidden" id="recaptchaToken" name="g-recaptcha-response" value="">
@@ -2250,7 +2296,6 @@
                     country_code: document.querySelector('input[name="country_code"]')?.value?.trim() || '',
                     services: document.getElementById('selected-services')?.value || '',
                     message: document.querySelector('textarea[name="message"]')?.value?.trim() || '',
-                    budget_range: document.getElementById('priceRange')?.value || '',
                     timestamp: new Date().toISOString()
                 };
             }
@@ -2570,17 +2615,6 @@
                     });
                 }
 
-                // Budget range validation
-                const budgetInput = document.getElementById('priceRange');
-                const budgetTouched = budgetInput.getAttribute('data-touched') === 'true';
-                if (!budgetTouched || !budgetInput.value) {
-                    validationErrors.push({
-                        field: 'budget_range',
-                        message: 'Please select your budget range.',
-                        element: document.querySelector('.price-range-group')
-                    });
-                }
-
                 // If there are validation errors, show them and stop submission
                 if (validationErrors.length > 0) {
                     resetButtonState();
@@ -2657,7 +2691,7 @@
                         // Saved to localStorage - still show success!
                         showPopup('success', 'Message Saved!',
                             'Your message has been saved and will be sent shortly. Thank you for contacting us!'
-                            );
+                        );
                     } else {
                         showPopup('success', 'Message Sent!',
                             result.data?.message ||
@@ -2682,8 +2716,8 @@
                     } else {
                         // Absolute last resort - show mailto option
                         showPopup('info', 'Alternative Contact',
-                            'Please email us directly at nurudeen@p23africa.com with your inquiry. We apologize for the inconvenience.'
-                            );
+                            'Please email us directly at contact@p23africa.com with your inquiry. We apologize for the inconvenience.'
+                        );
                     }
                 }
             });
@@ -2765,11 +2799,6 @@
                     case 'message':
                         elements.highlight = document.querySelector('textarea[name="message"]');
                         elements.messageTarget = elements.highlight;
-                        break;
-
-                    case 'budget_range':
-                        elements.highlight = document.querySelector('input[name="budget_range"]');
-                        elements.messageTarget = document.querySelector('.price-range-group');
                         break;
 
                     case 'g-recaptcha-response':
@@ -2906,43 +2935,6 @@
                 }
             });
 
-            // Price range slider
-            const rangeInput = document.getElementById("priceRange");
-            const rangeValue = document.getElementById("rangeValue");
-
-            // Make updateSlider global for live form capture
-            window.updateSlider = function() {
-                const value = +rangeInput.value;
-                const min = +rangeInput.min;
-                const max = +rangeInput.max;
-                const isTouched = rangeInput.getAttribute('data-touched') === 'true';
-
-                // If slider hasn't been touched, show placeholder text
-                if (!isTouched) {
-                    rangeValue.textContent = 'Please select budget';
-                    rangeInput.style.background = '#EFF2F1';
-                    return;
-                }
-
-                const percent = ((value - min) / (max - min)) * 100;
-                rangeValue.textContent = `$${value.toLocaleString()}`;
-                rangeValue.style.left = `calc(${percent}% + (${8 - percent * 0.15}px))`;
-
-                rangeInput.style.background = `linear-gradient(to right, 
-            #1E6C82 ${percent}%, 
-            #EFF2F1 ${percent}%)`;
-            }
-
-            // Initialize slider
-            window.updateSlider();
-
-            // Handle slider input and mark as touched
-            rangeInput.addEventListener("input", function() {
-                // Mark as touched when user interacts
-                rangeInput.setAttribute('data-touched', 'true');
-                window.updateSlider();
-            });
-
             // Helper function for email validation
             function isValidEmail(email) {
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -2976,15 +2968,6 @@
                     tag.classList.remove('selected');
                     tag.querySelector('.tag-icon').src = "{{ asset('img/unselected.png') }}";
                 });
-
-                // Reset slider
-                const rangeInput = document.getElementById("priceRange");
-                const rangeValue = document.getElementById("rangeValue");
-                if (rangeInput && rangeValue) {
-                    rangeInput.value = rangeInput.min;
-                    rangeInput.setAttribute('data-touched', 'false');
-                    window.updateSlider();
-                }
 
                 // Reset submission states
                 submissionComplete = false;

@@ -29,7 +29,6 @@ class ContactController extends Controller
             'country_code' => 'required|string|max:10',
             'services' => 'required|string',
             'message' => 'required|string|max:2000',
-            'budget_range' => 'required|numeric|min:100|max:5000',
             // reCAPTCHA removed from here - validated separately with graceful fallback
         ];
     }
@@ -51,10 +50,6 @@ class ContactController extends Controller
             'country_code.max' => 'Invalid country code.',
             'services.required' => 'Please select at least one service.',
             'message.required' => 'Message is required.',
-            'budget_range.required' => 'Please select your budget range.',
-            'budget_range.numeric' => 'Budget must be a valid number.',
-            'budget_range.min' => 'Budget must be at least $100.',
-            'budget_range.max' => 'Budget must not exceed $5000.',
         ];
     }
 
@@ -239,7 +234,7 @@ class ContactController extends Controller
                 'country_code' => strip_tags($validated['country_code']),
                 'services' => $services,
                 'message' => strip_tags($validated['message']),
-                'budget_range' => (int)$validated['budget_range'],
+                'budget_range' => null,
                 'ip_address' => $request->ip(),
                 'user_agent' => $request->userAgent(),
                 'status' => 'submitted',
@@ -327,7 +322,7 @@ class ContactController extends Controller
             $submissionData = $submission->toArray();
 
             // Queue email to site owner (async - won't block response)
-            Mail::to('nurudeen@p23africa.com')->send(new ContactFormMail($submissionData));
+            Mail::to('contact@p23africa.com')->send(new ContactFormMail($submissionData));
 
             // Queue thank-you email to user (async - won't block response)
             if ($submission->email) {
