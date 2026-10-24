@@ -81,6 +81,7 @@ class BlogController extends Controller
 
             // ✅ Save the blog
             $blog = Blog::create($data);
+            $blog->syncTranslations($request->input('translations', []), ['title', 'subtitle', 'content_1', 'content_2']);
 
             activity()
                 ->causedBy(Auth::user())
@@ -181,6 +182,7 @@ class BlogController extends Controller
 
                 // Update blog
                 $blog->update($data);
+                $blog->syncTranslations($request->input('translations', []), ['title', 'subtitle', 'content_1', 'content_2']);
 
                 $this->logActivity('Updated blog/resource', $blog, ['title' => $blog->title]);
 

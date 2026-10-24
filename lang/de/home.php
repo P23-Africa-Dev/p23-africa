@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'hero_title_line' => 'Afrikanische Märkte erschließen',
+    'hero_title_evidence' => 'Mit Belegen',
+    'hero_title_not' => 'Nicht mit Annahmen',
+    'hero_body' => 'Wir helfen internationalen Unternehmen, die Nachfrage zu prüfen, Vertriebspartner zu verifizieren und die Vertriebsorganisation aufzubauen, die für Wachstum in Afrika nötig ist. Vom Test des echten Käuferinteresses bis zur Stärkung lokaler Teams machen wir Markteintrittspläne zu kommerziellem Handeln.',
+    'results' => 'Kommerzielle Ergebnisse in echten Märkten',
+    'solutions' => 'Kommerzielle Lösungen für die Expansion in Afrika',
+    'verify' => 'Prüfung von Vertriebspartnern',
+    'outbound' => 'Outbound-Nachfragetest',
+    'sales_ops' => 'Vertrieb und kommerzielle Abläufe',
+    'reach' => 'Globale Reichweite.',
+    'local' => 'Lokaler Ansatz',
+    'built_for' => 'Für internationale Unternehmen, die nach Afrika expandieren',
+    'manufacturers' => 'Ausrüstungs- und Industriehersteller',
+    'saas' => 'Software- und SaaS-Unternehmen',
+    'why' => 'Warum P23 Africa?',
+    'practical' => 'Praktisch, nicht theoretisch',
+    'relationship' => 'Beziehungsorientiert',
+    'flexible' => 'Flexible Zusammenarbeit',
+    'objectives' => 'An Ihren Zielen ausgerichtet',
+    'insights' => 'P23 Einblicke',
+    'guide' => 'Wesentlicher Leitfaden für Geschäfte in Afrika',
+    'cta_pill' => 'STARTEN SIE IHRE EXPANSION',
+    'cta' => 'Bereit, den afrikanischen Markt zu erkunden?',
+    'cta_body' => 'Ob Sie Afrika zum ersten Mal prüfen, in weitere Märkte expandieren, Kunden oder Vertriebspartner suchen oder ein bestehendes Geschäft auf die nächste Wachstumsstufe vorbereiten: P23 Africa kann helfen.',
+];

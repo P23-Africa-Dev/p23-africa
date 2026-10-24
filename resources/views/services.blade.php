@@ -27,16 +27,16 @@
                 
                 {{-- Left Column: Copy & CTAs --}}
                 <div class="services-hero-content">
-                    <p class="hero-eyebrow">STRATEGY · MARKET ACCESS · GROWTH</p>
+                    <p class="hero-eyebrow">{{ __('services.eyebrow') }}</p>
                     
-                    <h1 class="hero-headline">Your next market is full of opportunity. <em>Let's make it yours.</em></h1>
+                    <h1 class="hero-headline">{{ __('services.hero') }} <em>{{ __('services.hero_em') }}</em></h1>
                     
                     <p class="hero-description">
-                        Entering a new market or scaling an existing business takes more than ambition. It takes the right insight, the right relationships, and a strategy built for execution.
+                        {{ __('services.hero_body') }}
                     </p>
                     
                     <div class="hero-cta-group">
-                        <a href="{{ url('contact') }}" class="hero-cta-btn" id="hero-talk-to-us-btn">
+                        <a href="{{ locale_route('contact') }}" class="hero-cta-btn" id="hero-talk-to-us-btn">
                             Talk to Us
                         </a>
                         
@@ -179,8 +179,8 @@
         <div class="plan-section-card">
             
             <h2 class="plan-section-title">
-                Growth is a goal.<br>
-                Getting there takes a plan.
+                {{ __('services.plan_line_1') }}<br>
+                {{ __('services.plan_line_2') }}
             </h2>
 
             <div class="plan-cards-grid">
@@ -189,7 +189,7 @@
                 <div class="plan-col-tall">
                     <div class="plan-card plan-card-market-entry">
                         <div class="plan-card-body">
-                            <h3 class="plan-card-title">Market Entry &amp; Expansion</h3>
+                            <h3 class="plan-card-title">{{ __('services.market_entry') }}</h3>
                             <p class="plan-card-desc">
                                 Build practical strategies for entering and developing new African markets.
                             </p>
@@ -209,7 +209,7 @@
                 <div class="plan-col-stacked">
                     {{-- Distributor Card --}}
                     <div class="plan-card plan-card-distributor">
-                        <h3 class="plan-card-title">Distributor &amp; Partner Development</h3>
+                        <h3 class="plan-card-title">{{ __('services.distributor') }}</h3>
                         <p class="plan-card-desc">
                             Find, assess and verify the right local commercial relationships.
                         </p>
@@ -220,7 +220,7 @@
 
                     {{-- Operations Card --}}
                     <div class="plan-card plan-card-operations">
-                        <h3 class="plan-card-title">Sales &amp; Market Support</h3>
+                        <h3 class="plan-card-title">{{ __('services.sales_support') }}</h3>
                         <p class="plan-card-desc">
                             Build the local capabilities and relationships required to operate effectively.
                         </p>
@@ -234,7 +234,7 @@
                 <div class="plan-col-stacked">
                     {{-- Investment Card --}}
                     <div class="plan-card plan-card-investment">
-                        <h3 class="plan-card-title">Investment &amp; Growth Readiness</h3>
+                        <h3 class="plan-card-title">{{ __('services.investment') }}</h3>
                         <p class="plan-card-desc">
                             Strengthen businesses preparing for investment, partnerships or significant expansion.
                         </p>
@@ -245,7 +245,7 @@
 
                     {{-- Outbound Sales Card --}}
                     <div class="plan-card plan-card-outbound">
-                        <h3 class="plan-card-title">Outbound Sales Demand Testing</h3>
+                        <h3 class="plan-card-title">{{ __('services.outbound') }}</h3>
                         <p class="plan-card-desc">
                             Generate opportunities, develop relationships and build commercial pipelines.
                         </p>
@@ -302,13 +302,13 @@
                 {{-- Right Column: Typography & Contact CTA --}}
                 <div class="reach-content">
                     <h2 class="reach-title">
-                        Global Reach.<br>
-                        Local Approach.
+                        {{ __('services.reach_1') }}<br>
+                        {{ __('services.reach_2') }}
                     </h2>
                     
                     <div class="reach-description">
                         <p>
-                            We partner with entrepreneurs and businesses to understand their unique needs, align them with their goals, and set a clear path to execution and results.
+                            {{ __('services.reach_body') }}
                         </p>
                         <p>
                             Our consulting services come with personalised and hands-on support, and our team is committed to excellence, integrity and collaboration. Let's help you thrive in the dynamic and unpredictable global market.

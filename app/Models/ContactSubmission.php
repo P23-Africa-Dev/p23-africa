@@ -24,7 +24,8 @@ class ContactSubmission extends Model
         'last_activity_at',
         'field_interactions',
         'draft_created_at',
-        'submitted_at'
+        'submitted_at',
+        'locale',
     ];
 
     protected $casts = [

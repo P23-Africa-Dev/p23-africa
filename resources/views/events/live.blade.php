@@ -11,9 +11,9 @@
                 <div class="row">
                     <!-- Event Information -->
                     <div class="col-md-6 text-start">
-                        <h4><strong>{{ strtoupper($event->title) }}</strong></h4>
-                        <p class="mb-1"><em>{{ $event->subtitle }}</em></p>
-                        <p>{!! Str::limit($event->description, 90) !!}</p>
+                        <h4><strong>{{ strtoupper($event->translated('title')) }}</strong></h4>
+                        <p class="mb-1"><em>{{ $event->translated('subtitle') }}</em></p>
+                        <p>{!! Str::limit($event->translated('description'), 90) !!}</p>
                         <p><strong>Date:</strong> {{ \Carbon\Carbon::parse($event->event_date)->toFormattedDateString() }}
                         </p>
                         <p><strong>Time:</strong> {{ \Carbon\Carbon::parse($event->event_time)->format('h:i A') }}</p>

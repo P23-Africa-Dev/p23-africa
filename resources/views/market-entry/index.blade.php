@@ -31,11 +31,11 @@
                 {{-- Left Column: Copy & Actions --}}
                 <div class="me-hero-content">
                     <h1 class="me-hero-headline">
-                        Enter Africa with confidence. Build with local knowledge.
+                        {{ __('market.hero') }}
                     </h1>
 
                     <p class="me-hero-description">
-                        Expanding into Africa presents significant opportunities, but successful market entry requires more than a market report. You need to understand the market, test the opportunity, find the right people, build the right relationships and execute locally.
+                        {{ __('market.hero_body') }}
                     </p>
 
                     <div class="me-hero-cta-group">
@@ -89,7 +89,7 @@
                 {{-- Left Title Column --}}
                 <div class="me-methodology-title-block">
                     <h2 class="me-methodology-title">
-                        Our<br>Execution<br>Methodology
+                        {!! __('market.method') !!}
                     </h2>
                 </div>
 
@@ -188,7 +188,7 @@
             {{-- Right: Content & Link --}}
             <div class="me-execution-content">
                 <h2 class="me-execution-headline">
-                    P23 Africa helps businesses move from market opportunity to practical execution.
+                    {{ __('market.execution') }}
                 </h2>
 
                 <p class="me-execution-desc">
@@ -214,9 +214,9 @@
                 
                 <div class="me-momentum-title-group">
                     <h2 class="me-momentum-title">
-                        Market Entry Momentum In Africa
+                        {{ __('market.momentum') }}
                     </h2>
-                    <a href="{{ url('contact') }}" class="me-momentum-btn" id="me-momentum-talk-btn">
+                    <a href="{{ locale_route('contact') }}" class="me-momentum-btn" id="me-momentum-talk-btn">
                         Talk to Us
                     </a>
                 </div>
@@ -271,10 +271,10 @@
         {{-- Section Header --}}
         <div class="me-casestudy-header">
             <h2 class="me-casestudy-title">
-                From market opportunity to market presence
+                {{ __('market.presence') }}
             </h2>
             <p class="me-casestudy-subtitle">
-                Examine how multinational manufacturers and scale-ups successfully entered African markets without risking unvetted capital.
+                {{ __('market.presence_body') }}
             </p>
         </div>
 
@@ -350,7 +350,7 @@
                         </p>
                     </div>
 
-                    <a href="{{ route('case-studies.show', 'thermoflow-hvac') }}" class="me-case-continue-btn" id="btn-continue-reading-bld">
+                    <a href="{{ locale_route('case-studies.show', ['slug' => 'thermoflow-hvac']) }}" class="me-case-continue-btn" id="btn-continue-reading-bld">
                         Continue Reading
                     </a>
                 </div>
@@ -378,7 +378,7 @@
                         </p>
                     </div>
 
-                    <a href="{{ route('case-studies.show', 'packline-industrial-machinery') }}" class="me-case-continue-btn" id="btn-continue-reading-fmcg">
+                    <a href="{{ locale_route('case-studies.show', ['slug' => 'packline-industrial-machinery']) }}" class="me-case-continue-btn" id="btn-continue-reading-fmcg">
                         Continue Reading
                     </a>
                 </div>
@@ -406,7 +406,7 @@
                         </p>
                     </div>
 
-                    <a href="{{ route('case-studies.show', 'finedge-software') }}" class="me-case-continue-btn" id="btn-continue-reading-fintech">
+                    <a href="{{ locale_route('case-studies.show', ['slug' => 'finedge-software']) }}" class="me-case-continue-btn" id="btn-continue-reading-fintech">
                         Continue Reading
                     </a>
                 </div>
@@ -468,7 +468,7 @@
                 {{-- Left Column: Copy & Actions --}}
                 <div class="me-cta-content">
                     <h2 class="me-cta-headline">
-                        Ready to explore your next market?
+                        {{ __('market.cta') }}
                     </h2>
 
                     <p class="me-cta-desc">

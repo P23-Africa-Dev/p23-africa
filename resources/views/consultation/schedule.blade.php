@@ -2011,7 +2011,7 @@
 
 
                         <!-- Hidden form for actual submission -->
-                        <form id="scheduleForm" method="POST" action="{{ route('consultation.schedule.submit') }}"
+                        <form id="scheduleForm" method="POST" action="{{ locale_route('consultation.schedule.submit') }}"
                             style="display: none;">
                             @csrf
                             <input type="hidden" name="session_date" id="hiddenDate">

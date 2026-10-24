@@ -7,7 +7,7 @@
                 <h2>We’d love your feedback</h2>
             </legend>
 
-            <form action="{{ route('feedback.submit') }}" method="POST">
+            <form action="{{ locale_route('feedback.submit') }}" method="POST">
                 @csrf
                 <input type="hidden" name="event_id" value="{{ $event_id }}">
                 <input type="hidden" name="email" value="{{ $email }}">

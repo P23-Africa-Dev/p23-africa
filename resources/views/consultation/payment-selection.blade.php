@@ -236,7 +236,7 @@
             </a>
 
             <div class="payment-header">
-                <h1>Select Payment Method</h1>
+                <h1>{{ __('consultation.payment_method') }}</h1>
                 <p>Choose your preferred payment method to complete your consultation booking</p>
             </div>
 

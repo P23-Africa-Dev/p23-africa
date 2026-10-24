@@ -68,7 +68,7 @@
             <div class="content-container align-items-center">
                 <div class="quiz-content container">
                     <div class="intro-content">
-                        <h1><strong>Are You Losing Revenue?</strong></h1>
+                        <h1><strong>{{ __('quiz.losing') }}</strong></h1>
                         <p class="intro-para">
                             Take this 2-minute quiz to find out what's costing your business
                             money—and how to fix it.

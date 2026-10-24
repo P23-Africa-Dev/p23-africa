@@ -135,13 +135,13 @@
                                     {{-- <div style="font-size: 24px;">📅</div> --}}
                                     <div>
                                         <h3><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""><a
-                                                href="{{ route('events.show', $event->slug) }}"> {{ $event->title }} <i>
-                                                    @if ($event->subtitle)
-                                                        ({{ $event->subtitle }})
+                                                href="{{ locale_route('events.show', ['slug' => $event->slug]) }}"> {{ $event->translated('title') }} <i>
+                                                    @if ($event->translated('subtitle'))
+                                                        ({{ $event->translated('subtitle') }})
                                                     @endif
 
                                                 </i></a></h3>
-                                        <p>{!! Str::limit($event->description, 233) !!}</p>
+                                        <p>{!! Str::limit($event->translated('description'), 233) !!}</p>
                                         <div class="event-card-footer">
                                             <span class="countdown status"
                                                 data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}">
@@ -181,14 +181,14 @@
                                         {{-- <div style="font-size: 24px;">📅</div> --}}
                                         <div>
                                             <h3><img src="{{ asset('images/calendar.png') }}" loading='lazy'
-                                                    alt=""><a href="{{ route('events.show', $event->slug) }}">
-                                                    {{ $event->title }} <i>
-                                                        @if ($event->subtitle)
-                                                            ({{ $event->subtitle }})
+                                                    alt=""><a href="{{ locale_route('events.show', ['slug' => $event->slug]) }}">
+                                                    {{ $event->translated('title') }} <i>
+                                                        @if ($event->translated('subtitle'))
+                                                            ({{ $event->translated('subtitle') }})
                                                         @endif
 
                                                     </i></a></h3>
-                                            <p>{!! Str::limit($event->description, 233) !!}</p>
+                                            <p>{!! Str::limit($event->translated('description'), 233) !!}</p>
                                             <div class="event-card-footer">
                                                 <span class="countdown status"
                                                     data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}">
@@ -353,7 +353,7 @@
     //         }
 
     //         $.ajax({
-    //             url: '{{ route('events.search') }}',
+    //             url: '{{ locale_route('events.search') }}',
     //             data: { term },
     //             success: function (data) {
     //                 $suggestionBox.empty();
@@ -404,7 +404,7 @@
     //         $('#suggestion-box').hide();
 
     //         $.ajax({
-    //             url: '{{ route('events.search') }}',
+    //             url: '{{ locale_route('events.search') }}',
     //             data: { filter },
     //             success: function (data) {
     //                 $eventList.empty();
@@ -454,7 +454,7 @@
 
         function fetchEvents(term = '', filter = '') {
             $.ajax({
-                url: '{{ route('events.search') }}',
+                url: '{{ locale_route('events.search') }}',
                 data: {
                     term,
                     filter
@@ -592,7 +592,7 @@
 
         function fetchEvents(term = '', filter = '') {
             $.ajax({
-                url: '{{ route('events.search') }}',
+                url: '{{ locale_route('events.search') }}',
                 data: {
                     term,
                     filter

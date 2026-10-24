@@ -175,6 +175,16 @@
                             @endif
                         </div>
 
+                        @include('admin.partials.content-translations', [
+                            'model' => $blog,
+                            'translationFields' => [
+                                'title' => 'Title',
+                                'subtitle' => 'Subtitle',
+                                'content_1' => 'First content',
+                                'content_2' => 'Second content',
+                            ],
+                        ])
+
                         <button type="submit"
                             class="btn btn-dark dark:bg-gray-600 dark:border-gray-600 dark:hover:bg-gray-700 w-25 mt-4 dark-transition">{{ isset($blog) ? 'Update' : 'Publish' }}</button>
                     </form>

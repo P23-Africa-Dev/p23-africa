@@ -27,7 +27,7 @@
                             <img src="{{ asset('images/rectangle-line.png') }}" loading='lazy' alt="">
                         </div>
                         <div class="blog-date">1st May 2025</div>
-                        <h2 class="blog-title">Understanding Buyer Habits</h2>
+                        <h2 class="blog-title">{{ __('events.buyer_habits') }}</h2>
                         <p class="blog-description">
                             Buyer habits in Africa are evolving fast, driven by digital adoption and a growing middle class,
                             but differences across regions and trust issues still pose challenges.
@@ -336,9 +336,9 @@
                             <div class="blog-card {{ $bgClasses[$index] }}">
                                 <div class="date">{{ \Carbon\Carbon::parse($blog->created_at)->format('l, F jS Y') }}
                                 </div>
-                                <div class="heading">{{ $blog->title }}</div>
+                                <div class="heading">{{ $blog->translated('title') }}</div>
                                 <div class="content mb-4">
-                                    {!! \Illuminate\Support\Str::limit($blog->content_1, 600) !!}
+                                    {!! \Illuminate\Support\Str::limit($blog->translated('content_1'), 600) !!}
                                 </div>
 
 
@@ -350,7 +350,7 @@
                                         </button>
                                     </div>
                                 @else --}}
-                                    <a href="{{ route('resource-show', $blog->slug) }}" class="read-more-btn">Read More
+                                    <a href="{{ locale_route('resource-show', ['slug' => $blog->slug]) }}" class="read-more-btn">Read More
                                         →</a>
                                 {{-- @endif --}}
                             </div>
@@ -371,9 +371,9 @@
                             <div class="blog-card {{ $bgClasses[$bgIndex] }}">
                                 <div class="date">{{ \Carbon\Carbon::parse($blog->created_at)->format('l, F jS Y') }}
                                 </div>
-                                <div class="heading">{{ $blog->title }}</div>
+                                <div class="heading">{{ $blog->translated('title') }}</div>
                                 <div class="content mb-4">
-                                    {!! \Illuminate\Support\Str::limit($blog->content_1, 1200) !!}
+                                    {!! \Illuminate\Support\Str::limit($blog->translated('content_1'), 1200) !!}
                                 </div>
                                 {{-- @if ($blog->pdf_path)
                                     <div class="my-auto">
@@ -383,7 +383,7 @@
                                         </button>
                                     </div>
                                 @else --}}
-                                    <a href="{{ route('resource-show', $blog->slug) }}" class="read-more-btn">Read More
+                                    <a href="{{ locale_route('resource-show', ['slug' => $blog->slug]) }}" class="read-more-btn">Read More
                                         →</a>
                                 {{-- @endif --}}
                             </div>
@@ -391,7 +391,7 @@
                         @endforeach
 
                         <div class="">
-                            <a href="{{ route('archive-page') }}" class="btn btn-archive"><span>View Archived Blogs
+                            <a href="{{ locale_route('archive-page') }}" class="btn btn-archive"><span>View Archived Blogs
                                 </span> <span class="mx-2"></span>
                                 <span> →</span></a>
                         </div>
@@ -399,7 +399,7 @@
                 </div>
 
                 <div class="playbook-download-section">
-                    <a href="{{ route('playbook.landing') }}" class="btn-playbook"
+                    <a href="{{ locale_route('playbook.landing') }}" class="btn-playbook"
                         style="text-decoration: none; display: inline-block;">
                         📥 Download the P23 Africa's Founders Playbook
                     </a>

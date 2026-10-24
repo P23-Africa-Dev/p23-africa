@@ -39,17 +39,17 @@ class ContactController extends Controller
     private function getValidationMessages(): array
     {
         return [
-            'name.required' => 'Name is required.',
-            'company_name.required' => 'Company name is required.',
-            'company_name.max' => 'Company name must not exceed 255 characters.',
-            'email.required' => 'Email address is required.',
-            'email.email' => 'Please enter a valid email address.',
-            'phone.required' => 'Phone number is required.',
-            'phone.max' => 'Phone number must not exceed 20 characters.',
-            'country_code.required' => 'Country code is required.',
-            'country_code.max' => 'Invalid country code.',
-            'services.required' => 'Please select at least one service.',
-            'message.required' => 'Message is required.',
+            'name.required' => __('contact.validation.name'),
+            'company_name.required' => __('contact.validation.company_name'),
+            'company_name.max' => __('contact.validation.company_name_max'),
+            'email.required' => __('contact.validation.email'),
+            'email.email' => __('contact.validation.email_invalid'),
+            'phone.required' => __('contact.validation.phone'),
+            'phone.max' => __('contact.validation.phone_max'),
+            'country_code.required' => __('contact.validation.country_code'),
+            'country_code.max' => __('contact.validation.country_code_invalid'),
+            'services.required' => __('contact.validation.services'),
+            'message.required' => __('contact.validation.message'),
         ];
     }
 
@@ -148,11 +148,11 @@ class ContactController extends Controller
                     if ($request->expectsJson()) {
                         return response()->json([
                             'success' => true,
-                            'message' => 'Your message has already been sent successfully! We will get back to you soon.'
+                            'message' => __('contact.validation.already_sent')
                         ]);
                     }
 
-                    return redirect()->back()->with('success', 'Your message has already been sent successfully! We will get back to you soon.');
+                    return redirect()->back()->with('success', __('contact.validation.already_sent'));
                 }
 
                 // Set a lock to prevent duplicate processing (expires in 60 seconds)
@@ -191,11 +191,11 @@ class ContactController extends Controller
                 if ($request->expectsJson()) {
                     return response()->json([
                         'success' => true,
-                        'message' => 'Your message has already been sent successfully! We will get back to you soon.'
+                        'message' => __('contact.validation.already_sent')
                     ]);
                 }
 
-                return redirect()->back()->with('success', 'Your message has already been sent successfully! We will get back to you soon.');
+                return redirect()->back()->with('success', __('contact.validation.already_sent'));
             }
 
             Log::info('Starting validation', [
@@ -235,6 +235,7 @@ class ContactController extends Controller
                 'services' => $services,
                 'message' => strip_tags($validated['message']),
                 'budget_range' => null,
+                'locale' => app()->getLocale(),
                 'ip_address' => $request->ip(),
                 'user_agent' => $request->userAgent(),
                 'status' => 'submitted',
@@ -264,16 +265,16 @@ class ContactController extends Controller
             if ($request->expectsJson()) {
                 return response()->json([
                     'success' => true,
-                    'message' => 'Your message has been sent successfully! We will get back to you soon.'
+                    'message' => __('contact.validation.sent')
                 ]);
             }
 
-            return redirect()->back()->with('success', 'Your message has been sent successfully! We will get back to you soon.');
+            return redirect()->back()->with('success', __('contact.validation.sent'));
         } catch (\Illuminate\Validation\ValidationException $e) {
             if ($request->expectsJson()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Please check your input and try again.',
+                    'message' => __('contact.validation.check'),
                     'errors' => $e->errors()
                 ], 422);
             }
@@ -326,7 +327,9 @@ class ContactController extends Controller
 
             // Queue thank-you email to user (async - won't block response)
             if ($submission->email) {
-                Mail::to($submission->email)->send(new ThankYouMail($submissionData));
+                Mail::to($submission->email)->send(
+                    (new ThankYouMail($submissionData))->locale($submission->locale ?: 'en')
+                );
             }
 
             Log::info('Submission emails queued successfully', [

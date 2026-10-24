@@ -31,7 +31,8 @@ class BrnSubmission extends Model
         'selected_outcome',
         'b2b_interest',
         'status', // approved, declined, pending
-        'tier' // silver, gold, platinum
+        'tier', // silver, gold, platinum
+        'locale',
     ];
 
     /**

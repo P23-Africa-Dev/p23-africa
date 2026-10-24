@@ -31,6 +31,7 @@
                 'resolve.org' => \App\Http\Middleware\ResolveOrganization::class,
                 'legacy.analytics' => \App\Http\Middleware\EnsureLegacyAnalyticsAccess::class,
                 'legacy.whatsapp' => \App\Http\Middleware\EnsureLegacyWhatsAppAccess::class,
+                'locale' => \App\Http\Middleware\SetLocale::class,
             ]);
 
             // $middleware->append(CheckSuspended::class);

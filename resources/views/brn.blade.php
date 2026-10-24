@@ -83,7 +83,7 @@
             <div class="container">
                 <div class="section-header">
                     <h4>How We Operate</h4>
-                    <h2>Simple, Trusted & Effective</h2>
+                    <h2>{{ __('brn.simple') }}</h2>
                 </div>
                 <div class="card-wrapper">
                     <div class="operate-card card-1">
@@ -91,7 +91,7 @@
                             <img src="{{ asset('images/arrow-group.png') }}" class="image" loading="lazy" alt="Arrow">
                         </div>
                         <div class="card-content px-4">
-                            <h3>Join the Exclusive Circle</h3>
+                            <h3>{{ __('brn.circle') }}</h3>
                             <p>
                                 Apply, get approved, and start <span class="d-md-inline d-block">your 14-day free
                                     trial.</span>
@@ -112,7 +112,7 @@
                                 src="{{ asset('images/brn-intro-mobile.png') }}" alt="CEO Image" />
                         </div>
                         <div class="card-content my-3 px-5 px-md-4">
-                            <h3>Connect & Match</h3>
+                            <h3>{{ __('brn.connect') }}</h3>
                             <p class="">
                                 Browse the vetted directory, get matched with the right professionals, and share referrals.
                             </p>
@@ -121,7 +121,7 @@
                     <div class="operate-card card-3">
                         <img class="top" src="{{ asset('images/Vector (3).png') }}" loading="lazy" alt="" />
                         <div class="card-content">
-                            <h3>Collaborate Privately</h3>
+                            <h3>{{ __('brn.collaborate') }}</h3>
                             <p>
                                 Message members directly and grow your network inside an exclusive community.
                             </p>
@@ -200,8 +200,8 @@
                     <div class="row header-row px-md-0 px-5">
                         <div class="col-12 col-lg-6">
                             <div class="title-group text-left text-lg-start">
-                                <h2>Testimonials.</h2>
-                                <h2>Member Spotlight.</h2>
+                                <h2>{{ __('brn.testimonials') }}</h2>
+                                <h2>{{ __('brn.spotlight') }}</h2>
                             </div>
                         </div>
                         <div class="col-12 col-lg-6 mt-3 mt-lg-4">
@@ -295,12 +295,12 @@
                 <div class="row g-4 align-items-center">
                     <div class="col-12 col-lg-4">
                         <div class="events-intro text-left text-lg-start">
-                            <h2>Events & Meetups</h2>
+                            <h2>{{ __('brn.meetups') }}</h2>
                             <p>
                                 From closed-door roundtables to business retreats, every event
                                 is designed to foster genuine collaboration and opportunity.
                             </p>
-                            <a href="{{ route('events.all-events', ['filter' => 'brn']) }}"
+                            <a href="{{ locale_route('events.all-events', ['filter' => 'brn']) }}"
                                 class="see-all-events-button">
                                 See All Events
                                 <i class="fa fa-arrow-right"></i>
@@ -316,13 +316,13 @@
                                         <img src="{{ asset('images/calendar-white2.png') }}" loading="lazy"
                                             alt="" />
                                         <h3><a
-                                                href="{{ route('events.show', $event->slug) }}">{{ Str::limit($event->title, 20) }}</a>
+                                                href="{{ locale_route('events.show', ['slug' => $event->slug]) }}">{{ Str::limit($event->translated('title'), 20) }}</a>
                                         </h3>
                                     </div>
                                     <div>
-                                        {!! Str::limit($event->description, 233) !!}
+                                        {!! Str::limit($event->translated('description'), 233) !!}
                                     </div>
-                                    <a href="{{ route('events.show', $event->slug) }}" class="book-seat-button actionBtn"
+                                    <a href="{{ locale_route('events.show', ['slug' => $event->slug]) }}" class="book-seat-button actionBtn"
                                         id="actionBtn" data-event-id="{{ $event->id }}"
                                         data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
                                         data-event-link="{{ $event->link }}" data-bs-toggle="modal"
@@ -340,13 +340,13 @@
 
                                         <h3>
                                             <a
-                                                href="{{ route('events.show', $event->slug) }}">{{ Str::limit($event->title, 20) }}</a>
+                                                href="{{ locale_route('events.show', ['slug' => $event->slug]) }}">{{ Str::limit($event->translated('title'), 20) }}</a>
                                         </h3>
                                     </div>
                                     <div>
-                                        {!! Str::limit($event->description, 233) !!}
+                                        {!! Str::limit($event->translated('description'), 233) !!}
                                     </div>
-                                    <a href="{{ route('events.show', $event->slug) }}" class="book-seat-button actionBtn"
+                                    <a href="{{ locale_route('events.show', ['slug' => $event->slug]) }}" class="book-seat-button actionBtn"
                                         id="actionBtn" data-event-id="{{ $event->id }}"
                                         data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
                                         data-event-link="{{ $event->link }}" data-bs-toggle="modal"
@@ -374,7 +374,7 @@
                         <img class="top-image" src="{{ asset('images/Vector -cta.png') }}" loading="lazy"
                             alt="" />
                         <div class="left-content text-left">
-                            <h2>Ready to Grow with Trusted Leaders?</h2>
+                            <h2>{{ __('brn.ready') }}</h2>
 
                             <p>
                                 Join a powerful ecosystem of referrals, relationships, and

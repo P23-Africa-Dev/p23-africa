@@ -1017,12 +1017,12 @@
         // Success popup controls
         closeSuccessPopup.addEventListener("click", () => {
             hideSuccessPopup();
-            window.location.href = "{{ route('playbook.landing2') }}";
+            window.location.href = "{{ locale_route('playbook.landing2') }}";
         });
 
         successOverlay.addEventListener("click", () => {
             hideSuccessPopup();
-            window.location.href = "{{ route('playbook.landing2') }}";
+            window.location.href = "{{ locale_route('playbook.landing2') }}";
         });
 
         // Stripe Modal controls

@@ -68,14 +68,14 @@
         </div>
     </section>
     <nav class="cs-navigation" aria-label="Browse case studies">
-        <a href="{{ route('case-studies.show', $previousStudy['slug']) }}" aria-label="Previous case study: {{ $previousStudy['title'] }}"><img src="{{ asset('images/case-studies/previous.svg') }}" width="16" height="16" alt=""></a>
-        <a href="{{ route('case-studies.show', $nextStudy['slug']) }}" aria-label="Next case study: {{ $nextStudy['title'] }}"><img src="{{ asset('images/case-studies/next.svg') }}" width="16" height="16" alt=""></a>
+        <a href="{{ locale_route('case-studies.show', ['slug' => $previousStudy['slug']]) }}" aria-label="Previous case study: {{ $previousStudy['title'] }}"><img src="{{ asset('images/case-studies/previous.svg') }}" width="16" height="16" alt=""></a>
+        <a href="{{ locale_route('case-studies.show', ['slug' => $nextStudy['slug']]) }}" aria-label="Next case study: {{ $nextStudy['title'] }}"><img src="{{ asset('images/case-studies/next.svg') }}" width="16" height="16" alt=""></a>
     </nav>
     <details class="cs-library" id="case-library" @if (request()->boolean('all')) open @endif>
         <summary>Explore all case studies</summary>
         <ul>
             @foreach ($caseStudies as $study)
-            <li><a href="{{ route('case-studies.show', $study['slug']) }}" @if ($study['slug'] === $caseStudy['slug']) aria-current="page" @endif>{{ $study['title'] }}@if ($study['illustrative']) <span>(Illustrative example)</span>@endif</a></li>
+            <li><a href="{{ locale_route('case-studies.show', ['slug' => $study['slug']]) }}" @if ($study['slug'] === $caseStudy['slug']) aria-current="page" @endif>{{ $study['title'] }}@if ($study['illustrative']) <span>(Illustrative example)</span>@endif</a></li>
             @endforeach
         </ul>
     </details>

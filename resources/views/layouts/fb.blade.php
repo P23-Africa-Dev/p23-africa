@@ -7,6 +7,7 @@
         <link rel="shortcut icon" href="{{ asset('images/service-group.png') }}" type="image/x-icon">
 
         <title>Event Feedback | P23 Africa</title>
+        @include('partials.hreflang')
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -36,6 +37,8 @@
         <x-head.tinymce-config/>
     </head>
     <body class="font-sans antialiased">
+        @include('partials.language-suggestion')
+        @include('partials.language-switcher')
         <div class="min-h-screen bg-gray-100">
             {{-- @include('layouts.navigation') --}}
 

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         @yield('meta')
+        @include('partials.hreflang')
         <title>@yield('title')</title>
 
         <!--<link rel="shortcut icon" href="{{ asset('images/logo.png') }}" type="image/x-icon">-->
@@ -80,10 +81,11 @@
     </head>
 
     <body>
+        @include('partials.language-suggestion')
         <!-- Navbar -->
         <nav class="navbar-full navbar navbar-expand-lg">
             <div class="container">
-                <a class="navbar-brand" href="{{ route('homepage') }}">
+                <a class="navbar-brand" href="{{ locale_route('homepage') }}">
                     <img src="{{ asset('images/logo.png') }}" loading='lazy' alt="">
                 </a>
                 <button class="navbar-toggler text-white border-0" type="button" data-bs-toggle="collapse"
@@ -93,13 +95,14 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                     <ul class="navbar-nav pt-md-0 pt-3">
-                        <li class="nav-item"><a class="nav-link" href="{{ url('about') }}">Who We Are</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url('services') }}">Services</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('event') }}">Our Events</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('resource-hub') }}">Resource Hub</a>
+                        <li class="nav-item"><a class="nav-link" href="{{ locale_route('about') }}">{{ __('nav.who_we_are_title') }}</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ locale_route('services') }}">{{ __('nav.services') }}</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ locale_route('event') }}">{{ __('nav.events') }}</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ locale_route('resource-hub') }}">{{ __('nav.resource_hub_title') }}</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url('contact') }}">Let’s Collaborate</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ locale_route('contact') }}">{{ __('footer.lets_collaborate') }}</a></li>
                     </ul>
+                    @include('partials.language-switcher', ['class' => 'locale-switcher--on-dark'])
 
                     <div class="d-flex align-items-right mt-5 mobile">
                         <button class="subscribe-btn me-3 mb-2">Subscribe</button>
@@ -169,7 +172,7 @@
                         <a href="{{ url('about') }}">Who We Are</a>
                         <a href="{{ url('services') }}">What We Do</a>
                         <a href="{{ route('event') }}">Events</a>
-                        <a href="{{ route('resource-hub') }}">Resource Hub</a>
+                        <a href="{{ locale_route('resource-hub') }}">{{ __('nav.resource_hub_title') }}</a>
                         <a href="{{ url('contact') }}">Let’s Collaborate</a>
                     </div>
 

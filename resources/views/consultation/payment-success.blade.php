@@ -254,9 +254,9 @@
                 </div>
 
                 @if (session('is_pending_verification'))
-                    <h1 class="payment-status">Payment Initiated!</h1>
+                    <h1 class="payment-status">{{ __('consultation.payment_started') }}</h1>
                 @else
-                    <h1 class="payment-status">Payment Successful!</h1>
+                    <h1 class="payment-status">{{ __('consultation.payment_success') }}</h1>
                 @endif
 
 
@@ -298,7 +298,7 @@
                         </p>
                     @endif
 
-                    <a href="{{ route('consultation.schedule-consultation', ['booking' => $application->booking_token]) }}" class="proceed-button">
+                    <a href="{{ locale_route('consultation.schedule-consultation', ['booking' => $application->booking_token]) }}" class="proceed-button">
                         Proceed to scheduling your session
                     </a>
                 </div>

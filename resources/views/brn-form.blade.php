@@ -1756,7 +1756,7 @@
                     <div class="first-form-heading hidden">
                         <div class="form-heading-card">
                             <div class="header">
-                                <h1>Basic Information</h1>
+                                <h1>{{ __('brn.basic') }}</h1>
                                 <div class="subtitle">
                                     <span class="line"></span>
                                     <p>Let's start with your basic details</p>
@@ -1802,7 +1802,7 @@
                     <div class="second-form-heading hidden">
                         <div class="form-heading-card">
                             <div class="header">
-                                <h1>Credibility Check</h1>
+                                <h1>{{ __('brn.credibility') }}</h1>
                                 <div class="subtitle">
                                     <span class="line"></span>
                                     <p>Stand out among other businesses</p>
@@ -1848,7 +1848,7 @@
                     <div class="third-form-heading hidden">
                         <div class="form-heading-card">
                             <div class="header">
-                                <h1>Industry Preference</h1>
+                                <h1>{{ __('brn.preference') }}</h1>
                                 <div class="subtitle">
                                     <span class="line"></span>
                                     <p>Boost visibility for your matches</p>
@@ -1894,7 +1894,7 @@
                     <div class="fourth-form-heading">
                         <div class="form-heading-card">
                             <div class="header">
-                                <h1>Industry Insight</h1>
+                                <h1>{{ __('brn.insight') }}</h1>
                                 <div class="subtitle">
                                     <span class="line"></span>
                                     <p>Stand out among other businesses</p>
@@ -1940,7 +1940,7 @@
                 <!-- Form Section -->
                 <section class="interest-form-container">
                     <div class="form-container">
-                        <form class="interest-form" id="brnForm" action="{{ route('brn.submit') }}" method="POST">
+                        <form class="interest-form" id="brnForm" action="{{ locale_route('brn.submit') }}" method="POST">
                             @csrf
                             <!-- First Stage Form -->
                             <div class="first-stage-form-container hidden">
@@ -3390,7 +3390,7 @@
                     <div class="first-form-heading hidden">
                         <div class="form-heading-card">
                             <div class="header">
-                                <h1>Basic Information</h1>
+                                <h1>{{ __('brn.basic') }}</h1>
                                 <div class="subtitle">
                                     <span class="line"></span>
                                     <p>Let's start with your basic details</p>
@@ -3436,7 +3436,7 @@
                     <div class="second-form-heading hidden">
                         <div class="form-heading-card">
                             <div class="header">
-                                <h1>Credibility Check</h1>
+                                <h1>{{ __('brn.credibility') }}</h1>
                                 <div class="subtitle">
                                     <span class="line"></span>
                                     <p>Stand out among other businesses</p>
@@ -3482,7 +3482,7 @@
                     <div class="third-form-heading hidden">
                         <div class="form-heading-card">
                             <div class="header">
-                                <h1>Industry Preference</h1>
+                                <h1>{{ __('brn.preference') }}</h1>
                                 <div class="subtitle">
                                     <span class="line"></span>
                                     <p>Boost visibility for your matches</p>
@@ -3528,7 +3528,7 @@
                     <div class="fourth-form-heading">
                         <div class="form-heading-card">
                             <div class="header">
-                                <h1>Industry Insight</h1>
+                                <h1>{{ __('brn.insight') }}</h1>
                                 <div class="subtitle">
                                     <span class="line"></span>
                                     <p>Stand out among other businesses</p>
@@ -3775,7 +3775,7 @@
             const csrfToken = document.querySelector('input[name="_token"]')?.value ||
                 document.querySelector('meta[name="csrf-token"]')?.content;
 
-            fetch('{{ route('brn.check-email') }}', {
+            fetch('{{ locale_route('brn.check-email') }}', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -3795,7 +3795,7 @@
                         if (newToken) {
                             updateCsrfToken(newToken);
                             // Retry with new token
-                            return fetch('{{ route('brn.check-email') }}', {
+                            return fetch('{{ locale_route('brn.check-email') }}', {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',

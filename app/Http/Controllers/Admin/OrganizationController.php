@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Organization;
+use App\Support\LocaleUrl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class OrganizationController extends Controller
 {
@@ -27,9 +29,11 @@ class OrganizationController extends Controller
             'description' => 'nullable|string|max:1000',
         ]);
 
+        $slug = $this->reservedSlug($data['name']);
+
         $org = Organization::create([
             'name' => $data['name'],
-            'slug' => Str::slug($data['name']),
+            'slug' => $slug,
             'description' => $data['description'] ?? null,
         ]);
 
@@ -42,9 +46,11 @@ class OrganizationController extends Controller
             'name' => 'required|string|max:255|unique:organizations,name',
         ]);
 
+        $slug = $this->reservedSlug($data['name']);
+
         $org = Organization::create([
             'name' => $data['name'],
-            'slug' => Str::slug($data['name']),
+            'slug' => $slug,
         ]);
 
         return response()->json(['success' => true, 'organization' => $org]);
@@ -70,11 +76,24 @@ class OrganizationController extends Controller
 
         $organization->update([
             'name' => $data['name'],
-            'slug' => Str::slug($data['name']),
+            'slug' => $this->reservedSlug($data['name']),
             'description' => $data['description'] ?? $organization->description,
         ]);
 
         return orgRedirect('admin.organizations.index')->with('success', 'Organization updated successfully.');
+    }
+
+    private function reservedSlug(string $name): string
+    {
+        $slug = Str::slug($name);
+
+        if (in_array($slug, LocaleUrl::LOCALES, true)) {
+            throw ValidationException::withMessages([
+                'name' => 'This organization name is reserved for a site language.',
+            ]);
+        }
+
+        return $slug;
     }
 
     /**

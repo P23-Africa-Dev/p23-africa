@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'hero_title_line' => 'Enter African Markets',
+    'hero_title_evidence' => 'With Evidence',
+    'hero_title_not' => 'Not Assumptions',
+    'hero_body' => 'We help international businesses validate demand, verify distribution partners and build the sales operations needed to grow in Africa. From testing real buyer interest to strengthening local sales teams and channel performance, we turn market-entry plans into commercial action.',
+    'results' => 'Commercial Results in Real Markets',
+    'solutions' => 'Commercial Solutions for African Expansion',
+    'verify' => 'Distributor Verification',
+    'outbound' => 'Outbound Demand Testing',
+    'sales_ops' => 'Sales & Commercial Operations',
+    'reach' => 'Global Reach.',
+    'local' => 'Local Approach',
+    'built_for' => 'Built for International Businesses Expanding into Africa',
+    'manufacturers' => 'Equipment and Industrial Manufacturers',
+    'saas' => 'Software and SaaS Companies',
+    'why' => 'Why P23 Africa?',
+    'practical' => 'Practical, not theoretical',
+    'relationship' => 'Relationship-led',
+    'flexible' => 'Flexible engagement',
+    'objectives' => 'Built around your objectives',
+    'insights' => 'P23 Insights',
+    'guide' => 'Essential Guide to Doing Business in Africa',
+    'cta_pill' => 'START YOUR EXPANSION',
+    'cta' => 'Ready to Explore the African Market?',
+    'cta_body' => 'Whether you’re considering Africa for the first time, looking to expand into additional markets, searching for customers or distributors, or preparing an established business for its next stage of growth, P23 Africa can help.',
+];

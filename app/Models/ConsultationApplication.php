@@ -21,7 +21,8 @@ class ConsultationApplication extends Model
         'selected_challenges',
         'desired_outcomes',
         'status',
-        'submitted_at'
+        'submitted_at',
+        'locale',
     ];
 
     protected $casts = [

@@ -96,21 +96,21 @@
                 @foreach ($categories as $index => $category)
                     @if ($index < 5)
                         <!-- Box 1 -->
-                        <a href="{{ route('archive-list', ['category' => $category->name]) }}">
+                        <a href="{{ locale_route('archive-list', ['category' => $category->name]) }}">
                             <div class="box" style="background-image: url('{{ asset($backgrounds[$index]) }}');">
                                 <div class="text-wrapper {{ $index === 3 ? 'dark-text' : '' }}">
-                                    <p class="title">{{ $category->name }}</p>
-                                    <p class="description">{{ $category->description }}</p>
+                                    <p class="title">{{ $category->translated('name') }}</p>
+                                    <p class="description">{{ $category->translated('description') }}</p>
                                 </div>
                             </div>
                         </a>
                     @else
                         <!-- Default Style for Remaining Categories -->
-                        <a href="{{ route('archive-list', ['category' => $category->name]) }}">
+                        <a href="{{ locale_route('archive-list', ['category' => $category->name]) }}">
                             <div class="box default-box">
                                 <div class="text-wrapper">
-                                    <p class="title">{{ $category->name }}</p>
-                                    <p class="description">{{ $category->description }}</p>
+                                    <p class="title">{{ $category->translated('name') }}</p>
+                                    <p class="description">{{ $category->translated('description') }}</p>
                                 </div>
                             </div>
                         </a>
@@ -153,7 +153,7 @@
             </div>
 
             <div class="container btn-cd">
-                <a href="{{ route('archive-list') }}" class="btn">View all Archived Blogs</a>
+                <a href="{{ locale_route('archive-list') }}" class="btn">View all Archived Blogs</a>
             </div>
         </section>
     </section>
@@ -170,7 +170,7 @@
             }
 
             $.ajax({
-                url: '{{ route('archive.search') }}',
+                url: '{{ locale_route('archive.search') }}',
                 method: 'GET',
                 data: {
                     query

@@ -1144,7 +1144,7 @@
                         <!-- STEP 1 -->
                         <div class="step-title active title1" data-title="BUSINESS OVERVIEW"
                             data-subtitle="We use this info to better understand your business before the session.">
-                            <h2>BUSINESS OVERVIEW</h2>
+                            <h2>{{ __('consultation.overview') }}</h2>
                             <p class="mobile-p">
                                 <span>We use this info to better understand</span>
                                 <span> your business before the session</span>
@@ -1158,7 +1158,7 @@
                         <!-- STEP 2 -->
                         <div class="step-title title2" data-title="BRAND IDENTITY"
                             data-subtitle="Tell us more about your brand tone, target audience, and positioning.">
-                            <h2>Current Stage & Goals</h2>
+                            <h2>{{ __('consultation.goals') }}</h2>
 
                             <p class="mobile-p">
                                 <span>What are your current top goals?</span>
@@ -1172,7 +1172,7 @@
                         <!-- STEP 3 -->
                         <div class="step-title title3" data-title="challenges"
                             data-subtitle="Share your project goals and the key outcomes you want to achieve.">
-                            <h2>Key Challenges</h2>
+                            <h2>{{ __('consultation.challenges') }}</h2>
 
                             <p class="mobile-p">
                                 <span>What challenges are holding your </span>
@@ -1186,14 +1186,14 @@
 
                         <!-- STEP 4 -->
                         <div class="step-title title4" data-title="outcome">
-                            <h2>Outcome</h2>
+                            <h2>{{ __('consultation.outcome') }}</h2>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Step Content -->
-            <form id="multiStepForm" method="POST" action="{{ route('consultation.submit') }}">
+            <form id="multiStepForm" method="POST" action="{{ locale_route('consultation.submit') }}">
                 @csrf
 
                 <!-- STEP 1 -->

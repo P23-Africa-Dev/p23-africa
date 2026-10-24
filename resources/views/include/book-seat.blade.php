@@ -79,7 +79,7 @@
                 Thank you for signing up. We've sent event details to your email <br>
                 <span class="">— please check your inbox.</span>
             </h5>
-            <a href="{{ route('events.all-events') }}" class="btn mt-3"
+            <a href="{{ locale_route('events.all-events') }}" class="btn mt-3"
                 style="background-color: #0D4036; color: #fff; font-family: 'GT Walsheim Con';">
                 View Other Events <i class="bi bi-arrow-right ms-2"></i>
             </a>

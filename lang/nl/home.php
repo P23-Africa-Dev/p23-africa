@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'hero_title_line' => 'Betreed Afrikaanse markten',
+    'hero_title_evidence' => 'Met bewijs',
+    'hero_title_not' => 'Niet met aannames',
+    'hero_body' => 'Wij helpen internationale bedrijven de vraag te toetsen, distributiepartners te controleren en de verkooporganisatie op te bouwen die nodig is om in Afrika te groeien. Van echte kopersinteresse tot sterkere lokale teams: wij maken markttoegang tot commerciële actie.',
+    'results' => 'Commerciële resultaten in echte markten',
+    'solutions' => 'Commerciële oplossingen voor expansie in Afrika',
+    'verify' => 'Distributeurs controleren',
+    'outbound' => 'Outbound vraagtest',
+    'sales_ops' => 'Verkoop en commerciële operatie',
+    'reach' => 'Wereldwijd bereik.',
+    'local' => 'Lokale aanpak',
+    'built_for' => 'Voor internationale bedrijven die naar Afrika uitbreiden',
+    'manufacturers' => 'Producenten van apparatuur en industrie',
+    'saas' => 'Software- en SaaS-bedrijven',
+    'why' => 'Waarom P23 Africa?',
+    'practical' => 'Praktisch, niet theoretisch',
+    'relationship' => 'Gebouwd op relaties',
+    'flexible' => 'Flexibele samenwerking',
+    'objectives' => 'Afgestemd op uw doelen',
+    'insights' => 'P23-inzichten',
+    'guide' => 'Essentiële gids voor zakendoen in Afrika',
+    'cta_pill' => 'START UW EXPANSIE',
+    'cta' => 'Klaar om de Afrikaanse markt te verkennen?',
+    'cta_body' => 'Of u Afrika voor het eerst overweegt, naar extra markten wilt uitbreiden, klanten of distributeurs zoekt, of een bestaand bedrijf voorbereidt op de volgende groeifase: P23 Africa kan helpen.',
+];

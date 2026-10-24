@@ -36,7 +36,7 @@
                             Explore upcoming events tailored to equip, connect, and empower businesses across Africa and
                             beyond.
                         </p>
-                        <a href="{{ route('events.all-events') }}" class="btn btn-outline-light2 mt-3">
+                        <a href="{{ locale_route('events.all-events') }}" class="btn btn-outline-light2 mt-3">
                             See All Events <i class="bi bi-arrow-right px-3"></i>
                         </a>
                     </div>
@@ -50,15 +50,15 @@
                                     <img src="{{ asset('images/calendar-white.png') }}" id="img" loading='lazy'
                                         alt="">
                                     <div class="event-title"><a
-                                            href="{{ route('events.show', $event->slug) }}">{{ Str::limit($event->title, 20) }}</a>
+                                            href="{{ locale_route('events.show', ['slug' => $event->slug]) }}">{{ Str::limit($event->translated('title'), 20) }}</a>
                                     </div>
                                 </div>
                                 <p>
-                                    {!! Str::limit($event->description, 233) !!}
+                                    {!! Str::limit($event->translated('description'), 233) !!}
                                 </p><br>
                                 <div class="d-flex justify-content-between align-items-center my-auto btn-book">
                                     <div>
-                                        <a href="{{ route('events.show', $event->slug) }}"
+                                        <a href="{{ locale_route('events.show', ['slug' => $event->slug]) }}"
                                             class="btn btn-outline-light actionBtn" id="actionBtn"
                                             data-event-id="{{ $event->id }}"
                                             data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
@@ -66,7 +66,7 @@
                                             data-bs-target="#seatModal">
                                             Book A Seat <i class="bi bi-arrow-right"></i>
                                         </a>
-                                        {{-- <a href="{{ route('events.show', $event->slug) }}"
+                                        {{-- <a href="{{ locale_route('events.show', ['slug' => $event->slug]) }}"
                                             class="btn btn-outline-light btn-book actionBtn" id="actionBtn"
                                             data-event-id="{{ $event->id }}"
                                             data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
@@ -77,7 +77,7 @@
                                     </div>
 
                                     <div>
-                                        <a href="{{ route('events.show', $event->slug) }}" class="details">
+                                        <a href="{{ locale_route('events.show', ['slug' => $event->slug]) }}" class="details">
                                             View Details <i class="bi bi-arrow-right"></i>
                                         </a>
                                     </div>
@@ -92,15 +92,15 @@
                                     {{-- <div class="event-icon">📅</div> --}}
                                     <img src="{{ asset('images/calendar.png') }}" loading='lazy' alt="">
                                     <div class="event-title"><a
-                                            href="{{ route('events.show', $event->slug) }}">{{ Str::limit($event->title, 20) }}</a>
+                                            href="{{ locale_route('events.show', ['slug' => $event->slug]) }}">{{ Str::limit($event->translated('title'), 20) }}</a>
                                     </div>
                                 </div>
                                 <p>
-                                    {!! Str::limit($event->description, 233) !!}
+                                    {!! Str::limit($event->translated('description'), 233) !!}
                                 </p><br>
                                 <div class="d-flex justify-content-between align-items-center my-auto btn-book">
                                     <div>
-                                        <a href="{{ route('events.show', $event->slug) }}"
+                                        <a href="{{ locale_route('events.show', ['slug' => $event->slug]) }}"
                                             class="btn btn-outline-dark actionBtn" id="actionBtn"
                                             data-event-id="{{ $event->id }}"
                                             data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
@@ -111,12 +111,12 @@
                                     </div>
 
                                     <div>
-                                        <a href="{{ route('events.show', $event->slug) }}" class="details">
+                                        <a href="{{ locale_route('events.show', ['slug' => $event->slug]) }}" class="details">
                                             View Details <i class="bi bi-arrow-right"></i>
                                         </a>
                                     </div>
                                 </div>
-                                {{-- <a href="{{ route('events.show', $event->slug) }}" class="btn btn-outline-dark btn-book"
+                                {{-- <a href="{{ locale_route('events.show', ['slug' => $event->slug]) }}" class="btn btn-outline-dark btn-book"
                                     id="actionBtn" data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
                                     data-event-link="{{ $event->link }}" data-bs-toggle="modal"
                                     data-bs-target="#seatModal">
@@ -183,7 +183,7 @@
             <div class="row g-md-5 g-4">
                 <div class="col-12 col-sm-6 col-lg-4 my-auto">
                     <div class="">
-                        <h2 class="event-title">Past Events</h2>
+                        <h2 class="event-title">{{ __('events.past') }}</h2>
                         <p class="event-subtitle">
                             Explore our past events tailored to equip, connect, and empower businesses across Africa and
                             beyond.
@@ -206,7 +206,7 @@
                                 <h5>{{ $past_event->title }}</h5>
                                 <p>{!! Str::limit($past_event->description, 80) !!}</p>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <a href="{{ route('events.show', $past_event->slug) }}" class="view-link">View Gallery
+                                    <a href="{{ locale_route('events.show', ['slug' => $past_event->slug]) }}" class="view-link">View Gallery
                                         →</a>
                                     <span class="event-meta">Virtual (Google Meet)</span>
                                 </div>

@@ -5,20 +5,20 @@
                 <div class="row gy-4">
                     <div class="col-md-4 col-lg-4 col-7">
                         <img src="{{ asset('images/logo.png') }}" loading='lazy' alt="">
-                        <p class="mt-3 logo-text">P23 Africa LTD is registered in the United Kingdom. Company No: 15246700</p>
+                        <p class="mt-3 logo-text">{{ __('footer.company') }}</p>
                     </div>
 
                     <div class="col-md-2 col-lg-2 col-4 footer-links desk">
-                        <a href="{{ route('sales') }}">Home</a>
-                        <a href="#">How It Works</a>
-                        <a href="#">Quiz</a>
+                        <a href="{{ locale_route('sales') }}">{{ __('nav.home') }}</a>
+                        <a href="#">{{ __('nav.how_it_works') }}</a>
+                        <a href="{{ locale_route('quiz') }}">{{ __('nav.quiz') }}</a>
                     </div>
 
                     <div class="col-md-2 col-lg-2 col-4 footer-links footer-quick-links">
-                        <p>Quick Links</p>
-                        <a href="{{ route('sales') }}">Home</a>
-                        <a href="#">How It Works</a>
-                        <a href="#">Quiz</a>
+                        <p>{{ __('footer.quick_links') }}</p>
+                        <a href="{{ locale_route('sales') }}">{{ __('nav.home') }}</a>
+                        <a href="#">{{ __('nav.how_it_works') }}</a>
+                        <a href="{{ locale_route('quiz') }}">{{ __('nav.quiz') }}</a>
                     </div>
 
                     {{-- <div class="col-md-2 footer-links strategy">
@@ -32,7 +32,7 @@
                     </div> --}}
 
                     <div class="col-md-2 footer-links first-icon">
-                        <p>Contact Us</p>
+                        <p>{{ __('footer.contact_us') }}</p>
                         <div class="social-icons mt-2 d-flex">
                             <a href="https://linkedin.com/company/p23-africa/" target="_blank"><i class="fab fa-linkedin"></i></a>
                             <a href="https://facebook.com/p23africa" target="_blank"><i class="fab fa-facebook"></i></a>
@@ -42,7 +42,7 @@
                     </div>
 
                     <div class="col-md-2 footer-links second-icon">
-                        <p>Contact Us</p>
+                        <p>{{ __('footer.contact_us') }}</p>
                         <div class="social-icons mt-2 d-flex">
                             <a href="https://linkedin.com/company/p23-africa/" target="_blank"><i class="fab fa-linkedin"></i></a>
                             <a href="https://facebook.com/p23africa" target="_blank"><i class="fab fa-facebook"></i></a>

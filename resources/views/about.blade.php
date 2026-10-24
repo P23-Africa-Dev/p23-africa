@@ -30,8 +30,8 @@
             </div>
             
             <div class="ab-hero-card">
-                <h1>EMPOWERING BUSINESSES,<br>TRANSFORMING MARKETS.</h1>
-                <p>Africa-focused, globally relevant.</p>
+                <h1>{!! __('about.hero') !!}</h1>
+                <p>{{ __('about.hero_line') }}</p>
             </div>
         </div>
     </section>
@@ -43,8 +43,8 @@
     <section class="ab-who-section" aria-labelledby="who-we-are-heading">
         <div class="ab-who-container">
             <div class="ab-who-header">
-                <h2 id="who-we-are-heading" class="ab-who-title">WHO WE ARE</h2>
-                <p class="ab-who-subtitle">Everything you want to know</p>
+                <h2 id="who-we-are-heading" class="ab-who-title">{{ __('about.who') }}</h2>
+                <p class="ab-who-subtitle">{{ __('about.who_sub') }}</p>
             </div>
 
             <div class="ab-pillars-grid">
@@ -58,7 +58,7 @@
                              aria-hidden="true">
                     </div>
                     <div class="ab-pillar-text">
-                        <h3>The Knowledge of Experts</h3>
+                        <h3>{{ __('about.experts') }}</h3>
                         <p>Tap into decades of combined experience from industry specialists. We provide strategic insights tailored to your unique business journey.</p>
                     </div>
                 </article>
@@ -73,7 +73,7 @@
                              aria-hidden="true">
                     </div>
                     <div class="ab-pillar-text">
-                        <h3>Simple Execution</h3>
+                        <h3>{{ __('about.execution') }}</h3>
                         <p>We strip away complexity to deliver clear, actionable steps. Our streamlined processes turn big ideas into tangible outcomes.</p>
                     </div>
                 </article>
@@ -88,7 +88,7 @@
                              aria-hidden="true">
                     </div>
                     <div class="ab-pillar-text">
-                        <h3>Practical Guidance</h3>
+                        <h3>{{ __('about.guidance') }}</h3>
                         <p>Beyond theory, we walk with you through implementation. Expect hands-on support to navigate real-world challenges with confidence.</p>
                     </div>
                 </article>
@@ -104,11 +104,11 @@
         <div class="ab-story-container">
             <div class="ab-story-card">
                 <div class="ab-story-header">
-                    <h2 id="our-story-heading" class="ab-story-title">OUR STORY</h2>
-                    <h3 class="ab-story-subtitle">We aim to inspire</h3>
+                    <h2 id="our-story-heading" class="ab-story-title">{{ __('about.story') }}</h2>
+                    <h3 class="ab-story-subtitle">{{ __('about.inspire') }}</h3>
                 </div>
-                <p>Founded on the conviction that Africa’s vast growth potential requires deliberate, on-the-ground precision, P23 Africa bridges the gap between global enterprise ambition and local commercial reality. We help multinational organizations, investors, and high-growth scale-ups navigate regulatory landscapes, validate regional demand, and forge vetted distributor partnerships that drive sustainable, scalable market leadership.</p>
-                <a href="{{ url('contact') }}" class="ab-story-btn">Contact Us</a>
+                <p>{{ __('about.story_body') }}</p>
+                <a href="{{ locale_route('contact') }}" class="ab-story-btn">{{ __('about.contact') }}</a>
             </div>
 
             <div class="ab-story-image-wrap">
@@ -132,7 +132,7 @@
                 </div>
 
                 <div class="ab-exec-header-row">
-                    <h2 id="exec-heading" class="ab-exec-header-title">The People Behind<br>The Influence</h2>
+                    <h2 id="exec-heading" class="ab-exec-header-title">{!! __('about.people') !!}</h2>
                     <p class="ab-exec-header-desc">With a commitment to excellence, integrity, and collaboration, we partner closely with our clients to understand their unique needs, goals, and aspirations. Through personalised consulting services, actionable insights, and hands-on support, we strive to empower businesses and entrepreneurs to thrive in dynamic and competitive markets.</p>
                 </div>
             </div>
@@ -190,10 +190,10 @@
     @if(isset($caseStudies) && count($caseStudies) > 0)
     <div class="visually-hidden" aria-hidden="true">
         @foreach ($caseStudies as $study)
-            <a href="{{ route('case-studies.show', $study['slug']) }}">{{ $study['title'] }}</a>
+            <a href="{{ locale_route('case-studies.show', ['slug' => $study['slug']]) }}">{{ $study['title'] }}</a>
         @endforeach
-        <a href="{{ route('case-studies') }}">Case Studies</a>
-        <a href="{{ route('case-studies', ['all' => 1]) }}#case-library">All Case Studies</a>
+        <a href="{{ locale_route('case-studies') }}">Case Studies</a>
+        <a href="{{ locale_route('case-studies', ['all' => 1]) }}#case-library">All Case Studies</a>
     </div>
     @endif
 </div>

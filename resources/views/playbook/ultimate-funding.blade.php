@@ -936,7 +936,7 @@
                         the right capital faster.
                     </p>
 
-                    <a href="{{ route('playbook.checkout') }}" class="cta-btn">Download Now</a>
+                    <a href="{{ locale_route('playbook.checkout') }}" class="cta-btn">Download Now</a>
                 </div>
 
                 <div class="intro-image desktop">
@@ -983,7 +983,7 @@
                     opportunities designed for African entrepreneurs.
                 </p>
 
-                <a href="{{ route('playbook.checkout') }}" class="cta-btn">Get Access to the Funding Directory</a>
+                <a href="{{ locale_route('playbook.checkout') }}" class="cta-btn">Get Access to the Funding Directory</a>
             </div>
         </div>
     </section>
@@ -995,7 +995,7 @@
                     <div class="text-content-upper">
                         <h2>Get Access to the Ultimate Funding & Investor Directory</p>
 
-                            <a href="{{ route('playbook.checkout') }}" class="learn-more">Get your Funding Directory
+                            <a href="{{ locale_route('playbook.checkout') }}" class="learn-more">Get your Funding Directory
                                 Here!</a>
                     </div>
 

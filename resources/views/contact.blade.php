@@ -1344,7 +1344,7 @@
                 <div class="left-row animate-on-scroll">
                     <!--  -->
                     <div class="contact-info">
-                        <h2 class="heading">Contact Information</h2>
+                        <h2 class="heading">{{ __('contact.information') }}</h2>
                         <div class="contact-info-icons ">
                             <div class="icon phone">
                                 <img src="{{ asset('./img/phone.png') }}" loading="lazy"src="{{ asset('./img/phone.png') }}"
@@ -1365,13 +1365,13 @@
                     <!-- Contact Form -->
                     <div class="contact-info-form">
 
-                        <form class="contact-info-form__container" action="{{ route('contact.submit') }}" method="POST"
+                        <form class="contact-info-form__container" action="{{ locale_route('contact.submit') }}" method="POST"
                             id="contactForm">
                             @csrf
-                            <h2 class="contact-info-form__title">Leave us a message</h2>
+                            <h2 class="contact-info-form__title">{{ __('contact.leave_message') }}</h2>
 
                             <div class="contact-info-form__group name-field">
-                                <label class="floating-label">Full Name</label>
+                                <label class="floating-label">{{ __('contact.full_name') }}</label>
                                 <input type="text" name="name" class="floating-input @error('name') error @enderror"
                                     value="{{ old('name') }}" />
                                 @error('name')
@@ -1383,7 +1383,7 @@
 
                             <div class="form-field2 country_with_phone">
                                 <div class="contact-info-form__group full-width">
-                                    <label class="floating-label2">Country</label>
+                                    <label class="floating-label2">{{ __('contact.country') }}</label>
                                     <div class="phone-row">
                                         <!-- Country Flag Dropdown -->
                                         <div class="country-select" id="countrySelect">
@@ -1987,11 +1987,11 @@
 
                                         <!-- Phone Input -->
                                         <div class="phone-input-wrapper">
-                                            <label class="floating-phone">Phone Number</label>
+                                            <label class="floating-phone">{{ __('contact.phone') }}</label>
                                             <span class="prefix" id="phonePrefix" style="display: none;"></span>
                                             <input type="tel" id="phoneNumber" name="phone"
                                                 class="floating-input phone @error('phone') error @enderror"
-                                                placeholder="Select country first" value="{{ old('phone') }}"
+                                                placeholder="{{ __('contact.phone_placeholder') }}" value="{{ old('phone') }}"
                                                 readonly />
                                             <!-- Hidden input for country code -->
                                             <input type="hidden" id="countryCode" name="country_code"
@@ -2017,7 +2017,7 @@
                             <div class="form_group_field mt-2">
 
                                 <div class="contact-info-form__group name-field emaill">
-                                    <label class="floating-label">Email</label>
+                                    <label class="floating-label">{{ __('contact.email') }}</label>
 
                                     <input type="email" name="email"
                                         class="floating-input @error('email') error @enderror"
@@ -2030,7 +2030,7 @@
 
 
                                 <div class="contact-info-form__group name-field company">
-                                    <label class="floating-label">Company Name</label>
+                                    <label class="floating-label">{{ __('contact.company') }}</label>
                                     <input type="text" name="company_name"
                                         class="floating-input @error('company_name') error @enderror"
                                         value="{{ old('company_name') }}" />
@@ -2056,39 +2056,39 @@
 
 
                             <div class="contact-info-form__section-title">
-                                What service(s) do you require
+                                {{ __('contact.services_title') }}
                             </div>
                             <p class="contact-info-form__subtitle">
-                                Select from the options
+                                {{ __('contact.services_hint') }}
                             </p>
 
                             <div class="contact-info-form__tags">
                                 <div class="contact-info-form__tags-row">
                                     <div class="tag" data-value="Verify Distributors">
                                         <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
-                                        Verify Distributors
+                                        {{ __('contact.services.verify_distributors') }}
                                     </div>
 
                                     <div class="tag" data-value="Sales">
                                         <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
-                                        Sales
+                                        {{ __('contact.services.sales') }}
                                     </div>
                                 </div>
 
                                 <div class="contact-info-form__tags-row">
                                     <div class="tag" data-value="Expansion">
                                         <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
-                                        Expansion
+                                        {{ __('contact.services.expansion') }}
                                     </div>
 
                                     <div class="tag" data-value="Operations">
                                         <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
-                                        Operations
+                                        {{ __('contact.services.operations') }}
                                     </div>
 
                                     <div class="tag" data-value="Launch">
                                         <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
-                                        Launch
+                                        {{ __('contact.services.launch') }}
                                     </div>
                                 </div>
                             </div>
@@ -2101,7 +2101,7 @@
                             @enderror
 
                             <textarea name="message" class="contact-info-form__textarea @error('message') error @enderror"
-                                placeholder="Add additional message here">{{ old('message') }}</textarea>
+                                placeholder="{{ __('contact.message_placeholder') }}">{{ old('message') }}</textarea>
                             @error('message')
                                 <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
                                     {{ $message }}</div>
@@ -2116,8 +2116,8 @@
                             @enderror
 
                             <button type="submit" class="contact-info-form__btn" id="submitBtn">
-                                <span class="btn-text">Send</span>
-                                <span class="spinner" style="display: none;">Sending...</span>
+                                <span class="btn-text">{{ __('contact.send') }}</span>
+                                <span class="spinner" style="display: none;">{{ __('contact.sending') }}</span>
                             </button>
                         </form>
                     </div>
@@ -2126,7 +2126,7 @@
                     <!-- Location -->
 
                     <div class="contact-info-location">
-                        <h3 class="heading">Location</h3>
+                        <h3 class="heading">{{ __('contact.location') }}</h3>
                         <div class="location-content">
                             <p>185 Tower Bridge Rd</p>
                             <p>185 Tower Bridge Rd, London SE1 2UF, UK</p>
@@ -2544,7 +2544,7 @@
                 if (!nameInput.value.trim()) {
                     validationErrors.push({
                         field: 'name',
-                        message: 'Name is required.',
+                        message: @json(__('contact.validation.name')),
                         element: nameInput
                     });
                 }
@@ -2554,7 +2554,7 @@
                 if (!companyInput.value.trim()) {
                     validationErrors.push({
                         field: 'company_name',
-                        message: 'Company name is required.',
+                        message: @json(__('contact.validation.company_name')),
                         element: companyInput
                     });
                 }
@@ -2564,13 +2564,13 @@
                 if (!emailInput.value.trim()) {
                     validationErrors.push({
                         field: 'email',
-                        message: 'Email address is required.',
+                        message: @json(__('contact.validation.email')),
                         element: emailInput
                     });
                 } else if (!isValidEmail(emailInput.value)) {
                     validationErrors.push({
                         field: 'email',
-                        message: 'Please enter a valid email address.',
+                        message: @json(__('contact.validation.email_invalid')),
                         element: emailInput
                     });
                 }
@@ -2580,7 +2580,7 @@
                 if (!countryCodeInput.value.trim()) {
                     validationErrors.push({
                         field: 'country_code',
-                        message: 'Please select your country first.',
+                        message: @json(__('contact.validation.country_first')),
                         element: document.querySelector('.country_with_phone')
                     });
                 }
@@ -2590,7 +2590,7 @@
                 if (!phoneInputEl.value.trim()) {
                     validationErrors.push({
                         field: 'phone',
-                        message: 'Phone number is required.',
+                        message: @json(__('contact.validation.phone')),
                         element: document.querySelector('.country_with_phone')
                     });
                 }
@@ -2600,7 +2600,7 @@
                 if (!servicesInput.value || servicesInput.value.trim() === '') {
                     validationErrors.push({
                         field: 'services',
-                        message: 'Please select at least one service.',
+                        message: @json(__('contact.validation.services')),
                         element: document.querySelector('.contact-info-form__tags')
                     });
                 }
@@ -2610,7 +2610,7 @@
                 if (!messageInput.value.trim()) {
                     validationErrors.push({
                         field: 'message',
-                        message: 'Message is required.',
+                        message: @json(__('contact.validation.message')),
                         element: messageInput
                     });
                 }

@@ -81,273 +81,57 @@ Route::get('/our-sales', function () {
 })->name('redirect.with.count');
 
 
-Route::get('/', [SliderController::class, 'showSlider'])->name('homepage');
 
-Route::get('/case-studies', [\App\Http\Controllers\CaseStudyController::class, 'show'])->name('case-studies');
-Route::get('/case-studies/{slug}', [\App\Http\Controllers\CaseStudyController::class, 'show'])->name('case-studies.show');
+Route::get("/en", fn () => redirect("/", 301));
+Route::get("/en/{path}", fn (string $path) => redirect("/" . $path, 301))->where("path", ".*");
 
-Route::get('/contact', function () {
-    ClickTracker::track('Contact_Page');
-    return view('contact');
-});
-Route::get('/about', function () {
-    ClickTracker::track('About_Page');
-    return view('about', ['caseStudies' => \App\Support\CaseStudies::all()]);
-});
-Route::get('/services', function () {
-    ClickTracker::track('Service_Page');
-    return view('services');
+$registerPublicRoutes = require __DIR__ . "/public.php";
+
+Route::middleware("locale")->group(function () use ($registerPublicRoutes) {
+    $registerPublicRoutes(false);
 });
 
-// Market Entry & Expansion Flow
-Route::get('/market-entry', function () {
-    ClickTracker::track('Market_Entry_Page');
-    return view('market-entry.index');
-})->name('services.market-entry');
+Route::middleware("locale")
+    ->prefix("{locale}")
+    ->where(["locale" => "fr|de|nl"])
+    ->group(function () use ($registerPublicRoutes) {
+        $registerPublicRoutes(true);
+    });
 
-Route::get('/market-entry/nigeria', function () {
-    ClickTracker::track('Market_Entry_Nigeria_Page');
-    return view('market-entry.nigeria');
-})->name('services.market-entry.nigeria');
+Route::get("/csrf-token", function () {
+    return response()->json(["token" => csrf_token()]);
+})->name("csrf.refresh");
 
-Route::get('/market-entry/ghana', function () {
-    ClickTracker::track('Market_Entry_Ghana_Page');
-    return view('market-entry.ghana');
-})->name('services.market-entry.ghana');
+Route::post("/ultimate-funding/payment-callback", [\App\Http\Controllers\PlaybookController::class, "ultimateFundingPaymentCallback"])->name("ultimate-funding.payment-callback");
+Route::post("/ultimate-funding/create-payment-intent", [\App\Http\Controllers\PlaybookController::class, "createStripePaymentIntent"])->name("ultimate-funding.create-payment-intent");
+Route::post("/ultimate-funding/stripe-payment-callback", [\App\Http\Controllers\PlaybookController::class, "stripePaymentCallback"])->name("ultimate-funding.stripe-callback");
 
-// Service detail pages
-Route::get('/distributor-partner-development', function () {
-    ClickTracker::track('Distributor_Partner_Page');
-    return view('services.distributor-partner-development');
-})->name('services.distributor-partner');
-
-Route::get('/outbound-sales-demand-testing', function () {
-    ClickTracker::track('Outbound_Sales_Page');
-    return view('services.outbound-sales-demand-testing');
-})->name('services.outbound-sales');
-
-// Convenience aliases / redirects from legacy /services/market-entry
-Route::get('/services/market-entry', fn() => redirect()->route('services.market-entry'));
-Route::get('/services/market-entry/nigeria', fn() => redirect()->route('services.market-entry.nigeria'));
-Route::get('/services/market-entry/ghana', fn() => redirect()->route('services.market-entry.ghana'));
-
-Route::get('/sales', function () {
-    ClickTracker::track('Sales_Page');
-    return response()
-        ->view('sales')
-        ->header('X-Robots-Tag', 'noindex, nofollow');
-})->name('sales');
-
-Route::get('/quiz', function () {
-    ClickTracker::track('Quiz_Page');
-    return view('sales-quiz');
-})->name('quiz');
-
-Route::get('/device-display', function () {
-    return view('device');
-})->name('device');
-
-Route::get('/playbook/ultimate-funding/payment', function () {
-    return view('playbook.payment');
-})->name('playbook.payment');
-
-Route::get('/playbook/ultimate-funding/checkout', function () {
-    return view('playbook.checkout');
-})->name('playbook.checkout');
-// BRN
-// Route::get('/brn', function () {
-//     ClickTracker::track('BRN_Page');
-//     return view('brn');
-// })->name('brn');
-Route::get('/noel54/interest-form', function () {
-    ClickTracker::track('NOEL_Form_Page');
-    return view('brn-form');
-})->name('brn-form');
-
-Route::post('/noel54/interest-form', [BrnController::class, 'store'])->name('brn.submit');
-Route::post('/noel54/check-email', [BrnController::class, 'checkEmail'])->name('brn.check-email');
-
-// Step-by-step form validation endpoints
-Route::post('/noel54/validate-step/{step}', [BrnController::class, 'validateStep'])->name('brn.validate-step');
-Route::post('/noel54/validate-all', [BrnController::class, 'validateAllSteps'])->name('brn.validate-all');
-
-// CSRF Token Refresh Route - for long forms that may experience session timeout
-Route::get('/csrf-token', function () {
-    return response()->json(['token' => csrf_token()]);
-})->name('csrf.refresh');
-
-// Playbook Download Route
-Route::post('/playbook/download', [\App\Http\Controllers\PlaybookController::class, 'download'])->name('playbook.download');
-
-// Sales Book Download Route
-Route::post('/sales-book/download', [\App\Http\Controllers\PlaybookController::class, 'salesBookDownload'])->name('sales-book.download');
-
-// Ultimate Funding Download Route (Premium)
-Route::post('/ultimate-funding/download', [\App\Http\Controllers\PlaybookController::class, 'ultimateFundingDownload'])->name('ultimate-funding.download');
-Route::post('/ultimate-funding/payment-callback', [\App\Http\Controllers\PlaybookController::class, 'ultimateFundingPaymentCallback'])->name('ultimate-funding.payment-callback');
-
-// Stripe Payment Routes
-Route::post('/ultimate-funding/create-payment-intent', [\App\Http\Controllers\PlaybookController::class, 'createStripePaymentIntent'])->name('ultimate-funding.create-payment-intent');
-Route::post('/ultimate-funding/stripe-payment-callback', [\App\Http\Controllers\PlaybookController::class, 'stripePaymentCallback'])->name('ultimate-funding.stripe-callback');
-
-// Playbook Landing Page
-Route::get('/founders-playbook', [\App\Http\Controllers\PlaybookController::class, 'landing'])->name('playbook.landing');
-Route::get('/playbook/funding-readiness', [\App\Http\Controllers\PlaybookController::class, 'playbookOne'])->name('playbook.landing1');
-Route::get('/playbook/ultimate-funding', [\App\Http\Controllers\PlaybookController::class, 'playbookTwo'])->name('playbook.landing2');
-
-
-Route::get('/brn-form', function () {
-    return redirect('/noel54/interest-form');
+Route::get("/test-csrf", function () {
+    return view("test-csrf");
 });
 
+Route::post("/test-csrf-submit", function () {
+    return response()->json(["message" => "CSRF protection working!"]);
+})->name("test.csrf");
 
-
-/* ========== TEST CSRF TOKEN ========== */
-Route::get('/test-csrf', function () {
-    return view('test-csrf');
+Route::get("/test-email", function () {
+    return view("emails.challenge_result", ["label" => "Hidden Powerhouse"]);
 });
 
-Route::post('/test-csrf-submit', function () {
-    return response()->json(['message' => 'CSRF protection working!']);
-})->name('test.csrf');
-/* ========== TEST CSRF TOKEN END ========== */
+Route::get("/chat-test", function () {
+    return view("chat-test");
+})->name("chat.test");
 
+Route::post("/book-consultation/payment/initiate", [App\Http\Controllers\ConsultationController::class, "initiatePayment"])->name("consultation.payment.initiate");
+Route::post("/book-consultation/payment/process", [App\Http\Controllers\ConsultationController::class, "processPayment"])->name("consultation.payment.process");
+Route::post("/book-consultation/payment/callback", [App\Http\Controllers\ConsultationController::class, "handlePaymentCallback"])->name("consultation.payment.callback");
+Route::post("/book-consultation/payment/create-intent", [App\Http\Controllers\ConsultationController::class, "createStripePaymentIntent"])->name("consultation.payment.create-intent");
+Route::get("/book-consultation/payment/callback/{reference}/{status}", [App\Http\Controllers\ConsultationController::class, "handlePaymentCallbackLegacy"])->name("consultation.payment.callback.legacy");
 
+Route::get("/google/calendar/auth", [App\Http\Controllers\ConsultationController::class, "googleCalendarAuth"])->name("google.calendar.auth");
+Route::get("/google/calendar/callback", [App\Http\Controllers\ConsultationController::class, "googleCalendarCallback"])->name("google.calendar.callback");
 
-Route::get('/noel54', [BrnController::class, 'brnIndex'])->name('brn');
-
-// Student
-Route::get('/student', [SliderController::class, 'showSliderStudent'])->name('student');
-Route::post('/submit-student', [submitStudent::class, 'submitStudent']);
-
-
-// Route::get('/student', function () {
-//     return view('student');
-// })->name('student');
-
-/**
- * Route to display click counts.
- */
-
-Route::get('/resource-hub', [ResourceHubController::class, 'resourceHub'])->name('resource-hub');
-Route::get('/resource/{slug}', [ResourceHubController::class, 'resourceDetails'])->name('resource-show');
-Route::get('/res/category/{slug}', [ResourceHubController::class, 'categoryView'])->name('archive.category');
-
-
-Route::get('/res/archive', [ResourceHubController::class, 'archivePage'])->name('archive-page');
-Route::get('/res/archive/list', [ResourceHubController::class, 'archiveList'])->name('archive-list');
-Route::get('/res/archive/search', [ResourceHubController::class, 'searchArchive'])->name('archive.search');
-
-
-Route::get('/quiz/result/fragile-funnel', fn() => view('quiz-answers.result-a'))->name('fragile-funnel');
-Route::get('/quiz/result/hidden-powerhouse', fn() => view('quiz-answers.result-b'))->name('hidden-powerhouse');
-Route::get('/quiz/result/cloudy-climber', fn() => view('quiz-answers.result-c'))->name('cloudy-climber');
-
-
-Route::get('/quiz/start', function () {
-    ClickTracker::track('Quiz_Start_Page');
-    return view('start-quiz');
-})->name('start-quiz');
-
-Route::get('/test-email', function () {
-    return view('emails.challenge_result', ['label' => 'Hidden Powerhouse']);
-});
-
-// Route::post('/submit-challenge', function (Request $request) {
-//     $data = $request->only(['challenge1', 'challenge2', 'challenge3', 'label']);
-
-//     Mail::to('contact@p23africa.com')->send(new ChallengeSubmission($data));
-
-//     return response()->json(['status' => 'success']);
-// });
-Route::post('/submit-challenge', [QuizController::class, 'submitChallenge']);
-
-
-
-// Route::post('/events/{event}/book-seat', [SeatController::class, 'store'])->name('seats.store');
-Route::post('/book-seat/{event_id}', [SeatController::class, 'store'])->name('seats.store');
-
-Route::get('/events', [UserEventController::class, 'eventPage'])->name('event');
-
-// Route::get('/all-events', [UserEventController::class, 'allEvents'])->name('events.all-events');
-// Route::get('/all-events/search', [UserEventController::class, 'search'])->name('events.search');
-
-Route::get('/all-events', [UserEventController::class, 'allEvents'])->name('events.all-events');
-Route::get('/events/search', [UserEventController::class, 'search'])->name('events.search');
-
-Route::post('/event/join', [UserEventController::class, 'join'])->name('event.join');
-// Route::get('/event/live/{seatCode}', [UserEventController::class, 'live'])->name('event.live');
-
-Route::get('/event/live/{slug}/{code}', [UserEventController::class, 'liveEvent'])->name('private.access');
-
-Route::get('/download-ics/{booking}', [App\Http\Controllers\CalendarController::class, 'downloadIcs'])->name('download.ics');
-
-Route::get('/feedback', [FeedbackController::class, 'showForm'])->name('feedback.form');
-Route::post('/feedback', [FeedbackController::class, 'submit'])->name('feedback.submit');
-
-Route::get('/feedback/thank-you', function () {
-    return view('feedback.thankyou');
-})->name('feedback.thankyou');
-
-
-
-
-Route::get('/book-consultation', function () {
-    return redirect('/contact');
-})->name('consultation.index');
-Route::get('/book', function () {
-    return view('consultation.schedule');
-})->name('consultation.schedule');
-
-// Consultation Application Routes
-Route::get('/book-consultation/form', [App\Http\Controllers\ConsultationController::class, 'showApplicationForm'])->name('consultation.application-forms');
-Route::post('/book-consultation/submit', [App\Http\Controllers\ConsultationController::class, 'submitApplication'])->name('consultation.submit');
-
-// Consultation Summary
-Route::get('/book-consultation/summary', [App\Http\Controllers\ConsultationController::class, 'showSummary'])->name('consultation.consultation-summary');
-
-// Payment Selection
-Route::get('/book-consultation/payment-selection', [App\Http\Controllers\ConsultationController::class, 'showPaymentSelection'])->name('consultation.payment-selection');
-
-// Payment Routes
-Route::post('/book-consultation/payment/initiate', [App\Http\Controllers\ConsultationController::class, 'initiatePayment'])->name('consultation.payment.initiate');
-Route::post('/book-consultation/payment/process', [App\Http\Controllers\ConsultationController::class, 'processPayment'])->name('consultation.payment.process');
-Route::post('/book-consultation/payment/callback', [App\Http\Controllers\ConsultationController::class, 'handlePaymentCallback'])->name('consultation.payment.callback');
-Route::post('/book-consultation/payment/create-intent', [App\Http\Controllers\ConsultationController::class, 'createStripePaymentIntent'])->name('consultation.payment.create-intent');
-Route::get('/book-consultation/payment/callback/{reference}/{status}', [App\Http\Controllers\ConsultationController::class, 'handlePaymentCallbackLegacy'])->name('consultation.payment.callback.legacy');
-
-// Payment Success
-Route::get('/book-consultation/payment-success', [App\Http\Controllers\ConsultationController::class, 'showPaymentSuccess'])->name('consultation.payment-success');
-
-// Scheduling
-Route::get('/book-consultation/schedule', [App\Http\Controllers\ConsultationController::class, 'showScheduling'])->name('consultation.schedule-consultation');
-Route::post('/book-consultation/schedule', [App\Http\Controllers\ConsultationController::class, 'scheduleSession'])->name('consultation.schedule.submit');
-
-// Test route for chat functionality (remove in production)
-Route::get('/chat-test', function () {
-    return view('chat-test');
-})->name('chat.test');
-
-// Calendar integration
-Route::get('/book-consultation/download-ics/{filename}', [App\Http\Controllers\ConsultationController::class, 'downloadIcs'])->name('consultation.download-ics');
-Route::get('/google/calendar/auth', [App\Http\Controllers\ConsultationController::class, 'googleCalendarAuth'])->name('google.calendar.auth');
-Route::get('/google/calendar/callback', [App\Http\Controllers\ConsultationController::class, 'googleCalendarCallback'])->name('google.calendar.callback');
-// Route::get('/email-test', function () {
-//     return view('emails.consultation-scheduled');
-// })->name('feedback.thankyou');
-
-// Route::get('/events/all-events', function () {
-//     $events = Event::all();
-//     return view('all-events', compact('events'));
-// })->name('events.all-events');
-
-// Contact form - increased throttle to 15 requests per minute for better UX with retries
-Route::post('/contact', [ContactController::class, 'submitForm'])->middleware('throttle:15,1')->name('contact.submit');
-
-// Advanced tracking endpoint
-Route::post('/track-advanced', [\App\Http\Controllers\AdvancedTrackingController::class, 'track'])->name('track.advanced');
-
-Route::get('/events/{slug}', [UserEventController::class, 'show'])->name('events.show');
+Route::post("/track-advanced", [\App\Http\Controllers\AdvancedTrackingController::class, "track"])->name("track.advanced");
 
 // Route::get('/', function () {
 //     return view('welcome');

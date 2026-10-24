@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'hero_title_line' => 'Entrez les marchés africains',
+    'hero_title_evidence' => 'Avec des preuves',
+    'hero_title_not' => 'Pas des hypothèses',
+    'hero_body' => 'Nous aidons les entreprises internationales à valider la demande, vérifier les partenaires de distribution et construire les opérations commerciales nécessaires pour croître en Afrique. Du test de l’intérêt réel des acheteurs au renforcement des équipes locales, nous transformons les plans d’entrée en action commerciale.',
+    'results' => 'Des résultats commerciaux sur de vrais marchés',
+    'solutions' => 'Des solutions commerciales pour l’expansion en Afrique',
+    'verify' => 'Vérification des distributeurs',
+    'outbound' => 'Test de la demande sortante',
+    'sales_ops' => 'Ventes et opérations commerciales',
+    'reach' => 'Portée mondiale.',
+    'local' => 'Approche locale',
+    'built_for' => 'Conçu pour les entreprises internationales qui s’étendent en Afrique',
+    'manufacturers' => 'Fabricants d’équipements et industriels',
+    'saas' => 'Éditeurs de logiciels et SaaS',
+    'why' => 'Pourquoi P23 Africa ?',
+    'practical' => 'Pratique, pas théorique',
+    'relationship' => 'Fondé sur les relations',
+    'flexible' => 'Engagement flexible',
+    'objectives' => 'Construit autour de vos objectifs',
+    'insights' => 'Analyses P23',
+    'guide' => 'Guide essentiel pour faire des affaires en Afrique',
+    'cta_pill' => 'COMMENCEZ VOTRE EXPANSION',
+    'cta' => 'Prêt à explorer le marché africain ?',
+    'cta_body' => 'Que vous envisagiez l’Afrique pour la première fois, une expansion vers d’autres marchés, la recherche de clients ou de distributeurs, ou la prochaine étape de croissance, P23 Africa peut vous aider.',
+];

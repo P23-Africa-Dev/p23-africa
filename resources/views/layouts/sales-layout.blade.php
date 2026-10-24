@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
     <head>
         <meta charset="UTF-8">
@@ -13,6 +13,7 @@
         <meta property="og:image" content="https://p23africa.com/images/homepage-thumbnail-og.png">
 
         @yield('meta')
+        @include('partials.hreflang')
 
 
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
@@ -68,6 +69,7 @@
     </head>
 
     <body>
+        @include('partials.language-suggestion')
         {{-- NAVBAR --}}
         @include('layouts.includes.sales-navbar')
 

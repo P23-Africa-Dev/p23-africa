@@ -1814,10 +1814,10 @@
             <section class="hero content-section animate-on-scroll">
                 <div class="row hero-sec-row">
                     <div class="col-md-7 hero-text my-auto">
-                        <h1>Enter African Markets <br> With Evidence <br><span id="fonts">Not Assumptions</span></h1>
+                        <h1>{{ __('home.hero_title_line') }} <br> {{ __('home.hero_title_evidence') }} <br><span id="fonts">{{ __('home.hero_title_not') }}</span></h1>
                         <br>
                         <p>
-                          We help international businesses validate demand, verify distribution partners and build the sales operations needed to grow in Africa.<br>From testing real buyer interest to strengthening local sales teams and channel performance, we turn market-entry plans into commercial action.
+                          {{ __('home.hero_body') }}
                         </p>
                         <br>
                         <div class="hero-cta-wrapper">
@@ -1945,7 +1945,7 @@
             {{-- Section Header --}}
             <div class="home-casestudy-header">
                 <span class="home-casestudy-kicker">CASE STUDIES</span>
-                <h2 class="home-casestudy-title">Commercial Results in Real Markets</h2>
+                <h2 class="home-casestudy-title">{{ __('home.results') }}</h2>
                 <p class="home-casestudy-subtitle">
                     Examine how international manufacturers and platforms validate real buyer demand and execute successful market expansion across Africa.
                 </p>
@@ -2160,7 +2160,7 @@
     <section id="how_we_help" class="content-section animate-on-scroll">
         <div class="py-5 content">
             <span class="section-eyebrow">OUR CAPABILITIES</span>
-            <h2 class="section-title">Commercial Solutions for African Expansion</h2>
+            <h2 class="section-title">{{ __('home.solutions') }}</h2>
             <div class="custom-underline"></div>
 
             <div class="row g-4 capabilities-grid">
@@ -2171,7 +2171,7 @@
                             <div class="capability-icon">
                                 <i class="bi bi-shield-check"></i>
                             </div>
-                            <h3 class="capability-title">Distributor Verification</h3>
+                            <h3 class="capability-title">{{ __('home.verify') }}</h3>
                             <p class="capability-desc">Assess prospective distribution partners before committing to a commercial relationship. Verify their capabilities, market coverage, customer access and suitability for your business.</p>
                             <div class="capability-tags">
                                 <span class="tag-item">Partner due diligence</span>
@@ -2196,7 +2196,7 @@
                             <div class="capability-icon">
                                 <i class="bi bi-graph-up-arrow"></i>
                             </div>
-                            <h3 class="capability-title">Outbound Demand Testing</h3>
+                            <h3 class="capability-title">{{ __('home.outbound') }}</h3>
                             <p class="capability-desc">Test your proposition with real prospective buyers and distributors before making significant market-entry investments. Gather direct feedback, assess buying interest and identify viable opportunities.</p>
                             <div class="capability-tags">
                                 <span class="tag-item">Target buyer identification</span>
@@ -2221,7 +2221,7 @@
                             <div class="capability-icon">
                                 <i class="bi bi-gear-wide-connected"></i>
                             </div>
-                            <h3 class="capability-title">Sales & Commercial Operations</h3>
+                            <h3 class="capability-title">{{ __('home.sales_ops') }}</h3>
                             <p class="capability-desc">Build and support the local sales operation that turns market opportunity into revenue, including sales teams, channel partner performance, CRM systems and commercial reporting.</p>
                             <div class="capability-tags">
                                 <span class="tag-item">Sales team setup</span>
@@ -2242,7 +2242,7 @@
         </div>
 
         <div class="global_reach">
-            <h2><strong>Global Reach.</strong> <span>Local Approach</span></h2>
+            <h2><strong>{{ __('home.reach') }}</strong> <span>{{ __('home.local') }}</span></h2>
 
             <div class="row justify-content-center text-center stats me-auto ms-auto mt-5">
                 <div class="col-6 col-md-3 stat-box">
@@ -2272,7 +2272,7 @@
         <div class="container">
             <div class="sectors-header">
                 <span class="section-eyebrow">WHO WE HELP</span>
-                <h2>Built for International Businesses Expanding into Africa</h2>
+                <h2>{{ __('home.built_for') }}</h2>
                 <p>Specialized commercial strategies tailored to industry realities across Africa.</p>
             </div>
 
@@ -2282,7 +2282,7 @@
                     <div class="sector-card">
                         <div>
                             <div class="sector-icon"><i class="bi bi-tools"></i></div>
-                            <h3 class="sector-title">Equipment and Industrial Manufacturers</h3>
+                            <h3 class="sector-title">{{ __('home.manufacturers') }}</h3>
                             <p class="sector-desc">Helping international manufacturers test market demand, identify target enterprise customers, and verify reliable distribution partners before committing to a market.</p>
                             <ul class="sector-verticals">
                                 <li><i class="bi bi-check-circle-fill"></i> Heavy Equipment &amp; Industrial Machinery</li>
@@ -2298,7 +2298,7 @@
                     <div class="sector-card">
                         <div>
                             <div class="sector-icon"><i class="bi bi-cpu"></i></div>
-                            <h3 class="sector-title">Software and SaaS Companies</h3>
+                            <h3 class="sector-title">{{ __('home.saas') }}</h3>
                             <p class="sector-desc">Supporting technology companies and software platforms seeking enterprise clients, commercial partnerships, and routes to market across Africa.</p>
                             <ul class="sector-verticals">
                                 <li><i class="bi bi-check-circle-fill"></i> Fintech and financial technology</li>
@@ -2324,7 +2324,7 @@
         <div class="container">
             <div class="why-header">
                 <span class="why-eyebrow">THE P23 ADVANTAGE</span>
-                <h2>Why P23 Africa?</h2>
+                <h2>{{ __('home.why') }}</h2>
                 <div class="why-tagline">Local insight. International perspective. Commercial focus.</div>
                 <p class="why-lead">
                     African market expansion can be complex. We help simplify the process by combining an understanding of international business requirements with knowledge of African markets and commercial environments.
@@ -2335,7 +2335,7 @@
                 <div class="col-lg-6">
                     <div class="why-card">
                         <div class="why-card-icon"><i class="bi bi-bullseye"></i></div>
-                        <h3 class="why-card-title">Practical, not theoretical</h3>
+                        <h3 class="why-card-title">{{ __('home.practical') }}</h3>
                         <p class="why-card-desc">Our focus is on information and activity that can lead to commercial decisions and measurable progress.</p>
                     </div>
                 </div>
@@ -2343,7 +2343,7 @@
                 <div class="col-lg-6">
                     <div class="why-card">
                         <div class="why-card-icon"><i class="bi bi-people-fill"></i></div>
-                        <h3 class="why-card-title">Relationship-led</h3>
+                        <h3 class="why-card-title">{{ __('home.relationship') }}</h3>
                         <p class="why-card-desc">Strong local relationships are fundamental to successful business development across Africa.</p>
                     </div>
                 </div>
@@ -2351,7 +2351,7 @@
                 <div class="col-lg-6">
                     <div class="why-card">
                         <div class="why-card-icon"><i class="bi bi-sliders"></i></div>
-                        <h3 class="why-card-title">Flexible engagement</h3>
+                        <h3 class="why-card-title">{{ __('home.flexible') }}</h3>
                         <p class="why-card-desc">From a focused market validation project to ongoing commercial support, our involvement can adapt to your requirements.</p>
                     </div>
                 </div>
@@ -2359,7 +2359,7 @@
                 <div class="col-lg-6">
                     <div class="why-card">
                         <div class="why-card-icon"><i class="bi bi-crosshair"></i></div>
-                        <h3 class="why-card-title">Built around your objectives</h3>
+                        <h3 class="why-card-title">{{ __('home.objectives') }}</h3>
                         <p class="why-card-desc">We don’t apply a one-size-fits-all market-entry model. We start with your business, proposition and objectives.</p>
                     </div>
                 </div>
@@ -2376,7 +2376,7 @@
 
     <section class="insight-section content-section animate-on-scroll">
         <div class="">
-            <h2>P23 Insights</h2>
+            <h2>{{ __('home.insights') }}</h2>
             <div class="row insight-content">
                 <div class="col-md-6 insight-image-wrapper">
                     <img src="{{ asset('images/insight-side.jpg') }}" loading='lazy' alt="Scolding Donald"
@@ -2385,12 +2385,12 @@
                 </div>
                 <div class="col-md-6 insight-text">
                     <p class="date">17th October 2026</p>
-                    <h3><b> Essential Guide to Doing Business in Africa</b></h3>
+                    <h3><b> {{ __('home.guide') }}</b></h3>
                     <p class="description">
                         Our essential guide helps foreign investors navigate Africa’s diverse markets, build local
                         partnerships, and understand regulations, offering practical strategies for sustainable success.
                     </p>
-                    <a href="{{ route('resource-hub') }}" class="read-more">Read More <span>→</span></a>
+                    <a href="{{ locale_route('resource-hub') }}" class="read-more">Read More <span>→</span></a>
                 </div>
             </div>
         </div>
@@ -2405,7 +2405,7 @@
                         <button class="view-pdf-btn cursor-pointer bg-white border border-0 text-left"
                             data-pdf="{{ asset('storage/' . $blog->pdf_path) }}">
                         @else
-                            <a href="{{ route('resource-show', $blog->slug) }}" class="text-decoration-none">
+                            <a href="{{ locale_route('resource-show', ['slug' => $blog->slug]) }}" class="text-decoration-none">
                     @endif
                     @if ($blog->image_path)
                         <img src="{{ asset('storage/' . $blog->image_path) }}" loading='lazy' alt="Card image">
@@ -2415,8 +2415,8 @@
                     <div class="card-body">
                         <div class="date text-start w-100">
                             {{ \Carbon\Carbon::parse($blog->created_at)->format('l, F jS Y') }}</div>
-                        <h5 class="text-start w-100">{{ $blog->title }}</h5>
-                        <p class="text-start w-100"> {{ \Illuminate\Support\Str::limit($blog->subtitle, 138) }}</p>
+                        <h5 class="text-start w-100">{{ $blog->translated('title') }}</h5>
+                        <p class="text-start w-100"> {{ \Illuminate\Support\Str::limit($blog->translated('subtitle'), 138) }}</p>
                     </div>
                     @if (!$blog->pdf_path)
                         </a>
@@ -2425,7 +2425,7 @@
                     @endif
                 </div>
             @endforeach --}}
-            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
+            <a href="{{ locale_route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/funding.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
                     <div class="date">2nd October 2026</div>
@@ -2435,7 +2435,7 @@
                 </div>
             </a>
 
-            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
+            <a href="{{ locale_route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/girl.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
                     <div class="date">10th October 2026</div>
@@ -2445,7 +2445,7 @@
                 </div>
             </a>
 
-            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
+            <a href="{{ locale_route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/plant.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
                     <div class="date">22nd September 2026</div>
@@ -2455,7 +2455,7 @@
                 </div>
             </a>
 
-            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
+            <a href="{{ locale_route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/carousel00.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
                     <div class="date">9th September 2026</div>
@@ -2472,7 +2472,7 @@
                         <button class="view-pdf-btn cursor-pointer bg-white border border-0 text-left"
                             data-pdf="{{ asset('storage/' . $blog->pdf_path) }}">
                         @else
-                            <a href="{{ route('resource-show', $blog->slug) }}" class="text-decoration-none">
+                            <a href="{{ locale_route('resource-show', ['slug' => $blog->slug]) }}" class="text-decoration-none">
                     @endif
                     @if ($blog->image_path)
                         <img src="{{ asset('storage/' . $blog->image_path) }}" loading='lazy' alt="Card image">
@@ -2482,8 +2482,8 @@
                     <div class="card-body">
                         <div class="date text-start w-100">
                             {{ \Carbon\Carbon::parse($blog->created_at)->format('l, F jS Y') }}</div>
-                        <h5 class="text-start w-100">{{ $blog->title }}</h5>
-                        <p class="text-start w-100"> {{ \Illuminate\Support\Str::limit($blog->subtitle, 138) }}</p>
+                        <h5 class="text-start w-100">{{ $blog->translated('title') }}</h5>
+                        <p class="text-start w-100"> {{ \Illuminate\Support\Str::limit($blog->translated('subtitle'), 138) }}</p>
                     </div>
                     @if (!$blog->pdf_path)
                         </a>
@@ -2493,7 +2493,7 @@
                 </div>
             @endforeach --}}
 
-            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
+            <a href="{{ locale_route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/funding.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
                     <div class="date">2nd October 2026</div>
@@ -2503,7 +2503,7 @@
                 </div>
             </a>
 
-            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
+            <a href="{{ locale_route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/girl.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
                     <div class="date">10th October 2026</div>
@@ -2513,7 +2513,7 @@
                 </div>
             </a>
 
-            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
+            <a href="{{ locale_route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/plant.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
                     <div class="date">22nd September 2026</div>
@@ -2523,7 +2523,7 @@
                 </div>
             </a>
 
-            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
+            <a href="{{ locale_route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/carousel00.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
                     <div class="date">9th September 2026</div>
@@ -2535,7 +2535,7 @@
         </div>
 
         <div id="btn" class="mt-4">
-            <a href="{{ route('resource-hub') }}" class="btn">More on the Resource Hub</a>
+            <a href="{{ locale_route('resource-hub') }}" class="btn">More on the Resource Hub</a>
         </div>
 
         <div class="pdf-popup" id="pdfPopup">
@@ -2554,10 +2554,10 @@
     <section class="cta-closing-section content-section animate-on-scroll">
         <div class="container">
             <div class="cta-closing-inner">
-                <span class="cta-pill">START YOUR EXPANSION</span>
-                <h2>Ready to Explore the African Market?</h2>
+                <span class="cta-pill">{{ __('home.cta_pill') }}</span>
+                <h2>{{ __('home.cta') }}</h2>
                 <p class="cta-desc">
-                    Whether you’re considering Africa for the first time, looking to expand into additional markets, searching for customers or distributors, or preparing an established business for its next stage of growth, P23 Africa can help.
+                    {{ __('home.cta_body') }}
                 </p>
                 <div class="cta-prompt">Let’s discuss what you’re trying to achieve.</div>
                 <div class="d-flex justify-content-center flex-wrap">

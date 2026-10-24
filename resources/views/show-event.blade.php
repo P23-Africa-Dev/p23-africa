@@ -1,19 +1,19 @@
 @extends('layouts.master')
 @section('title')
-    {{ $event->title }}
-    @if ($event->subtitle)
-        ({{ $event->subtitle }})
+    {{ $event->translated('title') }}
+    @if ($event->translated('subtitle'))
+        ({{ $event->translated('subtitle') }})
     @endif
     | P23 Africa
 @endsection
 
 @section('meta')
     <meta property="og:image" content="{{ asset('storage/' . $event->image) }}">
-    <meta name="description" content="{!! $event->description !!}">
+    <meta name="description" content="{!! $event->translated('description') !!}">
 
-    <meta name="keywords" content="{!! $event->description !!}">
+    <meta name="keywords" content="{!! $event->translated('description') !!}">
     <meta name="author" content="Nurudeen O. Daniju">
-    <meta name="generator" content="{!! $event->description !!}">
+    <meta name="generator" content="{!! $event->translated('description') !!}">
 @endsection
 
 <style>
@@ -229,9 +229,9 @@
                 <div class="row justify-content-between">
                     <div class="col-md-6">
                         <h6 class="text-uppercase fw-bold">About This Event</h6>
-                        <h1 class="fw-bold display-5 text-uppercase">{{ $event->title }}</h1>
-                        @if ($event->subtitle)
-                            <h3 class="mb-4 text-capitalize">{{ $event->subtitle }}</h3>
+                        <h1 class="fw-bold display-5 text-uppercase">{{ $event->translated('title') }}</h1>
+                        @if ($event->translated('subtitle'))
+                            <h3 class="mb-4 text-capitalize">{{ $event->translated('subtitle') }}</h3>
                         @endif
                     </div>
 
@@ -253,7 +253,7 @@
                                     <div class="d-flex align-items-center justify-content-center">
                                         <i class="fas fa-map-marker-alt fa-2x me-3"></i>
                                         <p>
-                                            <strong>{{ $event->venue ?? 'Google Meet' }}</strong><br />
+                                            <strong>{{ $event->translated('venue') ?? 'Google Meet' }}</strong><br />
                                             <strong>1hr 30mins</strong>
                                         </p>
                                     </div>
@@ -265,7 +265,7 @@
 
                 <!-- Description -->
                 <div class="fw-semibold fs-5 mt-md-4 mt-lg-4 mt-2" id="paragragh">
-                    {!! $event->description !!}
+                    {!! $event->translated('description') !!}
                 </div>
                 {{-- <p class="fw-semibold fs-5 text-dark">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
@@ -289,7 +289,7 @@
                             <div class="d-flex align-items-center justify-content-center">
                                 <i class="fas fa-map-marker-alt fa-2x me-3"></i>
                                 <p>
-                                    <strong>{{ $event->venue ?? 'Google Meet' }}</strong><br />
+                                    <strong>{{ $event->translated('venue') ?? 'Google Meet' }}</strong><br />
                                     <strong>1hr 30mins</strong>
                                 </p>
                             </div>
@@ -357,7 +357,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content p-4">
                     <h5 class="text-center mb-3">Enter Your Seat Code</h5>
-                    <form method="POST" action="{{ route('event.join') }}">
+                    <form method="POST" action="{{ locale_route('event.join') }}">
                         @csrf
                         <input type="hidden" name="event_id" value="{{ $event->id }}">
                         <input type="text" name="seat_code" class="form-control mb-3" placeholder="Enter your seat code"

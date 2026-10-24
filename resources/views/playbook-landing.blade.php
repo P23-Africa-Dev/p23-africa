@@ -560,7 +560,7 @@
         <div class="container pt-5">
             <div class="row align-items-center">
                 <div class="col-lg-7 mb-5 mb-lg-0">
-                    <h1>P23 Africa's Founders Playbook</h1>
+                    <h1>{{ __('playbook.title') }}</h1>
                     <p class="subtitle">
                         Your comprehensive guide to building and scaling successful businesses across Africa.
                         Get expert insights, proven strategies, and actionable advice from successful entrepreneurs.
@@ -726,12 +726,12 @@
     <!-- Features Section -->
     {{-- <section class="features-section">
         <div class="container">
-            <h2 class="section-title">What You'll Discover</h2>
+            <h2 class="section-title">{{ __('playbook.discover') }}</h2>
             <div class="row">
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card">
                         <div class="feature-icon">🚀</div>
-                        <h3 class="feature-title">Startup Fundamentals</h3>
+                        <h3 class="feature-title">{{ __('playbook.fundamentals') }}</h3>
                         <p class="feature-description">
                             Learn the essential building blocks for launching a successful business in Africa,
                             from ideation to execution.
@@ -741,7 +741,7 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card">
                         <div class="feature-icon">📈</div>
-                        <h3 class="feature-title">Growth Strategies</h3>
+                        <h3 class="feature-title">{{ __('playbook.growth') }}</h3>
                         <p class="feature-description">
                             Discover proven methods to scale your business across African markets with
                             sustainable growth tactics.
@@ -751,7 +751,7 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card">
                         <div class="feature-icon">💰</div>
-                        <h3 class="feature-title">Funding & Investment</h3>
+                        <h3 class="feature-title">{{ __('playbook.funding') }}</h3>
                         <p class="feature-description">
                             Navigate the African investment landscape and learn how to secure funding
                             for your ventures.
@@ -761,7 +761,7 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card">
                         <div class="feature-icon">🌍</div>
-                        <h3 class="feature-title">Market Expansion</h3>
+                        <h3 class="feature-title">{{ __('playbook.expansion') }}</h3>
                         <p class="feature-description">
                             Strategic insights on expanding your business across different African
                             markets and cultures.
@@ -771,7 +771,7 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card">
                         <div class="feature-icon">🤝</div>
-                        <h3 class="feature-title">Partnership Building</h3>
+                        <h3 class="feature-title">{{ __('playbook.partnerships') }}</h3>
                         <p class="feature-description">
                             Build strategic partnerships and networks that accelerate your business
                             growth across the continent.
@@ -781,7 +781,7 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card">
                         <div class="feature-icon">⚡</div>
-                        <h3 class="feature-title">Digital Transformation</h3>
+                        <h3 class="feature-title">{{ __('playbook.digital') }}</h3>
                         <p class="feature-description">
                             Leverage technology and digital tools to optimize operations and
                             reach customers effectively.
@@ -795,7 +795,7 @@
     <!-- Highlights Section -->
     {{-- <section class="highlights-section">
         <div class="container">
-            <h2 class="section-title">Key Highlights from the Playbook</h2>
+            <h2 class="section-title">{{ __('playbook.highlights') }}</h2>
             <div class="row">
                 <div class="col-lg-6">
                     <div class="highlight-item">
@@ -868,7 +868,7 @@
     <!-- Testimonials Section -->
     {{-- <section class="testimonial-section">
         <div class="container">
-            <h2 class="section-title">What Entrepreneurs Are Saying</h2>
+            <h2 class="section-title">{{ __('playbook.saying') }}</h2>
             <div class="row">
                 <div class="col-lg-4">
                     <div class="testimonial-card">
@@ -907,7 +907,7 @@
     <!-- CTA Section -->
     {{-- <section class="cta-section">
         <div class="container text-center">
-            <h2 class="cta-title">Ready to Transform Your Business?</h2>
+            <h2 class="cta-title">{{ __('playbook.ready') }}</h2>
             <p class="cta-subtitle">
                 Join thousands of successful entrepreneurs who have downloaded the P23 Africa's Founders Playbook
             </p>
@@ -922,7 +922,7 @@
         <div class="playbook-popup-content">
             <span class="close-playbook-popup">&times;</span>
             <div class="playbook-form-container">
-                <h3 class="playbook-title">Get Your Free Founders Playbook</h3>
+                <h3 class="playbook-title">{{ __('playbook.free') }}</h3>
                 <p class="playbook-subtitle">Enter your details to receive the P23 Africa's Founders Playbook directly in
                     your inbox.</p>
 
@@ -1323,7 +1323,7 @@
                 });
 
                 // Submit to server
-                fetch('{{ route('playbook.download') }}', {
+                fetch('{{ locale_route('playbook.download') }}', {
                         method: 'POST',
                         headers: {
                             'X-CSRF-TOKEN': formDataObject._token,
