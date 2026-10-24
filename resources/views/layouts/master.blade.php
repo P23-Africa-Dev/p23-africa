@@ -223,6 +223,7 @@
         //     $(window).on('scroll', animateOnScroll); // On scroll
         // });
     </script>
+    @include('partials.scroll-reveal')
 </body>
 
 </html>

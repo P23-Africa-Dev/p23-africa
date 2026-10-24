@@ -129,6 +129,7 @@
             window.handleCsrfExpiry = handleCsrfExpiry;
         })();
     </script>
+    @include('partials.scroll-reveal')
 
 </body>
 

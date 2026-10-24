@@ -57,5 +57,6 @@
             </main>
             
         </div>
+        @include('partials.scroll-reveal')
     </body>
 </html>

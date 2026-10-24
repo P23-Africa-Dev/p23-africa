@@ -325,6 +325,7 @@
     </script>
 
     @include('include.version-update')
+    @include('partials.scroll-reveal')
 </body>
 
 </html>

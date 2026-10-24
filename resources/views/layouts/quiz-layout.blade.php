@@ -89,6 +89,7 @@
                 }
             });
         </script>
+        @include('partials.scroll-reveal')
     </body>
 
 </html>

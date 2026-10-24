@@ -366,6 +366,7 @@
             //     startInfiniteScroll('.slider-two', 30, 'down'); // second slider scrolls down
             // });
         </script>
+        @include('partials.scroll-reveal')
     </body>
 
 </html>
