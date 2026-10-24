@@ -82,10 +82,10 @@
                         </li>
                         <li class="nav-item"><a class="nav-link" href="{{ locale_route('brn') }}">{{ __('nav.business_network') }}</a></li>
                     </ul>
-                    @include('partials.language-switcher', ['class' => 'locale-switcher--on-dark'])
 
                     <div class="d-flex align-items-right mt-5 mobile">
                         <button class="subscribe-btn me-3 mb-2">Subscribe</button>
+                        @include('partials.language-switcher', ['class' => 'locale-switcher--on-dark'])
                         <div class="social-icons">
                             <a href="https://linkedin.com/company/p23-africa/" target="_blank">
                                 <i class="fab fa-linkedin-in"></i>
@@ -105,6 +105,7 @@
 
                 <div class="d-flex align-items-right desktop">
                     <a href="{{ locale_route('contact') }}" class="subscribe-btn me-3" id="btn">{{ __('nav.book_consultation_short') }}</a>
+                    @include('partials.language-switcher', ['class' => 'locale-switcher--on-dark'])
                     <div class="social-icons">
                         <a href="https://linkedin.com/company/p23-africa/" target="_blank">
                             <i class="fab fa-linkedin-in"></i>

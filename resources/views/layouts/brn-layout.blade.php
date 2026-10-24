@@ -140,7 +140,6 @@
                     </li>
                     <li class="nav-item"><a class="nav-link" href="{{ locale_route('brn') }}">{{ __('nav.business_network') }}</a></li>
                 </ul>
-                @include('partials.language-switcher', ['class' => 'locale-switcher--on-dark'])
 
                 <div class="d-flex align-items-right mt-5 mobile">
                     {{-- <a href="#" class="btn login-btn my-auto">Log In</a>
@@ -150,6 +149,7 @@
                     <div class="subscribe brn-consult">
                         <a href="{{ locale_route('contact') }}" class="btn" id="btn">{{ __('nav.book_consultation_short') }}</a>
                     </div>
+                    @include('partials.language-switcher', ['class' => 'locale-switcher--on-dark'])
 
                     <div class="social-icons brn-consult">
                         <a href="https://linkedin.com/company/p23-africa/" target="_blank"><i
@@ -170,6 +170,7 @@
                 <div class="subscribe brn-consult">
                     <a href="{{ locale_route('contact') }}" class="btn" id="btn">{{ __('nav.book_consultation_short') }}</a>
                 </div>
+                @include('partials.language-switcher', ['class' => 'locale-switcher--on-dark'])
 
                 <div class="social-icons brn-consult">
                     <a href="https://linkedin.com/company/p23-africa/" target="_blank"><i

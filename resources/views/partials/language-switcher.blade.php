@@ -68,12 +68,21 @@
         }
 
         .navbar .subscribe #btn,
+        .navbar .subscribe #btn:hover,
+        .navbar .subscribe #btn:focus,
         .navbar .subscribe.brn-consult .btn,
+        .navbar .subscribe.brn-consult .btn:hover,
+        .navbar .subscribe.brn-consult .btn:focus,
         .navbar .subscribe-btn,
-        .subscribe-btn #btn {
+        .navbar .subscribe-btn:hover,
+        .navbar .subscribe-btn:focus,
+        .subscribe-btn#btn,
+        .subscribe-btn#btn:hover,
+        .subscribe-btn#btn:focus {
             width: auto !important;
             height: auto;
             line-height: 1.25;
+            text-decoration: none;
             white-space: nowrap;
             display: inline-flex;
             align-items: center;
@@ -134,9 +143,9 @@
         }
     </style>
     <script>
-        (function () {
+        (function() {
             function fitNavbars() {
-                document.querySelectorAll('nav.navbar').forEach(function (nav) {
+                document.querySelectorAll('nav.navbar').forEach(function(nav) {
                     var wasCompressed = nav.classList.contains('is-nav-compressed');
                     if (wasCompressed) {
                         nav.classList.remove('is-nav-compressed');
@@ -156,14 +165,14 @@
             if (document.fonts && document.fonts.ready) {
                 document.fonts.ready.then(fitNavbars);
             }
-        })();
+        })
+        ();
     </script>
 @endonce
 <nav class="locale-switcher {{ $class ?? '' }}" aria-label="{{ __('nav.language') }}">
     @foreach (['en' => 'EN', 'fr' => 'FR', 'de' => 'DE', 'nl' => 'NL'] as $code => $label)
         <a href="{{ \App\Support\LocaleUrl::switch($code) }}"
-            class="{{ app()->getLocale() === $code ? 'is-active' : '' }}"
-            hreflang="{{ $code }}"
+            class="{{ app()->getLocale() === $code ? 'is-active' : '' }}" hreflang="{{ $code }}"
             lang="{{ $code }}"
             onclick="document.cookie='locale_prompt=1;path=/;max-age=31536000;SameSite=Lax'">{{ $label }}</a>
     @endforeach
