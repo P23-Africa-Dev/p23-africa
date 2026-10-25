@@ -85,6 +85,8 @@ Route::get('/our-sales', function () {
 Route::get("/en", fn() => redirect("/", 301));
 Route::get("/en/{path}", fn(string $path) => redirect("/" . $path, 301))->where("path", ".*");
 
+Route::get('/sitemap.xml', \App\Http\Controllers\SitemapController::class)->name('sitemap');
+
 $registerPublicRoutes = require __DIR__ . "/public.php";
 
 Route::middleware(["locale", "browser-locale"])->group(function () use ($registerPublicRoutes) {

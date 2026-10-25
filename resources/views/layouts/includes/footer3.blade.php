@@ -97,9 +97,9 @@
         {{-- Bottom Legal / Copyright Row --}}
         <div class="footer3-bottom">
             <p class="footer3-legal-text">
-                &copy;P23 Africa 2025 &bull; 
-                <a href="{{ url('privacy-policy') }}">Privacy Policy</a> &bull; 
-                <a href="{{ url('terms-and-conditions') }}">Terms &amp; Conditions</a>
+                &copy;P23 Africa 2025 &bull;
+                <a href="{{ locale_route('privacy') }}">{{ __('footer.privacy') }}</a> &bull;
+                <a href="{{ locale_route('terms') }}">{{ __('footer.terms') }}</a>
             </p>
         </div>
     </div>

@@ -27,14 +27,18 @@
                             <div class="progress-bar-fill" id="progressBar" style="width: 0%"></div>
                             <span class="progress-text" id="progressText">{{ __('quiz.progress', ['current' => 1, 'total' => 8]) }}</span>
                         </div>
-                        <h2 class="question-text" id="questionText"></h2>
+                        <h2 class="question-text" id="questionText">{{ __('quiz.questions')[0]['question'] }}</h2>
                     </div>
                 </div>
                 <div>
                     <div class="main-quiz-body">
                         <div class="quiz-body-container">
                             <div id="quizWrapper">
-                                <div class="answer-options" id="answerOptions"></div>
+                                <div class="answer-options" id="answerOptions">
+                                    <div class="answer-item"><span class="answer-letter">A</span><p class="answer-text">{{ __('quiz.questions')[0]['a'] }}</p></div>
+                                    <div class="answer-item"><span class="answer-letter">B</span><p class="answer-text">{{ __('quiz.questions')[0]['b'] }}</p></div>
+                                    <div class="answer-item"><span class="answer-letter">C</span><p class="answer-text">{{ __('quiz.questions')[0]['c'] }}</p></div>
+                                </div>
                                 <div class="quiz-navigation">
                                     <button class="btn next-question-btn" id="nextBtn" disabled>
                                         <i class="bi bi-arrow-right"></i>
@@ -98,6 +102,23 @@
                 </div>
             </div>
         </div> --}}
+
+        <ol id="quizReadable" hidden>
+            @foreach (__('quiz.questions') as $index => $item)
+                <li>
+                    <h2>{{ $item['question'] }}</h2>
+                    @if ($index === 7)
+                        <p>{{ __('quiz.ch1') }} {{ __('quiz.ch1_ph') }}</p>
+                        <p>{{ __('quiz.ch2') }} {{ __('quiz.ch2_ph') }}</p>
+                        <p>{{ __('quiz.ch3') }} {{ __('quiz.ch3_ph') }}</p>
+                    @else
+                        <p>A. {{ $item['a'] }}</p>
+                        <p>B. {{ $item['b'] }}</p>
+                        <p>C. {{ $item['c'] }}</p>
+                    @endif
+                </li>
+            @endforeach
+        </ol>
 
         @include('include.quiz-questions-js')
     </section>

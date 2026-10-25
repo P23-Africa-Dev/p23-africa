@@ -19,11 +19,9 @@
                     <div class="header-section mb-4">
                         <h1>
                             <span>{{ __('quiz.you_are') }}</span>
-                            <span id="typing-title" class="typing-text"></span>
+                            <span id="typing-title" class="typing-text">{{ __('quiz.c_name') }}</span>
                         </h1>
-                        <p id="typing-subtitle" class="typing-text">
-
-                        </p>
+                        <p id="typing-subtitle" class="typing-text">{{ __('quiz.c_sub') }}</p>
                     </div>
 
                     <div class="chart-container d-flex flex-column align-items-start mb-4 mb-lg-0">
@@ -204,7 +202,8 @@
                 }
             }
 
-            // Start typing as soon as DOM is ready
+            titleEl.textContent = "";
+            subtitleEl.textContent = "";
             typeTitle();
         });
 

@@ -26,6 +26,9 @@ return function (bool $localized): void {
         return view('contact');
     })->name($name('contact'));
 
+    Route::view('/privacy-policy', 'legal.privacy')->name($name('privacy'));
+    Route::view('/terms-and-conditions', 'legal.terms')->name($name('terms'));
+
     Route::get('/about', function () {
         ClickTracker::track('About_Page');
 

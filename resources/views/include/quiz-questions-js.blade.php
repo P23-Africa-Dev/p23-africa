@@ -22,13 +22,21 @@
     }
 </style>
 
-<script>
-    const questions = @json(array_map(function ($item) {
+@php
+    $quizQuestions = array_map(function ($item) {
         return [
             'question' => $item['question'],
             'options' => ['A' => $item['a'], 'B' => $item['b'], 'C' => $item['c']],
         ];
-    }, __('quiz.questions')));
+    }, __('quiz.questions'));
+@endphp
+<script>
+    (function () {
+        var readable = document.getElementById("quizReadable");
+        if (readable) readable.hidden = true;
+    })();
+
+    const questions = @json($quizQuestions);
 
     let currentQuestion = 0;
     let selectedAnswers = [];
@@ -161,11 +169,11 @@
 
             // Redirect based on result
             if (topChoice === 'A') {
-                window.location.href = "/quiz/result/fragile-funnel";
+                window.location.href = @json(locale_route('fragile-funnel'));
             } else if (topChoice === 'B') {
-                window.location.href = "/quiz/result/hidden-powerhouse";
+                window.location.href = @json(locale_route('hidden-powerhouse'));
             } else {
-                window.location.href = "/quiz/result/cloudy-climber";
+                window.location.href = @json(locale_route('cloudy-climber'));
             }
 
         } catch (error) {

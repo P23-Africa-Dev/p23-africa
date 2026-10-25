@@ -70,7 +70,7 @@
                 </div>
 
                 <div class="footer-bottom footer-bottom_desktop mt-4">
-                    {{ __('footer.copyright') }} • <a href="#">{{ __('footer.privacy') }}</a> • <a href="#">{{ __('footer.terms') }}</a>
+                    {{ __('footer.copyright') }} • <a href="{{ locale_route('privacy') }}">{{ __('footer.privacy') }}</a> • <a href="{{ locale_route('terms') }}">{{ __('footer.terms') }}</a>
                 </div>
                 <div class="footer-bottom footer-bottom_mobile mt-4">
                     {{ __('footer.copyright') }}

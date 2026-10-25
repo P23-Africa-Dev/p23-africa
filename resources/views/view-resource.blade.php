@@ -10,11 +10,10 @@
 
 @section('meta')
     <meta property="og:image" content="{{ asset('storage/' . $blog->image_path) }}">
-    <meta name="description" content="{!! nl2br(e($blog->translated('content_1'))) !!}">
-
-    <meta name="keywords" content="{!! nl2br(e($blog->translated('content_1'))) !!}">
+    <meta name="description" content="{{ \Illuminate\Support\Str::limit(trim(preg_replace('/\s+/', ' ', strip_tags($blog->translated('content_1') ?? ''))), 160) }}">
+    <meta name="keywords" content="{{ $blog->translated('title') }}">
     <meta name="author" content="Nurudeen O. Daniju">
-    <meta name="generator" content="{!! nl2br(e($blog->translated('content_1'))) !!}">
+    <meta name="generator" content="P23 Africa">
 @endsection
 
 <style>

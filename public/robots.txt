@@ -1,2 +1,4 @@
 User-agent: *
 Disallow:
+
+Sitemap: https://p23africa.com/sitemap.xml
