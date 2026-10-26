@@ -1383,14 +1383,14 @@
         font-weight: 600;
         line-height: 1.2;
         letter-spacing: -0.01em;
-        color: #1a3832;
+        color: #111827;
         text-align: center;
         white-space: nowrap;
         transition: color 0.3s ease;
     }
 
     .partner-logo-item:hover .partner-logo-name {
-        color: #07483e;
+        color: #000000;
     }
 
     @keyframes partnerMarqueeScroll {
