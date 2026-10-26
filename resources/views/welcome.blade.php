@@ -1,18 +1,18 @@
 @extends('layouts.master')
-@section('title', 'Helping Global Businesses Enter & Grow Across Africa | P23 Africa')
+@section('title', 'Helping Global Businesses Enter & Grow Across Africa')
 @section('meta')
     <meta name="description"
         content="P23 Africa helps global businesses understand African markets, validate opportunities, acquire customers and partners, and build sustainable commercial growth.">
     <meta name="keywords"
         content="market entry Africa, African business expansion, commercial solutions Africa, business consulting Africa, distributor development Africa, outbound sales demand testing, Nigeria Ghana Kenya South Africa business expansion, P23 Africa">
     <meta name="author" content="Nurudeen O. Daniju">
-    <meta name="generator" content="P23 Africa - Helping Global Businesses Enter & Grow Across Africa">
+    <meta name="generator" content="Helping Global Businesses Enter & Grow Across Africa">
     <link rel="canonical" href="{{ url()->current() }}">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:title" content="Helping Global Businesses Enter & Grow Across Africa | P23 Africa">
+    <meta property="og:title" content="Helping Global Businesses Enter & Grow Across Africa">
     <meta property="og:description"
         content="We help you understand African markets, validate opportunities, acquire customers and partners, and establish the foundations for sustainable growth.">
     <meta property="og:image" content="https://p23africa.com/images/homepage-thumbnail-og.png">
@@ -20,10 +20,71 @@
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="{{ url()->current() }}">
-    <meta name="twitter:title" content="Helping Global Businesses Enter & Grow Across Africa | P23 Africa">
+    <meta name="twitter:title" content="Helping Global Businesses Enter & Grow Across Africa">
     <meta name="twitter:description"
         content="We help you understand African markets, validate opportunities, acquire customers and partners, and establish the foundations for sustainable growth.">
     <meta name="twitter:image" content="https://p23africa.com/images/homepage-thumbnail-og.png">
+
+    <!-- Structured Data (JSON-LD) for Google Sitelinks & Core Services -->
+    <script type="application/ld+json">
+    {!! json_encode([
+      '@context' => 'https://schema.org',
+      '@graph' => [
+        [
+          '@type' => 'WebSite',
+          '@id' => 'https://p23africa.com/#website',
+          'url' => 'https://p23africa.com',
+          'name' => 'P23 Africa',
+          'description' => 'Helping Global Businesses Enter & Grow Across Africa'
+        ],
+        [
+          '@type' => 'Organization',
+          '@id' => 'https://p23africa.com/#organization',
+          'name' => 'P23 Africa',
+          'url' => 'https://p23africa.com',
+          'logo' => 'https://p23africa.com/images/p23-logo-black.svg',
+          'hasOfferCatalog' => [
+            '@type' => 'OfferCatalog',
+            'name' => 'Core Commercial Services',
+            'itemListElement' => [
+              [
+                '@type' => 'Service',
+                'name' => 'Market Demand Testing',
+                'url' => route('services.market-demand-testing'),
+                'description' => 'Evaluate real market demand and commercial opportunity across African markets before committing capital.'
+              ],
+              [
+                '@type' => 'Service',
+                'name' => 'Outbound Demand Testing',
+                'url' => route('services.outbound-demand-testing'),
+                'description' => 'Test real buyer interest with prospective customers in Africa. Validate commercial pipeline before expanding.'
+              ]
+            ]
+          ]
+        ],
+        [
+          '@type' => 'SiteNavigationElement',
+          '@id' => 'https://p23africa.com/#navigation',
+          'name' => [
+            'Market Demand Testing',
+            'Outbound Demand Testing',
+            'Services',
+            'About Us',
+            'Resource Hub',
+            'Contact Us'
+          ],
+          'url' => [
+            route('services.market-demand-testing'),
+            route('services.outbound-demand-testing'),
+            url('services'),
+            url('about'),
+            route('resource-hub'),
+            url('contact')
+          ]
+        ]
+      ]
+    ], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+    </script>
 @endsection
 
 <style>
@@ -2164,27 +2225,27 @@
             <div class="custom-underline"></div>
 
             <div class="row g-4 capabilities-grid">
-                <!-- 1. Distributor Verification -->
+                <!-- 1. Market Demand Testing -->
                 <div class="col-lg-4 col-md-6">
                     <div class="capability-card featured-card">
                         <div>
                             <div class="capability-icon">
-                                <i class="bi bi-shield-check"></i>
+                                <i class="bi bi-compass"></i>
                             </div>
-                            <h3 class="capability-title">Distributor Verification</h3>
-                            <p class="capability-desc">Assess prospective distribution partners before committing to a commercial relationship. Verify their capabilities, market coverage, customer access and suitability for your business.</p>
+                            <h3 class="capability-title">Market Demand Testing</h3>
+                            <p class="capability-desc">Evaluate real market demand and practical routes to market across Nigeria, Ghana, Kenya, and South Africa. Test viability before committing capital or opening local offices.</p>
                             <div class="capability-tags">
-                                <span class="tag-item">Partner due diligence</span>
+                                <span class="tag-item">Market entry strategy</span>
                                 <span class="tag-dot">·</span>
-                                <span class="tag-item">Capability assessment</span>
+                                <span class="tag-item">Demand validation</span>
                                 <span class="tag-dot">·</span>
-                                <span class="tag-item">Market coverage</span>
+                                <span class="tag-item">Route to market</span>
                                 <span class="tag-dot">·</span>
-                                <span class="tag-item">Commercial fit</span>
+                                <span class="tag-item">Commercial viability</span>
                             </div>
                         </div>
-                        <a href="{{ url('services') }}#partner-dev" class="capability-link">
-                            Explore partner verification <i class="bi bi-arrow-right"></i>
+                        <a href="{{ route('services.market-demand-testing') }}" class="capability-link">
+                            Explore market demand testing <i class="bi bi-arrow-right"></i>
                         </a>
                     </div>
                 </div>
@@ -2208,33 +2269,33 @@
                                 <span class="tag-item">Sales opportunity reporting</span>
                             </div>
                         </div>
-                        <a href="{{ url('services') }}#sales" class="capability-link">
-                            Explore demand testing <i class="bi bi-arrow-right"></i>
+                        <a href="{{ route('services.outbound-demand-testing') }}" class="capability-link">
+                            Explore outbound demand testing <i class="bi bi-arrow-right"></i>
                         </a>
                     </div>
                 </div>
 
-                <!-- 3. Sales & Commercial Operations -->
+                <!-- 3. Distributor Verification -->
                 <div class="col-lg-4 col-md-12">
                     <div class="capability-card">
                         <div>
                             <div class="capability-icon">
-                                <i class="bi bi-gear-wide-connected"></i>
+                                <i class="bi bi-shield-check"></i>
                             </div>
-                            <h3 class="capability-title">Sales & Commercial Operations</h3>
-                            <p class="capability-desc">Build and support the local sales operation that turns market opportunity into revenue, including sales teams, channel partner performance, CRM systems and commercial reporting.</p>
+                            <h3 class="capability-title">Distributor Verification</h3>
+                            <p class="capability-desc">Assess prospective distribution partners before committing to a commercial relationship. Verify their capabilities, market coverage, customer access and suitability for your business.</p>
                             <div class="capability-tags">
-                                <span class="tag-item">Sales team setup</span>
+                                <span class="tag-item">Partner due diligence</span>
                                 <span class="tag-dot">·</span>
-                                <span class="tag-item">Partner management</span>
+                                <span class="tag-item">Capability assessment</span>
                                 <span class="tag-dot">·</span>
-                                <span class="tag-item">CRM and reporting</span>
+                                <span class="tag-item">Market coverage</span>
                                 <span class="tag-dot">·</span>
-                                <span class="tag-item">Ongoing execution</span>
+                                <span class="tag-item">Commercial fit</span>
                             </div>
                         </div>
-                        <a href="{{ url('services') }}#operations" class="capability-link">
-                            Explore commercial operations <i class="bi bi-arrow-right"></i>
+                        <a href="{{ route('services.distributor-partner') }}" class="capability-link">
+                            Explore partner verification <i class="bi bi-arrow-right"></i>
                         </a>
                     </div>
                 </div>

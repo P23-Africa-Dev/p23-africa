@@ -99,11 +99,11 @@ Route::get('/services', function () {
     return view('services');
 });
 
-// Market Entry & Expansion Flow
-Route::get('/market-entry', function () {
+// Market Demand Testing (formerly Market Entry & Expansion)
+Route::get('/services/market-demand-testing', function () {
     ClickTracker::track('Market_Entry_Page');
     return view('market-entry.index');
-})->name('services.market-entry');
+})->name('services.market-demand-testing');
 
 Route::get('/market-entry/nigeria', function () {
     ClickTracker::track('Market_Entry_Nigeria_Page');
@@ -121,16 +121,22 @@ Route::get('/distributor-partner-development', function () {
     return view('services.distributor-partner-development');
 })->name('services.distributor-partner');
 
-Route::get('/outbound-sales-demand-testing', function () {
+// Outbound Demand Testing
+Route::get('/services/outbound-demand-testing', function () {
     ClickTracker::track('Outbound_Sales_Page');
     return view('services.outbound-sales-demand-testing');
-})->name('services.outbound-sales');
+})->name('services.outbound-demand-testing');
 
-// Convenience aliases / redirects from legacy /services/market-entry
-Route::get('/services/market-entry', fn() => redirect()->route('services.market-entry'));
-Route::get('/services/market-entry/nigeria', fn() => redirect()->route('services.market-entry.nigeria'));
-Route::get('/services/market-entry/ghana', fn() => redirect()->route('services.market-entry.ghana'));
-Route::get('/services/outbound-sales-demand-testing', fn() => redirect()->route('services.outbound-sales'));
+// Backward compatibility & SEO 301 Redirects
+Route::get('/market-demand-testing', fn() => redirect()->route('services.market-demand-testing', [], 301));
+Route::get('/market-entry', fn() => redirect()->route('services.market-demand-testing', [], 301))->name('services.market-entry');
+Route::get('/services/market-entry', fn() => redirect()->route('services.market-demand-testing', [], 301));
+Route::get('/services/market-demand-testing/nigeria', fn() => redirect()->route('services.market-entry.nigeria', [], 301));
+Route::get('/services/market-demand-testing/ghana', fn() => redirect()->route('services.market-entry.ghana', [], 301));
+
+Route::get('/outbound-demand-testing', fn() => redirect()->route('services.outbound-demand-testing', [], 301));
+Route::get('/outbound-sales-demand-testing', fn() => redirect()->route('services.outbound-demand-testing', [], 301))->name('services.outbound-sales');
+Route::get('/services/outbound-sales-demand-testing', fn() => redirect()->route('services.outbound-demand-testing', [], 301));
 
 Route::get('/sales', function () {
     ClickTracker::track('Sales_Page');

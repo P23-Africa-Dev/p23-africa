@@ -193,7 +193,7 @@
                             <p class="plan-card-desc">
                                 Build practical strategies for entering and developing new African markets.
                             </p>
-                            <a href="{{ url('market-entry') }}" class="plan-explore-btn" aria-label="Explore Market Entry & Expansion">
+                            <a href="{{ route('services.market-demand-testing') }}" class="plan-explore-btn" aria-label="Explore Market Demand Testing">
                                 Explore <span class="btn-arrow">→</span>
                             </a>
                         </div>
@@ -249,7 +249,7 @@
                         <p class="plan-card-desc">
                             Generate opportunities, develop relationships and build commercial pipelines.
                         </p>
-                        <a href="{{ route('services.outbound-sales') }}" class="plan-explore-btn" aria-label="Explore Outbound Sales Demand Testing">
+                        <a href="{{ route('services.outbound-demand-testing') }}" class="plan-explore-btn" aria-label="Explore Outbound Demand Testing">
                             Explore <span class="btn-arrow">→</span>
                         </a>
                     </div>

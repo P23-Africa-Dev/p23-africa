@@ -22,7 +22,7 @@
                 <li class="separator">/</li>
                 <li><a href="{{ url('services') }}">Services</a></li>
                 <li class="separator">/</li>
-                <li><a href="{{ route('services.market-entry') }}">Market Entry &amp; Expansion</a></li>
+                <li><a href="{{ route('services.market-demand-testing') }}">Market Demand Testing</a></li>
                 <li class="separator">/</li>
                 <li class="current">Nigeria HVAC Case Study</li>
             </ul>
@@ -410,7 +410,7 @@
                             <a href="{{ url('contact') }}" class="p23-btn-brand">
                                 Start a conversation with P23 Africa <i class="fas fa-calendar-check ms-1"></i>
                             </a>
-                            <a href="{{ route('services.market-entry') }}" class="p23-btn-outline-light">
+                            <a href="{{ route('services.market-demand-testing') }}" class="p23-btn-outline-light">
                                 Explore All Capabilities <i class="fas fa-arrow-left ms-1"></i>
                             </a>
                         </div>

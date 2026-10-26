@@ -1,16 +1,60 @@
 @extends('layouts.master')
-@section('title', 'Outbound Sales Demand Testing in Africa | P23 Africa')
+@section('title', 'Outbound Demand Testing for Africa | Test the Market Before You Commit Capital')
 @section('body_class', 'p23-black-navbar-page sd-body')
 
 @section('meta')
     <meta name="description"
-        content="Find out if Africa will buy before you commit capital. P23 Africa runs a real sales test in your target country and reports what actually happens.">
-    <meta property="og:title" content="Outbound Sales Demand Testing | P23 Africa">
-    <meta property="og:description" content="Evidence of demand (or the lack of it) before you hire a team, open an office or sign a distributor.">
+        content="Test real buyer demand with prospective customers in Africa. Validate commercial pipeline and buying interest before opening an office or hiring teams.">
+    <meta property="og:title" content="Outbound Demand Testing for Africa | Test the Market Before You Commit Capital">
+    <meta property="og:description" content="Test real buyer demand with prospective customers in Africa. Validate commercial pipeline and buying interest before opening an office or hiring teams.">
     <meta property="og:image" content="{{ asset('images/services/sd-outbound-hero.jpg') }}">
+    <link rel="canonical" href="{{ url('services/outbound-demand-testing') }}">
     {{-- services-new.css carries the shared footer3 + navbar styles used across the service pages --}}
     <link rel="stylesheet" href="{{ asset('css/services-new.css') }}">
     <link rel="stylesheet" href="{{ asset('css/service-detail.css') }}">
+
+    <script type="application/ld+json">
+    {!! json_encode([
+      '@context' => 'https://schema.org',
+      '@graph' => [
+        [
+          '@type' => 'Service',
+          'name' => 'Outbound Demand Testing for Africa',
+          'serviceType' => 'Outbound Sales & Commercial Demand Validation',
+          'provider' => [
+            '@type' => 'Organization',
+            'name' => 'P23 Africa',
+            'url' => 'https://p23africa.com'
+          ],
+          'url' => url('services/outbound-demand-testing'),
+          'description' => 'Test real buyer demand with prospective customers in Africa. Validate commercial pipeline and buying interest before opening an office or hiring teams.'
+        ],
+        [
+          '@type' => 'BreadcrumbList',
+          'itemListElement' => [
+            [
+              '@type' => 'ListItem',
+              'position' => 1,
+              'name' => 'Home',
+              'item' => url('/')
+            ],
+            [
+              '@type' => 'ListItem',
+              'position' => 2,
+              'name' => 'Services',
+              'item' => url('services')
+            ],
+            [
+              '@type' => 'ListItem',
+              'position' => 3,
+              'name' => 'Outbound Demand Testing',
+              'item' => url('services/outbound-demand-testing')
+            ]
+          ]
+        ]
+      ]
+    ], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+    </script>
 @endsection
 
 @section('navbar')

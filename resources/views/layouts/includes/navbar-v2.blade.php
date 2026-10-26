@@ -40,12 +40,25 @@
                 @endif
             </a>
 
-            <nav class="p23-nav-links" id="p23NavLinks" aria-label="Main Navigation">
-                <a href="{{ url('about') }}" class="p23-nav-link {{ $active === 'who-we-are' ? 'active' : '' }}">Who We Are</a>
-                <a href="{{ url('services') }}" class="p23-nav-link {{ in_array($active, ['what-we-do', 'services']) ? 'active' : '' }}">Services</a>
-                <a href="{{ route('event') }}" class="p23-nav-link {{ $active === 'events' ? 'active' : '' }}">Events</a>
-                <a href="{{ route('resource-hub') }}" class="p23-nav-link {{ $active === 'resource-hub' ? 'active' : '' }}">Resource Hub</a>
-                <a href="{{ route('brn') }}" class="p23-nav-link {{ $active === 'business-network' ? 'active' : '' }}">Business Network</a>
+            <nav class="p23-nav-links" id="p23NavLinks" aria-label="Main Navigation" itemscope itemtype="https://schema.org/SiteNavigationElement">
+                <a href="{{ url('about') }}" class="p23-nav-link {{ $active === 'who-we-are' ? 'active' : '' }}" itemprop="url"><span itemprop="name">Who We Are</span></a>
+                <div class="p23-nav-dropdown">
+                    <a href="{{ url('services') }}" class="p23-nav-link p23-nav-dropdown-trigger {{ in_array($active, ['what-we-do', 'services']) ? 'active' : '' }}" itemprop="url">
+                        <span itemprop="name">Services</span>
+                        <svg class="p23-nav-dropdown-icon" viewBox="0 0 10 6" fill="currentColor" aria-hidden="true">
+                            <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        </svg>
+                    </a>
+                    <div class="p23-nav-dropdown-menu" role="menu">
+                        <a href="{{ route('services.market-demand-testing') }}" class="p23-nav-dropdown-item" role="menuitem" itemprop="url"><span itemprop="name">Market Demand Testing</span></a>
+                        <a href="{{ route('services.outbound-demand-testing') }}" class="p23-nav-dropdown-item" role="menuitem" itemprop="url"><span itemprop="name">Outbound Demand Testing</span></a>
+                        <a href="{{ route('services.distributor-partner') }}" class="p23-nav-dropdown-item" role="menuitem" itemprop="url"><span itemprop="name">Distributor Verification</span></a>
+                        <a href="{{ url('services') }}" class="p23-nav-dropdown-item" role="menuitem">Overview of Services</a>
+                    </div>
+                </div>
+                <a href="{{ route('event') }}" class="p23-nav-link {{ $active === 'events' ? 'active' : '' }}" itemprop="url"><span itemprop="name">Events</span></a>
+                <a href="{{ route('resource-hub') }}" class="p23-nav-link {{ $active === 'resource-hub' ? 'active' : '' }}" itemprop="url"><span itemprop="name">Resource Hub</span></a>
+                <a href="{{ route('brn') }}" class="p23-nav-link {{ $active === 'business-network' ? 'active' : '' }}" itemprop="url"><span itemprop="name">Business Network</span></a>
             </nav>
         </div>
 
@@ -115,6 +128,10 @@
         <nav class="p23-mobile-links">
             <a href="{{ url('about') }}" class="p23-mobile-link {{ $active === 'who-we-are' ? 'active' : '' }}">Who We Are</a>
             <a href="{{ url('services') }}" class="p23-mobile-link {{ in_array($active, ['what-we-do', 'services']) ? 'active' : '' }}">Services</a>
+            <div class="p23-mobile-sublinks">
+                <a href="{{ route('services.market-demand-testing') }}" class="p23-mobile-sublink">↳ Market Demand Testing</a>
+                <a href="{{ route('services.outbound-demand-testing') }}" class="p23-mobile-sublink">↳ Outbound Demand Testing</a>
+            </div>
             <a href="{{ route('event') }}" class="p23-mobile-link {{ $active === 'events' ? 'active' : '' }}">Events</a>
             <a href="{{ route('resource-hub') }}" class="p23-mobile-link {{ $active === 'resource-hub' ? 'active' : '' }}">Resource Hub</a>
             <a href="{{ route('brn') }}" class="p23-mobile-link {{ $active === 'business-network' ? 'active' : '' }}">Business Network</a>

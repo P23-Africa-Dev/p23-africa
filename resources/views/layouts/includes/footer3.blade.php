@@ -32,11 +32,10 @@
             <div class="footer3-col">
                 <h3 class="footer3-heading">What We Do</h3>
                 <ul class="footer3-nav-list">
-                    <li><a href="{{ url('market-entry') }}" class="footer3-nav-link">Market Entry &amp; Expansion</a></li>
-                    <li><a href="{{ url('services') }}#growth-plan" class="footer3-nav-link">Verify Distributors</a></li>
-                    <li><a href="{{ url('services') }}#growth-plan" class="footer3-nav-link">Sales Demand Testing</a></li>
-                    <li><a href="{{ url('services') }}#growth-plan" class="footer3-nav-link">Sales/Market Support</a></li>
-                    <li><a href="{{ url('services') }}#growth-plan" class="footer3-nav-link">Investment Readiness</a></li>
+                    <li><a href="{{ route('services.market-demand-testing') }}" class="footer3-nav-link">Market Demand Testing</a></li>
+                    <li><a href="{{ route('services.outbound-demand-testing') }}" class="footer3-nav-link">Outbound Demand Testing</a></li>
+                    <li><a href="{{ route('services.distributor-partner') }}" class="footer3-nav-link">Distributor Verification</a></li>
+                    <li><a href="{{ url('services') }}" class="footer3-nav-link">Commercial Services</a></li>
                 </ul>
             </div>
 
