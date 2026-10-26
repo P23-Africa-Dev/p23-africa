@@ -130,6 +130,7 @@ Route::get('/outbound-sales-demand-testing', function () {
 Route::get('/services/market-entry', fn() => redirect()->route('services.market-entry'));
 Route::get('/services/market-entry/nigeria', fn() => redirect()->route('services.market-entry.nigeria'));
 Route::get('/services/market-entry/ghana', fn() => redirect()->route('services.market-entry.ghana'));
+Route::get('/services/outbound-sales-demand-testing', fn() => redirect()->route('services.outbound-sales'));
 
 Route::get('/sales', function () {
     ClickTracker::track('Sales_Page');

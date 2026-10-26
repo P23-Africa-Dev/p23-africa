@@ -53,7 +53,8 @@
     line-height: 1;
 }
 
-.p23-nav-logo img {
+.p23-nav-logo img,
+.p23-nav-logo svg {
     width: 62px;
     height: 30px;
     object-fit: contain;
@@ -287,6 +288,21 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 32px;
+}
+
+.p23-mobile-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    line-height: 1;
+}
+
+.p23-mobile-logo img,
+.p23-mobile-logo svg {
+    width: 62px;
+    height: 30px;
+    object-fit: contain;
+    display: block;
 }
 
 .p23-mobile-drawer-close {
