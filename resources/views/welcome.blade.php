@@ -1875,15 +1875,15 @@
             <section class="hero content-section animate-on-scroll">
                 <div class="row hero-sec-row">
                     <div class="col-md-7 hero-text my-auto">
-                        <h1>Enter African Markets <br> With Evidence <br><span id="fonts">Not Assumptions</span></h1>
+                        <h1>{{ __('home.hero_title_line') }} <br> {{ __('home.hero_title_evidence') }} <br><span id="fonts">{{ __('home.hero_title_not') }}</span></h1>
                         <br>
                         <p>
-                          We help international businesses validate demand, verify distribution partners and build the sales operations needed to grow in Africa.<br>From testing real buyer interest to strengthening local sales teams and channel performance, we turn market-entry plans into commercial action.
+                          {{ __('home.hero_body') }}
                         </p>
                         <br>
                         <div class="hero-cta-wrapper">
-                            <a href="{{ url('contact') }}" class="d-flex justify-content-between align-items-center">
-                                <span class="hero-btn-label">Discuss Your Market Entry</span>
+                            <a href="{{ locale_route('contact') }}" class="d-flex justify-content-between align-items-center">
+                                <span class="hero-btn-label">{{ __('home.discuss') }}</span>
                                 <span class="hero-btn-arrow" aria-hidden="true">→</span>
                             </a>
                         </div>
@@ -1958,7 +1958,7 @@
 
     <section class="partner-logos-section" id="trusted-partners" aria-label="Trusted by leading organizations">
         <div class="partner-logos-container">
-            <p class="partner-logos-title">Trusted by 25k+ businesses</p>
+            <p class="partner-logos-title">{{ __('home.trusted') }}</p>
         </div>
 
         <div class="partner-marquee-wrapper">
@@ -2005,10 +2005,10 @@
             
             {{-- Section Header --}}
             <div class="home-casestudy-header">
-                <span class="home-casestudy-kicker">CASE STUDIES</span>
-                <h2 class="home-casestudy-title">Commercial Results in Real Markets</h2>
+                <span class="home-casestudy-kicker">{{ __('home.case_kicker') }}</span>
+                <h2 class="home-casestudy-title">{{ __('home.results') }}</h2>
                 <p class="home-casestudy-subtitle">
-                    Examine how international manufacturers and platforms validate real buyer demand and execute successful market expansion across Africa.
+                    {{ __('home.case_subtitle') }}
                 </p>
             </div>
 
@@ -2024,7 +2024,7 @@
                             id="tab-industrial"
                             onclick="switchHomeCaseTab('home-pane-industrial', this)">
                         <span class="tab-dot"></span>
-                        Manufacturers
+                        {{ __('home.tab_manufacturers') }}
                     </button>
                     <button type="button" 
                             class="home-tab-btn" 
@@ -2035,7 +2035,7 @@
                             id="tab-software"
                             onclick="switchHomeCaseTab('home-pane-software', this)">
                         <span class="tab-dot"></span>
-                        Software &amp; SaaS
+                        {{ __('home.tab_saas') }}
                     </button>
                     <button type="button" 
                             class="home-tab-btn" 
@@ -2046,7 +2046,7 @@
                             id="tab-verification"
                             onclick="switchHomeCaseTab('home-pane-verification', this)">
                         <span class="tab-dot"></span>
-                        Distributor Verification
+                        {{ __('home.tab_verification') }}
                     </button>
                 </div>
             </div>
@@ -2059,45 +2059,45 @@
                     <div class="home-case-card">
                         <div class="home-case-visual">
                             <img src="{{ asset('images/case-studies/thermoflow.png') }}" 
-                                 alt="Testing Demand for an Industrial Equipment Manufacturer" 
+                                 alt="{{ __('home.case_mfg_alt') }}" 
                                  loading="lazy">
-                            <span class="home-case-badge">Manufacturers</span>
+                            <span class="home-case-badge">{{ __('home.tab_manufacturers') }}</span>
                         </div>
 
                         <div class="home-case-article">
                             <div>
                                 <div class="home-case-meta">
-                                    <span><i class="bi bi-geo-alt"></i> Nigeria (Lagos &amp; Abuja)</span>
-                                    <span><i class="bi bi-clock"></i> 10-Week Demand Testing</span>
+                                    <span><i class="bi bi-geo-alt"></i> {{ __('home.case_mfg_place') }}</span>
+                                    <span><i class="bi bi-clock"></i> {{ __('home.case_mfg_time') }}</span>
                                 </div>
 
                                 <h3 class="home-case-heading">
-                                    Testing Demand for an Industrial Equipment Manufacturer
+                                    {{ __('home.case_mfg_title') }}
                                 </h3>
 
                                 <p class="home-case-description">
-                                    Validated buyer interest, gathered market pricing insights and identified potential distribution partners in Nigeria.
+                                    {{ __('home.case_mfg_body') }}
                                 </p>
 
                                 <div class="home-case-metrics">
                                     <div class="home-metric-item">
                                         <span class="home-metric-value">312</span>
-                                        <span class="home-metric-label">Target Accounts</span>
+                                        <span class="home-metric-label">{{ __('home.metric_accounts') }}</span>
                                     </div>
                                     <div class="home-metric-item">
                                         <span class="home-metric-value">47</span>
-                                        <span class="home-metric-label">Qualified Opportunities</span>
+                                        <span class="home-metric-label">{{ __('home.metric_opportunities') }}</span>
                                     </div>
                                     <div class="home-metric-item">
-                                        <span class="home-metric-value">Verified</span>
-                                        <span class="home-metric-label">Distribution Route</span>
+                                        <span class="home-metric-value">{{ __('home.metric_verified') }}</span>
+                                        <span class="home-metric-label">{{ __('home.metric_route') }}</span>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="home-case-footer">
-                                <a href="{{ url('case-studies/thermoflow-hvac') }}" class="home-case-link" id="btn-read-case-industrial">
-                                    Read the case study <span class="arrow">→</span>
+                                <a href="{{ locale_route('case-studies.show', ['slug' => 'thermoflow-hvac']) }}" class="home-case-link" id="btn-read-case-industrial">
+                                    {{ __('home.read_case') }} <span class="arrow">→</span>
                                 </a>
                             </div>
                         </div>
@@ -2109,45 +2109,45 @@
                     <div class="home-case-card">
                         <div class="home-case-visual">
                             <img src="{{ asset('images/case-studies/finedge.png') }}" 
-                                 alt="Enterprise Client Acquisition & Partner Routes for B2B SaaS" 
+                                 alt="{{ __('home.case_saas_alt') }}" 
                                  loading="lazy">
-                            <span class="home-case-badge">Software &amp; SaaS</span>
+                            <span class="home-case-badge">{{ __('home.tab_saas') }}</span>
                         </div>
 
                         <div class="home-case-article">
                             <div>
                                 <div class="home-case-meta">
-                                    <span><i class="bi bi-geo-alt"></i> Nigeria &amp; Kenya</span>
-                                    <span><i class="bi bi-clock"></i> 12-Week Market Entry</span>
+                                    <span><i class="bi bi-geo-alt"></i> {{ __('home.case_saas_place') }}</span>
+                                    <span><i class="bi bi-clock"></i> {{ __('home.case_saas_time') }}</span>
                                 </div>
 
                                 <h3 class="home-case-heading">
-                                    Enterprise Client Acquisition &amp; Partner Routes for B2B SaaS
+                                    {{ __('home.case_saas_title') }}
                                 </h3>
 
                                 <p class="home-case-description">
-                                    Supporting technology companies and software platforms seeking enterprise clients, commercial partnerships, and routes to market across Africa.
+                                    {{ __('home.case_saas_body') }}
                                 </p>
 
                                 <div class="home-case-metrics">
                                     <div class="home-metric-item">
                                         <span class="home-metric-value">280</span>
-                                        <span class="home-metric-label">Target Accounts</span>
+                                        <span class="home-metric-label">{{ __('home.metric_accounts') }}</span>
                                     </div>
                                     <div class="home-metric-item">
                                         <span class="home-metric-value">18</span>
-                                        <span class="home-metric-label">Qualified Leads</span>
+                                        <span class="home-metric-label">{{ __('home.metric_leads') }}</span>
                                     </div>
                                     <div class="home-metric-item">
-                                        <span class="home-metric-value">2 Signed</span>
-                                        <span class="home-metric-label">Channel Partners</span>
+                                        <span class="home-metric-value">{{ __('home.metric_signed') }}</span>
+                                        <span class="home-metric-label">{{ __('home.metric_channels') }}</span>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="home-case-footer">
-                                <a href="{{ url('case-studies/cloudworks-analytics') }}" class="home-case-link" id="btn-read-case-software">
-                                    Read the case study <span class="arrow">→</span>
+                                <a href="{{ locale_route('case-studies.show', ['slug' => 'cloudworks-analytics']) }}" class="home-case-link" id="btn-read-case-software">
+                                    {{ __('home.read_case') }} <span class="arrow">→</span>
                                 </a>
                             </div>
                         </div>
@@ -2159,45 +2159,45 @@
                     <div class="home-case-card">
                         <div class="home-case-visual">
                             <img src="{{ asset('images/case-studies/distributor-verification.png') }}" 
-                                 alt="Verifying Local Distribution Partners Before Market Entry" 
+                                 alt="{{ __('home.case_ver_alt') }}" 
                                  loading="lazy">
-                            <span class="home-case-badge">Distributor Verification</span>
+                            <span class="home-case-badge">{{ __('home.tab_verification') }}</span>
                         </div>
 
                         <div class="home-case-article">
                             <div>
                                 <div class="home-case-meta">
-                                    <span><i class="bi bi-geo-alt"></i> Kenya &amp; Tanzania</span>
-                                    <span><i class="bi bi-clock"></i> 14-Week Partner Verification</span>
+                                    <span><i class="bi bi-geo-alt"></i> {{ __('home.case_ver_place') }}</span>
+                                    <span><i class="bi bi-clock"></i> {{ __('home.case_ver_time') }}</span>
                                 </div>
 
                                 <h3 class="home-case-heading">
-                                    Verifying Local Distribution Partners Before Market Entry
+                                    {{ __('home.case_ver_title') }}
                                 </h3>
 
                                 <p class="home-case-description">
-                                    Assessing prospective distribution partners before committing capital. Verifying on-ground sales capabilities, customer access, and territory coverage to establish reliable commercial routes.
+                                    {{ __('home.case_ver_body') }}
                                 </p>
 
                                 <div class="home-case-metrics">
                                     <div class="home-metric-item">
                                         <span class="home-metric-value">13</span>
-                                        <span class="home-metric-label">Distributors Screened</span>
+                                        <span class="home-metric-label">{{ __('home.metric_screened') }}</span>
                                     </div>
                                     <div class="home-metric-item">
                                         <span class="home-metric-value">5</span>
-                                        <span class="home-metric-label">Shortlisted</span>
+                                        <span class="home-metric-label">{{ __('home.metric_shortlisted') }}</span>
                                     </div>
                                     <div class="home-metric-item">
-                                        <span class="home-metric-value">2 Signed</span>
-                                        <span class="home-metric-label">Verified Partners</span>
+                                        <span class="home-metric-value">{{ __('home.metric_signed') }}</span>
+                                        <span class="home-metric-label">{{ __('home.metric_partners') }}</span>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="home-case-footer">
-                                <a href="{{ url('case-studies/coolair-systems') }}" class="home-case-link" id="btn-read-case-verification">
-                                    Read the case study <span class="arrow">→</span>
+                                <a href="{{ locale_route('case-studies.show', ['slug' => 'coolair-systems']) }}" class="home-case-link" id="btn-read-case-verification">
+                                    {{ __('home.read_case') }} <span class="arrow">→</span>
                                 </a>
                             </div>
                         </div>
@@ -2208,8 +2208,8 @@
 
             {{-- All Case Studies Link --}}
             <div class="home-casestudy-all-link">
-                <a href="{{ url('case-studies') }}" id="link-explore-all-case-studies">
-                    Explore all verified market case studies <span>→</span>
+                <a href="{{ locale_route('case-studies') }}" id="link-explore-all-case-studies">
+                    {{ __('home.explore_cases') }} <span>→</span>
                 </a>
             </div>
 
@@ -2220,8 +2220,8 @@
 
     <section id="how_we_help" class="content-section animate-on-scroll">
         <div class="py-5 content">
-            <span class="section-eyebrow">OUR CAPABILITIES</span>
-            <h2 class="section-title">Commercial Solutions for African Expansion</h2>
+            <span class="section-eyebrow">{{ __('home.capabilities') }}</span>
+            <h2 class="section-title">{{ __('home.solutions') }}</h2>
             <div class="custom-underline"></div>
 
             <div class="row g-4 capabilities-grid">
@@ -2257,16 +2257,16 @@
                             <div class="capability-icon">
                                 <i class="bi bi-graph-up-arrow"></i>
                             </div>
-                            <h3 class="capability-title">Outbound Demand Testing</h3>
-                            <p class="capability-desc">Test your proposition with real prospective buyers and distributors before making significant market-entry investments. Gather direct feedback, assess buying interest and identify viable opportunities.</p>
+                            <h3 class="capability-title">{{ __('home.outbound') }}</h3>
+                            <p class="capability-desc">{{ __('home.outbound_body') }}</p>
                             <div class="capability-tags">
-                                <span class="tag-item">Target buyer identification</span>
+                                <span class="tag-item">{{ __('home.tag_buyers') }}</span>
                                 <span class="tag-dot">·</span>
-                                <span class="tag-item">Direct outreach</span>
+                                <span class="tag-item">{{ __('home.tag_outreach') }}</span>
                                 <span class="tag-dot">·</span>
-                                <span class="tag-item">Demand validation</span>
+                                <span class="tag-item">{{ __('home.tag_demand') }}</span>
                                 <span class="tag-dot">·</span>
-                                <span class="tag-item">Sales opportunity reporting</span>
+                                <span class="tag-item">{{ __('home.tag_reporting') }}</span>
                             </div>
                         </div>
                         <a href="{{ route('services.outbound-demand-testing') }}" class="capability-link">
@@ -2303,24 +2303,24 @@
         </div>
 
         <div class="global_reach">
-            <h2><strong>Global Reach.</strong> <span>Local Approach</span></h2>
+            <h2><strong>{{ __('home.reach') }}</strong> <span>{{ __('home.local') }}</span></h2>
 
             <div class="row justify-content-center text-center stats me-auto ms-auto mt-5">
                 <div class="col-6 col-md-3 stat-box">
                     <div class="number" id="countries"></div>
-                    <div class="label">Countries</div>
+                    <div class="label">{{ __('home.countries') }}</div>
                 </div>
                 <div class="col-6 col-md-3 stat-box">
                     <div class="number" id="businesses"></div>
-                    <div class="label">Businesses</div>
+                    <div class="label">{{ __('home.businesses') }}</div>
                 </div>
                 <div class="col-6 col-md-3 stat-box">
                     <div class="number" id="partnership"></div>
-                    <div class="label">Partnership</div>
+                    <div class="label">{{ __('home.partnership') }}</div>
                 </div>
                 <div class="col-6 col-md-3 stat-box">
                     <div class="number" id="network"></div>
-                    <div class="label">Expert Network</div>
+                    <div class="label">{{ __('home.network') }}</div>
                 </div>
             </div>
         </div>
@@ -2332,9 +2332,9 @@
     <section id="sectors" class="sectors-section content-section animate-on-scroll">
         <div class="container">
             <div class="sectors-header">
-                <span class="section-eyebrow">WHO WE HELP</span>
-                <h2>Built for International Businesses Expanding into Africa</h2>
-                <p>Specialized commercial strategies tailored to industry realities across Africa.</p>
+                <span class="section-eyebrow">{{ __('home.who') }}</span>
+                <h2>{{ __('home.built_for') }}</h2>
+                <p>{{ __('home.sector_intro') }}</p>
             </div>
 
             <div class="row g-4 justify-content-center">
@@ -2343,12 +2343,12 @@
                     <div class="sector-card">
                         <div>
                             <div class="sector-icon"><i class="bi bi-tools"></i></div>
-                            <h3 class="sector-title">Equipment and Industrial Manufacturers</h3>
-                            <p class="sector-desc">Helping international manufacturers test market demand, identify target enterprise customers, and verify reliable distribution partners before committing to a market.</p>
+                            <h3 class="sector-title">{{ __('home.manufacturers') }}</h3>
+                            <p class="sector-desc">{{ __('home.mfg_body') }}</p>
                             <ul class="sector-verticals">
-                                <li><i class="bi bi-check-circle-fill"></i> Heavy Equipment &amp; Industrial Machinery</li>
-                                <li><i class="bi bi-check-circle-fill"></i> Construction, Infrastructure &amp; HVAC Equipment</li>
-                                <li><i class="bi bi-check-circle-fill"></i> Agricultural, Manufacturing &amp; Medical Equipment</li>
+                                <li><i class="bi bi-check-circle-fill"></i> {{ __('home.vertical_heavy') }}</li>
+                                <li><i class="bi bi-check-circle-fill"></i> {{ __('home.vertical_hvac') }}</li>
+                                <li><i class="bi bi-check-circle-fill"></i> {{ __('home.vertical_agri') }}</li>
                             </ul>
                         </div>
                     </div>
@@ -2359,12 +2359,12 @@
                     <div class="sector-card">
                         <div>
                             <div class="sector-icon"><i class="bi bi-cpu"></i></div>
-                            <h3 class="sector-title">Software and SaaS Companies</h3>
-                            <p class="sector-desc">Supporting technology companies and software platforms seeking enterprise clients, commercial partnerships, and routes to market across Africa.</p>
+                            <h3 class="sector-title">{{ __('home.saas') }}</h3>
+                            <p class="sector-desc">{{ __('home.saas_body') }}</p>
                             <ul class="sector-verticals">
-                                <li><i class="bi bi-check-circle-fill"></i> Fintech and financial technology</li>
-                                <li><i class="bi bi-check-circle-fill"></i> Logistics and supply chain businesses</li>
-                                <li><i class="bi bi-check-circle-fill"></i> Compliance and RegTech providers</li>
+                                <li><i class="bi bi-check-circle-fill"></i> {{ __('home.vertical_fintech') }}</li>
+                                <li><i class="bi bi-check-circle-fill"></i> {{ __('home.vertical_logistics') }}</li>
+                                <li><i class="bi bi-check-circle-fill"></i> {{ __('home.vertical_regtech') }}</li>
                             </ul>
                         </div>
                     </div>
@@ -2372,8 +2372,8 @@
             </div>
 
             <div class="sectors-cta-wrap">
-                <a href="{{ url('contact') }}" class="sectors-cta-btn">
-                    <span>Contact Us</span>
+                <a href="{{ locale_route('contact') }}" class="sectors-cta-btn">
+                    <span>{{ __('home.contact_us') }}</span>
                     <i class="bi bi-arrow-right" aria-hidden="true"></i>
                 </a>
             </div>
@@ -2384,11 +2384,11 @@
     <section id="why_p23" class="why-section content-section animate-on-scroll">
         <div class="container">
             <div class="why-header">
-                <span class="why-eyebrow">THE P23 ADVANTAGE</span>
-                <h2>Why P23 Africa?</h2>
-                <div class="why-tagline">Local insight. International perspective. Commercial focus.</div>
+                <span class="why-eyebrow">{{ __('home.advantage') }}</span>
+                <h2>{{ __('home.why') }}</h2>
+                <div class="why-tagline">{{ __('home.why_tagline') }}</div>
                 <p class="why-lead">
-                    African market expansion can be complex. We help simplify the process by combining an understanding of international business requirements with knowledge of African markets and commercial environments.
+                    {{ __('home.why_lead') }}
                 </p>
             </div>
 
@@ -2396,32 +2396,32 @@
                 <div class="col-lg-6">
                     <div class="why-card">
                         <div class="why-card-icon"><i class="bi bi-bullseye"></i></div>
-                        <h3 class="why-card-title">Practical, not theoretical</h3>
-                        <p class="why-card-desc">Our focus is on information and activity that can lead to commercial decisions and measurable progress.</p>
+                        <h3 class="why-card-title">{{ __('home.practical') }}</h3>
+                        <p class="why-card-desc">{{ __('home.practical_body') }}</p>
                     </div>
                 </div>
 
                 <div class="col-lg-6">
                     <div class="why-card">
                         <div class="why-card-icon"><i class="bi bi-people-fill"></i></div>
-                        <h3 class="why-card-title">Relationship-led</h3>
-                        <p class="why-card-desc">Strong local relationships are fundamental to successful business development across Africa.</p>
+                        <h3 class="why-card-title">{{ __('home.relationship') }}</h3>
+                        <p class="why-card-desc">{{ __('home.relationship_body') }}</p>
                     </div>
                 </div>
 
                 <div class="col-lg-6">
                     <div class="why-card">
                         <div class="why-card-icon"><i class="bi bi-sliders"></i></div>
-                        <h3 class="why-card-title">Flexible engagement</h3>
-                        <p class="why-card-desc">From a focused market validation project to ongoing commercial support, our involvement can adapt to your requirements.</p>
+                        <h3 class="why-card-title">{{ __('home.flexible') }}</h3>
+                        <p class="why-card-desc">{{ __('home.flexible_body') }}</p>
                     </div>
                 </div>
 
                 <div class="col-lg-6">
                     <div class="why-card">
                         <div class="why-card-icon"><i class="bi bi-crosshair"></i></div>
-                        <h3 class="why-card-title">Built around your objectives</h3>
-                        <p class="why-card-desc">We don’t apply a one-size-fits-all market-entry model. We start with your business, proposition and objectives.</p>
+                        <h3 class="why-card-title">{{ __('home.objectives') }}</h3>
+                        <p class="why-card-desc">{{ __('home.objectives_body') }}</p>
                     </div>
                 </div>
             </div>
@@ -2437,7 +2437,7 @@
 
     <section class="insight-section content-section animate-on-scroll">
         <div class="">
-            <h2>P23 Insights</h2>
+            <h2>{{ __('home.insights') }}</h2>
             <div class="row insight-content">
                 <div class="col-md-6 insight-image-wrapper">
                     <img src="{{ asset('images/insight-side.jpg') }}" loading='lazy' alt="Scolding Donald"
@@ -2446,12 +2446,11 @@
                 </div>
                 <div class="col-md-6 insight-text">
                     <p class="date">17th October 2026</p>
-                    <h3><b> Essential Guide to Doing Business in Africa</b></h3>
+                    <h3><b> {{ __('home.guide') }}</b></h3>
                     <p class="description">
-                        Our essential guide helps foreign investors navigate Africa’s diverse markets, build local
-                        partnerships, and understand regulations, offering practical strategies for sustainable success.
+                        {{ __('home.guide_body') }}
                     </p>
-                    <a href="{{ route('resource-hub') }}" class="read-more">Read More <span>→</span></a>
+                    <a href="{{ locale_route('resource-hub') }}" class="read-more">{{ __('home.read_more') }} <span>→</span></a>
                 </div>
             </div>
         </div>
@@ -2466,7 +2465,7 @@
                         <button class="view-pdf-btn cursor-pointer bg-white border border-0 text-left"
                             data-pdf="{{ asset('storage/' . $blog->pdf_path) }}">
                         @else
-                            <a href="{{ route('resource-show', $blog->slug) }}" class="text-decoration-none">
+                            <a href="{{ locale_route('resource-show', ['slug' => $blog->slug]) }}" class="text-decoration-none">
                     @endif
                     @if ($blog->image_path)
                         <img src="{{ asset('storage/' . $blog->image_path) }}" loading='lazy' alt="Card image">
@@ -2476,8 +2475,8 @@
                     <div class="card-body">
                         <div class="date text-start w-100">
                             {{ \Carbon\Carbon::parse($blog->created_at)->format('l, F jS Y') }}</div>
-                        <h5 class="text-start w-100">{{ $blog->title }}</h5>
-                        <p class="text-start w-100"> {{ \Illuminate\Support\Str::limit($blog->subtitle, 138) }}</p>
+                        <h5 class="text-start w-100">{{ $blog->translated('title') }}</h5>
+                        <p class="text-start w-100"> {{ \Illuminate\Support\Str::limit($blog->translated('subtitle'), 138) }}</p>
                     </div>
                     @if (!$blog->pdf_path)
                         </a>
@@ -2486,43 +2485,39 @@
                     @endif
                 </div>
             @endforeach --}}
-            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
+            <a href="{{ locale_route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/funding.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
                     <div class="date">2nd October 2026</div>
-                    <h5>State of Funding 2025</h5>
-                    <p>Africa’s funding landscape in 2025 shows steady growth, but challenges like tighter global capital
-                        and cautious investor sentiment remain.</p>
+                    <h5>{{ __('home.insight_funding') }}</h5>
+                    <p>{{ __('home.insight_funding_body') }}</p>
                 </div>
             </a>
 
-            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
+            <a href="{{ locale_route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/girl.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
                     <div class="date">10th October 2026</div>
-                    <h5>Understanding buyer habits</h5>
-                    <p>Buyer habits in Africa are evolving fast, driven by digital adoption and a growing middle class, but
-                        differences across regions and trust issues still pose challenges.</p>
+                    <h5>{{ __('home.insight_buyers') }}</h5>
+                    <p>{{ __('home.insight_buyers_body') }}</p>
                 </div>
             </a>
 
-            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
+            <a href="{{ locale_route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/plant.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
                     <div class="date">22nd September 2026</div>
-                    <h5>Top Agri sectors to watch</h5>
-                    <p>Africa’s agriculture sector is full of opportunity, with agri-tech, food processing, and sustainable
-                        farming emerging as key areas to watch.</p>
+                    <h5>{{ __('home.insight_agri') }}</h5>
+                    <p>{{ __('home.insight_agri_body') }}</p>
                 </div>
             </a>
 
-            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
+            <a href="{{ locale_route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/carousel00.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
                     <div class="date">9th September 2026</div>
-                    <h5>Business trends 2025</h5>
-                    <p>Business trends in Africa are evolving rapidly, with growth in digital transformation, green energy,
-                        and emerging markets driving new opportunities across the continent.</p>
+                    <h5>{{ __('home.insight_trends') }}</h5>
+                    <p>{{ __('home.insight_trends_body') }}</p>
                 </div>
             </a>
 
@@ -2533,7 +2528,7 @@
                         <button class="view-pdf-btn cursor-pointer bg-white border border-0 text-left"
                             data-pdf="{{ asset('storage/' . $blog->pdf_path) }}">
                         @else
-                            <a href="{{ route('resource-show', $blog->slug) }}" class="text-decoration-none">
+                            <a href="{{ locale_route('resource-show', ['slug' => $blog->slug]) }}" class="text-decoration-none">
                     @endif
                     @if ($blog->image_path)
                         <img src="{{ asset('storage/' . $blog->image_path) }}" loading='lazy' alt="Card image">
@@ -2543,8 +2538,8 @@
                     <div class="card-body">
                         <div class="date text-start w-100">
                             {{ \Carbon\Carbon::parse($blog->created_at)->format('l, F jS Y') }}</div>
-                        <h5 class="text-start w-100">{{ $blog->title }}</h5>
-                        <p class="text-start w-100"> {{ \Illuminate\Support\Str::limit($blog->subtitle, 138) }}</p>
+                        <h5 class="text-start w-100">{{ $blog->translated('title') }}</h5>
+                        <p class="text-start w-100"> {{ \Illuminate\Support\Str::limit($blog->translated('subtitle'), 138) }}</p>
                     </div>
                     @if (!$blog->pdf_path)
                         </a>
@@ -2554,56 +2549,52 @@
                 </div>
             @endforeach --}}
 
-            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
+            <a href="{{ locale_route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/funding.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
                     <div class="date">2nd October 2026</div>
-                    <h5>State of Funding 2025</h5>
-                    <p>Africa’s funding landscape in 2025 shows steady growth, but challenges like tighter global capital
-                        and cautious investor sentiment remain.</p>
+                    <h5>{{ __('home.insight_funding') }}</h5>
+                    <p>{{ __('home.insight_funding_body') }}</p>
                 </div>
             </a>
 
-            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
+            <a href="{{ locale_route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/girl.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
                     <div class="date">10th October 2026</div>
-                    <h5>Understanding buyer habits</h5>
-                    <p>Buyer habits in Africa are evolving fast, driven by digital adoption and a growing middle class, but
-                        differences across regions and trust issues still pose challenges.</p>
+                    <h5>{{ __('home.insight_buyers') }}</h5>
+                    <p>{{ __('home.insight_buyers_body') }}</p>
                 </div>
             </a>
 
-            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
+            <a href="{{ locale_route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/plant.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
                     <div class="date">22nd September 2026</div>
-                    <h5>Top Agri sectors to watch</h5>
-                    <p>Africa’s agriculture sector is full of opportunity, with agri-tech, food processing, and sustainable
-                        farming emerging as key areas to watch.</p>
+                    <h5>{{ __('home.insight_agri') }}</h5>
+                    <p>{{ __('home.insight_agri_body') }}</p>
                 </div>
             </a>
 
-            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
+            <a href="{{ locale_route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/carousel00.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
                     <div class="date">9th September 2026</div>
-                    <h5>Business trends 2025</h5>
-                    <p>Business trends in Africa are evolving rapidly, with growth in digital transformation, green energy,
-                        and emerging markets driving new opportunities across the continent.</p>
+                    <h5>{{ __('home.insight_trends') }}</h5>
+                    <p>{{ __('home.insight_trends_body') }}</p>
                 </div>
             </a>
         </div>
 
         <div id="btn" class="mt-4">
-            <a href="{{ route('resource-hub') }}" class="btn">More on the Resource Hub</a>
+            <a href="{{ locale_route('resource-hub') }}" class="btn">{{ __('home.more_hub') }}</a>
         </div>
 
         <div class="pdf-popup" id="pdfPopup">
             <div class="pdf-popup-content">
                 <span class="close-popup">&times;</span>
                 <a href="" class="download-btn" id="downloadPdf" download>
-                    📥 Download PDF
+                    📥 {{ __('home.download_pdf') }}
                 </a>
                 <iframe class="pdf-viewer" id="pdfViewer" src="" frameborder="0"></iframe>
             </div>
@@ -2615,18 +2606,18 @@
     <section class="cta-closing-section content-section animate-on-scroll">
         <div class="container">
             <div class="cta-closing-inner">
-                <span class="cta-pill">START YOUR EXPANSION</span>
-                <h2>Ready to Explore the African Market?</h2>
+                <span class="cta-pill">{{ __('home.cta_pill') }}</span>
+                <h2>{{ __('home.cta') }}</h2>
                 <p class="cta-desc">
-                    Whether you’re considering Africa for the first time, looking to expand into additional markets, searching for customers or distributors, or preparing an established business for its next stage of growth, P23 Africa can help.
+                    {{ __('home.cta_body') }}
                 </p>
-                <div class="cta-prompt">Let’s discuss what you’re trying to achieve.</div>
+                <div class="cta-prompt">{{ __('home.cta_prompt') }}</div>
                 <div class="d-flex justify-content-center flex-wrap">
-                    <a href="{{ url('contact') }}" class="cta-btn-primary">
-                        Book a Consultation <i class="bi bi-arrow-right"></i>
+                    <a href="{{ locale_route('contact') }}" class="cta-btn-primary">
+                        {{ __('home.book') }} <i class="bi bi-arrow-right"></i>
                     </a>
-                    <a href="{{ url('contact') }}" class="cta-btn-secondary">
-                        Contact Our Team
+                    <a href="{{ locale_route('contact') }}" class="cta-btn-secondary">
+                        {{ __('home.contact_team') }}
                     </a>
                 </div>
             </div>

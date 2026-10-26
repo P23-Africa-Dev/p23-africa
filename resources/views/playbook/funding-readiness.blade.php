@@ -797,28 +797,27 @@
             <div class="intro-container">
                 <div class="intro-content">
                     <h1>
-                        Funding<br />
-                        Readiness<br />
-                        <span>Guidebook</span>
+                        {{ __('playbook.fr_line1') }}<br />
+                        {{ __('playbook.fr_line2') }}<br />
+                        <span>{{ __('playbook.fr_line3') }}</span>
                     </h1>
 
                     <div class="intro-info">
                         <p>
-                            A step-by-step guide to becoming investor-ready, built for
-                            African entrepreneurs.
+                            {{ __('playbook.fr_intro') }}
                         </p>
 
-                        <a href="" class="cta-btn open-modal-btn">Download Now</a>
+                        <a href="" class="cta-btn open-modal-btn">{{ __('playbook.fr_download') }}</a>
                     </div>
 
 
                 </div>
 
                 <div class="intro-image desktop">
-                    <img src="{{ asset('./img/desktop.png') }}" loading="lazy" alt="Entrepreneur using laptop" />
+                    <img src="{{ asset('./img/desktop.png') }}" loading="lazy" alt="{{ __('playbook.alt_laptop') }}" />
                 </div>
                 <div class="intro-image mobile">
-                    <img src="{{ asset('./img/mobile.png') }}" loading="lazy" alt="Entrepreneur using laptop" />
+                    <img src="{{ asset('./img/mobile.png') }}" loading="lazy" alt="{{ __('playbook.alt_laptop') }}" />
                 </div>
             </div>
         </div>
@@ -828,12 +827,9 @@
         <div class="sales-container">
             <div class="book-container">
                 <div class="book-header">
-                    <h3>About the Book</h3>
+                    <h3>{{ __('playbook.fr_about') }}</h3>
                     <p>
-                        Funding is limited and competitive in Africa. This guide helps you
-                        master your business story, understand your numbers, and pitch
-                        with confidence — so you can attract the right investors or grow
-                        sustainably without them.
+                        {{ __('playbook.fr_about_body') }}
                     </p>
                 </div>
 
@@ -856,11 +852,10 @@
                 </div>
 
                 <p class="closing-text">
-                    Walk away with a ready-to-use pitch deck, funding plan, and clarity
-                    on your next move.
+                    {{ __('playbook.fr_close') }}
                 </p>
 
-                <a href="" class="cta-btn open-modal-btn">Get My Free Guide Now</a>
+                <a href="" class="cta-btn open-modal-btn">{{ __('playbook.fr_get') }}</a>
             </div>
         </div>
     </section>
@@ -873,12 +868,12 @@
             <div class="content">
                 <div class="text-content">
                     <div class="text-content-upper">
-                        <h2>When You’re Ready to Raise...</h2>
-                        <p>Get Access to the Ultimate Funding & Investor Directory</p>
+                        <h2>{{ __('playbook.fr_raise') }}</h2>
+                        <p>{{ __('playbook.fr_dir_access') }}</p>
                     </div>
                     <div class="text-content-below">
                         <p>
-                            Once you’ve completed your free guide, take the next step.
+                            {{ __('playbook.fr_next') }}
                             <img src="{{ asset('./img/arrow-right.png') }}" alt="" />
                         </p>
                         <!-- <span></span> -->
@@ -886,29 +881,28 @@
                 </div>
                 <div class="info">
                     <div class="info-container">
-                        <h3>Our premium Funding Directory includes:</h3>
+                        <h3>{{ __('playbook.fr_includes') }}</h3>
                         <div class="info-headings-container">
                             <div class="info-headings">
                                 <div>
                                     <h5>40+</h5>
-                                    <span> African countries <br> covered </span>
+                                    <span> {{ __('playbook.fr_countries') }} </span>
                                 </div>
                                 <div>
                                     <h5>100+</h5>
-                                    <span> Global grant funders/VC investors </span>
+                                    <span> {{ __('playbook.fr_investors') }} </span>
                                 </div>
                             </div>
                             <ul>
-                                <li>Verified investors actively funding African startups</li>
+                                <li>{{ __('playbook.fr_verified') }}</li>
                                 <li>
-                                    Bonus: Investor-ready templates and funding strategy
-                                    planners
+                                    {{ __('playbook.fr_bonus') }}
                                 </li>
                             </ul>
                         </div>
                     </div>
 
-                    <a href="#" class="learn-more">Learn More About the Investor Directory</a>
+                    <a href="{{ locale_route('playbook.landing2') }}" class="learn-more">{{ __('playbook.fr_learn') }}</a>
                 </div>
             </div>
         </div>
@@ -917,7 +911,7 @@
     <!-- FORM MODAL -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-box">
-            <h3>Kindly Input Your Details Below<br />And Proceed To Download</h3>
+            <h3>{{ __('playbook.fr_form_title') }}</h3>
 
             <div class="success-message" id="successMessage"></div>
 
@@ -927,31 +921,31 @@
                 <div class="modal-form-fields">
                     <div class="modal-input-fields">
                         <div>
-                            <input type="text" name="name" placeholder="Enter Full name" required />
+                            <input type="text" name="name" placeholder="{{ __('playbook.ph_full') }}" required />
                             <div class="error-message" id="nameError"></div>
                         </div>
 
                         <div>
-                            <input type="email" name="email" placeholder="Enter Email" required />
+                            <input type="email" name="email" placeholder="{{ __('playbook.ph_email_short') }}" required />
                             <div class="error-message" id="emailError"></div>
                         </div>
                     </div>
 
                     <div class="modal-input-fields">
                         <div>
-                            <input type="text" name="company" placeholder="Company name" required />
+                            <input type="text" name="company" placeholder="{{ __('playbook.ph_company_short') }}" required />
                             <div class="error-message" id="companyError"></div>
                         </div>
 
                         <div>
-                            <input type="text" name="phone" placeholder="Phone Number" required />
+                            <input type="text" name="phone" placeholder="{{ __('playbook.ph_phone') }}" required />
                             <div class="error-message" id="phoneError"></div>
                         </div>
                     </div>
                 </div>
 
                 <button type="submit" class="form-btn" id="submitBtn">
-                    <span class="btn-text">Download Now</span>
+                    <span class="btn-text">{{ __('playbook.fr_download') }}</span>
                     <span class="spinner" style="display: none;">
                         <div
                             style="display: inline-block; width: 16px; height: 16px; border: 2px solid transparent; border-top: 2px solid white; border-radius: 50%; animation: spin 1s linear infinite;">
@@ -968,9 +962,9 @@
     <div class="success-overlay" id="successOverlay"></div>
     <div class="success-popup" id="successPopup">
         <div class="success-icon">✓</div>
-        <h4>Success!</h4>
-        <p id="successPopupMessage">Funding Readiness Guide will be sent to your email shortly!</p>
-        <button class="popup-close-btn" id="closeSuccessPopup">Got it!</button>
+        <h4>{{ __('playbook.success') }}</h4>
+        <p id="successPopupMessage">{{ __('playbook.fr_sent') }}</p>
+        <button class="popup-close-btn" id="closeSuccessPopup">{{ __('playbook.got_it') }}</button>
     </div>
 @endsection
 
@@ -1106,13 +1100,13 @@
                         // For non-validation errors
                         console.log('Non-validation error:', data.message);
                         showError('emailError', data.message ||
-                            'An error occurred. Please try again.');
+                            @json(__('playbook.err_generic')));
                     }
                 }
             } catch (error) {
                 console.error('Error:', error);
                 showError('emailError',
-                    'Network error. Please check your connection and try again.');
+                    @json(__('playbook.err_network')));
             } finally {
                 setLoading(false);
             }

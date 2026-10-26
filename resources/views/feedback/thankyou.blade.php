@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container text-center mt-5">
-    <h2 class="h1 text-success"><strong>Thank You!</strong></h2>
-    <p>Your feedback has been submitted successfully. We appreciate your time!</p>
+    <h2 class="h1 text-success"><strong>{{ __('events.thanks') }}</strong></h2>
+    <p>{{ __('events.thanks_body') }}</p>
 </div>
 @endsection

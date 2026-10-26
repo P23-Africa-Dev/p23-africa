@@ -1129,7 +1129,7 @@
                 <div class="step-progress-container">
                     <div class="progress-area">
                         <div class="box-area">
-                            <span class="progress-text">01 of 04</span>
+                            <span class="progress-text">{{ __('consultation.step_progress') }}</span>
                             <div class="progress-baar">
                                 <div class="progress-fill"></div>
                             </div>
@@ -1142,65 +1142,63 @@
 
                     <div class="step-titles">
                         <!-- STEP 1 -->
-                        <div class="step-title active title1" data-title="BUSINESS OVERVIEW"
-                            data-subtitle="We use this info to better understand your business before the session.">
-                            <h2>BUSINESS OVERVIEW</h2>
+                        <div class="step-title active title1" data-title="{{ __('consultation.overview') }}"
+                            data-subtitle="{{ __('consultation.understand') }}">
+                            <h2>{{ __('consultation.overview') }}</h2>
                             <p class="mobile-p">
-                                <span>We use this info to better understand</span>
-                                <span> your business before the session</span>
+                                <span>{{ __('consultation.understand_m1') }}</span>
+                                <span> {{ __('consultation.understand_m2') }}</span>
                             </p>
                             <p class="desktop-p">
-                                We use this info to better understand your business before the
-                                session
+                                {{ __('consultation.understand') }}
                             </p>
                         </div>
 
                         <!-- STEP 2 -->
-                        <div class="step-title title2" data-title="BRAND IDENTITY"
-                            data-subtitle="Tell us more about your brand tone, target audience, and positioning.">
-                            <h2>Current Stage & Goals</h2>
+                        <div class="step-title title2" data-title="{{ __('consultation.goals') }}"
+                            data-subtitle="{{ __('consultation.goals_prompt') }}">
+                            <h2>{{ __('consultation.goals') }}</h2>
 
                             <p class="mobile-p">
-                                <span>What are your current top goals?</span>
-                                <span>(Select up to 2)</span>
+                                <span>{{ __('consultation.goals_m1') }}</span>
+                                <span>{{ __('consultation.goals_m2') }}</span>
                             </p>
                             <p class="desktop-p">
-                                What are your current top goals? (Select up to 2)
+                                {{ __('consultation.goals_prompt') }}
                             </p>
                         </div>
 
                         <!-- STEP 3 -->
-                        <div class="step-title title3" data-title="challenges"
-                            data-subtitle="Share your project goals and the key outcomes you want to achieve.">
-                            <h2>Key Challenges</h2>
+                        <div class="step-title title3" data-title="{{ __('consultation.challenges') }}"
+                            data-subtitle="{{ __('consultation.challenges_prompt') }}">
+                            <h2>{{ __('consultation.challenges') }}</h2>
 
                             <p class="mobile-p">
-                                <span>What challenges are holding your </span>
-                                <span>business back? (Select up to 3)</span>
+                                <span>{{ __('consultation.challenges_m1') }}</span>
+                                <span>{{ __('consultation.challenges_m2') }}</span>
                             </p>
                             <p class="desktop-p">
-                                What challenges are holding your business back? (Select up to
-                                3)
+                                {{ __('consultation.challenges_prompt') }}
                             </p>
                         </div>
 
                         <!-- STEP 4 -->
-                        <div class="step-title title4" data-title="outcome">
-                            <h2>Outcome</h2>
+                        <div class="step-title title4" data-title="{{ __('consultation.outcome') }}">
+                            <h2>{{ __('consultation.outcome') }}</h2>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Step Content -->
-            <form id="multiStepForm" method="POST" action="{{ route('consultation.submit') }}">
+            <form id="multiStepForm" method="POST" action="{{ locale_route('consultation.submit') }}">
                 @csrf
 
                 <!-- STEP 1 -->
                 <div class="form-step active">
                     <div class="form-grid">
                         <div class="grid-input">
-                            <input type="text" name="full_name" placeholder="Full Name" value="{{ old('full_name') }}"
+                            <input type="text" name="full_name" placeholder="{{ __('consultation.ph_name') }}" value="{{ old('full_name') }}"
                                 required />
                             @error('full_name')
                                 <span class="text-red-600 text-sm">{{ $message }}</span>
@@ -1692,7 +1690,7 @@
                                 <!-- PREFIX + INPUT -->
                                 <div class="number-wrapper">
                                     <span id="countryPrefix" style="display: none;"></span>
-                                    <input type="text" id="phoneInput" placeholder="Select country first" disabled>
+                                    <input type="text" id="phoneInput" placeholder="{{ __('consultation.ph_country_first') }}" disabled>
                                 </div>
 
                                 <!-- Hidden field for form submission -->
@@ -1708,12 +1706,12 @@
                             @enderror
 
                             <input type="text" name="company_brand_name" value="{{ old('company_brand_name') }}"
-                                placeholder="Company Name" required />
+                                placeholder="{{ __('consultation.ph_company') }}" required />
                             @error('company_brand_name')
                                 <span class="text-red-600 text-sm">{{ $message }}</span>
                             @enderror
 
-                            <input type="text" name="website_or_handle" placeholder="Website/Social media"
+                            <input type="text" name="website_or_handle" placeholder="{{ __('consultation.ph_website') }}"
                                 value="{{ old('website_or_handle') }}" />
                             @error('website_or_handle')
                                 <span class="text-red-600 text-sm">{{ $message }}</span>
@@ -1722,20 +1720,20 @@
 
                         </div>
                         <div class="grid-input industry-cont">
-                            <input type="email" name="email" class="email" placeholder="Email Address"
+                            <input type="email" name="email" class="email" placeholder="{{ __('consultation.ph_email') }}"
                                 autocomplete="email" required value="{{ old('email') }}" />
                             @error('email')
                                 <span class="text-red-600 text-sm">{{ $message }}</span>
                             @enderror
 
-                            <input type="text" class="input-industry" name="industry" placeholder="Industry"
+                            <input type="text" class="input-industry" name="industry" placeholder="{{ __('consultation.ph_industry') }}"
                                 value="{{ old('industry') }}" required />
                             @error('industry')
                                 <span class="text-red-600 text-sm">{{ $message }}</span>
                             @enderror
 
                             <textarea name="business_description" class="brief"
-                                placeholder="Briefly describe what your business does (1–2 sentences)." required>{{ old('business_description') }}</textarea>
+                                placeholder="{{ __('consultation.ph_brief') }}" required>{{ old('business_description') }}</textarea>
                             @error('business_description')
                                 <span class="text-red-600 text-sm">{{ $message }}</span>
                             @enderror
@@ -1760,7 +1758,7 @@
                         <div class="goals-grid">
                             <label class="goal-card">
                                 <input type="checkbox" name="business_goals[]" value="Increase revenue or sales" />
-                                <span class="goal-text increase-text">Increase revenue or sales</span>
+                                <span class="goal-text increase-text">{{ __('consultation.goal_revenue') }}</span>
                                 <span class="goal-checkmark">
                                     <img src="{{ asset('img/marked.png') }}" alt="" />
                                 </span>
@@ -1768,7 +1766,7 @@
 
                             <label class="goal-card">
                                 <input type="checkbox" name="business_goals[]" value="Generate more leads" />
-                                <span class="goal-text">Generate more leads</span>
+                                <span class="goal-text">{{ __('consultation.goal_leads') }}</span>
                                 <span class="goal-checkmark">
                                     <img src="{{ asset('img/marked.png') }}" alt="" />
                                 </span>
@@ -1776,7 +1774,7 @@
 
                             <label class="goal-card">
                                 <input type="checkbox" name="business_goals[]" value="Improve brand visibility" />
-                                <span class="goal-text">Improve brand visibility</span>
+                                <span class="goal-text">{{ __('consultation.goal_brand') }}</span>
                                 <span class="goal-checkmark">
                                     <img src="{{ asset('img/marked.png') }}" alt="" />
                                 </span>
@@ -1784,7 +1782,7 @@
 
                             <label class="goal-card">
                                 <input type="checkbox" name="business_goals[]" value="Launch a new product or service" />
-                                <span class="goal-text launch-text">Launch a new product or service</span>
+                                <span class="goal-text launch-text">{{ __('consultation.goal_launch') }}</span>
                                 <span class="goal-checkmark">
                                     <img src="{{ asset('img/marked.png') }}" alt="" />
                                 </span>
@@ -1792,7 +1790,7 @@
 
                             <label class="goal-card">
                                 <input type="checkbox" name="business_goals[]" value="Expand into new markets" />
-                                <span class="goal-text">Expand into new markets</span>
+                                <span class="goal-text">{{ __('consultation.goal_markets') }}</span>
                                 <span class="goal-checkmark">
                                     <img src="{{ asset('img/marked.png') }}" alt="" />
                                 </span>
@@ -1801,8 +1799,7 @@
                             <label class="goal-card">
                                 <input type="checkbox" name="business_goals[]"
                                     value="Prepare for funding or investor conversations" />
-                                <span class="goal-text prepare-text">Prepare for funding or investor
-                                    conversations</span>
+                                <span class="goal-text prepare-text">{{ __('consultation.goal_funding') }}</span>
                                 <span class="goal-checkmark">
                                     <img src="{{ asset('img/marked.png') }}" alt="" />
                                 </span>
@@ -1811,8 +1808,7 @@
                             <label class="goal-card">
                                 <input type="checkbox" name="business_goals[]"
                                     value="Build internal systems or operational structure" />
-                                <span class="goal-text build-text">Build internal systems or operational
-                                    structure</span>
+                                <span class="goal-text build-text">{{ __('consultation.goal_systems') }}</span>
                                 <span class="goal-checkmark">
                                     <img src="{{ asset('img/marked.png') }}" alt="" />
                                 </span>
@@ -1838,35 +1834,35 @@
                         <div class="goals-grid">
                             <label class="goal-card">
                                 <input type="checkbox" name="key_challenges[]" value="Low or inconsistent sales" />
-                                <span class="goal-text">Low or inconsistent sales</span>
+                                <span class="goal-text">{{ __('consultation.ch_sales') }}</span>
                                 <span class="goal-checkmark"><img src="{{ asset('img/marked.png') }}"
                                         alt="" /></span>
                             </label>
 
                             <label class="goal-card">
                                 <input type="checkbox" name="key_challenges[]" value="Weak marketing strategy" />
-                                <span class="goal-text">Weak marketing strategy</span>
+                                <span class="goal-text">{{ __('consultation.ch_marketing') }}</span>
                                 <span class="goal-checkmark"><img src="{{ asset('img/marked.png') }}"
                                         alt="" /></span>
                             </label>
 
                             <label class="goal-card">
                                 <input type="checkbox" name="key_challenges[]" value="Difficulty acquiring customers" />
-                                <span class="goal-text">Difficulty acquiring customers</span>
+                                <span class="goal-text">{{ __('consultation.ch_customers') }}</span>
                                 <span class="goal-checkmark"><img src="{{ asset('img/marked.png') }}"
                                         alt="" /></span>
                             </label>
 
                             <label class="goal-card">
                                 <input type="checkbox" name="key_challenges[]" value="Operational inefficiencies" />
-                                <span class="goal-text">Operational inefficiencies</span>
+                                <span class="goal-text">{{ __('consultation.ch_ops') }}</span>
                                 <span class="goal-checkmark"><img src="{{ asset('img/marked.png') }}"
                                         alt="" /></span>
                             </label>
 
                             <label class="goal-card">
                                 <input type="checkbox" name="key_challenges[]" value="Monetization not working" />
-                                <span class="goal-text">Monetization not working</span>
+                                <span class="goal-text">{{ __('consultation.ch_money') }}</span>
                                 <span class="goal-checkmark"><img src="{{ asset('img/marked.png') }}"
                                         alt="" /></span>
                             </label>
@@ -1874,14 +1870,14 @@
                             <label class="goal-card">
                                 <input type="checkbox" name="key_challenges[]"
                                     value="Need clarity on product-market fit" />
-                                <span class="goal-text">Need clarity on product-market fit</span>
+                                <span class="goal-text">{{ __('consultation.ch_fit') }}</span>
                                 <span class="goal-checkmark"><img src="{{ asset('img/marked.png') }}"
                                         alt="" /></span>
                             </label>
 
                             <label class="goal-card">
                                 <input type="checkbox" name="key_challenges[]" value="Scaling challenges" />
-                                <span class="goal-text">Scaling challenges</span>
+                                <span class="goal-text">{{ __('consultation.ch_scale') }}</span>
                                 <span class="goal-checkmark"><img src="{{ asset('img/marked.png') }}"
                                         alt="" /></span>
                             </label>
@@ -1902,14 +1898,14 @@
                 <div class="form-step step4">
                     <div class="form-grid outcome-grid">
                         <div class="grid-input outcome-input">
-                            <label for="motivation">What made you book this consultation today?</label>
+                            <label for="motivation">{{ __('consultation.q_motivation') }}</label>
                             <textarea name="motivation" required>{{ old('motivation') }}</textarea>
                             @error('motivation')
                                 <span class="text-red-600 text-sm">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="grid-input outcome-input">
-                            <label for="success_definition">What would make this session a success for you?</label>
+                            <label for="success_definition">{{ __('consultation.q_success') }}</label>
                             <textarea name="success_definition" required>{{ old('success_definition') }}</textarea>
                             @error('success_definition')
                                 <span class="text-red-600 text-sm">{{ $message }}</span>
@@ -2053,27 +2049,27 @@
 
             const requiredFields = [{
                     name: 'full_name',
-                    label: 'Full Name'
+                    label: @json(__('consultation.ph_name'))
                 },
                 {
                     name: 'phone',
-                    label: 'Phone Number'
+                    label: @json(__('consultation.label_phone'))
                 },
                 {
                     name: 'company_brand_name',
-                    label: 'Company Name'
+                    label: @json(__('consultation.ph_company'))
                 },
                 {
                     name: 'email',
-                    label: 'Email Address'
+                    label: @json(__('consultation.ph_email'))
                 },
                 {
                     name: 'industry',
-                    label: 'Industry'
+                    label: @json(__('consultation.ph_industry'))
                 },
                 {
                     name: 'business_description',
-                    label: 'Business Description'
+                    label: @json(__('consultation.label_business'))
                 }
             ];
 
@@ -2089,7 +2085,7 @@
 
                         const errorMsg = document.createElement('span');
                         errorMsg.className = 'error-message';
-                        errorMsg.textContent = 'Please select a country code';
+                        errorMsg.textContent = @json(__('consultation.err_country'));
 
                         phoneNumberInput.closest('.phone-field')
                             .insertAdjacentElement('afterend', errorMsg);
@@ -2101,7 +2097,7 @@
 
                         const errorMsg = document.createElement('span');
                         errorMsg.className = 'error-message';
-                        errorMsg.textContent = 'Phone Number is required';
+                        errorMsg.textContent = @json(__('consultation.err_phone_required'));
 
                         phoneNumberInput.closest('.phone-field')
                             .insertAdjacentElement('afterend', errorMsg);
@@ -2114,7 +2110,7 @@
 
                         const errorMsg = document.createElement('span');
                         errorMsg.className = 'error-message';
-                        errorMsg.textContent = 'Please enter a valid phone number';
+                        errorMsg.textContent = @json(__('consultation.err_phone'));
 
                         phoneNumberInput.closest('.phone-field')
                             .insertAdjacentElement('afterend', errorMsg);
@@ -2129,17 +2125,17 @@
                     const input = document.querySelector(
                         `input[name="${field.name}"], textarea[name="${field.name}"]`);
                     if (!input || !input.value.trim()) {
-                        showInputError(input, `${field.label} is required`);
+                        showInputError(input, @json(__('consultation.field_required')).replace(':field', field.label));
                         isValid = false;
                     } else {
                         // Additional validation for specific fields
                         if (field.name === 'email' && !isValidEmail(input.value.trim())) {
-                            showInputError(input, 'Please enter a valid email address');
+                            showInputError(input, @json(__('consultation.err_email')));
                             isValid = false;
                         } else if (field.name === 'business_description' && input.value.trim().length <
                             10) {
                             showInputError(input,
-                                'Please provide at least 10 characters describing your business');
+                                @json(__('consultation.err_brief')));
                             isValid = false;
                         }
                     }
@@ -2147,7 +2143,7 @@
             });
 
             if (!isValid) {
-                showStepError(0, 'Please fill in all required fields correctly before proceeding.');
+                showStepError(0, @json(__('consultation.err_step1')));
             }
 
             return isValid;
@@ -2160,7 +2156,7 @@
             const checkedGoals = document.querySelectorAll('.step2-wrapper input[type="checkbox"]:checked');
 
             if (checkedGoals.length === 0) {
-                showStepError(1, 'Please select at least one business goal.');
+                showStepError(1, @json(__('consultation.err_goal')));
 
                 // Highlight goal cards as error
                 document.querySelectorAll('.step2-wrapper .goal-card').forEach(card => {
@@ -2169,7 +2165,7 @@
 
                 return false;
             } else if (checkedGoals.length > 2) {
-                showStepError(1, 'Please select no more than 2 business goals.');
+                showStepError(1, @json(__('consultation.err_goal_max')));
                 return false;
             }
 
@@ -2184,7 +2180,7 @@
                 '.step3-wrapper input[type="checkbox"]:checked');
 
             if (checkedChallenges.length === 0) {
-                showStepError(2, 'Please select at least one key challenge.');
+                showStepError(2, @json(__('consultation.err_challenge')));
 
                 // Highlight goal cards as error  
                 document.querySelectorAll('.step3-wrapper .goal-card').forEach(card => {
@@ -2193,7 +2189,7 @@
 
                 return false;
             } else if (checkedChallenges.length > 3) {
-                showStepError(2, 'Please select no more than 3 key challenges.');
+                showStepError(2, @json(__('consultation.err_challenge_max')));
                 return false;
             }
 
@@ -2209,23 +2205,23 @@
             const successField = document.querySelector('textarea[name="success_definition"]');
 
             if (!motivationField.value.trim()) {
-                showInputError(motivationField, 'Please explain what made you book this consultation');
+                showInputError(motivationField, @json(__('consultation.err_motivation')));
                 isValid = false;
             } else if (motivationField.value.trim().length < 10) {
-                showInputError(motivationField, 'Please provide at least 10 characters');
+                showInputError(motivationField, @json(__('consultation.err_min')));
                 isValid = false;
             }
 
             if (!successField.value.trim()) {
-                showInputError(successField, 'Please define what would make this session successful');
+                showInputError(successField, @json(__('consultation.err_success')));
                 isValid = false;
             } else if (successField.value.trim().length < 10) {
-                showInputError(successField, 'Please provide at least 10 characters');
+                showInputError(successField, @json(__('consultation.err_min')));
                 isValid = false;
             }
 
             if (!isValid) {
-                showStepError(3, 'Please complete both questions before submitting.');
+                showStepError(3, @json(__('consultation.err_step4')));
             }
 
             return isValid;
@@ -2243,7 +2239,7 @@
 
             const percent = ((currentStep + 1) / steps.length) * 100;
             progressFill.style.width = percent + "%";
-            progressText.textContent = `0${currentStep + 1} of 0${steps.length}`;
+            progressText.textContent = @json(__('consultation.step_progress')).replace(':current', '0' + (currentStep + 1)).replace(':total', '0' + steps.length);
             counterCircleText.textContent = `0${currentStep + 1}`;
 
             localStorage.setItem("currentStep", currentStep);

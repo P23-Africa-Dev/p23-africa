@@ -1,13 +1,13 @@
 @extends('layouts.master')
-@section('title', 'All Events | P23 Africa')
+@section('title', __('events.all_title'))
 
 @section('meta')
     <meta name="description"
-        content="Expand and grow your business in Africa with expert business consulting. P23 Africa helps entrepreneurs, SMEs, and international businesses with strategy, expansion, marketing, operational efficiency and tailored solutions to thrive in African markets. Get started today!">
+        content="{{ __('events.meta') }}">
     <meta name="keywords"
-        content="Expand and grow your business in Africa with expert business consulting. P23 Africa helps entrepreneurs, SMEs, and international businesses with strategy, expansion, marketing, operational efficiency and tailored solutions to thrive in African markets. Get started today!">
+        content="{{ __('events.meta') }}">
     <meta name="author" content="Nurudeen O. Daniju">
-    <meta name="generator" content="Business Consulting & Growth Solutions for Africa | P23 Africa">
+    <meta name="generator" content="{{ __('events.meta_generator') }}">
     <meta property="og:image" content="{{ asset('images/All-Desktopt-Event.png') }}">
 @endsection
 
@@ -66,7 +66,7 @@
                 <div class="col-md-6">
                     <div class="position-relative" id="search">
                         <input type="text" id="search-input" class="form-control"
-                            placeholder="Search your preferred event">
+                            placeholder="{{ __('events.search_ph') }}">
                         <div id="suggestion-box" class="list-group position-absolute w-100 shadow-sm"
                             style="z-index: 1000; display: none;"></div>
                     </div>
@@ -74,8 +74,8 @@
             </div>
             <!-- Mobile Tabs -->
             <div class="tabs-mobile">
-                <button class="tab-btn active" onclick="switchTab('month', this)">Happening This Month</button>
-                <button class="tab-btn" onclick="switchTab('next', this)">Happening Next Month</button>
+                <button class="tab-btn active" onclick="switchTab('month', this)">{{ __('events.this_month') }}</button>
+                <button class="tab-btn" onclick="switchTab('next', this)">{{ __('events.next_month') }}</button>
             </div>
 
             @php
@@ -106,18 +106,18 @@
                     <div class="event-box filter-btn" data-filter="this_month">
                         <h4><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt="">
                             {{ getMonthRange($thisMonth) }}</h4>
-                        <p>Happening This Month</p>
+                        <p>{{ __('events.this_month') }}</p>
                     </div>
                     <div class="event-box filter-btn" data-filter="next_month">
                         <h4><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt="">
                             {{ getMonthRange($nextMonth) }}
                         </h4>
-                        <p>Happening Next Month</p>
+                        <p>{{ __('events.next_month') }}</p>
                     </div>
                     <div class="event-box filter-btn" data-filter="two_months">
                         <h4><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt="">
                             {{ getMonthRange($twoMonths) }}</h4>
-                        <p>Happening In Two Month</p>
+                        <p>{{ __('events.two_months') }}</p>
                     </div>
                 </div>
 
@@ -127,7 +127,7 @@
                     <div id="month" class="tab-panel active">
                         <div id="event-list">
                             @if ($filter === 'brn')
-                                <h2 class="mb-4 brn-events">All BRN Events</h2>
+                                <h2 class="mb-4 brn-events">{{ __('events.all_brn') }}</h2>
                             @endif
 
                             @foreach ($events as $event)
@@ -135,17 +135,17 @@
                                     {{-- <div style="font-size: 24px;">📅</div> --}}
                                     <div>
                                         <h3><img src="{{ asset('images/calendar.png') }}" loading='lazy' alt=""><a
-                                                href="{{ route('events.show', $event->slug) }}"> {{ $event->title }} <i>
-                                                    @if ($event->subtitle)
-                                                        ({{ $event->subtitle }})
+                                                href="{{ locale_route('events.show', ['slug' => $event->slug]) }}"> {{ $event->translated('title') }} <i>
+                                                    @if ($event->translated('subtitle'))
+                                                        ({{ $event->translated('subtitle') }})
                                                     @endif
 
                                                 </i></a></h3>
-                                        <p>{!! Str::limit($event->description, 233) !!}</p>
+                                        <p>{!! Str::limit($event->translated('description'), 233) !!}</p>
                                         <div class="event-card-footer">
                                             <span class="countdown status"
                                                 data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}">
-                                                Loading...</span>
+                                                {{ __('events.loading') }}</span>
 
                                             @php
                                                 $startTime = \Carbon\Carbon::parse($event->event_time);
@@ -158,7 +158,7 @@
                                                 data-event-id="{{ $event->id }}"
                                                 data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
                                                 data-event-link="{{ $event->link }}" data-bs-toggle="modal"
-                                                data-bs-target="#seatModal">Book A Seat →</button>
+                                                data-bs-target="#seatModal">{{ __('events.book_seat') }} →</button>
                                         </div>
                                     </div>
                                 </div>
@@ -181,18 +181,18 @@
                                         {{-- <div style="font-size: 24px;">📅</div> --}}
                                         <div>
                                             <h3><img src="{{ asset('images/calendar.png') }}" loading='lazy'
-                                                    alt=""><a href="{{ route('events.show', $event->slug) }}">
-                                                    {{ $event->title }} <i>
-                                                        @if ($event->subtitle)
-                                                            ({{ $event->subtitle }})
+                                                    alt=""><a href="{{ locale_route('events.show', ['slug' => $event->slug]) }}">
+                                                    {{ $event->translated('title') }} <i>
+                                                        @if ($event->translated('subtitle'))
+                                                            ({{ $event->translated('subtitle') }})
                                                         @endif
 
                                                     </i></a></h3>
-                                            <p>{!! Str::limit($event->description, 233) !!}</p>
+                                            <p>{!! Str::limit($event->translated('description'), 233) !!}</p>
                                             <div class="event-card-footer">
                                                 <span class="countdown status"
                                                     data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}">
-                                                    Loading...</span>
+                                                    {{ __('events.loading') }}</span>
 
                                                 @php
                                                     $startTime = \Carbon\Carbon::parse($event->event_time);
@@ -205,7 +205,7 @@
                                                     data-event-id="{{ $event->id }}"
                                                     data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
                                                     data-event-link="{{ $event->link }}" data-bs-toggle="modal"
-                                                    data-bs-target="#seatModal">Book A Seat →</button>
+                                                    data-bs-target="#seatModal">{{ __('events.book_seat') }} →</button>
                                             </div>
                                         </div>
                                     </div>
@@ -322,12 +322,12 @@
 
                 if (today === eventDateOnly) {
                     if (distance < 0) {
-                        el.innerHTML = "Event Started";
+                        el.innerHTML = @json(__('events.event_started'));
                         return;
                     }
                     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    el.innerHTML = `Happening in ${hours}h ${minutes}m`;
+                    el.innerHTML = @json(__('events.happening_in')).replace(':hours', hours).replace(':minutes', minutes);
                 } else {
                     el.innerHTML = getFormattedDate(eventDate);
                 }
@@ -353,7 +353,7 @@
     //         }
 
     //         $.ajax({
-    //             url: '{{ route('events.search') }}',
+    //             url: '{{ locale_route('events.search') }}',
     //             data: { term },
     //             success: function (data) {
     //                 $suggestionBox.empty();
@@ -404,13 +404,13 @@
     //         $('#suggestion-box').hide();
 
     //         $.ajax({
-    //             url: '{{ route('events.search') }}',
+    //             url: '{{ locale_route('events.search') }}',
     //             data: { filter },
     //             success: function (data) {
     //                 $eventList.empty();
 
     //                 if (data.length === 0) {
-    //                     $eventList.append('<div class="text-muted text-center w-100">No events found.</div>');
+    //                     $eventList.append('<div class="text-muted text-center w-100">{{ __('events.none_found') }}</div>');
     //                 } else {
     //                     data.forEach(event => {
     //                         const desc = event.description.length > 233 ? event.description.slice(0, 230) + '...' : event.description;
@@ -425,9 +425,9 @@
     //                                     </h3>
     //                                     <p>${desc}</p>
     //                                     <div class="event-card-footer">
-    //                                         <span class="countdown status" data-event-datetime="${event.event_date} ${event.event_time}">Loading...</span>
+    //                                         <span class="countdown status" data-event-datetime="${event.event_date} ${event.event_time}">{{ __('events.loading') }}</span>
     //                                         <span class="time">${event.event_time} - 5:30PM</span>
-    //                                         <button class="btn">Book A Seat →</button>
+    //                                         <button class="btn">{{ __('events.book_seat') }} →</button>
     //                                     </div>
     //                                 </div>
     //                             </div>
@@ -454,7 +454,7 @@
 
         function fetchEvents(term = '', filter = '') {
             $.ajax({
-                url: '{{ route('events.search') }}',
+                url: '{{ locale_route('events.search') }}',
                 data: {
                     term,
                     filter
@@ -464,7 +464,7 @@
 
                     if (data.length === 0) {
                         $eventList.append(
-                            '<div class="text-muted text-center w-100">No events found.</div>');
+                            '<div class="text-muted text-center w-100">{{ __('events.none_found') }}</div>');
                     } else {
                         data.forEach(event => {
                             const desc = event.description.length > 233 ? event.description
@@ -484,10 +484,10 @@
                                         <p>${desc}</p>
                                         <div class="event-card-footer">
                                             <span class="countdown status" data-event-datetime="${event.event_date} ${event.event_time}">
-                                                Loading...
+                                                {{ __('events.loading') }}
                                             </span>
                                             <span class="time">${event.event_time} - 5:30PM</span>
-                                            <button class="btn">Book A Seat →</button>
+                                            <button class="btn">{{ __('events.book_seat') }} →</button>
                                         </div>
                                     </div>
                                 </div>
@@ -567,13 +567,13 @@
 
                 if (today === eventDateOnly) {
                     if (distance < 0) {
-                        el.innerHTML = "Event Started";
+                        el.innerHTML = @json(__('events.event_started'));
                         return;
                     }
 
                     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    el.innerHTML = `Happening in ${hours}h ${minutes}m`;
+                    el.innerHTML = @json(__('events.happening_in')).replace(':hours', hours).replace(':minutes', minutes);
                 } else {
                     el.innerHTML = getFormattedDate(eventDate);
                 }
@@ -592,7 +592,7 @@
 
         function fetchEvents(term = '', filter = '') {
             $.ajax({
-                url: '{{ route('events.search') }}',
+                url: '{{ locale_route('events.search') }}',
                 data: {
                     term,
                     filter
@@ -601,7 +601,7 @@
                     $eventList.empty();
                     if (data.length === 0) {
                         $eventList.append(
-                            '<div class="col-12"><p class="text-muted text-center">No events found.</p></div>'
+                            '<div class="col-12"><p class="text-muted text-center">{{ __('events.none_found') }}</p></div>'
                             );
                     } else {
                         data.forEach(event => {

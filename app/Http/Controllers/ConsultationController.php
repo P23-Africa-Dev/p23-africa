@@ -67,13 +67,13 @@ class ConsultationController extends Controller
             'business_goals.required' => 'Please select at least one business goal.',
             'business_goals.min' => 'Please select at least one business goal.',
             'business_goals.max' => 'Please select no more than 2 business goals.',
-            'key_challenges.required' => 'Please select at least one key challenge.',
-            'key_challenges.min' => 'Please select at least one key challenge.',
-            'key_challenges.max' => 'Please select no more than 3 key challenges.',
-            'motivation.required' => 'Please explain what made you book this consultation.',
-            'motivation.min' => 'Please provide at least 10 characters.',
-            'success_definition.required' => 'Please define what would make this session successful.',
-            'success_definition.min' => 'Please provide at least 10 characters.',
+            'key_challenges.required' => __('consultation.validation.challenges_required'),
+            'key_challenges.min' => __('consultation.validation.challenges_required'),
+            'key_challenges.max' => __('consultation.validation.challenges_max'),
+            'motivation.required' => __('consultation.validation.motivation'),
+            'motivation.min' => __('consultation.validation.motivation_min'),
+            'success_definition.required' => __('consultation.validation.success'),
+            'success_definition.min' => __('consultation.validation.success_min'),
         ]);
 
         if ($validator->fails()) {
@@ -97,7 +97,8 @@ class ConsultationController extends Controller
                 'success_definition' => $request->success_definition
             ]),
             'status' => 'pending',
-            'submitted_at' => now()
+            'submitted_at' => now(),
+            'locale' => app()->getLocale(),
         ];
 
         // Create new consultation application
@@ -132,7 +133,7 @@ class ConsultationController extends Controller
         $application = $this->resolveApplication($request);
 
         if (!$application) {
-            return redirect()->route('consultation.application-forms')
+            return $this->localizedRedirect('consultation.application-forms')
                 ->with('error', 'Please complete the application form first.');
         }
 
@@ -144,7 +145,7 @@ class ConsultationController extends Controller
         $application = $this->resolveApplication($request);
 
         if (!$application) {
-            return redirect()->route('consultation.application-forms')
+            return $this->localizedRedirect('consultation.application-forms')
                 ->with('error', 'Please complete the application form first.');
         }
 
@@ -160,7 +161,7 @@ class ConsultationController extends Controller
         $application = $this->resolveApplication($request);
 
         if (!$application) {
-            return redirect()->route('consultation.application-forms')
+            return $this->localizedRedirect('consultation.application-forms')
                 ->with('error', 'Please complete the application form first.');
         }
 
@@ -180,7 +181,7 @@ class ConsultationController extends Controller
         $application = $this->resolveApplication($request);
 
         if (!$application) {
-            return redirect()->route('consultation.application-forms')
+            return $this->localizedRedirect('consultation.application-forms')
                 ->with('error', 'Application not found.');
         }
 
@@ -308,7 +309,7 @@ class ConsultationController extends Controller
                 'payload' => $request->except(['_token']),
             ]);
 
-            return redirect()->route('consultation.payment-selection')
+            return $this->localizedRedirect('consultation.payment-selection')
                 ->with('error', 'Invalid payment callback data.');
         }
 
@@ -321,7 +322,7 @@ class ConsultationController extends Controller
                 'gateway' => $request->gateway,
             ]);
 
-            return redirect()->route('consultation.payment-selection')
+            return $this->localizedRedirect('consultation.payment-selection')
                 ->with('error', 'Invalid payment callback data.');
         }
 
@@ -384,7 +385,7 @@ class ConsultationController extends Controller
         }
 
         if (!$payment) {
-            return redirect()->route('consultation.application-forms')
+            return $this->localizedRedirect('consultation.application-forms')
                 ->with('error', 'Payment not found for this booking. Please try again.');
         }
 
@@ -392,7 +393,7 @@ class ConsultationController extends Controller
         $this->persistBookingContext($application);
 
         if (!$application) {
-            return redirect()->route('consultation.application-forms')
+            return $this->localizedRedirect('consultation.application-forms')
                 ->with('error', 'Application not found.');
         }
 
@@ -485,7 +486,7 @@ class ConsultationController extends Controller
         $payment = Payment::where('payment_reference', $reference)->first();
 
         if (!$payment) {
-            return redirect()->route('consultation.application-forms')
+            return $this->localizedRedirect('consultation.application-forms')
                 ->with('error', 'Payment not found.');
         }
 
@@ -515,7 +516,7 @@ class ConsultationController extends Controller
         $application = $this->resolveApplication($request, false);
 
         if (!$application) {
-            return redirect()->route('consultation.application-forms');
+            return $this->localizedRedirect('consultation.application-forms');
         }
 
         $application = ConsultationApplication::with(['payments' => function ($q) {
@@ -523,7 +524,7 @@ class ConsultationController extends Controller
         }])->find($application->id);
 
         if (!$application) {
-            return redirect()->route('consultation.application-forms')
+            return $this->localizedRedirect('consultation.application-forms')
                 ->with('error', 'Application not found.');
         }
 
@@ -538,7 +539,7 @@ class ConsultationController extends Controller
         $application = $this->resolveApplication($request, false);
 
         if (!$application || !in_array($application->status, ['paid', 'scheduled', 'completed'], true)) {
-            return redirect()->route('consultation.application-forms')
+            return $this->localizedRedirect('consultation.application-forms')
                 ->with('error', 'Please complete payment first.');
         }
 
@@ -573,7 +574,7 @@ class ConsultationController extends Controller
                     'message' => $errorMessage
                 ]);
             }
-            return redirect()->route('consultation.application-forms')
+            return $this->localizedRedirect('consultation.application-forms')
                 ->with('error', $errorMessage);
         }
 
@@ -714,7 +715,7 @@ class ConsultationController extends Controller
                 ]);
             }
 
-            return redirect()->route('consultation.application-forms')
+            return $this->localizedRedirect('consultation.application-forms')
                 ->with('success', $successMessage);
         } catch (\Exception $e) {
             Log::error('Consultation scheduling failed: ' . $e->getMessage());
@@ -942,7 +943,24 @@ class ConsultationController extends Controller
 
     private function redirectWithBooking(string $routeName, ConsultationApplication $application)
     {
-        return redirect()->route($routeName, ['booking' => $application->booking_token]);
+        $locale = $application->locale ?: app()->getLocale();
+
+        return $this->localizedRedirect($routeName, ['booking' => $application->booking_token], $locale);
+    }
+
+    private function localizedRedirect(string $routeName, array $parameters = [], ?string $locale = null)
+    {
+        $locale = $locale ?: app()->getLocale();
+        if (!in_array($locale, \App\Support\LocaleUrl::LOCALES, true)) {
+            $locale = 'en';
+        }
+
+        $previous = app()->getLocale();
+        app()->setLocale($locale);
+        $url = locale_route($routeName, $parameters);
+        app()->setLocale($previous);
+
+        return redirect($url);
     }
 
     private function resolveConsultationCharge(string $preferredCurrency): array

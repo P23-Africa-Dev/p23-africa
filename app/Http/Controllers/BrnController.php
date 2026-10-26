@@ -82,7 +82,7 @@ class BrnController extends Controller
                 return response()->json([
                     'exists' => true,
                     'valid' => true,
-                    'message' => 'This email address is already registered.'
+                    'message' => __('brn.duplicate_email_short')
                 ], 422);
             }
 
@@ -139,7 +139,7 @@ class BrnController extends Controller
                             return response()->json([
                                 'success' => false,
                                 'message' => 'Please correct the error below.',
-                                'errors' => ['email' => ['This email address is already registered.']]
+                                'errors' => ['email' => [__('brn.duplicate_email_short')]]
                             ], 422);
                         }
                     }
@@ -259,9 +259,9 @@ class BrnController extends Controller
                 if ($exists) {
                     return response()->json([
                         'success' => false,
-                        'message' => 'This email address is already registered.',
-                        'errors' => ['email' => ['This email address is already registered.']],
-                        'errors_by_step' => [1 => ['email' => ['This email address is already registered.']]],
+                        'message' => __('brn.duplicate_email_short'),
+                        'errors' => ['email' => [__('brn.duplicate_email_short')]],
+                        'errors_by_step' => [1 => ['email' => [__('brn.duplicate_email_short')]]],
                         'first_error_step' => 1
                     ], 422);
                 }
@@ -430,15 +430,17 @@ class BrnController extends Controller
             if ($emailExists) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'This email address is already registered. If you need to update your application, please contact us.',
-                    'errors' => ['email' => ['This email address is already registered.']],
-                    'errors_by_step' => [1 => ['email' => ['This email address is already registered.']]],
+                    'message' => __('brn.duplicate_email'),
+                    'errors' => ['email' => [__('brn.duplicate_email_short')]],
+                    'errors_by_step' => [1 => ['email' => [__('brn.duplicate_email_short')]]],
                     'first_error_step' => 1
                 ], 422);
             }
 
             // Post-process validated data
             $processedData = $this->processValidatedData($validated, $request);
+
+            $processedData['locale'] = app()->getLocale();
 
             // Create the submission
             $submission = BrnSubmission::create($processedData);

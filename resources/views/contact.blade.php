@@ -630,14 +630,33 @@
     .contact-info-form__tags {
         margin-top: 15px;
         display: flex;
-        flex-wrap: wrap;
+        flex-direction: column;
         gap: 10px;
         font-family: "GT Walsheim Con";
+    }
+
+    .contact-info-form__tags-row {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .contact-info-form__tags-row:last-child .tag {
+        flex: 1 1 0;
+        min-width: 0;
+        justify-content: center;
+        padding-left: 10px;
+        padding-right: 10px;
     }
 
     .tag {
         display: flex;
         align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        flex: 0 1 auto;
         gap: 8px;
         padding: 11px 22px;
         background: #ffffff;
@@ -645,6 +664,8 @@
         border-radius: 30px;
         cursor: pointer;
         font-size: 13px;
+        line-height: 1.2;
+        white-space: nowrap;
         transition: all 0.25s ease;
         border: 2px solid transparent;
         font-weight: 500;
@@ -669,6 +690,7 @@
         width: 100%;
         height: 120px;
         margin-top: 20px;
+        margin-bottom: 8px;
         padding: 14px;
         border-radius: 12px;
         border: 1px solid rgba(255, 255, 255, 0.3);
@@ -687,6 +709,7 @@
 
     .contact-info-form__btn {
         width: 100%;
+        margin-top: 24px;
         margin-bottom: 20px;
         background: #22c58b;
         color: #fff;
@@ -705,6 +728,61 @@
         background: #1eae79;
         transform: translateY(-2px);
         box-shadow: 0 6px 12px rgba(34, 197, 139, 0.3);
+    }
+
+    @media (max-width: 767px) {
+        .contact-info-form__tags-row {
+            gap: 8px;
+        }
+
+        .tag {
+            padding: 10px 12px;
+            font-size: 12px;
+            gap: 6px;
+        }
+
+        .contact-info-form__tags-row:last-child .tag {
+            flex: 1 1 0;
+            min-width: 0;
+            padding: 10px 8px;
+            justify-content: center;
+        }
+
+        .tag-icon {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+
+        .contact-info-form__textarea {
+            margin-top: 24px;
+            margin-bottom: 0;
+        }
+
+        .contact-info-form__btn {
+            margin-top: 28px;
+        }
+    }
+
+    @media (max-width: 380px) {
+        .contact-info-form__tags-row {
+            gap: 6px;
+        }
+
+        .tag {
+            padding: 8px 8px;
+            font-size: 11px;
+            gap: 4px;
+        }
+
+        .contact-info-form__tags-row:last-child .tag {
+            padding: 8px 6px;
+        }
+
+        .tag-icon {
+            width: 14px;
+            height: 14px;
+        }
     }
 
     .contact-info-location {
@@ -911,7 +989,7 @@
         }
 
         .contact-info-form__btn {
-            margin-top: 15px;
+            margin-top: 24px;
         }
 
         .form_group_field {
@@ -920,15 +998,14 @@
         }
 
         .tag {
-            gap: 10px;
-            padding: 8px 25px 8px 25px;
-
-            font-size: 15px;
+            gap: 8px;
+            padding: 10px 16px;
+            font-size: 14px;
         }
 
         .tag-icon {
-            width: 28px;
-            height: 28px;
+            width: 22px;
+            height: 22px;
         }
 
 
@@ -1247,9 +1324,9 @@
                     <div class="intro-container animate-on-scroll">
                         <!--COntent -->
                         <div class="intro-content">
-                            <h2>Contact Us</h2>
-                            <h4>Ready to expand your business?</h4>
-                            <p>Contact P23 Africa and let’s make growth happen.</p>
+                            <h2>{{ __('contact.heading') }}</h2>
+                            <h4>{{ __('contact.ready') }}</h4>
+                            <p>{{ __('contact.ready_body') }}</p>
                         </div>
                         <!-- Vertical desktop image -->
                         <div class="intro-vrt-image">
@@ -1267,12 +1344,12 @@
                 <div class="left-row animate-on-scroll">
                     <!--  -->
                     <div class="contact-info">
-                        <h2 class="heading">Contact Information</h2>
+                        <h2 class="heading">{{ __('contact.information') }}</h2>
                         <div class="contact-info-icons ">
                             <div class="icon phone">
                                 <img src="{{ asset('./img/phone.png') }}" loading="lazy"src="{{ asset('./img/phone.png') }}"
                                     loading="lazy" alt="" />
-                                <p><a href="tel:+447535659835"> +44 7535 659835</a></p>
+                                <p><a href="tel:+447498006410"> +44 7498 006410</a></p>
                             </div>
                             <div class="icon email">
                                 <img src="{{ asset('./img/email.png') }}" loading="lazy" alt="" />
@@ -1280,7 +1357,7 @@
                             </div>
                             <div class="icon location">
                                 <img src="{{ asset('./img/address.png') }}" loading="lazy" alt="" />
-                                <p>London UK</p>
+                                <p>{{ __('contact.london') }}</p>
                             </div>
                         </div>
                     </div>
@@ -1288,13 +1365,13 @@
                     <!-- Contact Form -->
                     <div class="contact-info-form">
 
-                        <form class="contact-info-form__container" action="{{ route('contact.submit') }}" method="POST"
+                        <form class="contact-info-form__container" action="{{ locale_route('contact.submit') }}" method="POST"
                             id="contactForm">
                             @csrf
-                            <h2 class="contact-info-form__title">Leave us a message</h2>
+                            <h2 class="contact-info-form__title">{{ __('contact.leave_message') }}</h2>
 
                             <div class="contact-info-form__group name-field">
-                                <label class="floating-label">Full Name</label>
+                                <label class="floating-label">{{ __('contact.full_name') }}</label>
                                 <input type="text" name="name" class="floating-input @error('name') error @enderror"
                                     value="{{ old('name') }}" />
                                 @error('name')
@@ -1306,7 +1383,7 @@
 
                             <div class="form-field2 country_with_phone">
                                 <div class="contact-info-form__group full-width">
-                                    <label class="floating-label2">Country</label>
+                                    <label class="floating-label2">{{ __('contact.country') }}</label>
                                     <div class="phone-row">
                                         <!-- Country Flag Dropdown -->
                                         <div class="country-select" id="countrySelect">
@@ -1910,11 +1987,11 @@
 
                                         <!-- Phone Input -->
                                         <div class="phone-input-wrapper">
-                                            <label class="floating-phone">Phone Number</label>
+                                            <label class="floating-phone">{{ __('contact.phone') }}</label>
                                             <span class="prefix" id="phonePrefix" style="display: none;"></span>
                                             <input type="tel" id="phoneNumber" name="phone"
                                                 class="floating-input phone @error('phone') error @enderror"
-                                                placeholder="Select country first" value="{{ old('phone') }}"
+                                                placeholder="{{ __('contact.phone_placeholder') }}" value="{{ old('phone') }}"
                                                 readonly />
                                             <!-- Hidden input for country code -->
                                             <input type="hidden" id="countryCode" name="country_code"
@@ -1940,7 +2017,7 @@
                             <div class="form_group_field mt-2">
 
                                 <div class="contact-info-form__group name-field emaill">
-                                    <label class="floating-label">Email</label>
+                                    <label class="floating-label">{{ __('contact.email') }}</label>
 
                                     <input type="email" name="email"
                                         class="floating-input @error('email') error @enderror"
@@ -1953,7 +2030,7 @@
 
 
                                 <div class="contact-info-form__group name-field company">
-                                    <label class="floating-label">Company Name</label>
+                                    <label class="floating-label">{{ __('contact.company') }}</label>
                                     <input type="text" name="company_name"
                                         class="floating-input @error('company_name') error @enderror"
                                         value="{{ old('company_name') }}" />
@@ -1965,62 +2042,54 @@
                             </div>
 
                             <!-- <div class="form-group2 field">
-                                                                                    <div class="contact-info-form__group name-field">
-                                                                                                                <label class="floating-label">Phone Number</label>
-                                                                                                                <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
-                                                                                                                    placeholder="+1234567890" value="{{ old('phone') }}" />
-                                                                                                                @error('phone')
+                                                                                                <div class="contact-info-form__group name-field">
+                                                                                                                            <label class="floating-label">{{ __('contact.phone') }}</label>
+                                                                                                                            <input type="tel" name="phone" class="floating-input @error('phone') error @enderror"
+                                                                                                                                placeholder="+1234567890" value="{{ old('phone') }}" />
+                                                                                                                            @error('phone')
         <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
-                                                                                                                                                                                                        {{ $message }}</div>
+                                                                                                                                                                                                                                {{ $message }}</div>
     @enderror
-                                                                                                            </div>
-                                                                                                            </div> -->
+                                                                                                                        </div>
+                                                                                                                        </div> -->
 
 
 
                             <div class="contact-info-form__section-title">
-                                What service(s) do you require
+                                {{ __('contact.services_title') }}
                             </div>
                             <p class="contact-info-form__subtitle">
-                                Select from the options
+                                {{ __('contact.services_hint') }}
                             </p>
 
                             <div class="contact-info-form__tags">
-                                <div class="tag" data-value="Advise">
-                                    <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
-                                    Advise
-                                </div>
+                                <div class="contact-info-form__tags-row">
+                                    <div class="tag" data-value="Verify Distributors">
+                                        <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
+                                        {{ __('contact.services.verify_distributors') }}
+                                    </div>
 
-                                <div class="tag" data-value="Marketing">
-                                    <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
-                                    Marketing
-                                </div>
-
-                                <div class="d-flex gap-2">
                                     <div class="tag" data-value="Sales">
                                         <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
-                                        Sales
+                                        {{ __('contact.services.sales') }}
+                                    </div>
+                                </div>
+
+                                <div class="contact-info-form__tags-row">
+                                    <div class="tag" data-value="Expansion">
+                                        <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
+                                        {{ __('contact.services.expansion') }}
+                                    </div>
+
+                                    <div class="tag" data-value="Operations">
+                                        <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
+                                        {{ __('contact.services.operations') }}
                                     </div>
 
                                     <div class="tag" data-value="Launch">
                                         <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
-                                        Launch
+                                        {{ __('contact.services.launch') }}
                                     </div>
-
-                                    <div class="tag" data-value="Expansion">
-                                        <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
-                                        Expansion
-                                    </div>
-                                </div>
-
-                                <div class="tag" data-value="Mentorship">
-                                    <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
-                                    Mentorship
-                                </div>
-
-                                <div class="tag" data-value="Operations">
-                                    <img class="tag-icon" src="{{ asset('img/unselected.png') }}" alt="" />
-                                    Operations
                                 </div>
                             </div>
 
@@ -2032,35 +2101,12 @@
                             @enderror
 
                             <textarea name="message" class="contact-info-form__textarea @error('message') error @enderror"
-                                placeholder="Add additional message here">{{ old('message') }}</textarea>
+                                placeholder="{{ __('contact.message_placeholder') }}">{{ old('message') }}</textarea>
                             @error('message')
                                 <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
                                     {{ $message }}</div>
                             @enderror
 
-
-                            <!-- PRICE RANGE  -->
-                            <div class="form-price-container">
-                                <h2>Indicate your budget for support</h2>
-                                <p>Move toggle to your most preferred budget.</p>
-
-                                <div class="form-group price-range-group">
-
-                                    <div class="range-wrapper">
-                                        <span class="range-label">$100</span>
-                                        <div class="range-value" id="rangeValue">Please select budget</div>
-                                        <input type="range" id="priceRange" name="budget_range" min="100"
-                                            max="5000" value="{{ old('budget_range', 100) }}" step="50"
-                                            data-touched="{{ old('budget_range') ? 'true' : 'false' }}" />
-                                        <span class="range-label">$Max</span>
-                                    </div>
-                                </div>
-                                @error('budget_range')
-                                    <div class="error-message" style="color: #e74c3c; font-size: 12px; margin-top: 5px;">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
 
                             <!-- reCAPTCHA v3 - Invisible -->
                             <input type="hidden" id="recaptchaToken" name="g-recaptcha-response" value="">
@@ -2070,8 +2116,8 @@
                             @enderror
 
                             <button type="submit" class="contact-info-form__btn" id="submitBtn">
-                                <span class="btn-text">Send</span>
-                                <span class="spinner" style="display: none;">Sending...</span>
+                                <span class="btn-text">{{ __('contact.send') }}</span>
+                                <span class="spinner" style="display: none;">{{ __('contact.sending') }}</span>
                             </button>
                         </form>
                     </div>
@@ -2080,7 +2126,7 @@
                     <!-- Location -->
 
                     <div class="contact-info-location">
-                        <h3 class="heading">Location</h3>
+                        <h3 class="heading">{{ __('contact.location') }}</h3>
                         <div class="location-content">
                             <p>185 Tower Bridge Rd</p>
                             <p>185 Tower Bridge Rd, London SE1 2UF, UK</p>
@@ -2096,7 +2142,7 @@
 
                     <!-- Social Media -->
                     <div class="contact-info-socials">
-                        <h3>Social Media</h3>
+                        <h3>{{ __('contact.social') }}</h3>
 
                         <div class="socials">
                             <a href="https://linkedin.com/company/p23-africa/" target="_blank"
@@ -2118,8 +2164,8 @@
             <div class="news-letter">
                 <div class="contact-news-letter-container">
                     <div class="contact-news-letter__content">
-                        <h2 class="contact-news-letter__title">Subscribe</h2>
-                        <p class="contact-news-letter__text">to our Newsletter</p>
+                        <h2 class="contact-news-letter__title">{{ __('contact.subscribe') }}</h2>
+                        <p class="contact-news-letter__text">{{ __('contact.newsletter') }}</p>
                     </div>
                     <form class="contact-news-letter__form">
                         <input type="email" placeholder="Email" class="contact-news-letter__input" required />
@@ -2250,7 +2296,6 @@
                     country_code: document.querySelector('input[name="country_code"]')?.value?.trim() || '',
                     services: document.getElementById('selected-services')?.value || '',
                     message: document.querySelector('textarea[name="message"]')?.value?.trim() || '',
-                    budget_range: document.getElementById('priceRange')?.value || '',
                     timestamp: new Date().toISOString()
                 };
             }
@@ -2499,7 +2544,7 @@
                 if (!nameInput.value.trim()) {
                     validationErrors.push({
                         field: 'name',
-                        message: 'Name is required.',
+                        message: @json(__('contact.validation.name')),
                         element: nameInput
                     });
                 }
@@ -2509,7 +2554,7 @@
                 if (!companyInput.value.trim()) {
                     validationErrors.push({
                         field: 'company_name',
-                        message: 'Company name is required.',
+                        message: @json(__('contact.validation.company_name')),
                         element: companyInput
                     });
                 }
@@ -2519,13 +2564,13 @@
                 if (!emailInput.value.trim()) {
                     validationErrors.push({
                         field: 'email',
-                        message: 'Email address is required.',
+                        message: @json(__('contact.validation.email')),
                         element: emailInput
                     });
                 } else if (!isValidEmail(emailInput.value)) {
                     validationErrors.push({
                         field: 'email',
-                        message: 'Please enter a valid email address.',
+                        message: @json(__('contact.validation.email_invalid')),
                         element: emailInput
                     });
                 }
@@ -2535,7 +2580,7 @@
                 if (!countryCodeInput.value.trim()) {
                     validationErrors.push({
                         field: 'country_code',
-                        message: 'Please select your country first.',
+                        message: @json(__('contact.validation.country_first')),
                         element: document.querySelector('.country_with_phone')
                     });
                 }
@@ -2545,7 +2590,7 @@
                 if (!phoneInputEl.value.trim()) {
                     validationErrors.push({
                         field: 'phone',
-                        message: 'Phone number is required.',
+                        message: @json(__('contact.validation.phone')),
                         element: document.querySelector('.country_with_phone')
                     });
                 }
@@ -2555,7 +2600,7 @@
                 if (!servicesInput.value || servicesInput.value.trim() === '') {
                     validationErrors.push({
                         field: 'services',
-                        message: 'Please select at least one service.',
+                        message: @json(__('contact.validation.services')),
                         element: document.querySelector('.contact-info-form__tags')
                     });
                 }
@@ -2565,19 +2610,8 @@
                 if (!messageInput.value.trim()) {
                     validationErrors.push({
                         field: 'message',
-                        message: 'Message is required.',
+                        message: @json(__('contact.validation.message')),
                         element: messageInput
-                    });
-                }
-
-                // Budget range validation
-                const budgetInput = document.getElementById('priceRange');
-                const budgetTouched = budgetInput.getAttribute('data-touched') === 'true';
-                if (!budgetTouched || !budgetInput.value) {
-                    validationErrors.push({
-                        field: 'budget_range',
-                        message: 'Please select your budget range.',
-                        element: document.querySelector('.price-range-group')
                     });
                 }
 
@@ -2657,7 +2691,7 @@
                         // Saved to localStorage - still show success!
                         showPopup('success', 'Message Saved!',
                             'Your message has been saved and will be sent shortly. Thank you for contacting us!'
-                            );
+                        );
                     } else {
                         showPopup('success', 'Message Sent!',
                             result.data?.message ||
@@ -2682,8 +2716,8 @@
                     } else {
                         // Absolute last resort - show mailto option
                         showPopup('info', 'Alternative Contact',
-                            'Please email us directly at nurudeen@p23africa.com with your inquiry. We apologize for the inconvenience.'
-                            );
+                            'Please email us directly at contact@p23africa.com with your inquiry. We apologize for the inconvenience.'
+                        );
                     }
                 }
             });
@@ -2765,11 +2799,6 @@
                     case 'message':
                         elements.highlight = document.querySelector('textarea[name="message"]');
                         elements.messageTarget = elements.highlight;
-                        break;
-
-                    case 'budget_range':
-                        elements.highlight = document.querySelector('input[name="budget_range"]');
-                        elements.messageTarget = document.querySelector('.price-range-group');
                         break;
 
                     case 'g-recaptcha-response':
@@ -2906,43 +2935,6 @@
                 }
             });
 
-            // Price range slider
-            const rangeInput = document.getElementById("priceRange");
-            const rangeValue = document.getElementById("rangeValue");
-
-            // Make updateSlider global for live form capture
-            window.updateSlider = function() {
-                const value = +rangeInput.value;
-                const min = +rangeInput.min;
-                const max = +rangeInput.max;
-                const isTouched = rangeInput.getAttribute('data-touched') === 'true';
-
-                // If slider hasn't been touched, show placeholder text
-                if (!isTouched) {
-                    rangeValue.textContent = 'Please select budget';
-                    rangeInput.style.background = '#EFF2F1';
-                    return;
-                }
-
-                const percent = ((value - min) / (max - min)) * 100;
-                rangeValue.textContent = `$${value.toLocaleString()}`;
-                rangeValue.style.left = `calc(${percent}% + (${8 - percent * 0.15}px))`;
-
-                rangeInput.style.background = `linear-gradient(to right, 
-            #1E6C82 ${percent}%, 
-            #EFF2F1 ${percent}%)`;
-            }
-
-            // Initialize slider
-            window.updateSlider();
-
-            // Handle slider input and mark as touched
-            rangeInput.addEventListener("input", function() {
-                // Mark as touched when user interacts
-                rangeInput.setAttribute('data-touched', 'true');
-                window.updateSlider();
-            });
-
             // Helper function for email validation
             function isValidEmail(email) {
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -2976,15 +2968,6 @@
                     tag.classList.remove('selected');
                     tag.querySelector('.tag-icon').src = "{{ asset('img/unselected.png') }}";
                 });
-
-                // Reset slider
-                const rangeInput = document.getElementById("priceRange");
-                const rangeValue = document.getElementById("rangeValue");
-                if (rangeInput && rangeValue) {
-                    rangeInput.value = rangeInput.min;
-                    rangeInput.setAttribute('data-touched', 'false');
-                    window.updateSlider();
-                }
 
                 // Reset submission states
                 submissionComplete = false;

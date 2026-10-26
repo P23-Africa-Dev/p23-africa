@@ -1,0 +1,201 @@
+5: <meta name="description"
+6: content="Book a personalized business consultation with P23 Africa. Get expert guidance on funding readiness, market positioning, strategy development, and investor engagement tailored to African entrepreneurs and growing businesses.">
+7: <meta name="keywords"
+8: content="book consultation, business consultation, P23 Africa, African entrepreneurs, business strategy, funding readiness, investor preparation, growth consulting, startup advisory, business development Africa">
+9: P23 Africa
+10: Book Consultation | P23 Africa
+12: Book a Consultation | P23 Africa
+13: <meta property="og:description"
+14: content="Schedule a one-on-one consultation to strengthen your business strategy, improve funding readiness, and unlock growth opportunities with expert advisors at P23 Africa.">
+15: {{ asset('img/consultation-form.png') }}
+16: website
+18: {{ csrf_token() }}
+55: <div class="step-title active title1" data-title="BUSINESS OVERVIEW"
+56: data-subtitle="We use this info to better understand your business before the session.">
+59: We use this info to better understand
+60: your business before the session
+63: We use this info to better understand your business before the
+64: session
+69: <div class="step-title title2" data-title="BRAND IDENTITY"
+70: data-subtitle="Tell us more about your brand tone, target audience, and positioning.">
+74: What are your current top goals?
+75: (Select up to 2)
+78: What are your current top goals? (Select up to 2)
+83: <div class="step-title title3" data-title="challenges"
+84: data-subtitle="Share your project goals and the key outcomes you want to achieve.">
+88: What challenges are holding your
+89: business back? (Select up to 3)
+92: What challenges are holding your business back? (Select up to
+98: outcome
+113: <input type="text" name="full_name" placeholder="Full Name" value=" "
+114: required />
+123: <img id="flagImg" class="flagImagee" src="" alt="flag"
+124: style="display: none;">
+127: <img id="dropdownIcon" class="dropdown-icon" src=" "
+128: alt="" />
+133: <input type="text" id="flagSearch" placeholder="Search countries..."
+134: autocomplete="off">
+138: USA (+1)
+142: United Kingdom (+44)
+146: India (+91)
+150: China (+86)
+154: Japan (+81)
+158: Germany (+49)
+162: France (+33)
+166: Italy (+39)
+170: Russia (+7)
+174: Brazil (+55)
+178: Mexico (+52)
+182: Australia (+61)
+186: South Africa (+27)
+190: Nigeria (+234)
+194: Kenya (+254)
+198: Ghana (+233)
+202: Uganda (+256)
+206: Tanzania (+255)
+210: Egypt (+20)
+214: Algeria (+213)
+218: Morocco (+212)
+222: Tunisia (+216)
+226: Libya (+218)
+230: Ethiopia (+251)
+234: Zambia (+260)
+238: Zimbabwe (+263)
+242: Malawi (+265)
+246: Botswana (+267)
+250: Eswatini (+268)
+254: Lesotho (+266)
+258: Namibia (+264)
+262: Mozambique (+258)
+266: Madagascar (+261)
+270: Mauritius (+230)
+274: Seychelles (+248)
+278: Rwanda (+250)
+282: Senegal (+221)
+286: Ivory Coast (+225)
+290: Burkina Faso (+226)
+294: Mali (+223)
+298: Niger (+227)
+302: Chad (+235)
+306: Cameroon (+237)
+310: Central African Republic (+236)
+314: Republic of Congo (+242)
+318: Democratic Republic of Congo (+243)
+322: Gabon (+241)
+326: Equatorial Guinea (+240)
+330: São Tomé and Príncipe (+239)
+334: Cape Verde (+238)
+338: Guinea (+224)
+342: Guinea-Bissau (+245)
+346: Liberia (+231)
+350: Sierra Leone (+232)
+354: Togo (+228)
+358: Benin (+229)
+362: Mauritania (+222)
+366: Gambia (+220)
+370: Burundi (+257)
+374: Djibouti (+253)
+378: Eritrea (+291)
+382: Somalia (+252)
+386: South Sudan (+211)
+390: Sudan (+249)
+394: Angola (+244)
+398: Comoros (+269)
+403: Canada (+1)
+407: Spain (+34)
+411: Portugal (+351)
+415: Netherlands (+31)
+419: Belgium (+32)
+423: Switzerland (+41)
+427: Austria (+43)
+431: Sweden (+46)
+435: Norway (+47)
+439: Denmark (+45)
+443: Finland (+358)
+447: Ireland (+353)
+451: New Zealand (+64)
+455: Singapore (+65)
+459: Malaysia (+60)
+463: Thailand (+66)
+467: Philippines (+63)
+471: Indonesia (+62)
+475: Vietnam (+84)
+479: South Korea (+82)
+483: Pakistan (+92)
+487: Bangladesh (+880)
+491: Sri Lanka (+94)
+495: Argentina (+54)
+499: Chile (+56)
+503: Colombia (+57)
+507: Peru (+51)
+511: Venezuela (+58)
+515: Ecuador (+593)
+519: Uruguay (+598)
+523: Paraguay (+595)
+527: Bolivia (+591)
+531: Guyana (+592)
+535: Suriname (+597)
+539: Turkey (+90)
+543: United Arab Emirates (+971)
+547: Saudi Arabia (+966)
+551: Qatar (+974)
+555: Kuwait (+965)
+559: Bahrain (+973)
+563: Oman (+968)
+567: Jordan (+962)
+571: Lebanon (+961)
+575: Syria (+963)
+579: Iraq (+964)
+583: Iran (+98)
+587: Afghanistan (+93)
+591: Israel (+972)
+595: Palestine (+970)
+605: Select country first
+620: <input type="text" name="company_brand_name" value=" "
+621: placeholder="Company Name" required />
+626: <input type="text" name="website_or_handle" placeholder="Website/Social media"
+627: value=" " />
+635: <input type="email" name="email" class="email" placeholder="Email Address"
+636: autocomplete="email" required value=" " />
+641: <input type="text" class="input-industry" name="industry" placeholder="Industry"
+642: value=" " required />
+647: <textarea name="business_description" class="brief"
+648: placeholder="Briefly describe what your business does (1–2 sentences)." required>
+673: Increase revenue or sales
+681: Generate more leads
+689: Improve brand visibility
+697: Launch a new product or service
+705: Expand into new markets
+712: <input type="checkbox" name="business_goals[]"
+713: value="Prepare for funding or investor conversations" />
+714: Prepare for funding or investor
+715: conversations
+722: <input type="checkbox" name="business_goals[]"
+723: value="Build internal systems or operational structure" />
+724: Build internal systems or operational
+725: structure
+751: Low or inconsistent sales
+752: <img src=" "
+753: alt="" />
+758: Weak marketing strategy
+759: <img src=" "
+760: alt="" />
+765: Difficulty acquiring customers
+766: <img src=" "
+767: alt="" />
+772: Operational inefficiencies
+773: <img src=" "
+774: alt="" />
+779: Monetization not working
+780: <img src=" "
+781: alt="" />
+785: <input type="checkbox" name="key_challenges[]"
+786: value="Need clarity on product-market fit" />
+787: Need clarity on product-market fit
+788: <img src=" "
+789: alt="" />
+794: Scaling challenges
+795: <img src=" "
+796: alt="" />
+815: What made you book this consultation today?
+822: What would make this session a success for you?

@@ -23,7 +23,7 @@ class ThankYouMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Thank You for Contacting P23 Africa')
+        return $this->subject(__('mail.subject'))
             ->view('emails.thank-you');
     }
 
@@ -33,7 +33,7 @@ class ThankYouMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Thank You for Contacting P23 Africa',
+            subject: __('mail.subject'),
         );
     }
 

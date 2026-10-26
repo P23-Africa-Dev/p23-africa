@@ -22,12 +22,12 @@ class QuizController extends Controller
         ]);
 
         // Send to company
-        Mail::to('nurudeen@p23africa.com')->send(new ChallengeSubmission($data));
+        Mail::to('contact@p23africa.com')->send(new ChallengeSubmission($data));
 
         // Send to user
         if (!empty($data['email'])) {
             Mail::to($data['email'])->send(new ChallengeResult($data));
-        }   
+        }
 
 
         return response()->json(['status' => 'ok']);

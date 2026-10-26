@@ -87,3 +87,17 @@ if (!function_exists('orgRedirect')) {
         return redirect()->to(orgRoute($name, $parameters));
     }
 }
+
+if (!function_exists('locale_route')) {
+    function locale_route(string $name, array $parameters = [], bool $absolute = true): string
+    {
+        return \App\Support\LocaleUrl::route($name, $parameters, $absolute);
+    }
+}
+
+if (!function_exists('locale_url')) {
+    function locale_url(string $path): string
+    {
+        return \App\Support\LocaleUrl::to($path);
+    }
+}

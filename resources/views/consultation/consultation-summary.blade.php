@@ -530,19 +530,18 @@
             <div class="summary-left-content">
                 <div class="title">
                     <h1>
-                        <span class="light">Your</span> <br />
-                        <span class="bold">Consultation Summary</span>
+                        <span class="light">{{ __('consultation.your') }}</span> <br />
+                        <span class="bold">{{ __('consultation.summary_title') }}</span>
                     </h1>
 
 
                     <p>
-                        Thank You <span id="userName">{{ $application->name }}</span>, We've Captured Your
-                        Key Goals And Challenges.
+                        {{ __('consultation.thank_you') }} <span id="userName">{{ $application->name }}</span>, {{ __('consultation.captured') }}
                     </p>
                 </div>
 
                 <div class="overview">
-                    <h3>Business Overview:</h3>
+                    <h3>{{ __('consultation.overview_label') }}</h3>
                     <p>
 
                         {{-- (<strong>{{ $application->company }}</strong>)  --}}
@@ -553,7 +552,7 @@
                 </div>
 
                 <div class="summary-section challenges">
-                    <h4>Your Key Challenges:</h4>
+                    <h4>{{ __('consultation.your_challenges') }}</h4>
                     <div id="challengeList" class="list-container">
                         <div class="lists">
                             @foreach (($application->selected_challenges ?? []) as $challenge)
@@ -571,7 +570,7 @@
             <!-- ---------------------------RIGHT CONTENT -->
             <div class="summary-right-content">
                 <div class="summary-section goals">
-                    <h4>Your Current Goals:</h4>
+                    <h4>{{ __('consultation.your_goals') }}</h4>
                     <div id="goalList" class="list-container">
                         <div class="lists">
                             @foreach (($application->selected_goals ?? []) as $goal)
@@ -586,19 +585,19 @@
                 </div>
 
                 <div class="summary-box">
-                    <h3>Your 1hr 30m Consultation Will;</h3>
+                    <h3>{{ __('consultation.will_do') }}</h3>
                     <ul>
-                        <li>Review Your Business Position And Growth Stage</li>
-                        <li>Identify The Key Blockers Slowing Your Progress</li>
-                        <li>Provide Practical, Step-By-Step Recommendations</li>
-                        <li>Outline A Clear Roadmap To Move Forward With Confidence</li>
+                        <li>{{ __('consultation.will_1') }}</li>
+                        <li>{{ __('consultation.will_2') }}</li>
+                        <li>{{ __('consultation.will_3') }}</li>
+                        <li>{{ __('consultation.will_4') }}</li>
                     </ul>
 
-                    <p class="subtitle">You'll Leave The Session With:</p>
+                    <p class="subtitle">{{ __('consultation.leave_with') }}</p>
                     <ul class="benefit-list">
-                        <li>Clarity</li>
-                        <li>Direction</li>
-                        <li>Action Steps You Can Implement Immediately</li>
+                        <li>{{ __('consultation.leave_clarity') }}</li>
+                        <li>{{ __('consultation.leave_direction') }}</li>
+                        <li>{{ __('consultation.leave_actions') }}</li>
                     </ul>
                 </div>
                 <div class="payment-btn">
@@ -606,7 +605,7 @@
                         @csrf
                         <input type="hidden" name="booking" value="{{ $application->booking_token }}">
                         <button type="submit" class="btn proceed-btn">
-                            Proceed to Payment
+                            {{ __('consultation.proceed_payment') }}
                             <i class="fa-solid fa-arrow-right"></i>
                         </button>
                     </form>
@@ -637,7 +636,7 @@
                 // Show loading state
                 if (submitBtn) {
                     submitBtn.disabled = true;
-                    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+                    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> ' + @json(__('consultation.processing'));
                 }
 
                 // Use fetch to check for 419 before actual submit
@@ -656,10 +655,10 @@
                         // CSRF expired - show refresh prompt
                         if (typeof Swal !== 'undefined') {
                             Swal.fire({
-                                title: 'Session Expired',
-                                text: 'Your session has expired for security reasons. The page will refresh to continue.',
+                                title: @json(__('consultation.session_expired')),
+                                text: @json(__('consultation.session_expired_body')),
                                 icon: 'warning',
-                                confirmButtonText: 'Refresh Page',
+                                confirmButtonText: @json(__('consultation.refresh_page')),
                                 confirmButtonColor: '#591044',
                                 allowOutsideClick: false,
                                 allowEscapeKey: false
@@ -667,7 +666,7 @@
                                 window.location.reload();
                             });
                         } else {
-                            alert('Your session has expired. The page will refresh.');
+                            alert(@json(__('consultation.session_alert')));
                             window.location.reload();
                         }
                         return;
@@ -690,7 +689,7 @@
                     if (submitBtn) {
                         submitBtn.disabled = false;
                         submitBtn.innerHTML =
-                            'Proceed to Payment <i class="fa-solid fa-arrow-right"></i>';
+                            '{{ __('consultation.proceed_payment') }} <i class="fa-solid fa-arrow-right"></i>';
                     }
                 });
 

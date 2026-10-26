@@ -28,6 +28,14 @@
                                     class="form-control border border-1 border-theme dark-transition theme-transition bg-theme-tertiary text-theme-primary">{{ old('description', $category->description) }}</textarea>
                             </div>
 
+                            @include('admin.partials.content-translations', [
+                                'model' => $category,
+                                'translationFields' => [
+                                    'name' => 'Name',
+                                    'description' => 'Description',
+                                ],
+                            ])
+
                             <button type="submit"
                                 class="btn btn-primary dark:bg-blue-600 dark:border-blue-600 dark:hover:bg-blue-700 dark-transition">Update
                                 Category</button>

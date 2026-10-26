@@ -408,6 +408,15 @@
                             </div>
                         </div>
 
+                        @include('admin.partials.content-translations', [
+                            'translationFields' => [
+                                'title' => 'Title',
+                                'subtitle' => 'Subtitle',
+                                'description' => 'Description',
+                                'venue' => 'Venue',
+                            ],
+                        ])
+
                         <!-- Submit Button -->
                         <div class="flex items-center justify-between pt-6">
                             <a href="{{ orgRoute('admin.events.index') }}"

@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'hero' => 'RENFORCER LES ENTREPRISES,<br>TRANSFORMER LES MARCHÉS.',
+    'hero_line' => 'Ancrés en Afrique, pertinents dans le monde.',
+    'who' => 'QUI NOUS SOMMES',
+    'who_sub' => 'Tout ce que vous voulez savoir',
+    'experts' => 'Le savoir des experts',
+    'execution' => 'Une exécution simple',
+    'guidance' => 'Un accompagnement concret',
+    'story' => 'NOTRE HISTOIRE',
+    'inspire' => 'Nous voulons inspirer',
+    'story_body' => 'Convaincus que le potentiel de croissance de l’Afrique exige une précision de terrain, P23 Africa relie l’ambition des entreprises mondiales à la réalité commerciale locale. Nous aidons les organisations multinationales, les investisseurs et les scale-ups à naviguer dans la réglementation, valider la demande régionale et nouer des partenariats de distribution vérifiés.',
+    'contact' => 'Contactez-nous',
+    'people' => 'Les personnes derrière<br>l’influence',
+    'experts_body' => 'Appuyez-vous sur des décennies d’expérience cumulée de spécialistes du secteur. Nous apportons des éclairages stratégiques adaptés à votre parcours.',
+    'execution_body' => 'Nous retirons la complexité pour livrer des étapes claires et actionnables. Nos processus transforment les grandes idées en résultats concrets.',
+    'guidance_body' => 'Au-delà de la théorie, nous vous accompagnons dans la mise en œuvre. Attendez-vous à un soutien concret pour traverser les défis du terrain avec assurance.',
+    'exec_team' => 'Équipe de direction',
+    'exec_body' => 'Avec un engagement d’excellence, d’intégrité et de collaboration, nous travaillons étroitement avec nos clients pour comprendre leurs besoins, leurs objectifs et leurs ambitions. Par un conseil personnalisé, des analyses actionnables et un soutien concret, nous aidons les entreprises et les entrepreneurs à prospérer sur des marchés dynamiques et concurrentiels.',
+    'role_market' => 'Directeur du développement des marchés',
+    'role_ops' => 'Directeur des opérations',
+    'role_vp' => 'VP des partenariats stratégiques et de la distribution',
+    'case_studies' => 'Études de cas',
+    'all_case_studies' => 'Toutes les études de cas',
+];

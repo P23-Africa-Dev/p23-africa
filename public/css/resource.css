@@ -123,11 +123,14 @@ body {
     border-radius: 8px;
     padding: 5px 15px;
     font-size: 0.9rem;
+    text-decoration: none;
 }
 
-.subscribe-btn:hover {
+.subscribe-btn:hover,
+.subscribe-btn:focus {
     background-color: white;
     color: #4d787b;
+    text-decoration: none;
 }
 
 .social-icons i {

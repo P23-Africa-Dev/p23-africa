@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'hub' => 'Centre de ressources',
+    'archive' => 'Archives',
+    'archive_title' => 'Archives | P23 Africa',
+    'list_title' => 'Liste des archives | P23 Africa',
+    'meta' => 'Explorez des articles d’experts, les tendances de marché et des conseils pratiques pour développer votre activité en Afrique et au-delà.',
+    'meta_generator' => 'Articles d’experts, tendances de marché et conseils pratiques | P23 Africa',
+    'hero' => 'Explorez nos archives d’articles <span>business</span> et de <span>rapports</span>',
+    'search_ph' => 'Recherchez l’article de votre choix',
+    'view_all' => 'Voir tous les articles archivés',
+    'no_category' => 'Sans catégorie',
+    'written_by' => 'Écrit par :name',
+    'other_categories' => 'Autres catégories :',
+    'latest' => 'Recevoir les dernières analyses →',
+    'buyer_body' => 'Les habitudes d’achat en Afrique évoluent vite, portées par le numérique et une classe moyenne en croissance, mais les différences régionales et les questions de confiance restent des défis.',
+    'read_blog' => 'Lire l’article',
+    'minds' => 'Les esprits derrière les analyses',
+    'recent' => 'Nos articles les plus récents',
+    'explore' => 'Explorez des articles d’experts, les tendances de marché et des conseils pratiques pour développer votre activité en Afrique et au-delà.',
+    'read_more' => 'Lire la suite',
+    'archived' => 'Voir les articles archivés',
+    'playbook' => 'Télécharger le guide des fondateurs de P23 Africa',
+    'download_pdf' => 'Télécharger le PDF',
+    'empty' => 'Aucun article ne correspond encore à cette recherche.',
+    'no_results' => 'Aucun résultat',
+];

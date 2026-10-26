@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'hero' => 'UNTERNEHMEN STÄRKEN,<br>MÄRKTE VERÄNDERN.',
+    'hero_line' => 'Auf Afrika ausgerichtet, weltweit relevant.',
+    'who' => 'WER WIR SIND',
+    'who_sub' => 'Alles, was Sie wissen möchten',
+    'experts' => 'Das Wissen von Experten',
+    'execution' => 'Einfache Umsetzung',
+    'guidance' => 'Praktische Begleitung',
+    'story' => 'UNSERE GESCHICHTE',
+    'inspire' => 'Wir wollen inspirieren',
+    'story_body' => 'Aus der Überzeugung, dass Afrikas Wachstumspotenzial Präzision vor Ort braucht, schließt P23 Africa die Lücke zwischen globalem Ehrgeiz und lokaler kommerzieller Realität. Wir helfen multinationalen Organisationen, Investoren und Scale-ups, Regulierung zu navigieren, regionale Nachfrage zu prüfen und geprüfte Vertriebspartnerschaften aufzubauen.',
+    'contact' => 'Kontakt',
+    'people' => 'Die Menschen hinter<br>dem Einfluss',
+    'experts_body' => 'Nutzen Sie jahrzehntelange gemeinsame Erfahrung von Branchenspezialisten. Wir liefern strategische Erkenntnisse, die zu Ihrem Weg passen.',
+    'execution_body' => 'Wir nehmen Komplexität heraus und liefern klare, umsetzbare Schritte. Unsere Prozesse machen aus großen Ideen greifbare Ergebnisse.',
+    'guidance_body' => 'Über die Theorie hinaus begleiten wir Sie bei der Umsetzung. Sie erhalten praktische Unterstützung, um reale Herausforderungen sicher zu meistern.',
+    'exec_team' => 'Führungsteam',
+    'exec_body' => 'Mit dem Anspruch von Exzellenz, Integrität und Zusammenarbeit arbeiten wir eng mit unseren Kunden, um ihre Bedürfnisse, Ziele und Ambitionen zu verstehen. Durch persönliche Beratung, umsetzbare Erkenntnisse und praktische Unterstützung helfen wir Unternehmen und Unternehmern, in dynamischen Märkten zu bestehen.',
+    'role_market' => 'Direktor für Marktentwicklung',
+    'role_ops' => 'Leiter Operations',
+    'role_vp' => 'VP für strategische Partnerschaften und Vertrieb',
+    'case_studies' => 'Fallstudien',
+    'all_case_studies' => 'Alle Fallstudien',
+];

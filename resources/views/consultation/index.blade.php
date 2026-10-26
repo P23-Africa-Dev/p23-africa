@@ -399,13 +399,13 @@
         <div class="box-container">
             <div class="intro-container">
                 <div class="left-content">
-                    <h3>Let’s help you unlock growth clarity for your business.</h3>
+                    <h3>{{ __('consultation.clarity') }}</h3>
 
                     <div class="info">
                         <img src="{{ asset('img/left-conv-pattern.png') }}" class="content-pattern" alt="" />
                         <div class="info-content">
                             <div class="btn">
-                                <a href="{{ route('consultation.application-forms') }}">Let’s get started
+                                <a href="{{ locale_route('consultation.application-forms') }}">{{ __('consultation.get_started') }}
                                     <div>
                                         <img src="{{ asset('img/right.png') }}" alt="" />
                                     </div>
@@ -413,9 +413,7 @@
                             </div>
                             <div class="para">
                                 <p>
-                                    <span>The consultation</span> will analyze your challenges,
-                                    identify growth blockers, and design a roadmap to help you
-                                    scale sustainably in African markets.
+                                    {{ __('consultation.analyze') }}
                                 </p>
                             </div>
                         </div>

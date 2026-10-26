@@ -1,12 +1,11 @@
 @extends('layouts.stu-layout')
-@section('title', 'University Partnership | P23 Africa')
+@section('title', __('student_page.title'))
 
 @section('meta')
-    <meta name="description" content="Partnering With Universities To Help Students Turn Data Into Rewards.">
-    <meta name="keywords" content="Partnering With Universities To Help Students Turn Data Into Rewards.">
+    <meta name="description" content="{{ __('student_page.meta') }}">
+    <meta name="keywords" content="{{ __('student_page.meta') }}">
     <meta name="author" content="Nurudeen O. Daniju">
-    <meta name="generator"
-        content="Join a continent-wide network where high-performing students collect real-world data that fuels business, policy, and research | P23 Africa">
+    <meta name="generator" content="{{ __('student_page.meta_generator') }}">
     <meta property="og:image" content="{{ asset('images/stintro-bg.png') }}">
 @endsection
 
@@ -46,21 +45,22 @@
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-6 col-md-12 left-content">
-                        <span class="badge">Student Network</span>
+                        <span class="badge">{{ __('student_page.badge') }}</span>
                         <h1 class="main-heading">
-                            Partnering With Universities To Help Students
-                            <span class="highlight"> Turn Data </span> <span class="into">Into Rewards.</span>
+                            {{ __('student_page.hero_before') }}
+                            <span class="highlight"> {{ __('student_page.hero_data') }} </span> <span
+                                class="into">{{ __('student_page.hero_rewards') }}</span>
                         </h1>
                         <p class="description">
-                            Join a continent-wide network where high-performing students
-                            collect real-world data that fuels business, policy, and research.
+                            {{ __('student_page.hero_body') }}
                         </p>
                         <a data-bs-toggle="modal" data-bs-target="#seatModal" href="#" class="join-button">
-                            Join The Network <i class="fa fa-arrow-right arrow"></i>
+                            {{ __('student_page.join') }} <i class="fa fa-arrow-right arrow"></i>
                         </a>
                     </div>
                     <div class="col-lg-6 col-md-12 right-content">
-                        <img src="./images/stintro-bg.png" alt="Happy student" class="student-image" />
+                        <img src="./images/stintro-bg.png" alt="{{ __('student_page.alt_student') }}"
+                            class="student-image" />
                         <div class="decorative-circles d-none d-lg-block">
                             <img src="./images/st-frame-intro.png" alt="" />
                         </div>
@@ -71,7 +71,7 @@
 
         <section class="student-page-insight-section reveal-section">
             <div class="container">
-                <h2 class="section-title mx-md-5 mx-3">Who Uses These Insights</h2>
+                <h2 class="section-title mx-md-5 mx-3">{{ __('student_page.who') }}</h2>
                 <div class="container page-insight-cards">
                     <div class="row g-4 align-items-start">
                         <div class="col-md-6 col-lg-4 d-flex">
@@ -80,17 +80,16 @@
                                     <div class="card-icon">
                                         <img src="./images/b-logo-st.png" alt="" />
                                     </div>
-                                    <h3 class="card-title">Businesses</h3>
+                                    <h3 class="card-title">{{ __('student_page.businesses') }}</h3>
                                     <p class="card-description">
-                                        Gain real-time, grassroots data to inform market entry,
-                                        customer behavior, and operational strategies.
+                                        {{ __('student_page.businesses_body') }}
                                     </p>
                                 </div>
                                 <a href="#" class="action-button">
                                     <div class="act-icon">
                                         <img src="./images/b-ai-chat-01-st.png" alt="" />
                                     </div>
-                                    Make informed decisions with real-time market insights.
+                                    {{ __('student_page.businesses_cta') }}
                                 </a>
                             </div>
                         </div>
@@ -101,17 +100,16 @@
                                     <div class="card-icon">
                                         <img src="./images/polisy-log-st.png" alt="" />
                                     </div>
-                                    <h3 class="card-title">Policymakers</h3>
+                                    <h3 class="card-title">{{ __('student_page.policymakers') }}</h3>
                                     <p class="card-description">
-                                        Access evidence-based insights to design inclusive,
-                                        data-driven policies that reflect on-the-ground realities.
+                                        {{ __('student_page.policymakers_body') }}
                                     </p>
                                 </div>
                                 <a href="#" class="action-button">
                                     <div class="act-icon">
                                         <img src="./images/ai-chat-01.png" alt="" />
                                     </div>
-                                    Design people-centered policies backed by data.
+                                    {{ __('student_page.policymakers_cta') }}
                                 </a>
                             </div>
                         </div>
@@ -122,10 +120,9 @@
                                     <div class="card-icon">
                                         <img src="{{ asset('images/res-logo-st.png') }}" loading="lazy" alt="" />
                                     </div>
-                                    <h3 class="card-title">Researchers</h3>
+                                    <h3 class="card-title">{{ __('student_page.researchers') }}</h3>
                                     <p class="card-description">
-                                        Tap into rich, field-collected data to support
-                                        context-specific academic and development research.
+                                        {{ __('student_page.researchers_body') }}
                                     </p>
                                 </div>
                                 <a href="#" class="action-button">
@@ -133,7 +130,7 @@
                                         <img src="{{ asset('images/b-ai-chat-01-st.png') }}" loading="lazy"
                                             alt="" />
                                     </div>
-                                    Conduct relevant research using contextual field data.
+                                    {{ __('student_page.researchers_cta') }}
                                 </a>
                             </div>
                         </div>
@@ -148,17 +145,14 @@
                     <div class="page-driven-container">
                         <div class="left-content">
                             <div class="heading">
-                                <h1>Students from Key Disciplines Driving Africa's Growth</h1>
+                                <h1>{{ __('student_page.disciplines') }}</h1>
                                 <div class="icons-container">
                                     <img src="./images/title-bg.png" alt="" />
                                 </div>
                             </div>
 
                             <p class="d-none d-lg-block">
-                                We welcome curious, high-performing students from departments
-                                that shape business, society, and innovation. If you're
-                                passionate about solving real-world problems with data, insight,
-                                and collaboration, this is for you.
+                                {{ __('student_page.welcome') }}
                             </p>
                         </div>
                         <div class="slider-glow-wrapper position-relative">
@@ -183,10 +177,10 @@
                                                     {{-- <h3 class="card-title">{{ $title[$index % count($title)] }}</h3>
                                                     <div class="card-image">
                                                         <img src="{{ asset('images/' . $image) }}" loading="lazy"
-                                                            alt="Student" />
+                                                            alt="{{ __('student_page.alt_student') }}" />
                                                     </div> --}}
                                                     <img src="{{ asset('images/' . $image) }}" loading="lazy"
-                                                        alt="Student" />
+                                                        alt="{{ __('student_page.alt_student') }}" />
                                                 </div>
                                             @endforeach
                                         @endfor
@@ -200,10 +194,7 @@
                                     <div class="fade-overlay">
                                         <div class="page-driven-content-overlay-mobile">
                                             <p class="">
-                                                We welcome curious, high-performing students from departments
-                                                that shape business, society, and innovation. If you're
-                                                passionate about solving real-world problems with data,
-                                                insight, and collaboration, this is for you.
+                                                {{ __('student_page.welcome') }}
                                             </p>
                                         </div>
                                     </div>
@@ -226,10 +217,10 @@
                                                     {{-- <h3 class="card-title">{{ $title2[$index2 % count($title2)] }}</h3>
                                                     <div class="card-image circle-mask">
                                                         <img src="{{ asset('images/' . $image2) }}" loading="lazy"
-                                                            alt="Student" />
+                                                            alt="{{ __('student_page.alt_student') }}" />
                                                     </div> --}}
                                                     <img src="{{ asset('images/' . $image2) }}" loading="lazy"
-                                                        alt="Student" />
+                                                        alt="{{ __('student_page.alt_student') }}" />
                                                 </div>
                                             @endforeach
                                         @endfor
@@ -245,51 +236,46 @@
         <section class="students-page-policyandresearch-section reveal-section">
             <div class="container">
                 <h2 class="section-title">
-                    Why it matters <span> (Serving Business, Policy, and Research)</span>
+                    {{ __('student_page.why') }} <span> {{ __('student_page.why_span') }}</span>
                 </h2>
                 <div class="policyandresearch-grid-container">
                     <div class="grid-item">
                         <div class="item-number">/01</div>
-                        <div class="item-title">Hands-On Experience</div>
+                        <div class="item-title">{{ __('student_page.i1') }}</div>
                         <p>
-                            Get involved in real field research that matters. Contribute to
-                            studies with real-world relevance and influence.
+                            {{ __('student_page.i1_body') }}
                         </p>
                     </div>
                     <div class="grid-item">
                         <div class="item-number">/02</div>
-                        <div class="item-title">Network & Collaborate</div>
+                        <div class="item-title">{{ __('student_page.i2') }}</div>
                         <p>
-                            Work alongside professionals across industries. Strengthen your
-                            role in industry-level research.
+                            {{ __('student_page.i2_body') }}
                         </p>
                     </div>
                     <div class="grid-item">
                         <div class="item-number">/03</div>
-                        <div class="item-title">Earn While You Learn</div>
+                        <div class="item-title">{{ __('student_page.i3') }}</div>
                         <p>
-                            Access funding for approved university participation and
-                            mentorship. Receive compensation for verified contributions.
+                            {{ __('student_page.i3_body') }}
                         </p>
                     </div>
                     <div class="grid-item" style="margin-top: 2rem;">
                         <div class="item-number">/04</div>
-                        <div class="item-title">Grow With Mentorship</div>
+                        <div class="item-title">{{ __('student_page.i4') }}</div>
                         <p>
-                            Bridge the gap between academia and industry with applied
-                            learning. Exposure to practical research methods
+                            {{ __('student_page.i4_body') }}
                         </p>
                     </div>
                     <div class="grid-item highlight">
                         <div class="item-number">/05</div>
-                        <div class="item-title" style="max-width: 300px;">Boost Research <span
-                                class="boost">Impact</span></div>
+                        <div class="item-title" style="max-width: 300px;">{{ __('student_page.i5') }} <span
+                                class="boost">{{ __('student_page.impact') }}</span></div>
                         <p>
-                            Drive meaningful change with data-backed discoveries that extend
-                            beyond the classroom.
+                            {{ __('student_page.i5_body') }}
                         </p>
-                        <a data-bs-toggle="modal" data-bs-target="#seatModal" href="#" class="btn-join">Join The
-                            Movement <i class="fa fa-arrow-right"></i></a>
+                        <a data-bs-toggle="modal" data-bs-target="#seatModal" href="#"
+                            class="btn-join">{{ __('student_page.movement') }} <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -302,22 +288,22 @@
                         <img src="./images/build-st-bg.png" alt="" />
                     </div>
                     <div class="content-right">
-                        <h2>Let's Build the Future Together</h2>
+                        <h2>{{ __('student_page.future') }}</h2>
                         <p>
-                            Whether you're a student looking to build your career, a
-                            university aiming to elevate your research, or a business needing
-                            real insights, we're building this platform for you.
+                            {{ __('student_page.future_body') }}
                         </p>
                         <div class="checklist">
                             <div class="check-item">
-                                <img src="./images/Check circle.png" alt="" /> For Students
+                                <img src="./images/Check circle.png" alt="" />
+                                {{ __('student_page.for_students') }}
                             </div>
                             <div class="check-item">
-                                <img src="./images/Check circle.png" alt="" /> For University
+                                <img src="./images/Check circle.png" alt="" />
+                                {{ __('student_page.for_university') }}
                             </div>
                         </div>
-                        <a data-bs-toggle="modal" data-bs-target="#seatModal" href="#" class="btn-join">Join The
-                            Movement <i class="fa fa-arrow-right mx-3"></i></a>
+                        <a data-bs-toggle="modal" data-bs-target="#seatModal" href="#"
+                            class="btn-join">{{ __('student_page.movement') }} <i class="fa fa-arrow-right mx-3"></i></a>
                     </div>
                 </div>
             </div>
@@ -333,42 +319,43 @@
                 <div class="modal-content rounded-5 py-3 px-5">
                     <div class="modal-header border-0">
                         {{-- <h5 class="modal-title text-success" id="seatModalLabel">Book a Seat</h5> --}}
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="{{ __('student_page.close') }}"></button>
                     </div>
                     <div class="modal-body text-center">
                         <p class="mb-2" style="font-family: 'GT Walsheim Con';">
-                        <h4 style="color: #0D4036; font-weight: 500;">Interest Form</h4>
-                        <em>Kindly input your details to show your interest</em>
+                        <h4 style="color: #0D4036; font-weight: 500;">{{ __('student_page.interest') }}</h4>
+                        <em>{{ __('student_page.interest_help') }}</em>
                         </p><br>
                         <form id="studentForm" class="ms-auto me-auto w-75">
                             @csrf
                             <div class="row g-20">
                                 <div class="col-md-6">
                                     <input type="text" name="name" class="form-control mb-5"
-                                        placeholder="Full name" required>
+                                        placeholder="{{ __('student_page.full_name') }}" required>
                                 </div>
                                 <div class="col-md-6">
                                     <input type="text" name="phone" class="form-control mb-5"
-                                        placeholder="Contact Number (Optional)">
+                                        placeholder="{{ __('student_page.phone') }}">
                                 </div>
 
                                 <div class="col-md-6">
-                                    <input type="email" name="email" class="form-control mb-5" placeholder="Email"
-                                        required>
+                                    <input type="email" name="email" class="form-control mb-5"
+                                        placeholder="{{ __('student_page.email') }}" required>
                                 </div>
 
                                 <div class="col-md-6">
                                     <input type="text" name="occupation" class="form-control mb-5"
-                                        placeholder="Occupation (Optional)">
+                                        placeholder="{{ __('student_page.occupation') }}">
                                 </div>
 
                                 <div class="col-md-6">
                                     <input type="text" name="uniname" class="form-control mb-5"
-                                        placeholder="University Name" required>
+                                        placeholder="{{ __('student_page.university') }}" required>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" name="region" class="form-control mb-5" placeholder="Region"
-                                        required>
+                                    <input type="text" name="region" class="form-control mb-5"
+                                        placeholder="{{ __('student_page.region') }}" required>
                                 </div>
                             </div>
 
@@ -377,7 +364,7 @@
                             <button type="submit" class="btn w-50" id="submitBtn">
                                 <span class="spinner-border spinner-border-sm me-2 d-none" role="status"
                                     id="submitSpinner"></span>
-                                Submit <i class="bi bi-arrow-right ms-2"></i>
+                                {{ __('student_page.submit') }} <i class="bi bi-arrow-right ms-2"></i>
                             </button>
                         </form>
                     </div>
@@ -392,12 +379,12 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content text-center p-4 border-0 shadow rounded-4">
                     <h5 class="mb-3" style="color: #0D4036; font-weight: 500; font-family: 'GT Walsheim Con';">
-                        Thank you, we’ll get back as soon we review <br> your request
+                        {{ __('student_page.thanks') }}
                         {{-- <span class="">— please check your inbox.</span> --}}
                     </h5>
-                    <a href="{{ route('student') }}" id="closeModel" class="btn mt-3"
+                    <a href="{{ locale_route('student') }}" id="closeModel" class="btn mt-3"
                         style="background-color: #0D4036; color: #fff; font-family: 'GT Walsheim Con';">
-                        Done <i class="bi bi-arrow-right ms-2"></i>
+                        {{ __('student_page.done') }} <i class="bi bi-arrow-right ms-2"></i>
                     </a>
                 </div>
             </div>

@@ -24,10 +24,11 @@ class CategoryController extends Controller
         $request->validate(['name' => 'required']);
         $request->validate(['description' => 'nullable']);
         
-        Category::create([
+        $category = Category::create([
             'name' => $request->name,
             'description' => $request->description,
         ]);
+        $category->syncTranslations($request->input('translations', []), ['name', 'description']);
 
         return orgRedirect('admin.categories.index')->with('success', 'Category created.');
     }
@@ -46,6 +47,7 @@ class CategoryController extends Controller
             'name' => $request->name,
             'description' => $request->description,
         ]);
+        $category->syncTranslations($request->input('translations', []), ['name', 'description']);
 
         return orgRedirect('admin.categories.index')->with('success', 'Category updated.');
     }
