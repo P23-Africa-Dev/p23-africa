@@ -26,13 +26,11 @@
                     </div>
 
                     <div class="col-md-2 footer-links strategy">
-                        <p>{{ __('footer.what_we_do') }}</p>
-                        <a href="{{ locale_url('services#strategy') }}">{{ __('footer.business_strategy') }}</a>
-                        <a href="{{ locale_route('services.market-entry') }}">{{ __('footer.market_entry') }}</a>
-                        <a href="{{ locale_url('services#research') }}">{{ __('footer.business_research') }}</a>
-                        <a href="{{ locale_url('services#sales') }}">{{ __('footer.sales') }}</a>
-                        <a href="{{ locale_url('services#marketing') }}">{{ __('footer.marketing') }}</a>
-                        <a href="{{ locale_url('services#audit') }}">{{ __('footer.business_audit') }}</a>
+                        <p>What We Do</p>
+                        <a href="{{ route('services.market-demand-testing') }}">Market Demand Testing</a>
+                        <a href="{{ route('services.outbound-demand-testing') }}">Outbound Demand Testing</a>
+                        <a href="{{ route('services.distributor-partner') }}">Distributor Verification</a>
+                        <a href="{{ url('services') }}">Commercial Services</a>
                     </div>
 
                     <div class="col-md-2 footer-links first-icon">

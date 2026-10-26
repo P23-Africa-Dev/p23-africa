@@ -193,8 +193,8 @@
                             <p class="plan-card-desc">
                                 {{ __('services.entry_body') }}
                             </p>
-                            <a href="{{ locale_route('services.market-entry') }}" class="plan-explore-btn" aria-label="{{ __('services.explore_entry') }}">
-                                {{ __('services.explore') }} <span class="btn-arrow">→</span>
+                            <a href="{{ route('services.market-demand-testing') }}" class="plan-explore-btn" aria-label="Explore Market Demand Testing">
+                                Explore <span class="btn-arrow">→</span>
                             </a>
                         </div>
                         <div class="plan-card-illustration">
@@ -249,8 +249,8 @@
                         <p class="plan-card-desc">
                             {{ __('services.outbound_body') }}
                         </p>
-                        <a href="{{ locale_route('services.outbound-sales') }}" class="plan-explore-btn" aria-label="{{ __('services.explore_outbound') }}">
-                            {{ __('services.explore') }} <span class="btn-arrow">→</span>
+                        <a href="{{ route('services.outbound-demand-testing') }}" class="plan-explore-btn" aria-label="Explore Outbound Demand Testing">
+                            Explore <span class="btn-arrow">→</span>
                         </a>
                     </div>
                 </div>

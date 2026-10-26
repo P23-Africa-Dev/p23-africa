@@ -82,8 +82,129 @@ Route::get('/our-sales', function () {
 
 
 
-Route::get("/en", fn() => redirect("/", 301));
-Route::get("/en/{path}", fn(string $path) => redirect("/" . $path, 301))->where("path", ".*");
+Route::get('/case-studies', [\App\Http\Controllers\CaseStudyController::class, 'show'])->name('case-studies');
+Route::get('/case-studies/{slug}', [\App\Http\Controllers\CaseStudyController::class, 'show'])->name('case-studies.show');
+
+Route::get('/contact', function () {
+    ClickTracker::track('Contact_Page');
+    return view('contact');
+});
+Route::get('/about', function () {
+    ClickTracker::track('About_Page');
+    return view('about', ['caseStudies' => \App\Support\CaseStudies::all()]);
+});
+Route::get('/services', function () {
+    ClickTracker::track('Service_Page');
+    return view('services');
+});
+
+// Market Demand Testing (formerly Market Entry & Expansion)
+Route::get('/services/market-demand-testing', function () {
+    ClickTracker::track('Market_Entry_Page');
+    return view('market-entry.index');
+})->name('services.market-demand-testing');
+
+Route::get('/market-entry/nigeria', function () {
+    ClickTracker::track('Market_Entry_Nigeria_Page');
+    return view('market-entry.nigeria');
+})->name('services.market-entry.nigeria');
+
+Route::get('/market-entry/ghana', function () {
+    ClickTracker::track('Market_Entry_Ghana_Page');
+    return view('market-entry.ghana');
+})->name('services.market-entry.ghana');
+
+// Service detail pages
+Route::get('/distributor-partner-development', function () {
+    ClickTracker::track('Distributor_Partner_Page');
+    return view('services.distributor-partner-development');
+})->name('services.distributor-partner');
+
+// Outbound Demand Testing
+Route::get('/services/outbound-demand-testing', function () {
+    ClickTracker::track('Outbound_Sales_Page');
+    return view('services.outbound-sales-demand-testing');
+})->name('services.outbound-demand-testing');
+
+// Backward compatibility & SEO 301 Redirects
+Route::get('/market-demand-testing', fn() => redirect()->route('services.market-demand-testing', [], 301));
+Route::get('/market-entry', fn() => redirect()->route('services.market-demand-testing', [], 301))->name('services.market-entry');
+Route::get('/services/market-entry', fn() => redirect()->route('services.market-demand-testing', [], 301));
+Route::get('/services/market-demand-testing/nigeria', fn() => redirect()->route('services.market-entry.nigeria', [], 301));
+Route::get('/services/market-demand-testing/ghana', fn() => redirect()->route('services.market-entry.ghana', [], 301));
+
+Route::get('/outbound-demand-testing', fn() => redirect()->route('services.outbound-demand-testing', [], 301));
+Route::get('/outbound-sales-demand-testing', fn() => redirect()->route('services.outbound-demand-testing', [], 301))->name('services.outbound-sales');
+Route::get('/services/outbound-sales-demand-testing', fn() => redirect()->route('services.outbound-demand-testing', [], 301));
+
+Route::get('/sales', function () {
+    ClickTracker::track('Sales_Page');
+    return response()
+        ->view('sales')
+        ->header('X-Robots-Tag', 'noindex, nofollow');
+})->name('sales');
+
+Route::get('/quiz', function () {
+    ClickTracker::track('Quiz_Page');
+    return view('sales-quiz');
+})->name('quiz');
+
+Route::get('/device-display', function () {
+    return view('device');
+})->name('device');
+
+Route::get('/playbook/ultimate-funding/payment', function () {
+    return view('playbook.payment');
+})->name('playbook.payment');
+
+Route::get('/playbook/ultimate-funding/checkout', function () {
+    return view('playbook.checkout');
+})->name('playbook.checkout');
+// BRN
+// Route::get('/brn', function () {
+//     ClickTracker::track('BRN_Page');
+//     return view('brn');
+// })->name('brn');
+Route::get('/noel54/interest-form', function () {
+    ClickTracker::track('NOEL_Form_Page');
+    return view('brn-form');
+})->name('brn-form');
+
+Route::post('/noel54/interest-form', [BrnController::class, 'store'])->name('brn.submit');
+Route::post('/noel54/check-email', [BrnController::class, 'checkEmail'])->name('brn.check-email');
+
+// Step-by-step form validation endpoints
+Route::post('/noel54/validate-step/{step}', [BrnController::class, 'validateStep'])->name('brn.validate-step');
+Route::post('/noel54/validate-all', [BrnController::class, 'validateAllSteps'])->name('brn.validate-all');
+
+// CSRF Token Refresh Route - for long forms that may experience session timeout
+Route::get('/csrf-token', function () {
+    return response()->json(['token' => csrf_token()]);
+})->name('csrf.refresh');
+
+// Playbook Download Route
+Route::post('/playbook/download', [\App\Http\Controllers\PlaybookController::class, 'download'])->name('playbook.download');
+
+// Sales Book Download Route
+Route::post('/sales-book/download', [\App\Http\Controllers\PlaybookController::class, 'salesBookDownload'])->name('sales-book.download');
+
+// Ultimate Funding Download Route (Premium)
+Route::post('/ultimate-funding/download', [\App\Http\Controllers\PlaybookController::class, 'ultimateFundingDownload'])->name('ultimate-funding.download');
+Route::post('/ultimate-funding/payment-callback', [\App\Http\Controllers\PlaybookController::class, 'ultimateFundingPaymentCallback'])->name('ultimate-funding.payment-callback');
+
+// Stripe Payment Routes
+Route::post('/ultimate-funding/create-payment-intent', [\App\Http\Controllers\PlaybookController::class, 'createStripePaymentIntent'])->name('ultimate-funding.create-payment-intent');
+Route::post('/ultimate-funding/stripe-payment-callback', [\App\Http\Controllers\PlaybookController::class, 'stripePaymentCallback'])->name('ultimate-funding.stripe-callback');
+
+// Playbook Landing Page
+Route::get('/founders-playbook', [\App\Http\Controllers\PlaybookController::class, 'landing'])->name('playbook.landing');
+Route::get('/playbook/funding-readiness', [\App\Http\Controllers\PlaybookController::class, 'playbookOne'])->name('playbook.landing1');
+Route::get('/playbook/ultimate-funding', [\App\Http\Controllers\PlaybookController::class, 'playbookTwo'])->name('playbook.landing2');
+
+
+Route::get('/brn-form', function () {
+    return redirect('/noel54/interest-form');
+});
 
 Route::get('/sitemap.xml', \App\Http\Controllers\SitemapController::class)->name('sitemap');
 
