@@ -98,6 +98,34 @@
             transform: translateY(-2px);
         }
 
+        /* Card Button Perfect Alignment & No-Wrap Fix */
+        .plan-card {
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: flex-start !important;
+        }
+
+        .plan-card .plan-explore-btn {
+            margin-top: auto !important;
+            width: auto !important;
+            min-width: 145px !important;
+            height: 48px !important;
+            padding: 0 24px !important;
+            white-space: nowrap !important;
+            align-self: flex-start !important;
+        }
+
+        .plan-card-market-entry .plan-card-body {
+            display: flex !important;
+            flex-direction: column !important;
+            flex: 1 !important;
+        }
+
+        .plan-card-market-entry .plan-explore-btn {
+            margin-top: auto !important;
+            margin-bottom: 24px !important;
+        }
+
         .lead-final-action-box {
             margin-top: clamp(36px, 4vw, 56px);
             padding: clamp(28px, 3.5vw, 40px);
@@ -344,7 +372,7 @@
                            rel="noopener noreferrer" 
                            class="plan-explore-btn" 
                            aria-label="Read demand validation section in PDF">
-                            Explore Methodology <span class="btn-arrow">→</span>
+                            Read in Guide <span class="btn-arrow">→</span>
                         </a>
                     </div>
 
@@ -359,7 +387,7 @@
                            rel="noopener noreferrer" 
                            class="plan-explore-btn" 
                            aria-label="Read sales governance section in PDF">
-                            Explore Governance <span class="btn-arrow">→</span>
+                            Read in Guide <span class="btn-arrow">→</span>
                         </a>
                     </div>
                 </div>
@@ -377,7 +405,7 @@
                            rel="noopener noreferrer" 
                            class="plan-explore-btn" 
                            aria-label="Read commercial economics section in PDF">
-                            Explore Economics <span class="btn-arrow">→</span>
+                            Read in Guide <span class="btn-arrow">→</span>
                         </a>
                     </div>
 
@@ -392,7 +420,7 @@
                            rel="noopener noreferrer" 
                            class="plan-explore-btn" 
                            aria-label="Read risk control section in PDF">
-                            Read Frameworks <span class="btn-arrow">→</span>
+                            Read in Guide <span class="btn-arrow">→</span>
                         </a>
                     </div>
                 </div>
