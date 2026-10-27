@@ -120,6 +120,13 @@
                 </a>
 
                 @if (Auth::user()->hasRole('admin'))
+                    <a href="{{ orgRoute('admin.site-errors.index') }}"
+                        style="display:flex;align-items:center;gap:.625rem;padding:.5rem .75rem;border-radius:var(--radius-sm);color:var(--text-primary);font-size:.875rem;text-decoration:none;"
+                        onmouseenter="this.style.background='var(--bg-hover)'"
+                        onmouseleave="this.style.background='transparent'">
+                        <i class="bi bi-exclamation-triangle" style="color:var(--text-muted);"></i>
+                        Site Errors
+                    </a>
                     <a href="{{ orgRoute('admin.activity.logs') }}"
                         style="display:flex;align-items:center;gap:.625rem;padding:.5rem .75rem;border-radius:var(--radius-sm);color:var(--text-primary);font-size:.875rem;text-decoration:none;"
                         onmouseenter="this.style.background='var(--bg-hover)'"
