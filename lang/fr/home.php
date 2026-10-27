@@ -129,4 +129,18 @@ return [
     'metric_validation' => 'Validation des partenaires',
     'metric_derisked' => 'Risque réduit',
     'metric_execution' => 'Exécution de marché',
+
+    'guide_cta_pill' => 'NOUVEAU RAPPORT DE TERRAIN',
+    'guide_cta_title' => 'Expansion en Afrique pour les Industriels',
+    'guide_cta_subtitle' => 'Un guide pratique et éprouvé sur l’entrée sur le marché, la sélection des distributeurs et la structuration des opérations commerciales en Afrique.',
+    'guide_cta_bullet1' => 'Contrôle préalable des distributeurs et canaux d’accès',
+    'guide_cta_bullet2' => 'Validation de la demande avant engagement de capital',
+    'guide_cta_bullet3' => 'Cadre opérationnel commercial sur le terrain',
+    'guide_cta_download' => 'Expansion en Afrique pour les Industriels',
+    'guide_cta_preview' => 'Aperçu en ligne',
+    'guide_cta_meta' => 'Téléchargement PDF immédiat • Guide de 18 pages • Accès gratuit',
 ];
+
+
+
+

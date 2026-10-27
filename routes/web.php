@@ -126,6 +126,12 @@ Route::get('/services/outbound-demand-testing', function () {
     return view('services.outbound-sales-demand-testing');
 })->name('services.outbound-demand-testing');
 
+// African Expansion for Manufacturers Lead Magnet
+Route::get('/african-expansion-for-manufacturers', function () {
+    ClickTracker::track('African_Expansion_Landing_Page');
+    return view('landing.african-expansion-for-manufacturers');
+})->name('lead-magnets.african-expansion');
+
 // Backward compatibility & SEO 301 Redirects
 Route::get('/market-demand-testing', fn() => redirect()->route('services.market-demand-testing', [], 301));
 Route::get('/market-entry', fn() => redirect()->route('services.market-demand-testing', [], 301))->name('services.market-entry');

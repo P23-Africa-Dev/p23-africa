@@ -127,6 +127,20 @@ return [
     'metric_markets' => 'Afrikanische Märkte',
     'metric_direct' => 'Direkt',
     'metric_validation' => 'Partnerprüfung',
-    'metric_derisked' => 'Risiko gesenkt',
+    'metric_derisked' => 'Risko gesenkt',
     'metric_execution' => 'Marktumsetzung',
+
+    'guide_cta_pill' => 'NEUER PRAXISBERICHT & LEITFADEN',
+    'guide_cta_title' => 'Afrika-Expansion für Industrieunternehmen',
+    'guide_cta_subtitle' => 'Ein praxisnaher Leitfaden für Markteintritt, Partnerprüfung, Bedarfsvalidierung und den Aufbau erfolgreicher Vertriebsstrukturen in afrikanischen Märkten.',
+    'guide_cta_bullet1' => 'Distributoren-Prüfung und Vertriebswege',
+    'guide_cta_bullet2' => 'Bedarfsprüfung vor Kapitaleinsatz',
+    'guide_cta_bullet3' => 'Operatives Vertriebs-Framework vor Ort',
+    'guide_cta_download' => 'Afrika-Expansion für Industrieunternehmen',
+    'guide_cta_preview' => 'Online ansehen',
+    'guide_cta_meta' => 'Sofortiger PDF-Download • 18 Seiten Praxisleitfaden • Kostenloser Zugriff',
 ];
+
+
+
+

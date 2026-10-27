@@ -129,4 +129,18 @@ return [
     'metric_validation' => 'Partnercontrole',
     'metric_derisked' => 'Risico verlaagd',
     'metric_execution' => 'Marktuitvoering',
+
+    'guide_cta_pill' => 'NIEUW VELDAPPORT & GIDS',
+    'guide_cta_title' => 'Afrikaanse Expansie voor Fabrikanten',
+    'guide_cta_subtitle' => 'Een praktische, in de praktijk geteste gids voor markttoetreding, distributeursverificatie, vraagvalidatie en commerciële verkoopactiviteiten in Afrika.',
+    'guide_cta_bullet1' => 'Distributeur Due Diligence & Route-naar-de-markt',
+    'guide_cta_bullet2' => 'Vraagvalidatie vóór kapitaalinvestering',
+    'guide_cta_bullet3' => 'Lokaal commercieel operationeel kader',
+    'guide_cta_download' => 'Afrikaanse Expansie voor Fabrikanten',
+    'guide_cta_preview' => 'Online bekijken',
+    'guide_cta_meta' => 'Directe PDF-download • 18 pagina\'s veldgids • Gratis toegang',
 ];
+
+
+
+

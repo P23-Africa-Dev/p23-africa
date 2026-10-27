@@ -1498,6 +1498,450 @@
     }
 
     /* ========================================================
+       HOMEPAGE LEAD CTA: AFRICAN EXPANSION GUIDE
+       ======================================================== */
+    .home-guide-cta-section {
+        position: relative;
+        width: 100%;
+        margin: 0;
+        padding: clamp(54px, 6vw, 84px) 0;
+        background: linear-gradient(135deg, #022019 0%, #06392f 52%, #011612 100%);
+        border-top: 1px solid rgba(39, 230, 167, 0.22);
+        border-bottom: 1px solid rgba(39, 230, 167, 0.22);
+        color: #ffffff;
+        overflow: hidden;
+    }
+
+    .home-guide-cta-section::before {
+        content: '';
+        position: absolute;
+        top: -60px;
+        right: 5%;
+        width: 520px;
+        height: 520px;
+        background: radial-gradient(circle, rgba(39, 230, 167, 0.16) 0%, rgba(39, 230, 167, 0.03) 45%, transparent 70%);
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .home-guide-cta-section::after {
+        content: '';
+        position: absolute;
+        bottom: -80px;
+        left: -40px;
+        width: 420px;
+        height: 420px;
+        background: radial-gradient(circle, rgba(13, 64, 54, 0.45) 0%, transparent 70%);
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .home-guide-cta-container {
+        position: relative;
+        z-index: 2;
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 0 clamp(20px, 3.5vw, 36px);
+    }
+
+    .home-guide-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.95fr);
+        gap: clamp(32px, 4.5vw, 64px);
+        align-items: center;
+    }
+
+    .home-guide-content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .guide-kicker-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        font-family: "GT Walsheim ProCB", "Montserrat", sans-serif;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #27E6A7;
+        background: rgba(39, 230, 167, 0.12);
+        border: 1px solid rgba(39, 230, 167, 0.35);
+        padding: 7px 16px;
+        border-radius: 100px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 14px rgba(39, 230, 167, 0.1);
+    }
+
+    .guide-kicker-pill .guide-pill-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background-color: #27E6A7;
+        box-shadow: 0 0 10px #27E6A7;
+        animation: guidePulse 2s infinite ease-in-out;
+    }
+
+    @keyframes guidePulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.45; transform: scale(0.85); }
+    }
+
+    .guide-heading {
+        font-family: "Montserrat", sans-serif;
+        font-size: clamp(28px, 3.2vw, 42px);
+        font-weight: 700;
+        line-height: 1.22;
+        color: #ffffff;
+        margin: 0 0 16px 0;
+        letter-spacing: -0.015em;
+    }
+
+    .guide-lead-text {
+        font-family: "GT Walsheim Trial Cn Rg", sans-serif;
+        font-size: clamp(16px, 1.3vw, 18.5px);
+        line-height: 1.6;
+        color: #d2ede7;
+        margin: 0 0 24px 0;
+        max-width: 640px;
+    }
+
+    .guide-takeaways-list {
+        display: flex;
+        flex-direction: column;
+        gap: 11px;
+        margin-bottom: 28px;
+        width: 100%;
+    }
+
+    .guide-takeaway-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-family: "GT Walsheim ProCB", "Montserrat", sans-serif;
+        font-size: clamp(14px, 1.1vw, 15.5px);
+        color: #f1fbf8;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        padding: 9px 16px;
+        border-radius: 8px;
+        transition: all 0.25s ease;
+    }
+
+    .guide-takeaway-item:hover {
+        background: rgba(39, 230, 167, 0.09);
+        border-color: rgba(39, 230, 167, 0.3);
+        transform: translateX(4px);
+    }
+
+    .guide-takeaway-item i {
+        color: #27E6A7;
+        font-size: 17px;
+        flex-shrink: 0;
+    }
+
+    .guide-actions-group {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 16px;
+    }
+
+    .guide-btn-primary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        background: #27E6A7;
+        color: #03231c !important;
+        font-family: "GT Walsheim ProCB", sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+        padding: 14px 26px;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 0 10px 24px rgba(39, 230, 167, 0.28);
+        border: 1px solid #27E6A7;
+        cursor: pointer;
+    }
+
+    .guide-btn-primary:hover {
+        background: #ffffff;
+        border-color: #ffffff;
+        color: #003c32 !important;
+        transform: translateY(-2px);
+        box-shadow: 0 14px 28px rgba(39, 230, 167, 0.35);
+    }
+
+    .guide-btn-primary .guide-file-tag {
+        display: inline-block;
+        background: rgba(3, 35, 28, 0.15);
+        font-size: 11.5px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        padding: 2px 7px;
+        border-radius: 4px;
+        margin-left: 4px;
+    }
+
+    .guide-btn-primary:hover .guide-file-tag {
+        background: rgba(0, 60, 50, 0.12);
+        color: #003c32;
+    }
+
+    .guide-btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.08);
+        color: #ffffff !important;
+        font-family: "GT Walsheim ProCB", sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        padding: 14px 24px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .guide-btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.18);
+        border-color: rgba(255, 255, 255, 0.6);
+        color: #ffffff !important;
+        transform: translateY(-2px);
+    }
+
+    .guide-meta-footnote {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: "GT Walsheim Trial Cn Rg", sans-serif;
+        font-size: 13px;
+        color: rgba(208, 238, 233, 0.75);
+        letter-spacing: 0.02em;
+    }
+
+    .guide-meta-footnote i {
+        color: #27E6A7;
+        font-size: 14px;
+    }
+
+    /* Right Column: 3D Editorial Document Showcase */
+    .home-guide-visual {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        perspective: 1200px;
+    }
+
+    .guide-book-mockup {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        position: relative;
+        width: 100%;
+        max-width: 380px;
+        background: linear-gradient(145deg, #0a4d41 0%, #032e26 100%);
+        border: 1px solid rgba(39, 230, 167, 0.35);
+        border-radius: 14px;
+        padding: 30px 28px 24px;
+        box-shadow: 0 24px 50px rgba(0, 0, 0, 0.45), 0 0 40px rgba(39, 230, 167, 0.12);
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        cursor: pointer;
+        overflow: hidden;
+    }
+
+    .guide-book-mockup:hover {
+        color: inherit;
+        text-decoration: none;
+        transform: translateY(-6px) rotate(-0.5deg);
+        border-color: rgba(39, 230, 167, 0.6);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55), 0 0 50px rgba(39, 230, 167, 0.22);
+    }
+
+    .guide-book-mockup::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 14px;
+        background: linear-gradient(to right, rgba(0, 0, 0, 0.45) 0%, rgba(255, 255, 255, 0.15) 50%, rgba(0, 0, 0, 0.25) 100%);
+        border-right: 1px solid rgba(0, 0, 0, 0.35);
+    }
+
+    .guide-book-badge {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: rgba(39, 230, 167, 0.18);
+        border: 1px solid rgba(39, 230, 167, 0.4);
+        color: #27E6A7;
+        font-family: "GT Walsheim ProCB", sans-serif;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 4px 10px;
+        border-radius: 6px;
+    }
+
+    .guide-book-header {
+        padding-left: 8px;
+        margin-bottom: 22px;
+    }
+
+    .guide-book-brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: "GT Walsheim ProCB", "Montserrat", sans-serif;
+        font-size: 12px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #27E6A7;
+        margin-bottom: 12px;
+    }
+
+    .guide-book-brand i {
+        font-size: 14px;
+    }
+
+    .guide-book-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 21px;
+        font-weight: 700;
+        line-height: 1.3;
+        color: #ffffff;
+        margin: 0 0 10px 0;
+    }
+
+    .guide-book-sub {
+        font-family: "GT Walsheim Trial Cn Rg", sans-serif;
+        font-size: 13.5px;
+        line-height: 1.5;
+        color: #b5e5dc;
+        margin: 0;
+    }
+
+    .guide-book-preview-strip {
+        padding-left: 8px;
+        margin: 20px 0;
+        padding: 14px 14px 14px 20px;
+        background: rgba(0, 20, 15, 0.45);
+        border-radius: 8px;
+        border-left: 3px solid #27E6A7;
+    }
+
+    .guide-strip-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 12.5px;
+        color: #e3f5f0;
+        font-family: "GT Walsheim ProCB", sans-serif;
+        margin-bottom: 6px;
+    }
+    .guide-strip-item:last-child {
+        margin-bottom: 0;
+    }
+    .guide-strip-item i {
+        color: #27E6A7;
+        font-size: 13px;
+    }
+
+    .guide-book-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-left: 8px;
+        padding-top: 14px;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .guide-pages-count {
+        font-family: "GT Walsheim ProCB", sans-serif;
+        font-size: 12px;
+        color: #27E6A7;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+    }
+
+    .guide-action-cue {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-family: "GT Walsheim ProCB", sans-serif;
+        font-size: 12px;
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 4px 10px;
+        border-radius: 20px;
+        transition: all 0.25s ease;
+    }
+
+    .guide-book-mockup:hover .guide-action-cue {
+        background: #27E6A7;
+        color: #03231c;
+    }
+
+    @media (max-width: 991px) {
+        .home-guide-grid {
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+        .home-guide-content {
+            align-items: center;
+            text-align: center;
+        }
+        .guide-lead-text {
+            max-width: 100%;
+        }
+        .guide-takeaways-list {
+            align-items: stretch;
+            text-align: left;
+        }
+        .guide-actions-group {
+            justify-content: center;
+            width: 100%;
+        }
+        .guide-btn-primary, .guide-btn-secondary {
+            width: 100%;
+            max-width: 340px;
+        }
+        .guide-meta-footnote {
+            justify-content: center;
+        }
+        .guide-book-mockup {
+            max-width: 360px;
+        }
+    }
+
+    @media (max-width: 580px) {
+        .home-guide-cta-section {
+            padding: 42px 0;
+        }
+        .guide-takeaway-item {
+            font-size: 13.5px;
+            padding: 8px 12px;
+        }
+        .guide-btn-primary, .guide-btn-secondary {
+            font-size: 15px;
+            padding: 13px 18px;
+        }
+        .guide-book-title {
+            font-size: 18px;
+        }
+    }
+
+    /* ========================================================
        HOMEPAGE FEATURED CASE STUDIES (COMMERCIAL RESULTS)
        ======================================================== */
     .home-casestudy-section {
@@ -2597,6 +3041,123 @@
                     📥 {{ __('home.download_pdf') }}
                 </a>
                 <iframe class="pdf-viewer" id="pdfViewer" src="" frameborder="0"></iframe>
+            </div>
+        </div>
+    </section>
+
+    {{-- ========================================================
+         HOMEPAGE FEATURED LEAD CTA: AFRICAN EXPANSION GUIDE
+         ======================================================== --}}
+    <section class="home-guide-cta-section content-section animate-on-scroll" id="african-expansion-guide" aria-label="African Expansion for Manufacturers">
+        <div class="home-guide-cta-container">
+            <div class="home-guide-grid">
+                
+                {{-- Left: Copy, Highlights & Actions --}}
+                <div class="home-guide-content">
+                    <span class="guide-kicker-pill">
+                        <span class="guide-pill-dot"></span>
+                        <i class="bi bi-file-earmark-pdf-fill"></i>
+                        {{ __('home.guide_cta_pill') }}
+                    </span>
+                    
+                    <h2 class="guide-heading">
+                        {{ __('home.guide_cta_title') }}
+                    </h2>
+                    
+                    <p class="guide-lead-text">
+                        {{ __('home.guide_cta_subtitle') }}
+                    </p>
+
+                    <div class="guide-takeaways-list">
+                        <div class="guide-takeaway-item">
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>{{ __('home.guide_cta_bullet1') }}</span>
+                        </div>
+                        <div class="guide-takeaway-item">
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>{{ __('home.guide_cta_bullet2') }}</span>
+                        </div>
+                        <div class="guide-takeaway-item">
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>{{ __('home.guide_cta_bullet3') }}</span>
+                        </div>
+                    </div>
+
+                    <div class="guide-actions-group">
+                        <a href="{{ asset('documents/African.pdf') }}" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="guide-btn-primary" 
+                           id="home-guide-download-btn"
+                           title="African Expansion for Manufacturers">
+                            <i class="bi bi-cloud-arrow-down-fill"></i>
+                            <span>{{ __('home.guide_cta_download') }}</span>
+                        </a>
+
+                        <a href="{{ asset('documents/African.pdf') }}" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="guide-btn-secondary" 
+                           id="home-guide-preview-btn"
+                           title="Preview African Expansion for Manufacturers">
+                            <i class="bi bi-eye-fill"></i>
+                            <span>{{ __('home.guide_cta_preview') }}</span>
+                        </a>
+                    </div>
+
+                    <div class="guide-meta-footnote">
+                        <i class="bi bi-shield-check"></i>
+                        <span>{{ __('home.guide_cta_meta') }}</span>
+                    </div>
+                </div>
+
+                {{-- Right: Interactive Editorial 3D Guide Mockup --}}
+                <div class="home-guide-visual">
+                    <a href="{{ asset('documents/African.pdf') }}" 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       class="guide-book-mockup" 
+                       aria-label="African Expansion for Manufacturers"
+                       title="African Expansion for Manufacturers">
+                        <span class="guide-book-badge">FREE PDF</span>
+                        
+                        <div class="guide-book-header">
+                            <div class="guide-book-brand">
+                                <i class="bi bi-compass-fill"></i>
+                                <span>P23 Africa Playbook</span>
+                            </div>
+                            <h3 class="guide-book-title">
+                                African Expansion for Manufacturers
+                            </h3>
+                            <p class="guide-book-sub">
+                                A Practical Field Guide to Market Entry, Distributor Network & Commercial Success
+                            </p>
+                        </div>
+
+                        <div class="guide-book-preview-strip">
+                            <div class="guide-strip-item">
+                                <i class="bi bi-file-text-fill"></i>
+                                <span>18-Page Practical Field Guide</span>
+                            </div>
+                            <div class="guide-strip-item">
+                                <i class="bi bi-diagram-3-fill"></i>
+                                <span>Partner Due Diligence Framework</span>
+                            </div>
+                            <div class="guide-strip-item">
+                                <i class="bi bi-graph-up-arrow"></i>
+                                <span>Real Demand Validation Methodology</span>
+                            </div>
+                        </div>
+
+                        <div class="guide-book-footer">
+                            <span class="guide-pages-count">2026 Edition • Free Access</span>
+                            <span class="guide-action-cue">
+                                <i class="bi bi-eye"></i> Click to Read
+                            </span>
+                        </div>
+                    </a>
+                </div>
+
             </div>
         </div>
     </section>

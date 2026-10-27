@@ -71,6 +71,12 @@ return function (bool $localized): void {
         return view('services.outbound-sales-demand-testing');
     })->name($name('services.outbound-sales'));
 
+    Route::get('/african-expansion-for-manufacturers', function () {
+        ClickTracker::track('African_Expansion_Landing_Page');
+
+        return view('landing.african-expansion-for-manufacturers');
+    })->name($name('lead-magnets.african-expansion'));
+
     Route::get('/services/market-entry', fn () => redirect()->to(locale_route('services.market-entry')));
     Route::get('/services/market-entry/nigeria', fn () => redirect()->to(locale_route('services.market-entry.nigeria')));
     Route::get('/services/market-entry/ghana', fn () => redirect()->to(locale_route('services.market-entry.ghana')));
