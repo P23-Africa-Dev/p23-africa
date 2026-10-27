@@ -857,6 +857,19 @@
                                     </a>
                                 </div>
                             @endif
+                            @if (auth()->user() && auth()->user()->hasRole('admin'))
+                                <div class="col-6 col-md-4 col-lg-3">
+                                    <a href="{{ orgRoute('admin.site-errors.index') }}" class="action-item"
+                                        style="border:1px solid var(--border);border-radius:var(--radius-md);">
+                                        <div class="d-flex align-items-center">
+                                            <div class="action-icon-wrap"
+                                                style="background:rgba(13,64,54,.1);color:#0d4036;"><i
+                                                    class="bi bi-exclamation-triangle"></i></div>
+                                            <span style="font-size:.8125rem;">Site Errors</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endif
                             <div class="col-6 col-md-4 col-lg-3">
                                 <a href="{{ orgRoute('admin.activity.logs') }}" class="action-item"
                                     style="border:1px solid var(--border);border-radius:var(--radius-md);">

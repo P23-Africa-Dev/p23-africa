@@ -245,8 +245,13 @@
                 <span class="sidebar-text">Settings</span>
             </a>
 
-            {{-- Activity Logs (admin only) --}}
+            {{-- Site errors and activity logs (admin only) --}}
             @if (auth()->user() && auth()->user()->hasRole('admin'))
+                <a href="{{ orgRoute('admin.site-errors.index') }}" data-tooltip="Site Errors"
+                    class="sidebar-item {{ request()->routeIs('admin.site-errors.*') ? 'active' : '' }}">
+                    <span class="sidebar-icon"><i class="bi bi-exclamation-triangle"></i></span>
+                    <span class="sidebar-text">Site Errors</span>
+                </a>
                 <a href="{{ orgRoute('admin.activity.logs') }}" data-tooltip="Activity Logs"
                     class="sidebar-item {{ request()->routeIs('admin.activity.logs') ? 'active' : '' }}"
                     style="position:relative;">

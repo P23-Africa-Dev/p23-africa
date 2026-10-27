@@ -629,6 +629,14 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
 Broadcast::routes(['middleware' => ['auth', 'check.suspended', 'role:admin|supervisor|staff']]);
 
 
+Route::get('/admin/site-errors', [\App\Http\Controllers\Admin\SiteErrorController::class, 'index'])
+    ->middleware(['auth', 'check.suspended', 'role:admin'])
+    ->name('admin.site-errors.index');
+
+Route::get('/admin/site-errors/{siteError}', [\App\Http\Controllers\Admin\SiteErrorController::class, 'show'])
+    ->middleware(['auth', 'check.suspended', 'role:admin'])
+    ->name('admin.site-errors.show');
+
 Route::get('/admin/activity-logs', [\App\Http\Controllers\Admin\ActivityLogController::class, 'index'])
     ->middleware(['auth', 'role:admin'])
     ->name('admin.activity.logs');

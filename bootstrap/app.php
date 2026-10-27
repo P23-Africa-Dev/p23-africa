@@ -58,4 +58,29 @@ return Application::configure(basePath: dirname(__DIR__))
                 return response()->view('errors.403', [], 403);
             }
         });
+
+        $exceptions->render(function (\Throwable $e, $request) {
+            if ($e instanceof \Illuminate\Validation\ValidationException
+                || $e instanceof \Illuminate\Auth\AuthenticationException) {
+                return null;
+            }
+
+            $status = 500;
+            if ($e instanceof \Symfony\Component\HttpKernel\Exception\HttpExceptionInterface) {
+                $status = $e->getStatusCode();
+                if ($status < 500) {
+                    return null;
+                }
+            }
+
+            app(\App\Support\SiteErrorRecorder::class)->record($e, $request, $status);
+
+            if ($request->expectsJson() || $request->is('api/*')) {
+                return response()->json([
+                    'message' => 'Something went wrong. Please try again in a few minutes.',
+                ], $status);
+            }
+
+            return response()->view('errors.unavailable', [], $status);
+        });
     })->create();
