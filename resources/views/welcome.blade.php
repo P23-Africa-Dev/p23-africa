@@ -2441,123 +2441,6 @@
         </div>
     </section>
 
-    {{-- ========================================================
-         HOMEPAGE FEATURED LEAD CTA: AFRICAN EXPANSION GUIDE
-         ======================================================== --}}
-    <section class="home-guide-cta-section content-section animate-on-scroll" id="african-expansion-guide" aria-label="African Expansion for Manufacturers">
-        <div class="home-guide-cta-container">
-            <div class="home-guide-grid">
-                
-                {{-- Left: Copy, Highlights & Actions --}}
-                <div class="home-guide-content">
-                    <span class="guide-kicker-pill">
-                        <span class="guide-pill-dot"></span>
-                        <i class="bi bi-file-earmark-pdf-fill"></i>
-                        {{ __('home.guide_cta_pill') }}
-                    </span>
-                    
-                    <h2 class="guide-heading">
-                        {{ __('home.guide_cta_title') }}
-                    </h2>
-                    
-                    <p class="guide-lead-text">
-                        {{ __('home.guide_cta_subtitle') }}
-                    </p>
-
-                    <div class="guide-takeaways-list">
-                        <div class="guide-takeaway-item">
-                            <i class="bi bi-check-circle-fill"></i>
-                            <span>{{ __('home.guide_cta_bullet1') }}</span>
-                        </div>
-                        <div class="guide-takeaway-item">
-                            <i class="bi bi-check-circle-fill"></i>
-                            <span>{{ __('home.guide_cta_bullet2') }}</span>
-                        </div>
-                        <div class="guide-takeaway-item">
-                            <i class="bi bi-check-circle-fill"></i>
-                            <span>{{ __('home.guide_cta_bullet3') }}</span>
-                        </div>
-                    </div>
-
-                    <div class="guide-actions-group">
-                        <a href="{{ asset('documents/African.pdf') }}" 
-                           target="_blank" 
-                           rel="noopener noreferrer" 
-                           class="guide-btn-primary" 
-                           id="home-guide-download-btn"
-                           title="African Expansion for Manufacturers">
-                            <i class="bi bi-cloud-arrow-down-fill"></i>
-                            <span>{{ __('home.guide_cta_download') }}</span>
-                        </a>
-
-                        <a href="{{ asset('documents/African.pdf') }}" 
-                           target="_blank" 
-                           rel="noopener noreferrer" 
-                           class="guide-btn-secondary" 
-                           id="home-guide-preview-btn"
-                           title="Preview African Expansion for Manufacturers">
-                            <i class="bi bi-eye-fill"></i>
-                            <span>{{ __('home.guide_cta_preview') }}</span>
-                        </a>
-                    </div>
-
-                    <div class="guide-meta-footnote">
-                        <i class="bi bi-shield-check"></i>
-                        <span>{{ __('home.guide_cta_meta') }}</span>
-                    </div>
-                </div>
-
-                {{-- Right: Interactive Editorial 3D Guide Mockup --}}
-                <div class="home-guide-visual">
-                    <a href="{{ asset('documents/African.pdf') }}" 
-                       target="_blank" 
-                       rel="noopener noreferrer" 
-                       class="guide-book-mockup" 
-                       aria-label="African Expansion for Manufacturers"
-                       title="African Expansion for Manufacturers">
-                        <span class="guide-book-badge">FREE PDF</span>
-                        
-                        <div class="guide-book-header">
-                            <div class="guide-book-brand">
-                                <i class="bi bi-compass-fill"></i>
-                                <span>P23 Africa Playbook</span>
-                            </div>
-                            <h3 class="guide-book-title">
-                                African Expansion for Manufacturers
-                            </h3>
-                            <p class="guide-book-sub">
-                                A Practical Field Guide to Market Entry, Distributor Network & Commercial Success
-                            </p>
-                        </div>
-
-                        <div class="guide-book-preview-strip">
-                            <div class="guide-strip-item">
-                                <i class="bi bi-file-text-fill"></i>
-                                <span>18-Page Practical Field Guide</span>
-                            </div>
-                            <div class="guide-strip-item">
-                                <i class="bi bi-diagram-3-fill"></i>
-                                <span>Partner Due Diligence Framework</span>
-                            </div>
-                            <div class="guide-strip-item">
-                                <i class="bi bi-graph-up-arrow"></i>
-                                <span>Real Demand Validation Methodology</span>
-                            </div>
-                        </div>
-
-                        <div class="guide-book-footer">
-                            <span class="guide-pages-count">2026 Edition • Free Access</span>
-                            <span class="guide-action-cue">
-                                <i class="bi bi-eye"></i> Click to Read
-                            </span>
-                        </div>
-                    </a>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
     {{-- ==========================================
          FEATURED CASE STUDIES (COMMERCIAL RESULTS)
          ========================================== --}}
@@ -3158,6 +3041,123 @@
                     📥 {{ __('home.download_pdf') }}
                 </a>
                 <iframe class="pdf-viewer" id="pdfViewer" src="" frameborder="0"></iframe>
+            </div>
+        </div>
+    </section>
+
+    {{-- ========================================================
+         HOMEPAGE FEATURED LEAD CTA: AFRICAN EXPANSION GUIDE
+         ======================================================== --}}
+    <section class="home-guide-cta-section content-section animate-on-scroll" id="african-expansion-guide" aria-label="African Expansion for Manufacturers">
+        <div class="home-guide-cta-container">
+            <div class="home-guide-grid">
+                
+                {{-- Left: Copy, Highlights & Actions --}}
+                <div class="home-guide-content">
+                    <span class="guide-kicker-pill">
+                        <span class="guide-pill-dot"></span>
+                        <i class="bi bi-file-earmark-pdf-fill"></i>
+                        {{ __('home.guide_cta_pill') }}
+                    </span>
+                    
+                    <h2 class="guide-heading">
+                        {{ __('home.guide_cta_title') }}
+                    </h2>
+                    
+                    <p class="guide-lead-text">
+                        {{ __('home.guide_cta_subtitle') }}
+                    </p>
+
+                    <div class="guide-takeaways-list">
+                        <div class="guide-takeaway-item">
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>{{ __('home.guide_cta_bullet1') }}</span>
+                        </div>
+                        <div class="guide-takeaway-item">
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>{{ __('home.guide_cta_bullet2') }}</span>
+                        </div>
+                        <div class="guide-takeaway-item">
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>{{ __('home.guide_cta_bullet3') }}</span>
+                        </div>
+                    </div>
+
+                    <div class="guide-actions-group">
+                        <a href="{{ asset('documents/African.pdf') }}" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="guide-btn-primary" 
+                           id="home-guide-download-btn"
+                           title="African Expansion for Manufacturers">
+                            <i class="bi bi-cloud-arrow-down-fill"></i>
+                            <span>{{ __('home.guide_cta_download') }}</span>
+                        </a>
+
+                        <a href="{{ asset('documents/African.pdf') }}" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="guide-btn-secondary" 
+                           id="home-guide-preview-btn"
+                           title="Preview African Expansion for Manufacturers">
+                            <i class="bi bi-eye-fill"></i>
+                            <span>{{ __('home.guide_cta_preview') }}</span>
+                        </a>
+                    </div>
+
+                    <div class="guide-meta-footnote">
+                        <i class="bi bi-shield-check"></i>
+                        <span>{{ __('home.guide_cta_meta') }}</span>
+                    </div>
+                </div>
+
+                {{-- Right: Interactive Editorial 3D Guide Mockup --}}
+                <div class="home-guide-visual">
+                    <a href="{{ asset('documents/African.pdf') }}" 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       class="guide-book-mockup" 
+                       aria-label="African Expansion for Manufacturers"
+                       title="African Expansion for Manufacturers">
+                        <span class="guide-book-badge">FREE PDF</span>
+                        
+                        <div class="guide-book-header">
+                            <div class="guide-book-brand">
+                                <i class="bi bi-compass-fill"></i>
+                                <span>P23 Africa Playbook</span>
+                            </div>
+                            <h3 class="guide-book-title">
+                                African Expansion for Manufacturers
+                            </h3>
+                            <p class="guide-book-sub">
+                                A Practical Field Guide to Market Entry, Distributor Network & Commercial Success
+                            </p>
+                        </div>
+
+                        <div class="guide-book-preview-strip">
+                            <div class="guide-strip-item">
+                                <i class="bi bi-file-text-fill"></i>
+                                <span>18-Page Practical Field Guide</span>
+                            </div>
+                            <div class="guide-strip-item">
+                                <i class="bi bi-diagram-3-fill"></i>
+                                <span>Partner Due Diligence Framework</span>
+                            </div>
+                            <div class="guide-strip-item">
+                                <i class="bi bi-graph-up-arrow"></i>
+                                <span>Real Demand Validation Methodology</span>
+                            </div>
+                        </div>
+
+                        <div class="guide-book-footer">
+                            <span class="guide-pages-count">2026 Edition • Free Access</span>
+                            <span class="guide-action-cue">
+                                <i class="bi bi-eye"></i> Click to Read
+                            </span>
+                        </div>
+                    </a>
+                </div>
+
             </div>
         </div>
     </section>
