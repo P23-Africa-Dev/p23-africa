@@ -32,11 +32,10 @@
             <div class="footer3-col">
                 <h3 class="footer3-heading">{{ __('footer.what_we_do') }}</h3>
                 <ul class="footer3-nav-list">
-                    <li><a href="{{ locale_route('services.market-entry') }}" class="footer3-nav-link">{{ __('footer.market_entry_expansion') }}</a></li>
-                    <li><a href="{{ locale_url('services#growth-plan') }}" class="footer3-nav-link">{{ __('footer.verify_distributors') }}</a></li>
-                    <li><a href="{{ locale_url('services#growth-plan') }}" class="footer3-nav-link">{{ __('footer.sales_demand_testing') }}</a></li>
-                    <li><a href="{{ locale_url('services#growth-plan') }}" class="footer3-nav-link">{{ __('footer.sales_market_support') }}</a></li>
-                    <li><a href="{{ locale_url('services#growth-plan') }}" class="footer3-nav-link">{{ __('footer.investment_readiness') }}</a></li>
+                    <li><a href="{{ route('services.market-demand-testing') }}" class="footer3-nav-link">Market Demand Testing</a></li>
+                    <li><a href="{{ route('services.outbound-demand-testing') }}" class="footer3-nav-link">Outbound Demand Testing</a></li>
+                    <li><a href="{{ route('services.distributor-partner') }}" class="footer3-nav-link">Distributor Verification</a></li>
+                    <li><a href="{{ url('services') }}" class="footer3-nav-link">Commercial Services</a></li>
                 </ul>
             </div>
 

@@ -129,4 +129,18 @@ return [
     'metric_validation' => 'Partner Validation',
     'metric_derisked' => 'De-risked',
     'metric_execution' => 'Market Execution',
+
+    'guide_cta_pill' => 'NEW FIELD REPORT & GUIDE',
+    'guide_cta_title' => 'African Expansion for Manufacturers',
+    'guide_cta_subtitle' => 'A practical, field-tested guide on navigating market entry, distributor due diligence, demand validation, and commercial sales operations across African markets.',
+    'guide_cta_bullet1' => 'Distributor Due Diligence & Route-to-Market',
+    'guide_cta_bullet2' => 'Demand Testing Before Capital Allocation',
+    'guide_cta_bullet3' => 'Local Commercial Operations Framework',
+    'guide_cta_download' => 'African Expansion for Manufacturers',
+    'guide_cta_preview' => 'Preview Online',
+    'guide_cta_meta' => 'Instant PDF Download • 18-Page Field Guide • Free Access',
 ];
+
+
+
+

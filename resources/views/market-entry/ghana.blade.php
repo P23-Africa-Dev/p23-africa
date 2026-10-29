@@ -22,7 +22,7 @@
                 <li class="separator">/</li>
                 <li><a href="{{ locale_route('services') }}">{{ __('nav.services') }}</a></li>
                 <li class="separator">/</li>
-                <li><a href="{{ locale_route('services.market-entry') }}">{{ __('services.market_entry') }}</a></li>
+                <li><a href="{{ route('services.market-demand-testing') }}">Market Demand Testing</a></li>
                 <li class="separator">/</li>
                 <li class="current">{{ __('market_country.gh.crumb') }}</li>
             </ul>
@@ -347,8 +347,8 @@
                             <a href="{{ locale_route('contact') }}" class="p23-btn-brand">
                                 {{ __('market_country.gh.talk') }} <i class="fas fa-calendar-check ms-1"></i>
                             </a>
-                            <a href="{{ locale_route('services.market-entry') }}" class="p23-btn-outline-light">
-                                {{ __('market_country.gh.explore') }} <i class="fas fa-arrow-left ms-1"></i>
+                            <a href="{{ route('services.market-demand-testing') }}" class="p23-btn-outline-light">
+                                Explore Market Demand Testing <i class="fas fa-arrow-left ms-1"></i>
                             </a>
                         </div>
                     </div>

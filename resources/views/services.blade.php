@@ -96,37 +96,29 @@
     </section>
 
     {{-- ==========================================
-         SECTION 1 BOTTOM: PARTNER LOGOS MARQUEE (RIGHT TO LEFT LOOP)
+         SECTION 1 BOTTOM: PARTNER LOGOS (STATIC ROW OF 5 LOGOS)
          ========================================== --}}
     @php
         $partnerLogos = [
             [
-                'name' => 'CoolAir Systems',
+                'name' => 'CoolAir',
                 'src' => asset('images/partner-logos/coolair-systems.png'),
             ],
             [
-                'name' => 'PackLine Machinery',
+                'name' => 'PackLine',
                 'src' => asset('images/partner-logos/packline-machinery.png'),
             ],
             [
-                'name' => 'CompactPower Equipment',
+                'name' => 'CompactPower',
                 'src' => asset('images/partner-logos/compactpower-equipment.png'),
             ],
             [
-                'name' => 'Liftmasters International',
+                'name' => 'Liftmasters',
                 'src' => asset('images/partner-logos/liftmasters-international.png'),
             ],
             [
-                'name' => 'Agrimech International',
-                'src' => asset('images/partner-logos/agrimech-international.png'),
-            ],
-            [
-                'name' => 'Cloudworks Analytics',
+                'name' => 'Cloudworks',
                 'src' => asset('images/partner-logos/cloudworks-analytics.png'),
-            ],
-            [
-                'name' => 'Finedge Software',
-                'src' => asset('images/partner-logos/finedge-software.png'),
             ],
         ];
     @endphp
@@ -134,40 +126,14 @@
     <section class="partner-logos-section" id="trusted-partners" aria-label="{{ __('services.trusted_label') }}">
         <div class="partner-logos-container">
             <p class="partner-logos-title">{{ __('services.trusted') }}</p>
-        </div>
 
-        <div class="partner-marquee-wrapper">
-            <div class="partner-marquee-track">
-                {{-- Group 1 --}}
-                <div class="partner-marquee-group">
-                    @foreach ($partnerLogos as $logo)
-                        <div class="partner-logo-item" title="{{ $logo['name'] }}">
-                            <img src="{{ $logo['src'] }}" alt="{{ $logo['name'] }}" loading="lazy">
-                            <span class="partner-logo-name">{{ $logo['name'] }}</span>
-                        </div>
-                    @endforeach
-                    @foreach ($partnerLogos as $logo)
-                        <div class="partner-logo-item" title="{{ $logo['name'] }}">
-                            <img src="{{ $logo['src'] }}" alt="{{ $logo['name'] }}" loading="lazy">
-                            <span class="partner-logo-name">{{ $logo['name'] }}</span>
-                        </div>
-                    @endforeach
-                </div>
-                {{-- Group 2 (Duplicate for seamless continuous loop) --}}
-                <div class="partner-marquee-group" aria-hidden="true">
-                    @foreach ($partnerLogos as $logo)
-                        <div class="partner-logo-item" title="{{ $logo['name'] }}">
-                            <img src="{{ $logo['src'] }}" alt="{{ $logo['name'] }}" loading="lazy">
-                            <span class="partner-logo-name">{{ $logo['name'] }}</span>
-                        </div>
-                    @endforeach
-                    @foreach ($partnerLogos as $logo)
-                        <div class="partner-logo-item" title="{{ $logo['name'] }}">
-                            <img src="{{ $logo['src'] }}" alt="{{ $logo['name'] }}" loading="lazy">
-                            <span class="partner-logo-name">{{ $logo['name'] }}</span>
-                        </div>
-                    @endforeach
-                </div>
+            <div class="partner-logos-grid">
+                @foreach ($partnerLogos as $logo)
+                    <div class="partner-logo-item" title="{{ $logo['name'] }}">
+                        <img src="{{ $logo['src'] }}" alt="{{ $logo['name'] }}" loading="lazy">
+                        <span class="partner-logo-name">{{ $logo['name'] }}</span>
+                    </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -193,8 +159,8 @@
                             <p class="plan-card-desc">
                                 {{ __('services.entry_body') }}
                             </p>
-                            <a href="{{ locale_route('services.market-entry') }}" class="plan-explore-btn" aria-label="{{ __('services.explore_entry') }}">
-                                {{ __('services.explore') }} <span class="btn-arrow">→</span>
+                            <a href="{{ route('services.market-demand-testing') }}" class="plan-explore-btn" aria-label="Explore Market Demand Testing">
+                                Explore <span class="btn-arrow">→</span>
                             </a>
                         </div>
                         <div class="plan-card-illustration">
@@ -249,8 +215,8 @@
                         <p class="plan-card-desc">
                             {{ __('services.outbound_body') }}
                         </p>
-                        <a href="{{ locale_route('services.outbound-sales') }}" class="plan-explore-btn" aria-label="{{ __('services.explore_outbound') }}">
-                            {{ __('services.explore') }} <span class="btn-arrow">→</span>
+                        <a href="{{ route('services.outbound-demand-testing') }}" class="plan-explore-btn" aria-label="Explore Outbound Demand Testing">
+                            Explore <span class="btn-arrow">→</span>
                         </a>
                     </div>
                 </div>

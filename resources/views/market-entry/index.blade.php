@@ -1,17 +1,62 @@
 @extends('layouts.master')
-@section('title', 'Market Entry & Expansion across Nigeria, Ghana, Kenya & South Africa | P23 Africa')
+@section('title', 'Market Demand Testing for Africa')
 @section('body_class', 'p23-black-navbar-page')
 
 @section('meta')
     <meta name="description"
-        content="Enter Africa with confidence. Build with local knowledge. P23 Africa helps businesses test demand, vet distributors, and execute commercial expansion across Nigeria, Ghana, Kenya, and South Africa.">
+        content="Test real market demand and validate commercial routes across Nigeria, Ghana, Kenya, and South Africa before committing capital.">
     <meta name="keywords"
-        content="Market entry Africa, expand business to Nigeria, expand to Ghana, African business expansion, distributor due diligence Africa, demand validation Africa">
-    <meta property="og:title" content="Market Entry & Expansion | P23 Africa">
-    <meta property="og:description" content="Move from market opportunity to practical execution across Nigeria, Ghana, Kenya, and South Africa.">
+        content="Market demand testing Africa, market entry Africa, expand business to Nigeria, expand to Ghana, African business expansion, distributor due diligence Africa, demand validation Africa">
+    <meta property="og:title" content="Market Demand Testing for Africa">
+    <meta property="og:description" content="Test real market demand and validate commercial routes across Nigeria, Ghana, Kenya, and South Africa before committing capital.">
     <meta property="og:image" content="{{ asset('images/market-entry/hero-office-woman.png') }}">
+    <link rel="canonical" href="{{ url('services/market-demand-testing') }}">
     <link rel="stylesheet" href="{{ asset('css/market-entry-new.css') }}">
     <link rel="stylesheet" href="{{ asset('css/services-new.css') }}">
+
+    <script type="application/ld+json">
+    {!! json_encode([
+      '@context' => 'https://schema.org',
+      '@graph' => [
+        [
+          '@type' => 'Service',
+          'name' => 'Market Demand Testing for Africa',
+          'serviceType' => 'Market Entry & Commercial Validation',
+          'provider' => [
+            '@type' => 'Organization',
+            'name' => 'P23 Africa',
+            'url' => 'https://p23africa.com'
+          ],
+          'url' => url('services/market-demand-testing'),
+          'description' => 'Test real market demand and validate commercial routes across Nigeria, Ghana, Kenya, and South Africa before committing capital.',
+          'areaServed' => ['Nigeria', 'Ghana', 'Kenya', 'South Africa']
+        ],
+        [
+          '@type' => 'BreadcrumbList',
+          'itemListElement' => [
+            [
+              '@type' => 'ListItem',
+              'position' => 1,
+              'name' => 'Home',
+              'item' => url('/')
+            ],
+            [
+              '@type' => 'ListItem',
+              'position' => 2,
+              'name' => 'Services',
+              'item' => url('services')
+            ],
+            [
+              '@type' => 'ListItem',
+              'position' => 3,
+              'name' => 'Market Demand Testing',
+              'item' => url('services/market-demand-testing')
+            ]
+          ]
+        ]
+      ]
+    ], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+    </script>
 @endsection
 
 @section('navbar')
