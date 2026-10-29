@@ -27,8 +27,28 @@ function ensureDependencies() {
     }
 }
 
+function useSupportedNodeRuntime() {
+    const indexPath = path.join(__dirname, 'node_modules', 'vercel-php', 'dist', 'index.js');
+    const source = fs.readFileSync(indexPath, 'utf8');
+    const needle = 'const nodeVersion = await (0, build_utils_1.getNodeVersion)(workPath);';
+    const replacement = "const nodeVersion = { runtime: 'nodejs22.x' };";
+
+    if (source.includes(replacement)) {
+        return;
+    }
+
+    if (!source.includes(needle)) {
+        throw new Error('vercel-php did not contain the expected Node.js version lookup');
+    }
+
+    fs.writeFileSync(indexPath, source.replace(needle, replacement));
+}
+
 function loadPhp() {
     ensureDependencies();
+    // The PHP builder's Node helper only accepts Node 20 and older.
+    // This project uses Node 24, so the function is pinned to Node 22.
+    useSupportedNodeRuntime();
 
     return require('vercel-php');
 }
