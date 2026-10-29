@@ -1344,16 +1344,16 @@
         transition: color 0.3s ease;
     }
     /* ==========================================
-       PARTNER LOGOS MARQUEE SECTION
+       PARTNER LOGOS SECTION (STATIC ROW, NO BORDER)
        ========================================== */
     .partner-logos-section {
         position: relative;
         width: 100%;
         margin: 0;
-        padding: 16px 0 14px 0;
-        background: #fafcfb;
-        border-top: 1px solid rgba(13, 64, 54, 0.07);
-        border-bottom: 1px solid rgba(13, 64, 54, 0.07);
+        padding: 20px 0 16px 0;
+        background: transparent;
+        border-top: none;
+        border-bottom: none;
         overflow: hidden;
     }
 
@@ -1373,36 +1373,28 @@
         text-align: center;
         text-transform: none;
         color: rgba(5, 0, 56, 0.55);
-        margin: 0 0 10px 0;
+        margin: 0 0 14px 0;
+    }
+
+    .partner-logos-grid,
+    .partner-marquee-track,
+    .partner-marquee-group {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: clamp(24px, 4vw, 56px);
+        flex-wrap: wrap;
+        width: 100%;
+        animation: none !important;
     }
 
     .partner-marquee-wrapper {
         position: relative;
         width: 100%;
         overflow: hidden;
-        mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-        -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+        mask-image: none !important;
+        -webkit-mask-image: none !important;
         padding: 2px 0 4px 0;
-    }
-
-    .partner-marquee-track {
-        display: flex;
-        align-items: center;
-        width: max-content;
-        animation: partnerMarqueeScroll 38s linear infinite;
-        will-change: transform;
-    }
-
-    .partner-marquee-wrapper:hover .partner-marquee-track {
-        animation-play-state: paused;
-    }
-
-    .partner-marquee-group {
-        display: flex;
-        align-items: center;
-        gap: clamp(28px, 3.5vw, 48px);
-        padding-right: clamp(28px, 3.5vw, 48px);
-        flex-shrink: 0;
     }
 
     .partner-logo-item {
@@ -1410,11 +1402,11 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        min-width: 110px;
+        min-width: 100px;
         padding: 0 6px;
-        gap: 5px;
+        gap: 6px;
         transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
-        opacity: 0.92;
+        opacity: 0.9;
     }
 
     .partner-logo-item:hover {
@@ -1423,8 +1415,8 @@
     }
 
     .partner-logo-item img {
-        height: 30px;
-        max-height: 30px;
+        height: 32px;
+        max-height: 32px;
         max-width: 85px;
         width: auto;
         object-fit: contain;
@@ -1440,7 +1432,7 @@
 
     .partner-logo-name {
         font-family: "Montserrat", "GT Walsheim ProCB", sans-serif;
-        font-size: clamp(10.5px, 0.82vw, 11.5px);
+        font-size: clamp(11px, 0.85vw, 12px);
         font-weight: 600;
         line-height: 1.2;
         letter-spacing: -0.01em;
@@ -1454,36 +1446,23 @@
         color: #000000;
     }
 
-    @keyframes partnerMarqueeScroll {
-        0% {
-            transform: translateX(0);
-        }
-        100% {
-            transform: translateX(-50%);
-        }
-    }
-
     @media (max-width: 768px) {
         .partner-logos-section {
             margin: 0;
-            padding: 12px 0 10px 0;
+            padding: 14px 0 12px 0;
+            border-top: none;
+            border-bottom: none;
         }
         .partner-logos-title {
             font-size: 11px;
-            margin: 0 0 6px 0;
+            margin: 0 0 10px 0;
         }
-        .partner-marquee-wrapper {
-            padding: 2px 0;
-        }
-        .partner-marquee-track {
-            animation-duration: 25s;
-        }
+        .partner-logos-grid,
         .partner-marquee-group {
-            gap: 22px;
-            padding-right: 22px;
+            gap: 18px 24px;
         }
         .partner-logo-item {
-            min-width: 90px;
+            min-width: 85px;
             padding: 0 4px;
             gap: 4px;
         }
@@ -2365,37 +2344,29 @@
     </header>
 
     {{-- ==========================================
-         PARTNER LOGOS MARQUEE (RIGHT TO LEFT LOOP)
+         PARTNER LOGOS (STATIC ROW OF 5 LOGOS)
          ========================================== --}}
     @php
         $partnerLogos = [
             [
-                'name' => 'CoolAir Systems',
+                'name' => 'CoolAir',
                 'src' => asset('images/partner-logos/coolair-systems.png'),
             ],
             [
-                'name' => 'PackLine Machinery',
+                'name' => 'PackLine',
                 'src' => asset('images/partner-logos/packline-machinery.png'),
             ],
             [
-                'name' => 'CompactPower Equipment',
+                'name' => 'CompactPower',
                 'src' => asset('images/partner-logos/compactpower-equipment.png'),
             ],
             [
-                'name' => 'Liftmasters International',
+                'name' => 'Liftmasters',
                 'src' => asset('images/partner-logos/liftmasters-international.png'),
             ],
             [
-                'name' => 'Agrimech International',
-                'src' => asset('images/partner-logos/agrimech-international.png'),
-            ],
-            [
-                'name' => 'Cloudworks Analytics',
+                'name' => 'Cloudworks',
                 'src' => asset('images/partner-logos/cloudworks-analytics.png'),
-            ],
-            [
-                'name' => 'Finedge Software',
-                'src' => asset('images/partner-logos/finedge-software.png'),
             ],
         ];
     @endphp
@@ -2403,40 +2374,14 @@
     <section class="partner-logos-section" id="trusted-partners" aria-label="Trusted by leading organizations">
         <div class="partner-logos-container">
             <p class="partner-logos-title">{{ __('home.trusted') }}</p>
-        </div>
 
-        <div class="partner-marquee-wrapper">
-            <div class="partner-marquee-track">
-                {{-- Group 1 --}}
-                <div class="partner-marquee-group">
-                    @foreach ($partnerLogos as $logo)
-                        <div class="partner-logo-item" title="{{ $logo['name'] }}">
-                            <img src="{{ $logo['src'] }}" alt="{{ $logo['name'] }}" loading="lazy">
-                            <span class="partner-logo-name">{{ $logo['name'] }}</span>
-                        </div>
-                    @endforeach
-                    @foreach ($partnerLogos as $logo)
-                        <div class="partner-logo-item" title="{{ $logo['name'] }}">
-                            <img src="{{ $logo['src'] }}" alt="{{ $logo['name'] }}" loading="lazy">
-                            <span class="partner-logo-name">{{ $logo['name'] }}</span>
-                        </div>
-                    @endforeach
-                </div>
-                {{-- Group 2 (Duplicate for seamless continuous loop) --}}
-                <div class="partner-marquee-group" aria-hidden="true">
-                    @foreach ($partnerLogos as $logo)
-                        <div class="partner-logo-item" title="{{ $logo['name'] }}">
-                            <img src="{{ $logo['src'] }}" alt="{{ $logo['name'] }}" loading="lazy">
-                            <span class="partner-logo-name">{{ $logo['name'] }}</span>
-                        </div>
-                    @endforeach
-                    @foreach ($partnerLogos as $logo)
-                        <div class="partner-logo-item" title="{{ $logo['name'] }}">
-                            <img src="{{ $logo['src'] }}" alt="{{ $logo['name'] }}" loading="lazy">
-                            <span class="partner-logo-name">{{ $logo['name'] }}</span>
-                        </div>
-                    @endforeach
-                </div>
+            <div class="partner-logos-grid">
+                @foreach ($partnerLogos as $logo)
+                    <div class="partner-logo-item" title="{{ $logo['name'] }}">
+                        <img src="{{ $logo['src'] }}" alt="{{ $logo['name'] }}" loading="lazy">
+                        <span class="partner-logo-name">{{ $logo['name'] }}</span>
+                    </div>
+                @endforeach
             </div>
         </div>
     </section>
