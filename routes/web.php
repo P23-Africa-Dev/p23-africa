@@ -212,6 +212,9 @@ Route::get('/brn-form', function () {
     return redirect('/noel54/interest-form');
 });
 
+Route::get("/en", fn () => redirect("/", 301));
+Route::get("/en/{path}", fn (string $path) => redirect("/".$path, 301))->where("path", ".*");
+
 Route::get('/sitemap.xml', \App\Http\Controllers\SitemapController::class)->name('sitemap');
 
 $registerPublicRoutes = require __DIR__ . "/public.php";
@@ -755,6 +758,14 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
 
 Broadcast::routes(['middleware' => ['auth', 'check.suspended', 'role:admin|supervisor|staff']]);
 
+
+Route::get('/admin/site-errors', [\App\Http\Controllers\Admin\SiteErrorController::class, 'index'])
+    ->middleware(['auth', 'check.suspended', 'role:admin'])
+    ->name('admin.site-errors.index');
+
+Route::get('/admin/site-errors/{siteError}', [\App\Http\Controllers\Admin\SiteErrorController::class, 'show'])
+    ->middleware(['auth', 'check.suspended', 'role:admin'])
+    ->name('admin.site-errors.show');
 
 Route::get('/admin/activity-logs', [\App\Http\Controllers\Admin\ActivityLogController::class, 'index'])
     ->middleware(['auth', 'role:admin'])
