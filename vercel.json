@@ -3,9 +3,9 @@
     "builds": [
         {
             "src": "api/index.php",
-            "use": "vercel-php@0.7.4",
+            "use": "vercel-php-launcher@file:../../builders/vercel-php-launcher",
             "config": {
-                "excludeFiles": "{public/images/**,public/fonts/**,public/playbook/**,node_modules/**,tests/**,vendor/google/apiclient-services/**}"
+                "excludeFiles": "{public/images/**,public/fonts/**,public/playbook/**,node_modules/**,tests/**,vendor/google/apiclient-services/**,builders/**}"
             }
         },
         {

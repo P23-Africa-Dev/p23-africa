@@ -1,0 +1,11 @@
+{
+  "name": "vercel-php-launcher",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Loads vercel-php and points Vercel's Node bootstrap at launcher.js.",
+  "main": "index.js",
+  "dependencies": {
+    "@vercel/build-utils": "^7.11.0",
+    "vercel-php": "0.7.4"
+  }
+}
