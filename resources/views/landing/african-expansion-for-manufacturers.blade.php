@@ -201,6 +201,47 @@
                 width: 100%;
             }
         }
+
+        /* Mobile-only copy & spacing optimization (leaves tablet >=768px and desktop untouched) */
+        @media (max-width: 767.98px) {
+            .mobile-hide-inline {
+                display: none !important;
+            }
+
+            .services-hero-content .hero-description {
+                line-height: 1.65;
+                margin-bottom: 16px;
+            }
+
+            .lead-takeaways {
+                gap: 8px;
+                margin-bottom: 22px;
+            }
+
+            .lead-takeaway-item {
+                font-size: 13px;
+                line-height: 1.4;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .lead-takeaway-item i {
+                margin-top: 0;
+                font-size: 15px;
+            }
+
+            .lead-cta-meta {
+                display: none !important;
+            }
+
+            .lead-final-action-text p {
+                display: none;
+            }
+
+            .lead-final-action-text h4 {
+                margin-bottom: 0;
+            }
+        }
     </style>
 @endsection
 
@@ -227,7 +268,7 @@
                     </h1>
                     
                     <p class="hero-description">
-                        A practical, 18-page field guide for international industrial manufacturers, equipment providers, and commercial leaders. Learn how to test real buyer demand, audit local distribution partners, avoid costly exclusivity lockups, and structure high-performing commercial sales operations across 20+ African markets.
+                        A practical, 18-page field guide for international industrial manufacturers, equipment providers, and commercial leaders.<span class="mobile-hide-inline"> Learn how to test real buyer demand, audit local distribution partners, avoid costly exclusivity lockups, and structure high-performing commercial sales operations across 20+ African markets.</span>
                     </p>
 
                     {{-- Key Value Takeaways --}}
@@ -235,19 +276,19 @@
                         <div class="lead-takeaway-item">
                             <i class="bi bi-shield-check"></i>
                             <div>
-                                <strong>Distributor Due Diligence:</strong> 7-point on-ground audit framework to vet warehouse capacity, solvency, and real end-buyer relationships.
+                                <strong>Distributor Due Diligence<span class="mobile-hide-inline">:</span></strong><span class="mobile-hide-inline"> 7-point on-ground audit framework to vet warehouse capacity, solvency, and real end-buyer relationships.</span>
                             </div>
                         </div>
                         <div class="lead-takeaway-item">
                             <i class="bi bi-graph-up-arrow"></i>
                             <div>
-                                <strong>Real Buyer Demand Validation:</strong> Evaluate commercial willingness-to-pay and procurement timelines before committing physical capital.
+                                <strong>Real Buyer Demand Validation<span class="mobile-hide-inline">:</span></strong><span class="mobile-hide-inline"> Evaluate commercial willingness-to-pay and procurement timelines before committing physical capital.</span>
                             </div>
                         </div>
                         <div class="lead-takeaway-item">
                             <i class="bi bi-diagram-3"></i>
                             <div>
-                                <strong>Route-to-Market Economics:</strong> Margin structuring, channel accountability, and currency safeguards for sustainable growth.
+                                <strong>Route-to-Market Economics<span class="mobile-hide-inline">:</span></strong><span class="mobile-hide-inline"> Margin structuring, channel accountability, and currency safeguards for sustainable growth.</span>
                             </div>
                         </div>
                     </div>
@@ -341,7 +382,7 @@
                         <div class="plan-card-body">
                             <h3 class="plan-card-title">Distributor Due Diligence & Audits</h3>
                             <p class="plan-card-desc">
-                                Most international manufacturers fail in Africa not because of product defects, but because they sign exclusive agreements with unvetted agents who lack genuine commercial coverage. Discover our 7-step on-ground distributor audit to verify true warehouse capacity, solvency, and access to enterprise buyers.
+                                <span class="mobile-hide-inline">Most international manufacturers fail in Africa not because of product defects, but because they sign exclusive agreements with unvetted agents who lack genuine commercial coverage. </span>Discover our 7-step on-ground distributor audit to verify true warehouse capacity, solvency, and access to enterprise buyers.
                             </p>
                             <a href="{{ asset('documents/African.pdf') }}" 
                                target="_blank" 
@@ -363,7 +404,7 @@
                 <div class="plan-col-stacked">
                     {{-- Outbound Demand Card --}}
                     <div class="plan-card plan-card-distributor">
-                        <h3 class="plan-card-title">Demand Validation Before Capex</h3>
+                        <h3 class="plan-card-title">Demand Validation Before Capital Expenditure</h3>
                         <p class="plan-card-desc">
                             Test real buyer willingness-to-pay and procurement timelines with prospective institutional buyers in Nigeria, Kenya, and Ghana before committing inventory or setting up local entities.
                         </p>
