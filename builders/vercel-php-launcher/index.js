@@ -80,7 +80,7 @@ exports.build = async function build(options) {
     // vercel-php still reports the AWS name launcher.launcher, which does not exist.
     lambda.handler = 'launcher.js';
     lambda.launcherType = 'Nodejs';
-    lambda.awsLambdaHandler = 'launcher.launcher';
+    delete lambda.awsLambdaHandler;
     lambda.supportsResponseStreaming = false;
 
     return result;
