@@ -3,12 +3,12 @@
 
 @section('meta')
     <meta name="description"
-        content="Join an exclusive referral network designed for industry leaders who value trusted relationships and measurable growth.">
+        content="{{ __('brn.meta') }}">
     <meta name="keywords"
-        content="Join an exclusive referral network designed for industry leaders who value trusted relationships and measurable growth.">
+        content="{{ __('brn.meta') }}">
     <meta name="author" content="Nurudeen O. Daniju">
     <meta name="generator"
-        content="Join an exclusive referral network designed for industry leaders who value trusted relationships and measurable growth | P23 Africa">
+        content="{{ __('brn.meta_generator') }}">
     <meta property="og:image" content="{{ asset('images/brn-meta.png') }}">
 @endsection
 
@@ -22,16 +22,15 @@
                     <div class="col-12 col-lg-6 order-lg-2 mb-md-0 mb-5">
                         <div class="intro-content text-left mx-md-5">
                             <h1>
-                                Where Top CEOs <br />
-                                <span class="d-block">Connect and Grow</span>
+                                {{ __('brn.where') }} <br />
+                                <span class="d-block">{{ __('brn.connect_grow') }}</span>
                             </h1>
 
                             <p>
-                                A private, trusted platform for vetted CEOs across Africa to exchange referrals, strategic
-                                deals, and build partnerships through direct 1:1 connections.
+                                {{ __('brn.intro') }}
                             </p>
-                            <a href="{{ route('brn-form') }}" class="register-button">
-                                Register Now!
+                            <a href="{{ locale_route('brn-form') }}" class="register-button">
+                                {{ __('brn.register') }}
                                 <i class="fa fa-arrow-right"></i>
                             </a>
                         </div>
@@ -82,8 +81,8 @@
             <div class="top-right-bg"><img src="{{ asset('images/work-top.png') }}" loading="lazy" alt="" /></div>
             <div class="container">
                 <div class="section-header">
-                    <h4>How We Operate</h4>
-                    <h2>Simple, Trusted & Effective</h2>
+                    <h4>{{ __('brn.how') }}</h4>
+                    <h2>{{ __('brn.simple') }}</h2>
                 </div>
                 <div class="card-wrapper">
                     <div class="operate-card card-1">
@@ -91,10 +90,9 @@
                             <img src="{{ asset('images/arrow-group.png') }}" class="image" loading="lazy" alt="Arrow">
                         </div>
                         <div class="card-content px-4">
-                            <h3>Join the Exclusive Circle</h3>
+                            <h3>{{ __('brn.circle') }}</h3>
                             <p>
-                                Apply, get approved, and start <span class="d-md-inline d-block">your 14-day free
-                                    trial.</span>
+                                {{ __('brn.trial') }}
                             </p>
                         </div>
                         <div class="pt-3">
@@ -112,18 +110,18 @@
                                 src="{{ asset('images/brn-intro-mobile.png') }}" alt="CEO Image" />
                         </div>
                         <div class="card-content my-3 px-5 px-md-4">
-                            <h3>Connect & Match</h3>
+                            <h3>{{ __('brn.connect') }}</h3>
                             <p class="">
-                                Browse the vetted directory, get matched with the right professionals, and share referrals.
+                                {{ __('brn.connect_body') }}
                             </p>
                         </div>
                     </div>
                     <div class="operate-card card-3">
                         <img class="top" src="{{ asset('images/Vector (3).png') }}" loading="lazy" alt="" />
                         <div class="card-content">
-                            <h3>Collaborate Privately</h3>
+                            <h3>{{ __('brn.collaborate') }}</h3>
                             <p>
-                                Message members directly and grow your network inside an exclusive community.
+                                {{ __('brn.collaborate_body') }}
                             </p>
                         </div>
                         <img class="bottom" src="{{ asset('images/Vector (3).png') }}" loading="lazy" alt="" />
@@ -200,15 +198,14 @@
                     <div class="row header-row px-md-0 px-5">
                         <div class="col-12 col-lg-6">
                             <div class="title-group text-left text-lg-start">
-                                <h2>Testimonials.</h2>
-                                <h2>Member Spotlight.</h2>
+                                <h2>{{ __('brn.testimonials') }}</h2>
+                                <h2>{{ __('brn.spotlight') }}</h2>
                             </div>
                         </div>
                         <div class="col-12 col-lg-6 mt-3 mt-lg-4">
                             <div class="description text-left d-flex justify-content-end">
                                 <p>
-                                    Real success stories from CEOs who’ve grown through the power of referral-based
-                                    networking.
+                                    {{ __('brn.stories') }}
                                 </p>
                             </div>
                         </div>
@@ -222,10 +219,9 @@
                                 <p class="company-name">Kenya</p>
 
                                 <div>
-                                    <h4 class="ceo-name">Linda Mwangi, Managing Partner.</h4>
+                                    <h4 class="ceo-name">Linda Mwangi, {{ __('brn.role_partner') }}</h4>
                                     <p class="testimonial-text">
-                                        This community has opened doors I’d struggled to unlock for years. The calibre of
-                                        professionals here means every referral actually converts into real business.
+                                        {{ __('brn.quote_linda') }}
                                     </p>
                                 </div>
                             </div>
@@ -238,10 +234,9 @@
                                 <p class="company-name">Ghana</p>
 
                                 <div>
-                                    <h4 class="ceo-name">Kofi Mensah, CEO.</h4>
+                                    <h4 class="ceo-name">Kofi Mensah, {{ __('brn.role_ceo') }}</h4>
                                     <p class="testimonial-text">
-                                        I love that I don’t waste time here. The matching tool introduced me to founders in
-                                        Ghana and beyond who genuinely want to collaborate and grow together.
+                                        {{ __('brn.quote_kofi') }}
                                     </p>
                                 </div>
                             </div>
@@ -255,10 +250,9 @@
                                 <p class="company-name">Nigeria</p>
 
                                 <div>
-                                    <h4 class="ceo-name">Chijioke Okeke, Founder.</h4>
+                                    <h4 class="ceo-name">Chijioke Okeke, {{ __('brn.role_founder') }}</h4>
                                     <p class="testimonial-text">
-                                        What sets this apart is the community. Everyone is qualified, serious, and open to
-                                        real opportunities, not just networking for the sake of it.
+                                        {{ __('brn.quote_chijioke') }}
                                     </p>
                                 </div>
                             </div>
@@ -272,10 +266,9 @@
                                 <p class="company-name">South Africa</p>
 
                                 <div>
-                                    <h4 class="ceo-name">Zanele Khumalo, Director.</h4>
+                                    <h4 class="ceo-name">Zanele Khumalo, {{ __('brn.role_director') }}</h4>
                                     <p class="testimonial-text">
-                                        Finally, a trusted network that filters for quality. Every introduction feels
-                                        intentional, and I’ve already seen a clear ROI through new partnerships.
+                                        {{ __('brn.quote_zanele') }}
                                     </p>
                                 </div>
                             </div>
@@ -295,14 +288,13 @@
                 <div class="row g-4 align-items-center">
                     <div class="col-12 col-lg-4">
                         <div class="events-intro text-left text-lg-start">
-                            <h2>Events & Meetups</h2>
+                            <h2>{{ __('brn.meetups') }}</h2>
                             <p>
-                                From closed-door roundtables to business retreats, every event
-                                is designed to foster genuine collaboration and opportunity.
+                                {{ __('brn.events_body') }}
                             </p>
-                            <a href="{{ route('events.all-events', ['filter' => 'brn']) }}"
+                            <a href="{{ locale_route('events.all-events', ['filter' => 'brn']) }}"
                                 class="see-all-events-button">
-                                See All Events
+                                {{ __('events.see_all') }}
                                 <i class="fa fa-arrow-right"></i>
                             </a>
                         </div>
@@ -316,18 +308,18 @@
                                         <img src="{{ asset('images/calendar-white2.png') }}" loading="lazy"
                                             alt="" />
                                         <h3><a
-                                                href="{{ route('events.show', $event->slug) }}">{{ Str::limit($event->title, 20) }}</a>
+                                                href="{{ locale_route('events.show', ['slug' => $event->slug]) }}">{{ Str::limit($event->translated('title'), 20) }}</a>
                                         </h3>
                                     </div>
                                     <div>
-                                        {!! Str::limit($event->description, 233) !!}
+                                        {!! Str::limit($event->translated('description'), 233) !!}
                                     </div>
-                                    <a href="{{ route('events.show', $event->slug) }}" class="book-seat-button actionBtn"
+                                    <a href="{{ locale_route('events.show', ['slug' => $event->slug]) }}" class="book-seat-button actionBtn"
                                         id="actionBtn" data-event-id="{{ $event->id }}"
                                         data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
                                         data-event-link="{{ $event->link }}" data-bs-toggle="modal"
                                         data-bs-target="#seatModal">
-                                        Book A Seat
+                                        {{ __('events.book_seat') }}
                                         <i class="fa fa-arrow-right"></i>
                                     </a>
                                 </div>
@@ -340,18 +332,18 @@
 
                                         <h3>
                                             <a
-                                                href="{{ route('events.show', $event->slug) }}">{{ Str::limit($event->title, 20) }}</a>
+                                                href="{{ locale_route('events.show', ['slug' => $event->slug]) }}">{{ Str::limit($event->translated('title'), 20) }}</a>
                                         </h3>
                                     </div>
                                     <div>
-                                        {!! Str::limit($event->description, 233) !!}
+                                        {!! Str::limit($event->translated('description'), 233) !!}
                                     </div>
-                                    <a href="{{ route('events.show', $event->slug) }}" class="book-seat-button actionBtn"
+                                    <a href="{{ locale_route('events.show', ['slug' => $event->slug]) }}" class="book-seat-button actionBtn"
                                         id="actionBtn" data-event-id="{{ $event->id }}"
                                         data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
                                         data-event-link="{{ $event->link }}" data-bs-toggle="modal"
                                         data-bs-target="#seatModal">
-                                        Book A Seat
+                                        {{ __('events.book_seat') }}
                                         <i class="fa fa-arrow-right"></i>
                                     </a>
                                 </div>
@@ -374,14 +366,13 @@
                         <img class="top-image" src="{{ asset('images/Vector -cta.png') }}" loading="lazy"
                             alt="" />
                         <div class="left-content text-left">
-                            <h2>Ready to Grow with Trusted Leaders?</h2>
+                            <h2>{{ __('brn.ready') }}</h2>
 
                             <p>
-                                Join a powerful ecosystem of referrals, relationships, and
-                                results.
+                                {{ __('brn.join_body') }}
                             </p>
                             <a href="#" class="button">
-                                Register Your Interest
+                                {{ __('brn.register_interest') }}
                                 <i class="fa fa-arrow-right"></i>
                             </a>
                         </div>

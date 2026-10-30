@@ -257,7 +257,7 @@
     <section class="brn-body">
         <div class="brn-main-container">
             <div class="container">
-                <form id="brnForm" action="{{ route('brn.submit') }}" method="POST" enctype="multipart/form-data"
+                <form id="brnForm" action="{{ locale_route('brn.submit') }}" method="POST" enctype="multipart/form-data"
                     novalidate>
                     @csrf
                     <div class="brn-container form-step active" id="form1">
@@ -1177,7 +1177,7 @@
 
             showEmailStatus('loading');
 
-            fetch('{{ route('brn.check-email') }}', {
+            fetch('{{ locale_route('brn.check-email') }}', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

@@ -1,18 +1,18 @@
 @extends('layouts.master')
-@section('title', 'Helping Global Businesses Enter & Grow Across Africa | P23 Africa')
+@section('title', 'Helping Global Businesses Enter & Grow Across Africa')
 @section('meta')
     <meta name="description"
         content="P23 Africa helps global businesses understand African markets, validate opportunities, acquire customers and partners, and build sustainable commercial growth.">
     <meta name="keywords"
         content="market entry Africa, African business expansion, commercial solutions Africa, business consulting Africa, distributor development Africa, outbound sales demand testing, Nigeria Ghana Kenya South Africa business expansion, P23 Africa">
     <meta name="author" content="Nurudeen O. Daniju">
-    <meta name="generator" content="P23 Africa - Helping Global Businesses Enter & Grow Across Africa">
+    <meta name="generator" content="Helping Global Businesses Enter & Grow Across Africa">
     <link rel="canonical" href="{{ url()->current() }}">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:title" content="Helping Global Businesses Enter & Grow Across Africa | P23 Africa">
+    <meta property="og:title" content="Helping Global Businesses Enter & Grow Across Africa">
     <meta property="og:description"
         content="We help you understand African markets, validate opportunities, acquire customers and partners, and establish the foundations for sustainable growth.">
     <meta property="og:image" content="https://p23africa.com/images/homepage-thumbnail-og.png">
@@ -20,10 +20,71 @@
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="{{ url()->current() }}">
-    <meta name="twitter:title" content="Helping Global Businesses Enter & Grow Across Africa | P23 Africa">
+    <meta name="twitter:title" content="Helping Global Businesses Enter & Grow Across Africa">
     <meta name="twitter:description"
         content="We help you understand African markets, validate opportunities, acquire customers and partners, and establish the foundations for sustainable growth.">
     <meta name="twitter:image" content="https://p23africa.com/images/homepage-thumbnail-og.png">
+
+    <!-- Structured Data (JSON-LD) for Google Sitelinks & Core Services -->
+    <script type="application/ld+json">
+    {!! json_encode([
+      '@context' => 'https://schema.org',
+      '@graph' => [
+        [
+          '@type' => 'WebSite',
+          '@id' => 'https://p23africa.com/#website',
+          'url' => 'https://p23africa.com',
+          'name' => 'P23 Africa',
+          'description' => 'Helping Global Businesses Enter & Grow Across Africa'
+        ],
+        [
+          '@type' => 'Organization',
+          '@id' => 'https://p23africa.com/#organization',
+          'name' => 'P23 Africa',
+          'url' => 'https://p23africa.com',
+          'logo' => 'https://p23africa.com/images/p23-logo-black.svg',
+          'hasOfferCatalog' => [
+            '@type' => 'OfferCatalog',
+            'name' => 'Core Commercial Services',
+            'itemListElement' => [
+              [
+                '@type' => 'Service',
+                'name' => 'Market Demand Testing',
+                'url' => route('services.market-demand-testing'),
+                'description' => 'Evaluate real market demand and commercial opportunity across African markets before committing capital.'
+              ],
+              [
+                '@type' => 'Service',
+                'name' => 'Outbound Demand Testing',
+                'url' => route('services.outbound-demand-testing'),
+                'description' => 'Test real buyer interest with prospective customers in Africa. Validate commercial pipeline before expanding.'
+              ]
+            ]
+          ]
+        ],
+        [
+          '@type' => 'SiteNavigationElement',
+          '@id' => 'https://p23africa.com/#navigation',
+          'name' => [
+            'Market Demand Testing',
+            'Outbound Demand Testing',
+            'Services',
+            'About Us',
+            'Resource Hub',
+            'Contact Us'
+          ],
+          'url' => [
+            route('services.market-demand-testing'),
+            route('services.outbound-demand-testing'),
+            url('services'),
+            url('about'),
+            route('resource-hub'),
+            url('contact')
+          ]
+        ]
+      ]
+    ], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+    </script>
 @endsection
 
 <style>
@@ -1283,16 +1344,16 @@
         transition: color 0.3s ease;
     }
     /* ==========================================
-       PARTNER LOGOS MARQUEE SECTION
+       PARTNER LOGOS SECTION (STATIC ROW, NO BORDER)
        ========================================== */
     .partner-logos-section {
         position: relative;
         width: 100%;
         margin: 0;
-        padding: 16px 0 14px 0;
-        background: #fafcfb;
-        border-top: 1px solid rgba(13, 64, 54, 0.07);
-        border-bottom: 1px solid rgba(13, 64, 54, 0.07);
+        padding: 20px 0 16px 0;
+        background: transparent;
+        border-top: none;
+        border-bottom: none;
         overflow: hidden;
     }
 
@@ -1312,36 +1373,28 @@
         text-align: center;
         text-transform: none;
         color: rgba(5, 0, 56, 0.55);
-        margin: 0 0 10px 0;
+        margin: 0 0 14px 0;
+    }
+
+    .partner-logos-grid,
+    .partner-marquee-track,
+    .partner-marquee-group {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: clamp(24px, 4vw, 56px);
+        flex-wrap: wrap;
+        width: 100%;
+        animation: none !important;
     }
 
     .partner-marquee-wrapper {
         position: relative;
         width: 100%;
         overflow: hidden;
-        mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-        -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+        mask-image: none !important;
+        -webkit-mask-image: none !important;
         padding: 2px 0 4px 0;
-    }
-
-    .partner-marquee-track {
-        display: flex;
-        align-items: center;
-        width: max-content;
-        animation: partnerMarqueeScroll 38s linear infinite;
-        will-change: transform;
-    }
-
-    .partner-marquee-wrapper:hover .partner-marquee-track {
-        animation-play-state: paused;
-    }
-
-    .partner-marquee-group {
-        display: flex;
-        align-items: center;
-        gap: clamp(28px, 3.5vw, 48px);
-        padding-right: clamp(28px, 3.5vw, 48px);
-        flex-shrink: 0;
     }
 
     .partner-logo-item {
@@ -1349,11 +1402,11 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        min-width: 110px;
+        min-width: 100px;
         padding: 0 6px;
-        gap: 5px;
+        gap: 6px;
         transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
-        opacity: 0.92;
+        opacity: 0.9;
     }
 
     .partner-logo-item:hover {
@@ -1362,8 +1415,8 @@
     }
 
     .partner-logo-item img {
-        height: 30px;
-        max-height: 30px;
+        height: 32px;
+        max-height: 32px;
         max-width: 85px;
         width: auto;
         object-fit: contain;
@@ -1379,50 +1432,37 @@
 
     .partner-logo-name {
         font-family: "Montserrat", "GT Walsheim ProCB", sans-serif;
-        font-size: clamp(10.5px, 0.82vw, 11.5px);
+        font-size: clamp(11px, 0.85vw, 12px);
         font-weight: 600;
         line-height: 1.2;
         letter-spacing: -0.01em;
-        color: #1a3832;
+        color: #111827;
         text-align: center;
         white-space: nowrap;
         transition: color 0.3s ease;
     }
 
     .partner-logo-item:hover .partner-logo-name {
-        color: #07483e;
-    }
-
-    @keyframes partnerMarqueeScroll {
-        0% {
-            transform: translateX(0);
-        }
-        100% {
-            transform: translateX(-50%);
-        }
+        color: #000000;
     }
 
     @media (max-width: 768px) {
         .partner-logos-section {
             margin: 0;
-            padding: 12px 0 10px 0;
+            padding: 14px 0 12px 0;
+            border-top: none;
+            border-bottom: none;
         }
         .partner-logos-title {
             font-size: 11px;
-            margin: 0 0 6px 0;
+            margin: 0 0 10px 0;
         }
-        .partner-marquee-wrapper {
-            padding: 2px 0;
-        }
-        .partner-marquee-track {
-            animation-duration: 25s;
-        }
+        .partner-logos-grid,
         .partner-marquee-group {
-            gap: 22px;
-            padding-right: 22px;
+            gap: 18px 24px;
         }
         .partner-logo-item {
-            min-width: 90px;
+            min-width: 85px;
             padding: 0 4px;
             gap: 4px;
         }
@@ -1433,6 +1473,450 @@
         }
         .partner-logo-name {
             font-size: 9.5px;
+        }
+    }
+
+    /* ========================================================
+       HOMEPAGE LEAD CTA: AFRICAN EXPANSION GUIDE
+       ======================================================== */
+    .home-guide-cta-section {
+        position: relative;
+        width: 100%;
+        margin: 0;
+        padding: clamp(54px, 6vw, 84px) 0;
+        background: linear-gradient(135deg, #022019 0%, #06392f 52%, #011612 100%);
+        border-top: 1px solid rgba(39, 230, 167, 0.22);
+        border-bottom: 1px solid rgba(39, 230, 167, 0.22);
+        color: #ffffff;
+        overflow: hidden;
+    }
+
+    .home-guide-cta-section::before {
+        content: '';
+        position: absolute;
+        top: -60px;
+        right: 5%;
+        width: 520px;
+        height: 520px;
+        background: radial-gradient(circle, rgba(39, 230, 167, 0.16) 0%, rgba(39, 230, 167, 0.03) 45%, transparent 70%);
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .home-guide-cta-section::after {
+        content: '';
+        position: absolute;
+        bottom: -80px;
+        left: -40px;
+        width: 420px;
+        height: 420px;
+        background: radial-gradient(circle, rgba(13, 64, 54, 0.45) 0%, transparent 70%);
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .home-guide-cta-container {
+        position: relative;
+        z-index: 2;
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 0 clamp(20px, 3.5vw, 36px);
+    }
+
+    .home-guide-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.95fr);
+        gap: clamp(32px, 4.5vw, 64px);
+        align-items: center;
+    }
+
+    .home-guide-content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .guide-kicker-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        font-family: "GT Walsheim ProCB", "Montserrat", sans-serif;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #27E6A7;
+        background: rgba(39, 230, 167, 0.12);
+        border: 1px solid rgba(39, 230, 167, 0.35);
+        padding: 7px 16px;
+        border-radius: 100px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 14px rgba(39, 230, 167, 0.1);
+    }
+
+    .guide-kicker-pill .guide-pill-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background-color: #27E6A7;
+        box-shadow: 0 0 10px #27E6A7;
+        animation: guidePulse 2s infinite ease-in-out;
+    }
+
+    @keyframes guidePulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.45; transform: scale(0.85); }
+    }
+
+    .guide-heading {
+        font-family: "Montserrat", sans-serif;
+        font-size: clamp(28px, 3.2vw, 42px);
+        font-weight: 700;
+        line-height: 1.22;
+        color: #ffffff;
+        margin: 0 0 16px 0;
+        letter-spacing: -0.015em;
+    }
+
+    .guide-lead-text {
+        font-family: "GT Walsheim Trial Cn Rg", sans-serif;
+        font-size: clamp(16px, 1.3vw, 18.5px);
+        line-height: 1.6;
+        color: #d2ede7;
+        margin: 0 0 24px 0;
+        max-width: 640px;
+    }
+
+    .guide-takeaways-list {
+        display: flex;
+        flex-direction: column;
+        gap: 11px;
+        margin-bottom: 28px;
+        width: 100%;
+    }
+
+    .guide-takeaway-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-family: "GT Walsheim ProCB", "Montserrat", sans-serif;
+        font-size: clamp(14px, 1.1vw, 15.5px);
+        color: #f1fbf8;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        padding: 9px 16px;
+        border-radius: 8px;
+        transition: all 0.25s ease;
+    }
+
+    .guide-takeaway-item:hover {
+        background: rgba(39, 230, 167, 0.09);
+        border-color: rgba(39, 230, 167, 0.3);
+        transform: translateX(4px);
+    }
+
+    .guide-takeaway-item i {
+        color: #27E6A7;
+        font-size: 17px;
+        flex-shrink: 0;
+    }
+
+    .guide-actions-group {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 16px;
+    }
+
+    .guide-btn-primary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        background: #27E6A7;
+        color: #03231c !important;
+        font-family: "GT Walsheim ProCB", sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+        padding: 14px 26px;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 0 10px 24px rgba(39, 230, 167, 0.28);
+        border: 1px solid #27E6A7;
+        cursor: pointer;
+    }
+
+    .guide-btn-primary:hover {
+        background: #ffffff;
+        border-color: #ffffff;
+        color: #003c32 !important;
+        transform: translateY(-2px);
+        box-shadow: 0 14px 28px rgba(39, 230, 167, 0.35);
+    }
+
+    .guide-btn-primary .guide-file-tag {
+        display: inline-block;
+        background: rgba(3, 35, 28, 0.15);
+        font-size: 11.5px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        padding: 2px 7px;
+        border-radius: 4px;
+        margin-left: 4px;
+    }
+
+    .guide-btn-primary:hover .guide-file-tag {
+        background: rgba(0, 60, 50, 0.12);
+        color: #003c32;
+    }
+
+    .guide-btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.08);
+        color: #ffffff !important;
+        font-family: "GT Walsheim ProCB", sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        padding: 14px 24px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .guide-btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.18);
+        border-color: rgba(255, 255, 255, 0.6);
+        color: #ffffff !important;
+        transform: translateY(-2px);
+    }
+
+    .guide-meta-footnote {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: "GT Walsheim Trial Cn Rg", sans-serif;
+        font-size: 13px;
+        color: rgba(208, 238, 233, 0.75);
+        letter-spacing: 0.02em;
+    }
+
+    .guide-meta-footnote i {
+        color: #27E6A7;
+        font-size: 14px;
+    }
+
+    /* Right Column: 3D Editorial Document Showcase */
+    .home-guide-visual {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        perspective: 1200px;
+    }
+
+    .guide-book-mockup {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        position: relative;
+        width: 100%;
+        max-width: 380px;
+        background: linear-gradient(145deg, #0a4d41 0%, #032e26 100%);
+        border: 1px solid rgba(39, 230, 167, 0.35);
+        border-radius: 14px;
+        padding: 30px 28px 24px;
+        box-shadow: 0 24px 50px rgba(0, 0, 0, 0.45), 0 0 40px rgba(39, 230, 167, 0.12);
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        cursor: pointer;
+        overflow: hidden;
+    }
+
+    .guide-book-mockup:hover {
+        color: inherit;
+        text-decoration: none;
+        transform: translateY(-6px) rotate(-0.5deg);
+        border-color: rgba(39, 230, 167, 0.6);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55), 0 0 50px rgba(39, 230, 167, 0.22);
+    }
+
+    .guide-book-mockup::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 14px;
+        background: linear-gradient(to right, rgba(0, 0, 0, 0.45) 0%, rgba(255, 255, 255, 0.15) 50%, rgba(0, 0, 0, 0.25) 100%);
+        border-right: 1px solid rgba(0, 0, 0, 0.35);
+    }
+
+    .guide-book-badge {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: rgba(39, 230, 167, 0.18);
+        border: 1px solid rgba(39, 230, 167, 0.4);
+        color: #27E6A7;
+        font-family: "GT Walsheim ProCB", sans-serif;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 4px 10px;
+        border-radius: 6px;
+    }
+
+    .guide-book-header {
+        padding-left: 8px;
+        margin-bottom: 22px;
+    }
+
+    .guide-book-brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: "GT Walsheim ProCB", "Montserrat", sans-serif;
+        font-size: 12px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #27E6A7;
+        margin-bottom: 12px;
+    }
+
+    .guide-book-brand i {
+        font-size: 14px;
+    }
+
+    .guide-book-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 21px;
+        font-weight: 700;
+        line-height: 1.3;
+        color: #ffffff;
+        margin: 0 0 10px 0;
+    }
+
+    .guide-book-sub {
+        font-family: "GT Walsheim Trial Cn Rg", sans-serif;
+        font-size: 13.5px;
+        line-height: 1.5;
+        color: #b5e5dc;
+        margin: 0;
+    }
+
+    .guide-book-preview-strip {
+        padding-left: 8px;
+        margin: 20px 0;
+        padding: 14px 14px 14px 20px;
+        background: rgba(0, 20, 15, 0.45);
+        border-radius: 8px;
+        border-left: 3px solid #27E6A7;
+    }
+
+    .guide-strip-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 12.5px;
+        color: #e3f5f0;
+        font-family: "GT Walsheim ProCB", sans-serif;
+        margin-bottom: 6px;
+    }
+    .guide-strip-item:last-child {
+        margin-bottom: 0;
+    }
+    .guide-strip-item i {
+        color: #27E6A7;
+        font-size: 13px;
+    }
+
+    .guide-book-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-left: 8px;
+        padding-top: 14px;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .guide-pages-count {
+        font-family: "GT Walsheim ProCB", sans-serif;
+        font-size: 12px;
+        color: #27E6A7;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+    }
+
+    .guide-action-cue {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-family: "GT Walsheim ProCB", sans-serif;
+        font-size: 12px;
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 4px 10px;
+        border-radius: 20px;
+        transition: all 0.25s ease;
+    }
+
+    .guide-book-mockup:hover .guide-action-cue {
+        background: #27E6A7;
+        color: #03231c;
+    }
+
+    @media (max-width: 991px) {
+        .home-guide-grid {
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+        .home-guide-content {
+            align-items: center;
+            text-align: center;
+        }
+        .guide-lead-text {
+            max-width: 100%;
+        }
+        .guide-takeaways-list {
+            align-items: stretch;
+            text-align: left;
+        }
+        .guide-actions-group {
+            justify-content: center;
+            width: 100%;
+        }
+        .guide-btn-primary, .guide-btn-secondary {
+            width: 100%;
+            max-width: 340px;
+        }
+        .guide-meta-footnote {
+            justify-content: center;
+        }
+        .guide-book-mockup {
+            max-width: 360px;
+        }
+    }
+
+    @media (max-width: 580px) {
+        .home-guide-cta-section {
+            padding: 42px 0;
+        }
+        .guide-takeaway-item {
+            font-size: 13.5px;
+            padding: 8px 12px;
+        }
+        .guide-btn-primary, .guide-btn-secondary {
+            font-size: 15px;
+            padding: 13px 18px;
+        }
+        .guide-book-title {
+            font-size: 18px;
         }
     }
 
@@ -1814,15 +2298,15 @@
             <section class="hero content-section animate-on-scroll">
                 <div class="row hero-sec-row">
                     <div class="col-md-7 hero-text my-auto">
-                        <h1>Enter African Markets <br> With Evidence <br><span id="fonts">Not Assumptions</span></h1>
+                        <h1>{{ __('home.hero_title_line') }} <br> {{ __('home.hero_title_evidence') }} <br><span id="fonts">{{ __('home.hero_title_not') }}</span></h1>
                         <br>
                         <p>
-                          We help international businesses validate demand, verify distribution partners and build the sales operations needed to grow in Africa.<br>From testing real buyer interest to strengthening local sales teams and channel performance, we turn market-entry plans into commercial action.
+                          {{ __('home.hero_body') }}
                         </p>
                         <br>
                         <div class="hero-cta-wrapper">
-                            <a href="{{ url('contact') }}" class="d-flex justify-content-between align-items-center">
-                                <span class="hero-btn-label">Discuss Your Market Entry</span>
+                            <a href="{{ locale_route('contact') }}" class="d-flex justify-content-between align-items-center">
+                                <span class="hero-btn-label">{{ __('home.discuss') }}</span>
                                 <span class="hero-btn-arrow" aria-hidden="true">→</span>
                             </a>
                         </div>
@@ -1860,78 +2344,44 @@
     </header>
 
     {{-- ==========================================
-         PARTNER LOGOS MARQUEE (RIGHT TO LEFT LOOP)
+         PARTNER LOGOS (STATIC ROW OF 5 LOGOS)
          ========================================== --}}
     @php
         $partnerLogos = [
             [
-                'name' => 'CoolAir Systems',
+                'name' => 'CoolAir',
                 'src' => asset('images/partner-logos/coolair-systems.png'),
             ],
             [
-                'name' => 'PackLine Machinery',
+                'name' => 'PackLine',
                 'src' => asset('images/partner-logos/packline-machinery.png'),
             ],
             [
-                'name' => 'CompactPower Equipment',
+                'name' => 'CompactPower',
                 'src' => asset('images/partner-logos/compactpower-equipment.png'),
             ],
             [
-                'name' => 'Liftmasters International',
+                'name' => 'Liftmasters',
                 'src' => asset('images/partner-logos/liftmasters-international.png'),
             ],
             [
-                'name' => 'Agrimech International',
-                'src' => asset('images/partner-logos/agrimech-international.png'),
-            ],
-            [
-                'name' => 'Cloudworks Analytics',
+                'name' => 'Cloudworks',
                 'src' => asset('images/partner-logos/cloudworks-analytics.png'),
-            ],
-            [
-                'name' => 'Finedge Software',
-                'src' => asset('images/partner-logos/finedge-software.png'),
             ],
         ];
     @endphp
 
     <section class="partner-logos-section" id="trusted-partners" aria-label="Trusted by leading organizations">
         <div class="partner-logos-container">
-            <p class="partner-logos-title">Trusted by 25k+ businesses</p>
-        </div>
+            <p class="partner-logos-title">{{ __('home.trusted') }}</p>
 
-        <div class="partner-marquee-wrapper">
-            <div class="partner-marquee-track">
-                {{-- Group 1 --}}
-                <div class="partner-marquee-group">
-                    @foreach ($partnerLogos as $logo)
-                        <div class="partner-logo-item" title="{{ $logo['name'] }}">
-                            <img src="{{ $logo['src'] }}" alt="{{ $logo['name'] }}" loading="lazy">
-                            <span class="partner-logo-name">{{ $logo['name'] }}</span>
-                        </div>
-                    @endforeach
-                    @foreach ($partnerLogos as $logo)
-                        <div class="partner-logo-item" title="{{ $logo['name'] }}">
-                            <img src="{{ $logo['src'] }}" alt="{{ $logo['name'] }}" loading="lazy">
-                            <span class="partner-logo-name">{{ $logo['name'] }}</span>
-                        </div>
-                    @endforeach
-                </div>
-                {{-- Group 2 (Duplicate for seamless continuous loop) --}}
-                <div class="partner-marquee-group" aria-hidden="true">
-                    @foreach ($partnerLogos as $logo)
-                        <div class="partner-logo-item" title="{{ $logo['name'] }}">
-                            <img src="{{ $logo['src'] }}" alt="{{ $logo['name'] }}" loading="lazy">
-                            <span class="partner-logo-name">{{ $logo['name'] }}</span>
-                        </div>
-                    @endforeach
-                    @foreach ($partnerLogos as $logo)
-                        <div class="partner-logo-item" title="{{ $logo['name'] }}">
-                            <img src="{{ $logo['src'] }}" alt="{{ $logo['name'] }}" loading="lazy">
-                            <span class="partner-logo-name">{{ $logo['name'] }}</span>
-                        </div>
-                    @endforeach
-                </div>
+            <div class="partner-logos-grid">
+                @foreach ($partnerLogos as $logo)
+                    <div class="partner-logo-item" title="{{ $logo['name'] }}">
+                        <img src="{{ $logo['src'] }}" alt="{{ $logo['name'] }}" loading="lazy">
+                        <span class="partner-logo-name">{{ $logo['name'] }}</span>
+                    </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -1944,10 +2394,10 @@
             
             {{-- Section Header --}}
             <div class="home-casestudy-header">
-                <span class="home-casestudy-kicker">CASE STUDIES</span>
-                <h2 class="home-casestudy-title">Commercial Results in Real Markets</h2>
+                <span class="home-casestudy-kicker">{{ __('home.case_kicker') }}</span>
+                <h2 class="home-casestudy-title">{{ __('home.results') }}</h2>
                 <p class="home-casestudy-subtitle">
-                    Examine how international manufacturers and platforms validate real buyer demand and execute successful market expansion across Africa.
+                    {{ __('home.case_subtitle') }}
                 </p>
             </div>
 
@@ -1963,7 +2413,7 @@
                             id="tab-industrial"
                             onclick="switchHomeCaseTab('home-pane-industrial', this)">
                         <span class="tab-dot"></span>
-                        Manufacturers
+                        {{ __('home.tab_manufacturers') }}
                     </button>
                     <button type="button" 
                             class="home-tab-btn" 
@@ -1974,7 +2424,7 @@
                             id="tab-software"
                             onclick="switchHomeCaseTab('home-pane-software', this)">
                         <span class="tab-dot"></span>
-                        Software &amp; SaaS
+                        {{ __('home.tab_saas') }}
                     </button>
                     <button type="button" 
                             class="home-tab-btn" 
@@ -1985,7 +2435,7 @@
                             id="tab-verification"
                             onclick="switchHomeCaseTab('home-pane-verification', this)">
                         <span class="tab-dot"></span>
-                        Distributor Verification
+                        {{ __('home.tab_verification') }}
                     </button>
                 </div>
             </div>
@@ -1998,45 +2448,45 @@
                     <div class="home-case-card">
                         <div class="home-case-visual">
                             <img src="{{ asset('images/case-studies/thermoflow.png') }}" 
-                                 alt="Testing Demand for an Industrial Equipment Manufacturer" 
+                                 alt="{{ __('home.case_mfg_alt') }}" 
                                  loading="lazy">
-                            <span class="home-case-badge">Manufacturers</span>
+                            <span class="home-case-badge">{{ __('home.tab_manufacturers') }}</span>
                         </div>
 
                         <div class="home-case-article">
                             <div>
                                 <div class="home-case-meta">
-                                    <span><i class="bi bi-geo-alt"></i> Nigeria (Lagos &amp; Abuja)</span>
-                                    <span><i class="bi bi-clock"></i> 10-Week Demand Testing</span>
+                                    <span><i class="bi bi-geo-alt"></i> {{ __('home.case_mfg_place') }}</span>
+                                    <span><i class="bi bi-clock"></i> {{ __('home.case_mfg_time') }}</span>
                                 </div>
 
                                 <h3 class="home-case-heading">
-                                    Testing Demand for an Industrial Equipment Manufacturer
+                                    {{ __('home.case_mfg_title') }}
                                 </h3>
 
                                 <p class="home-case-description">
-                                    Validated buyer interest, gathered market pricing insights and identified potential distribution partners in Nigeria.
+                                    {{ __('home.case_mfg_body') }}
                                 </p>
 
                                 <div class="home-case-metrics">
                                     <div class="home-metric-item">
                                         <span class="home-metric-value">312</span>
-                                        <span class="home-metric-label">Target Accounts</span>
+                                        <span class="home-metric-label">{{ __('home.metric_accounts') }}</span>
                                     </div>
                                     <div class="home-metric-item">
                                         <span class="home-metric-value">47</span>
-                                        <span class="home-metric-label">Qualified Opportunities</span>
+                                        <span class="home-metric-label">{{ __('home.metric_opportunities') }}</span>
                                     </div>
                                     <div class="home-metric-item">
-                                        <span class="home-metric-value">Verified</span>
-                                        <span class="home-metric-label">Distribution Route</span>
+                                        <span class="home-metric-value">{{ __('home.metric_verified') }}</span>
+                                        <span class="home-metric-label">{{ __('home.metric_route') }}</span>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="home-case-footer">
-                                <a href="{{ url('case-studies/thermoflow-hvac') }}" class="home-case-link" id="btn-read-case-industrial">
-                                    Read the case study <span class="arrow">→</span>
+                                <a href="{{ locale_route('case-studies.show', ['slug' => 'thermoflow-hvac']) }}" class="home-case-link" id="btn-read-case-industrial">
+                                    {{ __('home.read_case') }} <span class="arrow">→</span>
                                 </a>
                             </div>
                         </div>
@@ -2048,45 +2498,45 @@
                     <div class="home-case-card">
                         <div class="home-case-visual">
                             <img src="{{ asset('images/case-studies/finedge.png') }}" 
-                                 alt="Enterprise Client Acquisition & Partner Routes for B2B SaaS" 
+                                 alt="{{ __('home.case_saas_alt') }}" 
                                  loading="lazy">
-                            <span class="home-case-badge">Software &amp; SaaS</span>
+                            <span class="home-case-badge">{{ __('home.tab_saas') }}</span>
                         </div>
 
                         <div class="home-case-article">
                             <div>
                                 <div class="home-case-meta">
-                                    <span><i class="bi bi-geo-alt"></i> Nigeria &amp; Kenya</span>
-                                    <span><i class="bi bi-clock"></i> 12-Week Market Entry</span>
+                                    <span><i class="bi bi-geo-alt"></i> {{ __('home.case_saas_place') }}</span>
+                                    <span><i class="bi bi-clock"></i> {{ __('home.case_saas_time') }}</span>
                                 </div>
 
                                 <h3 class="home-case-heading">
-                                    Enterprise Client Acquisition &amp; Partner Routes for B2B SaaS
+                                    {{ __('home.case_saas_title') }}
                                 </h3>
 
                                 <p class="home-case-description">
-                                    Supporting technology companies and software platforms seeking enterprise clients, commercial partnerships, and routes to market across Africa.
+                                    {{ __('home.case_saas_body') }}
                                 </p>
 
                                 <div class="home-case-metrics">
                                     <div class="home-metric-item">
                                         <span class="home-metric-value">280</span>
-                                        <span class="home-metric-label">Target Accounts</span>
+                                        <span class="home-metric-label">{{ __('home.metric_accounts') }}</span>
                                     </div>
                                     <div class="home-metric-item">
                                         <span class="home-metric-value">18</span>
-                                        <span class="home-metric-label">Qualified Leads</span>
+                                        <span class="home-metric-label">{{ __('home.metric_leads') }}</span>
                                     </div>
                                     <div class="home-metric-item">
-                                        <span class="home-metric-value">2 Signed</span>
-                                        <span class="home-metric-label">Channel Partners</span>
+                                        <span class="home-metric-value">{{ __('home.metric_signed') }}</span>
+                                        <span class="home-metric-label">{{ __('home.metric_channels') }}</span>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="home-case-footer">
-                                <a href="{{ url('case-studies/cloudworks-analytics') }}" class="home-case-link" id="btn-read-case-software">
-                                    Read the case study <span class="arrow">→</span>
+                                <a href="{{ locale_route('case-studies.show', ['slug' => 'cloudworks-analytics']) }}" class="home-case-link" id="btn-read-case-software">
+                                    {{ __('home.read_case') }} <span class="arrow">→</span>
                                 </a>
                             </div>
                         </div>
@@ -2098,45 +2548,45 @@
                     <div class="home-case-card">
                         <div class="home-case-visual">
                             <img src="{{ asset('images/case-studies/distributor-verification.png') }}" 
-                                 alt="Verifying Local Distribution Partners Before Market Entry" 
+                                 alt="{{ __('home.case_ver_alt') }}" 
                                  loading="lazy">
-                            <span class="home-case-badge">Distributor Verification</span>
+                            <span class="home-case-badge">{{ __('home.tab_verification') }}</span>
                         </div>
 
                         <div class="home-case-article">
                             <div>
                                 <div class="home-case-meta">
-                                    <span><i class="bi bi-geo-alt"></i> Kenya &amp; Tanzania</span>
-                                    <span><i class="bi bi-clock"></i> 14-Week Partner Verification</span>
+                                    <span><i class="bi bi-geo-alt"></i> {{ __('home.case_ver_place') }}</span>
+                                    <span><i class="bi bi-clock"></i> {{ __('home.case_ver_time') }}</span>
                                 </div>
 
                                 <h3 class="home-case-heading">
-                                    Verifying Local Distribution Partners Before Market Entry
+                                    {{ __('home.case_ver_title') }}
                                 </h3>
 
                                 <p class="home-case-description">
-                                    Assessing prospective distribution partners before committing capital. Verifying on-ground sales capabilities, customer access, and territory coverage to establish reliable commercial routes.
+                                    {{ __('home.case_ver_body') }}
                                 </p>
 
                                 <div class="home-case-metrics">
                                     <div class="home-metric-item">
                                         <span class="home-metric-value">13</span>
-                                        <span class="home-metric-label">Distributors Screened</span>
+                                        <span class="home-metric-label">{{ __('home.metric_screened') }}</span>
                                     </div>
                                     <div class="home-metric-item">
                                         <span class="home-metric-value">5</span>
-                                        <span class="home-metric-label">Shortlisted</span>
+                                        <span class="home-metric-label">{{ __('home.metric_shortlisted') }}</span>
                                     </div>
                                     <div class="home-metric-item">
-                                        <span class="home-metric-value">2 Signed</span>
-                                        <span class="home-metric-label">Verified Partners</span>
+                                        <span class="home-metric-value">{{ __('home.metric_signed') }}</span>
+                                        <span class="home-metric-label">{{ __('home.metric_partners') }}</span>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="home-case-footer">
-                                <a href="{{ url('case-studies/coolair-systems') }}" class="home-case-link" id="btn-read-case-verification">
-                                    Read the case study <span class="arrow">→</span>
+                                <a href="{{ locale_route('case-studies.show', ['slug' => 'coolair-systems']) }}" class="home-case-link" id="btn-read-case-verification">
+                                    {{ __('home.read_case') }} <span class="arrow">→</span>
                                 </a>
                             </div>
                         </div>
@@ -2147,8 +2597,8 @@
 
             {{-- All Case Studies Link --}}
             <div class="home-casestudy-all-link">
-                <a href="{{ url('case-studies') }}" id="link-explore-all-case-studies">
-                    Explore all verified market case studies <span>→</span>
+                <a href="{{ locale_route('case-studies') }}" id="link-explore-all-case-studies">
+                    {{ __('home.explore_cases') }} <span>→</span>
                 </a>
             </div>
 
@@ -2159,14 +2609,64 @@
 
     <section id="how_we_help" class="content-section animate-on-scroll">
         <div class="py-5 content">
-            <span class="section-eyebrow">OUR CAPABILITIES</span>
-            <h2 class="section-title">Commercial Solutions for African Expansion</h2>
+            <span class="section-eyebrow">{{ __('home.capabilities') }}</span>
+            <h2 class="section-title">{{ __('home.solutions') }}</h2>
             <div class="custom-underline"></div>
 
             <div class="row g-4 capabilities-grid">
-                <!-- 1. Distributor Verification -->
+                <!-- 1. Market Demand Testing -->
                 <div class="col-lg-4 col-md-6">
                     <div class="capability-card featured-card">
+                        <div>
+                            <div class="capability-icon">
+                                <i class="bi bi-compass"></i>
+                            </div>
+                            <h3 class="capability-title">Market Demand Testing</h3>
+                            <p class="capability-desc">Evaluate real market demand and practical routes to market across Nigeria, Ghana, Kenya, and South Africa. Test viability before committing capital or opening local offices.</p>
+                            <div class="capability-tags">
+                                <span class="tag-item">Market entry strategy</span>
+                                <span class="tag-dot">·</span>
+                                <span class="tag-item">Demand validation</span>
+                                <span class="tag-dot">·</span>
+                                <span class="tag-item">Route to market</span>
+                                <span class="tag-dot">·</span>
+                                <span class="tag-item">Commercial viability</span>
+                            </div>
+                        </div>
+                        <a href="{{ route('services.market-demand-testing') }}" class="capability-link">
+                            Explore market demand testing <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 2. Outbound Demand Testing -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="capability-card">
+                        <div>
+                            <div class="capability-icon">
+                                <i class="bi bi-graph-up-arrow"></i>
+                            </div>
+                            <h3 class="capability-title">{{ __('home.outbound') }}</h3>
+                            <p class="capability-desc">{{ __('home.outbound_body') }}</p>
+                            <div class="capability-tags">
+                                <span class="tag-item">{{ __('home.tag_buyers') }}</span>
+                                <span class="tag-dot">·</span>
+                                <span class="tag-item">{{ __('home.tag_outreach') }}</span>
+                                <span class="tag-dot">·</span>
+                                <span class="tag-item">{{ __('home.tag_demand') }}</span>
+                                <span class="tag-dot">·</span>
+                                <span class="tag-item">{{ __('home.tag_reporting') }}</span>
+                            </div>
+                        </div>
+                        <a href="{{ route('services.outbound-demand-testing') }}" class="capability-link">
+                            Explore outbound demand testing <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 3. Distributor Verification -->
+                <div class="col-lg-4 col-md-12">
+                    <div class="capability-card">
                         <div>
                             <div class="capability-icon">
                                 <i class="bi bi-shield-check"></i>
@@ -2183,58 +2683,8 @@
                                 <span class="tag-item">Commercial fit</span>
                             </div>
                         </div>
-                        <a href="{{ url('services') }}#partner-dev" class="capability-link">
+                        <a href="{{ route('services.distributor-partner') }}" class="capability-link">
                             Explore partner verification <i class="bi bi-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- 2. Outbound Demand Testing -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="capability-card">
-                        <div>
-                            <div class="capability-icon">
-                                <i class="bi bi-graph-up-arrow"></i>
-                            </div>
-                            <h3 class="capability-title">Outbound Demand Testing</h3>
-                            <p class="capability-desc">Test your proposition with real prospective buyers and distributors before making significant market-entry investments. Gather direct feedback, assess buying interest and identify viable opportunities.</p>
-                            <div class="capability-tags">
-                                <span class="tag-item">Target buyer identification</span>
-                                <span class="tag-dot">·</span>
-                                <span class="tag-item">Direct outreach</span>
-                                <span class="tag-dot">·</span>
-                                <span class="tag-item">Demand validation</span>
-                                <span class="tag-dot">·</span>
-                                <span class="tag-item">Sales opportunity reporting</span>
-                            </div>
-                        </div>
-                        <a href="{{ url('services') }}#sales" class="capability-link">
-                            Explore demand testing <i class="bi bi-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- 3. Sales & Commercial Operations -->
-                <div class="col-lg-4 col-md-12">
-                    <div class="capability-card">
-                        <div>
-                            <div class="capability-icon">
-                                <i class="bi bi-gear-wide-connected"></i>
-                            </div>
-                            <h3 class="capability-title">Sales & Commercial Operations</h3>
-                            <p class="capability-desc">Build and support the local sales operation that turns market opportunity into revenue, including sales teams, channel partner performance, CRM systems and commercial reporting.</p>
-                            <div class="capability-tags">
-                                <span class="tag-item">Sales team setup</span>
-                                <span class="tag-dot">·</span>
-                                <span class="tag-item">Partner management</span>
-                                <span class="tag-dot">·</span>
-                                <span class="tag-item">CRM and reporting</span>
-                                <span class="tag-dot">·</span>
-                                <span class="tag-item">Ongoing execution</span>
-                            </div>
-                        </div>
-                        <a href="{{ url('services') }}#operations" class="capability-link">
-                            Explore commercial operations <i class="bi bi-arrow-right"></i>
                         </a>
                     </div>
                 </div>
@@ -2242,24 +2692,24 @@
         </div>
 
         <div class="global_reach">
-            <h2><strong>Global Reach.</strong> <span>Local Approach</span></h2>
+            <h2><strong>{{ __('home.reach') }}</strong> <span>{{ __('home.local') }}</span></h2>
 
             <div class="row justify-content-center text-center stats me-auto ms-auto mt-5">
                 <div class="col-6 col-md-3 stat-box">
                     <div class="number" id="countries"></div>
-                    <div class="label">Countries</div>
+                    <div class="label">{{ __('home.countries') }}</div>
                 </div>
                 <div class="col-6 col-md-3 stat-box">
                     <div class="number" id="businesses"></div>
-                    <div class="label">Businesses</div>
+                    <div class="label">{{ __('home.businesses') }}</div>
                 </div>
                 <div class="col-6 col-md-3 stat-box">
                     <div class="number" id="partnership"></div>
-                    <div class="label">Partnership</div>
+                    <div class="label">{{ __('home.partnership') }}</div>
                 </div>
                 <div class="col-6 col-md-3 stat-box">
                     <div class="number" id="network"></div>
-                    <div class="label">Expert Network</div>
+                    <div class="label">{{ __('home.network') }}</div>
                 </div>
             </div>
         </div>
@@ -2271,9 +2721,9 @@
     <section id="sectors" class="sectors-section content-section animate-on-scroll">
         <div class="container">
             <div class="sectors-header">
-                <span class="section-eyebrow">WHO WE HELP</span>
-                <h2>Built for International Businesses Expanding into Africa</h2>
-                <p>Specialized commercial strategies tailored to industry realities across Africa.</p>
+                <span class="section-eyebrow">{{ __('home.who') }}</span>
+                <h2>{{ __('home.built_for') }}</h2>
+                <p>{{ __('home.sector_intro') }}</p>
             </div>
 
             <div class="row g-4 justify-content-center">
@@ -2282,12 +2732,12 @@
                     <div class="sector-card">
                         <div>
                             <div class="sector-icon"><i class="bi bi-tools"></i></div>
-                            <h3 class="sector-title">Equipment and Industrial Manufacturers</h3>
-                            <p class="sector-desc">Helping international manufacturers test market demand, identify target enterprise customers, and verify reliable distribution partners before committing to a market.</p>
+                            <h3 class="sector-title">{{ __('home.manufacturers') }}</h3>
+                            <p class="sector-desc">{{ __('home.mfg_body') }}</p>
                             <ul class="sector-verticals">
-                                <li><i class="bi bi-check-circle-fill"></i> Heavy Equipment &amp; Industrial Machinery</li>
-                                <li><i class="bi bi-check-circle-fill"></i> Construction, Infrastructure &amp; HVAC Equipment</li>
-                                <li><i class="bi bi-check-circle-fill"></i> Agricultural, Manufacturing &amp; Medical Equipment</li>
+                                <li><i class="bi bi-check-circle-fill"></i> {{ __('home.vertical_heavy') }}</li>
+                                <li><i class="bi bi-check-circle-fill"></i> {{ __('home.vertical_hvac') }}</li>
+                                <li><i class="bi bi-check-circle-fill"></i> {{ __('home.vertical_agri') }}</li>
                             </ul>
                         </div>
                     </div>
@@ -2298,12 +2748,12 @@
                     <div class="sector-card">
                         <div>
                             <div class="sector-icon"><i class="bi bi-cpu"></i></div>
-                            <h3 class="sector-title">Software and SaaS Companies</h3>
-                            <p class="sector-desc">Supporting technology companies and software platforms seeking enterprise clients, commercial partnerships, and routes to market across Africa.</p>
+                            <h3 class="sector-title">{{ __('home.saas') }}</h3>
+                            <p class="sector-desc">{{ __('home.saas_body') }}</p>
                             <ul class="sector-verticals">
-                                <li><i class="bi bi-check-circle-fill"></i> Fintech and financial technology</li>
-                                <li><i class="bi bi-check-circle-fill"></i> Logistics and supply chain businesses</li>
-                                <li><i class="bi bi-check-circle-fill"></i> Compliance and RegTech providers</li>
+                                <li><i class="bi bi-check-circle-fill"></i> {{ __('home.vertical_fintech') }}</li>
+                                <li><i class="bi bi-check-circle-fill"></i> {{ __('home.vertical_logistics') }}</li>
+                                <li><i class="bi bi-check-circle-fill"></i> {{ __('home.vertical_regtech') }}</li>
                             </ul>
                         </div>
                     </div>
@@ -2311,8 +2761,8 @@
             </div>
 
             <div class="sectors-cta-wrap">
-                <a href="{{ url('contact') }}" class="sectors-cta-btn">
-                    <span>Contact Us</span>
+                <a href="{{ locale_route('contact') }}" class="sectors-cta-btn">
+                    <span>{{ __('home.contact_us') }}</span>
                     <i class="bi bi-arrow-right" aria-hidden="true"></i>
                 </a>
             </div>
@@ -2323,11 +2773,11 @@
     <section id="why_p23" class="why-section content-section animate-on-scroll">
         <div class="container">
             <div class="why-header">
-                <span class="why-eyebrow">THE P23 ADVANTAGE</span>
-                <h2>Why P23 Africa?</h2>
-                <div class="why-tagline">Local insight. International perspective. Commercial focus.</div>
+                <span class="why-eyebrow">{{ __('home.advantage') }}</span>
+                <h2>{{ __('home.why') }}</h2>
+                <div class="why-tagline">{{ __('home.why_tagline') }}</div>
                 <p class="why-lead">
-                    African market expansion can be complex. We help simplify the process by combining an understanding of international business requirements with knowledge of African markets and commercial environments.
+                    {{ __('home.why_lead') }}
                 </p>
             </div>
 
@@ -2335,32 +2785,32 @@
                 <div class="col-lg-6">
                     <div class="why-card">
                         <div class="why-card-icon"><i class="bi bi-bullseye"></i></div>
-                        <h3 class="why-card-title">Practical, not theoretical</h3>
-                        <p class="why-card-desc">Our focus is on information and activity that can lead to commercial decisions and measurable progress.</p>
+                        <h3 class="why-card-title">{{ __('home.practical') }}</h3>
+                        <p class="why-card-desc">{{ __('home.practical_body') }}</p>
                     </div>
                 </div>
 
                 <div class="col-lg-6">
                     <div class="why-card">
                         <div class="why-card-icon"><i class="bi bi-people-fill"></i></div>
-                        <h3 class="why-card-title">Relationship-led</h3>
-                        <p class="why-card-desc">Strong local relationships are fundamental to successful business development across Africa.</p>
+                        <h3 class="why-card-title">{{ __('home.relationship') }}</h3>
+                        <p class="why-card-desc">{{ __('home.relationship_body') }}</p>
                     </div>
                 </div>
 
                 <div class="col-lg-6">
                     <div class="why-card">
                         <div class="why-card-icon"><i class="bi bi-sliders"></i></div>
-                        <h3 class="why-card-title">Flexible engagement</h3>
-                        <p class="why-card-desc">From a focused market validation project to ongoing commercial support, our involvement can adapt to your requirements.</p>
+                        <h3 class="why-card-title">{{ __('home.flexible') }}</h3>
+                        <p class="why-card-desc">{{ __('home.flexible_body') }}</p>
                     </div>
                 </div>
 
                 <div class="col-lg-6">
                     <div class="why-card">
                         <div class="why-card-icon"><i class="bi bi-crosshair"></i></div>
-                        <h3 class="why-card-title">Built around your objectives</h3>
-                        <p class="why-card-desc">We don’t apply a one-size-fits-all market-entry model. We start with your business, proposition and objectives.</p>
+                        <h3 class="why-card-title">{{ __('home.objectives') }}</h3>
+                        <p class="why-card-desc">{{ __('home.objectives_body') }}</p>
                     </div>
                 </div>
             </div>
@@ -2376,7 +2826,7 @@
 
     <section class="insight-section content-section animate-on-scroll">
         <div class="">
-            <h2>P23 Insights</h2>
+            <h2>{{ __('home.insights') }}</h2>
             <div class="row insight-content">
                 <div class="col-md-6 insight-image-wrapper">
                     <img src="{{ asset('images/insight-side.jpg') }}" loading='lazy' alt="Scolding Donald"
@@ -2385,12 +2835,11 @@
                 </div>
                 <div class="col-md-6 insight-text">
                     <p class="date">17th October 2026</p>
-                    <h3><b> Essential Guide to Doing Business in Africa</b></h3>
+                    <h3><b> {{ __('home.guide') }}</b></h3>
                     <p class="description">
-                        Our essential guide helps foreign investors navigate Africa’s diverse markets, build local
-                        partnerships, and understand regulations, offering practical strategies for sustainable success.
+                        {{ __('home.guide_body') }}
                     </p>
-                    <a href="{{ route('resource-hub') }}" class="read-more">Read More <span>→</span></a>
+                    <a href="{{ locale_route('resource-hub') }}" class="read-more">{{ __('home.read_more') }} <span>→</span></a>
                 </div>
             </div>
         </div>
@@ -2405,7 +2854,7 @@
                         <button class="view-pdf-btn cursor-pointer bg-white border border-0 text-left"
                             data-pdf="{{ asset('storage/' . $blog->pdf_path) }}">
                         @else
-                            <a href="{{ route('resource-show', $blog->slug) }}" class="text-decoration-none">
+                            <a href="{{ locale_route('resource-show', ['slug' => $blog->slug]) }}" class="text-decoration-none">
                     @endif
                     @if ($blog->image_path)
                         <img src="{{ asset('storage/' . $blog->image_path) }}" loading='lazy' alt="Card image">
@@ -2415,8 +2864,8 @@
                     <div class="card-body">
                         <div class="date text-start w-100">
                             {{ \Carbon\Carbon::parse($blog->created_at)->format('l, F jS Y') }}</div>
-                        <h5 class="text-start w-100">{{ $blog->title }}</h5>
-                        <p class="text-start w-100"> {{ \Illuminate\Support\Str::limit($blog->subtitle, 138) }}</p>
+                        <h5 class="text-start w-100">{{ $blog->translated('title') }}</h5>
+                        <p class="text-start w-100"> {{ \Illuminate\Support\Str::limit($blog->translated('subtitle'), 138) }}</p>
                     </div>
                     @if (!$blog->pdf_path)
                         </a>
@@ -2425,43 +2874,39 @@
                     @endif
                 </div>
             @endforeach --}}
-            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
+            <a href="{{ locale_route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/funding.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
                     <div class="date">2nd October 2026</div>
-                    <h5>State of Funding 2025</h5>
-                    <p>Africa’s funding landscape in 2025 shows steady growth, but challenges like tighter global capital
-                        and cautious investor sentiment remain.</p>
+                    <h5>{{ __('home.insight_funding') }}</h5>
+                    <p>{{ __('home.insight_funding_body') }}</p>
                 </div>
             </a>
 
-            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
+            <a href="{{ locale_route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/girl.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
                     <div class="date">10th October 2026</div>
-                    <h5>Understanding buyer habits</h5>
-                    <p>Buyer habits in Africa are evolving fast, driven by digital adoption and a growing middle class, but
-                        differences across regions and trust issues still pose challenges.</p>
+                    <h5>{{ __('home.insight_buyers') }}</h5>
+                    <p>{{ __('home.insight_buyers_body') }}</p>
                 </div>
             </a>
 
-            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
+            <a href="{{ locale_route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/plant.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
                     <div class="date">22nd September 2026</div>
-                    <h5>Top Agri sectors to watch</h5>
-                    <p>Africa’s agriculture sector is full of opportunity, with agri-tech, food processing, and sustainable
-                        farming emerging as key areas to watch.</p>
+                    <h5>{{ __('home.insight_agri') }}</h5>
+                    <p>{{ __('home.insight_agri_body') }}</p>
                 </div>
             </a>
 
-            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
+            <a href="{{ locale_route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/carousel00.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
                     <div class="date">9th September 2026</div>
-                    <h5>Business trends 2025</h5>
-                    <p>Business trends in Africa are evolving rapidly, with growth in digital transformation, green energy,
-                        and emerging markets driving new opportunities across the continent.</p>
+                    <h5>{{ __('home.insight_trends') }}</h5>
+                    <p>{{ __('home.insight_trends_body') }}</p>
                 </div>
             </a>
 
@@ -2472,7 +2917,7 @@
                         <button class="view-pdf-btn cursor-pointer bg-white border border-0 text-left"
                             data-pdf="{{ asset('storage/' . $blog->pdf_path) }}">
                         @else
-                            <a href="{{ route('resource-show', $blog->slug) }}" class="text-decoration-none">
+                            <a href="{{ locale_route('resource-show', ['slug' => $blog->slug]) }}" class="text-decoration-none">
                     @endif
                     @if ($blog->image_path)
                         <img src="{{ asset('storage/' . $blog->image_path) }}" loading='lazy' alt="Card image">
@@ -2482,8 +2927,8 @@
                     <div class="card-body">
                         <div class="date text-start w-100">
                             {{ \Carbon\Carbon::parse($blog->created_at)->format('l, F jS Y') }}</div>
-                        <h5 class="text-start w-100">{{ $blog->title }}</h5>
-                        <p class="text-start w-100"> {{ \Illuminate\Support\Str::limit($blog->subtitle, 138) }}</p>
+                        <h5 class="text-start w-100">{{ $blog->translated('title') }}</h5>
+                        <p class="text-start w-100"> {{ \Illuminate\Support\Str::limit($blog->translated('subtitle'), 138) }}</p>
                     </div>
                     @if (!$blog->pdf_path)
                         </a>
@@ -2493,58 +2938,171 @@
                 </div>
             @endforeach --}}
 
-            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
+            <a href="{{ locale_route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/funding.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
                     <div class="date">2nd October 2026</div>
-                    <h5>State of Funding 2025</h5>
-                    <p>Africa’s funding landscape in 2025 shows steady growth, but challenges like tighter global capital
-                        and cautious investor sentiment remain.</p>
+                    <h5>{{ __('home.insight_funding') }}</h5>
+                    <p>{{ __('home.insight_funding_body') }}</p>
                 </div>
             </a>
 
-            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
+            <a href="{{ locale_route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/girl.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
                     <div class="date">10th October 2026</div>
-                    <h5>Understanding buyer habits</h5>
-                    <p>Buyer habits in Africa are evolving fast, driven by digital adoption and a growing middle class, but
-                        differences across regions and trust issues still pose challenges.</p>
+                    <h5>{{ __('home.insight_buyers') }}</h5>
+                    <p>{{ __('home.insight_buyers_body') }}</p>
                 </div>
             </a>
 
-            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
+            <a href="{{ locale_route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/plant.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
                     <div class="date">22nd September 2026</div>
-                    <h5>Top Agri sectors to watch</h5>
-                    <p>Africa’s agriculture sector is full of opportunity, with agri-tech, food processing, and sustainable
-                        farming emerging as key areas to watch.</p>
+                    <h5>{{ __('home.insight_agri') }}</h5>
+                    <p>{{ __('home.insight_agri_body') }}</p>
                 </div>
             </a>
 
-            <a href="{{ route('resource-hub') }}" class="insight-card text-decoration-none">
+            <a href="{{ locale_route('resource-hub') }}" class="insight-card text-decoration-none">
                 <img src="{{ asset('images/carousel00.jpg') }}" loading='lazy' alt="Card image">
                 <div class="card-body">
                     <div class="date">9th September 2026</div>
-                    <h5>Business trends 2025</h5>
-                    <p>Business trends in Africa are evolving rapidly, with growth in digital transformation, green energy,
-                        and emerging markets driving new opportunities across the continent.</p>
+                    <h5>{{ __('home.insight_trends') }}</h5>
+                    <p>{{ __('home.insight_trends_body') }}</p>
                 </div>
             </a>
         </div>
 
         <div id="btn" class="mt-4">
-            <a href="{{ route('resource-hub') }}" class="btn">More on the Resource Hub</a>
+            <a href="{{ locale_route('resource-hub') }}" class="btn">{{ __('home.more_hub') }}</a>
         </div>
 
         <div class="pdf-popup" id="pdfPopup">
             <div class="pdf-popup-content">
                 <span class="close-popup">&times;</span>
                 <a href="" class="download-btn" id="downloadPdf" download>
-                    📥 Download PDF
+                    📥 {{ __('home.download_pdf') }}
                 </a>
                 <iframe class="pdf-viewer" id="pdfViewer" src="" frameborder="0"></iframe>
+            </div>
+        </div>
+    </section>
+
+    {{-- ========================================================
+         HOMEPAGE FEATURED LEAD CTA: AFRICAN EXPANSION GUIDE
+         ======================================================== --}}
+    <section class="home-guide-cta-section content-section animate-on-scroll" id="african-expansion-guide" aria-label="African Expansion for Manufacturers">
+        <div class="home-guide-cta-container">
+            <div class="home-guide-grid">
+                
+                {{-- Left: Copy, Highlights & Actions --}}
+                <div class="home-guide-content">
+                    <span class="guide-kicker-pill">
+                        <span class="guide-pill-dot"></span>
+                        <i class="bi bi-file-earmark-pdf-fill"></i>
+                        {{ __('home.guide_cta_pill') }}
+                    </span>
+                    
+                    <h2 class="guide-heading">
+                        {{ __('home.guide_cta_title') }}
+                    </h2>
+                    
+                    <p class="guide-lead-text">
+                        {{ __('home.guide_cta_subtitle') }}
+                    </p>
+
+                    <div class="guide-takeaways-list">
+                        <div class="guide-takeaway-item">
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>{{ __('home.guide_cta_bullet1') }}</span>
+                        </div>
+                        <div class="guide-takeaway-item">
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>{{ __('home.guide_cta_bullet2') }}</span>
+                        </div>
+                        <div class="guide-takeaway-item">
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>{{ __('home.guide_cta_bullet3') }}</span>
+                        </div>
+                    </div>
+
+                    <div class="guide-actions-group">
+                        <a href="{{ asset('documents/African.pdf') }}" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="guide-btn-primary" 
+                           id="home-guide-download-btn"
+                           title="African Expansion for Manufacturers">
+                            <i class="bi bi-cloud-arrow-down-fill"></i>
+                            <span>{{ __('home.guide_cta_download') }}</span>
+                        </a>
+
+                        <a href="{{ asset('documents/African.pdf') }}" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="guide-btn-secondary" 
+                           id="home-guide-preview-btn"
+                           title="Preview African Expansion for Manufacturers">
+                            <i class="bi bi-eye-fill"></i>
+                            <span>{{ __('home.guide_cta_preview') }}</span>
+                        </a>
+                    </div>
+
+                    <div class="guide-meta-footnote">
+                        <i class="bi bi-shield-check"></i>
+                        <span>{{ __('home.guide_cta_meta') }}</span>
+                    </div>
+                </div>
+
+                {{-- Right: Interactive Editorial 3D Guide Mockup --}}
+                <div class="home-guide-visual">
+                    <a href="{{ asset('documents/African.pdf') }}" 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       class="guide-book-mockup" 
+                       aria-label="African Expansion for Manufacturers"
+                       title="African Expansion for Manufacturers">
+                        <span class="guide-book-badge">FREE PDF</span>
+                        
+                        <div class="guide-book-header">
+                            <div class="guide-book-brand">
+                                <i class="bi bi-compass-fill"></i>
+                                <span>P23 Africa Playbook</span>
+                            </div>
+                            <h3 class="guide-book-title">
+                                African Expansion for Manufacturers
+                            </h3>
+                            <p class="guide-book-sub">
+                                A Practical Field Guide to Market Entry, Distributor Network & Commercial Success
+                            </p>
+                        </div>
+
+                        <div class="guide-book-preview-strip">
+                            <div class="guide-strip-item">
+                                <i class="bi bi-file-text-fill"></i>
+                                <span>18-Page Practical Field Guide</span>
+                            </div>
+                            <div class="guide-strip-item">
+                                <i class="bi bi-diagram-3-fill"></i>
+                                <span>Partner Due Diligence Framework</span>
+                            </div>
+                            <div class="guide-strip-item">
+                                <i class="bi bi-graph-up-arrow"></i>
+                                <span>Real Demand Validation Methodology</span>
+                            </div>
+                        </div>
+
+                        <div class="guide-book-footer">
+                            <span class="guide-pages-count">2026 Edition • Free Access</span>
+                            <span class="guide-action-cue">
+                                <i class="bi bi-eye"></i> Click to Read
+                            </span>
+                        </div>
+                    </a>
+                </div>
+
             </div>
         </div>
     </section>
@@ -2554,18 +3112,18 @@
     <section class="cta-closing-section content-section animate-on-scroll">
         <div class="container">
             <div class="cta-closing-inner">
-                <span class="cta-pill">START YOUR EXPANSION</span>
-                <h2>Ready to Explore the African Market?</h2>
+                <span class="cta-pill">{{ __('home.cta_pill') }}</span>
+                <h2>{{ __('home.cta') }}</h2>
                 <p class="cta-desc">
-                    Whether you’re considering Africa for the first time, looking to expand into additional markets, searching for customers or distributors, or preparing an established business for its next stage of growth, P23 Africa can help.
+                    {{ __('home.cta_body') }}
                 </p>
-                <div class="cta-prompt">Let’s discuss what you’re trying to achieve.</div>
+                <div class="cta-prompt">{{ __('home.cta_prompt') }}</div>
                 <div class="d-flex justify-content-center flex-wrap">
-                    <a href="{{ url('contact') }}" class="cta-btn-primary">
-                        Book a Consultation <i class="bi bi-arrow-right"></i>
+                    <a href="{{ locale_route('contact') }}" class="cta-btn-primary">
+                        {{ __('home.book') }} <i class="bi bi-arrow-right"></i>
                     </a>
-                    <a href="{{ url('contact') }}" class="cta-btn-secondary">
-                        Contact Our Team
+                    <a href="{{ locale_route('contact') }}" class="cta-btn-secondary">
+                        {{ __('home.contact_team') }}
                     </a>
                 </div>
             </div>

@@ -8,41 +8,40 @@
             
             {{-- Column 1: Brand Logo & UK Registration --}}
             <div class="footer3-col footer3-col-brand">
-                <a href="{{ route('homepage') }}" class="footer3-logo-link" aria-label="P23 Africa Homepage">
+                <a href="{{ locale_route('homepage') }}" class="footer3-logo-link" aria-label="P23 Africa Homepage">
                     <img src="{{ asset('images/p23-logo-white.png') }}" 
                          alt="P23 Africa" 
                          class="footer3-logo" 
                          loading="lazy">
                 </a>
                 <p class="footer3-reg-text">
-                    P23 Africa LTD is registered in the United Kingdom. Company No: 15246700
+                    {{ __('footer.company') }}
                 </p>
             </div>
 
             {{-- Column 2: Who We Are --}}
             <div class="footer3-col">
-                <h3 class="footer3-heading">Who We Are</h3>
+                <h3 class="footer3-heading">{{ __('footer.who_we_are') }}</h3>
                 <ul class="footer3-nav-list">
-                    <li><a href="{{ url('about') }}" class="footer3-nav-link">About Us</a></li>
-                    <li><a href="{{ route('brn') }}" class="footer3-nav-link">Business Network</a></li>
+                    <li><a href="{{ locale_route('about') }}" class="footer3-nav-link">{{ __('footer.about_us') }}</a></li>
+                    <li><a href="{{ locale_route('brn') }}" class="footer3-nav-link">{{ __('footer.business_network') }}</a></li>
                 </ul>
             </div>
 
             {{-- Column 3: What We Do --}}
             <div class="footer3-col">
-                <h3 class="footer3-heading">What We Do</h3>
+                <h3 class="footer3-heading">{{ __('footer.what_we_do') }}</h3>
                 <ul class="footer3-nav-list">
-                    <li><a href="{{ url('market-entry') }}" class="footer3-nav-link">Market Entry &amp; Expansion</a></li>
-                    <li><a href="{{ url('services') }}#growth-plan" class="footer3-nav-link">Verify Distributors</a></li>
-                    <li><a href="{{ url('services') }}#growth-plan" class="footer3-nav-link">Sales Demand Testing</a></li>
-                    <li><a href="{{ url('services') }}#growth-plan" class="footer3-nav-link">Sales/Market Support</a></li>
-                    <li><a href="{{ url('services') }}#growth-plan" class="footer3-nav-link">Investment Readiness</a></li>
+                    <li><a href="{{ route('services.market-demand-testing') }}" class="footer3-nav-link">Market Demand Testing</a></li>
+                    <li><a href="{{ route('services.outbound-demand-testing') }}" class="footer3-nav-link">Outbound Demand Testing</a></li>
+                    <li><a href="{{ route('services.distributor-partner') }}" class="footer3-nav-link">Distributor Verification</a></li>
+                    <li><a href="{{ url('services') }}" class="footer3-nav-link">Commercial Services</a></li>
                 </ul>
             </div>
 
             {{-- Column 4: Contact Us & Social Links --}}
             <div class="footer3-col">
-                <h3 class="footer3-heading">Contact Us</h3>
+                <h3 class="footer3-heading">{{ __('footer.contact_us') }}</h3>
                 <div class="footer3-social-icons">
                     
                     {{-- LinkedIn --}}
@@ -97,9 +96,9 @@
         {{-- Bottom Legal / Copyright Row --}}
         <div class="footer3-bottom">
             <p class="footer3-legal-text">
-                &copy;P23 Africa 2025 &bull; 
-                <a href="{{ url('privacy-policy') }}">Privacy Policy</a> &bull; 
-                <a href="{{ url('terms-and-conditions') }}">Terms &amp; Conditions</a>
+                &copy;P23 Africa 2025 &bull;
+                <a href="{{ locale_route('privacy') }}">{{ __('footer.privacy') }}</a> &bull;
+                <a href="{{ locale_route('terms') }}">{{ __('footer.terms') }}</a>
             </p>
         </div>
     </div>

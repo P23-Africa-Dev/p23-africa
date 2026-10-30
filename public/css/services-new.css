@@ -274,16 +274,16 @@
 }
 
 /* ==========================================================================
-   Section 1 Bottom: Partner Logos Marquee (Right-to-Left Continuous Loop)
+   Section 1 Bottom: Partner Logos (Static Centered Display, No Border)
    ========================================================================== */
 .partner-logos-section {
     position: relative;
     width: 100%;
-    margin: 0 0 clamp(24px, 3.5vw, 44px) 0;
+    margin: 0 0 clamp(20px, 3vw, 36px) 0;
     padding: clamp(16px, 2.2vw, 24px) 0 clamp(14px, 2vw, 20px) 0;
-    background: #fafcfb;
-    border-top: 1px solid rgba(13, 64, 54, 0.07);
-    border-bottom: 1px solid rgba(13, 64, 54, 0.07);
+    background: transparent;
+    border-top: none;
+    border-bottom: none;
     overflow: hidden;
 }
 
@@ -303,36 +303,28 @@
     text-align: center;
     text-transform: none;
     color: rgba(5, 0, 56, 0.55);
-    margin: 0 0 10px 0;
+    margin: 0 0 14px 0;
+}
+
+.partner-logos-grid,
+.partner-marquee-track,
+.partner-marquee-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(24px, 4vw, 56px);
+    flex-wrap: wrap;
+    width: 100%;
+    animation: none !important;
 }
 
 .partner-marquee-wrapper {
     position: relative;
     width: 100%;
     overflow: hidden;
-    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
     padding: 2px 0 4px 0;
-}
-
-.partner-marquee-track {
-    display: flex;
-    align-items: center;
-    width: max-content;
-    animation: partnerMarqueeScroll 38s linear infinite;
-    will-change: transform;
-}
-
-.partner-marquee-wrapper:hover .partner-marquee-track {
-    animation-play-state: paused;
-}
-
-.partner-marquee-group {
-    display: flex;
-    align-items: center;
-    gap: clamp(28px, 3.5vw, 48px);
-    padding-right: clamp(28px, 3.5vw, 48px);
-    flex-shrink: 0;
 }
 
 .partner-logo-item {
@@ -340,11 +332,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-width: 110px;
+    min-width: 100px;
     padding: 0 6px;
-    gap: 5px;
+    gap: 6px;
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
-    opacity: 0.92;
+    opacity: 0.9;
 }
 
 .partner-logo-item:hover {
@@ -353,8 +345,8 @@
 }
 
 .partner-logo-item img {
-    height: 30px;
-    max-height: 30px;
+    height: 32px;
+    max-height: 32px;
     max-width: 85px;
     width: auto;
     object-fit: contain;
@@ -370,27 +362,18 @@
 
 .partner-logo-name {
     font-family: var(--font-sans, "Montserrat", sans-serif);
-    font-size: clamp(10.5px, 0.82vw, 11.5px);
+    font-size: clamp(11px, 0.85vw, 12px);
     font-weight: 600;
     line-height: 1.2;
     letter-spacing: -0.01em;
-    color: #1a3832;
+    color: #111827;
     text-align: center;
     white-space: nowrap;
     transition: color 0.3s ease;
 }
 
 .partner-logo-item:hover .partner-logo-name {
-    color: #07483e;
-}
-
-@keyframes partnerMarqueeScroll {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-50%);
-    }
+    color: #000000;
 }
 
 /* ==========================================================================
@@ -593,8 +576,13 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    width: 145px;
+    width: auto;
+    min-width: 145px;
     height: 48px;
+    padding: 0 24px;
+    white-space: nowrap;
+    margin-top: auto;
+    align-self: flex-start;
     border-radius: 10px;
     background-color: #FFFFFF;
     color: #181818 !important;
@@ -718,30 +706,24 @@
 
 @media (max-width: 768px) {
     .partner-logos-section {
-        margin: 0 0 20px 0;
+        margin: 0 0 16px 0;
         padding: 12px 0 10px 0;
+        border-top: none;
+        border-bottom: none;
     }
 
     .partner-logos-title {
         font-size: 11px;
-        margin: 0 0 6px 0;
+        margin: 0 0 10px 0;
     }
 
-    .partner-marquee-wrapper {
-        padding: 2px 0;
-    }
-
-    .partner-marquee-track {
-        animation-duration: 25s;
-    }
-
+    .partner-logos-grid,
     .partner-marquee-group {
-        gap: 22px;
-        padding-right: 22px;
+        gap: 18px 24px;
     }
 
     .partner-logo-item {
-        min-width: 90px;
+        min-width: 85px;
         padding: 0 4px;
         gap: 4px;
     }
@@ -796,11 +778,14 @@
     }
 
     .plan-card-market-entry .plan-explore-btn {
-        width: 140px !important;
+        width: auto !important;
+        min-width: 130px !important;
+        padding: 0 18px !important;
         height: 44px !important;
         font-size: 14.5px !important;
         border-radius: 8px !important;
         margin-bottom: 0 !important;
+        white-space: nowrap !important;
     }
 }
 
@@ -843,10 +828,13 @@
     }
 
     .plan-card-market-entry .plan-explore-btn {
-        width: 128px !important;
+        width: auto !important;
+        min-width: 120px !important;
+        padding: 0 16px !important;
         height: 40px !important;
         font-size: 13.5px !important;
         margin-bottom: 0 !important;
+        white-space: nowrap !important;
     }
 
     .plan-card-illustration,

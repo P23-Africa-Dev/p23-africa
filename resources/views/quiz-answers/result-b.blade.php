@@ -1,11 +1,11 @@
 @extends('layouts.quiz-layout')
-@section('title', 'Quiz Result (HIDDEN POWERHOUSE) | P23 Africa')
+@section('title', __('quiz.b_title'))
 
 @section('meta')
-    <meta name="description" content="Your revenue stream is vulnerable—small cracks today could become big breaks tomorrow.">
-    <meta name="keywords" content="Your revenue stream is vulnerable—small cracks today could become big breaks tomorrow.">
+    <meta name="description" content="{{ __('quiz.b_sub') }}">
+    <meta name="keywords" content="{{ __('quiz.b_sub') }}">
     <meta name="author" content="Nurudeen O. Daniju">
-    <meta name="generator" content="Business Consulting & Growth Solutions for Africa | P23 Africa">
+    <meta name="generator" content="{{ __('quiz.meta_generator') }}">
     <meta property="og:image" content="{{ asset('images/Hidden_Powerhouse.png') }}">
 @endsection
 
@@ -18,12 +18,10 @@
                 <div class="col-lg-6 left-column">
                     <div class="header-section mb-4">
                         <h1>
-                            <span>YOU ARE THE</span>
-                            <span id="typing-title" class="typing-text"></span>
+                            <span>{{ __('quiz.you_are') }}</span>
+                            <span id="typing-title" class="typing-text">{{ __('quiz.b_name') }}</span>
                         </h1>
-                        <p id="typing-subtitle" class="typing-text">
-
-                        </p>
+                        <p id="typing-subtitle" class="typing-text">{{ __('quiz.b_sub') }}</p>
                     </div>
 
                     <div class="chart-container d-flex flex-column align-items-start mb-4 mb-lg-0">
@@ -35,15 +33,15 @@
                             <div class="legend d-flex gap-2 flex-column">
                                 <li>
                                     <div class="color-box purple"></div>
-                                    System & conversion optimization
+                                    {{ __('quiz.b_m1') }}
                                 </li>
                                 <li>
                                     <div class="color-box dark-green"></div>
-                                    New growth channels & strategies
+                                    {{ __('quiz.b_m2') }}
                                 </li>
                                 <li>
                                     <div class="color-box green"></div>
-                                    Refinement & performance insights
+                                    {{ __('quiz.b_m3') }}
                                 </li>
                             </div>
                         </ul>
@@ -58,7 +56,7 @@
                             </div>
                             <div class="metric-item purple">
                                 <div class="color-box purple"></div>
-                                <p>System & conversion optimization <span>40%</span></p>
+                                <p>{{ __('quiz.b_m1') }} <span>40%</span></p>
                             </div>
                         </div>
                         <div class="metric">
@@ -67,7 +65,7 @@
                             </div>
                             <div class="metric-item green">
                                 <div class="color-box"></div>
-                                <p>New growth channels & strategies <span>35%</span></p>
+                                <p>{{ __('quiz.b_m2') }} <span>35%</span></p>
                             </div>
                         </div>
                         <div class="metric">
@@ -76,7 +74,7 @@
                             </div>
                             <div class="metric-item yellow">
                                 <div class="color-box"></div>
-                                <p>Refinement & performance insights <span>25%</span></p>
+                                <p>{{ __('quiz.b_m3') }} <span>25%</span></p>
                             </div>
                         </div>
                     </div>
@@ -85,45 +83,44 @@
 
                         <div class="right-panel-container">
                             <div class=" common-risks-section mb-2">
-                                <h3 class="mb-3">Signs Of Readiness To Scale:</h3>
+                                <h3 class="mb-3">{{ __('quiz.ready') }}</h3>
                                 <div class="risk-list">
                                     <ul>
-                                        <li>Consistent follow-ups and team clarity</li>
-                                        <li>Tools and systems are in place and used well</li>
+                                        <li>{{ __('quiz.b_r1') }}</li>
+                                        <li>{{ __('quiz.b_r2') }}</li>
                                         <li>
-                                            Clear understanding of customer journey
+                                            {{ __('quiz.b_r3') }}
                                         </li>
-                                        <li>Regular performance reviews and insights</li>
-                                        <li>You’re proactive, not reactive</li>
+                                        <li>{{ __('quiz.b_r4') }}</li>
+                                        <li>{{ __('quiz.b_r5') }}</li>
                                     </ul>
                                 </div>
                             </div>
 
                             <div class=" solution-section mb-2">
-                                <h3 class="mb-3">What You Need:</h3>
+                                <h3 class="mb-3">{{ __('quiz.need') }}</h3>
                                 <p>
-                                    A tailored growth plan. Now’s the time to identify advanced strategies: tightening
-                                    conversion points, exploring new channels, or creating scalable systems.
+                                    {{ __('quiz.b_need') }}
                                 </p>
                             </div>
 
                             <div class=" next-step-section">
-                                <h3 class="mb-3">Next Step:</h3>
+                                <h3 class="mb-3">{{ __('quiz.next') }}</h3>
                                 <p>
-                                    We can help you refine your growth plan and plug small gaps for big results. Let’s talk.
+                                    {{ __('quiz.b_next') }}
                                 </p>
                             </div>
                         </div>
 
                         <div class="buttons-group gap-3">
                             <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3tzdnFU-zme-lCpKoHGZktqjUVs4rll_QJtcUzK71d9-l3M0WIFvjtnJpLmosUraV8XkUJeD_k"
-                                target="_blank" class="btn btn-purple-outline">Book Business Audit Now!</a>
+                                target="_blank" class="btn btn-purple-outline">{{ __('quiz.book_audit') }}</a>
                             <button class="btn btn-dark-green" id="play-video-btn">
-                                Get Growth Tips
+                                {{ __('quiz.tips') }}
                                 <i class="bi bi-arrow-right"></i>
                             </button>
                             <button class="btn btn-dark-green" id="play-video-btn2">
-                                Get Growth Tips
+                                {{ __('quiz.tips') }}
                                 <i class="bi bi-arrow-right"></i>
                             </button>
                         </div>
@@ -138,7 +135,7 @@
                 <div class="modal-content bg-dark text-white">
                     <div class="modal-header border-0">
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
+                            aria-label="{{ __('quiz.close') }}"></button>
                     </div>
                     <div class="modal-body p-0 text-center">
                         <div class="ratio ratio-16x9" id="youtubePlayerContainer">
@@ -148,7 +145,7 @@
                         <!-- Hidden Appointment Button -->
                         <div id="appointmentButtonContainer" class="py-3" style="display: none;">
                             <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3tzdnFU-zme-lCpKoHGZktqjUVs4rll_QJtcUzK71d9-l3M0WIFvjtnJpLmosUraV8XkUJeD_k"
-                                target="_blank" class="btn btn-success animate-pop-in">Book Business Audit Now!</a>
+                                target="_blank" class="btn btn-success animate-pop-in">{{ __('quiz.book_audit') }}</a>
                         </div>
                     </div>
                 </div>
@@ -173,9 +170,8 @@
 
 
         document.addEventListener("DOMContentLoaded", () => {
-            const title = "Hidden Powerhouse";
-            const subtitle =
-                "Your revenue stream is vulnerable—small cracks today could become big breaks tomorrow.";
+            const title = @json(__('quiz.b_name'));
+            const subtitle = @json(__('quiz.b_sub'));
 
             const titleEl = document.getElementById("typing-title");
             const subtitleEl = document.getElementById("typing-subtitle");
@@ -205,7 +201,8 @@
                 }
             }
 
-            // Start typing as soon as DOM is ready
+            titleEl.textContent = "";
+            subtitleEl.textContent = "";
             typeTitle();
         });
 

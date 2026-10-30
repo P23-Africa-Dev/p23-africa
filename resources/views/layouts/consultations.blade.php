@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="UTF-8">
@@ -13,6 +13,7 @@
     <meta property="og:image" content="{{ asset('img/consultation-page-thumbnail-1.png') }}">
 
     @yield('meta')
+    @include('partials.hreflang')
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <script src="https://kit.fontawesome.com/3df60fe6e2.js" crossorigin="anonymous"></script>
@@ -37,6 +38,8 @@
 </head>
 
 <body>
+    @include('partials.language-suggestion')
+    @include('partials.language-switcher')
     {{-- NAVBAR --}}
 
 
@@ -126,6 +129,7 @@
             window.handleCsrfExpiry = handleCsrfExpiry;
         })();
     </script>
+    @include('partials.scroll-reveal')
 
 </body>
 

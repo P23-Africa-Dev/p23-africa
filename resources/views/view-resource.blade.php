@@ -1,20 +1,19 @@
 @extends('layouts.res-layout')
 
 @section('title')
-    {{ $blog->title }}
-    @if ($blog->subtitle)
-        ({{ $blog->subtitle }})
+    {{ $blog->translated('title') }}
+    @if ($blog->translated('subtitle'))
+        ({{ $blog->translated('subtitle') }})
     @endif
     Resource Details | P23 Africa
 @endsection
 
 @section('meta')
     <meta property="og:image" content="{{ asset('storage/' . $blog->image_path) }}">
-    <meta name="description" content="{!! nl2br(e($blog->content_1)) !!}">
-
-    <meta name="keywords" content="{!! nl2br(e($blog->content_1)) !!}">
+    <meta name="description" content="{{ \Illuminate\Support\Str::limit(trim(preg_replace('/\s+/', ' ', strip_tags($blog->translated('content_1') ?? ''))), 160) }}">
+    <meta name="keywords" content="{{ $blog->translated('title') }}">
     <meta name="author" content="Nurudeen O. Daniju">
-    <meta name="generator" content="{!! nl2br(e($blog->content_1)) !!}">
+    <meta name="generator" content="P23 Africa">
 @endsection
 
 <style>
@@ -113,9 +112,9 @@
                 <section class="resourse-details-header">
                     <div class="header">
                         <h5>INTRO</h5>
-                        <h2 class="section-title">{{ $blog->title }}</h2>
+                        <h2 class="section-title">{{ $blog->translated('title') }}</h2>
                         <p class="section-subtitle">
-                            {{ $blog->subtitle }}
+                            {{ $blog->translated('subtitle') }}
                             @if ($blog->pdf_path)
                                 <a href="{{ asset('storage/' . $blog->pdf_path) }}" target="_blank"
                                     class="text-danger"><i>Read Complete Report</i></a>
@@ -140,13 +139,13 @@
                                 {{ $blog->created_at->format('l, F jS Y') }}</div>
                             <div class="content">
                                 <p>
-                                    {!! $blog->content_1 !!}
+                                    {!! $blog->translated('content_1') !!}
                                 </p>
                             </div>
                         @else
                             <div class="content">
                                 <p>
-                                    {!! $blog->content_1 !!}
+                                    {!! $blog->translated('content_1') !!}
                                 </p>
                             </div>
                             <div class="date-author">Written by {{ $blog->user->name }} &nbsp; | &nbsp;
@@ -162,12 +161,12 @@
                             @endif
                             <div class="content">
                                 <p>
-                                    {!! $blog->content_2 !!}
+                                    {!! $blog->translated('content_2') !!}
                                 </p>
                                 @if (!$blog->pdf_path)
                                     <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3"
                                         style="margin-top: 30px; clear: both;">
-                                        <a href="{{ route('resource-hub') }}" class="cta-button">Get More Insights <span
+                                        <a href="{{ locale_route('resource-hub') }}" class="cta-button">Get More Insights <span
                                                 class="mx-2"></span> →</a>
                                     </div>
                                 @else
@@ -180,7 +179,7 @@
                                             </a>
                                         </div>
 
-                                        <a href="{{ route('resource-hub') }}" class="cta-button pdf">Get More Insights
+                                        <a href="{{ locale_route('resource-hub') }}" class="cta-button pdf">Get More Insights
                                             <span class="mx-2"></span> →</a>
                                     </div>
                                 @endif

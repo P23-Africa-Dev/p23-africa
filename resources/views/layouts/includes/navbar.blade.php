@@ -2,7 +2,7 @@
     <div id="">
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
-                <a href="{{ route('homepage') }}" class="navbar-brand logo">
+                <a href="{{ locale_route('homepage') }}" class="navbar-brand logo">
                     <img src="{{ asset('images/logo.png') }}" loading='lazy' alt="">
                 </a>
                 <button type="button" class="navbar-toggler" id="menuToggle" aria-label="Open navigation menu" aria-controls="sidebar" aria-expanded="false">
@@ -13,7 +13,7 @@
                 <div class="collapse navbar-collapse main-nav">
                     <ul class="navbar-nav me-auto ms-auto mb-2 mb-lg-0" id="nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('about') }}">Who we are</a>
+                            <a class="nav-link" href="{{ locale_route('about') }}">{{ __('nav.who_we_are') }}</a>
 
                             {{-- <div class="dropdown-menu dropdown-mega">
                                 <div class="container py-4" style="width: 70%; padding-left: 84px;">
@@ -33,7 +33,7 @@
                             </div> --}}
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('services') }}">Services</a>
+                            <a class="nav-link" href="{{ locale_route('services') }}">{{ __('nav.services') }}</a>
 
 
                             {{-- <div class="dropdown-menu dropdown-mega">
@@ -74,24 +74,26 @@
                             </div> --}}
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('event') }}">Events</a>
+                            <a class="nav-link" href="{{ locale_route('event') }}">{{ __('nav.events') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('resource-hub') }}">Resource hub</a>
+                            <a class="nav-link" href="{{ locale_route('resource-hub') }}">{{ __('nav.resource_hub') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('brn') }}">Business network</a>
+                            <a class="nav-link" href="{{ locale_route('brn') }}">{{ __('nav.business_network') }}</a>
                         </li>
                     </ul>
 
                     <div class="contact">
-                        <a href="{{ url('contact') }}" class="btn" id="btn">Contact us</a>
+                        <a href="{{ locale_route('contact') }}" class="btn" id="btn">{{ __('nav.contact_us') }}</a>
                     </div>
 
 
                     <div class="subscribe">
-                        <a href="{{ url('contact') }}" class="btn" id="btn">@yield('navbar_consultation_label', 'Book a Consultation')</a>
+                        <a href="{{ locale_route('contact') }}" class="btn" id="btn">@yield('navbar_consultation_label', __('nav.book_consultation'))</a>
                     </div>
+
+                    @include('partials.language-switcher', ['class' => 'locale-switcher--on-dark'])
 
                     <div class="social-icons">
                         <a href="https://linkedin.com/company/p23-africa/" target="_blank"><i
@@ -117,30 +119,31 @@
             <div id="mainMenu" class="main-menu">
                 <ul class="navbar-nav me-auto ms-auto mb-2 mb-lg-0" id="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('about') }}">Who We Are</a>
+                        <a class="nav-link" href="{{ locale_route('about') }}">{{ __('nav.who_we_are_title') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('services') }}">Services</a>
+                        <a class="nav-link" href="{{ locale_route('services') }}">{{ __('nav.services') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('event') }}">Events</a>
+                        <a class="nav-link" href="{{ locale_route('event') }}">{{ __('nav.events') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('resource-hub') }}">Resource Hub</a>
+                        <a class="nav-link" href="{{ locale_route('resource-hub') }}">{{ __('nav.resource_hub_title') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('brn') }}">Business network</a>
+                        <a class="nav-link" href="{{ locale_route('brn') }}">{{ __('nav.business_network') }}</a>
                     </li>
                 </ul>
 
                 <div class="contact">
-                    <a href="{{ url('contact') }}" class="btn" id="btn">Contact Us</a>
+                    <a href="{{ locale_route('contact') }}" class="btn" id="btn">{{ __('nav.contact_us_title') }}</a>
                 </div>
 
 
                 <div class="subscribe">
-                    <a href="#" class="btn" id="btn">Subscribe</a>
+                    <a href="{{ locale_route('contact') }}" class="btn" id="btn">{{ __('nav.subscribe') }}</a>
                 </div>
+                @include('partials.language-switcher', ['class' => 'locale-switcher--mobile'])
                 <div class="social-icons">
                     <a href="https://linkedin.com/company/p23-africa/" target="_blank"><i
                             class="fab fa-linkedin mx-1"></i></a>

@@ -1,13 +1,13 @@
 @extends('layouts.res-layout')
-@section('title', 'Archive | P23 Africa')
+@section('title', __('resources.archive_title'))
 
 @section('meta')
     <meta name="description"
-        content="Explore Expert Articles, Market Trends, And Practical Advice To Scale Your Business Across Africa And Beyond.">
+        content="{{ __('resources.meta') }}">
     <meta name="keywords"
-        content="Explore Expert Articles, Market Trends, And Practical Advice To Scale Your Business Across Africa And Beyond.">
+        content="{{ __('resources.meta') }}">
     <meta name="author" content="Nurudeen O. Daniju">
-    <meta name="generator" content="Explore Expert Articles, Market Trends, And Practical Advice To Scale Your Business Across Africa And Beyond | P23 Africa">
+    <meta name="generator" content="{{ __('resources.meta_generator') }}">
     <meta property="og:image" content="{{ asset('images/archive-header.png') }}">
 @endsection
 
@@ -53,11 +53,11 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-6 my-md-auto my-4">
-                        <h1>Explore Our Archive of Business <span>Blogs</span> And <span>Reports</span></h1>
+                        <h1>{!! __('resources.hero') !!}</h1>
 
                         <div class="search desktop">
                             <div class="search-bar">
-                                <input type="text" id="searchInput" placeholder="Search your preferred Blog"
+                                <input type="text" id="searchInput" placeholder="{{ __('resources.search_ph') }}"
                                     autocomplete="off">
                                 <div id="searchResults" class="search-dropdown d-none"></div>
                             </div>
@@ -68,7 +68,7 @@
                     </div>
                     <div class="search mobile">
                         <div class="search-bar">
-                            <input type="text" id="searchInput" placeholder="Search your preferred Blog"
+                            <input type="text" id="searchInput" placeholder="{{ __('resources.search_ph') }}"
                                 autocomplete="off">
                             <div id="searchResults" class="search-dropdown d-none"></div>
                         </div>
@@ -96,21 +96,21 @@
                 @foreach ($categories as $index => $category)
                     @if ($index < 5)
                         <!-- Box 1 -->
-                        <a href="{{ route('archive-list', ['category' => $category->name]) }}">
+                        <a href="{{ locale_route('archive-list', ['category' => $category->name]) }}">
                             <div class="box" style="background-image: url('{{ asset($backgrounds[$index]) }}');">
                                 <div class="text-wrapper {{ $index === 3 ? 'dark-text' : '' }}">
-                                    <p class="title">{{ $category->name }}</p>
-                                    <p class="description">{{ $category->description }}</p>
+                                    <p class="title">{{ $category->translated('name') }}</p>
+                                    <p class="description">{{ $category->translated('description') }}</p>
                                 </div>
                             </div>
                         </a>
                     @else
                         <!-- Default Style for Remaining Categories -->
-                        <a href="{{ route('archive-list', ['category' => $category->name]) }}">
+                        <a href="{{ locale_route('archive-list', ['category' => $category->name]) }}">
                             <div class="box default-box">
                                 <div class="text-wrapper">
-                                    <p class="title">{{ $category->name }}</p>
-                                    <p class="description">{{ $category->description }}</p>
+                                    <p class="title">{{ $category->translated('name') }}</p>
+                                    <p class="description">{{ $category->translated('description') }}</p>
                                 </div>
                             </div>
                         </a>
@@ -153,7 +153,7 @@
             </div>
 
             <div class="container btn-cd">
-                <a href="{{ route('archive-list') }}" class="btn">View all Archived Blogs</a>
+                <a href="{{ locale_route('archive-list') }}" class="btn">{{ __('resources.view_all') }}</a>
             </div>
         </section>
     </section>
@@ -170,7 +170,7 @@
             }
 
             $.ajax({
-                url: '{{ route('archive.search') }}',
+                url: '{{ locale_route('archive.search') }}',
                 method: 'GET',
                 data: {
                     query
@@ -179,7 +179,7 @@
                     if (response.html) {
                         $('#searchResults').html(response.html).removeClass('d-none');
                     } else {
-                        $('#searchResults').html('<div class="p-2">No results found</div>')
+                        $('#searchResults').html('<div class="p-2">{{ __('resources.no_results') }}</div>')
                             .removeClass('d-none');
                     }
                 }

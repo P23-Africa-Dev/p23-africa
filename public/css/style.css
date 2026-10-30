@@ -326,9 +326,12 @@ section.visible{
 .navbar #nav li a:hover::after {
     transform: scaleX(0.8);
 }
-.navbar #btn {
+.navbar #btn,
+.navbar #btn:hover,
+.navbar #btn:focus {
     border: 1px solid #fff;
     color: #fff;
+    text-decoration: none;
 }
 
 .main-nav .dropdown-mega {

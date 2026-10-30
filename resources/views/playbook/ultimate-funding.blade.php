@@ -915,8 +915,8 @@
         <div class="d-flex align-items-center">
             <i class="fas fa-check-circle me-2" style="color: #28a745; font-size: 1.2rem;"></i>
             <div>
-                <strong>Payment Successful!</strong><br>
-                <small>The Ultimate Funding Directory has been sent to your email.</small>
+                <strong>{{ __('playbook.pay_ok') }}</strong><br>
+                <small>{{ __('playbook.pay_sent') }}</small>
             </div>
             <button type="button" class="btn-close ms-auto"
                 onclick="document.getElementById('paymentSuccessAlert').style.display='none'"></button>
@@ -928,23 +928,22 @@
             <div class="intro-container">
                 <div class="intro-content">
                     <h1>
-                        The Ultimate Funding Directory for <span>African Entrepreneurs</span>
+                        {{ __('playbook.uf_for') }} <span>{{ __('playbook.uf_span') }}</span>
                     </h1>
 
                     <p>
-                        The most complete, Africa-focused funding and investor directory, curated to help entrepreneurs find
-                        the right capital faster.
+                        {{ __('playbook.uf_intro') }}
                     </p>
 
-                    <a href="{{ route('playbook.checkout') }}" class="cta-btn">Download Now</a>
+                    <a href="{{ locale_route('playbook.checkout') }}" class="cta-btn">{{ __('playbook.fr_download') }}</a>
                 </div>
 
                 <div class="intro-image desktop">
-                    <img src="{{ asset('/img/desktop-fund.png') }}" loading="lazy" alt="Entrepreneur using laptop" />
+                    <img src="{{ asset('/img/desktop-fund.png') }}" loading="lazy" alt="{{ __('playbook.alt_laptop') }}" />
 
                 </div>
                 <div class="intro-image mobile">
-                    <img src="{{ asset('/img/mobile-fund.png') }}" loading="lazy" alt="Entrepreneur using mobile" />
+                    <img src="{{ asset('/img/mobile-fund.png') }}" loading="lazy" alt="{{ __('playbook.alt_mobile') }}" />
                 </div>
             </div>
         </div>
@@ -954,9 +953,9 @@
         <div class="sales-container">
             <div class="book-container">
                 <div class="book-header">
-                    <h3>What you’ll Find in Our Funding Directory</h3>
+                    <h3>{{ __('playbook.uf_find') }}</h3>
                     <p>
-                        You’ve prepared your business. Now it’s time to find the right partners to fund your growth.
+                        {{ __('playbook.uf_prepared') }}
                     </p>
                 </div>
 
@@ -979,11 +978,10 @@
                 </div>
 
                 <p class="closing-text">
-                    This directory gives you direct access to active investors, global grant programs, and funding
-                    opportunities designed for African entrepreneurs.
+                    {{ __('playbook.uf_close') }}
                 </p>
 
-                <a href="{{ route('playbook.checkout') }}" class="cta-btn">Get Access to the Funding Directory</a>
+                <a href="{{ locale_route('playbook.checkout') }}" class="cta-btn">{{ __('playbook.uf_cta') }}</a>
             </div>
         </div>
     </section>
@@ -993,19 +991,17 @@
             <div class="content">
                 <div class="text-content">
                     <div class="text-content-upper">
-                        <h2>Get Access to the Ultimate Funding & Investor Directory</p>
+                        <h2>{{ __('playbook.fr_dir_access') }}</h2>
 
-                            <a href="{{ route('playbook.checkout') }}" class="learn-more">Get your Funding Directory
-                                Here!</a>
+                            <a href="{{ locale_route('playbook.checkout') }}" class="learn-more">{{ __('playbook.uf_here') }}</a>
                     </div>
 
                 </div>
                 <div class="info">
                     <div class="info-container">
-                        <h3>“Before this directory, finding serious investors was guesswork. Now I know exactly who to
-                            approach.”</h3>
+                        <h3>“{{ __('playbook.uf_quote') }}”</h3>
 
-                        <p>Amina K, Founder of a HealthTech Startup, Nigeria</p>
+                        <p>Amina K, {{ __('playbook.uf_role') }}</p>
 
                     </div>
 

@@ -162,7 +162,7 @@
 
             showEmailStatus('loading');
 
-            fetch('{{ route('brn.check-email') }}', {
+            fetch('{{ locale_route('brn.check-email') }}', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

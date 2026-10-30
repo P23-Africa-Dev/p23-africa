@@ -1,14 +1,14 @@
 @extends('layouts.res-layout')
-@section('title', 'Archive List | P23 Africa')
+@section('title', __('resources.list_title'))
 
 @section('meta')
     <meta name="description"
-        content="Explore Expert Articles, Market Trends, And Practical Advice To Scale Your Business Across Africa And Beyond.">
+        content="{{ __('resources.meta') }}">
     <meta name="keywords"
-        content="Explore Expert Articles, Market Trends, And Practical Advice To Scale Your Business Across Africa And Beyond.">
+        content="{{ __('resources.meta') }}">
     <meta name="author" content="Nurudeen O. Daniju">
     <meta name="generator"
-        content="Explore Expert Articles, Market Trends, And Practical Advice To Scale Your Business Across Africa And Beyond | P23 Africa">
+        content="{{ __('resources.meta_generator') }}">
     <meta property="og:image" content="{{ asset('images/archive-header.png') }}">
 @endsection
 
@@ -46,28 +46,28 @@
 
             <div class="search desktop mb-5">
                 <div class="search-bar">
-                    <input type="text" class="form-control" id="searchInput" placeholder="Search your preferred Blog"
+                    <input type="text" class="form-control" id="searchInput" placeholder="{{ __('resources.search_ph') }}"
                         autocomplete="off">
                     <div id="searchResults" class="search-dropdown d-none"></div>
                 </div>
             </div>
 
             @if ($category)
-                <h2>Showing results for "{{ $category->name }}"</h2>
+                <h2>{{ __('events.showing', ['name' => $category->translated('name')]) }}</h2>
             @endif
             <!-- Blog Card 1 -->
             {{-- @foreach ($olderBlogs as $blog) --}}
             @foreach ($blogs as $blog)
-                <a href="{{ route('resource-show', $blog->slug) }}" class="archive-link">
+                <a href="{{ locale_route('resource-show', ['slug' => $blog->slug]) }}" class="archive-link">
                     <div class="blog-card">
                         <div class="blog-text">
-                            <div class="blog-category">{{ $blog->category?->name ?? 'No Category' }}</div>
-                            <div class="blog-title">{{ $blog->title }}</div>
+                            <div class="blog-category">{{ $blog->category?->translated('name') ?? __('resources.no_category') }}</div>
+                            <div class="blog-title">{{ $blog->translated('title') }}</div>
                             <div class="blog-subtitle">
-                                {{ $blog->subtitle }}
+                                {{ $blog->translated('subtitle') }}
                             </div>
                             <div class="blog-meta">
-                                Written by {{ $blog->user->name }} &nbsp;&nbsp;&nbsp;&nbsp;
+                                {{ __('resources.written_by', ['name' => $blog->user->name]) }} &nbsp;&nbsp;&nbsp;&nbsp;
                                 {{ \Carbon\Carbon::parse($blog->created_at)->format('l, F jS Y') }}
                             </div>
                         </div>
@@ -84,11 +84,11 @@
             </div>
 
             <br>
-            <h4 class="mt-5">Other Categories:</h4>
+            <h4 class="mt-5">{{ __('resources.other_categories') }}</h4>
             <div class="category-list">
                 @foreach ($otherCategories as $cat)
-                    <a href="{{ route('archive-list', ['category' => $cat->name]) }}"
-                        class="mx-2">{{ $cat->name }}</a> *
+                    <a href="{{ locale_route('archive-list', ['category' => $cat->name]) }}"
+                        class="mx-2">{{ $cat->translated('name') }}</a> *
                 @endforeach
             </div>
             <!-- Blog Card 2 -->
@@ -109,7 +109,7 @@
 
             <!-- Call to Action -->
             <div class="cta-button">
-                <a href="{{ route('resource-hub') }}">Get Latest Insights →</a>
+                <a href="{{ locale_route('resource-hub') }}">{{ __('resources.latest') }}</a>
             </div>
         </div>
     </section>
@@ -126,7 +126,7 @@
             }
 
             $.ajax({
-                url: '{{ route('archive.search') }}',
+                url: '{{ locale_route('archive.search') }}',
                 method: 'GET',
                 data: {
                     query
@@ -135,7 +135,7 @@
                     if (response.html) {
                         $('#searchResults').html(response.html).removeClass('d-none');
                     } else {
-                        $('#searchResults').html('<div class="p-2">No results found</div>')
+                        $('#searchResults').html('<div class="p-2">{{ __('resources.no_results') }}</div>')
                             .removeClass('d-none');
                     }
                 }

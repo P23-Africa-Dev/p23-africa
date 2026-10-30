@@ -25,7 +25,8 @@ class ContactSubmission extends Model
         'last_activity_at',
         'field_interactions',
         'draft_created_at',
-        'submitted_at'
+        'submitted_at',
+        'locale',
     ];
 
     protected $casts = [
@@ -75,7 +76,7 @@ class ContactSubmission extends Model
      */
     public function getCompletionPercentage()
     {
-        $requiredFields = ['name', 'company_name', 'email', 'phone', 'services', 'message', 'budget_range'];
+        $requiredFields = ['name', 'company_name', 'email', 'phone', 'services', 'message'];
         $filledFields = 0;
 
         foreach ($requiredFields as $field) {

@@ -3,13 +3,13 @@
 
 @section('meta')
     <meta name="description"
-        content="Download the P23 Africa's Founders Playbook - Your comprehensive guide to building and scaling successful businesses across Africa. Free expert insights, strategies, and actionable advice.">
+        content="Download the {{ __('playbook.brand') }} Founders Playbook - Your comprehensive guide to building and scaling successful businesses across Africa. Free expert insights, strategies, and actionable advice.">
     <meta name="keywords"
         content="founders playbook, Africa business guide, startup guide, business scaling, entrepreneurship Africa, P23 Africa, business strategy, market expansion">
     <meta name="author" content="P23 Africa">
-    <meta name="generator" content="P23 Africa's Founders Playbook - Free Business Guide">
+    <meta name="generator" content="{{ __('playbook.brand') }} Founders Playbook - Free Business Guide">
     <meta property="og:image" content="{{ asset('images/playbook-og.png') }}">
-    <meta property="og:title" content="P23 Africa's Founders Playbook | Free Download">
+    <meta property="og:title" content="{{ __('playbook.brand') }} Founders Playbook | Free Download">
     <meta property="og:description"
         content="Your comprehensive guide to building and scaling successful businesses across Africa">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -560,21 +560,20 @@
         <div class="container pt-5">
             <div class="row align-items-center">
                 <div class="col-lg-7 mb-5 mb-lg-0">
-                    <h1>P23 Africa's Founders Playbook</h1>
+                    <h1>{{ __('playbook.title') }}</h1>
                     <p class="subtitle">
-                        Your comprehensive guide to building and scaling successful businesses across Africa.
-                        Get expert insights, proven strategies, and actionable advice from successful entrepreneurs.
+                        {{ __('playbook.subtitle') }}
                     </p>
                     <div class="d-flex flex-column flex-sm-row gap-3 align-items-start">
                         <button id="downloadPlaybookBtn" class="btn-download-hero">
-                            <span id="playbookBtnText">📥 Download Free Playbook</span>
-                            <span id="playbookCountdown" style="display: none;">Sending... (<span
+                            <span id="playbookBtnText">📥 {{ __('playbook.download') }}</span>
+                            <span id="playbookCountdown" style="display: none;">{{ __('playbook.sending') }} (<span
                                     id="countdownTimer">10</span>s)</span>
                         </button>
                         <div class="d-flex align-items-center gap-2 mt-5 position-relative">
-                            <span class="text-white-50">✅ Instant Download</span>
+                            <span class="text-white-50">✅ {{ __('playbook.instant') }}</span>
                             <span class="text-white-50">•</span>
-                            <span class="text-white-50">🔒 No Spam</span>
+                            <span class="text-white-50">🔒 {{ __('playbook.no_spam') }}</span>
                         </div>
                     </div>
                 </div>
@@ -642,7 +641,7 @@
                                     text-align: center;
                                     margin-bottom: 10px;
                                 ">
-                                    P23 Africa's</div>
+                                    {{ __('playbook.brand') }}</div>
 
                                 <div
                                     style="
@@ -653,7 +652,7 @@
                                     margin-bottom: 20px;
                                     line-height: 1.2;
                                 ">
-                                    FOUNDERS<br>PLAYBOOK</div>
+                                    {{ __('playbook.founders') }}<br>{{ __('playbook.playbook_word') }}</div>
 
                                 <div
                                     style="
@@ -671,7 +670,7 @@
                                     text-align: center;
                                     line-height: 1.6;
                                 ">
-                                    Your Complete Guide to Building & Scaling Successful Businesses in Africa</div>
+                                    {{ __('playbook.cover') }}</div>
 
                                 <div
                                     style="
@@ -726,12 +725,12 @@
     <!-- Features Section -->
     {{-- <section class="features-section">
         <div class="container">
-            <h2 class="section-title">What You'll Discover</h2>
+            <h2 class="section-title">{{ __('playbook.discover') }}</h2>
             <div class="row">
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card">
                         <div class="feature-icon">🚀</div>
-                        <h3 class="feature-title">Startup Fundamentals</h3>
+                        <h3 class="feature-title">{{ __('playbook.fundamentals') }}</h3>
                         <p class="feature-description">
                             Learn the essential building blocks for launching a successful business in Africa,
                             from ideation to execution.
@@ -741,7 +740,7 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card">
                         <div class="feature-icon">📈</div>
-                        <h3 class="feature-title">Growth Strategies</h3>
+                        <h3 class="feature-title">{{ __('playbook.growth') }}</h3>
                         <p class="feature-description">
                             Discover proven methods to scale your business across African markets with
                             sustainable growth tactics.
@@ -751,7 +750,7 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card">
                         <div class="feature-icon">💰</div>
-                        <h3 class="feature-title">Funding & Investment</h3>
+                        <h3 class="feature-title">{{ __('playbook.funding') }}</h3>
                         <p class="feature-description">
                             Navigate the African investment landscape and learn how to secure funding
                             for your ventures.
@@ -761,7 +760,7 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card">
                         <div class="feature-icon">🌍</div>
-                        <h3 class="feature-title">Market Expansion</h3>
+                        <h3 class="feature-title">{{ __('playbook.expansion') }}</h3>
                         <p class="feature-description">
                             Strategic insights on expanding your business across different African
                             markets and cultures.
@@ -771,7 +770,7 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card">
                         <div class="feature-icon">🤝</div>
-                        <h3 class="feature-title">Partnership Building</h3>
+                        <h3 class="feature-title">{{ __('playbook.partnerships') }}</h3>
                         <p class="feature-description">
                             Build strategic partnerships and networks that accelerate your business
                             growth across the continent.
@@ -781,7 +780,7 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card">
                         <div class="feature-icon">⚡</div>
-                        <h3 class="feature-title">Digital Transformation</h3>
+                        <h3 class="feature-title">{{ __('playbook.digital') }}</h3>
                         <p class="feature-description">
                             Leverage technology and digital tools to optimize operations and
                             reach customers effectively.
@@ -795,7 +794,7 @@
     <!-- Highlights Section -->
     {{-- <section class="highlights-section">
         <div class="container">
-            <h2 class="section-title">Key Highlights from the Playbook</h2>
+            <h2 class="section-title">{{ __('playbook.highlights') }}</h2>
             <div class="row">
                 <div class="col-lg-6">
                     <div class="highlight-item">
@@ -868,7 +867,7 @@
     <!-- Testimonials Section -->
     {{-- <section class="testimonial-section">
         <div class="container">
-            <h2 class="section-title">What Entrepreneurs Are Saying</h2>
+            <h2 class="section-title">{{ __('playbook.saying') }}</h2>
             <div class="row">
                 <div class="col-lg-4">
                     <div class="testimonial-card">
@@ -907,9 +906,9 @@
     <!-- CTA Section -->
     {{-- <section class="cta-section">
         <div class="container text-center">
-            <h2 class="cta-title">Ready to Transform Your Business?</h2>
+            <h2 class="cta-title">{{ __('playbook.ready') }}</h2>
             <p class="cta-subtitle">
-                Join thousands of successful entrepreneurs who have downloaded the P23 Africa's Founders Playbook
+                Join thousands of successful entrepreneurs who have downloaded the {{ __('playbook.brand') }} Founders Playbook
             </p>
             <button id="ctaDownloadBtn" class="btn-download-hero">
                 📥 Get Your Free Copy Now
@@ -922,34 +921,33 @@
         <div class="playbook-popup-content">
             <span class="close-playbook-popup">&times;</span>
             <div class="playbook-form-container">
-                <h3 class="playbook-title">Get Your Free Founders Playbook</h3>
-                <p class="playbook-subtitle">Enter your details to receive the P23 Africa's Founders Playbook directly in
-                    your inbox.</p>
+                <h3 class="playbook-title">{{ __('playbook.free') }}</h3>
+                <p class="playbook-subtitle">{{ __('playbook.inbox') }}</p>
 
                 <form id="playbookForm" class="playbook-form">
                     @csrf
                     <div class="form-group-playbook">
-                        <label for="playbook_name">Full Name *</label>
+                        <label for="playbook_name">{{ __('playbook.full_name') }}</label>
                         <input type="text" id="playbook_name" name="name" required>
                         <div class="error-message" id="nameError"></div>
                     </div>
 
                     <div class="form-group-playbook">
-                        <label for="playbook_email">Email Address *</label>
+                        <label for="playbook_email">{{ __('playbook.email') }}</label>
                         <input type="email" id="playbook_email" name="email" required>
                         <div class="error-message" id="emailError"></div>
                     </div>
 
                     <div class="form-group-playbook">
-                        <label for="playbook_company">Company Name *</label>
+                        <label for="playbook_company">{{ __('playbook.company') }}</label>
                         <input type="text" id="playbook_company" name="company" required>
                         <div class="error-message" id="companyError"></div>
                     </div>
 
                     <button type="submit" class="submit-playbook-btn" id="submitPlaybookBtn">
-                        <span class="submit-text">Get My Playbook</span>
+                        <span class="submit-text">{{ __('playbook.get_mine') }}</span>
                         <span class="submit-loading" style="display: none;">
-                            <span class="spinner"></span> Submitting...
+                            <span class="spinner"></span> {{ __('playbook.submitting') }}
                         </span>
                     </button>
                 </form>
@@ -1004,7 +1002,7 @@
 
                 // Validate name
                 if (!name.value.trim()) {
-                    showError('nameError', 'Full name is required');
+                    showError('nameError', @json(__('playbook.name_required')));
                     name.classList.add('error');
                     isValid = false;
                 }
@@ -1012,18 +1010,18 @@
                 // Validate email
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!email.value.trim()) {
-                    showError('emailError', 'Email address is required');
+                    showError('emailError', @json(__('playbook.email_required')));
                     email.classList.add('error');
                     isValid = false;
                 } else if (!emailRegex.test(email.value.trim())) {
-                    showError('emailError', 'Please enter a valid email address');
+                    showError('emailError', @json(__('playbook.email_invalid')));
                     email.classList.add('error');
                     isValid = false;
                 }
 
                 // Validate company
                 if (!company.value.trim()) {
-                    showError('companyError', 'Company name is required');
+                    showError('companyError', @json(__('playbook.company_required')));
                     company.classList.add('error');
                     isValid = false;
                 }
@@ -1101,7 +1099,7 @@
                         btnText.style.display = 'inline';
                         countdown.style.display = 'none';
                         playbookBtn.disabled = false;
-                        btnText.textContent = 'Playbook Sent! Check Your Email';
+                        btnText.textContent = '{{ __('playbook.sent_btn') }}';
 
                         // Show toast notification immediately when countdown completes
                         if (window.playbookSubmissionResult) {
@@ -1111,14 +1109,14 @@
                                 clearStoredFormData();
 
                                 showToast(
-                                    'Playbook Sent Successfully!',
-                                    'The P23 Africa\'s Founders Playbook has been sent to your email. Please check your inbox.',
+                                    @json(__('playbook.sent_title')),
+                                    @json(__('playbook.sent_body')),
                                     'success'
                                 );
                             } else {
                                 showToast(
-                                    'Submission Failed',
-                                    data.message || 'An unexpected error occurred. Please try again.',
+                                    @json(__('playbook.fail_title')),
+                                    data.message || @json(__('playbook.fail_body')),
                                     'error',
                                     true
                                 );
@@ -1154,15 +1152,15 @@
                                         if (data.success) {
                                             clearStoredFormData();
                                             showToast(
-                                                'Playbook Sent Successfully!',
-                                                'The P23 Africa\'s Founders Playbook has been sent to your email. Please check your inbox.',
+                                                @json(__('playbook.sent_title')),
+                                                @json(__('playbook.sent_body')),
                                                 'success'
                                             );
                                         } else {
                                             showToast(
-                                                'Submission Failed',
+                                                @json(__('playbook.fail_title')),
                                                 data.message ||
-                                                'An unexpected error occurred. Please try again.',
+                                                @json(__('playbook.fail_body')),
                                                 'error',
                                                 true
                                             );
@@ -1183,8 +1181,8 @@
 
                                     setTimeout(() => {
                                         showToast(
-                                            'Request Taking Longer Than Expected',
-                                            'Your playbook request is still being processed. Please check your email in a few minutes.',
+                                            @json(__('playbook.slow_title')),
+                                            @json(__('playbook.slow_body')),
                                             'success'
                                         );
                                     }, 500);
@@ -1194,8 +1192,8 @@
 
                         // Reset button text after 6 seconds (only if success)
                         setTimeout(() => {
-                            if (btnText.textContent === 'Playbook Sent! Check Your Email') {
-                                btnText.textContent = '📥 Download Free Playbook';
+                            if (btnText.textContent === '{{ __('playbook.sent_btn') }}') {
+                                btnText.textContent = '📥 {{ __('playbook.download') }}';
                             }
                         }, 6000);
                     }
@@ -1228,7 +1226,7 @@
                             margin-top: 8px;
                             transition: background 0.2s ease;
                         " onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">
-                            Try Again
+                            {{ __('playbook.try_again') }}
                         </button>
                     ` : '';
 
@@ -1323,7 +1321,7 @@
                 });
 
                 // Submit to server
-                fetch('{{ route('playbook.download') }}', {
+                fetch('{{ locale_route('playbook.download') }}', {
                         method: 'POST',
                         headers: {
                             'X-CSRF-TOKEN': formDataObject._token,
@@ -1381,13 +1379,13 @@
                         window.playbookSubmissionResult = null;
 
                         // Show error toast immediately
-                        let errorTitle = 'Submission Failed';
+                        let errorTitle = @json(__('playbook.fail_title'));
                         let errorMessage = 'An error occurred. Please try again.';
 
                         if (error.message.includes('Validation Error:')) {
                             errorTitle = 'Form Validation Error';
                             errorMessage = error.message.replace('Validation Error: ', '');
-                            showToast(errorTitle, errorMessage + ' Click "Try Again" to fix your form.',
+                            showToast(errorTitle, errorMessage + ' Click "{{ __('playbook.try_again') }}" to fix your form.',
                                 'error', true);
                         } else if (error.message.includes('Server Error:')) {
                             errorTitle = 'Server Error';
@@ -1421,7 +1419,7 @@
                 btnText.style.display = 'inline';
                 countdown.style.display = 'none';
                 playbookBtn.disabled = false;
-                btnText.textContent = '📥 Download Free Playbook';
+                btnText.textContent = '📥 {{ __('playbook.download') }}';
             }
         });
     </script>

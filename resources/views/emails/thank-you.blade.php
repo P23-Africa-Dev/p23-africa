@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="UTF-8">
@@ -306,17 +306,14 @@
             <div class="email-icon">
                 <img src="https://www.p23africa.com/images/email-envelope.png" alt="P23 Africa Email Icon" />
             </div> 
-            <h1 class="greeting">Hello {{ $data['name'] }},</h1>
-            <!--<h1 class="greeting">Hello Touka Fernande,</h1>-->
-            <p class="subtitle">Thank you for reaching out to <br>P23 Africa.</p>
+            <h1 class="greeting">{{ __('mail.hello', ['name' => $data['name']]) }}</h1>
+            <p class="subtitle">{!! __('mail.subtitle') !!}</p>
         </div>
 
         <div class="content px-md-5">
-            <h3>We acknowledge receipt of your inquiry regarding business consultation for your organization.</h3>
+            <h3>{{ __('mail.ack') }}</h3>
 
-            <p>Our team is currently reviewing your request to ensure we understand your business needs thoroughly.
-                Within the <strong>next 24-48 hours</strong>, one of our representatives will reach out with tailored
-                next steps and a few discovery questions to help us align our approach with your objectives.</p>
+            <p>{{ __('mail.review') }}</p>
 
             {{-- @if (!empty($data['services']) && is_array($data['services']) && count($data['services']) > 0)
                 <div class="services-list">
@@ -331,19 +328,15 @@
 
             @if (!empty($data['budget_range']))
                 <div class="budget-info">
-                    <p><strong>Your Budget Range:</strong> ${{ number_format($data['budget_range']) }}</p>
+                    <p><strong>{{ __('mail.budget') }}</strong> ${{ number_format($data['budget_range']) }}</p>
                 </div>
             @endif --}}
 
-            <p>Should you have any relevant company profile, reports, or background information to share, kindly send
-                them to <a href="mailto:contact@p23africa.com"
-                    style="color: #D65F5F; text-decoration: none;"><i>contact@p23africa.com</i></a> ahead of the call to
-                help
-                us prepare adequately.</p>
+            <p>{{ __('mail.prepare') }} <a href="mailto:contact@p23africa.com"
+                    style="color: #D65F5F; text-decoration: none;"><i>contact@p23africa.com</i></a></p>
 
             <div class="highlight-box">
-                <p>We appreciate your interest in working with P23 Africa and look forward to helping your business grow
-                    strategically.</p>
+                <p>{{ __('mail.appreciate') }}</p>
             </div>
 
             <div class="signature">
@@ -357,11 +350,11 @@
             <div class="cta-content">
             <div class="cta-text">
                 {{-- <h2 class="cta-title">Where Top CEOs <span style="color: #1DEAA5;">Connect and Grow</span></h2> --}}
-                <h2 class="cta-title">Join NOEL</h2>
-                <p class="cta-subtitle">A private network for vetted African CEOs who are matched for strategic deals and partnerships.</p>
+                <h2 class="cta-title">{{ __('mail.join') }}</h2>
+                <p class="cta-subtitle">{{ __('mail.network') }}</p>
             </div>
             <div class="cta-button-wrapper">
-                <a href="https://p23africa.com/noel54/interest-form" class="contact-button">Register Now</a>
+                <a href="https://p23africa.com/noel54/interest-form" class="contact-button">{{ __('mail.register') }}</a>
             </div>
             </div>
         </div>

@@ -1,0 +1,60 @@
+5: <meta name="description"
+6: content="Book a personalized business consultation with P23 Africa. Get expert guidance on funding readiness, market positioning, strategy development, and investor engagement tailored to African entrepreneurs and growing businesses.">
+7: <meta name="keywords"
+8: content="book consultation, business consultation, P23 Africa, African entrepreneurs, business strategy, funding readiness, investor preparation, growth consulting, startup advisory, business development Africa">
+9: P23 Africa
+10: Book Consultation | P23 Africa
+12: Book a Consultation | P23 Africa
+13: <meta property="og:description"
+14: content="Schedule a one-on-one consultation to strengthen your business strategy, improve funding readiness, and unlock growth opportunities with expert advisors at P23 Africa.">
+15: {{ asset('img/mobile.png') }}
+16: website
+18: {{ csrf_token() }}
+31: Schedule Your Consultation
+35: Pick a convenient date and time for your session. You’ll
+36: receive a confirmation email once it’s booked.
+48: Submit
+63: Select Day
+72: You cannot go before the current month
+78: November
+81: 2025
+92: Mon
+93: Tue
+94: Wed
+95: Thu
+96: Fri
+97: Sat
+98: Sun
+105: Selected Date:
+113: Set time
+114: <div class="custom-dropdown timeZone" id="dropdown-timezone" tabindex="0"
+115: role="listbox" aria-label="Timezone">
+117: GMT
+123: GMT
+124: UTC
+125: WAT
+131: ⏰ Same-day bookings must be scheduled at least one hour in advance.
+177: Selected Date:
+181: Selected Time:
+188: Selected Time:
+194: Submit
+202: Call For Help
+221: <img class="chat-inset-pattern" src=" "
+222: alt="" />
+228: <img class="arr-left" src=" "
+229: alt="" />
+235: P23 Africa
+236: Online
+252: Hey 👋
+257: Welcome to P23 Africa, what can we help you with?
+265: <input id="chat-input" placeholder="Type your message here"
+266: maxlength="1000" />
+268: <img class="arr-left" src=" "
+269: alt="" />
+283: <form id="scheduleForm" method="POST" action=" "
+284: style="display: none;">
+299: consultation confirmed!
+300: A confirmation email containing the date, time, and Google Meet link has been sent to your registered
+301: email address.
+306: Open customer .com
+309: Return to Homepage

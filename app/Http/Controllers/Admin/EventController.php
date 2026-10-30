@@ -116,6 +116,10 @@ class EventController extends Controller
 
         // Event::create($request->all());
         $event = Event::create($validated);
+        $event->syncTranslations(
+            $this->cleanEventTranslations($request->input('translations', [])),
+            ['title', 'subtitle', 'description', 'venue']
+        );
 
         activity()
             ->causedBy(Auth::user())
@@ -226,6 +230,10 @@ class EventController extends Controller
                 &$updateHistory
             ) {
                 $event->update($validated);
+                $event->syncTranslations(
+                    $this->cleanEventTranslations($request->input('translations', [])),
+                    ['title', 'subtitle', 'description', 'venue']
+                );
 
                 $updateHistory = EventUpdateHistory::create([
                     'event_id' => $event->id,
@@ -485,5 +493,18 @@ class EventController extends Controller
         ];
 
         return response()->json($fields);
+    }
+
+    private function cleanEventTranslations(array $translations): array
+    {
+        foreach (['fr', 'de', 'nl'] as $locale) {
+            if (!isset($translations[$locale]['description'])) {
+                continue;
+            }
+
+            $translations[$locale]['description'] = Purifier::clean($translations[$locale]['description']);
+        }
+
+        return $translations;
     }
 }

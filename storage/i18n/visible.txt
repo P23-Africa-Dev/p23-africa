@@ -1,0 +1,1366 @@
+
+===== brn-form.blade.php (481) =====
+Let's start with your basic details
+NOEL transforms executive networking from casual connections to strategic growth. Our platform facilitates verified, high-value introductions between senior leaders and investors. Focus on building relationships that drive real business outcomes.
+Basic Information
+Credibility Check
+Industry Preference
+Industry Insight
+Stand out among other businesses
+Boost visibility for your matches
+Full Name
+Title
+Title, e.g CEO
+Founder
+Investor
+Managing Director
+Director
+Manager
+Other
+Official Business Name
+Email Address
+✓ Email available
+⏳ Validating...
+Phone Number
+Afghanistan (+93)
+Albania (+355)
+Algeria (+213)
+Andorra (+376)
+Angola (+244)
+Argentina (+54)
+Armenia (+374)
+Australia (+61)
+Austria (+43)
+Azerbaijan (+994)
+Bahrain (+973)
+Bangladesh (+880)
+Belarus (+375)
+Belgium (+32)
+Benin (+229)
+Bhutan (+975)
+Bolivia (+591)
+Brazil (+55)
+Brunei (+673)
+Bulgaria (+359)
+Burkina Faso (+226)
+Burundi (+257)
+Cambodia (+855)
+Cameroon (+237)
+Canada (+1)
+Cape Verde (+238)
+Central African Republic (+236)
+Chad (+235)
+Chile (+56)
+China (+86)
+Colombia (+57)
+Comoros (+269)
+Congo (+242)
+DR Congo (+243)
+Costa Rica (+506)
+Ivory Coast (+225)
+Croatia (+385)
+Cuba (+53)
+Cyprus (+357)
+Czech Republic (+420)
+Denmark (+45)
+Djibouti (+253)
+Ecuador (+593)
+Egypt (+20)
+El Salvador (+503)
+Equatorial Guinea (+240)
+Eritrea (+291)
+Estonia (+372)
+Ethiopia (+251)
+Fiji (+679)
+Finland (+358)
+France (+33)
+Gabon (+241)
+Gambia (+220)
+Georgia (+995)
+Germany (+49)
+Ghana (+233)
+Greece (+30)
+Guatemala (+502)
+Guinea (+224)
+Guinea-Bissau (+245)
+Guyana (+592)
+Haiti (+509)
+Honduras (+504)
+Hong Kong (+852)
+Hungary (+36)
+Iceland (+354)
+India (+91)
+Indonesia (+62)
+Iran (+98)
+Iraq (+964)
+Ireland (+353)
+Israel (+972)
+Italy (+39)
+Japan (+81)
+Jordan (+962)
+Kazakhstan (+7)
+Kenya (+254)
+Kiribati (+686)
+North Korea (+850)
+South Korea (+82)
+Kuwait (+965)
+Kyrgyzstan (+996)
+Laos (+856)
+Latvia (+371)
+Lebanon (+961)
+Lesotho (+266)
+Liberia (+231)
+Libya (+218)
+Liechtenstein (+423)
+Lithuania (+370)
+Luxembourg (+352)
+Macau (+853)
+North Macedonia (+389)
+Madagascar (+261)
+Malawi (+265)
+Malaysia (+60)
+Maldives (+960)
+Mali (+223)
+Malta (+356)
+Marshall Islands (+692)
+Mauritania (+222)
+Mauritius (+230)
+Mexico (+52)
+Micronesia (+691)
+Moldova (+373)
+Monaco (+377)
+Mongolia (+976)
+Montenegro (+382)
+Morocco (+212)
+Mozambique (+258)
+Myanmar (+95)
+Namibia (+264)
+Nauru (+674)
+Nepal (+977)
+Netherlands (+31)
+New Zealand (+64)
+Nicaragua (+505)
+Niger (+227)
+Nigeria (+234)
+Niue (+683)
+Norfolk Island (+672)
+Norway (+47)
+Oman (+968)
+Pakistan (+92)
+Palau (+680)
+Panama (+507)
+Papua New Guinea (+675)
+Paraguay (+595)
+Peru (+51)
+Philippines (+63)
+Poland (+48)
+Portugal (+351)
+Qatar (+974)
+Romania (+40)
+Russia (+7)
+Rwanda (+250)
+Samoa (+685)
+San Marino (+378)
+São Tomé and Príncipe (+239)
+Saudi Arabia (+966)
+Senegal (+221)
+Serbia (+381)
+Seychelles (+248)
+Sierra Leone (+232)
+Singapore (+65)
+Slovakia (+421)
+Slovenia (+386)
+Solomon Islands (+677)
+Somalia (+252)
+South Africa (+27)
+South Sudan (+211)
+Spain (+34)
+Sri Lanka (+94)
+Sudan (+249)
+Suriname (+597)
+Eswatini (+268)
+Sweden (+46)
+Switzerland (+41)
+Syria (+963)
+Taiwan (+886)
+Tajikistan (+992)
+Tanzania (+255)
+Thailand (+66)
+Timor-Leste (+670)
+Togo (+228)
+Tonga (+676)
+Tunisia (+216)
+Turkey (+90)
+Turkmenistan (+993)
+Tuvalu (+688)
+Uganda (+256)
+Ukraine (+380)
+United Arab Emirates (+971)
+United Kingdom (+44)
+United States (+1)
+Uruguay (+598)
+Uzbekistan (+998)
+Vanuatu (+678)
+Vatican City (+39)
+Venezuela (+58)
+Vietnam (+84)
+Yemen (+967)
+Zambia (+260)
+Zimbabwe (+263)
+Proceed
+Company Registration Number
+Country Of Registration
+Select your country
+Afghanistan
+Albania
+Algeria
+Andorra
+Angola
+Argentina
+Armenia
+Australia
+Austria
+Azerbaijan
+Bahamas
+Bahrain
+Bangladesh
+Barbados
+Belarus
+Belgium
+Belize
+Benin
+Bhutan
+Bolivia
+Bosnia and Herzegovina
+Botswana
+Brazil
+Brunei
+Bulgaria
+Burkina Faso
+Burundi
+Cambodia
+Cameroon
+Canada
+Cape Verde
+Central African Republic
+Chad
+Chile
+China
+Colombia
+Comoros
+Congo
+Costa Rica
+Croatia
+Cuba
+Cyprus
+Czech Republic
+Denmark
+Djibouti
+Dominica
+Dominican Republic
+East Timor
+Ecuador
+Egypt
+El Salvador
+Equatorial Guinea
+Eritrea
+Estonia
+Ethiopia
+Fiji
+Finland
+France
+Gabon
+Gambia
+Georgia
+Germany
+Ghana
+Greece
+Grenada
+Guatemala
+Guinea
+Guinea-Bissau
+Guyana
+Haiti
+Honduras
+Hungary
+Iceland
+India
+Indonesia
+Iran
+Iraq
+Ireland
+Israel
+Italy
+Ivory Coast
+Jamaica
+Japan
+Jordan
+Kazakhstan
+Kenya
+Kiribati
+North Korea
+South Korea
+Kuwait
+Kyrgyzstan
+Laos
+Latvia
+Lebanon
+Lesotho
+Liberia
+Libya
+Liechtenstein
+Lithuania
+Luxembourg
+Macedonia
+Madagascar
+Malawi
+Malaysia
+Maldives
+Mali
+Malta
+Marshall Islands
+Mauritania
+Mauritius
+Mexico
+Micronesia
+Moldova
+Monaco
+Mongolia
+Montenegro
+Morocco
+Mozambique
+Myanmar
+Namibia
+Nauru
+Nepal
+Netherlands
+New Zealand
+Nicaragua
+Niger
+Nigeria
+Norway
+Oman
+Pakistan
+Palau
+Panama
+Papua New Guinea
+Paraguay
+Peru
+Philippines
+Poland
+Portugal
+Qatar
+Romania
+Russia
+Rwanda
+Saint Kitts and Nevis
+Saint Lucia
+Saint Vincent and the Grenadines
+Samoa
+San Marino
+Sao Tome and Principe
+Saudi Arabia
+Senegal
+Serbia
+Seychelles
+Sierra Leone
+Singapore
+Slovakia
+Slovenia
+Solomon Islands
+Somalia
+South Africa
+South Sudan
+Spain
+Sri Lanka
+Sudan
+Suriname
+Swaziland
+Sweden
+Switzerland
+Syria
+Taiwan
+Tajikistan
+Tanzania
+Thailand
+Togo
+Tonga
+Trinidad and Tobago
+Tunisia
+Turkey
+Turkmenistan
+Tuvalu
+Uganda
+Ukraine
+United Arab Emirates
+United Kingdom
+United States
+Uruguay
+Uzbekistan
+Vanuatu
+Vatican City
+Venezuela
+Vietnam
+Yemen
+Zambia
+Zimbabwe
+Company Website or Social Handle
+LinkedIn Profile
+I don’t have a LinkedIn account.
+Year of Establishment
+Return
+What industry does your business operate in?
+Select your industry
+Technology & Digital Services
+Financial & Professional Services
+Manufacturing & Industrial
+Healthcare & Pharmaceuticals
+Energy & Utilities
+Retail & Consumer Goods
+Logistics & Transportation
+Agriculture & Food Processing
+Real Estate & Construction
+Media & Communications
+Education & Training
+Government & Public Services
+Environmental & Specialized Services
+Numbers of Employees
+Select Employees range
+Approximate annual revenue
+(confidential – for internal use only)
+Select revenue range
+Below $1M
+$1M - $5M
+$5M+
+What value can your company offer to other CEOs in the network?
+Briefly describe what your company does and who your clients/customers are (max 150 words)
+What are you most interested in from this network?
+Select interest
+Networking
+Verified Business Leads
+Automated Sales Tools
+Consulting Support
+If your business isn’t eligible for the CEO Referral Network at this time, would you be interested in joining our B2B platform to access:
+Verified business leads
+Automated sales tools
+Growth audits and consulting support?
+Yes, I'm interested
+Maybe, send me more information
+No, not interested
+Submit
+Done
+Contact Information
+hello@p23africa.com
+London UK
+// FORM MANAGEMENT AND VALIDATION document.addEventListener('DOMContentLoaded', function() { const form = document.getElementById('brnForm'); const submitBtn = document.getElementById('submitBtn'); const btnText = submitBtn.querySelector('.btn-text'); const spinner = submitBtn.querySelector('.spinner-border'); const responseMessage = document.getElementById('responseMessage'); const modal = new bootstrap.Modal(document.getElementById('responseModal')); // Form persistence constants const FORM_STORAGE_KEY = 'brn_form_data'; const STEP_STORAGE_KEY = 'brn_current_step'; // Save form data to localStorage function saveFormData() { const formData = {}; const formElements = form.querySelectorAll('input, select, textarea'); formElements.forEach(element => { if (element.type === 'radio' || element.type === 'checkbox') { if (element.checked) { formData[element.name] = element.value; } } else if (element.name && element.value) { formData[element.name] = element.value; } }); // Save current step using currentStep variable const stepNames = ['form1', 'form2', 'form3', 'form4']; if (currentStep >= 0 && currentStep
+`; countryCodeInput.value = ""; phonePrefix.textContent = "--"; phoneInput.disabled = true; phoneInput.placeholder = "Select country code first"; } }); // Select country list.querySelectorAll("li:not(.no-country)").forEach(item => { item.addEventListener("click", () => { const code = item.dataset.code; const flag = item.querySelector("img").src; selectedFlag.innerHTML = `
+`; countryCodeInput.value = code; phonePrefix.textContent = code; phoneInput.disabled = false; phoneInput.placeholder = `Enter phone number`; countryDropdown.style.display = "none"; countryDropdown.classList.remove("open"); arrow.classList.remove("rotate-up"); }); }); // Close dropdown on outside click document.addEventListener("click", () => { countryDropdown.style.display = "none"; countryDropdown.classList.remove("open"); arrow.classList.remove("rotate-up"); }); // FOR STEP 2 - COUNTRY OF REGISTRATIOON const countrySearchInput = document.getElementById('countrySearchReg'); const optionsContainer = document.querySelector('#countryReg-options .custom-options-scrollable'); const allOptions = Array.from(optionsContainer.querySelectorAll('.custom-option')); // Create a "no results" element const noResults = document.createElement('span'); noResults.className = 'no-results'; noResults.textContent = 'No results found'; noResults.style.display = 'none'; noResults.style.color = '#ffff'; noResults.style.fontSize = '12px'; noResults.style.padding = '8px 12px'; optionsContainer.appendChild(noResults); // Listen for input in the search box countrySearchInput.addEventListener('input', function() { const query = this.value.toLowerCase().trim(); let hasVisible = false; allOptions.forEach(option => { const text = option.dataset.value.toLowerCase(); if (text.includes(query)) { option.style.display = 'block'; hasVisible = true; } else { option.style.display = 'none'; } }); // Show "no results" message if nothing matches noResults.style.display = hasVisible ? 'none' : 'block'; }); /************************************* * INDUSTRY → CATEGORY HANDLER *************************************/ const industryCategories = { "Technology & Digital Services": [ "Software and SaaS Solutions", "FinTech and Digital Payment Systems", "Cybersecurity and Data Protection Services", "Cloud Computing and IT Infrastructure", "Artificial Intelligence and Machine Learning", "Telecommunications and Network Services", "E-commerce and Digital Platforms", "Blockchain and Digital Asset Management", ], "Financial & Professional Services": [ "Banking and Financial Institutions", "Investment and Asset Management", "Insurance and Risk Advisory Services", "Legal and Regulatory Compliance Services", "Accounting and Tax Advisory Services", "Management Consulting", "Marketing and Advertising Agencies", "Human Resources and Talent Acquisition", ], "Manufacturing & Industrial": [ "Industrial Machinery and Equipment", "Automotive and Aerospace Manufacturing", "Electronics and Technology Components", "Chemicals and Raw Materials Production", "Construction Materials and Supplies", "Packaging and Container Manufacturing", "Medical Devices and Equipment Production", "Textiles and Apparel Manufacturing", ], "Healthcare & Pharmaceuticals": [ "Pharmaceuticals and Biotechnology", "Hospitals and Clinical Healthcare Facilities", "Medical Equipment and Supplies", "Healthcare Technology Systems", "Laboratory and Diagnostic Services", "Senior Care and Rehabilitation Services", "Telemedicine and Digital Health Solutions", "Clinical Research and Trials", ], "Energy & Utilities": [ "Oil, Gas, and Petroleum", "Renewable Energy (Solar, Wind, Hydroelectric)", "Power Generation and Distribution", "Utilities and Water Services Management", "Mining and Natural Resources Extraction", "Energy Storage and Management Systems", "Environmental and Sustainability Services", ], "Retail & Consumer Goods": [ "Wholesale and Distribution Networks", "Retail Chains and Franchising Operations", "Food and Beverage Production", "Consumer Electronics", "Fashion and Luxury Goods", "Home Goods and Appliances", "Sports and Leisure Products", ], "Logistics & Transportation": [ "Shipping and Freight Forwarding Services", "Air Cargo and Logistics", "Trucking and Ground Transportation", "Warehousing and Storage Facilities", "Supply Chain Management", "Fleet and Vehicle Management", "Ports and Terminal Operations", ], "Agriculture & Food Processing": [ "Farming and Agricultural Production", "Food Processing and Manufacturing", "Beverage Production", "Agricultural Technology (AgriTech)", "Livestock and Animal Products", "Commodity Trading and Export", "Agricultural Equipment and Supplies", ], "Real Estate & Construction": [ "Commercial Real Estate Development", "Property Management Services", "Construction and Engineering Services", "Architecture and Design Services", "Facility Management", "Real Estate Investment", "Building Materials and Supplies", ], "Media & Communications": [ "Broadcasting and Entertainment", "Digital Media and Publishing", "Advertising and Public Relations", "Telecommunications Services", "Content Creation and Production", "Event Management and Production", ], "Education & Training": [ "Corporate Training and Development", "Educational Technology (EdTech)", "Schools and Educational Institutions", "Professional Certification Programs", "Language and Skills Training", "E-learning and Online Education", ], "Government & Public Services": [ "Government and Public Administration", "Defense and Security Services", "Infrastructure Development", "Municipal and Public Utilities", "Public Health Services", "Government Technology Solutions", ], "Environmental & Specialized Services": [ "Waste Management and Recycling", "Water Treatment and Management", "Environmental Consulting", "Engineering and Technical Services", "Research and Development", "Testing and Quality Assurance", ], }; const defaultTags = [ "Software and SaaS Solutions", "Research and Development", "Oil, Gas, and Petroleum", "Public Health Services", // "Consumer Electronics", ]; let selectedCategories = {}; // store selections by industry const categoryContainer = document.getElementById("categoryContainer"); const industrySelect = document.querySelector('select[name="industry"]'); const hiddenCategoryInput = document.getElementById("selectedCategories"); // Initial render (default tags) renderTags(defaultTags, true); /** Update when user selects a new industry **/ // function updateCategories(industry) { // categoryContainer.innerHTML = ""; // hiddenCategoryInput.value = ""; // if (!industry || !industryCategories[industry]) { // renderTags(defaultTags, true); // return; // } // const categories = industryCategories[industry]; // const saved = selectedCategories[industry] || []; // renderTags(categories, false, saved); // } function updateCategories(industry) { categoryContainer.innerHTML = ""; hiddenCategoryInput.value = ""; // Remove padding fix by default categoryContainer.classList.remove("industry-selected"); if (!industry || !industryCategories[industry]) { renderTags(defaultTags, true); return; } // Apply padding fix once industry is selected categoryContainer.classList.add("industry-selected"); const categories = industryCategories[industry]; const saved = selectedCategories[industry] || []; renderTags(categories, false, saved); } /** Render tags **/ function renderTags(categories, isDefault = false, saved = []) { categoryContainer.innerHTML = ""; categories.forEach((category) => { const tag = document.createElement("div"); tag.className = "interest-form-tag"; if (isDefault) { tag.classList.add("is-default"); } if (saved.includes(category)) { tag.classList.add("active"); } tag.innerHTML = `
+${category}
+`; // Prevent clicks on default tags if (!isDefault) { tag.addEventListener("click", () => { const currentIndustry = industrySelect.value; tag.classList.toggle("active"); tag.querySelector(".check-icon").classList.toggle("active"); if (!selectedCategories[currentIndustry]) { selectedCategories[currentIndustry] = []; } if (tag.classList.contains("active")) { selectedCategories[currentIndustry].push(category); } else { selectedCategories[currentIndustry] = selectedCategories[currentIndustry].filter( (c) => c !== category ); } updateHiddenInput(); saveFormData(); }); } categoryContainer.appendChild(tag); }); } function renderTags(categories, isDefault = false, saved = []) { categoryContainer.innerHTML = ""; categories.forEach((category) => { const tag = document.createElement("div"); tag.className = "interest-form-tag"; if (saved.includes(category)) tag.classList.add("active"); tag.innerHTML = `
+`; // Add click event tag.addEventListener("click", () => { const currentIndustry = industrySelect.value; // Toggle visual state tag.classList.toggle("active"); const icon = tag.querySelector(".check-icon"); icon.classList.toggle("active"); // Handle storage if (!isDefault && currentIndustry) { if (!selectedCategories[currentIndustry]) { selectedCategories[currentIndustry] = []; } if (tag.classList.contains("active")) { selectedCategories[currentIndustry].push(category); } else { selectedCategories[currentIndustry] = selectedCategories[ currentIndustry ].filter((c) => c !== category); } } updateHiddenInput(); saveFormData(); // Save after category selection }); categoryContainer.appendChild(tag); }); } /** Sync hidden field for submission **/ function updateHiddenInput() { const allSelected = Object.values(selectedCategories).flat(); hiddenCategoryInput.value = allSelected.join(","); } // FORM STEPS (updated with validation) // Collect all forms and headings const formStages = document.querySelectorAll( ".first-stage-form-container, .second-stage-form-container, .third-stage-form-container, .fourth-stage-form-container" ); const mobileHeadings = document.querySelectorAll( ".mobile-heading .first-form-heading, .mobile-heading .second-form-heading, .mobile-heading .third-form-heading, .mobile-heading .fourth-form-heading" ); const desktopHeadings = document.querySelectorAll( ".desktop-heading .first-form-heading, .desktop-heading .second-form-heading, .desktop-heading .third-form-heading, .desktop-heading .fourth-form-heading" ); const proceedButtons = document.querySelectorAll( ".interest-form-proceed-button" ); const returnButtons = document.querySelectorAll( ".interest-form-return-button" ); // Initialize currentStep from localStorage or default to 0 function initializeCurrentStep() { const savedStep = localStorage.getItem(STEP_STORAGE_KEY); if (savedStep) { const stepMapping = { 'form1': 0, 'form2': 1, 'form3': 2, 'form4': 3 }; const stepIndex = stepMapping[savedStep] || 0; return stepIndex; } return 0; } let currentStep = initializeCurrentStep(); const totalSteps = formStages.length; // Initialize form and heading display function showStep(step) { // Hide all stages formStages.forEach((form) => form.classList.add("hidden")); mobileHeadings.forEach((heading) => heading.classList.add("hidden")); desktopHeadings.forEach((heading) => heading.classList.add("hidden")); // Show current stage formStages[step].classList.remove("hidden"); mobileHeadings[step].classList.remove("hidden"); desktopHeadings[step].classList.remove("hidden"); updateProgress(step); saveFormData(); // Save current step } // Update progress bar for all instances function updateProgress(step) { const progressSteppers = document.querySelectorAll(".progress-stepper"); progressSteppers.forEach((stepper) => { const steps = stepper.querySelectorAll(".step"); const progress = (step / totalSteps) * 100; stepper.style.setProperty("--progress-width", `${progress}%`); steps.forEach((s, i) => { s.classList.remove("active", "completed"); if (i
+{ btn.addEventListener("click", (e) => { e.preventDefault(); // Validate current step before proceeding if (validateCurrentStep()) { if (currentStep
+{ btn.addEventListener("click", (e) => { e.preventDefault(); if (currentStep > 0) { currentStep--; showStep(currentStep); } }); }); // Backend validation function for a specific step async function validateStepWithBackend(stepNumber) { try { const formData = new FormData(form); const csrfToken = getCsrfToken(); const url = validateStepUrl.replace('__STEP__', stepNumber); const response = await fetch(url, { method: 'POST', headers: { 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }, body: formData, credentials: 'same-origin' }); // Handle CSRF token expiration if (response.status === 419) { const newToken = await refreshCsrfToken(); if (newToken) { updateCsrfToken(newToken); // Retry once with new token const retryResponse = await fetch(url, { method: 'POST', headers: { 'X-CSRF-TOKEN': newToken, 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }, body: new FormData(form), credentials: 'same-origin' }); return await handleValidationResponse(retryResponse, stepNumber); } } return await handleValidationResponse(response, stepNumber); } catch (error) { console.warn('Backend validation network error:', error); // Return true to allow proceeding - final submission will validate again return true; } } // Handle validation response async function handleValidationResponse(response, stepNumber) { const data = await response.json(); if (response.ok && data.success) { // Update form fields with sanitized data if provided if (data.data) { Object.keys(data.data).forEach(field => { const input = form.querySelector(`[name="${field}"]`); if (input && data.data[field] !== undefined && data.data[field] !== null) { input.value = data.data[field]; } }); } return true; } if (data.errors) { // Show backend validation errors on the current step showBackendErrors(data.errors, stepNumber); } return false; } // Show backend validation errors on the form function showBackendErrors(errors, stepNumber) { const currentStage = formStages[stepNumber - 1]; // Clear previous errors in the current stage currentStage.querySelectorAll('.error-message').forEach(msg => msg.remove()); currentStage.querySelectorAll('input, select, textarea').forEach(input => { clearError(input); }); // Show new errors Object.keys(errors).forEach(field => { const input = currentStage.querySelector(`[name="${field}"]`); if (input) { const errorMessage = Array.isArray(errors[field]) ? errors[field][0] : errors[ field]; showError(input, errorMessage); } else { // Try to find in the form (might be a custom select) const formInput = form.querySelector(`[name="${field}"]`); if (formInput) { const errorMessage = Array.isArray(errors[field]) ? errors[field][0] : errors[ field]; showError(formInput, errorMessage); } } }); // Scroll to first error const firstError = currentStage.querySelector('.error-message'); if (firstError) { firstError.scrollIntoView({ behavior: 'smooth', block: 'center' }); } } // Validation function for current step (client-side) function validateCurrentStep() { const currentStage = formStages[currentStep]; let isValid = true; // Clear previous errors currentStage.querySelectorAll('.error-message').forEach(msg => msg.remove()); currentStage.querySelectorAll('input, select, textarea').forEach(input => { clearError(input); }); if (currentStep === 0) { // Step 1: Basic Information validation const name = currentStage.querySelector('input[name="name"]'); const email = currentStage.querySelector('input[name="email"]'); const phone = currentStage.querySelector('input[name="phone"]'); const position = currentStage.querySelector('select[name="position"]'); const companyName = currentStage.querySelector('input[name="company_name"]'); if (!name.value.trim()) { showError(name, 'Full name is required'); isValid = false; } if (!email.value.trim()) { showError(email, 'Email address is required'); isValid = false; } else if (!isValidEmail(email.value.trim())) { showError(email, 'Please enter a valid email address'); isValid = false; } if (!phone.value.trim()) { const phoneContainer = currentStage.querySelector('.phone-input-container'); if (phoneContainer) { // highlight border of phone input container phoneContainer.style.border = "1px solid #ef4444"; phoneContainer.style.borderRadius = "30px"; // create error message const error = document.createElement("div"); error.className = "error-message"; error.style.color = "#ef4444"; error.style.fontSize = "0.875rem"; error.style.marginTop = "6px"; error.textContent = "Phone number is required"; // append error message after the phone container phoneContainer.parentNode.insertBefore(error, phoneContainer.nextSibling); } isValid = false; } if (!position.value.trim()) { const customSelect = currentStage.querySelector('[data-select="title"]'); showError(customSelect || position.parentNode, 'Please select your title'); isValid = false; } if (!companyName.value.trim()) { showError(companyName, 'Company name is required'); isValid = false; } } else if (currentStep === 1) { // Step 2: Company Information validation const regNumber = currentStage.querySelector('input[name="reg_number"]'); const country = currentStage.querySelector('select[name="country"]'); const website = currentStage.querySelector('input[name="website"]'); const linkedin = currentStage.querySelector('input[name="linkedin"]'); const yearEstablished = currentStage.querySelector('input[name="year_established"]'); const noLinkedIn = currentStage.querySelector('input[name="no_linkedin"]')?.checked || false; if (!regNumber.value.trim()) { showError(regNumber, 'Company registration number is required'); isValid = false; } if (!country.value.trim()) { const customSelect = currentStage.querySelector('[data-select="country"]'); showError(customSelect || country.parentNode, 'Country of registration is required'); isValid = false; } if (!website.value.trim()) { showError(website, 'Company website or social handle is required'); isValid = false; } // if (!linkedin.value.trim()) { // showError(linkedin, 'LinkedIn profile is required'); // isValid = false; // } else if (!linkedin.value.toLowerCase().includes('linkedin')) { // showError(linkedin, 'Please enter a valid LinkedIn profile URL'); // isValid = false; // } // if (!linkedin.value.trim()) { // // showError(linkedin, 'LinkedIn profile is required'); // isValid = true; // } else if (!linkedin.value.toLowerCase().includes('linkedin')) { // showError(linkedin, 'Please enter a valid LinkedIn profile URL'); // isValid = false; // } if (!noLinkedIn) { // only validate LinkedIn if user has NOT checked "I don't have LinkedIn" if (!linkedin.value.trim()) { // linkedin is optional originally; // showError(linkedin, 'LinkedIn profile is required'); // isValid = false; } else if (!linkedin.value.toLowerCase().includes('linkedin')) { showError(linkedin, 'Please enter a valid LinkedIn profile URL'); isValid = false; } } else { // user opted-out of LinkedIn — ensure no lingering error state clearError(linkedin); } if (!yearEstablished.value.trim()) { showError(yearEstablished, 'Year established is required'); isValid = false; } else if (isNaN(yearEstablished.value) || yearEstablished.value
+1 || !csrfToken) { const newToken = await refreshCsrfToken(); if (newToken) { csrfToken = newToken; updateCsrfToken(newToken); // Update the FormData with new token formData.set('_token', newToken); } } if (!csrfToken) { throw { status: 'NO_TOKEN', message: 'Security token missing. Please refresh the page.' }; } const response = await fetch(form.action, { method: 'POST', headers: { 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }, body: formData, credentials: 'same-origin' }); // Handle 419 (CSRF token mismatch) - retry with fresh token if (response.status === 419) { console.log(`Attempt ${attempt}: Session expired, refreshing token...`); lastError = { status: 419, message: 'Session expired' }; if (attempt
+setTimeout(resolve, 500 * attempt)); continue; } } // Handle other errors if (!response.ok) { const errorData = await response.json().catch(() => ({})); throw { status: response.status, data: errorData, message: errorData.message || 'Server error' }; } // Success! return await response.json(); } catch (error) { lastError = error; // Network errors - retry if (error.name === 'TypeError' && error.message.includes('fetch')) { console.log(`Attempt ${attempt}: Network error, retrying...`); if (attempt
+setTimeout(resolve, 1000 * attempt)); continue; } } // Don't retry validation errors (422) if (error.status === 422) { throw error; } // Don't retry rate limiting (429) if (error.status === 429) { throw error; } // For other errors, retry if we have attempts left if (attempt >= maxRetries) { throw error; } } } // All retries exhausted throw lastError || { status: 'UNKNOWN', message: 'Submission failed after multiple attempts' }; } // Form submission handling form.addEventListener('submit', async function(e) { e.preventDefault(); // Validate all steps before submission let allValid = true; for (let step = 0; step
+You’ve just taken a big step toward meaningful business growth!
+Check your email for next steps and more details from NOEL.
+`; // responseMessage.style.color = '#059669'; modal.show(); // Clear saved form data clearFormData(); // Reset form form.reset(); currentStep = 0; showStep(currentStep); // Clear custom selects document.querySelectorAll('.custom-select-text').forEach(text => { const defaultText = text.closest('.custom-select').querySelector( '.custom-option')?.textContent || 'Select option'; text.textContent = defaultText; text.classList.remove('selected'); }); document.querySelectorAll('.custom-option').forEach(option => option.classList .remove('active')); // Clear categories categoryContainer.innerHTML = ''; renderTags(defaultTags, true); Object.keys(selectedCategories).forEach(key => delete selectedCategories[key]); hiddenCategoryInput.value = ''; } catch (error) { let errorMessage = 'Something went wrong. Please try again.'; let showRefreshButton = false; if (error.status === 419 || error.status === 'NO_TOKEN') { errorMessage = 'Your session has expired. Click the button below to refresh and try again.'; showRefreshButton = true; } else if (error.status === 422) { if (error.data?.errors) { // Handle step-based errors from backend if (error.data?.first_error_step) { navigateToStep = error.data.first_error_step - 1; // Convert to 0-based index currentStep = navigateToStep; showStep(currentStep); } // Show errors for the specific step if (error.data?.errors_by_step && navigateToStep !== null) { const stepErrors = error.data.errors_by_step[navigateToStep + 1]; if (stepErrors) { showBackendErrors(stepErrors, navigateToStep + 1); } } else { showServerErrors(error.data.errors); } errorMessage = error.data?.message || 'Please correct the errors below and try again.'; } else if (error.data?.message) { errorMessage = error.data.message; } } else if (error.status === 403) { errorMessage = 'Access denied. Please refresh the page and try again.'; showRefreshButton = true; } else if (error.status === 429) { errorMessage = 'Too many attempts. Please wait a few minutes and try again.'; } else if (error.name === 'TypeError' || error.message?.includes('network')) { errorMessage = 'Network error. Please check your internet connection and try again.'; } else if (error.message) { errorMessage = error.message; } // Build response message with optional refresh button if (showRefreshButton) { responseMessage.innerHTML = `
+${errorMessage}
+Refresh Page
+`; } else { responseMessage.textContent = errorMessage; } responseMessage.style.color = '#193E47'; modal.show(); } finally { submitBtn.disabled = false; spinner.classList.add('d-none'); btnText.classList.remove('d-none'); } }); // Function to show server errors function showServerErrors(errors) { // Clear ALL previous errors thoroughly document.querySelectorAll('.error-message').forEach(msg => msg.remove()); document.querySelectorAll('input, select, textarea').forEach(input => { clearError(input); }); // Show field-specific errors Object.keys(errors).forEach(field => { const input = form.querySelector(`[name="${field}"]`); if (input) { const errorMessage = errors[field][0]; clearError(input); input.style.border = '2px solid #ef4444'; input.style.backgroundColor = '#fef2f2'; const errorDiv = document.createElement('div'); errorDiv.className = 'error-message server-error'; errorDiv.style.color = '#ef4444'; errorDiv.style.fontSize = '0.875rem'; errorDiv.style.marginTop = '4px'; errorDiv.textContent = errorMessage; input.parentNode.insertBefore(errorDiv, input.nextSibling); } }); // Scroll to first error const firstError = document.querySelector('.server-error'); if (firstError) { firstError.scrollIntoView({ behavior: 'smooth', block: 'center' }); } } // LinkedIn URL normalization function function normalizeLinkedInURL(url) { if (!url || url.trim() === '') return ''; let normalizedUrl = url.trim(); // Remove common prefixes and normalize normalizedUrl = normalizedUrl.replace(/^(https?:\/\/)?(www\.)?/i, ''); // Handle different LinkedIn domain variations normalizedUrl = normalizedUrl.replace(/^(linkedin\.com|linkedin\.in|in\.linkedin\.com)/i, 'linkedin.com'); // Ensure it starts with linkedin.com if (!normalizedUrl.toLowerCase().startsWith('linkedin.com')) { // If it looks like a LinkedIn profile path, prepend linkedin.com if (normalizedUrl.startsWith('/in/') || normalizedUrl.match(/^[a-zA-Z0-9\-_.]+$/)) { normalizedUrl = 'linkedin.com/in/' + normalizedUrl.replace(/^\/in\//, ''); } else { // If it doesn't look like a valid LinkedIn URL, return as-is return 'https://' + normalizedUrl; } } // Ensure /in/ path is present for profiles if (normalizedUrl.toLowerCase().startsWith('linkedin.com') && !normalizedUrl.toLowerCase().includes('/company/') && !normalizedUrl.toLowerCase().includes('/in/')) { const path = normalizedUrl.substring('linkedin.com'.length).replace(/^\/+/, ''); if (path) { normalizedUrl = 'linkedin.com/in/' + path; } else { normalizedUrl = 'linkedin.com/in/'; } } // Add https prefix return 'https://' + normalizedUrl; } // Website URL normalization function function normalizeWebsiteURL(url) { if (!url || url.trim() === '') return ''; let normalizedUrl = url.trim(); // If it already has a protocol, return as-is if (/^https?:\/\//i.test(normalizedUrl)) { return normalizedUrl; } // Remove www. if present at the beginning normalizedUrl = normalizedUrl.replace(/^www\./i, ''); // Check if it looks like a social media handle (starts with @) if (normalizedUrl.startsWith('@')) { // Keep social handles as-is return normalizedUrl; } // Check if it's a social media URL pattern const socialPatterns = [ /^(twitter\.com|x\.com)\//i, /^instagram\.com\//i, /^facebook\.com\//i, /^tiktok\.com\//i, /^youtube\.com\//i, /^linkedin\.com\//i ]; let isSocialUrl = socialPatterns.some(pattern => pattern.test(normalizedUrl)); // If it's not a social URL and doesn't have a domain extension, // assume it's a domain and add .com if (!isSocialUrl && !normalizedUrl.includes('.') && !normalizedUrl.startsWith('@')) { normalizedUrl += '.com'; } // Add https prefix for URLs if (!normalizedUrl.startsWith('@')) { return 'https://' + normalizedUrl; } return normalizedUrl; } // LinkedIn URL auto-formatting const linkedinInput = document.querySelector('input[name="linkedin"]'); if (linkedinInput) { linkedinInput.addEventListener('blur', function() { const currentValue = this.value.trim(); if (currentValue && currentValue.toLowerCase().includes('linkedin')) { const normalizedValue = normalizeLinkedInURL(currentValue); if (normalizedValue !== currentValue) { this.value = normalizedValue; // Trigger change event to save the updated value this.dispatchEvent(new Event('change', { bubbles: true })); // Also trigger input event for any other listeners this.dispatchEvent(new Event('input', { bubbles: true })); } } else if (currentValue) { // If user entered something that doesn't include 'linkedin', // assume it's a username and format it const normalizedValue = normalizeLinkedInURL(currentValue); this.value = normalizedValue; this.dispatchEvent(new Event('change', { bubbles: true })); this.dispatchEvent(new Event('input', { bubbles: true })); } }); // Also format on paste linkedinInput.addEventListener('paste', function() { setTimeout(() => { const currentValue = this.value.trim(); if (currentValue) { const normalizedValue = normalizeLinkedInURL(currentValue); if (normalizedValue !== currentValue) { this.value = normalizedValue; this.dispatchEvent(new Event('change', { bubbles: true })); this.dispatchEvent(new Event('input', { bubbles: true })); } } }, 100); }); } // Website URL auto-formatting const websiteInput = document.querySelector('input[name="website"]'); if (websiteInput) { websiteInput.addEventListener('blur', function() { const currentValue = this.value.trim(); if (currentValue) { const normalizedValue = normalizeWebsiteURL(currentValue); if (normalizedValue !== currentValue) { this.value = normalizedValue; // Trigger change event to save the updated value this.dispatchEvent(new Event('change', { bubbles: true })); // Also trigger input event for any other listeners this.dispatchEvent(new Event('input', { bubbles: true })); } } }); // Also format on paste websiteInput.addEventListener('paste', function() { setTimeout(() => { const currentValue = this.value.trim(); if (currentValue) { const normalizedValue = normalizeWebsiteURL(currentValue); if (normalizedValue !== currentValue) { this.value = normalizedValue; this.dispatchEvent(new Event('change', { bubbles: true })); this.dispatchEvent(new Event('input', { bubbles: true })); } } }, 100); }); } // Scroll Back To Top FUnctionality (function() { const BUTTON_SELECTOR = ".interest-form-proceed-button, .interest-form-return-button"; const SCROLL_OFFSET = 0; // adjust to fit your design // Handler: delegated click listener document.addEventListener("click", function(e) { const btn = e.target.closest && e.target.closest(BUTTON_SELECTOR); if (!btn) return; // If it's a submit (accidentally matched) or disabled, do nothing if (btn.matches("[type='submit'], .interest-form-submit-button") || btn.disabled) return; requestAnimationFrame(() => { try { window.scrollTo({ top: SCROLL_OFFSET, behavior: "smooth" }); } catch (err) { // Fallback for older browsers window.scrollTo(0, 0); } }); }, false); })(); });
+ATTR Full name
+ATTR Business Name
+ATTR Email Address
+ATTR Search country...
+ATTR Select country code first
+ATTR Input you company Reg. Number
+ATTR Search countries...
+ATTR Input your company website/socials
+ATTR Add your profile Url (Optional)
+ATTR Input year of establishment
+ATTR Enter your value
+ATTR Enter your description
+
+===== brn-form2.blade.php (225) =====
+Personal Information
+Let's start with your basic details
+Let's start with your
+basic details
+Company Information
+Tell us about your
+business
+Choose Interest
+What would you like to get
+from this solution
+Next
+Select Country
+Afghanistan
+Albania
+Algeria
+Andorra
+Angola
+Argentina
+Armenia
+Australia
+Austria
+Azerbaijan
+Bahamas
+Bahrain
+Bangladesh
+Barbados
+Belarus
+Belgium
+Belize
+Benin
+Bhutan
+Bolivia
+Bosnia and Herzegovina
+Botswana
+Brazil
+Brunei
+Bulgaria
+Burkina Faso
+Burundi
+Cambodia
+Cameroon
+Canada
+Cape Verde
+Central African Republic
+Chad
+Chile
+China
+Colombia
+Comoros
+Congo
+Costa Rica
+Croatia
+Cuba
+Cyprus
+Czech Republic
+Denmark
+Djibouti
+Dominica
+Dominican Republic
+East Timor
+Ecuador
+Egypt
+El Salvador
+Equatorial Guinea
+Eritrea
+Estonia
+Ethiopia
+Fiji
+Finland
+France
+Gabon
+Gambia
+Georgia
+Germany
+Ghana
+Greece
+Grenada
+Guatemala
+Guinea
+Guinea-Bissau
+Guyana
+Haiti
+Honduras
+Hungary
+Iceland
+India
+Indonesia
+Iran
+Iraq
+Ireland
+Israel
+Italy
+Ivory Coast
+Jamaica
+Japan
+Jordan
+Kazakhstan
+Kenya
+Kiribati
+North Korea
+South Korea
+Kuwait
+Kyrgyzstan
+Laos
+Latvia
+Lebanon
+Lesotho
+Liberia
+Libya
+Liechtenstein
+Lithuania
+Luxembourg
+Macedonia
+Madagascar
+Malawi
+Malaysia
+Maldives
+Mali
+Malta
+Marshall Islands
+Mauritania
+Mauritius
+Mexico
+Micronesia
+Moldova
+Monaco
+Mongolia
+Montenegro
+Morocco
+Mozambique
+Myanmar
+Namibia
+Nauru
+Nepal
+Netherlands
+New Zealand
+Nicaragua
+Niger
+Nigeria
+Norway
+Oman
+Pakistan
+Palau
+Panama
+Papua New Guinea
+Paraguay
+Peru
+Philippines
+Poland
+Portugal
+Qatar
+Romania
+Russia
+Rwanda
+Saint Kitts and Nevis
+Saint Lucia
+Saint Vincent and the Grenadines
+Samoa
+San Marino
+Sao Tome and Principe
+Saudi Arabia
+Senegal
+Serbia
+Seychelles
+Sierra Leone
+Singapore
+Slovakia
+Slovenia
+Solomon Islands
+Somalia
+South Africa
+South Sudan
+Spain
+Sri Lanka
+Sudan
+Suriname
+Swaziland
+Sweden
+Switzerland
+Syria
+Taiwan
+Tajikistan
+Tanzania
+Thailand
+Togo
+Tonga
+Trinidad and Tobago
+Tunisia
+Turkey
+Turkmenistan
+Tuvalu
+Uganda
+Ukraine
+United Arab Emirates
+United Kingdom
+United States
+Uruguay
+Uzbekistan
+Vanuatu
+Vatican City
+Venezuela
+Vietnam
+Yemen
+Zambia
+Zimbabwe
+Select your business years of operation
+11-Above
+Select your number of employees
+Back
+What You Want To Gain
+What outcomes matter most for you?
+What outcome matter most to you?
+Network with like minds
+No more jump one platform for another
+Grow and Scale 100%
+All you need is here
+Submit
+ATTR Form Progress
+ATTR Full Name
+ATTR Enter your valid email address
+ATTR Enter phone number
+ATTR Enter your linkedin profile (e.g., https://linkedin.com/in/yourname)
+ATTR Company Name
+ATTR Position in the business
+ATTR Input reason for joining
+
+===== consultation/index.blade.php (4) =====
+Let’s help you unlock growth clarity for your business.
+Let’s get started
+The consultation
+will analyze your challenges, identify growth blockers, and design a roadmap to help you scale sustainably in African markets.
+
+===== consultation/application-forms.blade.php (162) =====
+01 of 04
+We use this info to better understand
+your business before the session
+We use this info to better understand your business before the session
+What are your current top goals?
+(Select up to 2)
+What are your current top goals? (Select up to 2)
+What challenges are holding your
+business back? (Select up to 3)
+What challenges are holding your business back? (Select up to 3)
+USA (+1)
+United Kingdom (+44)
+India (+91)
+China (+86)
+Japan (+81)
+Germany (+49)
+France (+33)
+Italy (+39)
+Russia (+7)
+Brazil (+55)
+Mexico (+52)
+Australia (+61)
+South Africa (+27)
+Nigeria (+234)
+Kenya (+254)
+Ghana (+233)
+Uganda (+256)
+Tanzania (+255)
+Egypt (+20)
+Algeria (+213)
+Morocco (+212)
+Tunisia (+216)
+Libya (+218)
+Ethiopia (+251)
+Zambia (+260)
+Zimbabwe (+263)
+Malawi (+265)
+Botswana (+267)
+Eswatini (+268)
+Lesotho (+266)
+Namibia (+264)
+Mozambique (+258)
+Madagascar (+261)
+Mauritius (+230)
+Seychelles (+248)
+Rwanda (+250)
+Senegal (+221)
+Ivory Coast (+225)
+Burkina Faso (+226)
+Mali (+223)
+Niger (+227)
+Chad (+235)
+Cameroon (+237)
+Central African Republic (+236)
+Republic of Congo (+242)
+Democratic Republic of Congo (+243)
+Gabon (+241)
+Equatorial Guinea (+240)
+São Tomé and Príncipe (+239)
+Cape Verde (+238)
+Guinea (+224)
+Guinea-Bissau (+245)
+Liberia (+231)
+Sierra Leone (+232)
+Togo (+228)
+Benin (+229)
+Mauritania (+222)
+Gambia (+220)
+Burundi (+257)
+Djibouti (+253)
+Eritrea (+291)
+Somalia (+252)
+South Sudan (+211)
+Sudan (+249)
+Angola (+244)
+Comoros (+269)
+Canada (+1)
+Spain (+34)
+Portugal (+351)
+Netherlands (+31)
+Belgium (+32)
+Switzerland (+41)
+Austria (+43)
+Sweden (+46)
+Norway (+47)
+Denmark (+45)
+Finland (+358)
+Ireland (+353)
+New Zealand (+64)
+Singapore (+65)
+Malaysia (+60)
+Thailand (+66)
+Philippines (+63)
+Indonesia (+62)
+Vietnam (+84)
+South Korea (+82)
+Pakistan (+92)
+Bangladesh (+880)
+Sri Lanka (+94)
+Argentina (+54)
+Chile (+56)
+Colombia (+57)
+Peru (+51)
+Venezuela (+58)
+Ecuador (+593)
+Uruguay (+598)
+Paraguay (+595)
+Bolivia (+591)
+Guyana (+592)
+Suriname (+597)
+Turkey (+90)
+United Arab Emirates (+971)
+Saudi Arabia (+966)
+Qatar (+974)
+Kuwait (+965)
+Bahrain (+973)
+Oman (+968)
+Jordan (+962)
+Lebanon (+961)
+Syria (+963)
+Iraq (+964)
+Iran (+98)
+Afghanistan (+93)
+Israel (+972)
+Palestine (+970)
+Increase revenue or sales
+Generate more leads
+Improve brand visibility
+Launch a new product or service
+Expand into new markets
+Prepare for funding or investor conversations
+Build internal systems or operational structure
+Low or inconsistent sales
+Weak marketing strategy
+Difficulty acquiring customers
+Operational inefficiencies
+Monetization not working
+Need clarity on product-market fit
+Scaling challenges
+What made you book this consultation today?
+What would make this session a success for you?
+document.addEventListener("DOMContentLoaded", function() { const steps = document.querySelectorAll(".form-step"); const stepTitles = document.querySelectorAll(".step-title"); const nextBtns = document.querySelectorAll(".next-btn"); const backBtns = document.querySelectorAll(".back-btn"); const progressFill = document.querySelector(".progress-fill"); const progressText = document.querySelector(".progress-text"); const counterCircleText = document.querySelector(".counter-circle span"); // Clear saved progress when starting fresh from consultation page // This ensures users always start from step 1 localStorage.removeItem("currentStep"); localStorage.removeItem("selectedBusinessGoals"); localStorage.removeItem("selectedKeyChallenges"); // Always start from step 0 (first step) let currentStep = 0; // ============= VALIDATION FUNCTIONS ============= // Clear previous errors function clearErrors(step) { const stepElement = steps[step]; // Remove error classes from inputs stepElement.querySelectorAll('input, textarea').forEach(input => { input.classList.remove('error'); }); // Remove error messages stepElement.querySelectorAll('.error-message').forEach(msg => { msg.remove(); }); // Remove step error message stepElement.querySelectorAll('.step-error').forEach(error => { error.remove(); }); // Remove error classes from goal cards stepElement.querySelectorAll('.goal-card').forEach(card => { card.classList.remove('error'); }); } // Show error message for input field function showInputError(input, message) { input.classList.add('error'); const errorMsg = document.createElement('span'); errorMsg.className = 'error-message'; errorMsg.textContent = message; input.parentNode.insertBefore(errorMsg, input.nextSibling); } // Show step error message function showStepError(step, message) { const stepElement = steps[step]; const existingError = stepElement.querySelector('.step-error'); if (!existingError) { const errorDiv = document.createElement('div'); errorDiv.className = 'step-error'; errorDiv.textContent = message; const stepButtons = stepElement.querySelector('.step-buttons'); stepButtons.parentNode.insertBefore(errorDiv, stepButtons); } } // Validate email format function isValidEmail(email) { const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; return emailRegex.test(email); } // Validate phone format (with country code) function isValidPhone(phone) { // Phone should be in format "+countrycode phonenumber" const phoneRegex = /^\+\d{1,4}\s\d{4,14}$/; return phoneRegex.test(phone); } // Validate individual phone number (without country code) function isValidPhoneNumber(phoneNumber) { // Basic phone number validation (4-14 digits) const phoneRegex = /^\d{4,14}$/; return phoneRegex.test(phoneNumber.replace(/[\s\-\(\)]/g, '')); } // Check if country code is selected function isCountryCodeSelected() { const prefixSpan = document.getElementById('countryPrefix'); return prefixSpan && prefixSpan.textContent.trim() !== ''; } // Update phone border when country is not selected function updatePhoneBorder(prefixSpan, phoneNumberInput) { const hasCountry = prefixSpan.textContent.trim() !== ""; if (!hasCountry) { phoneNumberInput.classList.add("phone-rounded"); phoneNumberInput.classList.remove("phone-no-radius"); } else { phoneNumberInput.classList.remove("phone-rounded"); phoneNumberInput.classList.add("phone-no-radius"); } } // Validate Step 1: Basic Information function validateStep1() { clearErrors(0); let isValid = true; const requiredFields = [{ name: 'full_name', label: 'Full Name' }, { name: 'phone', label: 'Phone Number' }, { name: 'company_brand_name', label: 'Company Name' }, { name: 'email', label: 'Email Address' }, { name: 'industry', label: 'Industry' }, { name: 'business_description', label: 'Business Description' } ]; requiredFields.forEach(field => { if (field.name === 'phone') { // Special handling for phone field const phoneNumberInput = document.getElementById('phoneInput'); const combinedPhoneInput = document.getElementById('combinedPhone'); const flagBox = document.getElementById('flagBox'); if (!isCountryCodeSelected()) { flagBox.classList.add('error'); const errorMsg = document.createElement('span'); errorMsg.className = 'error-message'; errorMsg.textContent = 'Please select a country code'; phoneNumberInput.closest('.phone-field') .insertAdjacentElement('afterend', errorMsg); isValid = false; } else if (!phoneNumberInput.value.trim()) { phoneNumberInput.classList.add('error'); const errorMsg = document.createElement('span'); errorMsg.className = 'error-message'; errorMsg.textContent = 'Phone Number is required'; phoneNumberInput.closest('.phone-field') .insertAdjacentElement('afterend', errorMsg); isValid = false; } else if (!isValidPhoneNumber(phoneNumberInput.value.trim())) { phoneNumberInput.classList.add('error'); const errorMsg = document.createElement('span'); errorMsg.className = 'error-message'; errorMsg.textContent = 'Please enter a valid phone number'; phoneNumberInput.closest('.phone-field') .insertAdjacentElement('afterend', errorMsg); isValid = false; } else { updateCombinedPhone(); } } else { const input = document.querySelector( `input[name="${field.name}"], textarea[name="${field.name}"]`); if (!input || !input.value.trim()) { showInputError(input, `${field.label} is required`); isValid = false; } else { // Additional validation for specific fields if (field.name === 'email' && !isValidEmail(input.value.trim())) { showInputError(input, 'Please enter a valid email address'); isValid = false; } else if (field.name === 'business_description' && input.value.trim().length
+{ card.classList.add('error'); }); return false; } else if (checkedGoals.length > 2) { showStepError(1, 'Please select no more than 2 business goals.'); return false; } return true; } // Validate Step 3: Key Challenges function validateStep3() { clearErrors(2); const checkedChallenges = document.querySelectorAll( '.step3-wrapper input[type="checkbox"]:checked'); if (checkedChallenges.length === 0) { showStepError(2, 'Please select at least one key challenge.'); // Highlight goal cards as error document.querySelectorAll('.step3-wrapper .goal-card').forEach(card => { card.classList.add('error'); }); return false; } else if (checkedChallenges.length > 3) { showStepError(2, 'Please select no more than 3 key challenges.'); return false; } return true; } // Validate Step 4: Outcome Questions function validateStep4() { clearErrors(3); let isValid = true; const motivationField = document.querySelector('textarea[name="motivation"]'); const successField = document.querySelector('textarea[name="success_definition"]'); if (!motivationField.value.trim()) { showInputError(motivationField, 'Please explain what made you book this consultation'); isValid = false; } else if (motivationField.value.trim().length
+step.classList.remove("active")); stepTitles.forEach((title) => title.classList.remove("active")); steps[currentStep].classList.add("active"); stepTitles[currentStep].classList.add("active"); const percent = ((currentStep + 1) / steps.length) * 100; progressFill.style.width = percent + "%"; progressText.textContent = `0${currentStep + 1} of 0${steps.length}`; counterCircleText.textContent = `0${currentStep + 1}`; localStorage.setItem("currentStep", currentStep); const backButton = steps[currentStep].querySelector(".back-btn"); if (backButton) backButton.disabled = currentStep === 0; document.querySelectorAll(".form-step, .step-title").forEach((el) => { el.classList.remove("fade-in"); void el.offsetWidth; el.classList.add("fade-in"); }); window.scrollTo({ top: 0, behavior: "smooth" }); } // NEXT BUTTONS nextBtns.forEach((btn, index) => { btn.addEventListener("click", (e) => { // If it's not the submit button, prevent default and validate current step if (btn.type !== 'submit') { e.preventDefault(); let isValid = false; // Validate current step switch (currentStep) { case 0: isValid = validateStep1(); break; case 1: isValid = validateStep2(); break; case 2: isValid = validateStep3(); break; case 3: isValid = validateStep4(); break; default: isValid = true; } // Only proceed if validation passes if (isValid && currentStep
+{ btn.addEventListener("click", () => { if (currentStep > 0) { currentStep--; updateStep(); } }); }); // ============= GOAL CARD HANDLING ============= // === Handle Selectable Goal Cards === function handleSelectableCards(selector, maxSelection, storageKey) { const cards = document.querySelectorAll(`${selector} .goal-card`); const inputs = document.querySelectorAll(`${selector} input[type="checkbox"]`); inputs.forEach((input) => { input.addEventListener("change", () => { const checked = Array.from(inputs).filter((i) => i.checked); // Apply selected / unselected styles cards.forEach((card) => { const checkbox = card.querySelector('input[type="checkbox"]'); card.classList.toggle("selected", checkbox.checked); // Clear error state when selection is made card.classList.remove("error"); }); // Blur unselected if max reached if (checked.length >= maxSelection) { cards.forEach((card) => { const checkbox = card.querySelector( 'input[type="checkbox"]'); if (!checkbox.checked) card.classList.add("blurred"); }); } else { cards.forEach((card) => card.classList.remove("blurred")); } // Save selections to localStorage const selectedValues = checked.map((i) => i.value); localStorage.setItem(storageKey, JSON.stringify(selectedValues)); // Clear any existing error messages for this step if (selector.includes('step2')) { clearErrors(1); } else if (selector.includes('step3')) { clearErrors(2); } }); }); } // Step 2: Business Goals (max 2) handleSelectableCards(".step2-wrapper", 2, "selectedBusinessGoals"); // Step 3: Key Challenges (max 3) handleSelectableCards(".step3-wrapper", 3, "selectedKeyChallenges"); // === Apply max-width rule for long goal-text === function adjustGoalTextWidths() { const goalTexts = document.querySelectorAll(".goal-card .goal-text"); goalTexts.forEach(text => { const wordCount = text.textContent.trim().split(/\s+/).length; if (wordCount > 4) { text.style.maxWidth = "100%"; } if (wordCount === 3 || wordCount === 2) { text.style.paddingLeft = "1px"; text.style.paddingRight = "1px"; } }); } // Clear errors when user starts typing in input fields document.querySelectorAll('input, textarea').forEach(input => { input.addEventListener('input', function() { if (this.classList.contains('error')) { this.classList.remove('error'); const errorMsg = this.parentNode.querySelector('.error-message'); if (errorMsg) { errorMsg.remove(); } } }); }); // Initialize phone field with existing value function initializePhoneField() { const combinedPhone = document.getElementById('combinedPhone'); const phoneNumberInput = document.getElementById('phoneInput'); const prefixSpan = document.getElementById('countryPrefix'); const flagImg = document.getElementById('flagImg'); const flagPlaceholder = document.getElementById('flagPlaceholder'); // Only initialize if there's an existing value (like from validation errors) if (combinedPhone.value && combinedPhone.value.includes('+')) { const parts = combinedPhone.value.split(' '); const countryCode = parts[0]; // Find the corresponding flag item const flagItem = document.querySelector(`[data-code="${countryCode}"]`); if (flagItem) { const flagSrc = flagItem.dataset.flag; // Update UI flagImg.src = flagSrc; flagImg.style.display = "block"; flagPlaceholder.style.display = "none"; prefixSpan.textContent = countryCode; prefixSpan.style.display = "block"; phoneNumberInput.disabled = false; phoneNumberInput.placeholder = "Enter phone number"; phoneNumberInput.value = parts.slice(1).join(' '); } } } const multiStepForm = document.getElementById('multiStepForm'); if (multiStepForm) { multiStepForm.addEventListener('submit', updateCombinedPhone); } // New custom phone field JS const flagBox = document.getElementById('flagBox'); const dropdown = document.getElementById('flagDropdown'); const flagImg = document.getElementById('flagImg'); const dropdownIcon = document.getElementById('dropdownIcon'); const prefixSpan = document.getElementById('countryPrefix'); const phoneNumberInput = document.getElementById('phoneInput'); const combinedPhone = document.getElementById('combinedPhone'); // OPEN / CLOSE DROPDOWN flagBox.addEventListener("click", () => { const isOpen = dropdown.style.display === "block"; dropdown.style.display = isOpen ? "none" : "block"; dropdownIcon.classList.toggle("rotate", !isOpen); // Focus search input when opening dropdown if (!isOpen) { setTimeout(() => { const searchInput = document.getElementById('flagSearch'); if (searchInput) { searchInput.focus(); searchInput.value = ''; // Clear previous search filterCountries(''); // Show all countries } }, 100); } }); // SELECT COUNTRY function setupCountrySelection() { document.querySelectorAll(".flag-item").forEach((item, index) => { // Make items focusable item.tabIndex = 0; item.addEventListener("click", (e) => { e.stopPropagation(); // IMPORTANT FIX selectCountry(item); }); // Handle keyboard selection item.addEventListener("keydown", (e) => { const visibleItems = Array.from(document.querySelectorAll( '.flag-item:not(.hidden)')); const currentIndex = visibleItems.indexOf(item); if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectCountry(item); } else if (e.key === 'ArrowDown') { e.preventDefault(); const nextIndex = Math.min(currentIndex + 1, visibleItems.length - 1); visibleItems[nextIndex]?.focus(); } else if (e.key === 'ArrowUp') { e.preventDefault(); if (currentIndex === 0) { // Go back to search input flagSearch?.focus(); } else { const prevIndex = Math.max(currentIndex - 1, 0); visibleItems[prevIndex]?.focus(); } } else if (e.key === 'Escape') { dropdown.style.display = "none"; dropdownIcon.classList.remove("rotate"); flagBox.focus(); } }); }); } function selectCountry(item) { const newFlag = item.dataset.flag; const newCode = item.dataset.code; // Update UI flagImg.src = newFlag; flagImg.style.display = "block"; // Hide placeholder text const flagPlaceholder = document.getElementById('flagPlaceholder'); if (flagPlaceholder) { flagPlaceholder.style.display = "none"; } // Show and update prefix prefixSpan.textContent = newCode; prefixSpan.style.display = "block"; // Enable phone input and update placeholder phoneNumberInput.disabled = false; phoneNumberInput.placeholder = "Enter phone number"; // Remove error styling if present flagBox.classList.remove('error'); phoneNumberInput.classList.remove('error'); // Update hidden backend field updateCombinedPhone(); // Close dropdown immediately dropdown.style.display = "none"; dropdownIcon.classList.remove("rotate"); // Focus phone input phoneNumberInput.focus(); } // Initialize country selection setupCountrySelection(); // SEARCH FUNCTIONALITY const flagSearch = document.getElementById('flagSearch'); if (flagSearch) { flagSearch.addEventListener('input', function(e) { const searchTerm = e.target.value.toLowerCase(); filterCountries(searchTerm); }); // Prevent dropdown from closing when clicking on search input flagSearch.addEventListener('click', function(e) { e.stopPropagation(); }); // Handle keyboard navigation flagSearch.addEventListener('keydown', function(e) { const visibleItems = document.querySelectorAll('.flag-item:not(.hidden)'); if (e.key === 'ArrowDown') { e.preventDefault(); if (visibleItems.length > 0) { visibleItems[0].focus(); } } else if (e.key === 'Escape') { dropdown.style.display = "none"; dropdownIcon.classList.remove("rotate"); flagBox.focus(); } }); } // FILTER COUNTRIES FUNCTION function filterCountries(searchTerm) { const flagItems = document.querySelectorAll('.flag-item'); let visibleCount = 0; // Remove existing no-results message const existingNoResults = dropdown.querySelector('.no-results'); if (existingNoResults) { existingNoResults.remove(); } flagItems.forEach(item => { const countryText = item.textContent.toLowerCase(); const countryCode = item.dataset.code.toLowerCase(); if (countryText.includes(searchTerm) || countryCode.includes(searchTerm)) { item.classList.remove('hidden'); visibleCount++; } else { item.classList.add('hidden'); } }); // Show "no results" message if no countries match if (visibleCount === 0 && searchTerm.trim() !== '') { const noResultsDiv = document.createElement('div'); noResultsDiv.className = 'no-results'; noResultsDiv.textContent = 'No countries found'; dropdown.appendChild(noResultsDiv); } } // CLICK OUTSIDE CLOSES DROPDOWN document.addEventListener("click", (e) => { if (!flagBox.contains(e.target) && !dropdown.contains(e.target)) { dropdown.style.display = "none"; dropdownIcon.classList.remove("rotate"); } }); // UPDATE HIDDEN FIELD (backend) function updateCombinedPhone() { const digitsOnly = phoneNumberInput.value.replace(/[^\d]/g, ''); const countryCode = prefixSpan.textContent; if (digitsOnly.length && countryCode && countryCode.trim()) { combinedPhone.value = `${countryCode} ${digitsOnly}`; } else { combinedPhone.value = ''; } } // UPDATE ON TYPING phoneNumberInput.addEventListener('input', updateCombinedPhone); phoneNumberInput.addEventListener('input', function() { if (this.classList.contains('error')) { this.classList.remove('error'); const msg = this.closest('.phone-field').parentNode.querySelector('.error-message'); if (msg) msg.remove(); } }); // Clear flag box error when clicked flagBox.addEventListener('click', function() { if (flagBox.classList.contains('error')) { flagBox.classList.remove('error'); const msg = phoneNumberInput.closest('.phone-field').parentNode.querySelector( '.error-message'); if (msg) msg.remove(); } }); // Initialize updateStep(); adjustGoalTextWidths(); initializePhoneField(); updatePhoneBorder(prefixSpan, phoneNumberInput); });
+ATTR BUSINESS OVERVIEW
+ATTR We use this info to better understand your business before the session.
+ATTR BRAND IDENTITY
+ATTR Tell us more about your brand tone, target audience, and positioning.
+ATTR challenges
+ATTR Share your project goals and the key outcomes you want to achieve.
+ATTR outcome
+ATTR Full Name
+ATTR flag
+ATTR Search countries...
+ATTR Select country first
+ATTR Company Name
+ATTR Website/Social media
+ATTR Email Address
+ATTR Industry
+ATTR Briefly describe what your business does (1–2 sentences).
+ATTR Enter phone number
+
+===== consultation/schedule.blade.php (42) =====
+Schedule Your Consultation
+Pick a convenient date and time for your session. You’ll receive a confirmation email once it’s booked.
+Submit
+Select Day
+You cannot go before the current month
+Selected Date:
+Set time
+⏰ Same-day bookings must be scheduled at least one hour in advance.
+Selected Time:
+Call For Help
+P23 Africa
+Online
+Hey 👋
+Welcome to P23 Africa, what can we help you with?
+consultation confirmed!
+A confirmation email containing the date, time, and Google Meet link has been sent to your registered email address.
+Open customer@example.com
+Return to Homepage
+document.addEventListener("DOMContentLoaded", () => { /* ------------------------- Elements ------------------------- */ const datesContainer = document.getElementById("dates"); const monthInput = document.getElementById("monthInput"); const yearInput = document.getElementById("yearInput"); const monthSuggestions = document.getElementById("monthSuggestions"); // const selectedDateText = document.getElementById("selectedDate"); // const selectedTimeText = document.getElementById("selectedTime"); const prevBtn = document.getElementById("prevMonth"); const prevTooltip = document.querySelector(".prev-tooltip"); /* Modal elements */ // const submitBtn = document.getElementById("submitSchedule"); const modal = document.getElementById("scheduleModal"); const modalDateText = document.getElementById("modalDateText"); const modalTimeText = document.getElementById("modalTimeText"); const closeModal = document.getElementById("closeModal"); /* ------------------------- Date limits & state ------------------------- */ const today = new Date(); const minYear = today.getFullYear(); const minMonth = today.getMonth(); // 0-indexed let selectedDate = null; let current = new Date(minYear, minMonth); /* ------------------------- Month autocomplete data ------------------------- */ const monthNames = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ]; let highlightedIndex = -1; function updateAllSelectedDate(dateString) { document.querySelectorAll(".selected-date").forEach(el => { el.textContent = dateString; }); } function updateAllSelectedTime(timeString) { document.querySelectorAll(".selected-time").forEach(el => { el.textContent = timeString; }); } /* ------------------------- Month autocomplete functions ------------------------- */ function showMonthSuggestions(input) { const filteredMonths = monthNames.filter(month => month.toLowerCase().startsWith(input.toLowerCase()) ); if (filteredMonths.length === 0 || (filteredMonths.length === 1 && filteredMonths[0] .toLowerCase() === input.toLowerCase())) { hideMonthSuggestions(); return; } monthSuggestions.innerHTML = ''; filteredMonths.forEach((month, index) => { const suggestion = document.createElement('div'); suggestion.className = 'month-suggestion'; suggestion.textContent = month; suggestion.onclick = () => selectMonth(month); monthSuggestions.appendChild(suggestion); }); monthSuggestions.style.display = 'block'; highlightedIndex = -1; } function hideMonthSuggestions() { monthSuggestions.style.display = 'none'; highlightedIndex = -1; } function selectMonth(monthName) { monthInput.value = monthName; hideMonthSuggestions(); updateCalendarFromInputs(); } function highlightSuggestion(direction) { const suggestions = monthSuggestions.querySelectorAll('.month-suggestion'); if (suggestions.length === 0) return; // Remove previous highlight if (highlightedIndex >= 0) { suggestions[highlightedIndex].classList.remove('highlighted'); } // Update index if (direction === 'down') { highlightedIndex = (highlightedIndex + 1) % suggestions.length; } else if (direction === 'up') { highlightedIndex = highlightedIndex
+= 0) { suggestions[highlightedIndex].classList.add('highlighted'); } } function selectHighlightedSuggestion() { const suggestions = monthSuggestions.querySelectorAll('.month-suggestion'); if (highlightedIndex >= 0 && highlightedIndex
+returns { el, open(), close(), getValue(), setValue(val) } */ function createDropdown({ id, options = [], initialIndex = 0 }) { const root = document.getElementById(id); const toggle = root.querySelector(".cd-toggle"); const selectedSpan = root.querySelector(".cd-selected"); const list = root.querySelector(".cd-list"); // populate list (clear first) list.innerHTML = ""; options.forEach((opt, i) => { const li = document.createElement("li"); li.className = "cd-option"; li.setAttribute("data-value", opt.value ?? opt); li.textContent = opt.label ?? opt; li.tabIndex = -1; li.role = "option"; if (i === initialIndex) li.classList.add("selected"); list.appendChild(li); }); // internal state let isOpen = false; let focusedIndex = initialIndex; function open() { root.classList.add("open"); toggle.classList.add("rotated"); toggle.setAttribute("aria-expanded", "true"); list.setAttribute("aria-hidden", "false"); isOpen = true; // focus the currently selected option if any const items = list.querySelectorAll(".cd-option"); if (items[focusedIndex]) { items[focusedIndex].classList.add("focused"); items[focusedIndex].focus(); scrollIntoViewIfNeeded(items[focusedIndex], list); } document.addEventListener("click", onDocClick); document.addEventListener("keydown", onKeyDown); } function close() { root.classList.remove("open"); toggle.classList.remove("rotated"); toggle.setAttribute("aria-expanded", "false"); list.setAttribute("aria-hidden", "true"); isOpen = false; clearFocused(); document.removeEventListener("click", onDocClick); document.removeEventListener("keydown", onKeyDown); } function getValue() { const sel = list.querySelector(".cd-option.selected"); return sel ? sel.getAttribute("data-value") : null; } function setValue(val) { const items = Array.from(list.querySelectorAll(".cd-option")); items.forEach((it) => it.classList.remove("selected")); const found = items.find( (it) => it.getAttribute("data-value") === String(val) ); if (found) { found.classList.add("selected"); selectedSpan.textContent = found.textContent; focusedIndex = items.indexOf(found); } else { // fallback: set first if (items[0]) { items[0].classList.add("selected"); selectedSpan.textContent = items[0].textContent; focusedIndex = 0; } } } function onToggleClick(e) { e.stopPropagation(); if (isOpen) close(); else open(); } toggle.addEventListener("click", onToggleClick); function onOptionClick(e) { const li = e.currentTarget; // remove selected from others list.querySelectorAll(".cd-option").forEach((o) => { o.classList.remove("selected", "focused"); }); li.classList.add("selected"); selectedSpan.textContent = li.textContent; focusedIndex = Array.from(list.children).indexOf(li); close(); // dispatch custom 'change' event on root for listeners root.dispatchEvent(new CustomEvent("cd-change", { detail: getValue() })); } function onDocClick(e) { if (!root.contains(e.target)) close(); } function clearFocused() { list .querySelectorAll(".cd-option") .forEach((o) => o.classList.remove("focused")); } function onKeyDown(e) { if (!isOpen) return; const items = Array.from(list.querySelectorAll(".cd-option")); if (e.key === "ArrowDown") { e.preventDefault(); focusedIndex = Math.min(items.length - 1, focusedIndex + 1); items.forEach((it) => it.classList.remove("focused")); items[focusedIndex].classList.add("focused"); scrollIntoViewIfNeeded(items[focusedIndex], list); } else if (e.key === "ArrowUp") { e.preventDefault(); focusedIndex = Math.max(0, focusedIndex - 1); items.forEach((it) => it.classList.remove("focused")); items[focusedIndex].classList.add("focused"); scrollIntoViewIfNeeded(items[focusedIndex], list); } else if (e.key === "Enter") { e.preventDefault(); if (items[focusedIndex]) { items[focusedIndex].click(); } } else if (e.key === "Escape") { e.preventDefault(); close(); } } // small helper to ensure option visible when keyboard navigates function scrollIntoViewIfNeeded(el, container) { const containerTop = container.scrollTop; const containerBottom = containerTop + container.clientHeight; const elTop = el.offsetTop; const elBottom = elTop + el.offsetHeight; if (elTop
+containerBottom) container.scrollTop = elBottom - container.clientHeight + 4; } // event bindings toggle.addEventListener("click", onToggleClick); root .querySelectorAll(".cd-option") .forEach((li) => li.addEventListener("click", onOptionClick)); // expose API return { el: root, open, close, getValue, setValue }; } /* ------------------------- Build dropdowns with options ------------------------- */ function pad(n) { return String(n).padStart(2, "0"); } /* timezone dropdown already has DOM items in HTML; we'll initialize it differently */ const timezoneDropdown = createDropdown({ id: "dropdown-timezone", options: [{ label: "GMT", value: "GMT" }, { label: "UTC", value: "UTC" }, { label: "WAT", value: "Africa/Lagos" }, ], initialIndex: 0, }); /* ------------------------- Scrollable Time Picker ------------------------- */ // Time wheel data const timeWheels = { hour: { element: null, items: [], currentIndex: 5 }, // Default to 06 minute: { element: null, items: [], currentIndex: 0 }, // Default to 00 // SECOND wheel: only include "00" so it is fixed second: { element: null, items: ['00'], currentIndex: 0 }, // Fixed to 00 ampm: { element: null, items: ['AM', 'PM'], currentIndex: 0 } // Default to AM }; // Initialize time wheels // Initialize time wheels function initTimeWheels() { // Generate hours (10 AM to 8 PM only) const allowedHours = [10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8]; timeWheels.hour.items = []; // reset to be safe allowedHours.forEach(hour => { timeWheels.hour.items.push(String(hour).padStart(2, '0')); }); // Generate minutes (00-59). NOTE: seconds are intentionally not generated beyond '00' timeWheels.minute.items = []; for (let i = 0; i
+= 10 && currentHour
+= 12) { ampm = 'PM'; if (currentHour > 12) { displayHour = currentHour - 12; } } const hourIndex = timeWheels.hour.items.findIndex(h => parseInt(h) === displayHour); if (hourIndex !== -1) { defaultHourIndex = hourIndex; defaultAmPmIndex = ampm === 'AM' ? 0 : 1; defaultMinuteIndex = currentMinute; } } // Update default indices timeWheels.hour.currentIndex = defaultHourIndex; timeWheels.minute.currentIndex = defaultMinuteIndex; timeWheels.second.currentIndex = 0; // always 0 (00) timeWheels.ampm.currentIndex = defaultAmPmIndex; // Setup each wheel setupTimeWheel('hour'); setupTimeWheel('minute'); setupTimeWheel('second'); // will be built but locked setupTimeWheel('ampm'); // Update initial display updateTimeDisplay(); } function setupTimeWheel(type) { const wheel = document.getElementById(`${type}-wheel`); if (!wheel) return; const list = wheel.querySelector('.time-wheel-list'); timeWheels[type].element = wheel; // Populate wheel items list.innerHTML = ''; timeWheels[type].items.forEach((item, index) => { const div = document.createElement('div'); div.className = 'time-wheel-item'; div.textContent = item; div.dataset.value = item; div.dataset.index = index; list.appendChild(div); }); // Set initial position const itemHeight = 40; const centerOffset = -timeWheels[type].currentIndex * itemHeight; list.style.transform = `translateY(${centerOffset}px)`; // Update active item updateActiveItem(type); // If this is the second wheel, lock it: don't attach any scroll/drag listeners if (type === 'second') { // add a marker class so CSS can render it as locked wheel.classList.add('time-wheel-locked'); // ensure it always stays at index 0 and transform exactly matches index 0 timeWheels.second.currentIndex = 0; list.style.transform = `translateY(${0}px)`; updateActiveItem('second'); return; } // Add scroll functionality for non-locked wheels (hour, minute, ampm) let isScrolling = false; let startY = 0; let startTransform = 0; wheel.addEventListener('wheel', (e) => { e.preventDefault(); const delta = e.deltaY > 0 ? 1 : -1; scrollWheel(type, delta); }); // Touch/mouse drag functionality wheel.addEventListener('mousedown', startDrag); wheel.addEventListener('touchstart', startDrag, { passive: false }); function startDrag(e) { isScrolling = true; startY = e.type === 'mousedown' ? e.clientY : e.touches[0].clientY; const transform = list.style.transform; const match = transform.match(/translateY\((-?\d+)px\)/); startTransform = match ? parseInt(match[1]) : 0; document.addEventListener('mousemove', onDrag); document.addEventListener('touchmove', onDrag, { passive: false }); document.addEventListener('mouseup', endDrag); document.addEventListener('touchend', endDrag); } function onDrag(e) { if (!isScrolling) return; e.preventDefault(); const currentY = e.type === 'mousemove' ? e.clientY : e.touches[0].clientY; const deltaY = currentY - startY; const newTransform = startTransform + deltaY; list.style.transform = `translateY(${newTransform}px)`; } function endDrag() { if (!isScrolling) return; isScrolling = false; // Snap to nearest item const transform = list.style.transform; const match = transform.match(/translateY\((-?\d+)px\)/); const currentTransform = match ? parseInt(match[1]) : 0; const itemHeight = 40; const newIndex = Math.max(0, Math.min( timeWheels[type].items.length - 1, Math.round(-currentTransform / itemHeight) )); setWheelIndex(type, newIndex); document.removeEventListener('mousemove', onDrag); document.removeEventListener('touchmove', onDrag); document.removeEventListener('mouseup', endDrag); document.removeEventListener('touchend', endDrag); } } // Only allow scrolling for non-locked wheels function scrollWheel(type, direction) { if (type === 'second') return; // guard: seconds are locked const newIndex = Math.max(0, Math.min( timeWheels[type].items.length - 1, timeWheels[type].currentIndex + direction )); setWheelIndex(type, newIndex); } function setWheelIndex(type, index) { // Only validate working hours for gentle reminders (don't block selection) validateWorkingHours(type, index); // Validate time selection if today is selected (only for past times) if (selectedDate && selectedDate.toDateString() === today.toDateString()) { const todayValidatedIndex = validateTimeSelection(type, index); if (todayValidatedIndex !== index) { index = todayValidatedIndex; // Show a brief flash message about time restriction const now = new Date(); const minHour = now.getHours() + 1; flashMessage( `Please select a time at least 1 hour ahead (after ${minHour}:${now.getMinutes().toString().padStart(2, '0')})` ); } } timeWheels[type].currentIndex = index; const list = timeWheels[type].element.querySelector('.time-wheel-list'); const itemHeight = 40; const centerOffset = -index * itemHeight; list.style.transform = `translateY(${centerOffset}px)`; updateActiveItem(type); updateTimeDisplay(); } function validateWorkingHours(type, newIndex) { // Allow all selections during normal interaction // Only show a gentle reminder message for times outside working hours // Get current selections (with the proposed change) const currentHour = type === 'hour' ? parseInt(timeWheels.hour.items[newIndex]) : parseInt( timeWheels.hour.items[timeWheels.hour.currentIndex]); const currentAmPm = type === 'ampm' ? timeWheels.ampm.items[newIndex] : timeWheels.ampm.items[ timeWheels.ampm.currentIndex]; // Convert to 24-hour format for validation let hour24 = currentHour; if (currentAmPm === 'PM' && currentHour !== 12) { hour24 += 12; } else if (currentAmPm === 'AM' && currentHour === 12) { hour24 = 0; } // Check if time is outside working hours (10 AM - 8 PM = 10:00 - 20:00) if (hour24
+20) { // Show a gentle notification but don't block the selection if (hour24
+20) { showWorkingHoursNotice('Consultation hours end at 8:00 PM'); } } return newIndex; // Always allow the selection } function validateTimeSelection(type, newIndex) { if (!selectedDate || selectedDate.toDateString() !== today.toDateString()) { return newIndex; // No validation needed for future dates } const now = new Date(); let minHour = now.getHours() + 1; const minMinute = now.getMinutes(); // Handle hour overflow if (minHour >= 24) { minHour = 23; } // Get current selections (with the proposed change) const currentHour = type === 'hour' ? parseInt(timeWheels.hour.items[newIndex]) : parseInt( timeWheels.hour.items[timeWheels.hour.currentIndex]); const currentMinute = type === 'minute' ? parseInt(timeWheels.minute.items[newIndex]) : parseInt( timeWheels.minute.items[timeWheels.minute.currentIndex]); const currentAmPm = type === 'ampm' ? timeWheels.ampm.items[newIndex] : timeWheels.ampm.items[ timeWheels.ampm.currentIndex]; // Convert current selection to 24-hour format let current24Hour = currentHour; if (currentAmPm === 'PM' && currentHour !== 12) { current24Hour += 12; } else if (currentAmPm === 'AM' && currentHour === 12) { current24Hour = 0; } // Check if the proposed time is valid if (current24Hour
+12 ? minHour - 12 : minHour; if (targetHour === 0) targetHour = 12; const minHourIndex = timeWheels.hour.items.findIndex(h => parseInt(h) === targetHour); return minHourIndex !== -1 ? minHourIndex : newIndex; } else if (type === 'ampm') { return minHour >= 12 ? 1 : 0; // PM if minHour >= 12, otherwise AM } return newIndex; } else if (current24Hour === minHour && currentMinute
+parseInt(m) >= minMinute); return minMinuteIndex !== -1 ? minMinuteIndex : newIndex; } return newIndex; } return newIndex; // Time is valid } function updateActiveItem(type) { const items = timeWheels[type].element.querySelectorAll('.time-wheel-item'); items.forEach((item, index) => { item.classList.toggle('active', index === timeWheels[type].currentIndex); }); } // Initialize the time wheels initTimeWheels(); // Set initial time restrictions if today is already selected updateTimeRestrictions(); /* ------------------------- Update time display from scrollable wheels ------------------------- */ function updateTimeDisplay() { const hour = timeWheels.hour.items[timeWheels.hour.currentIndex]; const minute = timeWheels.minute.items[timeWheels.minute.currentIndex]; const second = timeWheels.second.items[timeWheels.second.currentIndex]; const ampm = timeWheels.ampm.items[timeWheels.ampm.currentIndex]; const tz = timezoneDropdown.getValue(); updateAllSelectedTime(`${hour}:${minute}:${second} ${ampm} ${tz}`); } function getSelectedTime() { const hour = timeWheels.hour.items[timeWheels.hour.currentIndex]; const minute = timeWheels.minute.items[timeWheels.minute.currentIndex]; const second = timeWheels.second.items[timeWheels.second.currentIndex]; const ampm = timeWheels.ampm.items[timeWheels.ampm.currentIndex]; return `${hour}:${minute}:${second} ${ampm}`; } /* Time wheel events are handled internally, only timezone dropdown needs listener */ timezoneDropdown.el.addEventListener("cd-change", updateTimeDisplay); /* ------------------------- Calendar render & selection logic ------------------------- */ function renderCalendar() { const year = current.getFullYear(); const month = current.getMonth(); monthInput.value = current.toLocaleString("default", { month: "long" }); yearInput.value = year; const firstDay = new Date(year, month, 1); const daysInMonth = new Date(year, month + 1, 0).getDate(); const startIndex = (firstDay.getDay() + 6) % 7; const prevMonthDays = new Date(year, month, 0).getDate(); datesContainer.innerHTML = ""; /* --------------------- PREVIOUS MONTH VISIBLE DAYS --------------------- */ for (let i = 0; i
+selectDate(prevDate, div); } datesContainer.appendChild(div); } /* --------------------------- CURRENT MONTH DAYS --------------------------- */ for (let day = 1; day
+selectDate(dateObj, div); } datesContainer.appendChild(div); } /* ------------------------ NEXT MONTH VISIBLE DAYS ------------------------ */ const totalCells = startIndex + daysInMonth; const remaining = 42 - totalCells; // 6 rows calendar for (let i = 1; i
+selectDate(nextDate, div); } datesContainer.appendChild(div); } updatePrevButtonState(); } function selectDate(dateObj, div) { selectedDate = dateObj; // Remove selected and today classes from all dates document.querySelectorAll(".date").forEach((d) => { d.classList.remove("selected", "today"); }); // Add selected class to the clicked date div.classList.add("selected"); // If the selected date is today, also add the today class if (dateObj.toDateString() === today.toDateString()) { div.classList.add("today"); } updateAllSelectedDate(selectedDate.toDateString()); // Update time restrictions based on selected date updateTimeRestrictions(); updateTimeDisplay(); } function updateTimeRestrictions() { const timeRestrictionNotice = document.getElementById('timeRestrictionNotice'); // Always hide other notice so only 1 message is active hideWorkingHoursNotice(); if (!selectedDate) { if (timeRestrictionNotice) timeRestrictionNotice.style.display = 'none'; return; } const isToday = selectedDate.toDateString() === today.toDateString(); if (isToday) { restrictTimeToCurrentPlusOne(); if (timeRestrictionNotice) timeRestrictionNotice.style.display = 'block'; } else { resetTimeRestrictions(); if (timeRestrictionNotice) timeRestrictionNotice.style.display = 'none'; } } function restrictTimeToCurrentPlusOne() { const now = new Date(); let minHour = now.getHours() + 1; // At least 1 hour ahead const minMinute = now.getMinutes(); // Ensure minimum time is within working hours (10 AM - 8 PM) if (minHour
+20) { // If it's past 8 PM, they can't book for today return; } // Convert to 12-hour format let min12Hour = minHour > 12 ? minHour - 12 : minHour; if (min12Hour === 0) min12Hour = 12; const minAmPm = minHour >= 12 ? 'PM' : 'AM'; // Update time wheels to reflect restrictions restrictTimeWheels(min12Hour, minMinute, minAmPm, minHour); } function resetTimeRestrictions() { // Reset all time wheels to allow any time resetTimeWheels(); } function restrictTimeWheels(minHour, minMinute, minAmPm, originalMinHour) { // Find the appropriate indices for minimum allowed time const minAmPmIndex = minAmPm === 'AM' ? 0 : 1; const minHourIndex = timeWheels.hour.items.findIndex(h => parseInt(h) === minHour); // If current time selection is invalid, update to minimum allowed time const currentHour = parseInt(timeWheels.hour.items[timeWheels.hour.currentIndex]); const currentAmPm = timeWheels.ampm.items[timeWheels.ampm.currentIndex]; const currentMinute = parseInt(timeWheels.minute.items[timeWheels.minute.currentIndex]); const currentAmPmIndex = currentAmPm === 'AM' ? 0 : 1; // Convert current selection to 24-hour format for comparison let current24Hour = currentHour; if (currentAmPm === 'PM' && currentHour !== 12) { current24Hour += 12; } else if (currentAmPm === 'AM' && currentHour === 12) { current24Hour = 0; } // Check if current time is invalid let needsUpdate = false; if (current24Hour
+parseInt(m) >= minMinute); if (minMinuteIndex !== -1) { setWheelIndex('minute', minMinuteIndex); } } // Set seconds to 00 for cleaner time setWheelIndex('second', 0); } } function resetTimeWheels() { // No restrictions needed - all times are available // Keep current selections as they are } /* ------------------------- Prev / Next month logic + tooltip ------------------------- */ prevBtn.onclick = () => { const y = current.getFullYear(); const m = current.getMonth(); const atLimit = y === minYear && m === minMonth; if (atLimit) { prevTooltip.classList.add("show"); setTimeout(() => prevTooltip.classList.remove("show"), 1800); return; } current.setMonth(m - 1); renderCalendar(); }; document.getElementById("nextMonth").onclick = () => { current.setMonth(current.getMonth() + 1); renderCalendar(); }; function updatePrevButtonState() { const y = current.getFullYear(); const m = current.getMonth(); if (y === minYear && m === minMonth) { prevBtn.classList.add("disabled-prev"); } else { prevBtn.classList.remove("disabled-prev"); } } /* ------------------------- Month and Year input handlers ------------------------- */ function updateCalendarFromInputs() { const monthName = monthInput.value.trim(); const year = parseInt(yearInput.value); if (!monthName || isNaN(year)) return; const monthIndex = monthNames.findIndex(month => month.toLowerCase() === monthName.toLowerCase() ); if (monthIndex === -1) return; if (year
+{ const input = e.target.value; if (input.length > 0) { showMonthSuggestions(input); } else { hideMonthSuggestions(); } }); monthInput.addEventListener('keydown', (e) => { if (monthSuggestions.style.display === 'block') { switch (e.key) { case 'ArrowDown': e.preventDefault(); highlightSuggestion('down'); break; case 'ArrowUp': e.preventDefault(); highlightSuggestion('up'); break; case 'Enter': e.preventDefault(); if (!selectHighlightedSuggestion()) { updateCalendarFromInputs(); } break; case 'Escape': e.preventDefault(); hideMonthSuggestions(); break; } } else if (e.key === 'Enter') { updateCalendarFromInputs(); } }); monthInput.addEventListener('blur', () => { // Delay hiding to allow click on suggestions setTimeout(() => { hideMonthSuggestions(); updateCalendarFromInputs(); }, 150); }); // Year input handler yearInput.addEventListener('input', (e) => { let year = parseInt(e.target.value); if (year
+2050) { e.target.value = 2050; } updateCalendarFromInputs(); }); yearInput.addEventListener('change', updateCalendarFromInputs); // Click outside to hide suggestions document.addEventListener('click', (e) => { const monthContainer = document.querySelector('.month-input-container'); if (!monthContainer.contains(e.target)) { hideMonthSuggestions(); } }); /* ------------------------- Initial render ------------------------- */ renderCalendar(); /* ------------------------- Submit logic + modal ------------------------- */ document.querySelectorAll(".submit-schedule").forEach(btn => { // Track which button was last clicked (needed for flashMessage positioning) btn.addEventListener("click", () => { document.querySelectorAll(".submit-schedule") .forEach(b => b.classList.remove("last-clicked")); btn.classList.add("last-clicked"); }); // Main submit action btn.onclick = () => { if (!selectedDate) { flashMessage("Please select a date before submitting.", btn); return; } const hour = timeWheels.hour.items[timeWheels.hour.currentIndex]; const minute = timeWheels.minute.items[timeWheels.minute.currentIndex]; const second = timeWheels.second.items[timeWheels.second.currentIndex]; const ampm = timeWheels.ampm.items[timeWheels.ampm.currentIndex]; // Convert to 24-hour format for validation let hour24 = parseInt(hour); if (ampm === 'PM' && hour24 !== 12) { hour24 += 12; } else if (ampm === 'AM' && hour24 === 12) { hour24 = 0; } // Gentle reminder about working hours (but don't block submission) if (hour24
+20) { const isOutsideHours = hour24
+{ chatPanel.classList.add('open'); chatOverlay.classList.add('show'); document.body.style.overflow = "hidden"; // Focus on input after panel opens setTimeout(() => { chatInput.focus(); }, 300); }); function closeChatPanel() { chatPanel.classList.remove('open'); chatOverlay.classList.remove('show'); document.body.style.overflow = ""; } // Close when clicking outside the chat-panel-container chatPanel.addEventListener('click', (e) => { if (!chatPanelContainer.contains(e.target)) { closeChatPanel(); } }); // Close chat when clicking overlay chatOverlay.addEventListener('click', closeChatPanel); // Send message function async function sendChatMessage() { const message = chatInput.value.trim(); if (!message) { showFlashMessage('Please type a message', 'warning'); return; } if (!applicationId) { showFlashMessage('Session expired. Please refresh the page.', 'error'); return; } // Disable input and button during sending chatInput.disabled = true; sendBtn.disabled = true; sendBtn.style.opacity = '0.6'; // Add user message to chat immediately (optimistic UI) addMessageToChat(message, 'user', true); chatInput.value = ''; // Show immediate feedback showFlashMessage('Sending your message...', 'info'); try { const response = await fetch('/api/consultation/chat/send-message', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]') ?.getAttribute('content') || '' }, body: JSON.stringify({ application_id: applicationId, message: message, sender_name: applicationData?.name || 'Guest', sender_email: applicationData?.email || null }) }); if (!response.ok) { throw new Error(`HTTP error! status: ${response.status}`); } const data = await response.json(); if (data.success) { // Show success animation on the last message const lastMessage = chatBody.lastElementChild; if (lastMessage && lastMessage.classList.contains('sending')) { lastMessage.classList.remove('sending'); lastMessage.classList.add('sent'); // Add timestamp setTimeout(() => { const timestamp = document.createElement('div'); timestamp.style.fontSize = '11px'; timestamp.style.color = '#999'; timestamp.style.marginTop = '4px'; timestamp.textContent = 'Just now ✓'; lastMessage.appendChild(timestamp); }, 500); } // Show immediate success feedback showFlashMessage( 'Your message has been sent and someone from our team will get back to you shortly!', 'success'); // Show automated response after a short delay setTimeout(() => { addMessageToChat( "Thank you for reaching out! We've received your message and will get back to you soon. In the meantime, feel free to ask any other questions.", 'bot' ); }, 1500); } else { throw new Error(data.message || 'Failed to send message'); } } catch (error) { console.error('Chat message error:', error); // Remove the failed message const lastMessage = chatBody.lastElementChild; if (lastMessage && lastMessage.classList.contains('sending')) { lastMessage.remove(); } // Show specific error messages based on error type let errorMessage = 'Failed to send message. Please try again.'; if (error.message.includes('500')) { errorMessage = 'Server error occurred. Please try again in a moment.'; } else if (error.message.includes('404')) { errorMessage = 'Service not found. Please refresh the page and try again.'; } else if (error.message.includes('Network')) { errorMessage = 'Network error. Please check your connection and try again.'; } showFlashMessage(errorMessage, 'error'); chatInput.value = message; // Restore the message } finally { // Re-enable input and button chatInput.disabled = false; sendBtn.disabled = false; sendBtn.style.opacity = '1'; chatInput.focus(); } } // Add message to chat UI function addMessageToChat(message, type, sending = false) { const messageDiv = document.createElement('div'); messageDiv.className = `msg ${type}`; if (sending) { messageDiv.classList.add('sending'); messageDiv.style.opacity = '0.7'; } messageDiv.textContent = message; // Add animation messageDiv.style.transform = 'translateY(20px)'; messageDiv.style.opacity = sending ? '0.7' : '0'; chatBody.appendChild(messageDiv); // Animate message in setTimeout(() => { messageDiv.style.transition = 'all 0.3s ease'; messageDiv.style.transform = 'translateY(0)'; messageDiv.style.opacity = sending ? '0.7' : '1'; }, 10); // Scroll to bottom setTimeout(() => { chatBody.scrollTop = chatBody.scrollHeight; }, 100); } // Send button click handler sendBtn.addEventListener('click', sendChatMessage); // Enter key handler chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') { e.preventDefault(); sendChatMessage(); } }); // Add some CSS animations via JavaScript const style = document.createElement('style'); style.textContent = ` .msg.sending { position: relative; } .msg.sending::after { content: ''; position: absolute; right: -20px; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; border: 2px solid #ddd; border-top: 2px solid #0d4036; border-radius: 50%; animation: spin 1s linear infinite; } .msg.sent { opacity: 1 !important; } @keyframes spin { 0% { transform: translateY(-50%) rotate(0deg); } 100% { transform: translateY(-50%) rotate(360deg); } } #chat-input:disabled { background-color: #f5f5f5; cursor: not-allowed; } `; document.head.appendChild(style); // Flash message function for user feedback function showFlashMessage(message, type = 'info') { // Remove any existing flash messages const existingFlash = document.querySelector('.flash-message'); if (existingFlash) { existingFlash.remove(); } // Create flash message element const flashDiv = document.createElement('div'); flashDiv.className = `flash-message flash-${type}`; flashDiv.style.cssText = ` position: fixed; top: 20px; right: 20px; z-index: 10000; padding: 15px 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); font-weight: 500; max-width: 350px; word-wrap: break-word; transform: translateX(400px); transition: all 0.3s ease; ${type === 'success' ? 'background: #d4edda; color: #155724; border-left: 4px solid #28a745;' : ''} ${type === 'error' ? 'background: #f8d7da; color: #721c24; border-left: 4px solid #dc3545;' : ''} ${type === 'warning' ? 'background: #fff3cd; color: #856404; border-left: 4px solid #ffc107;' : ''} ${type === 'info' ? 'background: #d1ecf1; color: #0c5460; border-left: 4px solid #17a2b8;' : ''} `; // Add icon based on type const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : type === 'warning' ? '⚠️' : 'ℹ️'; flashDiv.innerHTML = `
+${icon}
+${message}`; // Add to document document.body.appendChild(flashDiv); // Animate in setTimeout(() => { flashDiv.style.transform = 'translateX(0)'; }, 10); // Auto remove after 4 seconds setTimeout(() => { flashDiv.style.transform = 'translateX(400px)'; setTimeout(() => { if (flashDiv.parentNode) { flashDiv.parentNode.removeChild(flashDiv); } }, 300); }, 4000); } });
+ATTR November
+ATTR Timezone
+ATTR Type your message here
+
+===== consultation/schedule-consultation.blade.php (43) =====
+Schedule Your Consultation
+Pick a convenient date and time for your session. You’ll receive a confirmation email once it’s booked.
+Submit
+Select Day
+You cannot go before the current month
+Selected Date:
+Set time
+⏰ Same-day bookings must be scheduled at least one hour in advance.
+Selected Time:
+Call For Help
+P23 Africa
+Online
+Hey 👋
+Welcome to P23 Africa, what can we help you with?
+booking_token }}">
+consultation confirmed!
+A confirmation email containing the date, time, and Google Meet link has been sent to your registered email address.
+Open customer@example.com
+Return to Homepage
+document.addEventListener("DOMContentLoaded", () => { /* ------------------------- Elements ------------------------- */ const datesContainer = document.getElementById("dates"); const monthInput = document.getElementById("monthInput"); const yearInput = document.getElementById("yearInput"); const monthSuggestions = document.getElementById("monthSuggestions"); // const selectedDateText = document.getElementById("selectedDate"); // const selectedTimeText = document.getElementById("selectedTime"); const prevBtn = document.getElementById("prevMonth"); const prevTooltip = document.querySelector(".prev-tooltip"); /* Modal elements */ // const submitBtn = document.getElementById("submitSchedule"); const modal = document.getElementById("scheduleModal"); const modalDateText = document.getElementById("modalDateText"); const modalTimeText = document.getElementById("modalTimeText"); const closeModal = document.getElementById("closeModal"); /* ------------------------- Date limits & state ------------------------- */ const today = new Date(); const minYear = today.getFullYear(); const minMonth = today.getMonth(); // 0-indexed let selectedDate = null; let current = new Date(minYear, minMonth); /* ------------------------- Month autocomplete data ------------------------- */ const monthNames = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ]; let highlightedIndex = -1; function updateAllSelectedDate(dateString) { document.querySelectorAll(".selected-date").forEach(el => { el.textContent = dateString; }); } function updateAllSelectedTime(timeString) { document.querySelectorAll(".selected-time").forEach(el => { el.textContent = timeString; }); } /* ------------------------- Month autocomplete functions ------------------------- */ function showMonthSuggestions(input) { const filteredMonths = monthNames.filter(month => month.toLowerCase().startsWith(input.toLowerCase()) ); if (filteredMonths.length === 0 || (filteredMonths.length === 1 && filteredMonths[0] .toLowerCase() === input.toLowerCase())) { hideMonthSuggestions(); return; } monthSuggestions.innerHTML = ''; filteredMonths.forEach((month, index) => { const suggestion = document.createElement('div'); suggestion.className = 'month-suggestion'; suggestion.textContent = month; suggestion.onclick = () => selectMonth(month); monthSuggestions.appendChild(suggestion); }); monthSuggestions.style.display = 'block'; highlightedIndex = -1; } function hideMonthSuggestions() { monthSuggestions.style.display = 'none'; highlightedIndex = -1; } function selectMonth(monthName) { monthInput.value = monthName; hideMonthSuggestions(); updateCalendarFromInputs(); } function highlightSuggestion(direction) { const suggestions = monthSuggestions.querySelectorAll('.month-suggestion'); if (suggestions.length === 0) return; // Remove previous highlight if (highlightedIndex >= 0) { suggestions[highlightedIndex].classList.remove('highlighted'); } // Update index if (direction === 'down') { highlightedIndex = (highlightedIndex + 1) % suggestions.length; } else if (direction === 'up') { highlightedIndex = highlightedIndex
+= 0) { suggestions[highlightedIndex].classList.add('highlighted'); } } function selectHighlightedSuggestion() { const suggestions = monthSuggestions.querySelectorAll('.month-suggestion'); if (highlightedIndex >= 0 && highlightedIndex
+returns { el, open(), close(), getValue(), setValue(val) } */ function createDropdown({ id, options = [], initialIndex = 0 }) { const root = document.getElementById(id); const toggle = root.querySelector(".cd-toggle"); const selectedSpan = root.querySelector(".cd-selected"); const list = root.querySelector(".cd-list"); // populate list (clear first) list.innerHTML = ""; options.forEach((opt, i) => { const li = document.createElement("li"); li.className = "cd-option"; li.setAttribute("data-value", opt.value ?? opt); li.textContent = opt.label ?? opt; li.tabIndex = -1; li.role = "option"; if (i === initialIndex) li.classList.add("selected"); list.appendChild(li); }); // internal state let isOpen = false; let focusedIndex = initialIndex; function open() { root.classList.add("open"); toggle.classList.add("rotated"); toggle.setAttribute("aria-expanded", "true"); list.setAttribute("aria-hidden", "false"); isOpen = true; // focus the currently selected option if any const items = list.querySelectorAll(".cd-option"); if (items[focusedIndex]) { items[focusedIndex].classList.add("focused"); items[focusedIndex].focus(); scrollIntoViewIfNeeded(items[focusedIndex], list); } document.addEventListener("click", onDocClick); document.addEventListener("keydown", onKeyDown); } function close() { root.classList.remove("open"); toggle.classList.remove("rotated"); toggle.setAttribute("aria-expanded", "false"); list.setAttribute("aria-hidden", "true"); isOpen = false; clearFocused(); document.removeEventListener("click", onDocClick); document.removeEventListener("keydown", onKeyDown); } function getValue() { const sel = list.querySelector(".cd-option.selected"); return sel ? sel.getAttribute("data-value") : null; } function setValue(val) { const items = Array.from(list.querySelectorAll(".cd-option")); items.forEach((it) => it.classList.remove("selected")); const found = items.find( (it) => it.getAttribute("data-value") === String(val) ); if (found) { found.classList.add("selected"); selectedSpan.textContent = found.textContent; focusedIndex = items.indexOf(found); } else { // fallback: set first if (items[0]) { items[0].classList.add("selected"); selectedSpan.textContent = items[0].textContent; focusedIndex = 0; } } } function onToggleClick(e) { e.stopPropagation(); if (isOpen) close(); else open(); } toggle.addEventListener("click", onToggleClick); function onOptionClick(e) { const li = e.currentTarget; // remove selected from others list.querySelectorAll(".cd-option").forEach((o) => { o.classList.remove("selected", "focused"); }); li.classList.add("selected"); selectedSpan.textContent = li.textContent; focusedIndex = Array.from(list.children).indexOf(li); close(); // dispatch custom 'change' event on root for listeners root.dispatchEvent(new CustomEvent("cd-change", { detail: getValue() })); } function onDocClick(e) { if (!root.contains(e.target)) close(); } function clearFocused() { list .querySelectorAll(".cd-option") .forEach((o) => o.classList.remove("focused")); } function onKeyDown(e) { if (!isOpen) return; const items = Array.from(list.querySelectorAll(".cd-option")); if (e.key === "ArrowDown") { e.preventDefault(); focusedIndex = Math.min(items.length - 1, focusedIndex + 1); items.forEach((it) => it.classList.remove("focused")); items[focusedIndex].classList.add("focused"); scrollIntoViewIfNeeded(items[focusedIndex], list); } else if (e.key === "ArrowUp") { e.preventDefault(); focusedIndex = Math.max(0, focusedIndex - 1); items.forEach((it) => it.classList.remove("focused")); items[focusedIndex].classList.add("focused"); scrollIntoViewIfNeeded(items[focusedIndex], list); } else if (e.key === "Enter") { e.preventDefault(); if (items[focusedIndex]) { items[focusedIndex].click(); } } else if (e.key === "Escape") { e.preventDefault(); close(); } } // small helper to ensure option visible when keyboard navigates function scrollIntoViewIfNeeded(el, container) { const containerTop = container.scrollTop; const containerBottom = containerTop + container.clientHeight; const elTop = el.offsetTop; const elBottom = elTop + el.offsetHeight; if (elTop
+containerBottom) container.scrollTop = elBottom - container.clientHeight + 4; } // event bindings toggle.addEventListener("click", onToggleClick); root .querySelectorAll(".cd-option") .forEach((li) => li.addEventListener("click", onOptionClick)); // expose API return { el: root, open, close, getValue, setValue }; } /* ------------------------- Build dropdowns with options ------------------------- */ function pad(n) { return String(n).padStart(2, "0"); } /* timezone dropdown already has DOM items in HTML; we'll initialize it differently */ const timezoneDropdown = createDropdown({ id: "dropdown-timezone", options: [{ label: "GMT", value: "GMT" }, { label: "UTC", value: "UTC" }, { label: "WAT", value: "Africa/Lagos" }, ], initialIndex: 0, }); /* ------------------------- Scrollable Time Picker ------------------------- */ // Time wheel data const timeWheels = { hour: { element: null, items: [], currentIndex: 5 }, // Default to 06 minute: { element: null, items: [], currentIndex: 0 }, // Default to 00 // SECOND wheel: only include "00" so it is fixed second: { element: null, items: ['00'], currentIndex: 0 }, // Fixed to 00 ampm: { element: null, items: ['AM', 'PM'], currentIndex: 0 } // Default to AM }; // Initialize time wheels // Initialize time wheels function initTimeWheels() { // Generate hours (10 AM to 8 PM only) const allowedHours = [10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8]; timeWheels.hour.items = []; // reset to be safe allowedHours.forEach(hour => { timeWheels.hour.items.push(String(hour).padStart(2, '0')); }); // Generate minutes (00-59). NOTE: seconds are intentionally not generated beyond '00' timeWheels.minute.items = []; for (let i = 0; i
+= 10 && currentHour
+= 12) { ampm = 'PM'; if (currentHour > 12) { displayHour = currentHour - 12; } } const hourIndex = timeWheels.hour.items.findIndex(h => parseInt(h) === displayHour); if (hourIndex !== -1) { defaultHourIndex = hourIndex; defaultAmPmIndex = ampm === 'AM' ? 0 : 1; defaultMinuteIndex = currentMinute; } } // Update default indices timeWheels.hour.currentIndex = defaultHourIndex; timeWheels.minute.currentIndex = defaultMinuteIndex; timeWheels.second.currentIndex = 0; // always 0 (00) timeWheels.ampm.currentIndex = defaultAmPmIndex; // Setup each wheel setupTimeWheel('hour'); setupTimeWheel('minute'); setupTimeWheel('second'); // will be built but locked setupTimeWheel('ampm'); // Update initial display updateTimeDisplay(); } function setupTimeWheel(type) { const wheel = document.getElementById(`${type}-wheel`); if (!wheel) return; const list = wheel.querySelector('.time-wheel-list'); timeWheels[type].element = wheel; // Populate wheel items list.innerHTML = ''; timeWheels[type].items.forEach((item, index) => { const div = document.createElement('div'); div.className = 'time-wheel-item'; div.textContent = item; div.dataset.value = item; div.dataset.index = index; list.appendChild(div); }); // Set initial position const itemHeight = 40; const centerOffset = -timeWheels[type].currentIndex * itemHeight; list.style.transform = `translateY(${centerOffset}px)`; // Update active item updateActiveItem(type); // If this is the second wheel, lock it: don't attach any scroll/drag listeners if (type === 'second') { // add a marker class so CSS can render it as locked wheel.classList.add('time-wheel-locked'); // ensure it always stays at index 0 and transform exactly matches index 0 timeWheels.second.currentIndex = 0; list.style.transform = `translateY(${0}px)`; updateActiveItem('second'); return; } // Add scroll functionality for non-locked wheels (hour, minute, ampm) let isScrolling = false; let startY = 0; let startTransform = 0; wheel.addEventListener('wheel', (e) => { e.preventDefault(); const delta = e.deltaY > 0 ? 1 : -1; scrollWheel(type, delta); }); // Touch/mouse drag functionality wheel.addEventListener('mousedown', startDrag); wheel.addEventListener('touchstart', startDrag, { passive: false }); function startDrag(e) { isScrolling = true; startY = e.type === 'mousedown' ? e.clientY : e.touches[0].clientY; const transform = list.style.transform; const match = transform.match(/translateY\((-?\d+)px\)/); startTransform = match ? parseInt(match[1]) : 0; document.addEventListener('mousemove', onDrag); document.addEventListener('touchmove', onDrag, { passive: false }); document.addEventListener('mouseup', endDrag); document.addEventListener('touchend', endDrag); } function onDrag(e) { if (!isScrolling) return; e.preventDefault(); const currentY = e.type === 'mousemove' ? e.clientY : e.touches[0].clientY; const deltaY = currentY - startY; const newTransform = startTransform + deltaY; list.style.transform = `translateY(${newTransform}px)`; } function endDrag() { if (!isScrolling) return; isScrolling = false; // Snap to nearest item const transform = list.style.transform; const match = transform.match(/translateY\((-?\d+)px\)/); const currentTransform = match ? parseInt(match[1]) : 0; const itemHeight = 40; const newIndex = Math.max(0, Math.min( timeWheels[type].items.length - 1, Math.round(-currentTransform / itemHeight) )); setWheelIndex(type, newIndex); document.removeEventListener('mousemove', onDrag); document.removeEventListener('touchmove', onDrag); document.removeEventListener('mouseup', endDrag); document.removeEventListener('touchend', endDrag); } } // Only allow scrolling for non-locked wheels function scrollWheel(type, direction) { if (type === 'second') return; // guard: seconds are locked const newIndex = Math.max(0, Math.min( timeWheels[type].items.length - 1, timeWheels[type].currentIndex + direction )); setWheelIndex(type, newIndex); } function setWheelIndex(type, index) { // Only validate working hours for gentle reminders (don't block selection) validateWorkingHours(type, index); // Validate time selection if today is selected (only for past times) if (selectedDate && selectedDate.toDateString() === today.toDateString()) { const todayValidatedIndex = validateTimeSelection(type, index); if (todayValidatedIndex !== index) { index = todayValidatedIndex; // Show a brief flash message about time restriction const now = new Date(); const minHour = now.getHours() + 1; flashMessage( `Please select a time at least 1 hour ahead (after ${minHour}:${now.getMinutes().toString().padStart(2, '0')})` ); } } timeWheels[type].currentIndex = index; const list = timeWheels[type].element.querySelector('.time-wheel-list'); const itemHeight = 40; const centerOffset = -index * itemHeight; list.style.transform = `translateY(${centerOffset}px)`; updateActiveItem(type); updateTimeDisplay(); } function validateWorkingHours(type, newIndex) { // Allow all selections during normal interaction // Only show a gentle reminder message for times outside working hours // Get current selections (with the proposed change) const currentHour = type === 'hour' ? parseInt(timeWheels.hour.items[newIndex]) : parseInt( timeWheels.hour.items[timeWheels.hour.currentIndex]); const currentAmPm = type === 'ampm' ? timeWheels.ampm.items[newIndex] : timeWheels.ampm.items[ timeWheels.ampm.currentIndex]; // Convert to 24-hour format for validation let hour24 = currentHour; if (currentAmPm === 'PM' && currentHour !== 12) { hour24 += 12; } else if (currentAmPm === 'AM' && currentHour === 12) { hour24 = 0; } // Check if time is outside working hours (10 AM - 8 PM = 10:00 - 20:00) if (hour24
+20) { // Show a gentle notification but don't block the selection if (hour24
+20) { showWorkingHoursNotice('Consultation hours end at 8:00 PM'); } } return newIndex; // Always allow the selection } function validateTimeSelection(type, newIndex) { if (!selectedDate || selectedDate.toDateString() !== today.toDateString()) { return newIndex; // No validation needed for future dates } const now = new Date(); let minHour = now.getHours() + 1; const minMinute = now.getMinutes(); // Handle hour overflow if (minHour >= 24) { minHour = 23; } // Get current selections (with the proposed change) const currentHour = type === 'hour' ? parseInt(timeWheels.hour.items[newIndex]) : parseInt( timeWheels.hour.items[timeWheels.hour.currentIndex]); const currentMinute = type === 'minute' ? parseInt(timeWheels.minute.items[newIndex]) : parseInt( timeWheels.minute.items[timeWheels.minute.currentIndex]); const currentAmPm = type === 'ampm' ? timeWheels.ampm.items[newIndex] : timeWheels.ampm.items[ timeWheels.ampm.currentIndex]; // Convert current selection to 24-hour format let current24Hour = currentHour; if (currentAmPm === 'PM' && currentHour !== 12) { current24Hour += 12; } else if (currentAmPm === 'AM' && currentHour === 12) { current24Hour = 0; } // Check if the proposed time is valid if (current24Hour
+12 ? minHour - 12 : minHour; if (targetHour === 0) targetHour = 12; const minHourIndex = timeWheels.hour.items.findIndex(h => parseInt(h) === targetHour); return minHourIndex !== -1 ? minHourIndex : newIndex; } else if (type === 'ampm') { return minHour >= 12 ? 1 : 0; // PM if minHour >= 12, otherwise AM } return newIndex; } else if (current24Hour === minHour && currentMinute
+parseInt(m) >= minMinute); return minMinuteIndex !== -1 ? minMinuteIndex : newIndex; } return newIndex; } return newIndex; // Time is valid } function updateActiveItem(type) { const items = timeWheels[type].element.querySelectorAll('.time-wheel-item'); items.forEach((item, index) => { item.classList.toggle('active', index === timeWheels[type].currentIndex); }); } // Initialize the time wheels initTimeWheels(); // Set initial time restrictions if today is already selected updateTimeRestrictions(); /* ------------------------- Update time display from scrollable wheels ------------------------- */ function updateTimeDisplay() { const hour = timeWheels.hour.items[timeWheels.hour.currentIndex]; const minute = timeWheels.minute.items[timeWheels.minute.currentIndex]; const second = timeWheels.second.items[timeWheels.second.currentIndex]; const ampm = timeWheels.ampm.items[timeWheels.ampm.currentIndex]; const tz = timezoneDropdown.getValue(); updateAllSelectedTime(`${hour}:${minute}:${second} ${ampm} ${tz}`); } function getSelectedTime() { const hour = timeWheels.hour.items[timeWheels.hour.currentIndex]; const minute = timeWheels.minute.items[timeWheels.minute.currentIndex]; const second = timeWheels.second.items[timeWheels.second.currentIndex]; const ampm = timeWheels.ampm.items[timeWheels.ampm.currentIndex]; return `${hour}:${minute}:${second} ${ampm}`; } /* Time wheel events are handled internally, only timezone dropdown needs listener */ timezoneDropdown.el.addEventListener("cd-change", updateTimeDisplay); /* ------------------------- Calendar render & selection logic ------------------------- */ function renderCalendar() { const year = current.getFullYear(); const month = current.getMonth(); monthInput.value = current.toLocaleString("default", { month: "long" }); yearInput.value = year; const firstDay = new Date(year, month, 1); const daysInMonth = new Date(year, month + 1, 0).getDate(); const startIndex = (firstDay.getDay() + 6) % 7; const prevMonthDays = new Date(year, month, 0).getDate(); datesContainer.innerHTML = ""; /* --------------------- PREVIOUS MONTH VISIBLE DAYS --------------------- */ for (let i = 0; i
+selectDate(prevDate, div); } datesContainer.appendChild(div); } /* --------------------------- CURRENT MONTH DAYS --------------------------- */ for (let day = 1; day
+selectDate(dateObj, div); } datesContainer.appendChild(div); } /* ------------------------ NEXT MONTH VISIBLE DAYS ------------------------ */ const totalCells = startIndex + daysInMonth; const remaining = 42 - totalCells; // 6 rows calendar for (let i = 1; i
+selectDate(nextDate, div); } datesContainer.appendChild(div); } updatePrevButtonState(); } function selectDate(dateObj, div) { selectedDate = dateObj; // Remove selected and today classes from all dates document.querySelectorAll(".date").forEach((d) => { d.classList.remove("selected", "today"); }); // Add selected class to the clicked date div.classList.add("selected"); // If the selected date is today, also add the today class if (dateObj.toDateString() === today.toDateString()) { div.classList.add("today"); } updateAllSelectedDate(selectedDate.toDateString()); // Update time restrictions based on selected date updateTimeRestrictions(); updateTimeDisplay(); } function updateTimeRestrictions() { const timeRestrictionNotice = document.getElementById('timeRestrictionNotice'); // Always hide other notice so only 1 message is active hideWorkingHoursNotice(); if (!selectedDate) { if (timeRestrictionNotice) timeRestrictionNotice.style.display = 'none'; return; } const isToday = selectedDate.toDateString() === today.toDateString(); if (isToday) { restrictTimeToCurrentPlusOne(); if (timeRestrictionNotice) timeRestrictionNotice.style.display = 'block'; } else { resetTimeRestrictions(); if (timeRestrictionNotice) timeRestrictionNotice.style.display = 'none'; } } function restrictTimeToCurrentPlusOne() { const now = new Date(); let minHour = now.getHours() + 1; // At least 1 hour ahead const minMinute = now.getMinutes(); // Ensure minimum time is within working hours (10 AM - 8 PM) if (minHour
+20) { // If it's past 8 PM, they can't book for today return; } // Convert to 12-hour format let min12Hour = minHour > 12 ? minHour - 12 : minHour; if (min12Hour === 0) min12Hour = 12; const minAmPm = minHour >= 12 ? 'PM' : 'AM'; // Update time wheels to reflect restrictions restrictTimeWheels(min12Hour, minMinute, minAmPm, minHour); } function resetTimeRestrictions() { // Reset all time wheels to allow any time resetTimeWheels(); } function restrictTimeWheels(minHour, minMinute, minAmPm, originalMinHour) { // Find the appropriate indices for minimum allowed time const minAmPmIndex = minAmPm === 'AM' ? 0 : 1; const minHourIndex = timeWheels.hour.items.findIndex(h => parseInt(h) === minHour); // If current time selection is invalid, update to minimum allowed time const currentHour = parseInt(timeWheels.hour.items[timeWheels.hour.currentIndex]); const currentAmPm = timeWheels.ampm.items[timeWheels.ampm.currentIndex]; const currentMinute = parseInt(timeWheels.minute.items[timeWheels.minute.currentIndex]); const currentAmPmIndex = currentAmPm === 'AM' ? 0 : 1; // Convert current selection to 24-hour format for comparison let current24Hour = currentHour; if (currentAmPm === 'PM' && currentHour !== 12) { current24Hour += 12; } else if (currentAmPm === 'AM' && currentHour === 12) { current24Hour = 0; } // Check if current time is invalid let needsUpdate = false; if (current24Hour
+parseInt(m) >= minMinute); if (minMinuteIndex !== -1) { setWheelIndex('minute', minMinuteIndex); } } // Set seconds to 00 for cleaner time setWheelIndex('second', 0); } } function resetTimeWheels() { // No restrictions needed - all times are available // Keep current selections as they are } /* ------------------------- Prev / Next month logic + tooltip ------------------------- */ prevBtn.onclick = () => { const y = current.getFullYear(); const m = current.getMonth(); const atLimit = y === minYear && m === minMonth; if (atLimit) { prevTooltip.classList.add("show"); setTimeout(() => prevTooltip.classList.remove("show"), 1800); return; } current.setMonth(m - 1); renderCalendar(); }; document.getElementById("nextMonth").onclick = () => { current.setMonth(current.getMonth() + 1); renderCalendar(); }; function updatePrevButtonState() { const y = current.getFullYear(); const m = current.getMonth(); if (y === minYear && m === minMonth) { prevBtn.classList.add("disabled-prev"); } else { prevBtn.classList.remove("disabled-prev"); } } /* ------------------------- Month and Year input handlers ------------------------- */ function updateCalendarFromInputs() { const monthName = monthInput.value.trim(); const year = parseInt(yearInput.value); if (!monthName || isNaN(year)) return; const monthIndex = monthNames.findIndex(month => month.toLowerCase() === monthName.toLowerCase() ); if (monthIndex === -1) return; if (year
+{ const input = e.target.value; if (input.length > 0) { showMonthSuggestions(input); } else { hideMonthSuggestions(); } }); monthInput.addEventListener('keydown', (e) => { if (monthSuggestions.style.display === 'block') { switch (e.key) { case 'ArrowDown': e.preventDefault(); highlightSuggestion('down'); break; case 'ArrowUp': e.preventDefault(); highlightSuggestion('up'); break; case 'Enter': e.preventDefault(); if (!selectHighlightedSuggestion()) { updateCalendarFromInputs(); } break; case 'Escape': e.preventDefault(); hideMonthSuggestions(); break; } } else if (e.key === 'Enter') { updateCalendarFromInputs(); } }); monthInput.addEventListener('blur', () => { // Delay hiding to allow click on suggestions setTimeout(() => { hideMonthSuggestions(); updateCalendarFromInputs(); }, 150); }); // Year input handler yearInput.addEventListener('input', (e) => { let year = parseInt(e.target.value); if (year
+2050) { e.target.value = 2050; } updateCalendarFromInputs(); }); yearInput.addEventListener('change', updateCalendarFromInputs); // Click outside to hide suggestions document.addEventListener('click', (e) => { const monthContainer = document.querySelector('.month-input-container'); if (!monthContainer.contains(e.target)) { hideMonthSuggestions(); } }); /* ------------------------- Initial render ------------------------- */ renderCalendar(); /* ------------------------- Submit logic + modal ------------------------- */ document.querySelectorAll(".submit-schedule").forEach(btn => { // Track which button was last clicked (needed for flashMessage positioning) btn.addEventListener("click", () => { document.querySelectorAll(".submit-schedule") .forEach(b => b.classList.remove("last-clicked")); btn.classList.add("last-clicked"); }); // Main submit action btn.onclick = () => { if (!selectedDate) { flashMessage("Please select a date before submitting.", btn); return; } const hour = timeWheels.hour.items[timeWheels.hour.currentIndex]; const minute = timeWheels.minute.items[timeWheels.minute.currentIndex]; const second = timeWheels.second.items[timeWheels.second.currentIndex]; const ampm = timeWheels.ampm.items[timeWheels.ampm.currentIndex]; // Convert to 24-hour format for validation let hour24 = parseInt(hour); if (ampm === 'PM' && hour24 !== 12) { hour24 += 12; } else if (ampm === 'AM' && hour24 === 12) { hour24 = 0; } // Gentle reminder about working hours (but don't block submission) if (hour24
+20) { const isOutsideHours = hour24
+{ chatPanel.classList.add('open'); chatOverlay.classList.add('show'); document.body.style.overflow = "hidden"; // Focus on input after panel opens setTimeout(() => { chatInput.focus(); }, 300); }); function closeChatPanel() { chatPanel.classList.remove('open'); chatOverlay.classList.remove('show'); document.body.style.overflow = ""; } // Close when clicking outside the chat-panel-container chatPanel.addEventListener('click', (e) => { if (!chatPanelContainer.contains(e.target)) { closeChatPanel(); } }); // Close chat when clicking overlay chatOverlay.addEventListener('click', closeChatPanel); // Send message function async function sendChatMessage() { const message = chatInput.value.trim(); if (!message) { showFlashMessage('Please type a message', 'warning'); return; } if (!applicationId) { showFlashMessage('Session expired. Please refresh the page.', 'error'); return; } // Disable input and button during sending chatInput.disabled = true; sendBtn.disabled = true; sendBtn.style.opacity = '0.6'; // Add user message to chat immediately (optimistic UI) addMessageToChat(message, 'user', true); chatInput.value = ''; // Show immediate feedback showFlashMessage('Sending your message...', 'info'); try { const response = await fetch('/api/consultation/chat/send-message', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]') ?.getAttribute('content') || '' }, body: JSON.stringify({ application_id: applicationId, message: message, sender_name: applicationData?.name || 'Guest', sender_email: applicationData?.email || null }) }); if (!response.ok) { throw new Error(`HTTP error! status: ${response.status}`); } const data = await response.json(); if (data.success) { // Show success animation on the last message const lastMessage = chatBody.lastElementChild; if (lastMessage && lastMessage.classList.contains('sending')) { lastMessage.classList.remove('sending'); lastMessage.classList.add('sent'); // Add timestamp setTimeout(() => { const timestamp = document.createElement('div'); timestamp.style.fontSize = '11px'; timestamp.style.color = '#999'; timestamp.style.marginTop = '4px'; timestamp.textContent = 'Just now ✓'; lastMessage.appendChild(timestamp); }, 500); } // Show immediate success feedback showFlashMessage( 'Your message has been sent and someone from our team will get back to you shortly!', 'success'); // Show automated response after a short delay setTimeout(() => { addMessageToChat( "Thank you for reaching out! We've received your message and will get back to you soon. In the meantime, feel free to ask any other questions.", 'bot' ); }, 1500); } else { throw new Error(data.message || 'Failed to send message'); } } catch (error) { console.error('Chat message error:', error); // Remove the failed message const lastMessage = chatBody.lastElementChild; if (lastMessage && lastMessage.classList.contains('sending')) { lastMessage.remove(); } // Show specific error messages based on error type let errorMessage = 'Failed to send message. Please try again.'; if (error.message.includes('500')) { errorMessage = 'Server error occurred. Please try again in a moment.'; } else if (error.message.includes('404')) { errorMessage = 'Service not found. Please refresh the page and try again.'; } else if (error.message.includes('Network')) { errorMessage = 'Network error. Please check your connection and try again.'; } showFlashMessage(errorMessage, 'error'); chatInput.value = message; // Restore the message } finally { // Re-enable input and button chatInput.disabled = false; sendBtn.disabled = false; sendBtn.style.opacity = '1'; chatInput.focus(); } } // Add message to chat UI function addMessageToChat(message, type, sending = false) { const messageDiv = document.createElement('div'); messageDiv.className = `msg ${type}`; if (sending) { messageDiv.classList.add('sending'); messageDiv.style.opacity = '0.7'; } messageDiv.textContent = message; // Add animation messageDiv.style.transform = 'translateY(20px)'; messageDiv.style.opacity = sending ? '0.7' : '0'; chatBody.appendChild(messageDiv); // Animate message in setTimeout(() => { messageDiv.style.transition = 'all 0.3s ease'; messageDiv.style.transform = 'translateY(0)'; messageDiv.style.opacity = sending ? '0.7' : '1'; }, 10); // Scroll to bottom setTimeout(() => { chatBody.scrollTop = chatBody.scrollHeight; }, 100); } // Send button click handler sendBtn.addEventListener('click', sendChatMessage); // Enter key handler chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') { e.preventDefault(); sendChatMessage(); } }); // Add some CSS animations via JavaScript const style = document.createElement('style'); style.textContent = ` .msg.sending { position: relative; } .msg.sending::after { content: ''; position: absolute; right: -20px; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; border: 2px solid #ddd; border-top: 2px solid #0d4036; border-radius: 50%; animation: spin 1s linear infinite; } .msg.sent { opacity: 1 !important; } @keyframes spin { 0% { transform: translateY(-50%) rotate(0deg); } 100% { transform: translateY(-50%) rotate(360deg); } } #chat-input:disabled { background-color: #f5f5f5; cursor: not-allowed; } `; document.head.appendChild(style); // Flash message function for user feedback function showFlashMessage(message, type = 'info') { // Remove any existing flash messages const existingFlash = document.querySelector('.flash-message'); if (existingFlash) { existingFlash.remove(); } // Create flash message element const flashDiv = document.createElement('div'); flashDiv.className = `flash-message flash-${type}`; flashDiv.style.cssText = ` position: fixed; top: 20px; right: 20px; z-index: 10000; padding: 15px 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); font-weight: 500; max-width: 350px; word-wrap: break-word; transform: translateX(400px); transition: all 0.3s ease; ${type === 'success' ? 'background: #d4edda; color: #155724; border-left: 4px solid #28a745;' : ''} ${type === 'error' ? 'background: #f8d7da; color: #721c24; border-left: 4px solid #dc3545;' : ''} ${type === 'warning' ? 'background: #fff3cd; color: #856404; border-left: 4px solid #ffc107;' : ''} ${type === 'info' ? 'background: #d1ecf1; color: #0c5460; border-left: 4px solid #17a2b8;' : ''} `; // Add icon based on type const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : type === 'warning' ? '⚠️' : 'ℹ️'; flashDiv.innerHTML = `
+${icon}
+${message}`; // Add to document document.body.appendChild(flashDiv); // Animate in setTimeout(() => { flashDiv.style.transform = 'translateX(0)'; }, 10); // Auto remove after 4 seconds setTimeout(() => { flashDiv.style.transform = 'translateX(400px)'; setTimeout(() => { if (flashDiv.parentNode) { flashDiv.parentNode.removeChild(flashDiv); } }, 300); }, 4000); } });
+ATTR November
+ATTR Timezone
+ATTR Type your message here
+
+===== consultation/payment-selection.blade.php (27) =====
+Back to Summary
+Choose your preferred payment method to complete your consultation booking
+Consultation Details
+Consultation Type:
+1-on-1 Business Strategy Session
+Duration:
+90 minutes
+Consultant:
+P23 Africa Expert
+Total Amount:
+GBP 75.00
+Choose Payment Method
+Stripe
+Secure payment processing with major credit cards and digital wallets
+Globally
+Secure Payment -
+Processing...'; if (selectedPaymentMethod === 'stripe') { processStripePayment(); } } function processStripePayment() { // Create Stripe card element modal createStripePaymentModal(); } function createStripePaymentModal() { let createdPaymentIntentId = ''; // Create modal for Stripe card input const modal = document.createElement('div'); modal.style.cssText = ` position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 10000; display: flex; align-items: center; justify-content: center; `; const modalContent = document.createElement('div'); modalContent.style.cssText = ` background: white; padding: 30px; border-radius: 15px; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto; `; modalContent.innerHTML = `
+Complete Payment
+Enter your card details to complete the payment in your local currency
+Cancel
+Pay ${BASE_DISPLAY_AMOUNT}
+`; modal.appendChild(modalContent); document.body.appendChild(modal); // Create Stripe elements const elements = stripe.elements(); const cardElement = elements.create('card', { style: { base: { fontSize: '16px', color: '#424770', '::placeholder': { color: '#aab7c4' }, }, }, }); cardElement.mount('#stripe-card-element'); // Handle card errors cardElement.on('change', ({ error }) => { const displayError = document.getElementById('stripe-card-errors'); if (error) { displayError.textContent = error.message; } else { displayError.textContent = ''; } }); // Handle cancel document.getElementById('stripe-cancel-btn').addEventListener('click', () => { document.body.removeChild(modal); resetPaymentButton(); }); // Handle payment document.getElementById('stripe-pay-btn').addEventListener('click', () => { const payBtn = document.getElementById('stripe-pay-btn'); const cancelBtn = document.getElementById('stripe-cancel-btn'); payBtn.disabled = true; cancelBtn.disabled = true; payBtn.innerHTML = '
+Payment Successful!'; payBtn.style.background = '#28a745'; console.log('Stripe payment successful, redirecting...'); // Close modal after brief success display setTimeout(() => { document.body.removeChild(modal); submitPaymentCallback('stripe', result.paymentIntent.id, 'successful', result .paymentIntent); }, 1500); } }) .catch(error => { document.body.removeChild(modal); console.error('Stripe payment error:', error); handlePaymentError( error.message || 'Payment processing failed', error.details || '' ); }); }); } function submitPaymentCallback(gateway, transactionId, status, data) { // Prevent double submission if (window._paymentCallbackSubmitted) return; window._paymentCallbackSubmitted = true; try { // Show loading state while redirecting const proceedBtn = document.getElementById('proceedBtn'); if (proceedBtn) { if (status === 'successful' || status === 'success') { proceedBtn.innerHTML = '
+Payment Successful - Redirecting...'; proceedBtn.style.background = '#28a745'; } else { proceedBtn.innerHTML = '
+' + (proceedLabel ? proceedLabel.textContent : BASE_DISPLAY_AMOUNT) + '
+'; } function updateDisplayedAmount(displayAmount) { const safeAmount = displayAmount || BASE_DISPLAY_AMOUNT; const summaryAmount = document.getElementById('paymentAmountLabel'); const proceedAmount = document.getElementById('proceedAmountLabel'); if (summaryAmount) { summaryAmount.textContent = safeAmount; } if (proceedAmount) { proceedAmount.textContent = safeAmount; } } function detectUserCurrency() { const localeCandidates = Array.isArray(navigator.languages) && navigator.languages.length ? navigator.languages : [navigator.language || 'en-GB']; let region = null; for (const locale of localeCandidates) { const matchedRegion = extractRegionFromLocale(locale); if (matchedRegion) { region = matchedRegion; break; } } if (!region) { const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; region = mapTimezoneToRegion(timezone); } if (!region) { region = 'GB'; } const map = { GB: 'GBP', US: 'USD', CA: 'CAD', AU: 'AUD', NZ: 'NZD', IE: 'EUR', FR: 'EUR', DE: 'EUR', ES: 'EUR', IT: 'EUR', PT: 'EUR', NL: 'EUR', BE: 'EUR', NG: 'NGN', GH: 'GHS', KE: 'KES', ZA: 'ZAR', }; return map[region] || 'GBP'; } function extractRegionFromLocale(locale) { if (!locale || typeof locale !== 'string') { return null; } const normalized = locale.replace('_', '-').toUpperCase(); const parts = normalized.split('-'); // Handles patterns like en-NG and zh-Hans-CN. for (let i = parts.length - 1; i >= 0; i--) { if (/^[A-Z]{2}$/.test(parts[i])) { return parts[i]; } } return null; } function mapTimezoneToRegion(timezone) { const timezoneMap = { 'Africa/Lagos': 'NG', 'Africa/Accra': 'GH', 'Africa/Nairobi': 'KE', 'Africa/Johannesburg': 'ZA', 'Europe/London': 'GB', 'America/New_York': 'US', 'America/Chicago': 'US', 'America/Los_Angeles': 'US', 'Europe/Paris': 'FR', 'Europe/Berlin': 'DE', }; return timezoneMap[timezone] || null; }
+ATTR Stripe
+
+===== consultation/payment-success.blade.php (3) =====
+Reference Number
+Payment Method
+$application->booking_token]) }}" class="proceed-button"> Proceed to scheduling your session
+
+===== consultation/consultation-summary.blade.php (21) =====
+Your
+Consultation Summary
+Thank You
+, We've Captured Your Key Goals And Challenges.
+Business Overview:
+Your Key Challenges:
+Your Current Goals:
+Your 1hr 30m Consultation Will;
+Review Your Business Position And Growth Stage
+Identify The Key Blockers Slowing Your Progress
+Provide Practical, Step-By-Step Recommendations
+Outline A Clear Roadmap To Move Forward With Confidence
+You'll Leave The Session With:
+Clarity
+Direction
+Action Steps You Can Implement Immediately
+booking_token }}">
+Proceed to Payment
+document.addEventListener("DOMContentLoaded", function() { const challengeCards = document.querySelectorAll("#challengeList .list-card"); if (challengeCards.length === 3) { const lastCard = challengeCards[challengeCards.length - 1]; lastCard.style.marginTop = "-1.5rem"; } // Handle payment form submission with CSRF error handling const paymentForm = document.querySelector('.payment-btn form'); if (paymentForm) { paymentForm.addEventListener('submit', function(e) { const submitBtn = paymentForm.querySelector('button[type="submit"]'); // Show loading state if (submitBtn) { submitBtn.disabled = true; submitBtn.innerHTML = '
+Processing...'; } // Use fetch to check for 419 before actual submit fetch(paymentForm.action, { method: 'POST', headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]') ?.content || '', 'Accept': 'text/html', 'X-Requested-With': 'XMLHttpRequest' }, body: new FormData(paymentForm) }).then(response => { if (response.status === 419) { e.preventDefault(); // CSRF expired - show refresh prompt if (typeof Swal !== 'undefined') { Swal.fire({ title: 'Session Expired', text: 'Your session has expired for security reasons. The page will refresh to continue.', icon: 'warning', confirmButtonText: 'Refresh Page', confirmButtonColor: '#591044', allowOutsideClick: false, allowEscapeKey: false }).then(() => { window.location.reload(); }); } else { alert('Your session has expired. The page will refresh.'); window.location.reload(); } return; } // If response is OK, redirect to the response URL if (response.redirected) { window.location.href = response.url; } else if (response.ok) { // For non-redirect responses, let the original form submission happen return response.text().then(html => { document.open(); document.write(html); document.close(); }); } }).catch(error => { console.error('Form submission error:', error); // Reset button on error if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = 'Proceed to Payment
+'; } }); // Prevent default form submission - we handle it via fetch e.preventDefault(); }); } });
+
+===== playbook-landing.blade.php (22) =====
+Your comprehensive guide to building and scaling successful businesses across Africa. Get expert insights, proven strategies, and actionable advice from successful entrepreneurs.
+📥 Download Free Playbook
+Sending... (
+✅ Instant Download
+🔒 No Spam
+P23 Africa's
+FOUNDERS
+PLAYBOOK
+Your Complete Guide to Building & Scaling Successful Businesses in Africa
+&times;
+Enter your details to receive the P23 Africa's Founders Playbook directly in your inbox.
+Full Name *
+Email Address *
+Company Name *
+Get My Playbook
+Submitting...
+document.addEventListener('DOMContentLoaded', function() { const playbookBtn = document.getElementById('downloadPlaybookBtn'); const playbookPopup = document.getElementById('playbookPopup'); const playbookForm = document.getElementById('playbookForm'); const closePlaybookPopup = document.querySelector('.close-playbook-popup'); const submitBtn = document.getElementById('submitPlaybookBtn'); // Initialize global variable for submission result window.playbookSubmissionResult = null; // Show popup when playbook button is clicked playbookBtn.addEventListener('click', function() { playbookPopup.classList.add('show'); document.body.style.overflow = 'hidden'; // Restore any previously saved form data restoreFormData(); }); // Close popup functionality function closePlaybookModal() { playbookPopup.classList.remove('show'); document.body.style.overflow = 'auto'; // Don't reset form immediately - let user reopen with data intact } closePlaybookPopup.addEventListener('click', closePlaybookModal); playbookPopup.addEventListener('click', function(e) { if (e.target === playbookPopup) { closePlaybookModal(); } }); // Form validation function validateForm() { let isValid = true; const name = document.getElementById('playbook_name'); const email = document.getElementById('playbook_email'); const company = document.getElementById('playbook_company'); // Clear previous errors clearErrors(); // Validate name if (!name.value.trim()) { showError('nameError', 'Full name is required'); name.classList.add('error'); isValid = false; } // Validate email const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; if (!email.value.trim()) { showError('emailError', 'Email address is required'); email.classList.add('error'); isValid = false; } else if (!emailRegex.test(email.value.trim())) { showError('emailError', 'Please enter a valid email address'); email.classList.add('error'); isValid = false; } // Validate company if (!company.value.trim()) { showError('companyError', 'Company name is required'); company.classList.add('error'); isValid = false; } return isValid; } function showError(elementId, message) { const errorElement = document.getElementById(elementId); errorElement.textContent = message; errorElement.classList.add('show'); } function clearErrors() { const inputs = playbookForm.querySelectorAll('input'); const errors = playbookForm.querySelectorAll('.error-message'); inputs.forEach(input => input.classList.remove('error')); errors.forEach(error => { error.classList.remove('show'); error.textContent = ''; }); } function resetForm() { playbookForm.reset(); clearErrors(); clearStoredFormData(); // Clear localStorage when form is reset // Reset submit button submitBtn.disabled = false; submitBtn.querySelector('.submit-text').style.display = 'inline'; submitBtn.querySelector('.submit-loading').style.display = 'none'; } // Function to restore form data from localStorage function restoreFormData() { const savedData = localStorage.getItem('playbookFormData'); if (savedData) { try { const formData = JSON.parse(savedData); document.getElementById('playbook_name').value = formData.name || ''; document.getElementById('playbook_email').value = formData.email || ''; document.getElementById('playbook_company').value = formData.company || ''; } catch (e) { console.error('Error restoring form data:', e); } } } // Function to clear stored form data function clearStoredFormData() { localStorage.removeItem('playbookFormData'); } // Countdown functionality function startCountdown() { const btnText = document.getElementById('playbookBtnText'); const countdown = document.getElementById('playbookCountdown'); const timer = document.getElementById('countdownTimer'); btnText.style.display = 'none'; countdown.style.display = 'inline'; playbookBtn.disabled = true; let timeLeft = 10; timer.textContent = timeLeft; const countdownInterval = setInterval(() => { timeLeft--; timer.textContent = timeLeft; if (timeLeft
+{ checkCount++; if (window.playbookSubmissionResult) { clearInterval(resultChecker); const data = window.playbookSubmissionResult; // Hide the processing toast const existingToast = document.querySelector( '.toast-notification'); if (existingToast) { hideToast(existingToast); } // Show final result after a brief delay setTimeout(() => { if (data.success) { clearStoredFormData(); showToast( 'Playbook Sent Successfully!', 'The P23 Africa\'s Founders Playbook has been sent to your email. Please check your inbox.', 'success' ); } else { showToast( 'Submission Failed', data.message || 'An unexpected error occurred. Please try again.', 'error', true ); resetMainButton(); } window.playbookSubmissionResult = null; }, 500); } else if (checkCount >= 30) { // Stop checking after 30 seconds clearInterval(resultChecker); // Hide processing toast and show timeout message const existingToast = document.querySelector( '.toast-notification'); if (existingToast) { hideToast(existingToast); } setTimeout(() => { showToast( 'Request Taking Longer Than Expected', 'Your playbook request is still being processed. Please check your email in a few minutes.', 'success' ); }, 500); } }, 1000); } // Reset button text after 6 seconds (only if success) setTimeout(() => { if (btnText.textContent === 'Playbook Sent! Check Your Email') { btnText.textContent = '📥 Download Free Playbook'; } }, 6000); } }, 1000); return countdownInterval; } // Toast notification functionality function showToast(title, message, type = 'success', showRetry = false) { // Remove existing toast if any const existingToast = document.querySelector('.toast-notification'); if (existingToast) { existingToast.remove(); } // Create toast element const toast = document.createElement('div'); toast.className = `toast-notification ${type}`; const retryButton = showRetry ? `
+Try Again
+` : ''; toast.innerHTML = `
+${title}
+${message}
+
+===== playbook/checkout.blade.php (41) =====
+The Ultimate Funding Directory for
+African Entrepreneurs
+Select your country
+Nigeria
+Kenya
+South Africa
+Ghana
+Uganda
+Tanzania
+Rwanda
+Ethiopia
+Egypt
+Morocco
+Algeria
+Tunisia
+Botswana
+Zambia
+Zimbabwe
+Senegal
+Ivory Coast
+Cameroon
+Other African Country
+International
+1x Ultimate Funding Directory for African Entrepreneurs
+Total
+Alternative Payment Method
+Card payment unavailable. Click below to pay with Flutterwave (supports mobile money, bank transfer, and other options).
+Pay with Flutterwave - $50
+Proceed to Payment - $50
+Payment Success!
+Your Ultimate Funding Directory has been sent to your email
+Back to Directory Page
+Ultimate Funding Directory
+Complete your secure payment
+Secured by Stripe - Your payment information is encrypted
+Pay $50.00
+Powered by
+ATTR Enter Your Full name
+ATTR Enter Your Email
+ATTR Company/Startup name
+ATTR Entrepreneur using laptop
+
+===== playbook/funding-readiness.blade.php (30) =====
+Funding
+Readiness
+Guidebook
+A step-by-step guide to becoming investor-ready, built for African entrepreneurs.
+Download Now
+About the Book
+Funding is limited and competitive in Africa. This guide helps you master your business story, understand your numbers, and pitch with confidence — so you can attract the right investors or grow sustainably without them.
+Walk away with a ready-to-use pitch deck, funding plan, and clarity on your next move.
+Get My Free Guide Now
+When You’re Ready to Raise...
+Get Access to the Ultimate Funding & Investor Directory
+Once you’ve completed your free guide, take the next step.
+Our premium Funding Directory includes:
+African countries
+covered
+Global grant funders/VC investors
+Verified investors actively funding African startups
+Bonus: Investor-ready templates and funding strategy planners
+Learn More About the Investor Directory
+Kindly Input Your Details Below
+And Proceed To Download
+Success!
+Funding Readiness Guide will be sent to your email shortly!
+Got it!
+document.addEventListener('DOMContentLoaded', function() { // Set up CSRF token for AJAX requests const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); const openModalBtns = document.querySelectorAll(".open-modal-btn"); const closeModal = document.getElementById("closeModal"); const modalOverlay = document.getElementById("modalOverlay"); const downloadForm = document.getElementById("downloadForm"); const submitBtn = document.getElementById("submitBtn"); const btnText = submitBtn.querySelector(".btn-text"); const spinner = submitBtn.querySelector(".spinner"); const successPopup = document.getElementById("successPopup"); const successOverlay = document.getElementById("successOverlay"); const successPopupMessage = document.getElementById("successPopupMessage"); const closeSuccessPopup = document.getElementById("closeSuccessPopup"); // Modal controls - Handle multiple buttons openModalBtns.forEach(btn => { btn.addEventListener("click", (e) => { e.preventDefault(); modalOverlay.classList.add("active"); clearErrors(); clearSuccess(); }); }); closeModal.addEventListener("click", () => { modalOverlay.classList.remove("active"); clearErrors(); clearSuccess(); }); modalOverlay.addEventListener("click", (e) => { if (e.target === modalOverlay) { modalOverlay.classList.remove("active"); clearErrors(); clearSuccess(); } }); // Success popup controls closeSuccessPopup.addEventListener("click", () => { hideSuccessPopup(); }); successOverlay.addEventListener("click", () => { hideSuccessPopup(); }); // Form submission downloadForm.addEventListener("submit", async function(e) { e.preventDefault(); clearErrors(); clearSuccess(); // Get form data const formData = new FormData(downloadForm); const name = formData.get('name').trim(); const email = formData.get('email').trim(); const company = formData.get('company').trim(); const phone = formData.get('phone') // Basic validation let hasErrors = false; if (hasErrors) { return; } // Show loading state setLoading(true); try { const response = await fetch('/sales-book/download', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json', }, body: JSON.stringify({ name: name, email: email, company: company, phone: phone }) }); const data = await response.json(); if (response.ok && data.success) { // Close the form modal first modalOverlay.classList.remove("active"); downloadForm.reset(); clearErrors(); // Show success popup showSuccessPopup(data.message); } else { // Handle validation errors if (data.errors) { console.log('Validation errors received:', data.errors); Object.keys(data.errors).forEach(field => { const errorElementId = field + 'Error'; const errorElement = document.getElementById(errorElementId); console.log(`Processing error for field: ${field}`, { errorElementId, errorElement, errorMessage: data.errors[field][0] }); if (errorElement) { showError(errorElementId, data.errors[field][0]); } else { console.warn(`Error element ${errorElementId} not found`); // Show a general error message instead showError('emailError', `${field}: ${data.errors[field][0]}`); } }); } else { // For non-validation errors console.log('Non-validation error:', data.message); showError('emailError', data.message || 'An error occurred. Please try again.'); } } } catch (error) { console.error('Error:', error); showError('emailError', 'Network error. Please check your connection and try again.'); } finally { setLoading(false); } }); // Helper functions function setLoading(loading) { submitBtn.disabled = loading; btnText.style.display = loading ? 'none' : 'inline'; spinner.style.display = loading ? 'inline' : 'none'; } function showError(elementId, message) { const errorElement = document.getElementById(elementId); if (!errorElement) { console.error(`Error element with ID ${elementId} not found`); return; } // Find the corresponding input element const inputElement = errorElement.previousElementSibling; if (!inputElement || inputElement.tagName !== 'INPUT') { console.warn(`Could not find input element for error ${elementId}`); } console.log(`Showing error for ${elementId}:`, message); errorElement.textContent = message; errorElement.classList.add('show'); if (inputElement && inputElement.tagName === 'INPUT') { inputElement.classList.add('error'); } } function clearErrors() { const errorElements = document.querySelectorAll('.error-message'); const inputElements = document.querySelectorAll('.modal-box input'); errorElements.forEach(el => { el.classList.remove('show'); el.textContent = ''; }); inputElements.forEach(el => { el.classList.remove('error'); }); } function showSuccess(message) { const successElement = document.getElementById('successMessage'); successElement.textContent = message; successElement.classList.add('show'); } function clearSuccess() { const successElement = document.getElementById('successMessage'); successElement.classList.remove('show'); successElement.textContent = ''; } function showSuccessPopup(message) { successPopupMessage.textContent = message; successOverlay.classList.add('show'); successPopup.classList.add('show'); // Auto-hide after 5 seconds // setTimeout(() => { // hideSuccessPopup(); // }, 5000); } function hideSuccessPopup() { successOverlay.classList.remove('show'); successPopup.classList.remove('show'); } function isValidEmail(email) { const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; return emailRegex.test(email); } });
+ATTR Entrepreneur using laptop
+ATTR Enter Full name
+ATTR Enter Email
+ATTR Company name
+ATTR Phone Number
+
+===== playbook/ultimate-funding.blade.php (16) =====
+Payment Successful!
+The Ultimate Funding Directory has been sent to your email.
+The Ultimate Funding Directory for
+African Entrepreneurs
+The most complete, Africa-focused funding and investor directory, curated to help entrepreneurs find the right capital faster.
+Download Now
+What you’ll Find in Our Funding Directory
+You’ve prepared your business. Now it’s time to find the right partners to fund your growth.
+This directory gives you direct access to active investors, global grant programs, and funding opportunities designed for African entrepreneurs.
+Get Access to the Funding Directory
+Get Access to the Ultimate Funding & Investor Directory
+Get your Funding Directory Here!
+“Before this directory, finding serious investors was guesswork. Now I know exactly who to approach.”
+Amina K, Founder of a HealthTech Startup, Nigeria
+ATTR Entrepreneur using laptop
+ATTR Entrepreneur using mobile
+
+===== playbook/payment.blade.php (12) =====
+Payment Success!
+References Number
+Date
+Mar 22, 2023
+Time
+07:80 AM
+Payment Method
+Credit Card
+Amount
+Your Guide has been sent to customer@example.com
+Back to Home
+document.addEventListener('DOMContentLoaded', function() { // Set up CSRF token for AJAX requests const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); const openModal = document.getElementById("openModal"); const closeModal = document.getElementById("closeModal"); const modalOverlay = document.getElementById("modalOverlay"); const downloadForm = document.getElementById("downloadForm"); const submitBtn = document.getElementById("submitBtn"); const btnText = submitBtn.querySelector(".btn-text"); const spinner = submitBtn.querySelector(".spinner"); // Modal controls openModal.addEventListener("click", (e) => { e.preventDefault(); modalOverlay.classList.add("active"); clearErrors(); clearSuccess(); }); closeModal.addEventListener("click", () => { modalOverlay.classList.remove("active"); clearErrors(); clearSuccess(); }); modalOverlay.addEventListener("click", (e) => { if (e.target === modalOverlay) { modalOverlay.classList.remove("active"); clearErrors(); clearSuccess(); } }); // Form submission downloadForm.addEventListener("submit", async function(e) { e.preventDefault(); clearErrors(); clearSuccess(); // Get form data const formData = new FormData(downloadForm); const name = formData.get('name').trim(); const email = formData.get('email').trim(); // Basic validation let hasErrors = false; if (!name) { showError('nameError', 'Full name is required.'); hasErrors = true; } if (!email) { showError('emailError', 'Email address is required.'); hasErrors = true; } else if (!isValidEmail(email)) { showError('emailError', 'Please enter a valid email address.'); hasErrors = true; } if (hasErrors) { return; } // Show loading state setLoading(true); try { const response = await fetch('/sales-book/download', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json', }, body: JSON.stringify({ name: name, email: email }) }); const data = await response.json(); if (response.ok && data.success) { showSuccess(data.message); downloadForm.reset(); // Auto-close modal after 3 seconds setTimeout(() => { modalOverlay.classList.remove("active"); clearSuccess(); }, 3000); } else { // Handle validation errors if (data.errors) { Object.keys(data.errors).forEach(field => { const errorElement = document.getElementById(field + 'Error'); if (errorElement) { showError(field + 'Error', data.errors[field][0]); } }); } else { showError('emailError', data.message || 'An error occurred. Please try again.'); } } } catch (error) { console.error('Error:', error); showError('emailError', 'Network error. Please check your connection and try again.'); } finally { setLoading(false); } }); // Helper functions function setLoading(loading) { submitBtn.disabled = loading; btnText.style.display = loading ? 'none' : 'inline'; spinner.style.display = loading ? 'inline' : 'none'; } function showError(elementId, message) { const errorElement = document.getElementById(elementId); const inputElement = errorElement.previousElementSibling; errorElement.textContent = message; errorElement.classList.add('show'); inputElement.classList.add('error'); } function clearErrors() { const errorElements = document.querySelectorAll('.error-message'); const inputElements = document.querySelectorAll('.modal-box input'); errorElements.forEach(el => { el.classList.remove('show'); el.textContent = ''; }); inputElements.forEach(el => { el.classList.remove('error'); }); } function showSuccess(message) { const successElement = document.getElementById('successMessage'); successElement.textContent = message; successElement.classList.add('show'); } function clearSuccess() { const successElement = document.getElementById('successMessage'); successElement.classList.remove('show'); successElement.textContent = ''; } function isValidEmail(email) { const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; return emailRegex.test(email); } });
+
+===== sales.blade.php (60) =====
+Stop Losing
+Leads.
+Start Closing
+More Deals.
+Sales Growth Toolkit for African Businesses
+– Train your team. Track leads. Close more deals.
+Countries
+Businesses
+Partnership
+How It Works
+Simple, Trusted & Effective
+START WITH A FREE BUSINESS AUDIT
+Let's show you what's leaking in your sales process. We'll audit your current setup and show you where leads are slipping through. No pressure. Just clarity.
+Yes, I Want My Free Audit
+This offer is perfect for
+Our Happy Clients Say
+"Before this, our sales process was scattered—leads fell through the cracks every week. After the training and toolkit, our team now has a rhythm, and we’ve seen a 40% increase in closed deals."
+Juliet Chukwudi
+Sales Manager
+"As someone with seven years of experience in manufacturing and sales, this training and toolkit have equipped me better than ever before. My outputs are now more organized, intentional, and productive."
+James Owoicho
+Marketing Manager
+"I took this leap of faith to further improve my team's performance, and it’s been absolutely worth it. My team is now in sync and performing better than ever, recording up to a 30% increase in productivity in just our first month of implementing it."
+Vera Agugam
+Team Lead
+Trained
+3000+ Teams
+Packages
+Standard
+Perfect for startups and small teams looking to build a basic but effective sales system.
+Includes:
+Half-day Sales Training Sales script templates (email, call, DM)
+Sales tracking spreadsheet (editable)
+Lead qualification checklist
+30-minute onboarding session
+Email support (7 days post-purchase)
+/one-time
+For businesses ready to optimise and scale their sales process.
+Full-day sales training Customised sales playbook tailored to your business
+Objection-handling guide
+1x 60-minute strategy call
+Sales process audit + recommendations
+30 days of email + WhatsApp support
+Bonus: Lead pipeline tracker (advanced version)
+Ready To Turn Leads Into Revenue?
+No guesswork. No CRM overwhelm. Just real systems that deliver results.
+Claim My Free Sales Audit!
+document.addEventListener('DOMContentLoaded', function() { const desktopVideoURL = "https://www.youtube.com/embed/l8JvWxEFVW0?autoplay=1"; const mobileVideoURL = "https://www.youtube.com/embed/unzc3SdI4dg?autoplay=1"; const videoModalEl = document.getElementById('videoModal'); const videoIframe = document.getElementById('videoIframe'); const videoModal = new bootstrap.Modal(videoModalEl); document.getElementById('play-video-desktop').addEventListener('click', function() { videoIframe.src = desktopVideoURL; videoModal.show(); }); document.getElementById('play-video-mobile').addEventListener('click', function() { videoIframe.src = mobileVideoURL; videoModal.show(); }); videoModalEl.addEventListener('hidden.bs.modal', function() { videoIframe.src = ""; }); }); $(document).ready(function() { // Define range flows const ranges = { countries: ["00", "05", 10, 15, 20], businessess: [500, 1000, 1500, 2000, 3000], partnerships: [100, 300, 600, 800, 1000] }; // Animation function function animateNumbers(id, values, interval = 500) { let index = 0; function update() { if (index
+ATTR Sales Growth Video
+ATTR Play video
+ATTR Close
+ATTR YouTube video
+ATTR Work Card
+ATTR Business team collaborating
+ATTR Offer
+ATTR Testimonial
+ATTR Client 1
+ATTR Client 2
+ATTR Client 3
+ATTR Business People
+
+===== sales-quiz.blade.php (8) =====
+Home
+How It Works
+Quiz
+Take this 2-minute quiz to find out what's costing your business money—and how to fix it.
+Start Quiz Now!
+You might be losing sales and opportunities without even realizing it. Answer these 8 quick questions to discover hidden gaps in your sales, team structure, and operations.
+ATTR Toggle navigation
+ATTR Business Professionals
+
+===== start-quiz.blade.php (5) =====
+1 of 8
+Almost There! Enter your details to see your result.
+Submit & See Results
+ATTR Full name
+ATTR Your Email
+
+===== include/quiz-questions-js.blade.php (12) =====
+const questions = [{ question: "How do you track potential leads and follow-ups?", options: { A: "We don’t track them", B: "Sometimes—manually or in spreadsheets", C: "We have a structured system" } }, { question: "How consistently does your team follow up with warm leads?", options: { A: "Rarely", B: "Occasionally", C: "Always—on a clear schedule" } }, { question: "Do you know exactly where your sales drop off in the customer journey?", options: { A: "No idea", B: "A rough idea", C: "Yes—we’ve analysed it" } }, { question: "Are your team’s targets clear and regularly reviewed?", options: { A: "No", B: "Kind Of", C: "Yes—targets are tracked and discussed" } }, { question: "Do you have simple tools to help your team stay organised?", options: { A: "Not Really", B: "We try—but it’s messy", C: "Yes—everyone uses them" } }, { question: "How often do you review your sales and marketing performance?", options: { A: "Rarely or never", B: "Occasionally", C: "Monthly or weekly" } }, { question: "Do you feel confident that your business is structured for growth?", options: { A: "Not at all", B: "Somewhat", C: "Definitely" } }, { question: "What’s your biggest challenge right now? (optional)", options: { A: "Challenge 1: Type in your first challenge here", B: "Challenge 2: Type in your second challenge here", C: "Challenge 3: Type in your third challenge here" } } ]; let currentQuestion = 0; let selectedAnswers = []; function loadQuestion() { const q = questions[currentQuestion]; document.getElementById("questionText").innerText = q.question; document.getElementById("questionNumber").innerText = String(currentQuestion + 1).padStart(2, '0'); document.getElementById("progressText").innerText = `${currentQuestion + 1} of ${questions.length}`; document.getElementById("progressBar").style.width = `${((currentQuestion + 1) / questions.length) * 100}%`; const answerContainer = document.getElementById("answerOptions"); answerContainer.innerHTML = ""; const nextBtn = document.getElementById("nextBtn"); if (currentQuestion
+${key}
+${q.options[key]}
+`; div.onclick = function() { document.querySelectorAll(".answer-item").forEach(item => item.classList.remove("selected")); div.classList.add("selected"); nextBtn.disabled = false; selectedAnswers[currentQuestion] = key; }; answerContainer.appendChild(div); } nextBtn.disabled = true; nextBtn.textContent = "→"; } else { // Final question (challenge input) answerContainer.innerHTML = `
+Challenge 1:
+Challenge 2:
+Challenge 3:
+`; nextBtn.disabled = false; nextBtn.textContent = "See Results →"; } } document.getElementById("nextBtn").addEventListener("click", function() { if (currentQuestion
+Analysing...`; const challenge1 = document.getElementById("challenge1")?.value ?? ''; const challenge2 = document.getElementById("challenge2")?.value ?? ''; const challenge3 = document.getElementById("challenge3")?.value ?? ''; const counts = { A: 0, B: 0, C: 0 }; selectedAnswers.slice(0, 7).forEach(ans => { if (ans && counts.hasOwnProperty(ans)) counts[ans]++; }); const topChoice = Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0]; const label = topChoice === 'A' ? 'FRAGILE FUNNEL' : topChoice === 'B' ? 'HIDDEN POWERHOUSE' : 'CLOUDY CLIMBER'; try { const response = await fetch("/submit-challenge", { method: "POST", headers: { "Content-Type": "application/json", "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute( "content") }, body: JSON.stringify({ challenge1, challenge2, challenge3, label, email, name }) }); if (!response.ok) { throw new Error("Submission failed"); } // Redirect based on result if (topChoice === 'A') { window.location.href = "/quiz/result/fragile-funnel"; } else if (topChoice === 'B') { window.location.href = "/quiz/result/hidden-powerhouse"; } else { window.location.href = "/quiz/result/cloudy-climber"; } } catch (error) { console.error("Submission error:", error); alert("Something went wrong. Please try again."); this.innerHTML = "Submit & See Results"; this.disabled = false; } }); function validateEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); } window.onload = loadQuestion;
+ATTR Type in your first challenge here
+ATTR Type in your second challenge here
+ATTR Type in your third challenge here
+
+===== include/book-seat.blade.php (6) =====
+Book your seat to be a part of this exclusive event and gain valuable insights from trusted experts.
+Submit
+Thank you for signing up. We've sent event details to your email
+— please check your inbox.
+View Other Events
+ATTR Close
+
+===== feedback/form.blade.php (7) =====
+How would you rate this event?
+Excellent
+Good
+Fair
+Poor
+Comments
+Submit Feedback
+
+===== show-event.blade.php (18) =====
+image) }}">
+translated('description') !!}">
+translated('description') !!}"> @endsection @section('content')
+image) }}" loading='lazy' alt="Main Event" class="main-img">
+About This Event
+1hr 30mins
+{!! $event->translated('description') !!}
+current() }}" onclick="shareEvent(this)" id="btn-share">Share This Event
+id) }}" target="_blank" class="btn btn-warning"> Edit Event
+Link copied to clipboard!
+Enter Your Seat Code
+id }}">
+Join Event
+console.log('Shared successfully')) .catch((error) => console.log('Sharing failed', error)); } else { // Fallback: Copy link to clipboard navigator.clipboard.writeText(url) .then(() => { document.getElementById('copy-success').style.display = 'inline'; setTimeout(() => { document.getElementById('copy-success').style.display = 'none'; }, 2000); }) .catch(err => { alert('Unable to copy. Please copy manually.'); console.error(err); }); } }
+ATTR Frame
+ATTR Main Event
+ATTR Event Frame
+ATTR Enter your seat code
+
+===== events/live.blade.php (5) =====
+You’ve joined the live session!
+{!! Str::limit($event->translated('description'), 90) !!}
+Date:
+Time:
+ATTR Speaker
+
+===== quiz-answers/result-a.blade.php (22) =====
+YOU ARE THE
+Leads going cold
+Lack of structure & tracking
+Missed sales & bad CX
+Common Risks At This Stage:
+Leads Going Cold Due To Lack Of Follow-Up
+Team Confusion Around Goals And Responsibilities
+Missed Sales Opportunities And Poor Customer Experience
+Marketing Spend With Little To No Return
+No Way To Measure Or Replicate Success
+What You Need:
+Foundational Systems And Tools. You Don't Need A CRM To Get Started—You Need A Basic, Consistent Sales Process, Clearer Accountability, And A Simple Way To Track Performance.
+Next Step:
+Book Your Free Business Audit. We'll Walk You Through The Top 3 Things To Fix Fast.
+Book Business Audit Now!
+Get Growth Tips
+// Animate when the element is in view document.addEventListener("DOMContentLoaded", () => { const fills = document.querySelectorAll(".progress-fill"); fills.forEach(fill => { const targetWidth = fill.getAttribute("data-width"); setTimeout(() => { fill.style.width = targetWidth; }, 500); }); }); document.addEventListener("DOMContentLoaded", () => { const title = "FRAGILE FUNNEL"; const subtitle = "Your Revenue Stream Is Vulnerable—Small Cracks Today Could Become Big Breaks Tomorrow."; const titleEl = document.getElementById("typing-title"); const subtitleEl = document.getElementById("typing-subtitle"); let titleIndex = 0; let subtitleIndex = 0; function typeTitle() { if (titleIndex
+{ createYouTubePlayer(videoUrl); }, 300); } // Clean up when modal is closed $('#videoModal').on('hidden.bs.modal', function() { if (player && player.destroy) { player.destroy(); } $('#youtubePlayer').html(''); $('#appointmentButtonContainer').hide().removeClass('animate-pop-in'); }); });
+ATTR SurveyMonkey Graphs
+ATTR Close
+ATTR FRAGILE FUNNEL
+ATTR Your Revenue Stream Is Vulnerable—Small Cracks Today Could Become Big Breaks Tomorrow.
+
+===== quiz-answers/result-b.blade.php (22) =====
+YOU ARE THE
+System & conversion optimization
+New growth channels & strategies
+Refinement & performance insights
+Signs Of Readiness To Scale:
+Consistent follow-ups and team clarity
+Tools and systems are in place and used well
+Clear understanding of customer journey
+Regular performance reviews and insights
+You’re proactive, not reactive
+What You Need:
+A tailored growth plan. Now’s the time to identify advanced strategies: tightening conversion points, exploring new channels, or creating scalable systems.
+Next Step:
+We can help you refine your growth plan and plug small gaps for big results. Let’s talk.
+Book Business Audit Now!
+Get Growth Tips
+// Animate when the element is in view document.addEventListener("DOMContentLoaded", () => { const fills = document.querySelectorAll(".progress-fill"); fills.forEach(fill => { const targetWidth = fill.getAttribute("data-width"); setTimeout(() => { fill.style.width = targetWidth; }, 500); }); }); document.addEventListener("DOMContentLoaded", () => { const title = "Hidden Powerhouse"; const subtitle = "Your revenue stream is vulnerable—small cracks today could become big breaks tomorrow."; const titleEl = document.getElementById("typing-title"); const subtitleEl = document.getElementById("typing-subtitle"); let titleIndex = 0; let subtitleIndex = 0; function typeTitle() { if (titleIndex
+{ createYouTubePlayer(videoUrl); }, 300); } // Clean up when modal is closed $('#videoModal').on('hidden.bs.modal', function() { if (player && player.destroy) { player.destroy(); } $('#youtubePlayer').html(''); $('#appointmentButtonContainer').hide().removeClass('animate-pop-in'); }); });
+ATTR SurveyMonkey Graphs
+ATTR Close
+ATTR Hidden Powerhouse
+ATTR Your revenue stream is vulnerable—small cracks today could become big breaks tomorrow.
+
+===== quiz-answers/result-c.blade.php (22) =====
+YOU ARE THE
+Inconsistent tools & effort-based growth
+Lack of visibility into performance
+Follow-up delays & customer drop-off
+What this often looks like:
+Follow-ups happening—but not timely
+Team using tools inconsistently or inefficiently
+Some growth—but mostly from effort, not strategy
+Unclear visibility into sales or marketing performance
+Customers falling out of the funnel without you knowing why
+What You Need:
+A proper growth strategy with practical, affordable systems. A few well-placed tools, a clear action plan, and team alignment can unlock serious gains.
+Next Step:
+Let’s review your business together. Our audit can show you what’s working, what’s not—and how to scale without burning out.
+Book Business Audit Now!
+Get Growth Tips
+// Animate when the element is in view document.addEventListener("DOMContentLoaded", () => { const fills = document.querySelectorAll(".progress-fill"); fills.forEach(fill => { const targetWidth = fill.getAttribute("data-width"); setTimeout(() => { fill.style.width = targetWidth; }, 500); }); }); document.addEventListener("DOMContentLoaded", () => { const title = "Cloudy Climber"; const subtitle = "You’re on the path—but a little clarity could make your next step a leap."; const titleEl = document.getElementById("typing-title"); const subtitleEl = document.getElementById("typing-subtitle"); let titleIndex = 0; let subtitleIndex = 0; function typeTitle() { if (titleIndex
+{ createYouTubePlayer(videoUrl); }, 300); } // Clean up when modal is closed $('#videoModal').on('hidden.bs.modal', function() { if (player && player.destroy) { player.destroy(); } $('#youtubePlayer').html(''); $('#appointmentButtonContainer').hide().removeClass('animate-pop-in'); }); });
+ATTR SurveyMonkey Graphs
+ATTR Close
+ATTR Cloudy Climber
+ATTR You’re on the path—but a little clarity could make your next step a leap.

@@ -1759,12 +1759,11 @@
         <div class="box-container">
             <div class="intro-container">
                 <div class="left-content">
-                    <h3>Schedule Your Consultation</h3>
+                    <h3>{{ __('consultation.schedule_title') }}</h3>
 
                     <div class="para">
                         <p>
-                            Pick a convenient date and time for your session. You’ll
-                            receive a confirmation email once it’s booked.
+                            {{ __('consultation.schedule_body') }}
                         </p>
                     </div>
 
@@ -1776,7 +1775,7 @@
 
                             <div class="btn">
                                 <button class="submit-schedule">
-                                    Submit
+                                    {{ __('consultation.submit') }}
                                     <div><img src="{{ asset('img/right.png') }}" alt="" /></div>
                                 </button>
                             </div>
@@ -1791,7 +1790,7 @@
                 <div id="calendar-wrapper">
                     <div class="calendar-wrapper-container">
                         <div class="calendar-header">
-                            <h3>Select Day</h3>
+                            <h3>{{ __('consultation.select_day') }}</h3>
 
                             {{--  --}}
                             <div class="nav-row">
@@ -1800,7 +1799,7 @@
                                         <img src="{{ asset('img/left.png') }}" alt="" />
                                     </button>
                                     <div class="prev-tooltip">
-                                        You cannot go before the current month
+                                        {{ __('consultation.before_month') }}
                                     </div>
                                 </div>
 
@@ -1820,20 +1819,16 @@
 
                         <div id="calendar-grid">
                             <div class="weekdays">
-                                <div class="weekday">Mon</div>
-                                <div class="weekday">Tue</div>
-                                <div class="weekday">Wed</div>
-                                <div class="weekday">Thu</div>
-                                <div class="weekday">Fri</div>
-                                <div class="weekday">Sat</div>
-                                <div class="weekday">Sun</div>
+                                @foreach (__('consultation.weekdays') as $weekday)
+                                    <div class="weekday">{{ $weekday }}</div>
+                                @endforeach
                             </div>
 
                             <div id="dates"></div>
                         </div>
 
                         <div class="output-box mobile">
-                            <p><strong>Selected Date:</strong></p>
+                            <p><strong>{{ __('consultation.selected_date') }}</strong></p>
                             <p class="selected-date">—</p>
                         </div>
 
@@ -1841,7 +1836,7 @@
                         <div class="time-box">
                             <div class="time-box-container">
                                 <div class="timezone-row">
-                                    <label>Set time</label>
+                                    <label>{{ __('consultation.set_time') }}</label>
                                     <div class="custom-dropdown timeZone" id="dropdown-timezone" tabindex="0"
                                         role="listbox" aria-label="Timezone">
                                         <button class="cd-toggle" aria-haspopup="listbox" aria-expanded="false">
@@ -1859,7 +1854,7 @@
                                 </div>
 
                                 <div class="time-restriction-notice" id="timeRestrictionNotice" style="display: none;">
-                                    <p>⏰ Same-day bookings must be scheduled at least one hour in advance.</p>
+                                    <p>⏰ {{ __('consultation.same_day') }}</p>
                                 </div>
 
                                 <!-- Scrollable Time Picker -->
@@ -1905,24 +1900,24 @@
 
                             <!-- SELECTED OUTPUT -->
                             <div class="output-box desktop">
-                                <p><strong>Selected Date:</strong></p>
+                                <p><strong>{{ __('consultation.selected_date') }}</strong></p>
                                 <p class="selected-date">—</p>
 
                                 <p style="margin-top: 10px">
-                                    <strong>Selected Time:</strong>
+                                    <strong>{{ __('consultation.selected_time') }}</strong>
                                 </p>
                                 <p class="selected-time">—</p>
                             </div>
                         </div>
 
                         <div class="output-box mobile">
-                            <p style="margin-top: 10px"><strong>Selected Time:</strong></p>
+                            <p style="margin-top: 10px"><strong>{{ __('consultation.selected_time') }}</strong></p>
                             <p class="selected-time">—</p>
                         </div>
 
                         <div class="mobile-btn">
                             <button class="submit-schedule">
-                                Submit
+                                {{ __('consultation.submit') }}
                                 <div><img src="{{ asset('img/right-colored-r.png') }}" alt="" /></div>
                             </button>
                         </div>
@@ -1930,7 +1925,7 @@
                         <div class="call-for-help">
 
                             <div class="callforhelp-container">
-                                <p>Call For Help</p>
+                                <p>{{ __('consultation.call_help') }}</p>
                                 <button>
                                     <div><img src="{{ asset('img/customer-service-01.png') }}" alt="" /></div>
                                 </button>
@@ -1964,7 +1959,7 @@
                                                 </div>
                                                 <div class="ct-cont">
                                                     <h3>P23 Africa</h3>
-                                                    <small>Online</small>
+                                                    <small>{{ __('consultation.online') }}</small>
                                                 </div>
                                             </div>
                                             <div class="chat-info-right-content">
@@ -1980,12 +1975,12 @@
                                     <div class="chat-body" id="chat-body">
                                         <div class="msg bot">
                                             <span>
-                                                Hey 👋
+                                                {{ __('consultation.chat_hey') }} 👋
                                             </span>
                                         </div>
                                         <div class="msg bot">
                                             <span>
-                                                Welcome to P23 Africa, what can we help you with?
+                                                {{ __('consultation.chat_welcome') }}
                                             </span>
 
                                         </div>
@@ -1993,7 +1988,7 @@
 
                                     <div class="chat-input-container">
                                         <div class="input-container">
-                                            <input id="chat-input" placeholder="Type your message here"
+                                            <input id="chat-input" placeholder="{{ __('consultation.ph_message') }}"
                                                 maxlength="1000" />
                                             <button class="send-btn" id="send-btn">
                                                 <img class="arr-left" src="{{ asset('img/send-icon.png') }}"
@@ -2011,7 +2006,7 @@
 
 
                         <!-- Hidden form for actual submission -->
-                        <form id="scheduleForm" method="POST" action="{{ route('consultation.schedule.submit') }}"
+                        <form id="scheduleForm" method="POST" action="{{ locale_route('consultation.schedule.submit') }}"
                             style="display: none;">
                             @csrf
                             <input type="hidden" name="booking" value="{{ $application->booking_token }}">
@@ -2028,17 +2023,14 @@
         <!-- POPUP MODAL -->
         <div id="scheduleModal" class="modal-overlay">
             <div class="modal-box">
-                <h3>consultation confirmed!</h3>
-                <p>A confirmation email containing the date, time, and Google Meet link has been sent to your registered
-                    email address.</p>
+                <h3>{{ __('consultation.confirmed') }}</h3>
+                <p>{{ __('consultation.confirmed_body') }}</p>
                 <h4 id="modalDateText"></h4>
                 <h4 id="modalTimeText"></h4>
 
-                <a href="#" class="submit-btn-modal">
-                    Open customer@example.com
-                </a>
-                <a href="{{ route('consultation.index') }}" class="submit-btn-modal">
-                    Return to Homepage
+                <a href="#" class="submit-btn-modal" id="openEmailBtn">{{ __('consultation.open_email') }}</a>
+                <a href="{{ locale_route('homepage') }}" class="submit-btn-modal">
+                    {{ __('consultation.return_home') }}
                 </a>
             </div>
         </div>
@@ -2078,10 +2070,7 @@
         let current = new Date(minYear, minMonth);
 
         /* ------------------------- Month autocomplete data ------------------------- */
-        const monthNames = [
-            'January', 'February', 'March', 'April', 'May', 'June',
-            'July', 'August', 'September', 'October', 'November', 'December'
-        ];
+        const monthNames = @json(__('consultation.months'));
         let highlightedIndex = -1;
 
 
@@ -2727,9 +2716,7 @@
             const year = current.getFullYear();
             const month = current.getMonth();
 
-            monthInput.value = current.toLocaleString("default", {
-                month: "long"
-            });
+            monthInput.value = monthNames[month];
             yearInput.value = year;
 
             const firstDay = new Date(year, month, 1);
@@ -3142,7 +3129,7 @@
 
                 // Show loading state on button
                 btn.disabled = true;
-                btn.textContent = 'Submitting...';
+                btn.textContent = @json(__('consultation.submitting'));
 
                 // Submit form via AJAX
                 fetch(form.action, {
@@ -3156,18 +3143,16 @@
                     .then(data => {
                         if (data.success) {
                             // Show success modal with submitted details
-                            modalDateText.textContent = "Date: " + selectedDate.toDateString();
+                            modalDateText.textContent = @json(__('consultation.date_label')) + ' ' + selectedDate.toLocaleDateString(@json(app()->getLocale()), { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
                             modalTimeText.textContent =
-                                "Time: " +
+                                @json(__('consultation.time_label')) + ' ' +
                                 `${hour}:${minute}:${second} ${ampm} ${timezoneDropdown.getValue()}`;
 
                             // Update email button with actual user email if provided
                             if (data.user_email) {
-                                const emailBtn = document.querySelector(
-                                        '.submit-btn-modal[textContent*="Open"]') ||
-                                    document.querySelector('.submit-btn-modal');
+                                const emailBtn = document.getElementById('openEmailBtn');
                                 if (emailBtn) {
-                                    emailBtn.textContent = `Open ${data.user_email}`;
+                                    emailBtn.textContent = @json(__('consultation.open_address')).replace(':email', data.user_email);
                                     emailBtn.onclick = function(e) {
                                         e.preventDefault();
                                         window.location.href = `mailto:${data.user_email}`;
@@ -3177,13 +3162,13 @@
 
                             modal.style.display = "flex";
                         } else {
-                            flashMessage(data.message || "An error occurred. Please try again.",
+                            flashMessage(data.message || @json(__('consultation.try_again')),
                                 btn);
                         }
                     })
                     .catch(error => {
                         console.error('Error:', error);
-                        flashMessage("An error occurred. Please try again.", btn);
+                        flashMessage(@json(__('consultation.try_again')), btn);
                     })
                     .finally(() => {
                         // Reset button state
@@ -3342,19 +3327,13 @@
 
         // Handle modal buttons
         document.querySelectorAll('.submit-btn-modal').forEach(btn => {
-            if (btn.textContent.includes('Open customer') || btn.textContent.includes(
-                    'customer@example.com')) {
+            if (btn.id === 'openEmailBtn') {
                 // This would be dynamically updated with the user's actual email
-                btn.textContent = 'Open Email';
+                btn.textContent = @json(__('consultation.open_email'));
                 btn.onclick = function(e) {
                     e.preventDefault();
                     // Open default email client
                     window.location.href = 'mailto:';
-                };
-            } else if (btn.textContent.includes('Return to Homepage')) {
-                btn.onclick = function(e) {
-                    e.preventDefault();
-                    window.location.href = '/';
                 };
             }
         });

@@ -36,6 +36,6 @@ class FeedbackController extends Controller
         // Send notification to admins
         AdminNotificationService::notifyNewEventFeedback($feedback);
 
-        return redirect()->route('feedback.thankyou'); // Optional thank-you page
+        return redirect(locale_route('feedback.thankyou'));
     }
 }

@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasContentTranslations;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class Blog extends Model
 {
+    use HasContentTranslations;
+
+    protected $with = ['contentTranslations'];
     protected $fillable = [
         'title',
         'subtitle',

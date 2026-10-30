@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="UTF-8">
@@ -8,6 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     @yield('meta')
+    @include('partials.hreflang')
     <title>@yield('title')</title>
 
     <link rel="shortcut icon" href="{{ asset('images/favicon-noel-white.png') }}" type="image/x-icon"> 
@@ -117,10 +118,11 @@
 </head>
 
 <body>
+    @include('partials.language-suggestion')
     <!-- Navbar -->
     <nav class="navbar-full navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" href="{{ route('homepage') }}">
+            <a class="navbar-brand" href="{{ locale_route('homepage') }}">
                 <img src="{{ asset('images/logo.png') }}" loading='lazy' alt="">
             </a>
             <button class="navbar-toggler text-white border-0" type="button" data-bs-toggle="collapse"
@@ -131,12 +133,12 @@
             </button>
             <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                 <ul class="navbar-nav pt-md-0 pt-3">
-                    <li class="nav-item"><a class="nav-link" href="{{ url('about') }}">Who we are</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('services') }}">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('event') }}">Events</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('resource-hub') }}">Resource hub</a>
+                    <li class="nav-item"><a class="nav-link" href="{{ locale_route('about') }}">{{ __('nav.who_we_are') }}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ locale_route('services') }}">{{ __('nav.services') }}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ locale_route('event') }}">{{ __('nav.events') }}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ locale_route('resource-hub') }}">{{ __('nav.resource_hub') }}</a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('brn') }}">Business network</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ locale_route('brn') }}">{{ __('nav.business_network') }}</a></li>
                 </ul>
 
                 <div class="d-flex align-items-right mt-5 mobile">
@@ -145,8 +147,9 @@
                     <a href="#" class="btn register-btn my-auto">Register</a> --}}
 
                     <div class="subscribe brn-consult">
-                        <a href="{{ url('contact') }}" class="btn" id="btn">Book a Consultation</a>
+                        <a href="{{ locale_route('contact') }}" class="btn" id="btn">{{ __('nav.book_consultation_short') }}</a>
                     </div>
+                    @include('partials.language-switcher', ['class' => 'locale-switcher--on-dark'])
 
                     <div class="social-icons brn-consult">
                         <a href="https://linkedin.com/company/p23-africa/" target="_blank"><i
@@ -165,8 +168,9 @@
                 <span class="mx-3"></span>
                 <a href="#" class="btn register-btn my-auto">Register</a> --}}
                 <div class="subscribe brn-consult">
-                    <a href="{{ url('contact') }}" class="btn" id="btn">Book a Consultation</a>
+                    <a href="{{ locale_route('contact') }}" class="btn" id="btn">{{ __('nav.book_consultation_short') }}</a>
                 </div>
+                @include('partials.language-switcher', ['class' => 'locale-switcher--on-dark'])
 
                 <div class="social-icons brn-consult">
                     <a href="https://linkedin.com/company/p23-africa/" target="_blank"><i
@@ -192,35 +196,34 @@
             <div class="row gy-4">
                 <div class="col-md-3 col-lg-3 col-7">
                     <img src="{{ asset('images/logo.png') }}" loading='lazy' alt="">
-                    <p class="mt-3 logo-text">P23 Africa LTD is registered in the United Kingdom. Company No:
-                        15246700</p>
+                    <p class="mt-3 logo-text">{{ __('footer.company') }}</p>
                 </div>
 
                 <div class="col-md-2 col-lg-2 col-4 footer-links desk">
-                    <p>Who We Are</p>
-                    <a href="{{ url('about') }}">About Us</a>
+                    <p>{{ __('footer.who_we_are') }}</p>
+                    <a href="{{ locale_route('about') }}">{{ __('footer.about_us') }}</a>
                     <a href="#">Business Referral Network</a>
                     <a href="#">University Partnership</a>
                     <a href="#">The 54th Pitch</a>
                 </div>
 
                 <div class="col-md-2 col-lg-2 col-4 footer-links footer-quick-links">
-                    <p>Quick Links</p>
-                    <a href="{{ url('about') }}">Who we are</a>
-                    <a href="{{ url('services') }}">What we do</a>
-                    <a href="{{ route('event') }}">Events</a>
-                    <a href="{{ route('resource-hub') }}">Resource hub</a>
-                    <a href="{{ route('brn') }}">Business network</a>
+                    <p>{{ __('footer.quick_links') }}</p>
+                    <a href="{{ locale_route('about') }}">{{ __('nav.who_we_are') }}</a>
+                    <a href="{{ locale_route('services') }}">{{ __('footer.what_we_do') }}</a>
+                    <a href="{{ locale_route('event') }}">{{ __('nav.events') }}</a>
+                    <a href="{{ locale_route('resource-hub') }}">{{ __('nav.resource_hub') }}</a>
+                    <a href="{{ locale_route('brn') }}">{{ __('nav.business_network') }}</a>
                 </div>
 
                 <div class="col-md-2 footer-links strategy">
-                    <p>What We Do</p>
-                    <a href="{{ url('services') }}#strategy">Business Strategy</a>
-                    <a href="{{ url('market-entry') }}">Market Entry</a>
-                    <a href="{{ url('services') }}#research">Business Research</a>
-                    <a href="{{ url('services') }}#sales">Sales</a>
-                    <a href="{{ url('services') }}#marketing">Marketing</a>
-                    <a href="{{ url('services') }}#audit">Business Audit</a>
+                    <p>{{ __('footer.what_we_do') }}</p>
+                    <a href="{{ locale_url('services#strategy') }}">{{ __('footer.business_strategy') }}</a>
+                    <a href="{{ locale_route('services.market-entry') }}">{{ __('footer.market_entry') }}</a>
+                    <a href="{{ locale_url('services#research') }}">{{ __('footer.business_research') }}</a>
+                    <a href="{{ locale_url('services#sales') }}">{{ __('footer.sales') }}</a>
+                    <a href="{{ locale_url('services#marketing') }}">{{ __('footer.marketing') }}</a>
+                    <a href="{{ locale_url('services#audit') }}">{{ __('footer.business_audit') }}</a>
                 </div>
 
                 <div class="col-md-2 footer-links first-icon">
@@ -323,6 +326,7 @@
     </script>
 
     @include('include.version-update')
+    @include('partials.scroll-reveal')
 </body>
 
 </html>

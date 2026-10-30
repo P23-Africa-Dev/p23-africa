@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'hub' => 'Kennisbank',
+    'archive' => 'Archief',
+    'archive_title' => 'Archief | P23 Africa',
+    'list_title' => 'Archieflijst | P23 Africa',
+    'meta' => 'Ontdek expertartikelen, markttrends en praktisch advies om uw bedrijf in Afrika en daarbuiten te laten groeien.',
+    'meta_generator' => 'Expertartikelen, markttrends en praktisch advies | P23 Africa',
+    'hero' => 'Ontdek ons archief van <span>artikelen</span> en <span>rapporten</span>',
+    'search_ph' => 'Zoek het artikel van uw keuze',
+    'view_all' => 'Bekijk alle gearchiveerde artikelen',
+    'no_category' => 'Geen categorie',
+    'written_by' => 'Geschreven door :name',
+    'other_categories' => 'Andere categorieën:',
+    'latest' => 'Ontvang de nieuwste inzichten →',
+    'buyer_body' => 'Koopgewoonten in Afrika veranderen snel, gedreven door digitalisering en een groeiende middenklasse, maar regionale verschillen en vertrouwen blijven uitdagingen.',
+    'read_blog' => 'Lees het artikel',
+    'minds' => 'De mensen achter de inzichten',
+    'recent' => 'Onze meest recente artikelen',
+    'explore' => 'Ontdek expertartikelen, markttrends en praktisch advies om uw bedrijf in Afrika en daarbuiten te laten groeien.',
+    'read_more' => 'Lees meer',
+    'archived' => 'Bekijk gearchiveerde artikelen',
+    'playbook' => 'Download het P23 Africa founders-playbook',
+    'download_pdf' => 'PDF downloaden',
+    'empty' => 'Geen artikelen komen nog overeen met deze zoekopdracht.',
+    'no_results' => 'Geen resultaten',
+];

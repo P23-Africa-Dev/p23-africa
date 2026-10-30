@@ -1,19 +1,19 @@
 @extends('layouts.master')
 @section('title')
-    {{ $event->title }}
-    @if ($event->subtitle)
-        ({{ $event->subtitle }})
+    {{ $event->translated('title') }}
+    @if ($event->translated('subtitle'))
+        ({{ $event->translated('subtitle') }})
     @endif
     | P23 Africa
 @endsection
 
 @section('meta')
     <meta property="og:image" content="{{ asset('storage/' . $event->image) }}">
-    <meta name="description" content="{!! $event->description !!}">
+    <meta name="description" content="{!! $event->translated('description') !!}">
 
-    <meta name="keywords" content="{!! $event->description !!}">
+    <meta name="keywords" content="{!! $event->translated('description') !!}">
     <meta name="author" content="Nurudeen O. Daniju">
-    <meta name="generator" content="{!! $event->description !!}">
+    <meta name="generator" content="{!! $event->translated('description') !!}">
 @endsection
 
 <style>
@@ -228,10 +228,10 @@
             <div class="container py-5">
                 <div class="row justify-content-between">
                     <div class="col-md-6">
-                        <h6 class="text-uppercase fw-bold">About This Event</h6>
-                        <h1 class="fw-bold display-5 text-uppercase">{{ $event->title }}</h1>
-                        @if ($event->subtitle)
-                            <h3 class="mb-4 text-capitalize">{{ $event->subtitle }}</h3>
+                        <h6 class="text-uppercase fw-bold">{{ __('events.about') }}</h6>
+                        <h1 class="fw-bold display-5 text-uppercase">{{ $event->translated('title') }}</h1>
+                        @if ($event->translated('subtitle'))
+                            <h3 class="mb-4 text-capitalize">{{ $event->translated('subtitle') }}</h3>
                         @endif
                     </div>
 
@@ -253,8 +253,8 @@
                                     <div class="d-flex align-items-center justify-content-center">
                                         <i class="fas fa-map-marker-alt fa-2x me-3"></i>
                                         <p>
-                                            <strong>{{ $event->venue ?? 'Google Meet' }}</strong><br />
-                                            <strong>1hr 30mins</strong>
+                                            <strong>{{ $event->translated('venue') ?? __('events.google_meet') }}</strong><br />
+                                            <strong>{{ __('events.duration') }}</strong>
                                         </p>
                                     </div>
                                 </div>
@@ -265,7 +265,7 @@
 
                 <!-- Description -->
                 <div class="fw-semibold fs-5 mt-md-4 mt-lg-4 mt-2" id="paragragh">
-                    {!! $event->description !!}
+                    {!! $event->translated('description') !!}
                 </div>
                 {{-- <p class="fw-semibold fs-5 text-dark">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
@@ -289,8 +289,8 @@
                             <div class="d-flex align-items-center justify-content-center">
                                 <i class="fas fa-map-marker-alt fa-2x me-3"></i>
                                 <p>
-                                    <strong>{{ $event->venue ?? 'Google Meet' }}</strong><br />
-                                    <strong>1hr 30mins</strong>
+                                    <strong>{{ $event->translated('venue') ?? __('events.google_meet') }}</strong><br />
+                                    <strong>{{ __('events.duration') }}</strong>
                                 </p>
                             </div>
                         </div>
@@ -304,8 +304,7 @@
                         <button class="btn me-4 mb-3 px-5 py-2 btn-color actionBtn" id="actionBtn"
                             data-event-id="{{ $event->id }}"
                             data-event-datetime="{{ $event->event_date }} {{ $event->event_time }}"
-                            data-event-link="{{ $event->link }}" data-bs-toggle="modal" data-bs-target="#seatModal">Book A
-                            Seat <i class="fas fa-arrow-right ms-2"></i></button>
+                            data-event-link="{{ $event->link }}" data-bs-toggle="modal" data-bs-target="#seatModal">{{ __('events.book_seat') }} <i class="fas fa-arrow-right ms-2"></i></button>
 
                         <!-- Event page button -->
                         {{-- <button id="actionBtn" class="btn btn-success"
@@ -322,7 +321,7 @@
 
                     <div class="d-block align-items-center ms-auto float-end mt-4">
                         <button class="btn me-3 mb-3 px-5 py-2 share-button d-block" data-url="{{ url()->current() }}"
-                            onclick="shareEvent(this)" id="btn-share">Share This Event <i
+                            onclick="shareEvent(this)" id="btn-share">{{ __('events.share') }} <i
                                 class="fas fa-share ms-2"></i></button>
 
 
@@ -331,12 +330,12 @@
                                 @if (auth()->user()->is_admin)
                                     <a href="{{ orgRoute('admin.events.edit', $event->id) }}" target="_blank"
                                         class="btn btn-warning">
-                                        Edit Event
+                                        {{ __('events.edit') }}
                                     </a>
                                 @endif
                             @endauth
                         </div>
-                        <small id="copy-success" style="display: none; color: green;">Link copied to clipboard!</small>
+                        <small id="copy-success" style="display: none; color: green;">{{ __('events.copied') }}</small>
                     </div>
                 </div>
             </div>
@@ -356,13 +355,13 @@
         <div class="modal fade" id="joinEventModal" tabindex="-1" aria-labelledby="joinEventLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content p-4">
-                    <h5 class="text-center mb-3">Enter Your Seat Code</h5>
-                    <form method="POST" action="{{ route('event.join') }}">
+                    <h5 class="text-center mb-3">{{ __('events.seat_code_title') }}</h5>
+                    <form method="POST" action="{{ locale_route('event.join') }}">
                         @csrf
                         <input type="hidden" name="event_id" value="{{ $event->id }}">
-                        <input type="text" name="seat_code" class="form-control mb-3" placeholder="Enter your seat code"
+                        <input type="text" name="seat_code" class="form-control mb-3" placeholder="{{ __('events.seat_code_ph') }}"
                             required>
-                        <button type="submit" class="btn btn-dark w-100">Join Event</button>
+                        <button type="submit" class="btn btn-dark w-100">{{ __('events.join') }}</button>
                     </form>
                 </div>
             </div>
