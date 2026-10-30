@@ -12,6 +12,7 @@ use App\Models\ContactSubmission;
 use App\Models\Lead;
 use App\Services\AdminNotificationService;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class ContactController extends Controller
 {
@@ -19,9 +20,9 @@ class ContactController extends Controller
      * Unified validation rules for contact form submissions
      * reCAPTCHA is validated separately with graceful fallback
      */
-    private function getSubmissionValidationRules(): array
+    private function getSubmissionValidationRules(bool $stepped = false): array
     {
-        return [
+        $rules = [
             'name' => 'required|string|max:255',
             'company_name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
@@ -32,6 +33,25 @@ class ContactController extends Controller
             'budget_range' => 'required|numeric|min:100|max:5000',
             // reCAPTCHA removed from here - validated separately with graceful fallback
         ];
+
+        if ($stepped) {
+            $rules['budget_range'] = 'required|integer|min:100|max:2147483647';
+            $rules += [
+                'role' => 'required|string|max:255',
+                'industry' => ['required', Rule::in(config('contact.industries'))],
+                'business_description' => 'required|string|max:1000',
+                'selected_services' => 'required|array|min:1|max:5',
+                'selected_services.*' => ['required', 'string', 'distinct', Rule::in(config('contact.services'))],
+                'expansion_markets' => 'required|array|min:1|max:10',
+                'expansion_markets.*' => 'required|string|max:100|distinct',
+                'referral_source' => ['required', Rule::in(config('contact.referral_sources'))],
+                'referral_other' => 'nullable|required_if:referral_source,Other|string|max:255',
+                'start_timeline' => ['required', Rule::in(config('contact.timelines'))],
+                'additional_notes' => 'nullable|string|max:2000',
+            ];
+        }
+
+        return $rules;
     }
 
     /**
@@ -54,7 +74,7 @@ class ContactController extends Controller
             'budget_range.required' => 'Please select your budget range.',
             'budget_range.numeric' => 'Budget must be a valid number.',
             'budget_range.min' => 'Budget must be at least $100.',
-            'budget_range.max' => 'Budget must not exceed $5000.',
+            'budget_range.max' => 'Budget must not exceed $:max.',
         ];
     }
 
@@ -125,6 +145,16 @@ class ContactController extends Controller
         ]);
 
         try {
+            $stepped = $request->input('form_flow') === 'contact-v2';
+            if ($stepped && is_array($request->input('selected_services'))) {
+                $request->merge(['services' => implode(', ', array_filter($request->input('selected_services'), 'is_string'))]);
+            }
+            // Validate before creating a deduplication lock so a corrected enquiry can be retried.
+            $validated = $request->validate(
+                $this->getSubmissionValidationRules($stepped),
+                $this->getValidationMessages()
+            );
+
             // Check cache health before relying on it for deduplication
             $cacheHealthy = $this->isCacheHealthy();
 
@@ -212,12 +242,6 @@ class ContactController extends Controller
             // Validate reCAPTCHA gracefully (won't block submission)
             $this->validateRecaptchaGracefully($request);
 
-            // Validate the request using unified validation rules (without reCAPTCHA)
-            $validated = $request->validate(
-                $this->getSubmissionValidationRules(),
-                $this->getValidationMessages()
-            );
-
             Log::info('Validation passed', [
                 'request_id' => $requestId,
                 'email' => $validated['email']
@@ -245,6 +269,16 @@ class ContactController extends Controller
                 'status' => 'submitted',
                 'submitted_at' => now(),
             ];
+
+            if ($stepped) {
+                $sanitizedData['project_details'] = [];
+                foreach (['role', 'industry', 'business_description', 'expansion_markets', 'referral_source', 'referral_other', 'start_timeline', 'additional_notes'] as $field) {
+                    $value = $validated[$field] ?? null;
+                    $sanitizedData['project_details'][$field] = is_array($value)
+                        ? array_map('strip_tags', $value)
+                        : ($value === null ? null : strip_tags($value));
+                }
+            }
 
             // Store in database (this path only for non-live-capture submissions)
             $contactSubmission = ContactSubmission::create($sanitizedData);
@@ -287,6 +321,9 @@ class ContactController extends Controller
                 ->withErrors($e->errors())
                 ->withInput();
         } catch (\Exception $e) {
+            if (isset($submissionKey) && $cacheHealthy) {
+                Cache::forget($submissionKey);
+            }
             Log::error('Contact form submission error', [
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
