@@ -2021,6 +2021,9 @@
                             @if ($application)
                             <input type="hidden" name="booking" value="{{ $application->booking_token }}">
                             @endif
+                            @if (!empty($assessmentToken) || request('assessment'))
+                            <input type="hidden" name="assessment" value="{{ $assessmentToken ?? request('assessment') }}">
+                            @endif
                             <input type="hidden" name="session_date" id="hiddenDate">
                             <input type="hidden" name="session_time" id="hiddenTime">
                             <input type="hidden" name="timezone" id="hiddenTimezone">
@@ -2772,8 +2775,11 @@
                 div.className = "date";
                 div.textContent = day;
 
-                // Check if this date is in the past
-                const isPastDate = dateObj < today && dateObj.toDateString() !== today.toDateString();
+                // Check if this date is in the past (consultation mode requires dates after today)
+                const allowSameDay = @json(($scheduleMode ?? '') === 'discovery');
+                const isPastDate = allowSameDay
+                    ? (dateObj < today && dateObj.toDateString() !== today.toDateString())
+                    : (dateObj <= today || dateObj.toDateString() === today.toDateString());
 
                 // Check if this date is Sunday (0 = Sunday)
                 const isSunday = dateObj.getDay() === 0;

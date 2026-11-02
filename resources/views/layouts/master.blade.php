@@ -76,7 +76,7 @@
     {{-- NAVBAR --}}
     @hasSection('navbar')
         @yield('navbar')
-    @else
+    @elseif (!View::hasSection('hide_navbar'))
         @include('layouts.includes.navbar')
     @endif
 

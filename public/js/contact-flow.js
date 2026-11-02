@@ -184,6 +184,44 @@
         }
         return { route: 'discovery', url: form.dataset.discoveryUrl || '/contact/discovery-call' };
     };
+    const buildAssessmentPayload = route => {
+        const services = [...form.querySelectorAll('[name="selected_services[]"]:checked, [name="selected_goals[]"]:checked')].map(el => el.value);
+        const expansionMarkets = [...form.querySelectorAll('[name="expansion_markets[]"]')].map(el => el.value);
+        return {
+            outcome: route,
+            name: document.getElementById('cfName')?.value || '',
+            email: document.getElementById('cfEmail')?.value || '',
+            phone: document.getElementById('cfPhone')?.value || '',
+            country_code: document.getElementById('cfCountry')?.value || '+27',
+            company_name: document.getElementById('cfCompany')?.value || '',
+            role: document.getElementById('cfRole')?.value || '',
+            industry: document.getElementById('cfIndustry')?.value || 'Other',
+            business_description: (document.getElementById('cfBusiness')?.value || '').slice(0, 400),
+            message: (document.getElementById('cfGoals')?.value || '').slice(0, 400),
+            services,
+            expansion_markets: expansionMarkets,
+            referral_source: form.querySelector('[name="referral_source"]:checked')?.value || '',
+            start_timeline: form.querySelector('[name="start_timeline"]:checked')?.value || '',
+            budget_range: Number(document.getElementById('cfBudget')?.value || 0),
+            additional_notes: (document.getElementById('cfNotes')?.value || '').slice(0, 300),
+        };
+    };
+    const encodeAssessment = payload => {
+        try {
+            const bytes = new TextEncoder().encode(JSON.stringify(payload));
+            let binary = '';
+            bytes.forEach(b => { binary += String.fromCharCode(b); });
+            return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+        } catch {
+            return '';
+        }
+    };
+    const withAssessmentParam = (url, route) => {
+        const token = encodeAssessment(buildAssessmentPayload(route));
+        if (!token) return url;
+        const separator = url.includes('?') ? '&' : '?';
+        return `${url}${separator}assessment=${encodeURIComponent(token)}`;
+    };
     back.addEventListener('click', () => { if (!submitting && current > 0) { clearErrors(); showStep(current - 1); } });
     const handleFieldChange = e => {
         if (e.target === marketInput) {
@@ -249,7 +287,7 @@
             }
             const outcome = result.outcome && result.outcome.route ? result.outcome : fallbackOutcome;
             if (outcome.route === 'consultation' || outcome.route === 'discovery') {
-                window.location.assign(outcome.url);
+                window.location.assign(withAssessmentParam(outcome.url, outcome.route));
                 return;
             }
             form.hidden = true;
@@ -264,6 +302,10 @@
                 success.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
             }
         } catch {
+            if (fallbackOutcome.route === 'consultation' || fallbackOutcome.route === 'discovery') {
+                window.location.assign(withAssessmentParam(fallbackOutcome.url, fallbackOutcome.route));
+                return;
+            }
             // If offline or server unreachable, still allow the Route 3 success state to display.
             if (fallbackOutcome.route === 'resources') {
                 form.hidden = true;
