@@ -187,6 +187,16 @@ return function (bool $localized): void {
     Route::get('/book-consultation/download-ics/{filename}', [\App\Http\Controllers\ConsultationController::class, 'downloadIcs'])->name($name('consultation.download-ics'));
 
     Route::post('/contact', [ContactController::class, 'submitForm'])->middleware('throttle:15,1')->name($name('contact.submit'));
+    Route::post('/contact/discovery-request', [ContactController::class, 'requestDiscovery'])->middleware('throttle:15,1')->name($name('contact.discovery-request'));
+
+    // Contact assessment next steps (routed by budget).
+    // Route 1: discovery call.
+    Route::get('/contact/discovery-call', [ContactController::class, 'showDiscoverySchedule'])->name($name('contact.discovery.schedule'));
+    // Route 2: schedule -> key challenges -> existing summary / payment / success screens.
+    Route::get('/contact/consultation/schedule', [ContactController::class, 'showConsultationSchedule'])->name($name('contact.consultation.schedule'));
+    Route::post('/contact/consultation/schedule', [ContactController::class, 'storeConsultationSlot'])->middleware('throttle:15,1')->name($name('contact.consultation.slot'));
+    Route::get('/contact/consultation/challenges', [ContactController::class, 'showKeyChallenges'])->name($name('contact.consultation.challenges'));
+    Route::post('/contact/consultation/challenges', [ContactController::class, 'submitKeyChallenges'])->middleware('throttle:15,1')->name($name('contact.consultation.challenges.submit'));
 
     Route::get('/events/{slug}', [UserEventController::class, 'show'])->name($name('events.show'));
 };

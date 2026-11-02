@@ -46,4 +46,10 @@ return [
         'sent' => 'Votre message a bien été envoyé. Nous vous répondrons bientôt.',
         'already_sent' => 'Votre message a déjà été envoyé. Nous vous répondrons bientôt.',
     ],
+    'flow' => [
+        'discovery_title' => 'Planifiez votre appel découverte',
+        'discovery_body' => 'Choisissez une date et une heure qui vous conviennent. Vous recevrez un e-mail de confirmation une fois la réservation faite.',
+        'discovery_confirmed' => 'Appel découverte confirmé !',
+        'discovery_confirmed_body' => 'Un e-mail de confirmation avec la date, l’heure et le lien Google Meet a été envoyé à votre adresse.',
+    ],
 ];

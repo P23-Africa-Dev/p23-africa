@@ -16,7 +16,7 @@
 @endphp
 <section class="cf-stage" aria-label="Contact P23 Africa">
     <noscript><p class="cf-alert">Please enable JavaScript to use this three-step enquiry form.</p></noscript>
-    <form id="contactFlow" class="cf-form" method="POST" action="{{ route('contact.submit') }}" novalidate>
+    <form id="contactFlow" class="cf-form" method="POST" action="{{ route('contact.submit') }}" data-resource-url="{{ locale_route('resource-hub') }}" data-consultation-url="{{ locale_route('contact.consultation.schedule') }}" data-discovery-url="{{ locale_route('contact.discovery.schedule') }}" novalidate>
         @csrf
         <input type="hidden" name="form_flow" value="contact-v2">
         <div class="cf-badge" aria-hidden="true">
@@ -147,7 +147,7 @@
                     </fieldset>
                     <div class="cf-field cf-budget">
                         <label for="cfBudget">What is your budget?</label>
-                        <input type="number" id="cfBudget" name="budget_range" placeholder="Input your budget (USD)" min="100" max="2147483647" step="1" required value="{{ old('budget_range') }}" aria-describedby="error-budget_range">
+                        <input type="number" id="cfBudget" name="budget_range" placeholder="Input your budget" min="0" max="2147483647" step="any" required value="{{ old('budget_range') }}" aria-describedby="error-budget_range">
                         <span class="cf-error" id="error-budget_range">@error('budget_range'){{ $message }}@enderror</span>
                     </div>
                 </div>
@@ -161,7 +161,7 @@
             </div>
         </div>
     </form>
-    <div class="cf-success" id="cfSuccess" tabindex="-1" hidden><h1>Thank you for reaching out.</h1><p>Your enquiry has been sent. Our team will get back to you soon.</p><a href="{{ url('services') }}">Explore our services</a></div>
+    <div class="cf-success" id="cfSuccess" tabindex="-1" hidden><h1>Thank you for reaching out.</h1><p>Your enquiry has been sent. Our team will get back to you soon.</p><a id="cfSuccessLink" href="{{ locale_route('resource-hub') }}">Explore our services</a></div>
 </section>
 @endsection
 @section('footer')

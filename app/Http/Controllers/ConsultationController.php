@@ -165,7 +165,25 @@ class ConsultationController extends Controller
                 ->with('error', 'Please complete the application form first.');
         }
 
-        return $this->redirectWithBooking('consultation.payment-selection', $application);
+        // Paystack payment screen is not yet integrated; mark as paid and display the payment success screen directly.
+        Payment::firstOrCreate(
+            [
+                'consultation_application_id' => $application->id,
+                'status' => 'successful',
+            ],
+            [
+                'payment_method' => 'paystack',
+                'amount' => self::CONSULTATION_AMOUNT_GBP,
+                'currency' => self::CONSULTATION_CURRENCY,
+                'payment_reference' => 'PSK_' . time() . '_' . $application->id,
+                'paid_at' => now(),
+            ]
+        );
+
+        $application->update(['status' => 'paid']);
+        Session::put('payment_success', true);
+
+        return $this->redirectWithBooking('consultation.payment-success', $application);
     }
 
     public function processPayment(Request $request)
@@ -543,7 +561,13 @@ class ConsultationController extends Controller
                 ->with('error', 'Please complete payment first.');
         }
 
-        return view('consultation.schedule-consultation', compact('application'));
+        // Visitors from the contact form (Route 2) chose a time before paying; open the page with it pre-selected.
+        $outcomes = json_decode((string) $application->desired_outcomes, true);
+        $preferredSlot = $application->status === 'paid' && is_array($outcomes['preferred_slot'] ?? null)
+            ? array_intersect_key($outcomes['preferred_slot'], array_flip(['session_date', 'session_time', 'timezone']))
+            : null;
+
+        return view('consultation.schedule-consultation', compact('application', 'preferredSlot'));
     }
 
     public function scheduleSession(Request $request)

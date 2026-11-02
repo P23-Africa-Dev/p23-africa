@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Mail\ContactFormMail;
+use App\Models\ConsultationApplication;
 use App\Models\ContactSubmission;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
@@ -97,5 +98,44 @@ class ContactFlowTest extends TestCase
             'message' => 'Please help us grow.', 'budget_range' => 500,
         ])->assertOk()->assertJson(['success' => true]);
         $this->assertNull(ContactSubmission::sole()->project_details);
+    }
+
+    public function test_contact_v2_route_two_flow_proceeds_through_summary_to_payment_success(): void
+    {
+        $payload = array_replace($this->enquiry(), ['budget_range' => 2000]);
+        $response = $this->postJson('/contact', $payload)
+            ->assertOk()
+            ->assertJsonPath('outcome.route', 'consultation');
+
+        $this->get($response->json('outcome.url'))->assertOk()->assertSee('Schedule Your Consultation');
+
+        $slot = [
+            'session_date' => now()->addDays(2)->format('Y-m-d'),
+            'session_time' => '11:00',
+            'timezone' => 'GMT',
+        ];
+        $this->postJson('/contact/consultation/schedule', $slot)->assertOk()->assertJsonPath('success', true);
+
+        $this->get('/contact/consultation/challenges')->assertOk()->assertSee('Key Challenges');
+        $this->post('/contact/consultation/challenges', [
+            'key_challenges' => ['Weak marketing strategy', 'Scaling challenges'],
+        ])->assertRedirect();
+
+        $application = ConsultationApplication::sole();
+        $this->get('/book-consultation/summary?booking=' . $application->booking_token)
+            ->assertOk()
+            ->assertSee('Nigeria')
+            ->assertSee('Ghana')
+            ->assertSee('Weak marketing strategy')
+            ->assertSee('Scaling challenges');
+
+        $initiateResponse = $this->post('/book-consultation/payment/initiate', [
+            'booking' => $application->booking_token,
+        ]);
+        $initiateResponse->assertRedirect(route('consultation.payment-success', ['booking' => $application->booking_token]));
+
+        $this->get('/book-consultation/payment-success?booking=' . $application->booking_token)
+            ->assertOk()
+            ->assertSee('Payment Successful');
     }
 }
