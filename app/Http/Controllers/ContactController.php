@@ -230,16 +230,23 @@ class ContactController extends Controller
             }
 
             // Check for duplicate submission in database
-            $duplicateCheck = ContactSubmission::where('email', $request->input('email'))
-                ->where('phone', $request->input('phone'))
-                ->where('status', 'submitted')
-                ->where('created_at', '>=', now()->subMinutes(10))
-                ->latest('id')
-                ->first();
+            $duplicateCheck = null;
+            try {
+                $duplicateCheck = ContactSubmission::where('email', $request->input('email'))
+                    ->where('phone', $request->input('phone'))
+                    ->where('status', 'submitted')
+                    ->where('created_at', '>=', now()->subMinutes(10))
+                    ->latest('id')
+                    ->first();
+            } catch (\Throwable $dbCheckError) {
+                Log::warning('Duplicate check query skipped', ['error' => $dbCheckError->getMessage()]);
+            }
 
             if ($duplicateCheck && (!$stepped || ($duplicateCheck->project_details['assessment_fingerprint'] ?? null) === $assessmentFingerprint)) {
                 if ($stepped) {
+                    $outcome = $duplicateCheck->project_details['assessment_result'] ?? app(ContactLeadAssessment::class)->evaluate($validated);
                     $request->session()->put('contact_assessment_id', $duplicateCheck->id);
+                    $request->session()->put('contact_assessment_state', $this->buildAssessmentStateFromSubmission($duplicateCheck, $outcome['route']));
                 }
                 Log::warning('Duplicate submission attempt detected in DB', [
                     'request_id' => $requestId,
@@ -256,7 +263,7 @@ class ContactController extends Controller
                     return response()->json([
                         'success' => true,
                         'message' => __('contact.validation.already_sent'),
-                        'outcome' => $stepped ? ($duplicateCheck->project_details['assessment_result'] ?? app(ContactLeadAssessment::class)->evaluate($validated)) : null,
+                        'outcome' => $stepped ? ($outcome ?? app(ContactLeadAssessment::class)->evaluate($validated)) : null,
                     ]);
                 }
 
@@ -326,28 +333,61 @@ class ContactController extends Controller
                 ];
             }
 
-            // Store in database (this path only for non-live-capture submissions)
-            $contactSubmission = ContactSubmission::create($sanitizedData);
+            // Store in database with graceful fallback if optional columns are not yet migrated on the host
+            $contactSubmission = null;
+            try {
+                $contactSubmission = ContactSubmission::create($sanitizedData);
+            } catch (\Throwable $createError) {
+                Log::warning('Primary ContactSubmission::create failed, retrying with base columns', [
+                    'error' => $createError->getMessage(),
+                ]);
+                try {
+                    $fallbackData = collect($sanitizedData)->except(['project_details', 'locale'])->all();
+                    $contactSubmission = ContactSubmission::create($fallbackData);
+                    $contactSubmission->project_details = $sanitizedData['project_details'] ?? null;
+                } catch (\Throwable $fallbackError) {
+                    Log::error('Fallback ContactSubmission::create failed, using in-memory submission', [
+                        'error' => $fallbackError->getMessage(),
+                    ]);
+                    $contactSubmission = (new ContactSubmission())->forceFill($sanitizedData);
+                }
+            }
+
             if ($stepped) {
-                $request->session()->put('contact_assessment_id', $contactSubmission->id);
+                if ($contactSubmission->id) {
+                    $request->session()->put('contact_assessment_id', $contactSubmission->id);
+                }
+                $request->session()->put(
+                    'contact_assessment_state',
+                    $this->buildAssessmentStateFromSubmission($contactSubmission, $outcome['route'])
+                );
             }
 
             // Send notification to admins
-            AdminNotificationService::notifyNewContactForm($contactSubmission);
+            if ($contactSubmission->exists) {
+                try {
+                    AdminNotificationService::notifyNewContactForm($contactSubmission);
+                } catch (\Throwable $notifyError) {
+                    Log::warning('Failed to notify admins of contact submission', [
+                        'submission_id' => $contactSubmission->id,
+                        'error' => $notifyError->getMessage(),
+                    ]);
+                }
 
-            // Auto-create CRM lead from contact submission
-            try {
-                $lead = Lead::createFromContactSubmission($contactSubmission);
-                AdminNotificationService::notifyNewLead($lead);
-            } catch (\Exception $e) {
-                Log::error('Failed to create lead from contact submission', [
-                    'submission_id' => $contactSubmission->id,
-                    'error' => $e->getMessage()
-                ]);
+                // Auto-create CRM lead from contact submission
+                try {
+                    $lead = Lead::createFromContactSubmission($contactSubmission);
+                    AdminNotificationService::notifyNewLead($lead);
+                } catch (\Throwable $e) {
+                    Log::error('Failed to create lead from contact submission', [
+                        'submission_id' => $contactSubmission->id,
+                        'error' => $e->getMessage()
+                    ]);
+                }
+
+                // Send emails using centralized method
+                $this->sendSubmissionEmails($contactSubmission);
             }
-
-            // Send emails using centralized method
-            $this->sendSubmissionEmails($contactSubmission);
 
             if ($request->expectsJson()) {
                 return response()->json([
@@ -395,16 +435,165 @@ class ContactController extends Controller
      * Send emails for completed submissions
      * Emails are queued for async processing - no locking needed
      */
+    private function buildAssessmentStateFromSubmission(ContactSubmission $submission, string $route, ?array $slot = null): array
+    {
+        $details = is_array($submission->project_details) ? $submission->project_details : [];
+        if ($slot) {
+            $details['preferred_slot'] = $slot;
+        }
+
+        return [
+            'outcome' => $route,
+            'name' => (string) $submission->name,
+            'company_name' => (string) $submission->company_name,
+            'email' => (string) $submission->email,
+            'phone' => (string) $submission->phone,
+            'country_code' => (string) ($submission->country_code ?? '+27'),
+            'services' => is_array($submission->services) ? $submission->services : [],
+            'message' => Str::limit((string) $submission->message, 400, ''),
+            'budget_range' => (int) ($submission->budget_range ?? 0),
+            'project_details' => [
+                'role' => $details['role'] ?? '',
+                'industry' => $details['industry'] ?? 'Not specified',
+                'business_description' => Str::limit((string) ($details['business_description'] ?? $submission->message), 400, ''),
+                'expansion_markets' => $details['expansion_markets'] ?? [],
+                'referral_source' => $details['referral_source'] ?? '',
+                'start_timeline' => $details['start_timeline'] ?? '',
+                'additional_notes' => Str::limit((string) ($details['additional_notes'] ?? ''), 300, ''),
+                'company_website' => $details['company_website'] ?? null,
+                'selected_goals' => $details['selected_goals'] ?? null,
+                'assessment_outcome' => $route,
+                'preferred_slot' => $details['preferred_slot'] ?? null,
+            ],
+        ];
+    }
+
+    private function encodeAssessmentState(ContactSubmission $submission, string $route, ?array $slot = null): string
+    {
+        $state = $this->buildAssessmentStateFromSubmission($submission, $route, $slot);
+        $json = json_encode($state);
+
+        return rtrim(strtr(base64_encode($json ?: '{}'), '+/', '-_'), '=');
+    }
+
+    private function decodeAssessmentToken(?string $token): ?array
+    {
+        if (!is_string($token) || trim($token) === '') {
+            return null;
+        }
+
+        $padded = strtr($token, '-_', '+/');
+        $mod = strlen($padded) % 4;
+        if ($mod > 0) {
+            $padded .= str_repeat('=', 4 - $mod);
+        }
+
+        $decoded = base64_decode($padded, true);
+        if ($decoded === false) {
+            return null;
+        }
+
+        $data = json_decode($decoded, true);
+
+        return is_array($data) ? $data : null;
+    }
+
     /**
      * The contact submission for this visitor's completed assessment, if it was routed to $route.
      */
     private function assessmentSubmission(Request $request, string $route): ?ContactSubmission
     {
-        $submission = ContactSubmission::find($request->session()->get('contact_assessment_id'));
+        $submission = null;
+        $sessionId = $request->session()->get('contact_assessment_id');
 
-        return $submission && ($submission->project_details['assessment_outcome'] ?? null) === $route
-            ? $submission
-            : null;
+        if ($sessionId) {
+            try {
+                $submission = ContactSubmission::find($sessionId);
+            } catch (\Throwable $e) {
+                $submission = null;
+            }
+        }
+
+        if ($submission) {
+            $details = is_array($submission->project_details) ? $submission->project_details : [];
+            if (empty($details) && is_array($request->session()->get('contact_assessment_state.project_details'))) {
+                $details = $request->session()->get('contact_assessment_state.project_details');
+                $submission->project_details = $details;
+            }
+            $outcome = $details['assessment_outcome'] ?? null;
+            if ($outcome === $route) {
+                return $submission;
+            }
+            if ($outcome !== null && !$request->filled('assessment')) {
+                return null;
+            }
+        }
+
+        $state = $this->decodeAssessmentToken($request->input('assessment'))
+            ?? $request->session()->get('contact_assessment_state');
+
+        if (!is_array($state)) {
+            return null;
+        }
+
+        $evaluatedRoute = app(ContactLeadAssessment::class)->evaluate([
+            'budget_range' => $state['budget_range'] ?? 0,
+        ])['route'];
+        $stateRoute = $state['outcome'] ?? $evaluatedRoute;
+
+        if ($stateRoute !== $route || $evaluatedRoute !== $route) {
+            return null;
+        }
+
+        $projectDetails = is_array($state['project_details'] ?? null) ? $state['project_details'] : [
+            'role' => $state['role'] ?? '',
+            'industry' => $state['industry'] ?? 'Not specified',
+            'business_description' => $state['business_description'] ?? ($state['message'] ?? ''),
+            'expansion_markets' => $state['expansion_markets'] ?? [],
+            'referral_source' => $state['referral_source'] ?? '',
+            'start_timeline' => $state['start_timeline'] ?? '',
+            'additional_notes' => $state['additional_notes'] ?? '',
+            'assessment_outcome' => $route,
+        ];
+        $projectDetails['assessment_outcome'] = $route;
+        if (!empty($state['preferred_slot']) && empty($projectDetails['preferred_slot'])) {
+            $projectDetails['preferred_slot'] = $state['preferred_slot'];
+        }
+
+        $attributes = [
+            'name' => strip_tags((string) ($state['name'] ?? 'Guest')),
+            'company_name' => strip_tags((string) ($state['company_name'] ?? '')),
+            'email' => filter_var((string) ($state['email'] ?? ''), FILTER_SANITIZE_EMAIL),
+            'phone' => strip_tags((string) ($state['phone'] ?? '')),
+            'country_code' => strip_tags((string) ($state['country_code'] ?? '+27')),
+            'services' => is_array($state['services'] ?? null) ? $state['services'] : [],
+            'message' => strip_tags((string) ($state['message'] ?? '')),
+            'budget_range' => (int) ($state['budget_range'] ?? 0),
+            'project_details' => $projectDetails,
+            'locale' => app()->getLocale(),
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'status' => 'submitted',
+            'submitted_at' => now(),
+        ];
+
+        try {
+            $restored = ContactSubmission::create($attributes);
+            $request->session()->put('contact_assessment_id', $restored->id);
+        } catch (\Throwable $e) {
+            $restored = (new ContactSubmission())->forceFill($attributes);
+        }
+
+        $request->session()->put(
+            'contact_assessment_state',
+            $this->buildAssessmentStateFromSubmission($restored, $route, $projectDetails['preferred_slot'] ?? null)
+        );
+
+        if (!empty($projectDetails['preferred_slot']) && !$request->session()->has('contact_consultation_slot')) {
+            $request->session()->put('contact_consultation_slot', $projectDetails['preferred_slot']);
+        }
+
+        return $restored;
     }
 
     private function slotRules(bool $allowToday = true): array
@@ -437,6 +626,7 @@ class ContactController extends Controller
             'confirmTitle' => __('contact.flow.discovery_confirmed'),
             'confirmBody' => __('contact.flow.discovery_confirmed_body'),
             'contactEmail' => $submission->email,
+            'assessmentToken' => $this->encodeAssessmentState($submission, 'discovery'),
         ]);
     }
 
@@ -448,7 +638,7 @@ class ContactController extends Controller
         }
 
         $validated = $request->validate($this->slotRules());
-        $details = $submission->project_details;
+        $details = is_array($submission->project_details) ? $submission->project_details : [];
         $details['discovery_request'] = [
             'preferred_date' => $validated['session_date'],
             'preferred_time' => $validated['session_time'],
@@ -456,12 +646,21 @@ class ContactController extends Controller
             'requested_at' => now()->toIso8601String(),
         ];
         $details['discovery_request'] += $this->bookDiscoveryCall($submission, $validated);
-        $submission->update(['project_details' => $details]);
+        $submission->project_details = $details;
+        if ($submission->exists) {
+            try {
+                $submission->update(['project_details' => $details]);
+            } catch (\Throwable $e) {
+                Log::warning('Could not persist discovery_request to DB', ['error' => $e->getMessage()]);
+            }
+        }
 
         try {
-            AdminNotificationService::notifyNewContactForm($submission);
+            if ($submission->exists) {
+                AdminNotificationService::notifyNewContactForm($submission);
+            }
             Mail::to('contact@p23africa.com')->send(new ContactFormMail($submission->toArray()));
-        } catch (\Exception $exception) {
+        } catch (\Throwable $exception) {
             Log::error('Discovery request notification failed', ['submission_id' => $submission->id, 'error' => $exception->getMessage()]);
         }
 
@@ -534,6 +733,7 @@ class ContactController extends Controller
             'scheduleTitle' => __('consultation.schedule_title'),
             'scheduleBody' => __('consultation.schedule_body'),
             'scheduleAction' => locale_route('contact.consultation.slot'),
+            'assessmentToken' => $this->encodeAssessmentState($submission, 'consultation'),
         ]);
     }
 
@@ -546,13 +746,28 @@ class ContactController extends Controller
 
         $slot = $request->validate($this->slotRules(false));
         $request->session()->put('contact_consultation_slot', $slot);
-        $details = $submission->project_details;
+        $details = is_array($submission->project_details) ? $submission->project_details : [];
         $details['preferred_slot'] = $slot;
-        $submission->update(['project_details' => $details]);
+        $submission->project_details = $details;
+        if ($submission->exists) {
+            try {
+                $submission->update(['project_details' => $details]);
+            } catch (\Throwable $e) {
+                Log::warning('Could not persist preferred_slot to DB', ['error' => $e->getMessage()]);
+            }
+        }
+        $request->session()->put(
+            'contact_assessment_state',
+            $this->buildAssessmentStateFromSubmission($submission, 'consultation', $slot)
+        );
+
+        $redirectParams = $request->filled('assessment')
+            ? ['assessment' => $this->encodeAssessmentState($submission, 'consultation', $slot)]
+            : [];
 
         return response()->json([
             'success' => true,
-            'redirect' => locale_route('contact.consultation.challenges'),
+            'redirect' => locale_route('contact.consultation.challenges', $redirectParams),
         ]);
     }
 
@@ -566,17 +781,24 @@ class ContactController extends Controller
         if (!$submission) {
             return redirect()->to(locale_route('contact'));
         }
-        if (!$request->session()->has('contact_consultation_slot')) {
+        $slot = $request->session()->get('contact_consultation_slot')
+            ?: ($submission->project_details['preferred_slot'] ?? null);
+        if (!$slot) {
             return redirect()->to(locale_route('contact.consultation.schedule'));
         }
+        $request->session()->put('contact_consultation_slot', $slot);
 
-        return view('contact.key-challenges', ['challenges' => $this->keyChallengeOptions()]);
+        return view('contact.key-challenges', [
+            'challenges' => $this->keyChallengeOptions(),
+            'assessmentToken' => $this->encodeAssessmentState($submission, 'consultation', $slot),
+        ]);
     }
 
     public function submitKeyChallenges(Request $request)
     {
         $submission = $this->assessmentSubmission($request, 'consultation');
-        $slot = $request->session()->get('contact_consultation_slot');
+        $slot = $request->session()->get('contact_consultation_slot')
+            ?: ($submission?->project_details['preferred_slot'] ?? null);
         if (!$submission || !$slot) {
             return redirect()->to(locale_route('contact'));
         }
@@ -591,7 +813,7 @@ class ContactController extends Controller
         ]);
 
         $details = $submission->project_details ?? [];
-        $application = ConsultationApplication::create([
+        $appAttributes = [
             'booking_token' => (string) Str::uuid(),
             'name' => $submission->name,
             'email' => $submission->email,
@@ -612,21 +834,67 @@ class ContactController extends Controller
             'status' => 'pending',
             'submitted_at' => now(),
             'locale' => app()->getLocale(),
-        ]);
-
-        $details['consultation_application_id'] = $application->id;
-        $submission->update(['project_details' => $details]);
+        ];
 
         try {
-            AdminNotificationService::notifyNewConsultation($application);
-        } catch (\Exception $exception) {
-            Log::error('Consultation notification failed', ['application_id' => $application->id, 'error' => $exception->getMessage()]);
+            $application = ConsultationApplication::create($appAttributes);
+        } catch (\Throwable $createAppError) {
+            Log::warning('Primary ConsultationApplication::create failed, retrying with base columns', [
+                'error' => $createAppError->getMessage(),
+            ]);
+            try {
+                $fallbackApp = collect($appAttributes)->except(['booking_token', 'locale'])->all();
+                $application = ConsultationApplication::create($fallbackApp);
+                $application->booking_token = $appAttributes['booking_token'];
+            } catch (\Throwable $fallbackAppError) {
+                $application = (new ConsultationApplication())->forceFill($appAttributes);
+            }
         }
+
+        $details['consultation_application_id'] = $application->id;
+        $submission->project_details = $details;
+        if ($submission->exists) {
+            try {
+                $submission->update(['project_details' => $details]);
+            } catch (\Throwable $e) {
+                Log::warning('Could not update consultation_application_id on submission', ['error' => $e->getMessage()]);
+            }
+        }
+
+        if ($application->exists) {
+            try {
+                AdminNotificationService::notifyNewConsultation($application);
+            } catch (\Throwable $exception) {
+                Log::error('Consultation notification failed', ['application_id' => $application->id, 'error' => $exception->getMessage()]);
+            }
+        }
+
+        $bookingState = [
+            'booking_token' => $application->booking_token,
+            'name' => $application->name,
+            'email' => $application->email,
+            'phone' => $application->phone,
+            'company' => $application->company,
+            'website_or_handle' => $application->website_or_handle,
+            'industry' => $application->industry,
+            'business_description' => Str::limit((string) $application->business_description, 400, ''),
+            'selected_goals' => $application->selected_goals,
+            'selected_challenges' => $application->selected_challenges,
+            'desired_outcomes' => $application->desired_outcomes,
+            'status' => $application->status,
+            'locale' => $application->locale ?: app()->getLocale(),
+        ];
 
         $request->session()->put('consultation_application_id', $application->id);
         $request->session()->put('consultation_booking_token', $application->booking_token);
+        $request->session()->put('consultation_booking_state', $bookingState);
 
-        return redirect()->to(locale_route('consultation.consultation-summary', ['booking' => $application->booking_token]));
+        $summaryParams = ['booking' => $application->booking_token];
+        if ($request->filled('assessment')) {
+            $summaryParams['state'] = rtrim(strtr(base64_encode(json_encode($bookingState) ?: '{}'), '+/', '-_'), '=');
+        }
+
+        return redirect()->to(locale_route('consultation.consultation-summary', $summaryParams));
     }
 
     private function keyChallengeOptions(): array

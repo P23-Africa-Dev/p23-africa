@@ -138,4 +138,43 @@ class ContactFlowTest extends TestCase
             ->assertOk()
             ->assertSee('Payment Successful');
     }
+
+    public function test_contact_page_hides_navbar_and_stateless_assessment_tokens_render_route_one_and_two(): void
+    {
+        $this->get('/contact')
+            ->assertOk()
+            ->assertDontSee('id="navbar"', false);
+
+        // Simulate a stateless serverless container where only the ?assessment= token arrives on GET /contact/discovery-call
+        $discoveryPayload = [
+            'outcome' => 'discovery',
+            'name' => 'Stateless Discovery User',
+            'email' => 'discovery-stateless@example.test',
+            'phone' => '8012345678',
+            'country_code' => '+234',
+            'company_name' => 'Stateless Co',
+            'industry' => 'Technology',
+            'business_description' => 'Testing stateless discovery routing.',
+            'message' => 'Expand across West Africa.',
+            'services' => ['Market Entry & Expansion'],
+            'expansion_markets' => ['Nigeria'],
+            'budget_range' => 3500,
+        ];
+        $discoveryToken = rtrim(strtr(base64_encode(json_encode($discoveryPayload)), '+/', '-_'), '=');
+
+        $this->get('/contact/discovery-call?assessment=' . urlencode($discoveryToken))
+            ->assertOk()
+            ->assertSee('Schedule Your Discovery Call');
+
+        // Simulate a stateless serverless container for Route 2 (1500 - 2500)
+        $consultationPayload = array_replace($discoveryPayload, [
+            'outcome' => 'consultation',
+            'budget_range' => 2000,
+        ]);
+        $consultationToken = rtrim(strtr(base64_encode(json_encode($consultationPayload)), '+/', '-_'), '=');
+
+        $this->get('/contact/consultation/schedule?assessment=' . urlencode($consultationToken))
+            ->assertOk()
+            ->assertSee('Schedule Your Consultation');
+    }
 }

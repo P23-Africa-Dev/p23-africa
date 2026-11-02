@@ -13,10 +13,12 @@ class ContactLeadAssessment
      */
     public function evaluate(array $answers): array
     {
-        $budget = (int) ($answers['budget_range'] ?? 0);
-        $routes = config('contact.budget_routes');
+        $budget = (float) ($answers['budget_range'] ?? 0);
+        $routes = config('contact.budget_routes', []);
+        $min = (float) ($routes['consultation_min'] ?? 1500);
+        $max = (float) ($routes['consultation_max'] ?? 2500);
 
-        if ($budget < (int) $routes['consultation_min']) {
+        if ($budget < $min) {
             return [
                 'route' => 'resources', 'title' => 'Start with practical resources',
                 'description' => 'Explore insights and guides to sharpen your plans before committing to a project.',
@@ -24,7 +26,7 @@ class ContactLeadAssessment
             ];
         }
 
-        if ($budget <= (int) $routes['consultation_max']) {
+        if ($budget <= $max) {
             return [
                 'route' => 'consultation', 'title' => 'Schedule your consultation',
                 'description' => 'Pick a convenient date and time for your paid consultation session.',

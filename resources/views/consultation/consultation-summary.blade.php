@@ -614,6 +614,9 @@
                     <form method="POST" action="{{ route('consultation.payment.initiate') }}">
                         @csrf
                         <input type="hidden" name="booking" value="{{ $application->booking_token }}">
+                        @if (request('state'))
+                        <input type="hidden" name="state" value="{{ request('state') }}">
+                        @endif
                         <button type="submit" class="btn proceed-btn">
                             {{ __('consultation.proceed_payment') }}
                             <i class="fa-solid fa-arrow-right"></i>

@@ -1,13 +1,14 @@
 @extends('layouts.master')
 @section('title', 'Contact | P23 Africa')
 @section('body_class', 'p23-black-navbar-page contact-flow-page')
+@section('hide_navbar', '1')
 @section('navbar_consultation_label', 'Book Consultation')
 @section('meta')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <meta name="description" content="Tell P23 Africa about your business, your expansion plans, and the support you need. Start a conversation with our team.">
 <link rel="stylesheet" href="{{ asset('css/services-new.css') }}">
-<link rel="stylesheet" href="{{ asset('css/contact-flow.css') }}">
-<script src="{{ asset('js/contact-flow.js') }}" defer></script>
+<link rel="stylesheet" href="{{ asset('css/contact-flow.css') }}?v=3">
+<script src="{{ asset('js/contact-flow.js') }}?v=3" defer></script>
 @endsection
 @section('content')
 @php

@@ -1,17 +1,24 @@
 @extends('layouts.master')
 @section('title', 'Key Challenges | P23 Africa')
 @section('body_class', 'p23-black-navbar-page contact-flow-page')
+@section('hide_navbar', '1')
 @section('navbar_consultation_label', 'Book Consultation')
 @section('meta')
 <meta name="robots" content="noindex">
 <link rel="stylesheet" href="{{ asset('css/services-new.css') }}">
-<link rel="stylesheet" href="{{ asset('css/contact-flow.css') }}">
+<link rel="stylesheet" href="{{ asset('css/contact-flow.css') }}?v=3">
 @endsection
 @section('content')
-@php $selected = old('key_challenges', []); @endphp
+@php
+    $selected = old('key_challenges', []);
+    $token = $assessmentToken ?? request('assessment');
+@endphp
 <section class="cf-stage cf-kc-stage" aria-label="Key challenges">
     <form id="cfKeyChallenges" class="cf-form cf-kc" method="POST" action="{{ locale_route('contact.consultation.challenges.submit') }}" novalidate>
         @csrf
+        @if (!empty($token))
+        <input type="hidden" name="assessment" value="{{ $token }}">
+        @endif
         <header class="cf-header cf-kc-header">
             <h1 tabindex="-1">{{ __('consultation.challenges') }}</h1>
             <p>{{ __('consultation.challenges_prompt') }}</p>
@@ -33,7 +40,7 @@
                 <p class="cf-error" id="cfKcError" role="status" aria-live="polite"></p>
             </fieldset>
             <div class="cf-actions">
-                <a class="cf-back" href="{{ locale_route('contact.consultation.schedule') }}" aria-label="Back to scheduling"><img src="{{ asset('images/contact/arrow-back.svg') }}" width="16" height="12.727" alt=""></a>
+                <a class="cf-back" href="{{ locale_route('contact.consultation.schedule', !empty($token) ? ['assessment' => $token] : []) }}" aria-label="Back to scheduling"><img src="{{ asset('images/contact/arrow-back.svg') }}" width="16" height="12.727" alt=""></a>
                 <button type="submit" class="cf-next" aria-label="Continue to consultation summary"><img src="{{ asset('images/contact/arrow-next.svg') }}" width="16" height="12.727" alt=""></button>
             </div>
         </div>

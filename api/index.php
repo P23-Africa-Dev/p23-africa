@@ -44,9 +44,24 @@ if ($uri !== '/' && $publicRoot && ! str_contains($uri, "\0") && ! str_contains(
 
 $database = '/tmp/database.sqlite';
 $databaseSource = __DIR__ . '/../database/vercel.sqlite';
+$schemaSource = __DIR__ . '/../database/schema/vercel-preview.sql';
 
-if (! is_file($database) && is_file($databaseSource)) {
-    copy($databaseSource, $database);
+if (! is_file($database) || filesize($database) === 0) {
+    if (is_file($databaseSource) && filesize($databaseSource) > 0) {
+        copy($databaseSource, $database);
+    } elseif (is_file($schemaSource)) {
+        try {
+            $pdo = new PDO('sqlite:' . $database);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $pdo->exec(file_get_contents($schemaSource));
+        } catch (\Throwable $e) {
+            if (! is_file($database)) {
+                touch($database);
+            }
+        }
+    } else {
+        touch($database);
+    }
 }
 
 putenv('DB_DATABASE=' . $database);
