@@ -1,0 +1,45 @@
+<?php
+
+return [
+    'assessment_goals' => [
+        'expand' => ['label' => 'Expand into African countries', 'service' => 'Market Entry & Expansion'],
+        'research' => ['label' => 'Understand customers and competitors', 'service' => 'Market Entry & Expansion'],
+        'partners' => ['label' => 'Find distributors and local partners', 'service' => 'Distributor & Partner Development'],
+        'demand' => ['label' => 'Generate qualified sales opportunities', 'service' => 'Outbound Sales Demand Testing'],
+        'operations' => ['label' => 'Strengthen sales and operations', 'service' => 'Sales & Market Support'],
+        'investment' => ['label' => 'Prepare for investment and growth', 'service' => 'Investment & Growth Readiness'],
+        'exploring' => ['label' => 'Explore my options', 'service' => null],
+        'other' => ['label' => 'Something else', 'service' => null],
+    ],
+    // Budget routing for the contact assessment (amounts in GBP).
+    // Below consultation_min -> Resource Hub (Route 3),
+    // consultation_min..consultation_max -> paid consultation (Route 2),
+    // above consultation_max -> discovery call (Route 1).
+    'budget_currency' => 'GBP',
+    'budget_routes' => [
+        'consultation_min' => 1500,
+        'consultation_max' => 2500,
+    ],
+    'discovery_call_minutes' => 30,
+    'budget_choices' => [
+        'project' => 'We have a budget allocated for this project',
+        'consultation' => 'We can invest in a paid consultation',
+        'none' => 'We do not have a budget yet',
+    ],
+    'services' => [
+        'Market Entry & Expansion',
+        'Distributor & Partner Development',
+        'Outbound Sales Demand Testing',
+        'Sales & Market Support',
+        'Investment & Growth Readiness',
+    ],
+    'industries' => [
+        'Manufacturing', 'Technology', 'Consumer Goods', 'Healthcare',
+        'Financial Services', 'Agriculture', 'Energy', 'Professional Services', 'Other',
+    ],
+    'timelines' => [
+        'As soon as possible', 'Within the next month', 'In 1–3 months',
+        'More than 3 months', 'Just exploring',
+    ],
+    'referral_sources' => ['LinkedIn', 'Tiktok/Instagram', 'Google', 'AI Chat', 'Referrals', 'Other'],
+];

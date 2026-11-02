@@ -46,4 +46,10 @@ return [
         'sent' => 'Ihre Nachricht wurde gesendet. Wir melden uns bald bei Ihnen.',
         'already_sent' => 'Ihre Nachricht wurde bereits gesendet. Wir melden uns bald bei Ihnen.',
     ],
+    'flow' => [
+        'discovery_title' => 'Planen Sie Ihr Erstgespräch',
+        'discovery_body' => 'Wählen Sie ein passendes Datum und eine Uhrzeit. Nach der Buchung erhalten Sie eine Bestätigung per E-Mail.',
+        'discovery_confirmed' => 'Erstgespräch bestätigt!',
+        'discovery_confirmed_body' => 'Eine Bestätigung mit Datum, Uhrzeit und Google-Meet-Link wurde an Ihre E-Mail-Adresse gesendet.',
+    ],
 ];

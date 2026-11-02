@@ -46,4 +46,10 @@ return [
         'sent' => 'Uw bericht is verzonden. We nemen binnenkort contact met u op.',
         'already_sent' => 'Uw bericht is al verzonden. We nemen binnenkort contact met u op.',
     ],
+    'flow' => [
+        'discovery_title' => 'Plan uw kennismakingsgesprek',
+        'discovery_body' => 'Kies een datum en tijd die u uitkomen. Na de boeking ontvangt u een bevestiging per e-mail.',
+        'discovery_confirmed' => 'Kennismakingsgesprek bevestigd!',
+        'discovery_confirmed_body' => 'Een bevestiging met datum, tijd en Google Meet-link is naar uw e-mailadres gestuurd.',
+    ],
 ];

@@ -1,0 +1,722 @@
+[
+  {
+    "name": "United States",
+    "code": "+1",
+    "flag": "us"
+  },
+  {
+    "name": "United Kingdom",
+    "code": "+44",
+    "flag": "gb"
+  },
+  {
+    "name": "Canada",
+    "code": "+1",
+    "flag": "ca"
+  },
+  {
+    "name": "Nigeria",
+    "code": "+234",
+    "flag": "ng"
+  },
+  {
+    "name": "South Africa",
+    "code": "+27",
+    "flag": "za"
+  },
+  {
+    "name": "Algeria",
+    "code": "+213",
+    "flag": "dz"
+  },
+  {
+    "name": "Angola",
+    "code": "+244",
+    "flag": "ao"
+  },
+  {
+    "name": "Benin",
+    "code": "+229",
+    "flag": "bj"
+  },
+  {
+    "name": "Botswana",
+    "code": "+267",
+    "flag": "bw"
+  },
+  {
+    "name": "Burkina Faso",
+    "code": "+226",
+    "flag": "bf"
+  },
+  {
+    "name": "Burundi",
+    "code": "+257",
+    "flag": "bi"
+  },
+  {
+    "name": "Cameroon",
+    "code": "+237",
+    "flag": "cm"
+  },
+  {
+    "name": "Cape Verde",
+    "code": "+238",
+    "flag": "cv"
+  },
+  {
+    "name": "Central African Republic",
+    "code": "+236",
+    "flag": "cf"
+  },
+  {
+    "name": "Chad",
+    "code": "+235",
+    "flag": "td"
+  },
+  {
+    "name": "Comoros",
+    "code": "+269",
+    "flag": "km"
+  },
+  {
+    "name": "Congo (DRC)",
+    "code": "+243",
+    "flag": "cd"
+  },
+  {
+    "name": "Congo Republic",
+    "code": "+242",
+    "flag": "cg"
+  },
+  {
+    "name": "C\u00f4te d'Ivoire",
+    "code": "+225",
+    "flag": "ci"
+  },
+  {
+    "name": "Djibouti",
+    "code": "+253",
+    "flag": "dj"
+  },
+  {
+    "name": "Egypt",
+    "code": "+20",
+    "flag": "eg"
+  },
+  {
+    "name": "Equatorial Guinea",
+    "code": "+240",
+    "flag": "gq"
+  },
+  {
+    "name": "Eritrea",
+    "code": "+291",
+    "flag": "er"
+  },
+  {
+    "name": "Eswatini",
+    "code": "+268",
+    "flag": "sz"
+  },
+  {
+    "name": "Ethiopia",
+    "code": "+251",
+    "flag": "et"
+  },
+  {
+    "name": "Gabon",
+    "code": "+241",
+    "flag": "ga"
+  },
+  {
+    "name": "Gambia",
+    "code": "+220",
+    "flag": "gm"
+  },
+  {
+    "name": "Ghana",
+    "code": "+233",
+    "flag": "gh"
+  },
+  {
+    "name": "Guinea",
+    "code": "+224",
+    "flag": "gn"
+  },
+  {
+    "name": "Guinea-Bissau",
+    "code": "+245",
+    "flag": "gw"
+  },
+  {
+    "name": "Kenya",
+    "code": "+254",
+    "flag": "ke"
+  },
+  {
+    "name": "Lesotho",
+    "code": "+266",
+    "flag": "ls"
+  },
+  {
+    "name": "Liberia",
+    "code": "+231",
+    "flag": "lr"
+  },
+  {
+    "name": "Libya",
+    "code": "+218",
+    "flag": "ly"
+  },
+  {
+    "name": "Madagascar",
+    "code": "+261",
+    "flag": "mg"
+  },
+  {
+    "name": "Malawi",
+    "code": "+265",
+    "flag": "mw"
+  },
+  {
+    "name": "Mali",
+    "code": "+223",
+    "flag": "ml"
+  },
+  {
+    "name": "Mauritania",
+    "code": "+222",
+    "flag": "mr"
+  },
+  {
+    "name": "Mauritius",
+    "code": "+230",
+    "flag": "mu"
+  },
+  {
+    "name": "Morocco",
+    "code": "+212",
+    "flag": "ma"
+  },
+  {
+    "name": "Mozambique",
+    "code": "+258",
+    "flag": "mz"
+  },
+  {
+    "name": "Namibia",
+    "code": "+264",
+    "flag": "na"
+  },
+  {
+    "name": "Niger",
+    "code": "+227",
+    "flag": "ne"
+  },
+  {
+    "name": "Rwanda",
+    "code": "+250",
+    "flag": "rw"
+  },
+  {
+    "name": "S\u00e3o Tom\u00e9 and Pr\u00edncipe",
+    "code": "+239",
+    "flag": "st"
+  },
+  {
+    "name": "Senegal",
+    "code": "+221",
+    "flag": "sn"
+  },
+  {
+    "name": "Seychelles",
+    "code": "+248",
+    "flag": "sc"
+  },
+  {
+    "name": "Sierra Leone",
+    "code": "+232",
+    "flag": "sl"
+  },
+  {
+    "name": "Somalia",
+    "code": "+252",
+    "flag": "so"
+  },
+  {
+    "name": "South Sudan",
+    "code": "+211",
+    "flag": "ss"
+  },
+  {
+    "name": "Sudan",
+    "code": "+249",
+    "flag": "sd"
+  },
+  {
+    "name": "Tanzania",
+    "code": "+255",
+    "flag": "tz"
+  },
+  {
+    "name": "Togo",
+    "code": "+228",
+    "flag": "tg"
+  },
+  {
+    "name": "Tunisia",
+    "code": "+216",
+    "flag": "tn"
+  },
+  {
+    "name": "Uganda",
+    "code": "+256",
+    "flag": "ug"
+  },
+  {
+    "name": "Zambia",
+    "code": "+260",
+    "flag": "zm"
+  },
+  {
+    "name": "Zimbabwe",
+    "code": "+263",
+    "flag": "zw"
+  },
+  {
+    "name": "Austria",
+    "code": "+43",
+    "flag": "at"
+  },
+  {
+    "name": "Belgium",
+    "code": "+32",
+    "flag": "be"
+  },
+  {
+    "name": "Bulgaria",
+    "code": "+359",
+    "flag": "bg"
+  },
+  {
+    "name": "Croatia",
+    "code": "+385",
+    "flag": "hr"
+  },
+  {
+    "name": "Cyprus",
+    "code": "+357",
+    "flag": "cy"
+  },
+  {
+    "name": "Czech Republic",
+    "code": "+420",
+    "flag": "cz"
+  },
+  {
+    "name": "Denmark",
+    "code": "+45",
+    "flag": "dk"
+  },
+  {
+    "name": "Estonia",
+    "code": "+372",
+    "flag": "ee"
+  },
+  {
+    "name": "Finland",
+    "code": "+358",
+    "flag": "fi"
+  },
+  {
+    "name": "France",
+    "code": "+33",
+    "flag": "fr"
+  },
+  {
+    "name": "Germany",
+    "code": "+49",
+    "flag": "de"
+  },
+  {
+    "name": "Greece",
+    "code": "+30",
+    "flag": "gr"
+  },
+  {
+    "name": "Hungary",
+    "code": "+36",
+    "flag": "hu"
+  },
+  {
+    "name": "Iceland",
+    "code": "+354",
+    "flag": "is"
+  },
+  {
+    "name": "Ireland",
+    "code": "+353",
+    "flag": "ie"
+  },
+  {
+    "name": "Italy",
+    "code": "+39",
+    "flag": "it"
+  },
+  {
+    "name": "Latvia",
+    "code": "+371",
+    "flag": "lv"
+  },
+  {
+    "name": "Lithuania",
+    "code": "+370",
+    "flag": "lt"
+  },
+  {
+    "name": "Luxembourg",
+    "code": "+352",
+    "flag": "lu"
+  },
+  {
+    "name": "Malta",
+    "code": "+356",
+    "flag": "mt"
+  },
+  {
+    "name": "Netherlands",
+    "code": "+31",
+    "flag": "nl"
+  },
+  {
+    "name": "Norway",
+    "code": "+47",
+    "flag": "no"
+  },
+  {
+    "name": "Poland",
+    "code": "+48",
+    "flag": "pl"
+  },
+  {
+    "name": "Portugal",
+    "code": "+351",
+    "flag": "pt"
+  },
+  {
+    "name": "Romania",
+    "code": "+40",
+    "flag": "ro"
+  },
+  {
+    "name": "Slovakia",
+    "code": "+421",
+    "flag": "sk"
+  },
+  {
+    "name": "Slovenia",
+    "code": "+386",
+    "flag": "si"
+  },
+  {
+    "name": "Spain",
+    "code": "+34",
+    "flag": "es"
+  },
+  {
+    "name": "Sweden",
+    "code": "+46",
+    "flag": "se"
+  },
+  {
+    "name": "Switzerland",
+    "code": "+41",
+    "flag": "ch"
+  },
+  {
+    "name": "Afghanistan",
+    "code": "+93",
+    "flag": "af"
+  },
+  {
+    "name": "Bahrain",
+    "code": "+973",
+    "flag": "bh"
+  },
+  {
+    "name": "Bangladesh",
+    "code": "+880",
+    "flag": "bd"
+  },
+  {
+    "name": "Bhutan",
+    "code": "+975",
+    "flag": "bt"
+  },
+  {
+    "name": "Brunei",
+    "code": "+673",
+    "flag": "bn"
+  },
+  {
+    "name": "Cambodia",
+    "code": "+855",
+    "flag": "kh"
+  },
+  {
+    "name": "China",
+    "code": "+86",
+    "flag": "cn"
+  },
+  {
+    "name": "India",
+    "code": "+91",
+    "flag": "in"
+  },
+  {
+    "name": "Indonesia",
+    "code": "+62",
+    "flag": "id"
+  },
+  {
+    "name": "Iran",
+    "code": "+98",
+    "flag": "ir"
+  },
+  {
+    "name": "Iraq",
+    "code": "+964",
+    "flag": "iq"
+  },
+  {
+    "name": "Israel",
+    "code": "+972",
+    "flag": "il"
+  },
+  {
+    "name": "Japan",
+    "code": "+81",
+    "flag": "jp"
+  },
+  {
+    "name": "Jordan",
+    "code": "+962",
+    "flag": "jo"
+  },
+  {
+    "name": "Kazakhstan",
+    "code": "+7",
+    "flag": "kz"
+  },
+  {
+    "name": "Kuwait",
+    "code": "+965",
+    "flag": "kw"
+  },
+  {
+    "name": "Kyrgyzstan",
+    "code": "+996",
+    "flag": "kg"
+  },
+  {
+    "name": "Laos",
+    "code": "+856",
+    "flag": "la"
+  },
+  {
+    "name": "Lebanon",
+    "code": "+961",
+    "flag": "lb"
+  },
+  {
+    "name": "Malaysia",
+    "code": "+60",
+    "flag": "my"
+  },
+  {
+    "name": "Maldives",
+    "code": "+960",
+    "flag": "mv"
+  },
+  {
+    "name": "Mongolia",
+    "code": "+976",
+    "flag": "mn"
+  },
+  {
+    "name": "Myanmar",
+    "code": "+95",
+    "flag": "mm"
+  },
+  {
+    "name": "Nepal",
+    "code": "+977",
+    "flag": "np"
+  },
+  {
+    "name": "North Korea",
+    "code": "+850",
+    "flag": "kp"
+  },
+  {
+    "name": "Oman",
+    "code": "+968",
+    "flag": "om"
+  },
+  {
+    "name": "Pakistan",
+    "code": "+92",
+    "flag": "pk"
+  },
+  {
+    "name": "Palestine",
+    "code": "+970",
+    "flag": "ps"
+  },
+  {
+    "name": "Philippines",
+    "code": "+63",
+    "flag": "ph"
+  },
+  {
+    "name": "Qatar",
+    "code": "+974",
+    "flag": "qa"
+  },
+  {
+    "name": "Saudi Arabia",
+    "code": "+966",
+    "flag": "sa"
+  },
+  {
+    "name": "Singapore",
+    "code": "+65",
+    "flag": "sg"
+  },
+  {
+    "name": "South Korea",
+    "code": "+82",
+    "flag": "kr"
+  },
+  {
+    "name": "Sri Lanka",
+    "code": "+94",
+    "flag": "lk"
+  },
+  {
+    "name": "Syria",
+    "code": "+963",
+    "flag": "sy"
+  },
+  {
+    "name": "Taiwan",
+    "code": "+886",
+    "flag": "tw"
+  },
+  {
+    "name": "Tajikistan",
+    "code": "+992",
+    "flag": "tj"
+  },
+  {
+    "name": "Thailand",
+    "code": "+66",
+    "flag": "th"
+  },
+  {
+    "name": "Turkey",
+    "code": "+90",
+    "flag": "tr"
+  },
+  {
+    "name": "Turkmenistan",
+    "code": "+993",
+    "flag": "tm"
+  },
+  {
+    "name": "UAE",
+    "code": "+971",
+    "flag": "ae"
+  },
+  {
+    "name": "Uzbekistan",
+    "code": "+998",
+    "flag": "uz"
+  },
+  {
+    "name": "Vietnam",
+    "code": "+84",
+    "flag": "vn"
+  },
+  {
+    "name": "Yemen",
+    "code": "+967",
+    "flag": "ye"
+  },
+  {
+    "name": "Australia",
+    "code": "+61",
+    "flag": "au"
+  },
+  {
+    "name": "Fiji",
+    "code": "+679",
+    "flag": "fj"
+  },
+  {
+    "name": "New Zealand",
+    "code": "+64",
+    "flag": "nz"
+  },
+  {
+    "name": "Papua New Guinea",
+    "code": "+675",
+    "flag": "pg"
+  },
+  {
+    "name": "Argentina",
+    "code": "+54",
+    "flag": "ar"
+  },
+  {
+    "name": "Brazil",
+    "code": "+55",
+    "flag": "br"
+  },
+  {
+    "name": "Chile",
+    "code": "+56",
+    "flag": "cl"
+  },
+  {
+    "name": "Colombia",
+    "code": "+57",
+    "flag": "co"
+  },
+  {
+    "name": "Ecuador",
+    "code": "+593",
+    "flag": "ec"
+  },
+  {
+    "name": "Mexico",
+    "code": "+52",
+    "flag": "mx"
+  },
+  {
+    "name": "Peru",
+    "code": "+51",
+    "flag": "pe"
+  },
+  {
+    "name": "Venezuela",
+    "code": "+58",
+    "flag": "ve"
+  },
+  {
+    "name": "Russia",
+    "code": "+7",
+    "flag": "ru"
+  }
+]
