@@ -95,7 +95,8 @@ class SiteErrorPageTest extends TestCase
         $this->actingAs($admin)
             ->get(route('admin.site-errors.index'))
             ->assertOk()
-            ->assertSee('Copy full error')
+            ->assertSee('aria-label="Copy full error"', false)
+            ->assertSee('aria-label="View error details"', false)
             ->assertSee('GET /services');
     }
 }
