@@ -7,8 +7,8 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <meta name="description" content="Tell P23 Africa about your business, your expansion plans, and the support you need. Start a conversation with our team.">
 <link rel="stylesheet" href="{{ asset('css/services-new.css') }}">
-<link rel="stylesheet" href="{{ asset('css/contact-flow.css') }}?v=6">
-<script src="{{ asset('js/contact-flow.js') }}?v=5" defer></script>
+<link rel="stylesheet" href="{{ asset('css/contact-flow.css') }}?v=7">
+<script src="{{ asset('js/contact-flow.js') }}?v=7" defer></script>
 @endsection
 @section('content')
 @php
@@ -66,11 +66,6 @@
                         <input id="cfCompany" name="company_name" autocomplete="organization" placeholder="Company/Brand Name" maxlength="255" required value="{{ old('company_name') }}" aria-describedby="error-company_name">
                         <span class="cf-error" id="error-company_name">@error('company_name'){{ $message }}@enderror</span>
                     </div>
-                    <div class="cf-field">
-                        <label for="cfRole" class="cf-sr-only">Role in the Company</label>
-                        <input id="cfRole" name="role" autocomplete="organization-title" placeholder="Role in the Company" maxlength="255" required value="{{ old('role') }}" aria-describedby="error-role">
-                        <span class="cf-error" id="error-role">@error('role'){{ $message }}@enderror</span>
-                    </div>
                 </div>
                 <div class="cf-column cf-column-right">
                     <div class="cf-field">
@@ -87,10 +82,15 @@
                         <span class="cf-error" id="error-industry">@error('industry'){{ $message }}@enderror</span>
                     </div>
                     <div class="cf-field">
-                        <label for="cfBusiness" class="cf-sr-only">Briefly describe what your business does (1–2 sentences).</label>
-                        <textarea id="cfBusiness" name="business_description" placeholder="Briefly describe what your business does (1–2 sentences)." maxlength="1000" required aria-describedby="error-business_description">{{ old('business_description') }}</textarea>
-                        <span class="cf-error" id="error-business_description">@error('business_description'){{ $message }}@enderror</span>
+                        <label for="cfWebsite" class="cf-sr-only">Company website or linkedIn page</label>
+                        <input id="cfWebsite" name="company_website" autocomplete="url" placeholder="Company website or linkedIn page" maxlength="2048" required value="{{ old('company_website') }}" aria-describedby="error-company_website">
+                        <span class="cf-error" id="error-company_website">@error('company_website'){{ $message }}@enderror</span>
                     </div>
+                </div>
+                <div class="cf-field cf-field-center">
+                    <label for="cfRole" class="cf-sr-only">Role in the Company</label>
+                    <input id="cfRole" name="role" autocomplete="organization-title" placeholder="Role in the Company" maxlength="255" required value="{{ old('role') }}" aria-describedby="error-role">
+                    <span class="cf-error" id="error-role">@error('role'){{ $message }}@enderror</span>
                 </div>
             </fieldset>
             <fieldset class="cf-step cf-needs" data-step="2" hidden>

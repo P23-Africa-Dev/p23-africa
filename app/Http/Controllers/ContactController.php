@@ -43,7 +43,8 @@ class ContactController extends Controller
             $rules += [
                 'role' => 'required|string|max:255',
                 'industry' => ['required', Rule::in(config('contact.industries'))],
-                'business_description' => 'required|string|max:1000',
+                'business_description' => 'required_without:company_website|nullable|string|max:1000',
+                'company_website' => 'required_without:business_description|nullable|string|max:2048',
                 'selected_services' => 'required|array|min:1|max:5',
                 'selected_services.*' => ['required', 'string', 'distinct', Rule::in(config('contact.services'))],
                 'expansion_markets' => 'required|array|min:1|max:10',
@@ -310,7 +311,7 @@ class ContactController extends Controller
 
             if ($stepped) {
                 $sanitizedData['project_details'] = [];
-                foreach (['role', 'industry', 'business_description', 'expansion_markets', 'referral_source', 'referral_other', 'start_timeline', 'additional_notes'] as $field) {
+                foreach (['role', 'industry', 'company_website', 'business_description', 'expansion_markets', 'referral_source', 'referral_other', 'start_timeline', 'additional_notes'] as $field) {
                     $value = $validated[$field] ?? null;
                     $sanitizedData['project_details'][$field] = is_array($value)
                         ? array_map('strip_tags', $value)

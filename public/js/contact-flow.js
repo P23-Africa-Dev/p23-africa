@@ -147,6 +147,7 @@
             if (input.validity.typeMismatch) return 'Please enter a valid email address.';
         }
         if (input.name === 'industry') return 'Please select your industry.';
+        if (input.name === 'company_website' && input.validity.valueMissing) return 'Please enter your company website or LinkedIn page.';
         if (input.name === 'business_description' && input.validity.valueMissing) return 'Please briefly describe what your business does.';
         if (input.name === 'message' && input.validity.valueMissing) return 'Please briefly describe what you want to accomplish.';
         if (input.name === 'referral_source') return 'Please select how you heard about us.';
@@ -217,9 +218,10 @@
             phone: document.getElementById('cfPhone')?.value || '',
             country_code: document.getElementById('cfCountry')?.value || '+27',
             company_name: document.getElementById('cfCompany')?.value || '',
+            company_website: document.getElementById('cfWebsite')?.value || '',
             role: document.getElementById('cfRole')?.value || '',
             industry: document.getElementById('cfIndustry')?.value || 'Other',
-            business_description: (document.getElementById('cfBusiness')?.value || '').slice(0, 400),
+            business_description: (document.getElementById('cfBusiness')?.value || document.getElementById('cfGoals')?.value || '').slice(0, 400),
             message: (document.getElementById('cfGoals')?.value || '').slice(0, 400),
             services,
             expansion_markets: expansionMarkets,

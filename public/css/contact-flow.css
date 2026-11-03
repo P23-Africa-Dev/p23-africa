@@ -19,13 +19,13 @@ body.contact-flow-page #navbar,body.contact-flow-page .p23-navbar-wrapper{displa
 .cf-body{padding:62px 154px 39px;border-radius:0 0 30px 30px;position:relative;isolation:isolate;min-height:449px;display:flex;flex-direction:column}
 .cf-form[data-current-step="2"] .cf-body,.cf-form[data-current-step="3"] .cf-body{padding:36px 31px 39px}
 .cf-form[data-current-step="2"] .cf-body:before,.cf-form[data-current-step="3"] .cf-body:before{content:'';position:absolute;inset:0;z-index:-1;border-radius:inherit;background:url('../images/contact/pattern.jpg') center / 1362px 1362px;opacity:.2;pointer-events:none}
-.cf-step{border:0;padding:0;margin:0;min-width:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:37px;flex:1}
-.cf-column{display:flex;flex-direction:column;gap:13px;min-width:0}
-.cf-column-right{gap:22px}
+.cf-step{border:0;padding:0;margin:0;min-width:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 37px;align-content:start;flex:1}
+.cf-column{display:flex;flex-direction:column;gap:16px;min-width:0}
+.cf-column-right{gap:16px}
 .cf-field{min-width:0}
+.cf-field-center{grid-column:1 / -1;width:calc((100% - 37px) / 2);margin:0 auto}
 .cf-form :where(input:not([type=checkbox]):not([type=radio]):not([type=hidden]),select,textarea){display:block;width:100%;min-width:0;height:55px;border:1px solid #e2e2e2;border-radius:30px;background:#fff;color:#0a3d43;box-shadow:0 10px 10px #0005;padding:15px 39px;font:400 13px/24px 'Contact Condensed',sans-serif;letter-spacing:.5px;outline-offset:3px}
 .cf-form select{-webkit-appearance:none;-moz-appearance:none;appearance:none}
-.cf-form select:not(#cfCountry){background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='10' viewBox='0 0 10.6632 9.5' fill='none'%3E%3Cpath transform='matrix(1 0 0 -1 0 9.5)' d='M4.46559 0.5C4.85049 -0.166667 5.81274 -0.166667 6.19764 0.5L10.5278 8C10.9127 8.66667 10.4315 9.5 9.66175 9.5H1.00149C0.231691 9.5 -0.249434 8.66667 0.135467 8L4.46559 0.5Z' fill='%23898D8D'/%3E%3C/svg%3E") right 24px center / 11px 10px no-repeat;padding-right:48px}
 .cf-form input[type=number]{-moz-appearance:textfield;appearance:textfield}
 .cf-form input[type=number]::-webkit-inner-spin-button,.cf-form input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 .cf-form :where(input:not([type=checkbox]):not([type=radio]):not([type=hidden]),select,textarea):-webkit-autofill,
@@ -107,7 +107,8 @@ body.contact-flow-page #navbar,body.contact-flow-page .p23-navbar-wrapper{displa
 .cf-badge{left:24px;top:-43px}
 .cf-progress{right:24px;top:27px;width:125px}
 .cf-body,.cf-form[data-current-step="2"] .cf-body,.cf-form[data-current-step="3"] .cf-body{padding:30px 24px;min-height:0}
-.cf-step{grid-template-columns:1fr;gap:22px}
+.cf-step{grid-template-columns:1fr;gap:16px}
+.cf-field-center{width:100%}
 .cf-column,.cf-column-right{gap:16px}
 .cf-form :where(input:not([type=checkbox]):not([type=radio]):not([type=hidden]),select,textarea){font-size:16px;padding-inline:24px}
 .cf-form .cf-country select{padding:0}
