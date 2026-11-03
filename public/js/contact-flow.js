@@ -78,15 +78,38 @@
     marketInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); addMarket(); } });
     markets.addEventListener('click', e => { const button = e.target.closest('button'); if (button) button.closest('li').remove(); });
     const country = document.getElementById('cfCountry');
+    const phoneInput = document.getElementById('cfPhone');
     const updateCountry = () => {
+        const selected = country.selectedOptions[0] || country.options[country.selectedIndex];
+        if (!selected) return;
         document.getElementById('cfDialCode').textContent = country.value;
-        const code = country.selectedOptions[0].dataset.flag;
+        const code = selected.dataset.flag || 'za';
         const emoji = document.getElementById('cfFlagEmoji');
         document.getElementById('cfFlagImage').hidden = code !== 'za';
         emoji.hidden = code === 'za';
         emoji.textContent = [...code.toUpperCase()].map(c => String.fromCodePoint(127397 + c.charCodeAt(0))).join('');
     };
+    const normalizeAutofilledPhone = () => {
+        if (!phoneInput) return;
+        const raw = phoneInput.value.trim();
+        if (!raw) return;
+        if (raw.startsWith('+')) {
+            const options = [...country.options].sort((a, b) => b.value.length - a.value.length);
+            const match = options.find(opt => raw.startsWith(opt.value));
+            if (match) {
+                country.value = match.value;
+                updateCountry();
+                const stripped = raw.slice(match.value.length).replace(/^[\s\-()]+/, '');
+                if (stripped) phoneInput.value = stripped;
+            }
+        }
+    };
     country.addEventListener('change', updateCountry);
+    country.addEventListener('input', updateCountry);
+    if (phoneInput) {
+        phoneInput.addEventListener('change', normalizeAutofilledPhone);
+        phoneInput.addEventListener('input', normalizeAutofilledPhone);
+    }
     updateCountry();
     const referralOther = document.getElementById('cfReferralOther');
     const updateReferral = () => {
@@ -124,6 +147,7 @@
             if (input.validity.typeMismatch) return 'Please enter a valid email address.';
         }
         if (input.name === 'industry') return 'Please select your industry.';
+        if (input.name === 'company_website' && input.validity.valueMissing) return 'Please enter your company website or LinkedIn page.';
         if (input.name === 'business_description' && input.validity.valueMissing) return 'Please briefly describe what your business does.';
         if (input.name === 'message' && input.validity.valueMissing) return 'Please briefly describe what you want to accomplish.';
         if (input.name === 'referral_source') return 'Please select how you heard about us.';
@@ -194,9 +218,10 @@
             phone: document.getElementById('cfPhone')?.value || '',
             country_code: document.getElementById('cfCountry')?.value || '+27',
             company_name: document.getElementById('cfCompany')?.value || '',
+            company_website: document.getElementById('cfWebsite')?.value || '',
             role: document.getElementById('cfRole')?.value || '',
             industry: document.getElementById('cfIndustry')?.value || 'Other',
-            business_description: (document.getElementById('cfBusiness')?.value || '').slice(0, 400),
+            business_description: (document.getElementById('cfBusiness')?.value || document.getElementById('cfGoals')?.value || '').slice(0, 400),
             message: (document.getElementById('cfGoals')?.value || '').slice(0, 400),
             services,
             expansion_markets: expansionMarkets,
