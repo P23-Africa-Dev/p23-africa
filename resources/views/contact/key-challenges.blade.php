@@ -6,7 +6,7 @@
 @section('meta')
 <meta name="robots" content="noindex">
 <link rel="stylesheet" href="{{ asset('css/services-new.css') }}">
-<link rel="stylesheet" href="{{ asset('css/contact-flow.css') }}?v=6">
+<link rel="stylesheet" href="{{ asset('css/contact-flow.css') }}?v=8">
 @endsection
 @section('content')
 @php
