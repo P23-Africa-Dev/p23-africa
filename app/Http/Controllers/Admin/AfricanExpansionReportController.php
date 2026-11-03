@@ -40,13 +40,13 @@ class AfricanExpansionReportController extends Controller
             ->count();
 
         $countryExpr = "COALESCE(NULLIF(country, ''), 'Unknown')";
-        $visitCase = "SUM(CASE WHEN route_name = '".self::VISIT_ROUTE."' THEN 1 ELSE 0 END)";
-        $downloadCase = "SUM(CASE WHEN route_name = '".self::DOWNLOAD_ROUTE."' THEN 1 ELSE 0 END)";
+        $visitCase = "SUM(CASE WHEN route_name = '" . self::VISIT_ROUTE . "' THEN 1 ELSE 0 END)";
+        $downloadCase = "SUM(CASE WHEN route_name = '" . self::DOWNLOAD_ROUTE . "' THEN 1 ELSE 0 END)";
 
         $countries = (clone $baseQuery)
             ->selectRaw("{$countryExpr} as country_name, {$visitCase} as visit_count, {$downloadCase} as download_count")
             ->groupBy(DB::raw($countryExpr))
-            ->orderByDesc(DB::raw('(visit_count + download_count)'))
+            ->orderByRaw("({$visitCase} + {$downloadCase}) DESC")
             ->get();
 
         $activity = (clone $baseQuery)
@@ -89,7 +89,7 @@ class AfricanExpansionReportController extends Controller
         $this->applyDateFilters($query, $filter, $startDate, $endDate);
         $rows = $query->orderByDesc('created_at')->get();
 
-        $filename = 'african_expansion_guide_'.date('Y-m-d_H-i-s').'.csv';
+        $filename = 'african_expansion_guide_' . date('Y-m-d_H-i-s') . '.csv';
 
         return response()->streamDownload(function () use ($rows) {
             $file = fopen('php://output', 'w');
@@ -114,7 +114,7 @@ class AfricanExpansionReportController extends Controller
                     $row->ip_address,
                     $row->country,
                     $row->city,
-                    trim(($row->browser ?? '').' '.($row->browser_version ?? '')),
+                    trim(($row->browser ?? '') . ' ' . ($row->browser_version ?? '')),
                     optional($row->created_at)->format('Y-m-d H:i:s'),
                 ]);
             }
