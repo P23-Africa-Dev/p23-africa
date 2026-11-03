@@ -165,40 +165,26 @@ class ConsultationController extends Controller
                 ->with('error', 'Please complete the application form first.');
         }
 
-        // Paystack payment screen is not yet integrated; mark as paid and display the payment success screen directly.
-        if ($application->exists && $application->id) {
+        // Hand off to the existing Stripe payment-selection screen.
+        if ($application->exists && $application->id && $application->status === 'pending') {
             try {
-                Payment::firstOrCreate(
-                    [
-                        'consultation_application_id' => $application->id,
-                        'status' => 'successful',
-                    ],
-                    [
-                        'payment_method' => 'paystack',
-                        'amount' => self::CONSULTATION_AMOUNT_GBP,
-                        'currency' => self::CONSULTATION_CURRENCY,
-                        'payment_reference' => 'PSK_' . time() . '_' . $application->id,
-                        'paid_at' => now(),
-                    ]
-                );
-                $application->update(['status' => 'paid']);
+                $application->update(['status' => 'payment_pending']);
             } catch (\Throwable $e) {
-                Log::warning('Could not persist payment record in initiatePayment', ['error' => $e->getMessage()]);
-                $application->status = 'paid';
+                Log::warning('Could not mark consultation payment_pending', ['error' => $e->getMessage()]);
+                $application->status = 'payment_pending';
             }
-        } else {
-            $application->status = 'paid';
+        } elseif ($application->status === 'pending') {
+            $application->status = 'payment_pending';
         }
 
         $this->persistBookingContext($application);
-        Session::put('payment_success', true);
 
         $params = ['booking' => $application->booking_token];
         if ($request->filled('state')) {
             $params['state'] = $this->encodeBookingState($application);
         }
 
-        return $this->localizedRedirect('consultation.payment-success', $params, $application->locale ?: app()->getLocale());
+        return $this->localizedRedirect('consultation.payment-selection', $params, $application->locale ?: app()->getLocale());
     }
 
     public function processPayment(Request $request)

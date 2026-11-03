@@ -39,12 +39,14 @@ class ContactController extends Controller
         ];
 
         if ($stepped) {
+            // contact-v2 (and shared stepped fields): match CONTACT_FLOWS_PAYLOADS.md
+            $rules['phone'] = ['required', 'string', 'min:5', 'max:20', 'regex:/^[0-9 ()+\-]{5,20}$/'];
             $rules['budget_range'] = 'required|numeric|min:0|max:2147483647';
             $rules += [
                 'role' => 'required|string|max:255',
                 'industry' => ['required', Rule::in(config('contact.industries'))],
-                'business_description' => 'required_without:company_website|nullable|string|max:1000',
-                'company_website' => 'required_without:business_description|nullable|string|max:2048',
+                'company_website' => 'required|string|max:2048',
+                'business_description' => 'nullable|string|max:1000',
                 'selected_services' => 'required|array|min:1|max:5',
                 'selected_services.*' => ['required', 'string', 'distinct', Rule::in(config('contact.services'))],
                 'expansion_markets' => 'required|array|min:1|max:10',
@@ -248,6 +250,7 @@ class ContactController extends Controller
                     $outcome = $duplicateCheck->project_details['assessment_result'] ?? app(ContactLeadAssessment::class)->evaluate($validated);
                     $request->session()->put('contact_assessment_id', $duplicateCheck->id);
                     $request->session()->put('contact_assessment_state', $this->buildAssessmentStateFromSubmission($duplicateCheck, $outcome['route']));
+                    $outcome = $this->attachAssessmentTokenToOutcome($outcome, $duplicateCheck);
                 }
                 Log::warning('Duplicate submission attempt detected in DB', [
                     'request_id' => $requestId,
@@ -264,7 +267,7 @@ class ContactController extends Controller
                     return response()->json([
                         'success' => true,
                         'message' => __('contact.validation.already_sent'),
-                        'outcome' => $stepped ? ($outcome ?? app(ContactLeadAssessment::class)->evaluate($validated)) : null,
+                        'outcome' => $stepped ? ($outcome ?? null) : null,
                     ]);
                 }
 
@@ -301,7 +304,7 @@ class ContactController extends Controller
                 'country_code' => strip_tags($validated['country_code']),
                 'services' => $services,
                 'message' => strip_tags($validated['message']),
-                'budget_range' => $stepped ? (int) $validated['budget_range'] : null,
+                'budget_range' => $stepped ? (float) $validated['budget_range'] : null,
                 'locale' => app()->getLocale(),
                 'ip_address' => $request->ip(),
                 'user_agent' => $request->userAgent(),
@@ -362,6 +365,7 @@ class ContactController extends Controller
                     'contact_assessment_state',
                     $this->buildAssessmentStateFromSubmission($contactSubmission, $outcome['route'])
                 );
+                $outcome = $this->attachAssessmentTokenToOutcome($outcome, $contactSubmission);
             }
 
             // Send notification to admins
@@ -436,6 +440,28 @@ class ContactController extends Controller
      * Send emails for completed submissions
      * Emails are queued for async processing - no locking needed
      */
+    /**
+     * Append ?assessment=<token> for consultation/discovery so clients can resume without session.
+     */
+    private function attachAssessmentTokenToOutcome(array $outcome, ContactSubmission $submission): array
+    {
+        $route = $outcome['route'] ?? null;
+        if (!in_array($route, ['consultation', 'discovery'], true)) {
+            return $outcome;
+        }
+
+        $baseUrl = (string) ($outcome['url'] ?? '');
+        if ($baseUrl === '') {
+            return $outcome;
+        }
+
+        $token = $this->encodeAssessmentState($submission, $route);
+        $separator = str_contains($baseUrl, '?') ? '&' : '?';
+        $outcome['url'] = $baseUrl.$separator.'assessment='.urlencode($token);
+
+        return $outcome;
+    }
+
     private function buildAssessmentStateFromSubmission(ContactSubmission $submission, string $route, ?array $slot = null): array
     {
         $details = is_array($submission->project_details) ? $submission->project_details : [];
@@ -452,7 +478,7 @@ class ContactController extends Controller
             'country_code' => (string) ($submission->country_code ?? '+44'),
             'services' => is_array($submission->services) ? $submission->services : [],
             'message' => Str::limit((string) $submission->message, 400, ''),
-            'budget_range' => (int) ($submission->budget_range ?? 0),
+            'budget_range' => (float) ($submission->budget_range ?? 0),
             'project_details' => [
                 'role' => $details['role'] ?? '',
                 'industry' => $details['industry'] ?? 'Not specified',

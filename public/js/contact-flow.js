@@ -324,7 +324,10 @@
             }
             const outcome = result.outcome && result.outcome.route ? result.outcome : fallbackOutcome;
             if (outcome.route === 'consultation' || outcome.route === 'discovery') {
-                window.location.assign(withAssessmentParam(outcome.url, outcome.route));
+                const nextUrl = outcome.url && outcome.url.includes('assessment=')
+                    ? outcome.url
+                    : withAssessmentParam(outcome.url, outcome.route);
+                window.location.assign(nextUrl);
                 return;
             }
             form.hidden = true;

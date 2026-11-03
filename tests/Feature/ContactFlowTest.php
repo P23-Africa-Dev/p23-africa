@@ -31,7 +31,7 @@ class ContactFlowTest extends TestCase
             'name' => 'Contact Flow Test', 'company_name' => 'Example Company',
             'email' => 'contact-flow@example.test', 'phone' => '8012345678', 'country_code' => '+234',
             'role' => 'Founder', 'industry' => 'Manufacturing',
-            'business_description' => 'We manufacture commercial equipment.',
+            'company_website' => 'https://example.test',
             'selected_services' => ['Market Entry & Expansion', 'Distributor & Partner Development'],
             'expansion_markets' => ['Nigeria', 'Ghana'], 'message' => 'Find a distributor and test buyer demand.',
             'referral_source' => 'LinkedIn', 'start_timeline' => 'Within the next month',
@@ -57,10 +57,10 @@ class ContactFlowTest extends TestCase
     public function test_missing_step_answers_are_rejected_and_a_corrected_retry_is_saved(): void
     {
         $data = $this->enquiry();
-        unset($data['business_description'], $data['start_timeline']);
+        unset($data['company_website'], $data['start_timeline']);
         $data['selected_services'] = [];
         $this->postJson('/contact', $data)->assertUnprocessable()
-            ->assertJsonValidationErrors(['business_description', 'selected_services', 'start_timeline']);
+            ->assertJsonValidationErrors(['company_website', 'selected_services', 'start_timeline']);
         $this->assertDatabaseCount('contact_submissions', 0);
         $this->postJson('/contact', $this->enquiry())->assertOk()->assertJson(['success' => true]);
         $this->assertDatabaseCount('contact_submissions', 1);
@@ -106,6 +106,7 @@ class ContactFlowTest extends TestCase
         $response = $this->postJson('/contact', $payload)
             ->assertOk()
             ->assertJsonPath('outcome.route', 'consultation');
+        $this->assertStringContainsString('assessment=', (string) $response->json('outcome.url'));
 
         $this->get($response->json('outcome.url'))->assertOk()->assertSee('Schedule Your Consultation');
 
@@ -132,11 +133,11 @@ class ContactFlowTest extends TestCase
         $initiateResponse = $this->post('/book-consultation/payment/initiate', [
             'booking' => $application->booking_token,
         ]);
-        $initiateResponse->assertRedirect(route('consultation.payment-success', ['booking' => $application->booking_token]));
+        $initiateResponse->assertRedirect(route('consultation.payment-selection', ['booking' => $application->booking_token]));
 
-        $this->get('/book-consultation/payment-success?booking=' . $application->booking_token)
+        $this->get('/book-consultation/payment-selection?booking=' . $application->booking_token)
             ->assertOk()
-            ->assertSee('Payment Successful');
+            ->assertSee('Stripe');
     }
 
     public function test_contact_page_hides_navbar_and_stateless_assessment_tokens_render_route_one_and_two(): void
