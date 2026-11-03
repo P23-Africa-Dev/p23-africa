@@ -81,6 +81,9 @@ body.contact-flow-page #navbar,body.contact-flow-page .p23-navbar-wrapper{displa
 .cf-form .cf-referral-options label{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:400;color:#898d8d;cursor:pointer;line-height:24px}
 .cf-referral-options input{width:18px;height:18px;accent-color:#10ac8d;flex:none;margin:0}
 .cf-budget{margin-top:28px;max-width:331px}
+.cf-budget-input{position:relative}
+.cf-budget-input>span{position:absolute;top:1px;bottom:1px;left:1px;width:48px;z-index:2;pointer-events:none;display:flex;align-items:center;justify-content:center;color:#898d8d;font:400 16px/1 'Contact Condensed',sans-serif;border-right:1px solid #e2e2e2}
+.cf-form .cf-budget .cf-budget-input input{padding-left:64px;padding-right:20px}
 .cf-notes{padding-top:28px}
 .cf-form .cf-notes textarea{height:150px}
 .cf-error{display:block;color:#a6153c;font:400 14px/18px 'Contact Condensed',sans-serif;white-space:normal;margin-top:6px}

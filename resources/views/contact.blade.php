@@ -7,7 +7,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <meta name="description" content="Tell P23 Africa about your business, your expansion plans, and the support you need. Start a conversation with our team.">
 <link rel="stylesheet" href="{{ asset('css/services-new.css') }}">
-<link rel="stylesheet" href="{{ asset('css/contact-flow.css') }}?v=5">
+<link rel="stylesheet" href="{{ asset('css/contact-flow.css') }}?v=6">
 <script src="{{ asset('js/contact-flow.js') }}?v=5" defer></script>
 @endsection
 @section('content')
@@ -148,7 +148,10 @@
                     </fieldset>
                     <div class="cf-field cf-budget">
                         <label for="cfBudget">What is your budget?</label>
-                        <input type="number" id="cfBudget" name="budget_range" placeholder="Input your budget" min="0" max="2147483647" step="any" required value="{{ old('budget_range') }}" aria-describedby="error-budget_range">
+                        <div class="cf-budget-input">
+                            <span aria-hidden="true">£</span>
+                            <input type="number" id="cfBudget" name="budget_range" placeholder="Input your budget" min="0" max="2147483647" step="any" required value="{{ old('budget_range') }}" aria-describedby="error-budget_range">
+                        </div>
                         <span class="cf-error" id="error-budget_range">@error('budget_range'){{ $message }}@enderror</span>
                     </div>
                 </div>
