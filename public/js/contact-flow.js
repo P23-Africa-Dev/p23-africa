@@ -83,11 +83,23 @@
         const selected = country.selectedOptions[0] || country.options[country.selectedIndex];
         if (!selected) return;
         document.getElementById('cfDialCode').textContent = country.value;
-        const code = selected.dataset.flag || 'za';
+        const code = (selected.dataset.flag || 'gb').toLowerCase();
+        const flagImg = document.getElementById('cfFlagImage');
         const emoji = document.getElementById('cfFlagEmoji');
-        document.getElementById('cfFlagImage').hidden = code !== 'za';
-        emoji.hidden = code === 'za';
-        emoji.textContent = [...code.toUpperCase()].map(c => String.fromCodePoint(127397 + c.charCodeAt(0))).join('');
+        const base = flagImg?.dataset.base || '/images/contact';
+        if (code === 'gb') {
+            flagImg.src = `${base}/flag-gb.svg`;
+            flagImg.hidden = false;
+            emoji.hidden = true;
+        } else if (code === 'za') {
+            flagImg.src = `${base}/flag-za.png`;
+            flagImg.hidden = false;
+            emoji.hidden = true;
+        } else {
+            flagImg.hidden = true;
+            emoji.hidden = false;
+            emoji.textContent = [...code.toUpperCase()].map(c => String.fromCodePoint(127397 + c.charCodeAt(0))).join('');
+        }
     };
     const normalizeAutofilledPhone = () => {
         if (!phoneInput) return;
@@ -216,7 +228,7 @@
             name: document.getElementById('cfName')?.value || '',
             email: document.getElementById('cfEmail')?.value || '',
             phone: document.getElementById('cfPhone')?.value || '',
-            country_code: document.getElementById('cfCountry')?.value || '+27',
+            country_code: document.getElementById('cfCountry')?.value || '+44',
             company_name: document.getElementById('cfCompany')?.value || '',
             company_website: document.getElementById('cfWebsite')?.value || '',
             role: document.getElementById('cfRole')?.value || '',

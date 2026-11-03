@@ -41,6 +41,7 @@ body.contact-flow-page #navbar,body.contact-flow-page .p23-navbar-wrapper{displa
 .cf-country:focus-within{outline:3px solid #df77c5;outline-offset:3px}
 .cf-country:has([aria-invalid=true]){border-color:#a6153c!important}
 .cf-country>img,.cf-country>span{position:absolute;top:15px;left:19px;pointer-events:none;z-index:1}
+.cf-country>img{border-radius:3px;object-fit:cover}
 .cf-country>span{top:14px;font-size:26px;line-height:1}
 .cf-form .cf-country select,.cf-form .cf-country select:-webkit-autofill,.cf-form .cf-country select:-webkit-autofill:hover,.cf-form .cf-country select:-webkit-autofill:focus,.cf-form .cf-country select:autofill{position:absolute;inset:0;width:100%;height:100%;opacity:0!important;padding:0!important;border:0!important;box-shadow:none!important;-webkit-box-shadow:none!important;-webkit-appearance:none!important;-moz-appearance:none!important;appearance:none!important;color:transparent!important;-webkit-text-fill-color:transparent!important;cursor:pointer;z-index:2}
 .cf-form .cf-country select option{color:#0a3d43;-webkit-text-fill-color:#0a3d43}
