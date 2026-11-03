@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Mail\ContactFormMail;
 use App\Models\ConsultationApplication;
 use App\Models\ContactSubmission;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
@@ -123,12 +124,35 @@ class ContactFlowTest extends TestCase
         ])->assertRedirect();
 
         $application = ConsultationApplication::sole();
+        $enquiry = $application->enquiryDetails();
+        $this->assertSame('Founder', $enquiry['role']);
+        $this->assertSame('https://example.test', $enquiry['company_website']);
+        $this->assertSame(['Nigeria', 'Ghana'], $enquiry['expansion_markets']);
+        $this->assertSame('LinkedIn', $enquiry['referral_source']);
+        $this->assertSame('Within the next month', $enquiry['start_timeline']);
+        $this->assertEquals(2000, $enquiry['budget_range']);
+        $this->assertSame('Our team is based in London.', $enquiry['additional_notes']);
+        $this->assertSame('11:00', $enquiry['preferred_slot']['session_time'] ?? null);
+        $this->assertNotEmpty($enquiry['contact_submission_id']);
+
         $this->get('/book-consultation/summary?booking=' . $application->booking_token)
             ->assertOk()
             ->assertSee('Nigeria')
             ->assertSee('Ghana')
             ->assertSee('Weak marketing strategy')
             ->assertSee('Scaling challenges');
+
+        $admin = User::factory()->create();
+        $admin->assignRole('admin');
+        $this->actingAs($admin)
+            ->get('/admin/consultations/'.$application->id)
+            ->assertOk()
+            ->assertSee('Full Enquiry Details')
+            ->assertSee('Founder')
+            ->assertSee('LinkedIn')
+            ->assertSee('Within the next month')
+            ->assertSee('Nigeria')
+            ->assertSee('Our team is based in London.');
 
         $initiateResponse = $this->post('/book-consultation/payment/initiate', [
             'booking' => $application->booking_token,

@@ -76,4 +76,49 @@ class ConsultationApplication extends Model
             default => ucfirst($this->status)
         };
     }
+
+    /**
+     * Decode desired_outcomes whether stored as JSON string or array.
+     */
+    public function decodedOutcomes(): array
+    {
+        $raw = $this->desired_outcomes;
+        if (is_array($raw)) {
+            return $raw;
+        }
+        if (is_string($raw) && $raw !== '') {
+            $decoded = json_decode($raw, true);
+
+            return is_array($decoded) ? $decoded : [];
+        }
+
+        return [];
+    }
+
+    /**
+     * Full enquiry snapshot for contact-v2 → consultation bookings (and legacy motivation fields).
+     */
+    public function enquiryDetails(): array
+    {
+        $outcomes = $this->decodedOutcomes();
+
+        return [
+            'role' => $outcomes['role'] ?? null,
+            'country_code' => $outcomes['country_code'] ?? null,
+            'company_website' => $outcomes['company_website'] ?? $this->website_or_handle,
+            'selected_services' => $outcomes['selected_services'] ?? $this->selected_goals ?? [],
+            'expansion_markets' => $outcomes['expansion_markets'] ?? [],
+            'message' => $outcomes['message'] ?? $outcomes['motivation'] ?? $this->business_description,
+            'referral_source' => $outcomes['referral_source'] ?? null,
+            'referral_other' => $outcomes['referral_other'] ?? null,
+            'start_timeline' => $outcomes['start_timeline'] ?? null,
+            'budget_range' => $outcomes['budget_range'] ?? null,
+            'budget_currency' => $outcomes['budget_currency'] ?? 'GBP',
+            'additional_notes' => $outcomes['additional_notes'] ?? $outcomes['success_definition'] ?? null,
+            'preferred_slot' => $outcomes['preferred_slot'] ?? null,
+            'contact_submission_id' => $outcomes['contact_submission_id'] ?? null,
+            'assessment_outcome' => $outcomes['assessment_outcome'] ?? null,
+            'form_flow' => $outcomes['form_flow'] ?? null,
+        ];
+    }
 }

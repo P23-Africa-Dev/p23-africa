@@ -492,6 +492,15 @@ class Lead extends Model
             $leadBankDrive = LeadDrive::where('slug', 'lead-bank')->first();
         }
 
+        $enquiry = $application->enquiryDetails();
+        $requirements = trim(implode("\n\n", array_filter([
+            $application->business_description,
+            !empty($enquiry['expansion_markets']) ? 'Markets: '.implode(', ', (array) $enquiry['expansion_markets']) : null,
+            !empty($enquiry['start_timeline']) ? 'Timeline: '.$enquiry['start_timeline'] : null,
+            !empty($enquiry['referral_source']) ? 'Referral: '.$enquiry['referral_source'].(!empty($enquiry['referral_other']) ? ' ('.$enquiry['referral_other'].')' : '') : null,
+            !empty($enquiry['additional_notes']) ? 'Notes: '.$enquiry['additional_notes'] : null,
+        ])));
+
         return self::create([
             'drive_id' => $leadBankDrive?->id,
             'first_name' => $nameParts[0] ?? $application->name,
@@ -500,11 +509,13 @@ class Lead extends Model
             'phone' => $application->phone,
             'company' => $application->company,
             'website' => $application->website_or_handle,
+            'country' => $enquiry['country_code'] ?? null,
             'status' => LeadStatus::getDefaultSlug(null),
             'source' => 'website',
             'priority' => 'high',
-            'interested_services' => $application->selected_goals,
-            'requirements' => $application->business_description,
+            'interested_services' => $enquiry['selected_services'] ?: $application->selected_goals,
+            'requirements' => $requirements !== '' ? $requirements : $application->business_description,
+            'estimated_value' => $enquiry['budget_range'],
             'source_type' => 'consultation_application',
             'source_id' => $application->id,
         ]);

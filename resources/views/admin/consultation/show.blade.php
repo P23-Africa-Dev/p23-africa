@@ -145,7 +145,7 @@
                             <div class="row">
                                 @if ($application->selected_goals)
                                     <div class="col-md-6 mb-4">
-                                        <h6 class="text-dark dark:text-gray-100 mb-3">Business Goals</h6>
+                                        <h6 class="text-dark dark:text-gray-100 mb-3">Business Goals / Services</h6>
                                         <ul class="list-unstyled">
                                             @foreach ($application->selected_goals ?? [] as $goal)
                                                 <li class="text-dark dark:text-gray-200 mb-2">
@@ -169,6 +169,102 @@
                                         </ul>
                                     </div>
                                 @endif
+                            </div>
+
+                            @php
+                                $enquiry = $application->enquiryDetails();
+                            @endphp
+                            <div class="mb-2">
+                                <h6 class="text-dark dark:text-gray-100 mb-3">Full Enquiry Details</h6>
+                                <div class="row">
+                                    @if (!empty($enquiry['role']))
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label text-muted dark:text-gray-400"><small>Role</small></label><br>
+                                            <p class="text-dark dark:text-gray-200 mb-0">{{ $enquiry['role'] }}</p>
+                                        </div>
+                                    @endif
+                                    @if (!empty($enquiry['country_code']))
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label text-muted dark:text-gray-400"><small>Country code</small></label><br>
+                                            <p class="text-dark dark:text-gray-200 mb-0">{{ $enquiry['country_code'] }}</p>
+                                        </div>
+                                    @endif
+                                    @if (!empty($enquiry['company_website']))
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label text-muted dark:text-gray-400"><small>Company website / LinkedIn</small></label><br>
+                                            <p class="text-dark dark:text-gray-200 mb-0">
+                                                <a href="{{ $enquiry['company_website'] }}" target="_blank" rel="noopener" class="text-primary">{{ $enquiry['company_website'] }}</a>
+                                            </p>
+                                        </div>
+                                    @endif
+                                    @if (!empty($enquiry['budget_range']) || $enquiry['budget_range'] === 0 || $enquiry['budget_range'] === '0')
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label text-muted dark:text-gray-400"><small>Budget</small></label><br>
+                                            <p class="text-dark dark:text-gray-200 mb-0">
+                                                {{ $enquiry['budget_currency'] ?? 'GBP' }} {{ is_numeric($enquiry['budget_range']) ? number_format((float) $enquiry['budget_range'], 2) : $enquiry['budget_range'] }}
+                                            </p>
+                                        </div>
+                                    @endif
+                                    @if (!empty($enquiry['start_timeline']))
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label text-muted dark:text-gray-400"><small>Start timeline</small></label><br>
+                                            <p class="text-dark dark:text-gray-200 mb-0">{{ $enquiry['start_timeline'] }}</p>
+                                        </div>
+                                    @endif
+                                    @if (!empty($enquiry['referral_source']))
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label text-muted dark:text-gray-400"><small>How they heard about us</small></label><br>
+                                            <p class="text-dark dark:text-gray-200 mb-0">
+                                                {{ $enquiry['referral_source'] }}{{ !empty($enquiry['referral_other']) ? ' — '.$enquiry['referral_other'] : '' }}
+                                            </p>
+                                        </div>
+                                    @endif
+                                    @if (!empty($enquiry['expansion_markets']))
+                                        <div class="col-md-12 mb-3">
+                                            <label class="form-label text-muted dark:text-gray-400"><small>Expansion markets</small></label>
+                                            <ul class="list-unstyled mb-0">
+                                                @foreach ((array) $enquiry['expansion_markets'] as $market)
+                                                    <li class="text-dark dark:text-gray-200 mb-1">
+                                                        <i class="fa fa-map-marker-alt text-primary me-2"></i>{{ $market }}
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
+                                    @if (!empty($enquiry['message']))
+                                        <div class="col-md-12 mb-3">
+                                            <label class="form-label text-muted dark:text-gray-400"><small>What they want to accomplish</small></label>
+                                            <div class="bg-light dark:bg-gray-700 p-3 rounded">
+                                                <p class="text-dark dark:text-gray-200 mb-0">{{ $enquiry['message'] }}</p>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    @if (!empty($enquiry['additional_notes']))
+                                        <div class="col-md-12 mb-3">
+                                            <label class="form-label text-muted dark:text-gray-400"><small>Additional notes</small></label>
+                                            <div class="bg-light dark:bg-gray-700 p-3 rounded">
+                                                <p class="text-dark dark:text-gray-200 mb-0">{{ $enquiry['additional_notes'] }}</p>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    @if (!empty($enquiry['preferred_slot']['session_date']))
+                                        <div class="col-md-12 mb-3">
+                                            <label class="form-label text-muted dark:text-gray-400"><small>Requested consultation slot</small></label><br>
+                                            <p class="text-dark dark:text-gray-200 mb-0">
+                                                {{ $enquiry['preferred_slot']['session_date'] }}
+                                                at {{ $enquiry['preferred_slot']['session_time'] ?? '' }}
+                                                ({{ $enquiry['preferred_slot']['timezone'] ?? '' }})
+                                            </p>
+                                        </div>
+                                    @endif
+                                    @if (!empty($enquiry['contact_submission_id']))
+                                        <div class="col-md-12 mb-1">
+                                            <a href="{{ orgRoute('admin.contact.show', $enquiry['contact_submission_id']) }}" class="btn btn-sm btn-outline-primary">
+                                                <i class="fa fa-envelope me-1"></i>Open linked contact submission #{{ $enquiry['contact_submission_id'] }}
+                                            </a>
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>

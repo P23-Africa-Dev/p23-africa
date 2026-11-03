@@ -839,7 +839,9 @@ class ContactController extends Controller
             'key_challenges.max' => __('consultation.validation.challenges_max'),
         ]);
 
-        $details = $submission->project_details ?? [];
+        $details = is_array($submission->project_details) ? $submission->project_details : [];
+        $selectedServices = $details['selected_goals']
+            ?? (is_array($submission->services) ? $submission->services : array_values(array_filter((array) $submission->services)));
         $appAttributes = [
             'booking_token' => (string) Str::uuid(),
             'name' => $submission->name,
@@ -849,14 +851,33 @@ class ContactController extends Controller
             'website_or_handle' => $details['company_website'] ?? null,
             'industry' => $details['industry'] ?? 'Not specified',
             'business_description' => $details['business_description'] ?? $submission->message,
-            'selected_goals' => $details['selected_goals'] ?? $submission->services ?? [],
+            'selected_goals' => $selectedServices,
             'selected_challenges' => array_values($validated['key_challenges']),
+            // Persist the full contact-v2 enquiry so admin consultation views are complete.
             'desired_outcomes' => json_encode([
+                'form_flow' => 'contact-v2',
+                'assessment_outcome' => $details['assessment_outcome'] ?? 'consultation',
+                'contact_submission_id' => $submission->id,
+                'name' => $submission->name,
+                'email' => $submission->email,
+                'phone' => $submission->phone,
+                'country_code' => $submission->country_code,
+                'company_name' => $submission->company_name,
+                'role' => $details['role'] ?? null,
+                'industry' => $details['industry'] ?? null,
+                'company_website' => $details['company_website'] ?? null,
+                'selected_services' => $selectedServices,
+                'expansion_markets' => $details['expansion_markets'] ?? [],
+                'message' => $submission->message,
                 'motivation' => $submission->message,
+                'referral_source' => $details['referral_source'] ?? null,
+                'referral_other' => $details['referral_other'] ?? null,
+                'start_timeline' => $details['start_timeline'] ?? null,
+                'budget_range' => $submission->budget_range,
+                'budget_currency' => $details['budget_currency'] ?? config('contact.budget_currency', 'GBP'),
+                'additional_notes' => $details['additional_notes'] ?? null,
                 'success_definition' => $details['additional_notes'] ?? '',
                 'preferred_slot' => $slot,
-                'contact_submission_id' => $submission->id,
-                'expansion_markets' => $details['expansion_markets'] ?? [],
             ]),
             'status' => 'pending',
             'submitted_at' => now(),
