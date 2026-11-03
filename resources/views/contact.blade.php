@@ -150,7 +150,7 @@
                         <label for="cfBudget">What is your budget?</label>
                         <div class="cf-budget-input">
                             <span aria-hidden="true">£</span>
-                            <input type="number" id="cfBudget" name="budget_range" placeholder="Input your budget" min="0" max="2147483647" step="any" required value="{{ old('budget_range') }}" aria-describedby="error-budget_range">
+                            <input type="number" id="cfBudget" name="budget_range" placeholder="Input your budget in pounds" min="0" max="2147483647" step="any" required value="{{ old('budget_range') }}" aria-describedby="error-budget_range">
                         </div>
                         <span class="cf-error" id="error-budget_range">@error('budget_range'){{ $message }}@enderror</span>
                     </div>
