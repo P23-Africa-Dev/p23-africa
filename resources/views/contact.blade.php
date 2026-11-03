@@ -7,8 +7,8 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <meta name="description" content="Tell P23 Africa about your business, your expansion plans, and the support you need. Start a conversation with our team.">
 <link rel="stylesheet" href="{{ asset('css/services-new.css') }}">
-<link rel="stylesheet" href="{{ asset('css/contact-flow.css') }}?v=7">
-<script src="{{ asset('js/contact-flow.js') }}?v=7" defer></script>
+<link rel="stylesheet" href="{{ asset('css/contact-flow.css') }}?v=8">
+<script src="{{ asset('js/contact-flow.js') }}?v=8" defer></script>
 @endsection
 @section('content')
 @php
@@ -49,15 +49,15 @@
                         <div class="cf-phone">
                             <div class="cf-country">
                                 <label class="cf-sr-only" for="cfCountry">Phone country code</label>
-                                <img id="cfFlagImage" src="{{ asset('images/contact/flag-za.png') }}" width="32" height="22" alt="">
+                                <img id="cfFlagImage" src="{{ asset('images/contact/flag-gb.svg') }}" data-base="{{ asset('images/contact') }}" width="32" height="22" alt="United Kingdom">
                                 <span id="cfFlagEmoji" aria-hidden="true" hidden></span>
                                 <select id="cfCountry" name="country_code" required aria-label="Phone country code">
                                     @foreach ($countries as $country)
-                                    <option value="{{ $country['code'] }}" data-flag="{{ $country['flag'] }}" @selected(old('country_code', '+27') === $country['code'])>{{ $country['name'] }} ({{ $country['code'] }})</option>
+                                    <option value="{{ $country['code'] }}" data-flag="{{ $country['flag'] }}" @selected(old('country_code', '+44') === $country['code'])>{{ $country['name'] }} ({{ $country['code'] }})</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="cf-phone-number"><span id="cfDialCode" aria-hidden="true">+27</span><label class="cf-sr-only" for="cfPhone">Phone Number</label><input type="tel" id="cfPhone" name="phone" autocomplete="tel-national" maxlength="20" pattern="[0-9 ()+\-]{5,20}" required value="{{ old('phone') }}" aria-describedby="error-phone"></div>
+                            <div class="cf-phone-number"><span id="cfDialCode" aria-hidden="true">+44</span><label class="cf-sr-only" for="cfPhone">Phone Number</label><input type="tel" id="cfPhone" name="phone" autocomplete="tel-national" maxlength="20" pattern="[0-9 ()+\-]{5,20}" required value="{{ old('phone') }}" aria-describedby="error-phone"></div>
                         </div>
                         <span class="cf-error" id="error-phone">@error('phone'){{ $message }}@enderror @error('country_code'){{ $message }}@enderror</span>
                     </div>
@@ -150,7 +150,7 @@
                         <label for="cfBudget">What is your budget?</label>
                         <div class="cf-budget-input">
                             <span aria-hidden="true">£</span>
-                            <input type="number" id="cfBudget" name="budget_range" placeholder="Input your budget" min="0" max="2147483647" step="any" required value="{{ old('budget_range') }}" aria-describedby="error-budget_range">
+                            <input type="number" id="cfBudget" name="budget_range" placeholder="Input your budget in pounds" min="0" max="2147483647" step="any" required value="{{ old('budget_range') }}" aria-describedby="error-budget_range">
                         </div>
                         <span class="cf-error" id="error-budget_range">@error('budget_range'){{ $message }}@enderror</span>
                     </div>
