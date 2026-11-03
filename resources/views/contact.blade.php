@@ -7,8 +7,8 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <meta name="description" content="Tell P23 Africa about your business, your expansion plans, and the support you need. Start a conversation with our team.">
 <link rel="stylesheet" href="{{ asset('css/services-new.css') }}">
-<link rel="stylesheet" href="{{ asset('css/contact-flow.css') }}?v=4">
-<script src="{{ asset('js/contact-flow.js') }}?v=3" defer></script>
+<link rel="stylesheet" href="{{ asset('css/contact-flow.css') }}?v=5">
+<script src="{{ asset('js/contact-flow.js') }}?v=5" defer></script>
 @endsection
 @section('content')
 @php

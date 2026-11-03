@@ -24,18 +24,28 @@ body.contact-flow-page #navbar,body.contact-flow-page .p23-navbar-wrapper{displa
 .cf-column-right{gap:22px}
 .cf-field{min-width:0}
 .cf-form :where(input:not([type=checkbox]):not([type=radio]):not([type=hidden]),select,textarea){display:block;width:100%;min-width:0;height:55px;border:1px solid #e2e2e2;border-radius:30px;background:#fff;color:#0a3d43;box-shadow:0 10px 10px #0005;padding:15px 39px;font:400 13px/24px 'Contact Condensed',sans-serif;letter-spacing:.5px;outline-offset:3px}
+.cf-form select{-webkit-appearance:none;-moz-appearance:none;appearance:none}
+.cf-form select:not(#cfCountry){background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='10' viewBox='0 0 10.6632 9.5' fill='none'%3E%3Cpath transform='matrix(1 0 0 -1 0 9.5)' d='M4.46559 0.5C4.85049 -0.166667 5.81274 -0.166667 6.19764 0.5L10.5278 8C10.9127 8.66667 10.4315 9.5 9.66175 9.5H1.00149C0.231691 9.5 -0.249434 8.66667 0.135467 8L4.46559 0.5Z' fill='%23898D8D'/%3E%3C/svg%3E") right 24px center / 11px 10px no-repeat;padding-right:48px}
+.cf-form input[type=number]{-moz-appearance:textfield;appearance:textfield}
+.cf-form input[type=number]::-webkit-inner-spin-button,.cf-form input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.cf-form :where(input:not([type=checkbox]):not([type=radio]):not([type=hidden]),select,textarea):-webkit-autofill,
+.cf-form :where(input:not([type=checkbox]):not([type=radio]):not([type=hidden]),select,textarea):-webkit-autofill:hover,
+.cf-form :where(input:not([type=checkbox]):not([type=radio]):not([type=hidden]),select,textarea):-webkit-autofill:focus,
+.cf-form :where(input:not([type=checkbox]):not([type=radio]):not([type=hidden]),select,textarea):autofill{-webkit-text-fill-color:#0a3d43!important;color:#0a3d43!important;-webkit-box-shadow:0 0 0 1000px #fff inset,0 10px 10px #0005!important;box-shadow:0 0 0 1000px #fff inset,0 10px 10px #0005!important;font:400 13px/24px 'Contact Condensed',sans-serif!important;letter-spacing:.5px;caret-color:#0a3d43;transition:background-color 9999s ease-out 0s}
 .cf-form input::placeholder,.cf-form textarea::placeholder{color:#898d8d;opacity:1}
 .cf-form select:invalid{color:#898d8d}
 .cf-form textarea{height:106px;resize:vertical;line-height:18px;padding-top:26px}
 .cf-form label:not(.cf-choice),.cf-form legend:not(.cf-sr-only){font:700 16px/15px 'Contact Condensed',sans-serif;letter-spacing:.5px;color:#0a3d43}
 .cf-phone{display:flex;gap:6px;min-width:0}
-.cf-country{position:relative;flex:0 0 89px;height:55px}
-.cf-country>img,.cf-country>span{position:absolute;top:16px;left:19px;pointer-events:none;z-index:1}
-.cf-country>span{font-size:24px;line-height:24px}
-.cf-form .cf-country select{padding:0;color:transparent!important;cursor:pointer}
-.cf-form .cf-country select option{color:#0a3d43}
+.cf-country{position:relative;flex:0 0 89px;height:55px;border:1px solid #e2e2e2;border-radius:30px;background:#fff;box-shadow:0 10px 10px #0005}
+.cf-country:focus-within{outline:3px solid #df77c5;outline-offset:3px}
+.cf-country:has([aria-invalid=true]){border-color:#a6153c!important}
+.cf-country>img,.cf-country>span{position:absolute;top:15px;left:19px;pointer-events:none;z-index:1}
+.cf-country>span{top:14px;font-size:26px;line-height:1}
+.cf-form .cf-country select,.cf-form .cf-country select:-webkit-autofill,.cf-form .cf-country select:-webkit-autofill:hover,.cf-form .cf-country select:-webkit-autofill:focus,.cf-form .cf-country select:autofill{position:absolute;inset:0;width:100%;height:100%;opacity:0!important;padding:0!important;border:0!important;box-shadow:none!important;-webkit-box-shadow:none!important;-webkit-appearance:none!important;-moz-appearance:none!important;appearance:none!important;color:transparent!important;-webkit-text-fill-color:transparent!important;cursor:pointer;z-index:2}
+.cf-form .cf-country select option{color:#0a3d43;-webkit-text-fill-color:#0a3d43}
 .cf-phone-number{position:relative;min-width:0;flex:1}
-.cf-phone-number>span{position:absolute;top:17px;left:21px;color:#898d8d;font-size:13px;border-right:1px solid #e2e2e2;padding-right:10px;line-height:21px}
+.cf-phone-number>span{position:absolute;top:17px;left:21px;z-index:2;pointer-events:none;color:#898d8d;font-size:13px;border-right:1px solid #e2e2e2;padding-right:10px;line-height:21px}
 .cf-form .cf-phone-number input{padding-left:72px;padding-right:16px}
 .cf-actions{display:flex;justify-content:center;gap:15px;margin-top:36px}
 .cf-actions button{display:flex;align-items:center;justify-content:center;width:108px;min-height:53px;padding:10px;border-radius:20px;box-shadow:0 10px 10px #0005;cursor:pointer}
@@ -121,8 +131,7 @@ body.contact-flow-page #navbar,body.contact-flow-page .p23-navbar-wrapper{displa
 
 .cf-form{scroll-margin-top:60px}
 @media(max-width:991px){.cf-form{scroll-margin-top:60px}}
-.cf-country:after{content:'';position:absolute;right:14px;top:21px;width:11px;height:10px;background:url('../images/contact/country-chevron.svg') center / contain no-repeat;pointer-events:none}
-.cf-country:after{transform:scaleY(-1)}
+.cf-country:after{content:'';position:absolute;right:16px;top:22px;z-index:1;width:11px;height:10px;background:url('../images/contact/country-chevron.svg') center / contain no-repeat;pointer-events:none;transform:scaleY(-1)}
 body.contact-flow-page #navbar .navbar-toggler{border:0!important;background:transparent!important}
 body.contact-flow-page #navbar .navbar-toggler img{filter:brightness(0) invert(1)!important;-webkit-filter:brightness(0) invert(1)!important}
 
