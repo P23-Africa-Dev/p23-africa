@@ -165,7 +165,7 @@
             </div>
         </div>
     </form>
-    <div class="cf-success" id="cfSuccess" tabindex="-1" hidden><h1>Thank you for reaching out.</h1><p>Your enquiry has been sent. Our team will get back to you soon.</p><a id="cfSuccessLink" href="{{ locale_route('resource-hub') }}">Explore our services</a></div>
+    <div class="cf-success" id="cfSuccess" tabindex="-1" hidden><h1>Thank you for reaching out.</h1><p>Your enquiry has been sent. Our team will get back to you soon.</p><a id="cfSuccessLink" href="{{ locale_route('resource-hub') }}">Explore our resources</a></div>
 </section>
 @endsection
 @section('footer')
