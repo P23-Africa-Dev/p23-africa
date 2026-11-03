@@ -3029,7 +3029,7 @@
                     </div>
 
                     <div class="guide-actions-group">
-                        <a href="{{ asset('documents/African.pdf') }}" 
+                        <a href="{{ locale_route('lead-magnets.african-expansion.guide') }}" 
                            target="_blank" 
                            rel="noopener noreferrer" 
                            class="guide-btn-primary" 
@@ -3039,7 +3039,7 @@
                             <span>{{ __('home.guide_cta_download') }}</span>
                         </a>
 
-                        <a href="{{ asset('documents/African.pdf') }}" 
+                        <a href="{{ locale_route('lead-magnets.african-expansion.guide') }}" 
                            target="_blank" 
                            rel="noopener noreferrer" 
                            class="guide-btn-secondary" 
@@ -3058,7 +3058,7 @@
 
                 {{-- Right: Interactive Editorial 3D Guide Mockup --}}
                 <div class="home-guide-visual">
-                    <a href="{{ asset('documents/African.pdf') }}" 
+                    <a href="{{ locale_route('lead-magnets.african-expansion.guide') }}" 
                        target="_blank" 
                        rel="noopener noreferrer" 
                        class="guide-book-mockup" 

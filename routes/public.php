@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers\ClickTracker;
+use App\Http\Controllers\AfricanExpansionGuideController;
 use App\Http\Controllers\BrnController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FeedbackController;
@@ -76,6 +77,9 @@ return function (bool $localized): void {
 
         return view('landing.african-expansion-for-manufacturers');
     })->name($name('lead-magnets.african-expansion'));
+
+    Route::get('/african-expansion-for-manufacturers/guide', AfricanExpansionGuideController::class)
+        ->name($name('lead-magnets.african-expansion.guide'));
 
     Route::get('/services/market-entry', fn () => redirect()->to(locale_route('services.market-entry')));
     Route::get('/services/market-entry/nigeria', fn () => redirect()->to(locale_route('services.market-entry.nigeria')));

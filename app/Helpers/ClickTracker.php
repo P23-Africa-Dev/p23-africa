@@ -102,6 +102,8 @@ class ClickTracker
             'student' => 'Student Portal',
             'resource-hub' => 'Resource Hub',
             'event' => 'Events',
+            'African_Expansion_Landing_Page' => 'African Expansion for Manufacturers',
+            'African_Expansion_Guide_Download' => 'African Expansion Guide PDF',
         ];
 
         return $titles[$routeName] ?? ucwords(str_replace(['_', '-'], ' ', $routeName));

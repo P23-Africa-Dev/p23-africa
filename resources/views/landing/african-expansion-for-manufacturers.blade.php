@@ -295,7 +295,7 @@
                     
                     {{-- CTA Group --}}
                     <div class="hero-cta-group">
-                        <a href="{{ asset('documents/African.pdf') }}" 
+                        <a href="{{ locale_route('lead-magnets.african-expansion.guide') }}" 
                            target="_blank" 
                            rel="noopener noreferrer" 
                            class="hero-cta-btn" 
@@ -384,7 +384,7 @@
                             <p class="plan-card-desc">
                                 <span class="mobile-hide-inline">Most international manufacturers fail in Africa not because of product defects, but because they sign exclusive agreements with unvetted agents who lack genuine commercial coverage. </span>Discover our 7-step on-ground distributor audit to verify true warehouse capacity, solvency, and access to enterprise buyers.
                             </p>
-                            <a href="{{ asset('documents/African.pdf') }}" 
+                            <a href="{{ locale_route('lead-magnets.african-expansion.guide') }}" 
                                target="_blank" 
                                rel="noopener noreferrer" 
                                class="plan-explore-btn" 
@@ -408,7 +408,7 @@
                         <p class="plan-card-desc">
                             Test real buyer willingness-to-pay and procurement timelines with prospective institutional buyers in Nigeria, Kenya, and Ghana before committing inventory or setting up local entities.
                         </p>
-                        <a href="{{ asset('documents/African.pdf') }}" 
+                        <a href="{{ locale_route('lead-magnets.african-expansion.guide') }}" 
                            target="_blank" 
                            rel="noopener noreferrer" 
                            class="plan-explore-btn" 
@@ -423,7 +423,7 @@
                         <p class="plan-card-desc">
                             Learn how to establish secondary sales visibility, structured milestone agreements, and transparent CRM reporting that keeps local distributor teams commercially aligned and accountable.
                         </p>
-                        <a href="{{ asset('documents/African.pdf') }}" 
+                        <a href="{{ locale_route('lead-magnets.african-expansion.guide') }}" 
                            target="_blank" 
                            rel="noopener noreferrer" 
                            class="plan-explore-btn" 
@@ -441,7 +441,7 @@
                         <p class="plan-card-desc">
                             Evaluate margin structures, import tariff classifications, and currency hedging strategies tailored specifically for industrial equipment, machinery, and commercial technologies.
                         </p>
-                        <a href="{{ asset('documents/African.pdf') }}" 
+                        <a href="{{ locale_route('lead-magnets.african-expansion.guide') }}" 
                            target="_blank" 
                            rel="noopener noreferrer" 
                            class="plan-explore-btn" 
@@ -456,7 +456,7 @@
                         <p class="plan-card-desc">
                             Proven decision gates designed for executive boards, investment committees, and export directors to expand with measurable risk control and verifiable market demand.
                         </p>
-                        <a href="{{ asset('documents/African.pdf') }}" 
+                        <a href="{{ locale_route('lead-magnets.african-expansion.guide') }}" 
                            target="_blank" 
                            rel="noopener noreferrer" 
                            class="plan-explore-btn" 
@@ -501,7 +501,7 @@
                     <p>Read the 18-page practical playbook on market entry, distributor auditing, and commercial operations.</p>
                 </div>
                 <div class="lead-final-action-buttons">
-                    <a href="{{ asset('documents/African.pdf') }}" 
+                    <a href="{{ locale_route('lead-magnets.african-expansion.guide') }}" 
                        target="_blank" 
                        rel="noopener noreferrer" 
                        class="lead-final-download-btn">

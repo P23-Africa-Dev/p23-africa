@@ -1,6 +1,8 @@
 <?php
 
 use App\Helpers\ClickTracker;
+use App\Http\Controllers\AfricanExpansionGuideController;
+use App\Http\Controllers\Admin\AfricanExpansionReportController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ClickReportController;
@@ -132,6 +134,9 @@ Route::get('/african-expansion-for-manufacturers', function () {
     return view('landing.african-expansion-for-manufacturers');
 })->name('lead-magnets.african-expansion');
 
+Route::get('/african-expansion-for-manufacturers/guide', AfricanExpansionGuideController::class)
+    ->name('lead-magnets.african-expansion.guide');
+
 // Backward compatibility & SEO 301 Redirects
 Route::get('/market-demand-testing', fn() => redirect()->route('services.market-demand-testing', [], 301));
 Route::get('/market-entry', fn() => redirect()->route('services.market-demand-testing', [], 301))->name('services.market-entry');
@@ -212,8 +217,8 @@ Route::get('/brn-form', function () {
     return redirect('/noel54/interest-form');
 });
 
-Route::get("/en", fn () => redirect("/", 301));
-Route::get("/en/{path}", fn (string $path) => redirect("/".$path, 301))->where("path", ".*");
+Route::get("/en", fn() => redirect("/", 301));
+Route::get("/en/{path}", fn(string $path) => redirect("/" . $path, 301))->where("path", ".*");
 
 Route::get('/sitemap.xml', \App\Http\Controllers\SitemapController::class)->name('sitemap');
 
@@ -405,6 +410,11 @@ Route::middleware(['auth', 'check.suspended', 'resolve.org', 'role:admin|supervi
         Route::get('/clicks/report', [ClickReportController::class, 'index'])->name('clicks.report');
         Route::get('/clicks/export', [ClickReportController::class, 'export'])->name('clicks.export');
         Route::post('/clicks/backfill-countries', [ClickReportController::class, 'backfillCountries'])->name('clicks.backfill-countries');
+
+        Route::middleware('role:admin')->group(function () {
+            Route::get('/african-expansion', [AfricanExpansionReportController::class, 'index'])->name('african-expansion.index');
+            Route::get('/african-expansion/export', [AfricanExpansionReportController::class, 'export'])->name('african-expansion.export');
+        });
 
         Route::middleware('legacy.analytics')->group(function () {
             Route::get('/link-tracking', [TrackedLinkAnalyticsController::class, 'index'])->name('link-tracking.index');
@@ -688,6 +698,11 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
     Route::get('/clicks/report', [ClickReportController::class, 'index'])->name('clicks.report');
     Route::get('/clicks/export', [ClickReportController::class, 'export'])->name('clicks.export');
     Route::post('/clicks/backfill-countries', [ClickReportController::class, 'backfillCountries'])->name('clicks.backfill-countries');
+
+    Route::middleware('role:admin')->group(function () {
+        Route::get('/african-expansion', [AfricanExpansionReportController::class, 'index'])->name('african-expansion.index');
+        Route::get('/african-expansion/export', [AfricanExpansionReportController::class, 'export'])->name('african-expansion.export');
+    });
 
     Route::middleware('legacy.analytics')->group(function () {
         Route::get('/link-tracking', [TrackedLinkAnalyticsController::class, 'index'])->name('link-tracking.index');

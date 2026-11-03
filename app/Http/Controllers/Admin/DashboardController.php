@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\Student;
 use App\Models\Blog;
+use App\Models\PageVisit;
 use App\Models\PlaybookDownload;
 use App\Models\SalesBookDownload;
 use App\Models\UltimateFundingDownload;
@@ -66,6 +67,11 @@ class DashboardController extends Controller
                 $stats['recent_downloads'] = PlaybookDownload::where('created_at', '>=', now()->subDays(30))->count() +
                     SalesBookDownload::where('created_at', '>=', now()->subDays(30))->count() +
                     UltimateFundingDownload::where('created_at', '>=', now()->subDays(30))->count();
+
+                if ($isAdmin) {
+                    $stats['african_expansion_visits'] = PageVisit::where('route_name', 'African_Expansion_Landing_Page')->count();
+                    $stats['african_expansion_downloads'] = PageVisit::where('route_name', 'African_Expansion_Guide_Download')->count();
+                }
             }
 
             // ── Organization-scoped project / task / lead stats ──
