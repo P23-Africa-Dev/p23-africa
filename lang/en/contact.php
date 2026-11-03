@@ -46,4 +46,10 @@ return [
         'sent' => 'Your message has been sent successfully! We will get back to you soon.',
         'already_sent' => 'Your message has already been sent successfully! We will get back to you soon.',
     ],
+    'flow' => [
+        'discovery_title' => 'Schedule Your Discovery Call',
+        'discovery_body' => 'Pick a convenient date and time for your session. You’ll receive a confirmation email once it’s booked.',
+        'discovery_confirmed' => 'Discovery Call Confirmed!',
+        'discovery_confirmed_body' => 'A confirmation email containing the date, time, and Google Meet link has been sent to your registered email address.',
+    ],
 ];

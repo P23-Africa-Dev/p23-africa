@@ -1,5 +1,14 @@
 @extends('layouts.master')
-@section('title', 'Book a Consultation | P23 Africa')
+@php
+    // Shared by: paid bookings (default), contact Route 2 pre-payment time pick, contact Route 1 discovery calls.
+    $scheduleMode = $scheduleMode ?? 'booking';
+    $scheduleTitle = $scheduleTitle ?? __('consultation.schedule_title');
+    $scheduleBody = $scheduleBody ?? __('consultation.schedule_body');
+    $scheduleAction = $scheduleAction ?? locale_route('consultation.schedule.submit');
+    $confirmTitle = $confirmTitle ?? __('consultation.confirmed');
+    $confirmBody = $confirmBody ?? __('consultation.confirmed_body');
+@endphp
+@section('title', ($scheduleMode === 'discovery' ? 'Schedule a Discovery Call' : 'Book a Consultation').' | P23 Africa')
 
 @section('meta')
     <meta name="description"
@@ -1759,11 +1768,11 @@
         <div class="box-container">
             <div class="intro-container">
                 <div class="left-content">
-                    <h3>{{ __('consultation.schedule_title') }}</h3>
+                    <h3>{{ $scheduleTitle }}</h3>
 
                     <div class="para">
                         <p>
-                            {{ __('consultation.schedule_body') }}
+                            {{ $scheduleBody }}
                         </p>
                     </div>
 
@@ -2006,10 +2015,15 @@
 
 
                         <!-- Hidden form for actual submission -->
-                        <form id="scheduleForm" method="POST" action="{{ locale_route('consultation.schedule.submit') }}"
+                        <form id="scheduleForm" method="POST" action="{{ $scheduleAction }}"
                             style="display: none;">
                             @csrf
+                            @if ($application)
                             <input type="hidden" name="booking" value="{{ $application->booking_token }}">
+                            @endif
+                            @if (!empty($assessmentToken) || request('assessment'))
+                            <input type="hidden" name="assessment" value="{{ $assessmentToken ?? request('assessment') }}">
+                            @endif
                             <input type="hidden" name="session_date" id="hiddenDate">
                             <input type="hidden" name="session_time" id="hiddenTime">
                             <input type="hidden" name="timezone" id="hiddenTimezone">
@@ -2023,8 +2037,8 @@
         <!-- POPUP MODAL -->
         <div id="scheduleModal" class="modal-overlay">
             <div class="modal-box">
-                <h3>{{ __('consultation.confirmed') }}</h3>
-                <p>{{ __('consultation.confirmed_body') }}</p>
+                <h3>{{ $confirmTitle }}</h3>
+                <p>{{ $confirmBody }}</p>
                 <h4 id="modalDateText"></h4>
                 <h4 id="modalTimeText"></h4>
 
@@ -2761,8 +2775,11 @@
                 div.className = "date";
                 div.textContent = day;
 
-                // Check if this date is in the past
-                const isPastDate = dateObj < today && dateObj.toDateString() !== today.toDateString();
+                // Check if this date is in the past (consultation mode requires dates after today)
+                const allowSameDay = @json(($scheduleMode ?? '') === 'discovery');
+                const isPastDate = allowSameDay
+                    ? (dateObj < today && dateObj.toDateString() !== today.toDateString())
+                    : (dateObj <= today || dateObj.toDateString() === today.toDateString());
 
                 // Check if this date is Sunday (0 = Sunday)
                 const isSunday = dateObj.getDay() === 0;
@@ -3064,6 +3081,29 @@
         /* ------------------------- Initial render ------------------------- */
         renderCalendar();
 
+        /* ---------------- Pre-select a time chosen before payment (contact Route 2) ---------------- */
+        (function preselectPreferredSlot(slot) {
+            if (!slot || !slot.session_date || !slot.session_time) return;
+            const [y, m, d] = String(slot.session_date).split('-').map(Number);
+            const dateObj = new Date(y, m - 1, d);
+            if (!isNaN(dateObj) && dateObj > today && dateObj.getDay() !== 0) {
+                current = new Date(y, m - 1);
+                renderCalendar();
+                const cell = Array.from(datesContainer.querySelectorAll('.date:not(.other-month):not(.disabled)'))
+                    .find(el => Number(el.textContent) === d);
+                if (cell) selectDate(dateObj, cell);
+            }
+            const [hh, mm] = String(slot.session_time).split(':').map(Number);
+            const hourIndex = timeWheels.hour.items.findIndex(h => parseInt(h, 10) === (hh % 12 || 12));
+            if (hourIndex !== -1) {
+                setWheelIndex('ampm', hh >= 12 ? 1 : 0);
+                setWheelIndex('hour', hourIndex);
+                if (mm >= 0 && mm <= 59) setWheelIndex('minute', mm);
+            }
+            if (slot.timezone) timezoneDropdown.setValue(slot.timezone === 'WAT' ? 'Africa/Lagos' : slot.timezone);
+            updateTimeDisplay();
+        })(@json($preferredSlot ?? null));
+
 
 
 
@@ -3136,11 +3176,16 @@
                         method: 'POST',
                         body: formData,
                         headers: {
+                            'Accept': 'application/json',
                             'X-Requested-With': 'XMLHttpRequest',
                         }
                     })
                     .then(response => response.json())
                     .then(data => {
+                        if (data.success && data.redirect) {
+                            window.location.assign(data.redirect);
+                            return;
+                        }
                         if (data.success) {
                             // Show success modal with submitted details
                             modalDateText.textContent = @json(__('consultation.date_label')) + ' ' + selectedDate.toLocaleDateString(@json(app()->getLocale()), { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });

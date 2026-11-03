@@ -26,6 +26,8 @@
 <p><strong>Message:</strong></p>
 <p>{{ $data['message'] }}</p>
 
+@include('contact.project-details', ['details' => $data['project_details'] ?? []])
+
 <hr>
 <p><strong>Submission Details:</strong></p>
 <p><strong>Submitted on:</strong> {{ $data['created_at'] ?? now()->format('Y-m-d H:i:s') }}</p>

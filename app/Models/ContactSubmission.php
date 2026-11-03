@@ -15,6 +15,7 @@ class ContactSubmission extends Model
         'services',
         'message',
         'budget_range',
+        'project_details',
         'ip_address',
         'user_agent',
         'email_sent_at',
@@ -30,6 +31,7 @@ class ContactSubmission extends Model
 
     protected $casts = [
         'services' => 'array',
+        'project_details' => 'array',
         'field_interactions' => 'array',
         'email_sent_at' => 'datetime',
         'last_activity_at' => 'datetime',

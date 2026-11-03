@@ -524,6 +524,16 @@
 </style>
 
 @section('content')
+    @php
+        $outcomes = json_decode((string) ($application->desired_outcomes ?? ''), true) ?: [];
+        $expansionMarkets = $outcomes['expansion_markets'] ?? [];
+        $isFromContactFlow = !empty($outcomes['contact_submission_id']);
+        $leftSectionTitle = ($isFromContactFlow && !empty($expansionMarkets)) ? 'Expansion Market' : __('consultation.your_challenges');
+        $leftSectionItems = ($isFromContactFlow && !empty($expansionMarkets)) ? $expansionMarkets : ($application->selected_challenges ?? []);
+        $rightSectionItems = ($isFromContactFlow && !empty($expansionMarkets))
+            ? (($application->selected_challenges ?? []) ?: ($application->selected_goals ?? []))
+            : ($application->selected_goals ?? []);
+    @endphp
     <section class="summary-main-container">
         <div class="summary-container">
             <!-- ---------------------------LEFT CONTENT -->
@@ -552,10 +562,10 @@
                 </div>
 
                 <div class="summary-section challenges">
-                    <h4>{{ __('consultation.your_challenges') }}</h4>
+                    <h4>{{ $leftSectionTitle }}</h4>
                     <div id="challengeList" class="list-container">
                         <div class="lists">
-                            @foreach (($application->selected_challenges ?? []) as $challenge)
+                            @foreach ($leftSectionItems as $challenge)
                                 <label class="list-card">
                                     <span class="list-text">{{ $challenge }}</span>
                                     <span class="list-checkmark"><img src="{{ asset('img/marked.png') }}"
@@ -573,7 +583,7 @@
                     <h4>{{ __('consultation.your_goals') }}</h4>
                     <div id="goalList" class="list-container">
                         <div class="lists">
-                            @foreach (($application->selected_goals ?? []) as $goal)
+                            @foreach ($rightSectionItems as $goal)
                                 <label class="list-card">
                                     <span class="list-text">{{ $goal }}</span>
                                     <span class="list-checkmark"><img src="{{ asset('img/marked.png') }}"
@@ -604,6 +614,9 @@
                     <form method="POST" action="{{ route('consultation.payment.initiate') }}">
                         @csrf
                         <input type="hidden" name="booking" value="{{ $application->booking_token }}">
+                        @if (request('state'))
+                        <input type="hidden" name="state" value="{{ request('state') }}">
+                        @endif
                         <button type="submit" class="btn proceed-btn">
                             {{ __('consultation.proceed_payment') }}
                             <i class="fa-solid fa-arrow-right"></i>

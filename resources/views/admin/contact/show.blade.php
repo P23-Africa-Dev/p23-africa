@@ -165,6 +165,12 @@
                 </div>
             </div>
 
+            @if ($contact->project_details)
+            <div class="card border-0 shadow-sm dark:bg-gray-800 mb-4"><div class="card-body">
+                @include('contact.project-details', ['details' => $contact->project_details])
+            </div></div>
+            @endif
+
             <!-- Technical Information Card -->
             <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition mb-4">
                 <div class="card-header bg-transparent border-0 pt-4 pb-3">

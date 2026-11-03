@@ -90,7 +90,7 @@
 
 
                     <div class="subscribe">
-                        <a href="{{ locale_route('contact') }}" class="btn" id="btn">{{ __('nav.book_consultation') }}</a>
+                        <a href="{{ locale_route('contact') }}" class="btn" id="btn">@yield('navbar_consultation_label', __('nav.book_consultation'))</a>
                     </div>
 
                     @include('partials.language-switcher', ['class' => 'locale-switcher--on-dark'])
