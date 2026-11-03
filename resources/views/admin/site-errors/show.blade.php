@@ -1,27 +1,3 @@
-@php
-    $errorLog = implode(
-        "\n",
-        array_filter([
-            'Time: ' . $siteError->created_at->format('d M Y H:i:s'),
-            'Status: ' . $siteError->status,
-            'Method/Path: ' .
-            $siteError->method .
-            ' ' .
-            $siteError->path .
-            ($siteError->query ? '?' . $siteError->query : ''),
-            'Exception: ' . $siteError->exception_class,
-            'Location: ' . ($siteError->file ?: 'n/a') . ':' . ($siteError->line ?: 'n/a'),
-            'User: ' . ($siteError->user ? $siteError->user->name . ' (' . $siteError->user->email . ')' : 'Guest'),
-            '',
-            'Message:',
-            $siteError->message,
-            '',
-            'Stack:',
-            $siteError->trace ?: '(none)',
-        ]),
-    );
-@endphp
-
 <x-app-layout>
     <x-slot name="header">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
@@ -34,7 +10,8 @@
                 </p>
             </div>
             <div class="d-flex gap-2">
-                <button type="button" id="copy-site-error-log" class="btn btn-outline-primary btn-sm">
+                <button type="button" id="copy-site-error-log" class="btn btn-outline-primary btn-sm copy-site-error-log"
+                    data-source="site-error-log-source">
                     <i class="fa fa-copy me-1"></i> <span data-label>Copy full error log</span>
                 </button>
                 <a href="{{ route('admin.site-errors.index') }}" class="btn btn-outline-secondary btn-sm">
@@ -46,7 +23,17 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <textarea id="site-error-log-source" class="visually-hidden" readonly aria-hidden="true">{{ $errorLog }}</textarea>
+            <textarea id="site-error-log-source" class="visually-hidden" readonly aria-hidden="true">{{ $siteError->fullErrorLog() }}</textarea>
+
+            <div class="mb-3 d-flex gap-2 flex-wrap">
+                <button type="button" class="btn btn-primary btn-sm copy-site-error-log"
+                    data-source="site-error-log-source">
+                    <i class="fa fa-copy me-1"></i> <span data-label>Copy full error log</span>
+                </button>
+                <a href="{{ route('admin.site-errors.index') }}" class="btn btn-outline-secondary btn-sm">
+                    <i class="fa fa-arrow-left me-1"></i> All site errors
+                </a>
+            </div>
 
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body">
@@ -91,29 +78,31 @@
     </div>
 
     <script>
-        document.getElementById('copy-site-error-log')?.addEventListener('click', async function() {
-            const source = document.getElementById('site-error-log-source');
-            const label = this.querySelector('[data-label]');
-            const text = source?.value || '';
-            const original = label?.textContent || 'Copy full error log';
+        document.querySelectorAll('.copy-site-error-log').forEach(function(button) {
+            button.addEventListener('click', async function() {
+                const source = document.getElementById(this.dataset.source);
+                const label = this.querySelector('[data-label]');
+                const text = source?.value || '';
+                const original = label?.textContent || 'Copy full error log';
 
-            try {
-                if (navigator.clipboard?.writeText) {
-                    await navigator.clipboard.writeText(text);
-                } else {
-                    source.classList.remove('visually-hidden');
-                    source.select();
-                    document.execCommand('copy');
-                    source.classList.add('visually-hidden');
+                try {
+                    if (navigator.clipboard?.writeText) {
+                        await navigator.clipboard.writeText(text);
+                    } else if (source) {
+                        source.classList.remove('visually-hidden');
+                        source.select();
+                        document.execCommand('copy');
+                        source.classList.add('visually-hidden');
+                    }
+                    if (label) label.textContent = 'Copied';
+                } catch (error) {
+                    if (label) label.textContent = 'Copy failed';
                 }
-                if (label) label.textContent = 'Copied';
-            } catch (error) {
-                if (label) label.textContent = 'Copy failed';
-            }
 
-            setTimeout(() => {
-                if (label) label.textContent = original;
-            }, 2000);
+                setTimeout(function() {
+                    if (label) label.textContent = original;
+                }, 2000);
+            });
         });
     </script>
 </x-app-layout>
