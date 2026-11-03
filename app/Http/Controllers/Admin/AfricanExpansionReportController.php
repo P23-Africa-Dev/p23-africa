@@ -39,15 +39,20 @@ class AfricanExpansionReportController extends Controller
             ->unique()
             ->count();
 
-        $countryExpr = "COALESCE(NULLIF(country, ''), 'Unknown')";
         $visitCase = "SUM(CASE WHEN route_name = '" . self::VISIT_ROUTE . "' THEN 1 ELSE 0 END)";
         $downloadCase = "SUM(CASE WHEN route_name = '" . self::DOWNLOAD_ROUTE . "' THEN 1 ELSE 0 END)";
 
+        // Group by the raw country column so MySQL ONLY_FULL_GROUP_BY accepts the query.
         $countries = (clone $baseQuery)
-            ->selectRaw("{$countryExpr} as country_name, {$visitCase} as visit_count, {$downloadCase} as download_count")
-            ->groupBy(DB::raw($countryExpr))
+            ->selectRaw("country, {$visitCase} as visit_count, {$downloadCase} as download_count")
+            ->groupBy('country')
             ->orderByRaw("({$visitCase} + {$downloadCase}) DESC")
-            ->get();
+            ->get()
+            ->map(function ($row) {
+                $row->country_name = filled($row->country) ? $row->country : 'Unknown';
+
+                return $row;
+            });
 
         $activity = (clone $baseQuery)
             ->select([
