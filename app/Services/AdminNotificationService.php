@@ -104,6 +104,26 @@ class AdminNotificationService
     }
 
     /**
+     * Notify when a consultation client cannot pay with Stripe and requests help.
+     */
+    public static function notifyPaymentAssistanceRequested($consultation): void
+    {
+        self::notifyAdmins(
+            'payment_assistance',
+            'Payment Assistance Requested',
+            $consultation->name . ' needs another way to pay for their consultation',
+            '/admin/consultations/' . $consultation->id,
+            'fas fa-hand-holding-usd',
+            [
+                'consultation_id' => $consultation->id,
+                'applicant_name' => $consultation->name,
+                'email' => $consultation->email,
+                'booking_token' => $consultation->booking_token,
+            ]
+        );
+    }
+
+    /**
      * Notify about new event feedback
      */
     public static function notifyNewEventFeedback($feedback): void

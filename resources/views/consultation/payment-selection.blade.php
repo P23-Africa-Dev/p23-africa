@@ -2,10 +2,8 @@
 @section('title', 'Select Payment Method | P23 Africa')
 
 @section('meta')
-    <meta name="description"
-        content="Complete your P23 Africa consultation booking with secure Stripe card payment.">
-    <meta name="keywords"
-        content="payment, consultation booking, P23 Africa, Stripe, business consultation payment">
+    <meta name="description" content="Complete your P23 Africa consultation booking with secure Stripe card payment.">
+    <meta name="keywords" content="payment, consultation booking, P23 Africa, Stripe, business consultation payment">
     <meta name="author" content="P23 Africa">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
@@ -222,6 +220,65 @@
         font-size: 0.95rem;
         line-height: 1.45;
     }
+
+    .payment-assistance-block {
+        margin-top: 28px;
+        padding-top: 24px;
+        border-top: 1px solid #e5e5e5;
+        text-align: center;
+    }
+
+    .payment-assistance-block p {
+        font-family: "GT Walsheim Con";
+        color: #555;
+        margin-bottom: 12px;
+    }
+
+    .payment-assistance-block textarea {
+        width: 100%;
+        max-width: 100%;
+        min-height: 90px;
+        margin: 0 0 14px;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        font-family: "GT Walsheim Con";
+        resize: vertical;
+    }
+
+    .payment-assistance-btn {
+        background: transparent;
+        color: #1a1a1a;
+        border: 1px solid #1a1a1a;
+        border-radius: 999px;
+        padding: 12px 22px;
+        font-family: "GT Walsheim Con";
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .payment-assistance-btn:hover:not(:disabled) {
+        background: #1a1a1a;
+        color: #fff;
+    }
+
+    .payment-assistance-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    .payment-assistance-success {
+        display: none;
+        margin-top: 14px;
+        padding: 12px 14px;
+        border-radius: 10px;
+        border: 1px solid #badbcc;
+        background: #d1e7dd;
+        color: #0f5132;
+        font-family: "GT Walsheim Con";
+        line-height: 1.45;
+    }
 </style>
 
 @section('content')
@@ -292,6 +349,22 @@
                     <i class="fa-solid fa-arrow-right"></i>
                 </button>
             </form>
+
+            <div class="payment-assistance-block">
+                <p>Having trouble paying with Stripe?</p>
+                <textarea id="paymentAssistanceNote" maxlength="500"
+                    placeholder="Optional: tell us why Stripe didn’t work, or your preferred payment method"></textarea>
+                <button type="button" class="payment-assistance-btn" id="paymentAssistanceBtn"
+                    onclick="requestPaymentAssistance()">
+                    Request another payment option
+                </button>
+                <div id="paymentAssistanceSuccess" class="payment-assistance-success" role="status"></div>
+                @if (session('success'))
+                    <div class="payment-assistance-success" style="display:block;" role="status">
+                        {{ session('success') }}
+                    </div>
+                @endif
+            </div>
         </div>
     </section>
 
@@ -471,7 +544,8 @@
                         const displayAmount = data.display_amount || BASE_DISPLAY_AMOUNT;
                         const amountCopy = document.getElementById('stripeAmountCopy');
                         if (amountCopy) {
-                            amountCopy.textContent = `Enter your card details to complete the ${displayAmount} payment`;
+                            amountCopy.textContent =
+                                `Enter your card details to complete the ${displayAmount} payment`;
                         }
 
                         payBtn.innerHTML = `Pay ${displayAmount}`;
@@ -497,7 +571,8 @@
                             document.body.removeChild(modal);
                             const normalizedError = normalizeStripeError(result.error);
 
-                            const failedTransactionId = (result.error.payment_intent && result.error.payment_intent.id) ?
+                            const failedTransactionId = (result.error.payment_intent && result.error
+                                    .payment_intent.id) ?
                                 result.error.payment_intent.id : createdPaymentIntentId;
 
                             submitPaymentCallback('stripe', failedTransactionId || '', 'failed', {
@@ -507,7 +582,8 @@
 
                             const friendlyMessage = getFriendlyStripeErrorMessage(normalizedError,
                                 result.error.message);
-                            handlePaymentError(friendlyMessage, normalizedError.decline_code || normalizedError.code ||
+                            handlePaymentError(friendlyMessage, normalizedError.decline_code || normalizedError
+                                .code ||
                                 'card_declined');
                         } else {
                             // Payment succeeded - show success state briefly
@@ -547,7 +623,8 @@
                 const proceedBtn = document.getElementById('proceedBtn');
                 if (proceedBtn) {
                     if (status === 'successful' || status === 'success') {
-                        proceedBtn.innerHTML = '<i class="fa-solid fa-check-circle"></i> Payment Successful - Redirecting...';
+                        proceedBtn.innerHTML =
+                            '<i class="fa-solid fa-check-circle"></i> Payment Successful - Redirecting...';
                         proceedBtn.style.background = '#28a745';
                     } else {
                         proceedBtn.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Logging payment failure...';
@@ -848,6 +925,59 @@
             };
 
             return timezoneMap[timezone] || null;
+        }
+
+        async function requestPaymentAssistance() {
+            const btn = document.getElementById('paymentAssistanceBtn');
+            const noteEl = document.getElementById('paymentAssistanceNote');
+            const successEl = document.getElementById('paymentAssistanceSuccess');
+            const note = noteEl ? noteEl.value.trim() : '';
+
+            if (btn) {
+                btn.disabled = true;
+                btn.textContent = 'Sending request…';
+            }
+
+            try {
+                const csrf = document.querySelector('meta[name="csrf-token"]')?.content ||
+                    document.querySelector('input[name="_token"]')?.value;
+
+                const response = await fetch(@json(route('consultation.payment.assistance')), {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': csrf || '',
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                    body: JSON.stringify({
+                        booking: BOOKING_TOKEN,
+                        note: note || null,
+                    }),
+                });
+
+                const data = await response.json().catch(() => ({}));
+
+                if (!response.ok) {
+                    throw new Error(data.message || 'Unable to send assistance request. Please try again.');
+                }
+
+                if (successEl) {
+                    successEl.style.display = 'block';
+                    successEl.textContent = data.message ||
+                        'Thanks — our team will email you another way to pay.';
+                }
+
+                if (btn) {
+                    btn.textContent = 'Request sent';
+                }
+            } catch (error) {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.textContent = 'Request another payment option';
+                }
+                handlePaymentError(error.message || 'Unable to send assistance request.');
+            }
         }
     </script>
 @endsection

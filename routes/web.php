@@ -263,6 +263,9 @@ Route::post("/book-consultation/payment/initiate", [App\Http\Controllers\Consult
 Route::post("/book-consultation/payment/process", [App\Http\Controllers\ConsultationController::class, "processPayment"])->name("consultation.payment.process");
 Route::post("/book-consultation/payment/callback", [App\Http\Controllers\ConsultationController::class, "handlePaymentCallback"])->name("consultation.payment.callback");
 Route::post("/book-consultation/payment/create-intent", [App\Http\Controllers\ConsultationController::class, "createStripePaymentIntent"])->name("consultation.payment.create-intent");
+Route::post("/book-consultation/payment/assistance", [App\Http\Controllers\ConsultationController::class, "requestPaymentAssistance"])
+    ->middleware("throttle:5,1")
+    ->name("consultation.payment.assistance");
 Route::get("/book-consultation/payment/callback/{reference}/{status}", [App\Http\Controllers\ConsultationController::class, "handlePaymentCallbackLegacy"])->name("consultation.payment.callback.legacy");
 
 Route::get("/google/calendar/auth", [App\Http\Controllers\ConsultationController::class, "googleCalendarAuth"])->name("google.calendar.auth");
@@ -326,6 +329,8 @@ Route::middleware(['auth', 'check.suspended', 'resolve.org', 'role:admin|supervi
             Route::post('/consultations/{id}/update-status', [\App\Http\Controllers\Admin\ConsultationController::class, 'updateStatus'])->name('consultation.updateStatus');
             Route::post('/consultations/{id}/reply', [\App\Http\Controllers\Admin\ConsultationController::class, 'sendReply'])->name('consultation.reply');
             Route::post('/consultations/{id}/manual-schedule', [\App\Http\Controllers\Admin\ConsultationController::class, 'manualSchedule'])->name('consultation.manual-schedule');
+            Route::post('/consultations/{id}/payment-assistance/instructions', [\App\Http\Controllers\Admin\ConsultationController::class, 'sendPaymentAssistanceInstructions'])->name('consultation.payment-assistance.instructions');
+            Route::post('/consultations/{id}/payment-assistance/mark-paid', [\App\Http\Controllers\Admin\ConsultationController::class, 'markAssistedPaymentReceived'])->name('consultation.payment-assistance.mark-paid');
             Route::post('/consultation/chat/mark-read/{messageId}', [\App\Http\Controllers\Admin\ConsultationController::class, 'markMessageAsRead'])->name('consultation.chat.markRead');
         });
 
@@ -537,6 +542,8 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
         Route::post('/consultations/{id}/update-status', [\App\Http\Controllers\Admin\ConsultationController::class, 'updateStatus'])->name('consultation.updateStatus');
         Route::post('/consultations/{id}/reply', [\App\Http\Controllers\Admin\ConsultationController::class, 'sendReply'])->name('consultation.reply');
         Route::post('/consultations/{id}/manual-schedule', [\App\Http\Controllers\Admin\ConsultationController::class, 'manualSchedule'])->name('consultation.manual-schedule');
+        Route::post('/consultations/{id}/payment-assistance/instructions', [\App\Http\Controllers\Admin\ConsultationController::class, 'sendPaymentAssistanceInstructions'])->name('consultation.payment-assistance.instructions');
+        Route::post('/consultations/{id}/payment-assistance/mark-paid', [\App\Http\Controllers\Admin\ConsultationController::class, 'markAssistedPaymentReceived'])->name('consultation.payment-assistance.mark-paid');
         Route::post('/consultation/chat/mark-read/{messageId}', [\App\Http\Controllers\Admin\ConsultationController::class, 'markMessageAsRead'])->name('consultation.chat.markRead');
     });
 

@@ -19,6 +19,7 @@ use Illuminate\Support\Str;
 use App\Mail\ConsultationScheduledMail;
 use App\Mail\ConsultationScheduledNotificationMail;
 use App\Mail\ChatMessageNotification;
+use App\Mail\PaymentAssistanceRequestedMail;
 use Stripe\Stripe;
 use Stripe\PaymentIntent;
 
@@ -221,6 +222,93 @@ class ConsultationController extends Controller
         // This endpoint should not be reached in normal flow
         return $this->redirectWithBooking('consultation.payment-selection', $application)
             ->with('error', 'Please select a payment method and try again.');
+    }
+
+    /**
+     * Visitor requests another payment option when Stripe is not workable.
+     */
+    public function requestPaymentAssistance(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'note' => 'nullable|string|max:500',
+            'booking' => 'nullable|string|max:64',
+        ]);
+
+        if ($validator->fails()) {
+            if ($request->expectsJson()) {
+                return response()->json(['success' => false, 'errors' => $validator->errors()], 422);
+            }
+
+            return back()->withErrors($validator);
+        }
+
+        $application = $this->resolveApplication($request);
+
+        if (!$application) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Booking not found. Please restart from the consultation application form.',
+                ], 404);
+            }
+
+            return $this->localizedRedirect('consultation.application-forms')
+                ->with('error', 'Please complete the application form first.');
+        }
+
+        $alreadyRequested = $application->status === 'payment_assistance'
+            && $application->payment_assistance_requested_at;
+
+        if (!$alreadyRequested) {
+            $application->update([
+                'status' => 'payment_assistance',
+                'payment_assistance_requested_at' => now(),
+                'payment_assistance_note' => $request->input('note'),
+            ]);
+
+            $adminEmail = config('services.admin.email', 'contact@p23africa.com');
+
+            try {
+                Mail::to($adminEmail)->send(new PaymentAssistanceRequestedMail(
+                    $application->fresh(),
+                    self::CONSULTATION_AMOUNT_GBP,
+                    self::CONSULTATION_CURRENCY
+                ));
+            } catch (\Throwable $e) {
+                Log::error('Failed to send payment assistance admin email', [
+                    'application_id' => $application->id,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+
+            try {
+                AdminNotificationService::notifyPaymentAssistanceRequested($application->fresh());
+            } catch (\Throwable $e) {
+                Log::warning('Failed to create payment assistance admin notification', [
+                    'application_id' => $application->id,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        } elseif ($request->filled('note') && blank($application->payment_assistance_note)) {
+            $application->update(['payment_assistance_note' => $request->input('note')]);
+        }
+
+        $this->persistBookingContext($application);
+
+        $message = 'Thanks — our team will email you another way to pay. Your booking reference is '
+            . $application->booking_token . '.';
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'already_requested' => (bool) $alreadyRequested,
+                'message' => $message,
+                'booking_token' => $application->booking_token,
+            ]);
+        }
+
+        return $this->redirectWithBooking('consultation.payment-selection', $application)
+            ->with('success', $message);
     }
 
     public function createStripePaymentIntent(Request $request)

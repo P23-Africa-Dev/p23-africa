@@ -145,6 +145,9 @@
                                     <option value="">All Status</option>
                                     <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>
                                         Pending Payment</option>
+                                    <option value="payment_assistance"
+                                        {{ request('status') == 'payment_assistance' ? 'selected' : '' }}>
+                                        Payment Assistance</option>
                                     <option value="paid" {{ request('status') == 'paid' ? 'selected' : '' }}>Paid
                                     </option>
                                     <option value="scheduled"
@@ -220,9 +223,13 @@
                                                     <span class="badge bg-info">
                                                         <i class="fa fa-calendar-check me-1"></i>Scheduled
                                                     </span>
-                                                @elseif($application->payments->where('status', 'successful')->count() > 0)
+                                                @elseif($application->payments->where('status', 'successful')->count() > 0 || $application->status === 'paid')
                                                     <span class="badge bg-success">
                                                         <i class="fa fa-credit-card me-1"></i>Paid
+                                                    </span>
+                                                @elseif($application->status === 'payment_assistance')
+                                                    <span class="badge bg-danger">
+                                                        <i class="fa fa-hand-holding-usd me-1"></i>Payment Assistance
                                                     </span>
                                                 @else
                                                     <span class="badge bg-warning">

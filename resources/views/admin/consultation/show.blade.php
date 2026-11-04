@@ -27,10 +27,15 @@
                                     <i class="fa fa-calendar-check fa-3x text-info mb-2"></i>
                                     <h5 class="text-dark dark:text-gray-100">Scheduled</h5>
                                     <p class="text-muted dark:text-gray-400 mb-0">Session is scheduled</p>
-                                @elseif($application->payments->where('status', 'successful')->count() > 0)
+                                @elseif($application->payments->where('status', 'successful')->count() > 0 || $application->status === 'paid')
                                     <i class="fa fa-credit-card fa-3x text-success mb-2"></i>
                                     <h5 class="text-dark dark:text-gray-100">Payment Complete</h5>
                                     <p class="text-muted dark:text-gray-400 mb-0">Ready to schedule</p>
+                                @elseif($application->status === 'payment_assistance')
+                                    <i class="fa fa-hand-holding-usd fa-3x text-danger mb-2"></i>
+                                    <h5 class="text-dark dark:text-gray-100">Payment Assistance</h5>
+                                    <p class="text-muted dark:text-gray-400 mb-0">Client needs another payment option
+                                    </p>
                                 @else
                                     <i class="fa fa-clock fa-3x text-warning mb-2"></i>
                                     <h5 class="text-dark dark:text-gray-100">Pending Payment</h5>
@@ -179,53 +184,66 @@
                                 <div class="row">
                                     @if (!empty($enquiry['role']))
                                         <div class="col-md-6 mb-3">
-                                            <label class="form-label text-muted dark:text-gray-400"><small>Role</small></label><br>
+                                            <label
+                                                class="form-label text-muted dark:text-gray-400"><small>Role</small></label><br>
                                             <p class="text-dark dark:text-gray-200 mb-0">{{ $enquiry['role'] }}</p>
                                         </div>
                                     @endif
                                     @if (!empty($enquiry['country_code']))
                                         <div class="col-md-6 mb-3">
-                                            <label class="form-label text-muted dark:text-gray-400"><small>Country code</small></label><br>
-                                            <p class="text-dark dark:text-gray-200 mb-0">{{ $enquiry['country_code'] }}</p>
+                                            <label class="form-label text-muted dark:text-gray-400"><small>Country
+                                                    code</small></label><br>
+                                            <p class="text-dark dark:text-gray-200 mb-0">{{ $enquiry['country_code'] }}
+                                            </p>
                                         </div>
                                     @endif
                                     @if (!empty($enquiry['company_website']))
                                         <div class="col-md-6 mb-3">
-                                            <label class="form-label text-muted dark:text-gray-400"><small>Company website / LinkedIn</small></label><br>
+                                            <label class="form-label text-muted dark:text-gray-400"><small>Company
+                                                    website / LinkedIn</small></label><br>
                                             <p class="text-dark dark:text-gray-200 mb-0">
-                                                <a href="{{ $enquiry['company_website'] }}" target="_blank" rel="noopener" class="text-primary">{{ $enquiry['company_website'] }}</a>
+                                                <a href="{{ $enquiry['company_website'] }}" target="_blank"
+                                                    rel="noopener"
+                                                    class="text-primary">{{ $enquiry['company_website'] }}</a>
                                             </p>
                                         </div>
                                     @endif
                                     @if (!empty($enquiry['budget_range']) || $enquiry['budget_range'] === 0 || $enquiry['budget_range'] === '0')
                                         <div class="col-md-6 mb-3">
-                                            <label class="form-label text-muted dark:text-gray-400"><small>Budget</small></label><br>
+                                            <label
+                                                class="form-label text-muted dark:text-gray-400"><small>Budget</small></label><br>
                                             <p class="text-dark dark:text-gray-200 mb-0">
-                                                {{ $enquiry['budget_currency'] ?? 'GBP' }} {{ is_numeric($enquiry['budget_range']) ? number_format((float) $enquiry['budget_range'], 2) : $enquiry['budget_range'] }}
+                                                {{ $enquiry['budget_currency'] ?? 'GBP' }}
+                                                {{ is_numeric($enquiry['budget_range']) ? number_format((float) $enquiry['budget_range'], 2) : $enquiry['budget_range'] }}
                                             </p>
                                         </div>
                                     @endif
                                     @if (!empty($enquiry['start_timeline']))
                                         <div class="col-md-6 mb-3">
-                                            <label class="form-label text-muted dark:text-gray-400"><small>Start timeline</small></label><br>
-                                            <p class="text-dark dark:text-gray-200 mb-0">{{ $enquiry['start_timeline'] }}</p>
+                                            <label class="form-label text-muted dark:text-gray-400"><small>Start
+                                                    timeline</small></label><br>
+                                            <p class="text-dark dark:text-gray-200 mb-0">
+                                                {{ $enquiry['start_timeline'] }}</p>
                                         </div>
                                     @endif
                                     @if (!empty($enquiry['referral_source']))
                                         <div class="col-md-6 mb-3">
-                                            <label class="form-label text-muted dark:text-gray-400"><small>How they heard about us</small></label><br>
+                                            <label class="form-label text-muted dark:text-gray-400"><small>How they
+                                                    heard about us</small></label><br>
                                             <p class="text-dark dark:text-gray-200 mb-0">
-                                                {{ $enquiry['referral_source'] }}{{ !empty($enquiry['referral_other']) ? ' — '.$enquiry['referral_other'] : '' }}
+                                                {{ $enquiry['referral_source'] }}{{ !empty($enquiry['referral_other']) ? ' — ' . $enquiry['referral_other'] : '' }}
                                             </p>
                                         </div>
                                     @endif
                                     @if (!empty($enquiry['expansion_markets']))
                                         <div class="col-md-12 mb-3">
-                                            <label class="form-label text-muted dark:text-gray-400"><small>Expansion markets</small></label>
+                                            <label class="form-label text-muted dark:text-gray-400"><small>Expansion
+                                                    markets</small></label>
                                             <ul class="list-unstyled mb-0">
                                                 @foreach ((array) $enquiry['expansion_markets'] as $market)
                                                     <li class="text-dark dark:text-gray-200 mb-1">
-                                                        <i class="fa fa-map-marker-alt text-primary me-2"></i>{{ $market }}
+                                                        <i
+                                                            class="fa fa-map-marker-alt text-primary me-2"></i>{{ $market }}
                                                     </li>
                                                 @endforeach
                                             </ul>
@@ -233,23 +251,28 @@
                                     @endif
                                     @if (!empty($enquiry['message']))
                                         <div class="col-md-12 mb-3">
-                                            <label class="form-label text-muted dark:text-gray-400"><small>What they want to accomplish</small></label>
+                                            <label class="form-label text-muted dark:text-gray-400"><small>What they
+                                                    want to accomplish</small></label>
                                             <div class="bg-light dark:bg-gray-700 p-3 rounded">
-                                                <p class="text-dark dark:text-gray-200 mb-0">{{ $enquiry['message'] }}</p>
+                                                <p class="text-dark dark:text-gray-200 mb-0">{{ $enquiry['message'] }}
+                                                </p>
                                             </div>
                                         </div>
                                     @endif
                                     @if (!empty($enquiry['additional_notes']))
                                         <div class="col-md-12 mb-3">
-                                            <label class="form-label text-muted dark:text-gray-400"><small>Additional notes</small></label>
+                                            <label class="form-label text-muted dark:text-gray-400"><small>Additional
+                                                    notes</small></label>
                                             <div class="bg-light dark:bg-gray-700 p-3 rounded">
-                                                <p class="text-dark dark:text-gray-200 mb-0">{{ $enquiry['additional_notes'] }}</p>
+                                                <p class="text-dark dark:text-gray-200 mb-0">
+                                                    {{ $enquiry['additional_notes'] }}</p>
                                             </div>
                                         </div>
                                     @endif
                                     @if (!empty($enquiry['preferred_slot']['session_date']))
                                         <div class="col-md-12 mb-3">
-                                            <label class="form-label text-muted dark:text-gray-400"><small>Requested consultation slot</small></label><br>
+                                            <label class="form-label text-muted dark:text-gray-400"><small>Requested
+                                                    consultation slot</small></label><br>
                                             <p class="text-dark dark:text-gray-200 mb-0">
                                                 {{ $enquiry['preferred_slot']['session_date'] }}
                                                 at {{ $enquiry['preferred_slot']['session_time'] ?? '' }}
@@ -259,8 +282,10 @@
                                     @endif
                                     @if (!empty($enquiry['contact_submission_id']))
                                         <div class="col-md-12 mb-1">
-                                            <a href="{{ orgRoute('admin.contact.show', $enquiry['contact_submission_id']) }}" class="btn btn-sm btn-outline-primary">
-                                                <i class="fa fa-envelope me-1"></i>Open linked contact submission #{{ $enquiry['contact_submission_id'] }}
+                                            <a href="{{ orgRoute('admin.contact.show', $enquiry['contact_submission_id']) }}"
+                                                class="btn btn-sm btn-outline-primary">
+                                                <i class="fa fa-envelope me-1"></i>Open linked contact submission
+                                                #{{ $enquiry['contact_submission_id'] }}
                                             </a>
                                         </div>
                                     @endif
@@ -272,6 +297,79 @@
 
                 <!-- Payment & Schedule Information -->
                 <div class="col-lg-4">
+                    @if ($application->status === 'payment_assistance' || $application->payment_assistance_requested_at)
+                        <div
+                            class="card border-0 shadow-sm dark:bg-gray-800 dark-transition mb-4 border-start border-danger border-3">
+                            <div class="card-header bg-transparent border-0 pt-4 pb-3">
+                                <h5 class="mb-0 text-dark dark:text-gray-100">
+                                    <i class="fa fa-hand-holding-usd me-2 text-danger"></i>Payment Assistance
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label class="form-label text-muted dark:text-gray-400"><small>Requested
+                                            at</small></label>
+                                    <p class="text-dark dark:text-gray-200 mb-0">
+                                        {{ optional($application->payment_assistance_requested_at)->format('M d, Y h:i A') ?? '—' }}
+                                    </p>
+                                </div>
+                                @if ($application->payment_assistance_note)
+                                    <div class="mb-3">
+                                        <label class="form-label text-muted dark:text-gray-400"><small>Client
+                                                note</small></label>
+                                        <div class="bg-light dark:bg-gray-700 p-3 rounded">
+                                            <p class="text-dark dark:text-gray-200 mb-0">
+                                                {{ $application->payment_assistance_note }}</p>
+                                        </div>
+                                    </div>
+                                @endif
+                                @if ($application->payment_assistance_admin_note)
+                                    <div class="mb-3">
+                                        <label class="form-label text-muted dark:text-gray-400"><small>Last
+                                                instructions sent</small></label>
+                                        <div class="bg-light dark:bg-gray-700 p-3 rounded">
+                                            <p class="text-dark dark:text-gray-200 mb-0"
+                                                style="white-space: pre-wrap;">
+                                                {{ $application->payment_assistance_admin_note }}</p>
+                                        </div>
+                                    </div>
+                                @endif
+
+                                @if ($application->payments->where('status', 'successful')->count() === 0)
+                                    <form method="POST"
+                                        action="{{ orgRoute('admin.consultation.payment-assistance.instructions', $application->id) }}"
+                                        class="mb-4">
+                                        @csrf
+                                        <label class="form-label text-dark dark:text-gray-200">Send payment
+                                            instructions</label>
+                                        <textarea name="instructions" class="form-control mb-2 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
+                                            rows="4" required minlength="10"
+                                            placeholder="Bank transfer details, invoice link, or other payment steps…">{{ old('instructions', $application->payment_assistance_admin_note) }}</textarea>
+                                        <button type="submit" class="btn btn-outline-primary btn-sm">
+                                            <i class="fa fa-paper-plane me-1"></i>Email instructions to client
+                                        </button>
+                                    </form>
+
+                                    <form method="POST"
+                                        action="{{ orgRoute('admin.consultation.payment-assistance.mark-paid', $application->id) }}">
+                                        @csrf
+                                        <label class="form-label text-dark dark:text-gray-200">Mark assisted payment
+                                            received</label>
+                                        <input type="text" name="reference"
+                                            class="form-control mb-2 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
+                                            placeholder="Optional payment reference">
+                                        <textarea name="notes" class="form-control mb-2 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
+                                            rows="2" placeholder="Optional internal notes"></textarea>
+                                        <button type="submit" class="btn btn-success btn-sm"
+                                            onclick="return confirm('Confirm that GBP 75.00 has been received outside Stripe?')">
+                                            <i class="fa fa-check me-1"></i>Mark paid (GBP 75.00)
+                                        </button>
+                                    </form>
+                                @endif
+                            </div>
+                        </div>
+                    @endif
+
                     <!-- Payment Information -->
                     <div class="card border-0 shadow-sm dark:bg-gray-800 dark-transition mb-4">
                         <div class="card-header bg-transparent border-0 pt-4 pb-3">
@@ -284,18 +382,20 @@
                                 @foreach ($application->payments as $payment)
                                     <div class="mb-3 pb-3 {{ !$loop->last ? 'border-bottom' : '' }}">
                                         <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <span
-                                                class="fw-medium text-dark dark:text-gray-100">${{ number_format($payment->amount / 100, 2) }}</span>
+                                            <span class="fw-medium text-dark dark:text-gray-100">
+                                                {{ strtoupper($payment->currency ?? 'GBP') }}
+                                                {{ number_format((float) $payment->amount, 2) }}
+                                            </span>
                                             <span
                                                 class="badge bg-{{ $payment->status == 'successful' ? 'success' : ($payment->status == 'pending' ? 'warning' : 'danger') }}">
                                                 {{ ucfirst($payment->status) }}
                                             </span>
                                         </div>
                                         <div class="small text-muted dark:text-gray-400">
-                                            <div>{{ ucfirst($payment->gateway) }} Payment</div>
+                                            <div>{{ ucfirst($payment->payment_method ?? 'card') }} Payment</div>
                                             <div>{{ $payment->created_at->format('M d, Y h:i A') }}</div>
-                                            @if ($payment->transaction_id)
-                                                <div>ID: {{ $payment->transaction_id }}</div>
+                                            @if ($payment->payment_reference)
+                                                <div>Ref: {{ $payment->payment_reference }}</div>
                                             @endif
                                         </div>
                                     </div>

@@ -21,6 +21,9 @@ class ConsultationApplication extends Model
         'selected_challenges',
         'desired_outcomes',
         'status',
+        'payment_assistance_requested_at',
+        'payment_assistance_note',
+        'payment_assistance_admin_note',
         'submitted_at',
         'locale',
     ];
@@ -29,6 +32,7 @@ class ConsultationApplication extends Model
         'selected_goals' => 'array',
         'selected_challenges' => 'array',
         'submitted_at' => 'datetime',
+        'payment_assistance_requested_at' => 'datetime',
     ];
 
     public function payment(): HasOne
@@ -69,6 +73,7 @@ class ConsultationApplication extends Model
         return match ($this->status) {
             'pending' => 'Pending Review',
             'payment_pending' => 'Payment Pending',
+            'payment_assistance' => 'Payment Assistance Requested',
             'paid' => 'Payment Completed',
             'scheduled' => 'Consultation Scheduled',
             'completed' => 'Completed',
