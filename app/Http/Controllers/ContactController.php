@@ -963,32 +963,31 @@ class ContactController extends Controller
                 return;
             }
 
-            // Mark as sent FIRST to prevent duplicate queue entries
-            $submission->update(['email_sent_at' => now()]);
-
             $submissionData = $submission->toArray();
 
-            // Queue email to site owner (async - won't block response)
             Mail::to('contact@p23africa.com')->send(new ContactFormMail($submissionData));
 
-            // Queue thank-you email to user (async - won't block response)
             if ($submission->email) {
                 Mail::to($submission->email)->send(
                     (new ThankYouMail($submissionData))->locale($submission->locale ?: 'en')
                 );
             }
 
-            Log::info('Submission emails queued successfully', [
+            // Only mark sent after SMTP succeeds; update solely this column so
+            // in-memory project_details never block delivery on older schemas.
+            ContactSubmission::whereKey($submission->id)->update(['email_sent_at' => now()]);
+            $submission->email_sent_at = now();
+
+            Log::info('Submission emails sent successfully', [
                 'submission_id' => $submission->id,
                 'email' => $submission->email
             ]);
         } catch (\Exception $mailException) {
-            Log::error('Failed to queue submission emails', [
+            Log::error('Failed to send submission emails', [
                 'error' => $mailException->getMessage(),
                 'submission_id' => $submission->id,
                 'email' => $submission->email
             ]);
-            // Don't clear email_sent_at - emails will be retried by queue worker
         }
     }
 }
