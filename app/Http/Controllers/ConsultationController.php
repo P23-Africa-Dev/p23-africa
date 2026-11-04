@@ -295,7 +295,7 @@ class ConsultationController extends Controller
 
         $this->persistBookingContext($application);
 
-        $message = 'Thanks — our team will email you another way to pay. Your booking reference is '
+        $message = 'Thanks, our team will email you another way to pay. Your booking reference is '
             . $application->booking_token . '.';
 
         if ($request->expectsJson()) {
@@ -1250,8 +1250,8 @@ class ConsultationController extends Controller
         $raw = (string) config('services.stripe.allowed_currencies', 'GBP,USD,EUR,NGN,GHS,KES,ZAR,CAD,AUD');
 
         $currencies = collect(explode(',', $raw))
-            ->map(fn ($item) => strtoupper(trim($item)))
-            ->filter(fn ($item) => preg_match('/^[A-Z]{3}$/', $item) === 1)
+            ->map(fn($item) => strtoupper(trim($item)))
+            ->filter(fn($item) => preg_match('/^[A-Z]{3}$/', $item) === 1)
             ->unique()
             ->values()
             ->all();

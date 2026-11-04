@@ -48,15 +48,13 @@
                                         <textarea id="site-error-log-{{ $error->id }}" class="visually-hidden" readonly aria-hidden="true">{{ $error->fullErrorLog() }}</textarea>
                                         <button type="button"
                                             class="btn btn-outline-primary btn-sm copy-site-error-log"
-                                            data-source="site-error-log-{{ $error->id }}"
-                                            title="Copy full error"
+                                            data-source="site-error-log-{{ $error->id }}" title="Copy full error"
                                             aria-label="Copy full error">
                                             <i class="fa fa-copy" aria-hidden="true"></i>
                                             <span class="visually-hidden" data-label>Copy full error</span>
                                         </button>
                                         <a href="{{ route('admin.site-errors.show', $error) }}"
-                                            class="btn btn-outline-secondary btn-sm"
-                                            title="View error details"
+                                            class="btn btn-outline-secondary btn-sm" title="View error details"
                                             aria-label="View error details">
                                             <i class="fa fa-eye" aria-hidden="true"></i>
                                         </a>

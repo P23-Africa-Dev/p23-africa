@@ -166,8 +166,8 @@ class ContactController extends Controller
             $assessment = $request->input('form_flow') === 'contact-v3';
             $stepped = $assessment || $request->input('form_flow') === 'contact-v2';
             if ($assessment && is_array($request->input('selected_goals'))) {
-                $services = collect($request->input('selected_goals'))->filter(fn ($goal) => is_string($goal))
-                    ->map(fn ($goal) => config("contact.assessment_goals.$goal.service"))->filter()->unique()->values()->all();
+                $services = collect($request->input('selected_goals'))->filter(fn($goal) => is_string($goal))
+                    ->map(fn($goal) => config("contact.assessment_goals.$goal.service"))->filter()->unique()->values()->all();
                 $request->merge(['services' => implode(', ', $services) ?: 'Exploring / other request']);
             } elseif ($stepped && is_array($request->input('selected_services'))) {
                 $request->merge(['services' => implode(', ', array_filter($request->input('selected_services'), 'is_string'))]);
@@ -194,7 +194,7 @@ class ContactController extends Controller
                     $request->ip()
             );
             if ($stepped) {
-                $submissionKey .= '_'.$assessmentFingerprint;
+                $submissionKey .= '_' . $assessmentFingerprint;
             }
 
             // Only use cache-based deduplication if cache is healthy
@@ -333,7 +333,7 @@ class ContactController extends Controller
             if ($assessment) {
                 $sanitizedData['project_details'] += [
                     'company_website' => $validated['company_website'],
-                    'selected_goals' => array_map(fn ($goal) => config("contact.assessment_goals.$goal.label"), $validated['selected_goals']),
+                    'selected_goals' => array_map(fn($goal) => config("contact.assessment_goals.$goal.label"), $validated['selected_goals']),
                 ];
             }
 
@@ -457,7 +457,7 @@ class ContactController extends Controller
 
         $token = $this->encodeAssessmentState($submission, $route);
         $separator = str_contains($baseUrl, '?') ? '&' : '?';
-        $outcome['url'] = $baseUrl.$separator.'assessment='.urlencode($token);
+        $outcome['url'] = $baseUrl . $separator . 'assessment=' . urlencode($token);
 
         return $outcome;
     }
@@ -627,7 +627,7 @@ class ContactController extends Controller
     {
         return [
             // Paid consultations are booked from tomorrow onwards (ConsultationController::scheduleSession).
-            'session_date' => 'required|date_format:Y-m-d|'.($allowToday ? 'after_or_equal' : 'after').':today|before_or_equal:'.now()->addMonths(6)->format('Y-m-d'),
+            'session_date' => 'required|date_format:Y-m-d|' . ($allowToday ? 'after_or_equal' : 'after') . ':today|before_or_equal:' . now()->addMonths(6)->format('Y-m-d'),
             'session_time' => 'required|date_format:H:i',
             // The scheduling page sends the IANA zone "Africa/Lagos" for WAT.
             'timezone' => ['required', Rule::in(['GMT', 'UTC', 'WAT', 'Africa/Lagos'])],
@@ -707,16 +707,16 @@ class ContactController extends Controller
     {
         try {
             $timezone = $slot['timezone'] === 'WAT' ? 'Africa/Lagos' : $slot['timezone'];
-            $start = Carbon::createFromFormat('Y-m-d H:i', $slot['session_date'].' '.$slot['session_time'], $timezone);
+            $start = Carbon::createFromFormat('Y-m-d H:i', $slot['session_date'] . ' ' . $slot['session_time'], $timezone);
             $end = $start->copy()->addMinutes((int) config('contact.discovery_call_minutes', 30));
             $adminEmail = config('services.admin.email', 'contact@p23africa.com');
             $description = "Discovery call\n\n"
-                ."Name: {$submission->name}\n"
-                ."Company: {$submission->company_name}\n"
-                ."Email: {$submission->email}\n"
-                ."Phone: {$submission->phone}\n\n"
-                ."Project:\n{$submission->message}\n\n"
-                .'This call will be held on Google Meet.';
+                . "Name: {$submission->name}\n"
+                . "Company: {$submission->company_name}\n"
+                . "Email: {$submission->email}\n"
+                . "Phone: {$submission->phone}\n\n"
+                . "Project:\n{$submission->message}\n\n"
+                . 'This call will be held on Google Meet.';
 
             $result = app(GoogleCalendarService::class)->createEvent(
                 'P23 Africa Discovery Call',
@@ -846,7 +846,7 @@ class ContactController extends Controller
             'booking_token' => (string) Str::uuid(),
             'name' => $submission->name,
             'email' => $submission->email,
-            'phone' => trim(($submission->country_code ?? '').' '.$submission->phone),
+            'phone' => trim(($submission->country_code ?? '') . ' ' . $submission->phone),
             'company' => $submission->company_name,
             'website_or_handle' => $details['company_website'] ?? null,
             'industry' => $details['industry'] ?? 'Not specified',
@@ -947,7 +947,7 @@ class ContactController extends Controller
 
     private function keyChallengeOptions(): array
     {
-        return array_map(fn ($key) => __("consultation.$key"), ['ch_sales', 'ch_marketing', 'ch_customers', 'ch_ops', 'ch_money', 'ch_fit', 'ch_scale']);
+        return array_map(fn($key) => __("consultation.$key"), ['ch_sales', 'ch_marketing', 'ch_customers', 'ch_ops', 'ch_money', 'ch_fit', 'ch_scale']);
     }
 
     private function sendSubmissionEmails(ContactSubmission $submission)

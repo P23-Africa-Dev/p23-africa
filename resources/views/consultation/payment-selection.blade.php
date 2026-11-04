@@ -965,7 +965,7 @@
                 if (successEl) {
                     successEl.style.display = 'block';
                     successEl.textContent = data.message ||
-                        'Thanks — our team will email you another way to pay.';
+                        'Thanks, our team will email you another way to pay.';
                 }
 
                 if (btn) {
