@@ -4,8 +4,8 @@ return [
     'assessment_goals' => [
         'expand' => ['label' => 'Expand into African countries', 'service' => 'Market Entry & Expansion'],
         'research' => ['label' => 'Understand customers and competitors', 'service' => 'Market Entry & Expansion'],
-        'partners' => ['label' => 'Find distributors and local partners', 'service' => 'Distributor & Partner Development'],
-        'demand' => ['label' => 'Generate qualified sales opportunities', 'service' => 'Outbound Sales Demand Testing'],
+        'partners' => ['label' => 'Find distributors and local partners', 'service' => 'Finding & Verifying Distributors'],
+        'demand' => ['label' => 'Generate qualified sales opportunities', 'service' => 'Market Testing'],
         'operations' => ['label' => 'Strengthen sales and operations', 'service' => 'Sales & Market Support'],
         'investment' => ['label' => 'Prepare for investment and growth', 'service' => 'Investment & Growth Readiness'],
         'exploring' => ['label' => 'Explore my options', 'service' => null],
@@ -28,8 +28,8 @@ return [
     ],
     'services' => [
         'Market Entry & Expansion',
-        'Distributor & Partner Development',
-        'Outbound Sales Demand Testing',
+        'Finding & Verifying Distributors',
+        'Market Testing',
         'Sales & Market Support',
         'Investment & Growth Readiness',
     ],

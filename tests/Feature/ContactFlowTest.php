@@ -32,7 +32,7 @@ class ContactFlowTest extends TestCase
             'email' => 'contact-flow@example.test', 'phone' => '8012345678', 'country_code' => '+234',
             'role' => 'Founder', 'industry' => 'Manufacturing',
             'business_description' => 'We manufacture commercial equipment.',
-            'selected_services' => ['Market Entry & Expansion', 'Distributor & Partner Development'],
+            'selected_services' => ['Market Entry & Expansion', 'Finding & Verifying Distributors'],
             'expansion_markets' => ['Nigeria', 'Ghana'], 'message' => 'Find a distributor and test buyer demand.',
             'referral_source' => 'LinkedIn', 'start_timeline' => 'Within the next month',
             'budget_range' => 12000, 'additional_notes' => 'Our team is based in London.',
@@ -43,7 +43,7 @@ class ContactFlowTest extends TestCase
     {
         $this->postJson('/contact', $this->enquiry())->assertOk()->assertJson(['success' => true]);
         $submission = ContactSubmission::sole();
-        $this->assertSame(['Market Entry & Expansion', 'Distributor & Partner Development'], $submission->services);
+        $this->assertSame(['Market Entry & Expansion', 'Finding & Verifying Distributors'], $submission->services);
         $this->assertSame(['Nigeria', 'Ghana'], $submission->project_details['expansion_markets']);
         $this->assertSame('Founder', $submission->project_details['role']);
         $this->assertEquals(12000, $submission->budget_range);
