@@ -59,7 +59,7 @@ body.contact-flow-page #navbar,body.contact-flow-page .p23-navbar-wrapper{displa
 .cf-needs,.cf-readiness{grid-template-columns:minmax(0,589fr) minmax(0,346fr);gap:54px}
 .cf-choice-group,.cf-referrals{border:0;padding:0;margin:0;min-width:0}
 .cf-choice-group legend,.cf-referrals legend{margin-bottom:13px}
-.cf-choices{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;min-height:141px;align-content:start}
+.cf-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;min-height:141px;align-content:start}
 .cf-choice{position:relative;display:flex;min-height:58px;cursor:pointer}
 .cf-choice input{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer}
 .cf-choice>span{display:flex;align-items:center;justify-content:center;width:100%;padding:10px 15px;border:1px solid #e2e2e2;border-radius:10px;box-shadow:0 10px 10px #21212126;background:white;font:400 13px/16px 'Contact Condensed',sans-serif;letter-spacing:.5px;text-align:center}
