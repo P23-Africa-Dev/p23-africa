@@ -10,10 +10,12 @@ use App\Models\ScheduledSession;
 use App\Services\GoogleCalendarService;
 use App\Mail\ConsultationScheduledMail;
 use App\Mail\ConsultationScheduledNotificationMail;
+use App\Mail\PaymentAssistanceInstructionsMail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class ConsultationController extends Controller
 {
@@ -29,14 +31,20 @@ class ConsultationController extends Controller
         if ($request->filled('status')) {
             switch ($request->status) {
                 case 'pending':
-                    $query->where('status', 'pending')
+                    $query->whereIn('status', ['pending', 'payment_pending'])
                         ->whereDoesntHave('payments', function ($q) {
                             $q->where('status', 'successful');
                         });
                     break;
+                case 'payment_assistance':
+                    $query->where('status', 'payment_assistance');
+                    break;
                 case 'paid':
-                    $query->whereHas('payments', function ($q) {
-                        $q->where('status', 'successful');
+                    $query->where(function ($q) {
+                        $q->where('status', 'paid')
+                            ->orWhereHas('payments', function ($paymentQuery) {
+                                $paymentQuery->where('status', 'successful');
+                            });
                     })->whereDoesntHave('scheduledSessions');
                     break;
                 case 'scheduled':
@@ -212,6 +220,84 @@ class ConsultationController extends Controller
                 'message' => 'Failed to mark message as read'
             ], 500);
         }
+    }
+
+    /**
+     * Email the client alternative payment instructions.
+     */
+    public function sendPaymentAssistanceInstructions(Request $request, $id)
+    {
+        $request->validate([
+            'instructions' => 'required|string|min:10|max:5000',
+        ]);
+
+        $application = ConsultationApplication::findOrFail($id);
+
+        $application->update([
+            'payment_assistance_admin_note' => $request->instructions,
+            'status' => $application->status === 'paid' ? $application->status : 'payment_assistance',
+        ]);
+
+        try {
+            Mail::to($application->email)->send(new PaymentAssistanceInstructionsMail(
+                $application->fresh(),
+                $request->instructions,
+                75.00,
+                'GBP'
+            ));
+        } catch (\Throwable $e) {
+            Log::error('Failed to send payment assistance instructions email', [
+                'application_id' => $application->id,
+                'error' => $e->getMessage(),
+            ]);
+
+            return back()->with('error', 'Saved the note, but the email failed to send: ' . $e->getMessage());
+        }
+
+        return back()->with('success', 'Payment instructions emailed to ' . $application->email);
+    }
+
+    /**
+     * Record that an assisted (non-Stripe) payment was received.
+     */
+    public function markAssistedPaymentReceived(Request $request, $id)
+    {
+        $request->validate([
+            'reference' => 'nullable|string|max:255',
+            'notes' => 'nullable|string|max:1000',
+        ]);
+
+        $application = ConsultationApplication::findOrFail($id);
+
+        $existingSuccessful = $application->payments()
+            ->where('status', 'successful')
+            ->exists();
+
+        if ($existingSuccessful) {
+            $application->update(['status' => 'paid']);
+
+            return back()->with('success', 'This booking already has a successful payment and is marked paid.');
+        }
+
+        Payment::create([
+            'consultation_application_id' => $application->id,
+            'payment_method' => 'assisted',
+            'payment_reference' => $request->input('reference') ?: ('ASSISTED_' . Str::upper(Str::random(10))),
+            'amount' => 75.00,
+            'currency' => 'GBP',
+            'status' => 'successful',
+            'paid_at' => now(),
+            'payment_data' => [
+                'source' => 'admin_assisted',
+                'notes' => $request->input('notes'),
+                'recorded_by' => Auth::id(),
+                'recorded_by_name' => Auth::user()?->name,
+            ],
+        ]);
+
+        $application->update(['status' => 'paid']);
+
+        return back()->with('success', 'Assisted payment recorded. You can now schedule the consultation.');
     }
 
     /**

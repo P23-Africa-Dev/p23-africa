@@ -89,6 +89,14 @@ class SiteErrorPageTest extends TestCase
             ->get(route('admin.site-errors.show', $error))
             ->assertOk()
             ->assertSee('Route was missing')
-            ->assertSee('routes/web.php');
+            ->assertSee('routes/web.php')
+            ->assertSee('Copy full error log');
+
+        $this->actingAs($admin)
+            ->get(route('admin.site-errors.index'))
+            ->assertOk()
+            ->assertSee('aria-label="Copy full error"', false)
+            ->assertSee('aria-label="View error details"', false)
+            ->assertSee('GET /services');
     }
 }

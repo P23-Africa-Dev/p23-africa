@@ -212,7 +212,7 @@
 
             {{-- Applications & Reports (admin only) --}}
             @if (auth()->user() && auth()->user()->hasRole('admin'))
-                <div class="sidebar-section" x-data="{ open: {{ request()->routeIs('admin.consultation.*', 'admin.brn.*', 'admin.clicks.*', 'org.admin.consultation.*', 'org.admin.brn.*', 'org.admin.clicks.*') ? 'true' : 'false' }} }">
+                <div class="sidebar-section" x-data="{ open: {{ request()->routeIs('admin.consultation.*', 'admin.brn.*', 'admin.clicks.*', 'admin.african-expansion.*', 'org.admin.consultation.*', 'org.admin.brn.*', 'org.admin.clicks.*', 'org.admin.african-expansion.*') ? 'true' : 'false' }} }">
                     <button @click="open=!open" data-tooltip="Applications" class="sidebar-dropdown-toggle">
                         <span class="sidebar-icon"><i class="bi bi-graph-up-arrow"></i></span>
                         <span class="sidebar-text">Applications</span>
@@ -230,6 +230,10 @@
                         <a href="{{ url($sidebarOrgPrefix . '/admin/clicks/report') }}"
                             class="sidebar-subitem {{ request()->routeIs('admin.clicks.*', 'org.admin.clicks.*') ? 'active' : '' }}">
                             <i class="bi bi-cursor"></i><span>Click Reports</span>
+                        </a>
+                        <a href="{{ url($sidebarOrgPrefix . '/admin/african-expansion') }}"
+                            class="sidebar-subitem {{ request()->routeIs('admin.african-expansion.*', 'org.admin.african-expansion.*') ? 'active' : '' }}">
+                            <i class="bi bi-file-earmark-pdf"></i><span>Expansion Guide</span>
                         </a>
                     </div>
                 </div>

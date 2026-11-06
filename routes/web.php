@@ -1,6 +1,8 @@
 <?php
 
 use App\Helpers\ClickTracker;
+use App\Http\Controllers\AfricanExpansionGuideController;
+use App\Http\Controllers\Admin\AfricanExpansionReportController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ClickReportController;
@@ -132,6 +134,9 @@ Route::get('/african-expansion-for-manufacturers', function () {
     return view('landing.african-expansion-for-manufacturers');
 })->name('lead-magnets.african-expansion');
 
+Route::get('/african-expansion-for-manufacturers/guide', AfricanExpansionGuideController::class)
+    ->name('lead-magnets.african-expansion.guide');
+
 // Backward compatibility & SEO 301 Redirects
 Route::get('/market-demand-testing', fn() => redirect()->route('services.market-demand-testing', [], 301));
 Route::get('/market-entry', fn() => redirect()->route('services.market-demand-testing', [], 301))->name('services.market-entry');
@@ -212,8 +217,8 @@ Route::get('/brn-form', function () {
     return redirect('/noel54/interest-form');
 });
 
-Route::get("/en", fn () => redirect("/", 301));
-Route::get("/en/{path}", fn (string $path) => redirect("/".$path, 301))->where("path", ".*");
+Route::get("/en", fn() => redirect("/", 301));
+Route::get("/en/{path}", fn(string $path) => redirect("/" . $path, 301))->where("path", ".*");
 
 Route::get('/sitemap.xml', \App\Http\Controllers\SitemapController::class)->name('sitemap');
 
@@ -258,6 +263,9 @@ Route::post("/book-consultation/payment/initiate", [App\Http\Controllers\Consult
 Route::post("/book-consultation/payment/process", [App\Http\Controllers\ConsultationController::class, "processPayment"])->name("consultation.payment.process");
 Route::post("/book-consultation/payment/callback", [App\Http\Controllers\ConsultationController::class, "handlePaymentCallback"])->name("consultation.payment.callback");
 Route::post("/book-consultation/payment/create-intent", [App\Http\Controllers\ConsultationController::class, "createStripePaymentIntent"])->name("consultation.payment.create-intent");
+Route::post("/book-consultation/payment/assistance", [App\Http\Controllers\ConsultationController::class, "requestPaymentAssistance"])
+    ->middleware("throttle:5,1")
+    ->name("consultation.payment.assistance");
 Route::get("/book-consultation/payment/callback/{reference}/{status}", [App\Http\Controllers\ConsultationController::class, "handlePaymentCallbackLegacy"])->name("consultation.payment.callback.legacy");
 
 Route::get("/google/calendar/auth", [App\Http\Controllers\ConsultationController::class, "googleCalendarAuth"])->name("google.calendar.auth");
@@ -321,6 +329,8 @@ Route::middleware(['auth', 'check.suspended', 'resolve.org', 'role:admin|supervi
             Route::post('/consultations/{id}/update-status', [\App\Http\Controllers\Admin\ConsultationController::class, 'updateStatus'])->name('consultation.updateStatus');
             Route::post('/consultations/{id}/reply', [\App\Http\Controllers\Admin\ConsultationController::class, 'sendReply'])->name('consultation.reply');
             Route::post('/consultations/{id}/manual-schedule', [\App\Http\Controllers\Admin\ConsultationController::class, 'manualSchedule'])->name('consultation.manual-schedule');
+            Route::post('/consultations/{id}/payment-assistance/instructions', [\App\Http\Controllers\Admin\ConsultationController::class, 'sendPaymentAssistanceInstructions'])->name('consultation.payment-assistance.instructions');
+            Route::post('/consultations/{id}/payment-assistance/mark-paid', [\App\Http\Controllers\Admin\ConsultationController::class, 'markAssistedPaymentReceived'])->name('consultation.payment-assistance.mark-paid');
             Route::post('/consultation/chat/mark-read/{messageId}', [\App\Http\Controllers\Admin\ConsultationController::class, 'markMessageAsRead'])->name('consultation.chat.markRead');
         });
 
@@ -405,6 +415,11 @@ Route::middleware(['auth', 'check.suspended', 'resolve.org', 'role:admin|supervi
         Route::get('/clicks/report', [ClickReportController::class, 'index'])->name('clicks.report');
         Route::get('/clicks/export', [ClickReportController::class, 'export'])->name('clicks.export');
         Route::post('/clicks/backfill-countries', [ClickReportController::class, 'backfillCountries'])->name('clicks.backfill-countries');
+
+        Route::middleware('role:admin')->group(function () {
+            Route::get('/african-expansion', [AfricanExpansionReportController::class, 'index'])->name('african-expansion.index');
+            Route::get('/african-expansion/export', [AfricanExpansionReportController::class, 'export'])->name('african-expansion.export');
+        });
 
         Route::middleware('legacy.analytics')->group(function () {
             Route::get('/link-tracking', [TrackedLinkAnalyticsController::class, 'index'])->name('link-tracking.index');
@@ -527,6 +542,8 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
         Route::post('/consultations/{id}/update-status', [\App\Http\Controllers\Admin\ConsultationController::class, 'updateStatus'])->name('consultation.updateStatus');
         Route::post('/consultations/{id}/reply', [\App\Http\Controllers\Admin\ConsultationController::class, 'sendReply'])->name('consultation.reply');
         Route::post('/consultations/{id}/manual-schedule', [\App\Http\Controllers\Admin\ConsultationController::class, 'manualSchedule'])->name('consultation.manual-schedule');
+        Route::post('/consultations/{id}/payment-assistance/instructions', [\App\Http\Controllers\Admin\ConsultationController::class, 'sendPaymentAssistanceInstructions'])->name('consultation.payment-assistance.instructions');
+        Route::post('/consultations/{id}/payment-assistance/mark-paid', [\App\Http\Controllers\Admin\ConsultationController::class, 'markAssistedPaymentReceived'])->name('consultation.payment-assistance.mark-paid');
         Route::post('/consultation/chat/mark-read/{messageId}', [\App\Http\Controllers\Admin\ConsultationController::class, 'markMessageAsRead'])->name('consultation.chat.markRead');
     });
 
@@ -688,6 +705,11 @@ Route::middleware(['auth', 'check.suspended', 'role:admin|supervisor|staff'])->p
     Route::get('/clicks/report', [ClickReportController::class, 'index'])->name('clicks.report');
     Route::get('/clicks/export', [ClickReportController::class, 'export'])->name('clicks.export');
     Route::post('/clicks/backfill-countries', [ClickReportController::class, 'backfillCountries'])->name('clicks.backfill-countries');
+
+    Route::middleware('role:admin')->group(function () {
+        Route::get('/african-expansion', [AfricanExpansionReportController::class, 'index'])->name('african-expansion.index');
+        Route::get('/african-expansion/export', [AfricanExpansionReportController::class, 'export'])->name('african-expansion.export');
+    });
 
     Route::middleware('legacy.analytics')->group(function () {
         Route::get('/link-tracking', [TrackedLinkAnalyticsController::class, 'index'])->name('link-tracking.index');

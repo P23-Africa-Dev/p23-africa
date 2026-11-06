@@ -4,11 +4,11 @@
 @section('hide_navbar', '1')
 @section('navbar_consultation_label', 'Book Consultation')
 @section('meta')
-<meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 <meta name="description" content="Tell P23 Africa about your business, your expansion plans, and the support you need. Start a conversation with our team.">
 <link rel="stylesheet" href="{{ asset('css/services-new.css') }}">
 <link rel="stylesheet" href="{{ asset('css/contact-flow.css') }}?v=9">
-<script src="{{ asset('js/contact-flow.js') }}?v=8" defer></script>
+<script src="{{ asset('js/contact-flow.js') }}?v=9" defer></script>
 @endsection
 @section('content')
 @php
@@ -18,24 +18,24 @@
 <section class="cf-stage" aria-label="Contact P23 Africa">
     <noscript><p class="cf-alert">Please enable JavaScript to use this three-step enquiry form.</p></noscript>
     <form id="contactFlow" class="cf-form" method="POST" action="{{ route('contact.submit') }}" data-resource-url="{{ locale_route('resource-hub') }}" data-consultation-url="{{ locale_route('contact.consultation.schedule') }}" data-discovery-url="{{ locale_route('contact.discovery.schedule') }}" novalidate>
-        @csrf
+                            @csrf
         <input type="hidden" name="form_flow" value="contact-v2">
         <div class="cf-badge" aria-hidden="true">
             <img id="cfRing" class="cf-ring" src="{{ asset('images/contact/ring-1.svg') }}" alt="" data-ring-base="{{ asset('images/contact') }}">
             <img class="cf-ring-inner" src="{{ asset('images/contact/ring-inner.svg') }}" alt="">
             <span id="cfStepNumber">01</span>
-        </div>
+                            </div>
         <header class="cf-header">
             <div class="cf-progress">
                 <span id="cfStepCount">01 of 03</span>
                 <div id="cfProgress" role="progressbar" aria-label="Form progress" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1"><span></span></div>
-            </div>
+                                            </div>
             <h1 id="cfTitle" tabindex="-1">Business Overview</h1>
             <p id="cfDescription">First, let’s get to know you and your business so we can better understand how to support you.</p>
         </header>
         <div id="cfStatus" class="cf-alert" role="status" aria-live="polite" @if (!session('success') && !session('error') && !$errors->any()) hidden @endif>
             @if (session('success')) {{ session('success') }} @elseif (session('error')) {{ session('error') }} @elseif ($errors->any()) Please check the highlighted fields and try again. @endif
-        </div>
+                                        </div>
         <div class="cf-body">
             <fieldset class="cf-step cf-overview" data-step="1">
                 <legend class="cf-sr-only">Business Overview</legend>
@@ -44,7 +44,7 @@
                         <label for="cfName" class="cf-sr-only">Full Name</label>
                         <input id="cfName" name="name" autocomplete="name" placeholder="Full Name" maxlength="255" required value="{{ old('name') }}" aria-describedby="error-name">
                         <span class="cf-error" id="error-name">@error('name'){{ $message }}@enderror</span>
-                    </div>
+                                        </div>
                     <div class="cf-field">
                         <div class="cf-phone">
                             <div class="cf-country">
@@ -56,23 +56,23 @@
                                     <option value="{{ $country['code'] }}" data-flag="{{ $country['flag'] }}" @selected(old('country_code', '+44') === $country['code'])>{{ $country['name'] }} ({{ $country['code'] }})</option>
                                     @endforeach
                                 </select>
-                            </div>
+                                    </div>
                             <div class="cf-phone-number"><span id="cfDialCode" aria-hidden="true">+44</span><label class="cf-sr-only" for="cfPhone">Phone Number</label><input type="tel" id="cfPhone" name="phone" autocomplete="tel-national" maxlength="20" pattern="[0-9 ()+\-]{5,20}" required value="{{ old('phone') }}" aria-describedby="error-phone"></div>
-                        </div>
+                                        </div>
                         <span class="cf-error" id="error-phone">@error('phone'){{ $message }}@enderror @error('country_code'){{ $message }}@enderror</span>
-                    </div>
+                                        </div>
                     <div class="cf-field">
                         <label for="cfCompany" class="cf-sr-only">Company/Brand Name</label>
                         <input id="cfCompany" name="company_name" autocomplete="organization" placeholder="Company/Brand Name" maxlength="255" required value="{{ old('company_name') }}" aria-describedby="error-company_name">
                         <span class="cf-error" id="error-company_name">@error('company_name'){{ $message }}@enderror</span>
-                    </div>
-                </div>
+                                </div>
+                            </div>
                 <div class="cf-column cf-column-right">
                     <div class="cf-field">
                         <label for="cfEmail" class="cf-sr-only">Email Address</label>
                         <input type="email" id="cfEmail" name="email" autocomplete="email" placeholder="Email Address" maxlength="255" required value="{{ old('email') }}" aria-describedby="error-email">
                         <span class="cf-error" id="error-email">@error('email'){{ $message }}@enderror</span>
-                    </div>
+                                </div>
                     <div class="cf-field">
                         <label for="cfIndustry" class="cf-sr-only">Industry</label>
                         <select id="cfIndustry" name="industry" required aria-describedby="error-industry">
@@ -80,18 +80,18 @@
                             @foreach (config('contact.industries') as $industry)<option @selected(old('industry') === $industry)>{{ $industry }}</option>@endforeach
                         </select>
                         <span class="cf-error" id="error-industry">@error('industry'){{ $message }}@enderror</span>
-                    </div>
+                                </div>
                     <div class="cf-field">
                         <label for="cfWebsite" class="cf-sr-only">Company website or linkedIn page</label>
                         <input id="cfWebsite" name="company_website" autocomplete="url" placeholder="Company website or linkedIn page" maxlength="2048" required value="{{ old('company_website') }}" aria-describedby="error-company_website">
                         <span class="cf-error" id="error-company_website">@error('company_website'){{ $message }}@enderror</span>
-                    </div>
-                </div>
+                            </div>
+                                                                                                            </div>
                 <div class="cf-field cf-field-center">
                     <label for="cfRole" class="cf-sr-only">Role in the Company</label>
                     <input id="cfRole" name="role" autocomplete="organization-title" placeholder="Role in the Company" maxlength="255" required value="{{ old('role') }}" aria-describedby="error-role">
                     <span class="cf-error" id="error-role">@error('role'){{ $message }}@enderror</span>
-                </div>
+                            </div>
             </fieldset>
             <fieldset class="cf-step cf-needs" data-step="2" hidden>
                 <legend class="cf-sr-only">What do you need</legend>
@@ -102,7 +102,7 @@
                             @foreach (config('contact.services') as $service)
                             <label class="cf-choice"><input type="checkbox" name="selected_services[]" value="{{ $service }}" @checked(in_array($service, $selectedServices))><span>{{ $service }}</span></label>
                             @endforeach
-                        </div>
+                                </div>
                         <span class="cf-error" id="error-selected_services">@error('selected_services'){{ $message }}@enderror</span>
                     </fieldset>
                     <div class="cf-market-group">
@@ -113,26 +113,26 @@
                             @foreach (old('expansion_markets', []) as $market)<li><span>{{ $market }}</span><input type="hidden" name="expansion_markets[]" value="{{ $market }}"><button type="button" aria-label="Remove {{ $market }}">×</button></li>@endforeach
                         </ul>
                         <span class="cf-error" id="error-expansion_markets">@error('expansion_markets'){{ $message }}@enderror</span>
-                    </div>
-                </div>
+                                </div>
+                                    </div>
                 <div class="cf-column cf-needs-right">
                     <div class="cf-field">
                         <label for="cfGoals">Briefly describe what you want to accomplish.</label>
                         <textarea id="cfGoals" name="message" maxlength="2000" required aria-describedby="error-message">{{ old('message') }}</textarea>
                         <span class="cf-error" id="error-message">@error('message'){{ $message }}@enderror</span>
-                    </div>
+                                    </div>
                     <fieldset class="cf-referrals">
                         <legend>How did you hear about us?</legend>
                         <div class="cf-referral-options">
                             @foreach (config('contact.referral_sources') as $source)
                             <label><input type="radio" name="referral_source" value="{{ $source }}" @checked(old('referral_source') === $source) required><span>{{ $source }}</span></label>
                             @endforeach
-                        </div>
+                                    </div>
                         <label class="cf-sr-only" for="cfReferralOther">Other referral source</label>
                         <input id="cfReferralOther" name="referral_other" placeholder="Others" maxlength="255" value="{{ old('referral_other') }}">
                         <span class="cf-error" id="error-referral_source">@error('referral_source'){{ $message }}@enderror @error('referral_other'){{ $message }}@enderror</span>
                     </fieldset>
-                </div>
+                                </div>
             </fieldset>
             <fieldset class="cf-step cf-readiness" data-step="3" hidden>
                 <legend class="cf-sr-only">Readiness and Budget</legend>
@@ -143,7 +143,7 @@
                             @foreach (config('contact.timelines') as $timeline)
                             <label class="cf-choice"><input type="radio" name="start_timeline" value="{{ $timeline }}" @checked(old('start_timeline') === $timeline) required><span>{{ $timeline }}</span></label>
                             @endforeach
-                        </div>
+                                </div>
                         <span class="cf-error" id="error-start_timeline">@error('start_timeline'){{ $message }}@enderror</span>
                     </fieldset>
                     <div class="cf-field cf-budget">
@@ -151,22 +151,22 @@
                         <div class="cf-budget-input">
                             <span aria-hidden="true">£</span>
                             <input type="number" id="cfBudget" name="budget_range" placeholder="Input your budget in pounds" min="0" max="2147483647" step="any" required value="{{ old('budget_range') }}" aria-describedby="error-budget_range">
-                        </div>
+                                </div>
                         <span class="cf-error" id="error-budget_range">@error('budget_range'){{ $message }}@enderror</span>
-                    </div>
-                </div>
+                            </div>
+                                    </div>
                 <div class="cf-column cf-notes">
                     <div class="cf-field"><label for="cfNotes">Anything else you feel the team should know?</label><textarea id="cfNotes" name="additional_notes" maxlength="2000">{{ old('additional_notes') }}</textarea><span class="cf-error" id="error-additional_notes">@error('additional_notes'){{ $message }}@enderror</span></div>
-                </div>
+                                </div>
             </fieldset>
             <div class="cf-actions">
                 <button type="button" class="cf-back" id="cfBack" aria-label="Previous step" disabled><img src="{{ asset('images/contact/arrow-back.svg') }}" width="16" height="12.727" alt=""></button>
                 <button type="submit" class="cf-next" id="cfNext" aria-label="Next step"><img src="{{ asset('images/contact/arrow-next.svg') }}" width="16" height="12.727" alt=""><span id="cfSubmitLabel" hidden>Send enquiry</span></button>
-            </div>
-        </div>
-    </form>
-    <div class="cf-success" id="cfSuccess" tabindex="-1" hidden><h1>Thank you for reaching out.</h1><p>Your enquiry has been sent. Our team will get back to you soon.</p><a id="cfSuccessLink" href="{{ locale_route('resource-hub') }}">Explore our resources</a></div>
-</section>
+                                    </div>
+                            </div>
+                        </form>
+    <div class="cf-success" id="cfSuccess" tabindex="-1" hidden><h1>Thank you for reaching out.</h1><p>Your enquiry has been sent. Our team will get back to you soon.</p><a id="cfSuccessLink" href="{{ locale_route('resource-hub') }}">Explore our services</a></div>
+    </section>
 @endsection
 @section('footer')
 @include('layouts.includes.footer3')

@@ -22,7 +22,7 @@ class ContactLeadAssessment
             return [
                 'route' => 'resources', 'title' => 'Start with practical resources',
                 'description' => 'Explore insights and guides to sharpen your plans before committing to a project.',
-                'label' => 'Explore free resources', 'url' => locale_route('resource-hub'),
+                'label' => 'Explore our services', 'url' => locale_route('resource-hub'),
             ];
         }
 

@@ -39,12 +39,14 @@ class ContactController extends Controller
         ];
 
         if ($stepped) {
+            // contact-v2 (and shared stepped fields): match CONTACT_FLOWS_PAYLOADS.md
+            $rules['phone'] = ['required', 'string', 'min:5', 'max:20', 'regex:/^[0-9 ()+\-]{5,20}$/'];
             $rules['budget_range'] = 'required|numeric|min:0|max:2147483647';
             $rules += [
                 'role' => 'required|string|max:255',
                 'industry' => ['required', Rule::in(config('contact.industries'))],
-                'business_description' => 'required_without:company_website|nullable|string|max:1000',
-                'company_website' => 'required_without:business_description|nullable|string|max:2048',
+                'company_website' => 'required|string|max:2048',
+                'business_description' => 'nullable|string|max:1000',
                 'selected_services' => 'required|array|min:1|max:5',
                 'selected_services.*' => ['required', 'string', 'distinct', Rule::in(config('contact.services'))],
                 'expansion_markets' => 'required|array|min:1|max:10',
@@ -164,8 +166,8 @@ class ContactController extends Controller
             $assessment = $request->input('form_flow') === 'contact-v3';
             $stepped = $assessment || $request->input('form_flow') === 'contact-v2';
             if ($assessment && is_array($request->input('selected_goals'))) {
-                $services = collect($request->input('selected_goals'))->filter(fn ($goal) => is_string($goal))
-                    ->map(fn ($goal) => config("contact.assessment_goals.$goal.service"))->filter()->unique()->values()->all();
+                $services = collect($request->input('selected_goals'))->filter(fn($goal) => is_string($goal))
+                    ->map(fn($goal) => config("contact.assessment_goals.$goal.service"))->filter()->unique()->values()->all();
                 $request->merge(['services' => implode(', ', $services) ?: 'Exploring / other request']);
             } elseif ($stepped && is_array($request->input('selected_services'))) {
                 $request->merge(['services' => implode(', ', array_filter($request->input('selected_services'), 'is_string'))]);
@@ -192,7 +194,7 @@ class ContactController extends Controller
                     $request->ip()
             );
             if ($stepped) {
-                $submissionKey .= '_'.$assessmentFingerprint;
+                $submissionKey .= '_' . $assessmentFingerprint;
             }
 
             // Only use cache-based deduplication if cache is healthy
@@ -248,6 +250,7 @@ class ContactController extends Controller
                     $outcome = $duplicateCheck->project_details['assessment_result'] ?? app(ContactLeadAssessment::class)->evaluate($validated);
                     $request->session()->put('contact_assessment_id', $duplicateCheck->id);
                     $request->session()->put('contact_assessment_state', $this->buildAssessmentStateFromSubmission($duplicateCheck, $outcome['route']));
+                    $outcome = $this->attachAssessmentTokenToOutcome($outcome, $duplicateCheck);
                 }
                 Log::warning('Duplicate submission attempt detected in DB', [
                     'request_id' => $requestId,
@@ -264,7 +267,7 @@ class ContactController extends Controller
                     return response()->json([
                         'success' => true,
                         'message' => __('contact.validation.already_sent'),
-                        'outcome' => $stepped ? ($outcome ?? app(ContactLeadAssessment::class)->evaluate($validated)) : null,
+                        'outcome' => $stepped ? ($outcome ?? null) : null,
                     ]);
                 }
 
@@ -301,7 +304,7 @@ class ContactController extends Controller
                 'country_code' => strip_tags($validated['country_code']),
                 'services' => $services,
                 'message' => strip_tags($validated['message']),
-                'budget_range' => $stepped ? (int) $validated['budget_range'] : null,
+                'budget_range' => $stepped ? (float) $validated['budget_range'] : null,
                 'locale' => app()->getLocale(),
                 'ip_address' => $request->ip(),
                 'user_agent' => $request->userAgent(),
@@ -330,7 +333,7 @@ class ContactController extends Controller
             if ($assessment) {
                 $sanitizedData['project_details'] += [
                     'company_website' => $validated['company_website'],
-                    'selected_goals' => array_map(fn ($goal) => config("contact.assessment_goals.$goal.label"), $validated['selected_goals']),
+                    'selected_goals' => array_map(fn($goal) => config("contact.assessment_goals.$goal.label"), $validated['selected_goals']),
                 ];
             }
 
@@ -362,6 +365,7 @@ class ContactController extends Controller
                     'contact_assessment_state',
                     $this->buildAssessmentStateFromSubmission($contactSubmission, $outcome['route'])
                 );
+                $outcome = $this->attachAssessmentTokenToOutcome($outcome, $contactSubmission);
             }
 
             // Send notification to admins
@@ -436,6 +440,28 @@ class ContactController extends Controller
      * Send emails for completed submissions
      * Emails are queued for async processing - no locking needed
      */
+    /**
+     * Append ?assessment=<token> for consultation/discovery so clients can resume without session.
+     */
+    private function attachAssessmentTokenToOutcome(array $outcome, ContactSubmission $submission): array
+    {
+        $route = $outcome['route'] ?? null;
+        if (!in_array($route, ['consultation', 'discovery'], true)) {
+            return $outcome;
+        }
+
+        $baseUrl = (string) ($outcome['url'] ?? '');
+        if ($baseUrl === '') {
+            return $outcome;
+        }
+
+        $token = $this->encodeAssessmentState($submission, $route);
+        $separator = str_contains($baseUrl, '?') ? '&' : '?';
+        $outcome['url'] = $baseUrl . $separator . 'assessment=' . urlencode($token);
+
+        return $outcome;
+    }
+
     private function buildAssessmentStateFromSubmission(ContactSubmission $submission, string $route, ?array $slot = null): array
     {
         $details = is_array($submission->project_details) ? $submission->project_details : [];
@@ -452,7 +478,7 @@ class ContactController extends Controller
             'country_code' => (string) ($submission->country_code ?? '+44'),
             'services' => is_array($submission->services) ? $submission->services : [],
             'message' => Str::limit((string) $submission->message, 400, ''),
-            'budget_range' => (int) ($submission->budget_range ?? 0),
+            'budget_range' => (float) ($submission->budget_range ?? 0),
             'project_details' => [
                 'role' => $details['role'] ?? '',
                 'industry' => $details['industry'] ?? 'Not specified',
@@ -601,7 +627,7 @@ class ContactController extends Controller
     {
         return [
             // Paid consultations are booked from tomorrow onwards (ConsultationController::scheduleSession).
-            'session_date' => 'required|date_format:Y-m-d|'.($allowToday ? 'after_or_equal' : 'after').':today|before_or_equal:'.now()->addMonths(6)->format('Y-m-d'),
+            'session_date' => 'required|date_format:Y-m-d|' . ($allowToday ? 'after_or_equal' : 'after') . ':today|before_or_equal:' . now()->addMonths(6)->format('Y-m-d'),
             'session_time' => 'required|date_format:H:i',
             // The scheduling page sends the IANA zone "Africa/Lagos" for WAT.
             'timezone' => ['required', Rule::in(['GMT', 'UTC', 'WAT', 'Africa/Lagos'])],
@@ -681,16 +707,16 @@ class ContactController extends Controller
     {
         try {
             $timezone = $slot['timezone'] === 'WAT' ? 'Africa/Lagos' : $slot['timezone'];
-            $start = Carbon::createFromFormat('Y-m-d H:i', $slot['session_date'].' '.$slot['session_time'], $timezone);
+            $start = Carbon::createFromFormat('Y-m-d H:i', $slot['session_date'] . ' ' . $slot['session_time'], $timezone);
             $end = $start->copy()->addMinutes((int) config('contact.discovery_call_minutes', 30));
             $adminEmail = config('services.admin.email', 'contact@p23africa.com');
             $description = "Discovery call\n\n"
-                ."Name: {$submission->name}\n"
-                ."Company: {$submission->company_name}\n"
-                ."Email: {$submission->email}\n"
-                ."Phone: {$submission->phone}\n\n"
-                ."Project:\n{$submission->message}\n\n"
-                .'This call will be held on Google Meet.';
+                . "Name: {$submission->name}\n"
+                . "Company: {$submission->company_name}\n"
+                . "Email: {$submission->email}\n"
+                . "Phone: {$submission->phone}\n\n"
+                . "Project:\n{$submission->message}\n\n"
+                . 'This call will be held on Google Meet.';
 
             $result = app(GoogleCalendarService::class)->createEvent(
                 'P23 Africa Discovery Call',
@@ -813,24 +839,45 @@ class ContactController extends Controller
             'key_challenges.max' => __('consultation.validation.challenges_max'),
         ]);
 
-        $details = $submission->project_details ?? [];
+        $details = is_array($submission->project_details) ? $submission->project_details : [];
+        $selectedServices = $details['selected_goals']
+            ?? (is_array($submission->services) ? $submission->services : array_values(array_filter((array) $submission->services)));
         $appAttributes = [
             'booking_token' => (string) Str::uuid(),
             'name' => $submission->name,
             'email' => $submission->email,
-            'phone' => trim(($submission->country_code ?? '').' '.$submission->phone),
+            'phone' => trim(($submission->country_code ?? '') . ' ' . $submission->phone),
             'company' => $submission->company_name,
             'website_or_handle' => $details['company_website'] ?? null,
             'industry' => $details['industry'] ?? 'Not specified',
             'business_description' => $details['business_description'] ?? $submission->message,
-            'selected_goals' => $details['selected_goals'] ?? $submission->services ?? [],
+            'selected_goals' => $selectedServices,
             'selected_challenges' => array_values($validated['key_challenges']),
+            // Persist the full contact-v2 enquiry so admin consultation views are complete.
             'desired_outcomes' => json_encode([
+                'form_flow' => 'contact-v2',
+                'assessment_outcome' => $details['assessment_outcome'] ?? 'consultation',
+                'contact_submission_id' => $submission->id,
+                'name' => $submission->name,
+                'email' => $submission->email,
+                'phone' => $submission->phone,
+                'country_code' => $submission->country_code,
+                'company_name' => $submission->company_name,
+                'role' => $details['role'] ?? null,
+                'industry' => $details['industry'] ?? null,
+                'company_website' => $details['company_website'] ?? null,
+                'selected_services' => $selectedServices,
+                'expansion_markets' => $details['expansion_markets'] ?? [],
+                'message' => $submission->message,
                 'motivation' => $submission->message,
+                'referral_source' => $details['referral_source'] ?? null,
+                'referral_other' => $details['referral_other'] ?? null,
+                'start_timeline' => $details['start_timeline'] ?? null,
+                'budget_range' => $submission->budget_range,
+                'budget_currency' => $details['budget_currency'] ?? config('contact.budget_currency', 'GBP'),
+                'additional_notes' => $details['additional_notes'] ?? null,
                 'success_definition' => $details['additional_notes'] ?? '',
                 'preferred_slot' => $slot,
-                'contact_submission_id' => $submission->id,
-                'expansion_markets' => $details['expansion_markets'] ?? [],
             ]),
             'status' => 'pending',
             'submitted_at' => now(),
@@ -900,7 +947,7 @@ class ContactController extends Controller
 
     private function keyChallengeOptions(): array
     {
-        return array_map(fn ($key) => __("consultation.$key"), ['ch_sales', 'ch_marketing', 'ch_customers', 'ch_ops', 'ch_money', 'ch_fit', 'ch_scale']);
+        return array_map(fn($key) => __("consultation.$key"), ['ch_sales', 'ch_marketing', 'ch_customers', 'ch_ops', 'ch_money', 'ch_fit', 'ch_scale']);
     }
 
     private function sendSubmissionEmails(ContactSubmission $submission)
@@ -916,32 +963,31 @@ class ContactController extends Controller
                 return;
             }
 
-            // Mark as sent FIRST to prevent duplicate queue entries
-            $submission->update(['email_sent_at' => now()]);
-
             $submissionData = $submission->toArray();
 
-            // Queue email to site owner (async - won't block response)
             Mail::to('contact@p23africa.com')->send(new ContactFormMail($submissionData));
 
-            // Queue thank-you email to user (async - won't block response)
             if ($submission->email) {
                 Mail::to($submission->email)->send(
                     (new ThankYouMail($submissionData))->locale($submission->locale ?: 'en')
                 );
             }
 
-            Log::info('Submission emails queued successfully', [
+            // Only mark sent after SMTP succeeds; update solely this column so
+            // in-memory project_details never block delivery on older schemas.
+            ContactSubmission::whereKey($submission->id)->update(['email_sent_at' => now()]);
+            $submission->email_sent_at = now();
+
+            Log::info('Submission emails sent successfully', [
                 'submission_id' => $submission->id,
                 'email' => $submission->email
             ]);
         } catch (\Exception $mailException) {
-            Log::error('Failed to queue submission emails', [
+            Log::error('Failed to send submission emails', [
                 'error' => $mailException->getMessage(),
                 'submission_id' => $submission->id,
                 'email' => $submission->email
             ]);
-            // Don't clear email_sent_at - emails will be retried by queue worker
         }
     }
 }

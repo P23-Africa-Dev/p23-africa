@@ -842,6 +842,27 @@
                                     </div>
                                 </a>
                             </div>
+                            @if (auth()->user() && auth()->user()->hasRole('admin'))
+                                <div class="col-6 col-md-4 col-lg-3">
+                                    <a href="{{ orgRoute('admin.african-expansion.index') }}" class="action-item"
+                                        style="border:1px solid var(--border);border-radius:var(--radius-md);">
+                                        <div class="d-flex align-items-center">
+                                            <div class="action-icon-wrap"
+                                                style="background:rgba(57,9,8,.1);color:#390908;"><i
+                                                    class="bi bi-file-earmark-pdf"></i></div>
+                                            <span style="font-size:.8125rem;">Expansion Guide
+                                                @isset($stats['african_expansion_visits'])
+                                                    <span class="text-muted d-block" style="font-size:.7rem;">
+                                                        {{ number_format($stats['african_expansion_visits']) }} visits ·
+                                                        {{ number_format($stats['african_expansion_downloads'] ?? 0) }}
+                                                        opens
+                                                    </span>
+                                                @endisset
+                                            </span>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endif
                             @if (auth()->user() &&
                                     (auth()->user()->hasRole('admin') || auth()->user()->hasRole('supervisor')) &&
                                     is_null(auth()->user()->organization_id))
