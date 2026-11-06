@@ -106,7 +106,7 @@
                         <span class="cf-error" id="error-selected_services">@error('selected_services'){{ $message }}@enderror</span>
                     </fieldset>
                     <div class="cf-market-group">
-                        <label for="cfMarket">Expansion Market</label>
+                        <label for="cfMarket">Expansion Market(s)</label>
                         <div class="cf-market-input"><input id="cfMarket" placeholder="Input country choice" maxlength="100" list="cfCountries" autocomplete="off"><button type="button" id="cfAddMarket">Add</button></div>
                         <datalist id="cfCountries">@foreach ($countries as $country)<option value="{{ $country['name'] }}">@endforeach</datalist>
                         <ul class="cf-markets" id="cfMarkets" aria-label="Selected expansion markets">

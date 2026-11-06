@@ -1287,8 +1287,59 @@
         /* background: rgba(136, 193, 183, 0.1); */
     }
 
-    .time-wheel-item:hover {
-        /* color: rgba(136, 193, 183, 0.8); */
+    /* Click-to-edit affordance */
+    .time-wheel:not(.time-wheel-locked) .time-wheel-item:hover {
+        color: #88C1B7;
+    }
+
+    .time-wheel:not(.time-wheel-locked) .time-wheel-item.active {
+        margin: 0 6px;
+        border-radius: 6px;
+        cursor: text;
+    }
+
+    .time-wheel#ampm-wheel .time-wheel-item.active {
+        cursor: pointer;
+    }
+
+    .time-wheel:not(.time-wheel-locked) .time-wheel-item.active:hover {
+        color: #fff;
+        background: rgba(136, 193, 183, 0.14);
+        box-shadow: inset 0 -2px 0 #88C1B7;
+    }
+
+    .time-wheel:focus-visible {
+        outline: 2px solid #88C1B7;
+        outline-offset: 2px;
+    }
+
+    .time-wheel.is-editing .time-wheel-item.active {
+        visibility: hidden;
+    }
+
+    .time-wheel-edit {
+        position: absolute;
+        top: 40px;
+        left: 4px;
+        right: 4px;
+        height: 40px;
+        z-index: 3;
+        padding: 0;
+        border: 1px solid #88C1B7;
+        border-radius: 6px;
+        background: rgba(6, 34, 29, 0.9);
+        color: #fff;
+        font: bold 18px "GT Walsheim Con";
+        text-align: center;
+        caret-color: #88C1B7;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(136, 193, 183, 0.25);
+        animation: timeEditIn 0.15s ease-out;
+    }
+
+    @keyframes timeEditIn {
+        from { transform: scale(0.9); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
     }
 
     /* Selection indicators */
@@ -2500,11 +2551,27 @@
             let isScrolling = false;
             let startY = 0;
             let startTransform = 0;
+            let dragDistance = 0;
+            let pressedItem = null;
 
             wheel.addEventListener('wheel', (e) => {
                 e.preventDefault();
                 const delta = e.deltaY > 0 ? 1 : -1;
                 scrollWheel(type, delta);
+            });
+
+            // Keyboard: arrows step the wheel, Enter/Space edits (or toggles AM/PM)
+            wheel.tabIndex = 0;
+            wheel.setAttribute('aria-label', type === 'ampm' ? 'AM or PM' : `${type} (click to edit)`);
+            wheel.addEventListener('keydown', (e) => {
+                if (e.target !== wheel) return;
+                if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    scrollWheel(type, e.key === 'ArrowDown' ? 1 : -1);
+                } else if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    activateItem(timeWheels[type].currentIndex);
+                }
             });
 
             // Touch/mouse drag functionality
@@ -2514,7 +2581,10 @@
             });
 
             function startDrag(e) {
+                if (e.target.closest('.time-wheel-edit')) return; // let the inline editor take the click
                 isScrolling = true;
+                dragDistance = 0;
+                pressedItem = e.target.closest('.time-wheel-item');
                 startY = e.type === 'mousedown' ? e.clientY : e.touches[0].clientY;
 
                 const transform = list.style.transform;
@@ -2535,6 +2605,7 @@
 
                 const currentY = e.type === 'mousemove' ? e.clientY : e.touches[0].clientY;
                 const deltaY = currentY - startY;
+                dragDistance = Math.max(dragDistance, Math.abs(deltaY));
                 const newTransform = startTransform + deltaY;
 
                 list.style.transform = `translateY(${newTransform}px)`;
@@ -2555,13 +2626,76 @@
                     Math.round(-currentTransform / itemHeight)
                 ));
 
-                setWheelIndex(type, newIndex);
-
                 document.removeEventListener('mousemove', onDrag);
                 document.removeEventListener('touchmove', onDrag);
                 document.removeEventListener('mouseup', endDrag);
                 document.removeEventListener('touchend', endDrag);
+
+                // A press that barely moved is a click: select that value, or edit it if already selected
+                if (dragDistance < 5 && pressedItem) {
+                    setWheelIndex(type, timeWheels[type].currentIndex);
+                    activateItem(parseInt(pressedItem.dataset.index, 10));
+                    return;
+                }
+
+                setWheelIndex(type, newIndex);
             }
+
+            function activateItem(index) {
+                if (index !== timeWheels[type].currentIndex) {
+                    setWheelIndex(type, index);
+                } else if (type === 'ampm') {
+                    setWheelIndex(type, 1 - index);
+                } else {
+                    openTimeEditor(type);
+                }
+            }
+        }
+
+        // Click-to-edit: swaps the selected hour/minute for a small input the user can type into
+        function openTimeEditor(type) {
+            const wheel = timeWheels[type].element;
+            if (!wheel || wheel.querySelector('.time-wheel-edit')) return;
+
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.inputMode = 'numeric';
+            input.maxLength = 2;
+            input.className = 'time-wheel-edit';
+            input.value = timeWheels[type].items[timeWheels[type].currentIndex];
+            input.setAttribute('aria-label', type === 'hour' ? 'Type the hour' : 'Type the minute');
+            wheel.classList.add('is-editing');
+            wheel.appendChild(input);
+            input.focus();
+            input.select();
+
+            let closed = false;
+            const close = (commit) => {
+                if (closed) return;
+                closed = true;
+                const value = parseInt(input.value, 10);
+                input.remove();
+                wheel.classList.remove('is-editing');
+                wheel.focus({ preventScroll: true });
+                if (!commit || input.value.trim() === '') return;
+
+                const index = Number.isNaN(value) ? -1 : timeWheels[type].items.indexOf(String(value).padStart(2, '0'));
+                if (index === -1) {
+                    flashMessage(type === 'hour'
+                        ? 'Please choose an hour between 10 AM and 8 PM.'
+                        : 'Please enter minutes between 00 and 59.', wheel);
+                    return;
+                }
+                setWheelIndex(type, index);
+            };
+
+            input.addEventListener('input', () => { input.value = input.value.replace(/\D/g, ''); });
+            input.addEventListener('keydown', (e) => {
+                e.stopPropagation();
+                if (e.key === 'Enter') { e.preventDefault(); close(true); }
+                if (e.key === 'Escape') { e.preventDefault(); close(false); }
+            });
+            input.addEventListener('blur', () => close(true));
         }
 
         // Only allow scrolling for non-locked wheels

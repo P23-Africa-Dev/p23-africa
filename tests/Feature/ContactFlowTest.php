@@ -44,7 +44,7 @@ class ContactFlowTest extends TestCase
     {
         $this->postJson('/contact', $this->enquiry())->assertOk()->assertJson(['success' => true]);
         $submission = ContactSubmission::sole();
-        $this->assertSame(['Market Entry & Expansion', 'Distributor & Partner Development'], $submission->services);
+        $this->assertSame(['Market Entry & Expansion', 'Finding & Verifying Distributors'], $submission->services);
         $this->assertSame(['Nigeria', 'Ghana'], $submission->project_details['expansion_markets']);
         $this->assertSame('Founder', $submission->project_details['role']);
         $this->assertEquals(12000, $submission->budget_range);
