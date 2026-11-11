@@ -502,5 +502,61 @@
     "quote": null,
     "cta_heading": "If your African distributor sells equipment but can’t support it, your brand suffers.",
     "cta_description": "Book a Discovery Call to build your after-sales operations."
+  },
+  {
+    "slug": "helios-solar-equipment",
+    "title": "Commercial Solar Investment Readiness",
+    "client": "Helios Industrial Solar",
+    "sector": "Solar Equipment Manufacturer (Commercial & Industrial C&I Solar)",
+    "market": "Nigeria, Ghana & Kenya",
+    "service": "Investment & Growth Readiness + Market Entry Execution",
+    "result": "Audit-ready multi-market financial model delivered; growth capital secured across 3 corridors",
+    "timeline": "12 weeks",
+    "summary": "How a Commercial Solar Equipment Manufacturer Structured Local Operations and Financial Models to Secure Regional Growth Capital.",
+    "image": "images/case-studies/gp-equipment.png",
+    "image_alt": "Commercial solar and industrial power equipment manufacturing facility",
+    "illustrative": false,
+    "challenge": "Helios Industrial Solar had early commercial traction supplying solar inverters and storage systems to commercial and industrial (C&I) buyers in West Africa. However, when approaching institutional growth investors to fund regional expansion into Ghana and Kenya, they lacked standardized unit-economics modelling, FX risk governance, and verifiable pipeline reporting across their local EPC partners.",
+    "process": [
+      {
+        "icon": "understand",
+        "title": "Understand",
+        "description": "Audited existing commercial operations, EPC partner agreements, import tariff structures, and working-capital cycles across Nigeria, Ghana, and Kenya."
+      },
+      {
+        "icon": "validate",
+        "title": "Validate",
+        "description": "Verified active C&I project pipelines with 38 industrial off-takers and EPC contractors to establish bankable demand conversion assumptions."
+      },
+      {
+        "icon": "connect",
+        "title": "Connect",
+        "description": "Deployed Factory 23 pipeline governance across partner EPC teams and structured standardized commercial contracts with currency safeguards."
+      },
+      {
+        "icon": "execute",
+        "title": "Execute",
+        "description": "Built an investor-grade 5-year multi-market financial model, commercial data room, and scalable operational governance framework."
+      }
+    ],
+    "metrics": [
+      {
+        "value": "3",
+        "label": "Regional Corridors Structured"
+      },
+      {
+        "value": "38",
+        "label": "Verified C&I Accounts"
+      },
+      {
+        "value": "100%",
+        "label": "Audit-Ready Pipeline Visibility"
+      }
+    ],
+    "validation": "Commercial audit findings: prior pipeline reporting overstated near-term conversion by 40% due to unverified EPC quotes. After P23 restructuring, 38 active industrial accounts were independently verified, unit margins were modelled per corridor net of duties and FX hedging costs, and 100% of partner opportunities were logged with stage-gate documentation.",
+    "outcome": "With an audit-ready financial model, transparent pipeline governance, and structured local operations, Helios passed institutional due diligence and secured regional growth financing to scale inventory and technical support across Nigeria, Ghana, and Kenya.",
+    "quote": "Investors didn’t doubt the demand for commercial solar in Africa—they doubted whether our local numbers and partner pipeline were bankable. P23 built the operational and financial structure that closed the round.",
+    "cta_heading": "If you’re preparing to scale or raise growth capital for African operations, investors need verifiable unit economics and pipeline visibility.",
+    "cta_description": "Book a Discovery Call to structure your investment and growth readiness."
   }
 ]

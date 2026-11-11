@@ -1,18 +1,18 @@
 @extends('layouts.master')
-@section('title', 'Market Demand Testing for Africa')
+@section('title', __('market.meta_title'))
 @section('body_class', 'p23-black-navbar-page')
 
 @section('meta')
     <meta name="description"
-        content="Test real market demand and validate commercial routes across Nigeria, Ghana, Kenya, and South Africa before committing capital.">
+        content="{{ __('market.meta_description') }}">
     <meta name="keywords"
-        content="Market demand testing Africa, market entry Africa, expand business to Nigeria, expand to Ghana, African business expansion, distributor due diligence Africa, demand validation Africa">
-    <meta property="og:title" content="Market Demand Testing for Africa">
-    <meta property="og:description" content="Test real market demand and validate commercial routes across Nigeria, Ghana, Kenya, and South Africa before committing capital.">
+        content="Africa market entry, market expansion Africa, outbound demand testing Africa, distributor development Africa, investment readiness Africa, expand business to Nigeria, expand to Ghana, Kenya market entry, South Africa market entry, P23 Africa">
+    <meta property="og:title" content="{{ __('market.meta_title') }}">
+    <meta property="og:description" content="{{ __('market.meta_description') }}">
     <meta property="og:image" content="{{ asset('images/market-entry/hero-office-woman.png') }}">
     <link rel="canonical" href="{{ url('services/market-demand-testing') }}">
-    <link rel="stylesheet" href="{{ asset('css/market-entry-new.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/services-new.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/market-entry-new.css') }}?v={{ filemtime(public_path('css/market-entry-new.css')) }}">
+    <link rel="stylesheet" href="{{ asset('css/services-new.css') }}?v={{ filemtime(public_path('css/services-new.css')) }}">
 
     <script type="application/ld+json">
     {!! json_encode([
@@ -20,15 +20,15 @@
       '@graph' => [
         [
           '@type' => 'Service',
-          'name' => 'Market Demand Testing for Africa',
-          'serviceType' => 'Market Entry & Commercial Validation',
+          'name' => 'Market Entry & Expansion in Africa',
+          'serviceType' => 'Market Entry, Distributor Development, Outbound Demand Testing & Investment Readiness',
           'provider' => [
             '@type' => 'Organization',
             'name' => 'P23 Africa',
             'url' => 'https://p23africa.com'
           ],
           'url' => url('services/market-demand-testing'),
-          'description' => 'Test real market demand and validate commercial routes across Nigeria, Ghana, Kenya, and South Africa before committing capital.',
+          'description' => __('market.meta_description'),
           'areaServed' => ['Nigeria', 'Ghana', 'Kenya', 'South Africa']
         ],
         [
@@ -49,7 +49,7 @@
             [
               '@type' => 'ListItem',
               'position' => 3,
-              'name' => 'Market Demand Testing',
+              'name' => 'Market Entry & Expansion',
               'item' => url('services/market-demand-testing')
             ]
           ]
@@ -145,11 +145,12 @@
                     <div class="me-methodology-step">
                         <div class="me-step-header">
                             <img src="{{ asset('images/market-entry/step-01-lightbulb.png') }}" 
-                                 alt="{{ __('market.step1_title') }}" 
+                                 alt="{{ __('market.step1_title') }} — {{ __('market.step1_service') }}" 
                                  class="me-step-icon">
                             <span class="me-step-number">01</span>
                         </div>
                         <h3 class="me-step-title">{{ __('market.step1_title') }}</h3>
+                        <span class="me-step-service">{{ __('market.step1_service') }}</span>
                         <p class="me-step-desc">
                             {{ __('market.step1_body') }}
                         </p>
@@ -159,11 +160,12 @@
                     <div class="me-methodology-step">
                         <div class="me-step-header">
                             <img src="{{ asset('images/market-entry/step-02-validate.png') }}" 
-                                 alt="{{ __('market.step2_title') }}" 
+                                 alt="{{ __('market.step2_title') }} — {{ __('market.step2_service') }}" 
                                  class="me-step-icon">
                             <span class="me-step-number">02</span>
                         </div>
                         <h3 class="me-step-title">{{ __('market.step2_title') }}</h3>
+                        <span class="me-step-service">{{ __('market.step2_service') }}</span>
                         <p class="me-step-desc">
                             {{ __('market.step2_body') }}
                         </p>
@@ -173,11 +175,12 @@
                     <div class="me-methodology-step">
                         <div class="me-step-header">
                             <img src="{{ asset('images/market-entry/step-03-people.png') }}" 
-                                 alt="{{ __('market.step3_title') }}" 
+                                 alt="{{ __('market.step3_title') }} — {{ __('market.step3_service') }}" 
                                  class="me-step-icon">
                             <span class="me-step-number">03</span>
                         </div>
                         <h3 class="me-step-title">{{ __('market.step3_title') }}</h3>
+                        <span class="me-step-service">{{ __('market.step3_service') }}</span>
                         <p class="me-step-desc">
                             {{ __('market.step3_body') }}
                         </p>
@@ -187,11 +190,12 @@
                     <div class="me-methodology-step">
                         <div class="me-step-header">
                             <img src="{{ asset('images/market-entry/step-04-route.png') }}" 
-                                 alt="{{ __('market.step4_title') }}" 
+                                 alt="{{ __('market.step4_title') }} — {{ __('market.step4_service') }}" 
                                  class="me-step-icon">
                             <span class="me-step-number">04</span>
                         </div>
                         <h3 class="me-step-title">{{ __('market.step4_title') }}</h3>
+                        <span class="me-step-service">{{ __('market.step4_service') }}</span>
                         <p class="me-step-desc">
                             {{ __('market.step4_body') }}
                         </p>
@@ -201,11 +205,12 @@
                     <div class="me-methodology-step">
                         <div class="me-step-header">
                             <img src="{{ asset('images/market-entry/step-05-lock.png') }}" 
-                                 alt="{{ __('market.step5_title') }}" 
+                                 alt="{{ __('market.step5_title') }} — {{ __('market.step5_service') }}" 
                                  class="me-step-icon">
                             <span class="me-step-number">05</span>
                         </div>
                         <h3 class="me-step-title">{{ __('market.step5_title') }}</h3>
+                        <span class="me-step-service">{{ __('market.step5_service') }}</span>
                         <p class="me-step-desc">
                             {{ __('market.step5_body') }}
                         </p>
@@ -272,37 +277,48 @@
 
             </div>
 
-            {{-- Bottom Row: 4 Momentum Stat Cards (Nigeria, Ghana, Kenya, South Africa) --}}
-            <div class="me-momentum-cards-grid">
-                
-                {{-- Card 1: Nigeria +9% --}}
-                <div class="me-momentum-card" id="card-nigeria">
-                    <img src="{{ asset('images/market-entry/momentum-nigeria.png') }}" 
-                         alt="Market entry growth momentum Nigeria +9%" 
-                         loading="lazy">
+            {{-- Bottom Row: Clearly Labeled 4 Momentum Stat Cards (Nigeria, Ghana, Kenya, South Africa) --}}
+            <div class="me-momentum-chart-block">
+                <div class="me-momentum-chart-legend" role="note" aria-label="{{ __('market.momentum_chart_legend') }}">
+                    <span class="me-momentum-legend-dot" aria-hidden="true"></span>
+                    {{ __('market.momentum_chart_legend') }}
                 </div>
 
-                {{-- Card 2: Ghana +14% --}}
-                <div class="me-momentum-card" id="card-ghana">
-                    <img src="{{ asset('images/market-entry/momentum-ghana.png') }}" 
-                         alt="Market entry growth momentum Ghana +14%" 
-                         loading="lazy">
-                </div>
+                <div class="me-momentum-cards-grid">
+                    
+                    {{-- Card 1: Nigeria +9% --}}
+                    <div class="me-momentum-card" id="card-nigeria">
+                        <img src="{{ asset('images/market-entry/momentum-nigeria.png') }}" 
+                             alt="Nigeria +9% — {{ __('market.momentum_chart_caption') }}" 
+                             loading="lazy">
+                        <span class="me-momentum-card-caption">{{ __('market.momentum_chart_caption') }}</span>
+                    </div>
 
-                {{-- Card 3: Kenya +17% (Dark Accent Card) --}}
-                <div class="me-momentum-card" id="card-kenya">
-                    <img src="{{ asset('images/market-entry/momentum-kenya.png') }}" 
-                         alt="Market entry growth momentum Kenya +17%" 
-                         loading="lazy">
-                </div>
+                    {{-- Card 2: Ghana +14% --}}
+                    <div class="me-momentum-card" id="card-ghana">
+                        <img src="{{ asset('images/market-entry/momentum-ghana.png') }}" 
+                             alt="Ghana +14% — {{ __('market.momentum_chart_caption') }}" 
+                             loading="lazy">
+                        <span class="me-momentum-card-caption">{{ __('market.momentum_chart_caption') }}</span>
+                    </div>
 
-                {{-- Card 4: South Africa +5% --}}
-                <div class="me-momentum-card" id="card-south-africa">
-                    <img src="{{ asset('images/market-entry/momentum-south-africa.png') }}" 
-                         alt="Market entry growth momentum South Africa +5%" 
-                         loading="lazy">
-                </div>
+                    {{-- Card 3: Kenya +17% (Dark Accent Card) --}}
+                    <div class="me-momentum-card" id="card-kenya">
+                        <img src="{{ asset('images/market-entry/momentum-kenya.png') }}" 
+                             alt="Kenya +17% — {{ __('market.momentum_chart_caption') }}" 
+                             loading="lazy">
+                        <span class="me-momentum-card-caption">{{ __('market.momentum_chart_caption') }}</span>
+                    </div>
 
+                    {{-- Card 4: South Africa +5% --}}
+                    <div class="me-momentum-card" id="card-south-africa">
+                        <img src="{{ asset('images/market-entry/momentum-south-africa.png') }}" 
+                             alt="South Africa +5% — {{ __('market.momentum_chart_caption') }}" 
+                             loading="lazy">
+                        <span class="me-momentum-card-caption">{{ __('market.momentum_chart_caption') }}</span>
+                    </div>
+
+                </div>
             </div>
 
         </div>
@@ -323,35 +339,35 @@
             </p>
         </div>
 
-        {{-- Animated Tabs Bar --}}
+        {{-- Animated Tabs Bar (3 Distinct Core Services) --}}
         <div class="me-tabs-wrapper">
-            <div class="me-tabs-container" role="tablist" aria-label="Case Study Industry Tabs">
+            <div class="me-tabs-container" role="tablist" aria-label="Case Study Service Tabs">
                 <button type="button" 
                         class="me-tab-btn active" 
                         role="tab" 
                         aria-selected="true" 
-                        aria-controls="pane-bld" 
-                        data-target="#pane-bld"
-                        id="tab-bld">
-                    {{ __('market.tab_hvac') }}
+                        aria-controls="pane-outbound" 
+                        data-target="#pane-outbound"
+                        id="tab-outbound">
+                    {{ __('market.tab_outbound') }}
                 </button>
                 <button type="button" 
                         class="me-tab-btn" 
                         role="tab" 
                         aria-selected="false" 
-                        aria-controls="pane-fmcg" 
-                        data-target="#pane-fmcg"
-                        id="tab-fmcg">
-                    {{ __('market.tab_machinery') }}
+                        aria-controls="pane-distributor" 
+                        data-target="#pane-distributor"
+                        id="tab-distributor">
+                    {{ __('market.tab_distributor') }}
                 </button>
                 <button type="button" 
                         class="me-tab-btn" 
                         role="tab" 
                         aria-selected="false" 
-                        aria-controls="pane-fintech" 
-                        data-target="#pane-fintech"
-                        id="tab-fintech">
-                    {{ __('market.tab_fintech') }}
+                        aria-controls="pane-investment" 
+                        data-target="#pane-investment"
+                        id="tab-investment">
+                    {{ __('market.tab_investment') }}
                 </button>
             </div>
         </div>
@@ -373,15 +389,17 @@
         {{-- Case Study Showcase Panes --}}
         <div class="me-case-panes-wrapper">
             
-            {{-- Pane 1: BLD Manufacturer (Default Active) --}}
-            <div class="me-case-pane active" id="pane-bld" role="tabpanel" aria-labelledby="tab-bld">
+            {{-- Pane 1: Outbound Demand Testing (Material Handling Manufacturer) --}}
+            <div class="me-case-pane active" id="pane-outbound" role="tabpanel" aria-labelledby="tab-outbound">
                 <div class="me-case-visual">
-                    <img src="{{ asset('images/case-studies/thermoflow.png') }}" 
-                         alt="Commercial HVAC units and industrial installations in Nigeria" 
+                    <img src="{{ asset('images/case-studies/liftmasters.png') }}" 
+                         alt="Material handling and industrial equipment demand testing across Nigeria, Kenya, and South Africa" 
                          loading="lazy">
                 </div>
 
                 <div class="me-case-article">
+                    <span class="me-case-sector-badge">{{ __('market.case1_sector') }}</span>
+
                     <h3 class="me-case-heading">
                         {{ __('market.case1_title') }}
                     </h3>
@@ -395,21 +413,23 @@
                         </p>
                     </div>
 
-                    <a href="{{ locale_route('case-studies.show', ['slug' => 'thermoflow-hvac']) }}" class="me-case-continue-btn" id="btn-continue-reading-bld">
+                    <a href="{{ locale_route('case-studies.show', ['slug' => 'liftmasters-international']) }}" class="me-case-continue-btn" id="btn-continue-reading-outbound">
                         {{ __('market.continue') }}
                     </a>
                 </div>
             </div>
 
-            {{-- Pane 2: FMCG Manufacturer --}}
-            <div class="me-case-pane" id="pane-fmcg" role="tabpanel" aria-labelledby="tab-fmcg">
+            {{-- Pane 2: Distributor Development (HVAC Equipment Manufacturer) --}}
+            <div class="me-case-pane" id="pane-distributor" role="tabpanel" aria-labelledby="tab-distributor">
                 <div class="me-case-visual">
-                    <img src="{{ asset('images/case-studies/packline.png') }}" 
-                         alt="Automated packaging production line in an FMCG manufacturing plant" 
+                    <img src="{{ asset('images/case-studies/thermoflow.png') }}" 
+                         alt="Commercial HVAC units and distributor vetting in Nigeria" 
                          loading="lazy">
                 </div>
 
                 <div class="me-case-article">
+                    <span class="me-case-sector-badge">{{ __('market.case2_sector') }}</span>
+
                     <h3 class="me-case-heading">
                         {{ __('market.case2_title') }}
                     </h3>
@@ -423,21 +443,23 @@
                         </p>
                     </div>
 
-                    <a href="{{ locale_route('case-studies.show', ['slug' => 'packline-industrial-machinery']) }}" class="me-case-continue-btn" id="btn-continue-reading-fmcg">
+                    <a href="{{ locale_route('case-studies.show', ['slug' => 'thermoflow-hvac']) }}" class="me-case-continue-btn" id="btn-continue-reading-distributor">
                         {{ __('market.continue') }}
                     </a>
                 </div>
             </div>
 
-            {{-- Pane 3: FINTECH Scale-up --}}
-            <div class="me-case-pane" id="pane-fintech" role="tabpanel" aria-labelledby="tab-fintech">
+            {{-- Pane 3: Investment Readiness (Solar Equipment Manufacturer) --}}
+            <div class="me-case-pane" id="pane-investment" role="tabpanel" aria-labelledby="tab-investment">
                 <div class="me-case-visual">
-                    <img src="{{ asset('images/case-studies/finedge.png') }}" 
-                         alt="Financial software and enterprise technology team collaborating in a modern office" 
+                    <img src="{{ asset('images/case-studies/gp-equipment.png') }}" 
+                         alt="Commercial solar equipment manufacturing and investment readiness across Africa" 
                          loading="lazy">
                 </div>
 
                 <div class="me-case-article">
+                    <span class="me-case-sector-badge">{{ __('market.case3_sector') }}</span>
+
                     <h3 class="me-case-heading">
                         {{ __('market.case3_title') }}
                     </h3>
@@ -451,7 +473,7 @@
                         </p>
                     </div>
 
-                    <a href="{{ locale_route('case-studies.show', ['slug' => 'finedge-software']) }}" class="me-case-continue-btn" id="btn-continue-reading-fintech">
+                    <a href="{{ locale_route('case-studies.show', ['slug' => 'helios-solar-equipment']) }}" class="me-case-continue-btn" id="btn-continue-reading-investment">
                         {{ __('market.continue') }}
                     </a>
                 </div>
