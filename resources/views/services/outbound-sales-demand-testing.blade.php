@@ -10,8 +10,8 @@
     <meta property="og:image" content="{{ asset('images/services/sd-outbound-hero.jpg') }}">
     <link rel="canonical" href="{{ url('services/outbound-demand-testing') }}">
     {{-- services-new.css carries the shared footer3 + navbar styles used across the service pages --}}
-    <link rel="stylesheet" href="{{ asset('css/services-new.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/service-detail.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/services-new.css') }}?v={{ filemtime(public_path('css/services-new.css')) }}">
+    <link rel="stylesheet" href="{{ asset('css/service-detail.css') }}?v={{ filemtime(public_path('css/service-detail.css')) }}">
 
     <script type="application/ld+json">
     {!! json_encode([
@@ -108,7 +108,7 @@
             <div class="sd-bento-o">
                 <div class="sd-bento-o__col">
                     {{-- 1 --}}
-                    <article class="sd-card" style="--h: 202; --bg: #283749; --pt: 29.5; --pl: 39; --pb: 28; --mw: 345;">
+                    <article class="sd-card" data-step="1" style="--h: 202; --bg: #283749; --pt: 29.5; --pl: 39; --pb: 28; --mw: 345;">
                         <span class="sd-num" style="--x: 375; --y: 22;" aria-hidden="true">1</span>
                         <div class="sd-card__inner">
                             <h2 class="sd-card__lead">{{ __('service_detail.outbound.how_it_works') }}</h2>
@@ -118,7 +118,7 @@
                     </article>
 
                     {{-- 2 --}}
-                    <article class="sd-card" style="--h: 455; --bg: #FAF4F0; --fg: #283749; --pt: 24; --pl: 26; --pb: 16; --mw: 400;">
+                    <article class="sd-card" data-step="2" style="--h: 455; --bg: #FAF4F0; --fg: #283749; --pt: 24; --pl: 26; --pb: 16; --mw: 400;">
                         <span class="sd-num" style="--x: 362; --y: 9; --stroke: #283749;" aria-hidden="true">2</span>
                         <div class="sd-card__inner">
                             <h3 class="sd-card-title">{!! __('service_detail.outbound.find_title') !!}</h3>
@@ -138,7 +138,7 @@
                 </div>
 
                 {{-- 3 --}}
-                <article class="sd-card" style="--h: 676; --bg: #390908; --pt: 142; --pl: 36; --pb: 40; --mw: 345;">
+                <article class="sd-card" data-step="3" style="--h: 676; --bg: #390908; --pt: 142; --pl: 36; --pb: 40; --mw: 345;">
                     <span class="sd-num" style="--x: 348; --y: 93;" aria-hidden="true">3</span>
                     <div class="sd-card__inner">
                         <h3 class="sd-card-title">{!! __('service_detail.outbound.outreach_title') !!}</h3>
@@ -156,7 +156,7 @@
                 </article>
 
                 {{-- 4 --}}
-                <article class="sd-card" style="--h: 479; --bg: #587C90; --pt: 135; --pl: 15; --pr: 16; --pb: 40; --mw: 335;">
+                <article class="sd-card" data-step="4" style="--h: 479; --bg: #587C90; --pt: 135; --pl: 15; --pr: 16; --pb: 40; --mw: 335;">
                     <span class="sd-num" style="--x: 294; --y: 32;" aria-hidden="true">4</span>
                     <div class="sd-card__inner">
                         <h3 class="sd-card-title">{{ __('service_detail.outbound.response_title') }}</h3>
