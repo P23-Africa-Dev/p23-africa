@@ -9,8 +9,8 @@
     <meta property="og:description" content="{{ __('service_detail.distributor.og_description') }}">
     <meta property="og:image" content="{{ asset('images/services/sd-distributor-hero-1.jpg') }}">
     {{-- services-new.css carries the shared footer3 + navbar styles used across the service pages --}}
-    <link rel="stylesheet" href="{{ asset('css/services-new.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/service-detail.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/services-new.css') }}?v={{ filemtime(public_path('css/services-new.css')) }}">
+    <link rel="stylesheet" href="{{ asset('css/service-detail.css') }}?v={{ filemtime(public_path('css/service-detail.css')) }}">
 @endsection
 
 @section('navbar')
@@ -73,7 +73,7 @@
             <div class="sd-bento-d">
                 <div class="sd-bento-d__left">
                     {{-- 1 --}}
-                    <article class="sd-card" style="--h: 358; --bg: #283749; --pt: 29.5; --pl: 39; --pb: 40; --mw: 345;">
+                    <article class="sd-card" data-step="1" style="--h: 358; --bg: #283749; --pt: 29.5; --pl: 39; --pb: 40; --mw: 345;">
                         <span class="sd-num" style="--x: 375; --y: 22;" aria-hidden="true">1</span>
                         <div class="sd-card__inner">
                             <h3 class="sd-card__lead">{{ __('service_detail.distributor.how_it_works') }}</h3>
@@ -84,7 +84,7 @@
                     </article>
 
                     {{-- 4 --}}
-                    <article class="sd-card sd-card--center" style="--h: 344; --bg: #E3E1CF; --fg: #283749; --pl: 36; --pt: 24; --pb: 24; --mw: 345;">
+                    <article class="sd-card sd-card--center" data-step="4" style="--h: 344; --bg: #E3E1CF; --fg: #283749; --pl: 36; --pt: 24; --pb: 24; --mw: 345;">
                         <span class="sd-num sd-num--ghost" style="--x: 348; --y: 23;" aria-hidden="true">4</span>
                         <span class="sd-num" style="--x: 368; --y: 39; --stroke: #283749;" aria-hidden="true">4</span>
                         <div class="sd-card__inner">
@@ -97,7 +97,7 @@
                 <div class="sd-bento-d__right">
                     <div class="sd-bento-d__row">
                         {{-- 2 --}}
-                        <article class="sd-card sd-card--center" style="--h: 314; --bg: #FAF4F0; --fg: #283749; --pl: 26; --pt: 20; --pb: 16; --mw: 400;">
+                        <article class="sd-card sd-card--center" data-step="2" style="--h: 314; --bg: #FAF4F0; --fg: #283749; --pl: 26; --pt: 20; --pb: 16; --mw: 400;">
                             <span class="sd-num" style="--x: 362; --y: 9; --stroke: #283749;" aria-hidden="true">2</span>
                             <div class="sd-card__inner">
                                 <h4 class="sd-card-title">{!! __('service_detail.distributor.screen_title') !!}</h4>
@@ -112,7 +112,7 @@
                         </article>
 
                         {{-- 3 --}}
-                        <article class="sd-card sd-card--center" style="--h: 314; --bg: #390908; --pl: 36; --pt: 24; --pb: 24; --mw: 305;">
+                        <article class="sd-card sd-card--center" data-step="3" style="--h: 314; --bg: #390908; --pl: 36; --pt: 24; --pb: 24; --mw: 305;">
                             <span class="sd-num" style="--x: 308; --y: 23;" aria-hidden="true">3</span>
                             <div class="sd-card__inner">
                                 <h4 class="sd-card-title">{!! __('service_detail.distributor.references_title') !!}</h4>
@@ -122,7 +122,7 @@
                     </div>
 
                     {{-- 5 --}}
-                    <article class="sd-card sd-card--center sd-card--span" style="--h: 389; --bg: #587C90; --pl: 43; --pt: 24; --pb: 24; --mw: 765;">
+                    <article class="sd-card sd-card--center sd-card--span" data-step="5" style="--h: 389; --bg: #587C90; --pl: 43; --pt: 24; --pb: 24; --mw: 765;">
                         <span class="sd-num" style="--x: 744; --y: 32;" aria-hidden="true">5</span>
                         <div class="sd-card__inner">
                             <h4 class="sd-card-title">{{ __('service_detail.distributor.payment_title') }}</h4>
