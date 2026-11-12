@@ -1301,6 +1301,14 @@ body.p23-black-navbar-page.sd-body .footer3 {
         order: 5;
     }
 
+    .sd-card[data-step="6"] {
+        order: 6;
+    }
+
+    .sd-card[data-step="7"] {
+        order: 7;
+    }
+
     .sd-bento-d__row > .sd-card:first-child,
     .sd-bento-d__row > .sd-card:last-child {
         width: 100%;
@@ -1693,5 +1701,349 @@ body.p23-black-navbar-page.sd-body .footer3 {
     .sd-cta__actions {
         flex-direction: column;
         align-items: flex-start;
+    }
+}
+
+/* ==========================================================================
+   AFTER-SALES SUPPORT PAGE (.sd-page--after-sales)
+   ========================================================================== */
+.sd-hero__eyebrow {
+    display: inline-block;
+    font-family: var(--sd-sans);
+    font-weight: 600;
+    font-size: max(12px, calc(14 * var(--u)));
+    line-height: 1.2;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--sd-maroon);
+    margin-bottom: calc(14 * var(--u)) !important;
+}
+
+/* Section: The Problem & What We Do */
+.sd-as-overview {
+    padding-top: calc(88 * var(--u));
+}
+
+.sd-as-overview .sd-inner {
+    padding-left: calc(120 * var(--u));
+    padding-right: calc(106 * var(--u));
+}
+
+.sd-as-split {
+    display: grid;
+    grid-template-columns: calc(490 * var(--u)) minmax(0, 1fr);
+    gap: calc(32 * var(--u));
+    align-items: stretch;
+}
+
+.sd-as-problem {
+    background: #1A283F;
+    color: #FFFFFF;
+    padding: calc(44 * var(--u)) calc(40 * var(--u));
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sd-as-problem__title {
+    font-family: var(--sd-serif);
+    font-weight: 700;
+    font-size: max(28px, calc(36 * var(--u)));
+    line-height: 1.15;
+    color: #FFFFFF;
+}
+
+.sd-as-problem__intro {
+    margin-top: calc(16 * var(--u)) !important;
+    font-size: max(14px, calc(15 * var(--u)));
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.88);
+}
+
+.sd-as-problem__list {
+    margin-top: calc(22 * var(--u)) !important;
+    list-style: disc;
+    padding-left: calc(20 * var(--u));
+    display: flex;
+    flex-direction: column;
+    gap: calc(12 * var(--u));
+    font-size: max(13.5px, calc(14.5 * var(--u)));
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.sd-as-problem__callout {
+    margin-top: calc(28 * var(--u));
+    padding: calc(18 * var(--u)) calc(22 * var(--u));
+    background: #141E30;
+    border-left: 3px solid #E3E1CF;
+    font-family: var(--sd-serif);
+    font-style: italic;
+    font-size: max(15px, calc(17 * var(--u)));
+    line-height: 1.45;
+    color: #E3E1CF;
+}
+
+.sd-as-what {
+    background: var(--sd-cream);
+    color: var(--sd-ink);
+    padding: calc(44 * var(--u)) calc(42 * var(--u));
+    display: flex;
+    flex-direction: column;
+}
+
+.sd-as-what__title {
+    font-family: var(--sd-serif);
+    font-weight: 700;
+    font-size: max(28px, calc(36 * var(--u)));
+    line-height: 1.15;
+    color: var(--sd-navy);
+}
+
+.sd-as-what__intro {
+    margin-top: calc(14 * var(--u)) !important;
+    font-size: max(14px, calc(15 * var(--u)));
+    line-height: 1.55;
+    color: var(--sd-ink);
+    max-width: calc(680 * var(--u));
+}
+
+.sd-as-what__grid {
+    margin-top: calc(26 * var(--u));
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: calc(16 * var(--u));
+}
+
+.sd-as-what__item {
+    background: #FFFFFF;
+    border: 1px solid rgba(40, 55, 73, 0.12);
+    padding: calc(20 * var(--u)) calc(22 * var(--u));
+    display: flex;
+    flex-direction: column;
+    gap: calc(6 * var(--u));
+}
+
+.sd-as-what__label {
+    font-family: var(--sd-serif);
+    font-weight: 700;
+    font-size: max(17px, calc(19 * var(--u)));
+    line-height: 1.2;
+    color: var(--sd-maroon);
+}
+
+.sd-as-what__text {
+    font-size: max(13px, calc(13.5 * var(--u)));
+    line-height: 1.45;
+    color: var(--sd-ink);
+}
+
+/* Section: How It Works (7-Step Bento Grid) */
+.sd-bento-as {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: calc(18 * var(--u));
+    max-width: calc(1286 * var(--u));
+    align-items: stretch;
+}
+
+.sd-bento-as .sd-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.sd-bento-as .sd-card--span-2 {
+    grid-column: span 2;
+}
+
+.sd-bento-as .sd-card--span-3 {
+    grid-column: 1 / -1;
+}
+
+.sd-pills--balanced .sd-pill {
+    justify-content: center;
+    text-align: center;
+    padding: 10px calc(22 * var(--u));
+}
+
+/* Section: Who Contracts With Whom & Setting Up */
+.sd-as-governance {
+    padding-top: calc(76 * var(--u));
+}
+
+.sd-as-governance .sd-inner {
+    padding-left: calc(120 * var(--u));
+    padding-right: calc(106 * var(--u));
+}
+
+.sd-as-contract {
+    background: #283749;
+    color: #FFFFFF;
+    padding: calc(40 * var(--u)) calc(48 * var(--u));
+    display: grid;
+    grid-template-columns: calc(340 * var(--u)) minmax(0, 1fr);
+    gap: calc(36 * var(--u));
+    align-items: center;
+}
+
+.sd-as-contract__title {
+    font-family: var(--sd-serif);
+    font-weight: 700;
+    font-size: max(24px, calc(32 * var(--u)));
+    line-height: 1.15;
+    color: #E3E1CF;
+}
+
+.sd-as-contract__body {
+    font-size: max(14.5px, calc(16 * var(--u)));
+    line-height: 1.65;
+    color: #FFFFFF;
+}
+
+/* Setting Up Grid */
+.sd-as-setup {
+    padding-top: calc(76 * var(--u));
+}
+
+.sd-as-setup .sd-inner {
+    padding-left: calc(120 * var(--u));
+    padding-right: calc(106 * var(--u));
+}
+
+.sd-as-setup__header {
+    max-width: calc(780 * var(--u));
+    margin-bottom: calc(32 * var(--u));
+}
+
+.sd-as-setup__title {
+    font-family: var(--sd-serif);
+    font-weight: 700;
+    font-size: max(28px, calc(36 * var(--u)));
+    line-height: 1.15;
+    color: var(--sd-navy);
+}
+
+.sd-as-setup__intro {
+    margin-top: calc(12 * var(--u)) !important;
+    font-size: max(14.5px, calc(16 * var(--u)));
+    line-height: 1.6;
+    color: var(--sd-ink);
+}
+
+.sd-as-setup__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: calc(16 * var(--u));
+}
+
+.sd-as-setup__card {
+    background: #FAF4F0;
+    border-top: 3px solid var(--sd-ink);
+    padding: calc(24 * var(--u)) calc(24 * var(--u)) calc(28 * var(--u));
+    display: flex;
+    flex-direction: column;
+    gap: calc(8 * var(--u));
+}
+
+.sd-as-setup__card:nth-child(even) {
+    background: #E3E1CF;
+    border-top-color: var(--sd-maroon);
+}
+
+.sd-as-setup__card--wide {
+    grid-column: span 2;
+    background: #587C90 !important;
+    border-top-color: #1A283F !important;
+    color: #FFFFFF;
+}
+
+.sd-as-setup__label {
+    font-family: var(--sd-serif);
+    font-weight: 700;
+    font-size: max(18px, calc(21 * var(--u)));
+    line-height: 1.2;
+    color: var(--sd-navy);
+}
+
+.sd-as-setup__card--wide .sd-as-setup__label {
+    color: #FFFFFF;
+}
+
+.sd-as-setup__text {
+    font-size: max(13px, calc(14 * var(--u)));
+    line-height: 1.5;
+    color: var(--sd-ink);
+}
+
+.sd-as-setup__card--wide .sd-as-setup__text {
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.sd-cta--single .sd-inner {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+@media (max-width: 1099.98px) {
+    .sd-as-overview,
+    .sd-as-governance,
+    .sd-as-setup {
+        padding-top: 64px;
+    }
+
+    .sd-as-split {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 24px;
+    }
+
+    .sd-as-problem,
+    .sd-as-what {
+        padding: 36px 28px;
+    }
+
+    .sd-bento-as {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        max-width: none;
+    }
+
+    .sd-bento-as .sd-card--span-2,
+    .sd-bento-as .sd-card--span-3 {
+        grid-column: 1 / -1;
+    }
+
+    .sd-as-contract {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+        padding: 32px 28px;
+    }
+
+    .sd-as-setup__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    .sd-as-setup__card--wide {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .sd-as-problem,
+    .sd-as-what,
+    .sd-as-contract {
+        padding: 28px 22px;
+    }
+
+    .sd-as-what__grid,
+    .sd-bento-as,
+    .sd-as-setup__grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .sd-bento-as .sd-card--span-2,
+    .sd-bento-as .sd-card--span-3,
+    .sd-as-setup__card--wide {
+        grid-column: auto;
     }
 }

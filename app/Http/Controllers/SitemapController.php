@@ -21,6 +21,7 @@ class SitemapController extends Controller
             '/market-entry/ghana',
             '/distributor-partner-development',
             '/outbound-sales-demand-testing',
+            '/services/after-sales-support',
             '/contact',
             '/case-studies',
             '/events',

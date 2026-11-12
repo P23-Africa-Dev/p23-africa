@@ -72,6 +72,14 @@ return function (bool $localized): void {
         return view('services.outbound-sales-demand-testing');
     })->name($name('services.outbound-sales'));
 
+    Route::get('/services/after-sales-support', function () {
+        ClickTracker::track('After_Sales_Support_Page');
+
+        return view('services.after-sales-support');
+    })->name($name('services.after-sales-support'));
+
+    Route::get('/after-sales-support', fn () => redirect()->to(locale_route('services.after-sales-support')));
+
     Route::get('/african-expansion-for-manufacturers', function () {
         ClickTracker::track('African_Expansion_Landing_Page');
 
