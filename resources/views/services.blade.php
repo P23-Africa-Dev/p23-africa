@@ -1,15 +1,17 @@
 @extends('layouts.master')
-@section('title', 'Services | P23 Africa')
+@section('title', __('services.meta_title'))
 @section('body_class', 'p23-black-navbar-page')
 
 @section('meta')
     <meta name="description"
-        content="Business Strategy | Market Access | Growth. Your next market is full of opportunity. Let's make it yours.">
+        content="{{ __('services.meta_description') }}">
     <meta name="keywords"
-        content="Expand and grow your business in Africa with expert business consulting. P23 Africa helps entrepreneurs, SMEs, and international businesses with strategy, expansion, marketing, operational efficiency and tailored solutions to thrive in African markets. Get started today!">
+        content="African market entry services, distributor development Africa, outbound sales demand testing Africa, investment readiness Africa, operations and market support Africa, P23 Africa">
     <meta name="author" content="P23 Africa">
+    <meta property="og:title" content="{{ __('services.meta_title') }}">
+    <meta property="og:description" content="{{ __('services.meta_description') }}">
     <meta property="og:image" content="{{ asset('images/servces-bg.png') }}">
-    <link rel="stylesheet" href="{{ asset('css/services-new.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/services-new.css') }}?v={{ filemtime(public_path('css/services-new.css')) }}">
 @endsection
 
 @section('navbar')
@@ -82,9 +84,9 @@
                                  loading="lazy">
                         </div>
 
-                        {{-- Tile 4 (Bottom Right): 5000+ Expert Network Metric --}}
+                        {{-- Tile 4 (Bottom Right): 100% On-Ground Visibility Metric --}}
                         <div class="mosaic-tile mosaic-tile-stat">
-                            <div class="stat-number">5000+</div>
+                            <div class="stat-number">{{ __('services.hero_stat_number') }}</div>
                             <div class="stat-label">{{ __('services.expert_network') }}</div>
                         </div>
 
@@ -159,8 +161,8 @@
                             <p class="plan-card-desc">
                                 {{ __('services.entry_body') }}
                             </p>
-                            <a href="{{ route('services.market-demand-testing') }}" class="plan-explore-btn" aria-label="Explore Market Demand Testing">
-                                Explore <span class="btn-arrow">→</span>
+                            <a href="{{ route('services.market-demand-testing') }}" class="plan-explore-btn" aria-label="{{ __('services.explore_entry') }}">
+                                {{ __('services.explore') }} <span class="btn-arrow">→</span>
                             </a>
                         </div>
                         <div class="plan-card-illustration">
@@ -190,33 +192,22 @@
                         <p class="plan-card-desc">
                             {{ __('services.sales_body') }}
                         </p>
-                        <a href="{{ locale_route('contact') }}" class="plan-explore-btn" aria-label="{{ __('services.explore_sales') }}">
+                        <a href="{{ locale_route('services.after-sales-support') }}" class="plan-explore-btn" aria-label="{{ __('services.explore_sales') }}">
                             {{ __('services.explore') }} <span class="btn-arrow">→</span>
                         </a>
                     </div>
                 </div>
 
-                {{-- Column 3: Investment (Top, 449px) & Outbound Sales (Bottom, 332px) --}}
-                <div class="plan-col-stacked">
-                    {{-- Investment Card --}}
-                    <div class="plan-card plan-card-investment">
-                        <h3 class="plan-card-title">{{ __('services.investment') }}</h3>
-                        <p class="plan-card-desc">
-                            {{ __('services.investment_body') }}
-                        </p>
-                        <a href="{{ locale_route('contact') }}" class="plan-explore-btn" aria-label="{{ __('services.explore_investment') }}">
-                            {{ __('services.explore') }} <span class="btn-arrow">→</span>
-                        </a>
-                    </div>
-
-                    {{-- Outbound Sales Card --}}
+                {{-- Column 3: Market Demand Testing (Full-Height Card) --}}
+                <div class="plan-col-tall">
+                    {{-- Market Demand Testing Card --}}
                     <div class="plan-card plan-card-outbound">
                         <h3 class="plan-card-title">{{ __('services.outbound') }}</h3>
                         <p class="plan-card-desc">
                             {{ __('services.outbound_body') }}
                         </p>
-                        <a href="{{ route('services.outbound-demand-testing') }}" class="plan-explore-btn" aria-label="Explore Outbound Demand Testing">
-                            Explore <span class="btn-arrow">→</span>
+                        <a href="{{ route('services.outbound-demand-testing') }}" class="plan-explore-btn" aria-label="{{ __('services.explore_outbound') }}">
+                            {{ __('services.explore') }} <span class="btn-arrow">→</span>
                         </a>
                     </div>
                 </div>
@@ -229,21 +220,21 @@
             {{-- Bottom Metrics Grid (3 Stats) --}}
             <div class="plan-metrics-grid">
                 
-                {{-- Metric 1: 5,000+ --}}
+                {{-- Metric 1: 100% --}}
                 <div class="plan-metric-item">
-                    <div class="plan-metric-number">5,000+</div>
+                    <div class="plan-metric-number">{{ __('services.metric_1_num') }}</div>
                     <div class="plan-metric-label">{{ __('services.loved') }}</div>
                 </div>
 
-                {{-- Metric 2: 25,000+ --}}
+                {{-- Metric 2: 90 Days --}}
                 <div class="plan-metric-item">
-                    <div class="plan-metric-number">25,000+</div>
+                    <div class="plan-metric-number">{{ __('services.metric_2_num') }}</div>
                     <div class="plan-metric-label">{{ __('services.trusted_customers') }}</div>
                 </div>
 
-                {{-- Metric 3: 24 hrs --}}
+                {{-- Metric 3: 5 Key Sectors --}}
                 <div class="plan-metric-item">
-                    <div class="plan-metric-number">24 hrs</div>
+                    <div class="plan-metric-number">{{ __('services.metric_3_num') }}</div>
                     <div class="plan-metric-label">{{ __('services.available') }}</div>
                 </div>
 
@@ -253,7 +244,7 @@
     </section>
 
     {{-- ==========================================
-         SECTION 3: GLOBAL REACH. LOCAL APPROACH.
+         SECTION 3: GLOBAL REACH. LOCAL EXECUTION.
          ========================================== --}}
     <section class="services-reach-section" id="global-reach">
         <div class="reach-container">
@@ -261,7 +252,8 @@
                 
                 {{-- Left Column: Executive Photo with Top-Right Arch --}}
                 <div class="reach-media">
-                    <img src="{{ asset('images/services/global-reach-executive.png') }}"                          alt="P23 strategic leadership consulting and advisory" 
+                    <img src="{{ asset('images/services/global-reach-executive.png') }}"
+                         alt="P23 strategic leadership consulting and frontline execution" 
                          loading="lazy">
                 </div>
 
@@ -276,9 +268,11 @@
                         <p>
                             {{ __('services.reach_body') }}
                         </p>
-                        <p>
-                            {{ __('services.reach_extra') }}
-                        </p>
+                        @if (!empty(__('services.reach_extra')))
+                            <p>
+                                {{ __('services.reach_extra') }}
+                            </p>
+                        @endif
                     </div>
 
                     <a href="{{ locale_route('contact') }}" class="reach-contact-btn" id="reach-contact-btn">
@@ -291,9 +285,9 @@
     </section>
 
     {{-- ==========================================
-         SECTION 4: 57% OPERATIONAL INEFFICIENCIES STAT
+         SECTION 4: 70% PARTNER EXECUTION STAT
          ========================================== --}}
-    <section class="services-inefficiency-section" id="inefficiencies" aria-label="Operational Inefficiencies Growth Impact">
+    <section class="services-inefficiency-section" id="inefficiencies" aria-label="Market Entry Partner Execution Impact">
         <div class="inefficiency-card">
             
             <div class="inefficiency-content-wrapper">
@@ -305,34 +299,18 @@
                 <div class="inefficiency-hero-stat">
                     <div class="inefficiency-percent-wrap">
                         <div class="inefficiency-percent-backdrop" aria-hidden="true"></div>
-                        <div class="inefficiency-percent">57%</div>
+                        <div class="inefficiency-percent">{{ __('services.inefficiency_num') }}</div>
                     </div>
                     <p class="inefficiency-statement">
                         {{ __('services.inefficiency') }}
                     </p>
                 </div>
 
-                {{-- Centered 3-Column Breakdown Box --}}
+                {{-- Framed Subtext Callout Box --}}
                 <div class="inefficiency-breakdown-box">
-                    
-                    {{-- Item 1: Start-ups --}}
-                    <div class="breakdown-item">
-                        <div class="breakdown-number">68%</div>
-                        <div class="breakdown-label">{{ __('services.startups') }}</div>
-                    </div>
-
-                    {{-- Item 2: MSMEs --}}
-                    <div class="breakdown-item">
-                        <div class="breakdown-number">59%</div>
-                        <div class="breakdown-label">{{ __('services.msmes') }}</div>
-                    </div>
-
-                    {{-- Item 3: Enterprises --}}
-                    <div class="breakdown-item">
-                        <div class="breakdown-number">46%</div>
-                        <div class="breakdown-label">{{ __('services.enterprises') }}</div>
-                    </div>
-
+                    <p class="inefficiency-subtext">
+                        {{ __('services.inefficiency_subtext') }}
+                    </p>
                 </div>
 
             </div>

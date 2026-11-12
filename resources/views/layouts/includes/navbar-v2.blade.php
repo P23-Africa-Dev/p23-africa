@@ -56,6 +56,7 @@
                         <a href="{{ route('services.market-demand-testing') }}" class="p23-nav-dropdown-item" role="menuitem" itemprop="url"><span itemprop="name">Market Demand Testing</span></a>
                         <a href="{{ route('services.outbound-demand-testing') }}" class="p23-nav-dropdown-item" role="menuitem" itemprop="url"><span itemprop="name">Outbound Demand Testing</span></a>
                         <a href="{{ route('services.distributor-partner') }}" class="p23-nav-dropdown-item" role="menuitem" itemprop="url"><span itemprop="name">Distributor Verification</span></a>
+                        <a href="{{ locale_route('services.after-sales-support') }}" class="p23-nav-dropdown-item" role="menuitem" itemprop="url"><span itemprop="name">After-Sales Support</span></a>
                         <a href="{{ url('services') }}" class="p23-nav-dropdown-item" role="menuitem">Overview of Services</a>
                     </div>
                 </div>
@@ -142,6 +143,8 @@
             <div class="p23-mobile-sublinks">
                 <a href="{{ route('services.market-demand-testing') }}" class="p23-mobile-sublink">↳ Market Demand Testing</a>
                 <a href="{{ route('services.outbound-demand-testing') }}" class="p23-mobile-sublink">↳ Outbound Demand Testing</a>
+                <a href="{{ route('services.distributor-partner') }}" class="p23-mobile-sublink">↳ Distributor Verification</a>
+                <a href="{{ locale_route('services.after-sales-support') }}" class="p23-mobile-sublink">↳ After-Sales Support</a>
             </div>
             <a href="{{ route('event') }}" class="p23-mobile-link {{ $active === 'events' ? 'active' : '' }}">Events</a>
             <a href="{{ route('resource-hub') }}" class="p23-mobile-link {{ $active === 'resource-hub' ? 'active' : '' }}">Resource Hub</a>
