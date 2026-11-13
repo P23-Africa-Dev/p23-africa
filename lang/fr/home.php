@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'hero_title_line' => 'Entrez les marchés africains',
+    'hero_title_line' => 'Entrez en Afrique',
     'hero_title_evidence' => 'Avec des preuves',
     'hero_title_not' => 'Pas des hypothèses',
     'hero_body' => 'Nous aidons les entreprises internationales à valider la demande, vérifier les partenaires de distribution et construire les opérations commerciales nécessaires pour croître en Afrique. Du test de l’intérêt réel des acheteurs au renforcement des équipes locales, nous transformons les plans d’entrée en action commerciale.',

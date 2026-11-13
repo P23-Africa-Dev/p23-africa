@@ -1603,37 +1603,63 @@ body.p23-black-navbar-page #navbar .navbar-toggler img {
 
 
 
-/* Mobile drawer uses a light surface, independently of the dark desktop header. */
+/* Mobile drawer uses the same style as the homepage mobile sidebar */
 @media (max-width: 991px) {
     body.p23-black-navbar-page #navbar #sidebar {
-        color: #1a293b;
+        color: #000;
         background: #fff;
-        height: 100dvh;
-        max-width: calc(100vw - 32px);
-        border-radius: 10px 0 0 10px;
+        width: 250px;
+        height: 80%;
+        border-radius: 10px;
+        padding: 20px;
     }
     body.p23-black-navbar-page #navbar #sidebar #nav {
         align-items: stretch;
-        gap: 12px;
-        margin: 20px 0 28px !important;
+        gap: 0;
+        margin: 0 0 0.5rem !important;
     }
-    body.p23-black-navbar-page #navbar #sidebar #nav li .nav-link,
-    body.p23-black-navbar-page #navbar #sidebar .social-icons a {
-        color: #1a293b !important;
+    body.p23-black-navbar-page #navbar #sidebar #nav li .nav-link {
+        color: #000 !important;
+        font-family: "GT Walsheim Con" !important;
+        font-weight: 500 !important;
+        font-size: 16px !important;
+        padding-bottom: 5px !important;
+        margin: 0 !important;
         opacity: 1 !important;
     }
     body.p23-black-navbar-page #navbar #sidebar .contact {
         display: block !important;
-        margin-bottom: 16px;
+        margin-bottom: 4rem;
     }
-    body.p23-black-navbar-page #navbar #sidebar .contact #btn,
+    body.p23-black-navbar-page #navbar #sidebar .contact #btn {
+        color: #000 !important;
+        border: 2px solid #000 !important;
+        background: transparent !important;
+        border-radius: 5px !important;
+        font-family: "GT Walsheim Pro" !important;
+        font-size: 1rem !important;
+        font-weight: 400 !important;
+        padding: 0.375rem 0.75rem !important;
+    }
     body.p23-black-navbar-page #navbar #sidebar .subscribe #btn {
-        color: #1a293b !important;
-        border: 1px solid #1a293b !important;
-        background: #fff !important;
+        color: #fff !important;
+        border: 2px solid #0d4036 !important;
+        background: #0d4036 !important;
+        border-radius: 5px !important;
+        margin-bottom: 1rem !important;
+        font-family: "GT Walsheim Pro" !important;
+        font-size: 1rem !important;
+        font-weight: 400 !important;
+        padding: 0.375rem 0.75rem !important;
     }
     body.p23-black-navbar-page #navbar #sidebar .social-icons {
-        margin: 24px 0 0;
+        margin: 0;
+        gap: 0;
+    }
+    body.p23-black-navbar-page #navbar #sidebar .social-icons a {
+        color: #0d4036 !important;
+        opacity: 1 !important;
+        font-size: 16px !important;
     }
 }
 #navbar #closeBtn {

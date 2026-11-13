@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'hero_title_line' => 'Afrikanische Märkte erschließen',
+    'hero_title_line' => 'Afrika erschließen',
     'hero_title_evidence' => 'Mit Belegen',
     'hero_title_not' => 'Nicht mit Annahmen',
     'hero_body' => 'Wir helfen internationalen Unternehmen, die Nachfrage zu prüfen, Vertriebspartner zu verifizieren und die Vertriebsorganisation aufzubauen, die für Wachstum in Afrika nötig ist. Vom Test des echten Käuferinteresses bis zur Stärkung lokaler Teams machen wir Markteintrittspläne zu kommerziellem Handeln.',

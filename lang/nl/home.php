@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'hero_title_line' => 'Betreed Afrikaanse markten',
+    'hero_title_line' => 'Betreed Afrika',
     'hero_title_evidence' => 'Met bewijs',
     'hero_title_not' => 'Niet met aannames',
     'hero_body' => 'Wij helpen internationale bedrijven de vraag te toetsen, distributiepartners te controleren en de verkooporganisatie op te bouwen die nodig is om in Afrika te groeien. Van echte kopersinteresse tot sterkere lokale teams: wij maken markttoegang tot commerciële actie.',
