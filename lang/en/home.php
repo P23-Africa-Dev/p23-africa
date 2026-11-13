@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'hero_title_line' => 'Enter African Markets',
+    'hero_title_line' => 'Enter Africa',
     'hero_title_evidence' => 'With Evidence',
     'hero_title_not' => 'Not Assumptions',
     'hero_body' => 'We help international businesses validate demand, verify distribution partners and build the sales operations needed to grow in Africa. From testing real buyer interest to strengthening local sales teams and channel performance, we turn market-entry plans into commercial action.',

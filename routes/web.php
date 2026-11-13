@@ -128,6 +128,12 @@ Route::get('/services/outbound-demand-testing', function () {
     return view('services.outbound-sales-demand-testing');
 })->name('services.outbound-demand-testing');
 
+// After-Sales Support
+Route::get('/services/after-sales-support', function () {
+    ClickTracker::track('After_Sales_Support_Page');
+    return view('services.after-sales-support');
+})->name('services.after-sales-support');
+
 // African Expansion for Manufacturers Lead Magnet
 Route::get('/african-expansion-for-manufacturers', function () {
     ClickTracker::track('African_Expansion_Landing_Page');
@@ -147,6 +153,8 @@ Route::get('/services/market-demand-testing/ghana', fn() => redirect()->route('s
 Route::get('/outbound-demand-testing', fn() => redirect()->route('services.outbound-demand-testing', [], 301));
 Route::get('/outbound-sales-demand-testing', fn() => redirect()->route('services.outbound-demand-testing', [], 301))->name('services.outbound-sales');
 Route::get('/services/outbound-sales-demand-testing', fn() => redirect()->route('services.outbound-demand-testing', [], 301));
+
+Route::get('/after-sales-support', fn() => redirect()->route('services.after-sales-support', [], 301));
 
 Route::get('/sales', function () {
     ClickTracker::track('Sales_Page');
