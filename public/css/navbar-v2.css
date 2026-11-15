@@ -188,6 +188,46 @@
     color: #FFFFFF;
 }
 
+/* Homepage Navbar (#navbar) Services Dropdown Support */
+#navbar #nav li.p23-nav-dropdown {
+    position: relative;
+}
+
+#navbar #nav li .nav-link.p23-nav-dropdown-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+#navbar #nav li .p23-nav-dropdown-menu {
+    top: calc(100% + 6px);
+    left: 10px;
+}
+
+#navbar #nav li .p23-nav-dropdown-item,
+.bg-scrolling .navbar #nav li .p23-nav-dropdown-item {
+    display: block;
+    padding: 10px 18px;
+    font-family: 'GT Walsheim Trial', 'Montserrat', -apple-system, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1A1A1A;
+    text-decoration: none;
+    margin: 0;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+#navbar #nav li .p23-nav-dropdown-item:hover,
+.bg-scrolling .navbar #nav li .p23-nav-dropdown-item:hover {
+    background: rgba(0, 0, 0, 0.04);
+    color: #000000;
+    font-weight: 500;
+}
+
+#navbar #nav li .p23-nav-dropdown-item::after {
+    display: none !important;
+}
+
 .p23-mobile-sublinks {
     display: flex;
     flex-direction: column;

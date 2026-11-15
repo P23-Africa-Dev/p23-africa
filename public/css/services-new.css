@@ -513,9 +513,8 @@
 .plan-card-outbound {
     background-color: #E3E1CF;
     color: #181818;
-    height: 100%;
     min-height: 332px;
-    flex: 1;
+    flex: 332;
 }
 
 /* Card Typography */

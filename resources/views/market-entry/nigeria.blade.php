@@ -22,7 +22,7 @@
                 <li class="separator">/</li>
                 <li><a href="{{ locale_route('services') }}">{{ __('nav.services') }}</a></li>
                 <li class="separator">/</li>
-                <li><a href="{{ route('services.market-demand-testing') }}">Market Demand Testing</a></li>
+                <li><a href="{{ locale_route('services.market-entry') }}">Market Entry</a></li>
                 <li class="separator">/</li>
                 <li class="current">{{ __('market_country.ng.crumb') }}</li>
             </ul>
@@ -410,7 +410,7 @@
                             <a href="{{ locale_route('contact') }}" class="p23-btn-brand">
                                 {{ __('market_country.ng.talk') }} <i class="fas fa-calendar-check ms-1"></i>
                             </a>
-                            <a href="{{ route('services.market-demand-testing') }}" class="p23-btn-outline-light">
+                            <a href="{{ locale_route('services.market-entry') }}" class="p23-btn-outline-light">
                                 Explore All Capabilities <i class="fas fa-arrow-left ms-1"></i>
                             </a>
                         </div>

@@ -32,11 +32,12 @@
             <div class="footer3-col">
                 <h3 class="footer3-heading">{{ __('footer.what_we_do') }}</h3>
                 <ul class="footer3-nav-list">
-                    <li><a href="{{ route('services.market-demand-testing') }}" class="footer3-nav-link">Market Demand Testing</a></li>
-                    <li><a href="{{ route('services.outbound-demand-testing') }}" class="footer3-nav-link">Outbound Demand Testing</a></li>
-                    <li><a href="{{ route('services.distributor-partner') }}" class="footer3-nav-link">Distributor Verification</a></li>
+                    <li><a href="{{ locale_route('services.market-entry') }}" class="footer3-nav-link">Market Entry</a></li>
+                    <li><a href="{{ locale_route('services.market-demand-testing') }}" class="footer3-nav-link">Market Demand Testing</a></li>
+                    <li><a href="{{ locale_route('services.distributor-partner') }}" class="footer3-nav-link">Distributor Verification</a></li>
+                    <li><a href="{{ locale_route('services.commercial-sales-team') }}" class="footer3-nav-link">Commercial Sales Team</a></li>
                     <li><a href="{{ locale_route('services.after-sales-support') }}" class="footer3-nav-link">After-Sales Support</a></li>
-                    <li><a href="{{ url('services') }}" class="footer3-nav-link">Commercial Services</a></li>
+                    <li><a href="{{ locale_route('services') }}" class="footer3-nav-link">Commercial Services</a></li>
                 </ul>
             </div>
 
