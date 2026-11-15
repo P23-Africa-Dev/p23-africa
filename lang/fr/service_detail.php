@@ -85,9 +85,9 @@ return [
         'why_body' => 'Un distributeur est difficile à défaire. L’exclusivité, le stock à crédit et la réputation de votre marque sont entre ses mains, et beaucoup de « sociétés de distribution » sont des structures à une seule personne. Quelques semaines de vérification coûtent bien moins qu’une année avec le mauvais partenaire.',
     ],
     'outbound' => [
-        'meta_title' => 'Test de la demande commerciale sortante en Afrique | P23 Africa',
+        'meta_title' => 'Test de Demande du Marché en Afrique | P23 Africa',
         'meta_description' => 'Découvrez si l’Afrique achètera avant d’engager du capital. P23 Africa mène un vrai test commercial dans votre pays cible et rend compte de ce qui se passe réellement.',
-        'og_title' => 'Test de la demande commerciale sortante | P23 Africa',
+        'og_title' => 'Test de Demande du Marché en Afrique | P23 Africa',
         'og_description' => 'La preuve d’une demande (ou de son absence) avant d’embaucher une équipe, d’ouvrir un bureau ou de signer avec un distributeur.',
         'hero' => 'Découvrez si l’Afrique achètera <br class="sd-br-d">avant d’engager <br class="sd-br-d">du capital.',
         'hero_desc' => 'Nous menons un vrai test commercial dans votre pays cible. Nous trouvons des entreprises qui montrent déjà des signes qu’elles sont prêtes à acheter, nous joignons leurs décideurs et nous rendons compte de ce qui se passe réellement. Vous obtenez la preuve d’une demande (ou de son absence) avant d’embaucher une équipe, d’ouvrir un bureau ou de signer avec un distributeur.',

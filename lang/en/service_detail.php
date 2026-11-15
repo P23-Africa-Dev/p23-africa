@@ -85,9 +85,9 @@ return [
         'why_body' => 'A distributor is hard to undo. Exclusivity, stock on credit and your brand reputation are all in their hands, and many “distribution companies” are one-person operations. A few weeks of checking costs far less than a year with the wrong partner.',
     ],
     'outbound' => [
-        'meta_title' => 'Outbound Sales Demand Testing in Africa | P23 Africa',
+        'meta_title' => 'Market Demand Testing for Africa | Test the Market Before You Commit Capital',
         'meta_description' => 'Find out if Africa will buy before you commit capital. P23 Africa runs a real sales test in your target country and reports what actually happens.',
-        'og_title' => 'Outbound Sales Demand Testing | P23 Africa',
+        'og_title' => 'Market Demand Testing for Africa | Test the Market Before You Commit Capital',
         'og_description' => 'Evidence of demand (or the lack of it) before you hire a team, open an office or sign a distributor.',
         'hero' => 'Find out if Africa will <br class="sd-br-d">buy before you commit <br class="sd-br-d">capital.',
         'hero_desc' => 'We run a real sales test in your target country. We find companies already showing signs they’re ready to buy, reach their decision-makers, and report what actually happens. You get evidence of demand (or the lack of it) before you hire a team, open an office or sign a distributor.',

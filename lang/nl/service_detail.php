@@ -85,9 +85,9 @@ return [
         'why_body' => 'Een distributeur maakt u niet eenvoudig ongedaan. Exclusiviteit, voorraad op krediet en de reputatie van uw merk liggen in zijn handen, en veel „distributiebedrijven” zijn eenmanszaken. Een paar weken controleren kost veel minder dan een jaar met de verkeerde partner.',
     ],
     'outbound' => [
-        'meta_title' => 'Outbound test van verkoopvraag in Afrika | P23 Africa',
+        'meta_title' => 'Marktvraagtesten in Afrika | P23 Africa',
         'meta_description' => 'Ontdek of Afrika koopt voordat u kapitaal vastlegt. P23 Africa voert een echte verkooptest uit in uw doelland en rapporteert wat er werkelijk gebeurt.',
-        'og_title' => 'Outbound test van verkoopvraag | P23 Africa',
+        'og_title' => 'Marktvraagtesten in Afrika | P23 Africa',
         'og_description' => 'Bewijs van vraag, of van het ontbreken ervan, voordat u een team aanneemt, een kantoor opent of een distributeur tekent.',
         'hero' => 'Ontdek of Afrika koopt <br class="sd-br-d">voordat u kapitaal <br class="sd-br-d">vastlegt.',
         'hero_desc' => 'Wij voeren een echte verkooptest uit in uw doelland. Wij vinden bedrijven die al tekenen geven dat zij klaar zijn om te kopen, bereiken hun beslissers en rapporteren wat er werkelijk gebeurt. U krijgt bewijs van vraag, of van het ontbreken ervan, voordat u een team aanneemt, een kantoor opent of een distributeur tekent.',

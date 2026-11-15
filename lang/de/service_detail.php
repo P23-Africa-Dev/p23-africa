@@ -85,9 +85,9 @@ return [
         'why_body' => 'Einen Vertriebspartner macht man nicht einfach rückgängig. Exklusivität, Ware auf Kredit und der Ruf Ihrer Marke liegen in seinen Händen, und viele „Vertriebsgesellschaften“ sind Ein-Personen-Betriebe. Ein paar Wochen Prüfung kosten weit weniger als ein Jahr mit dem falschen Partner.',
     ],
     'outbound' => [
-        'meta_title' => 'Outbound-Test der Vertriebsnachfrage in Afrika | P23 Africa',
+        'meta_title' => 'Marktnachfragetests in Afrika | P23 Africa',
         'meta_description' => 'Prüfen Sie, ob Afrika kauft, bevor Sie Kapital binden. P23 Africa führt einen echten Verkaufstest in Ihrem Zielland durch und berichtet, was tatsächlich geschieht.',
-        'og_title' => 'Outbound-Test der Vertriebsnachfrage | P23 Africa',
+        'og_title' => 'Marktnachfragetests in Afrika | P23 Africa',
         'og_description' => 'Belege für Nachfrage oder für ihr Fehlen, bevor Sie ein Team einstellen, ein Büro eröffnen oder einen Vertriebspartner beauftragen.',
         'hero' => 'Prüfen Sie, ob Afrika kauft, <br class="sd-br-d">bevor Sie Kapital <br class="sd-br-d">binden.',
         'hero_desc' => 'Wir führen einen echten Verkaufstest in Ihrem Zielland durch. Wir finden Unternehmen, die bereits Zeichen zeigen, dass sie kaufbereit sind, erreichen ihre Entscheider und berichten, was tatsächlich geschieht. Sie erhalten Belege für Nachfrage oder für ihr Fehlen, bevor Sie ein Team einstellen, ein Büro eröffnen oder einen Vertriebspartner beauftragen.',
