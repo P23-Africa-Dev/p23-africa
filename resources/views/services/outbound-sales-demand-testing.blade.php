@@ -1,14 +1,14 @@
 @extends('layouts.master')
-@section('title', 'Outbound Demand Testing for Africa | Test the Market Before You Commit Capital')
+@section('title', __('service_detail.outbound.meta_title'))
 @section('body_class', 'p23-black-navbar-page sd-body')
 
 @section('meta')
     <meta name="description"
-        content="Test real buyer demand with prospective customers in Africa. Validate commercial pipeline and buying interest before opening an office or hiring teams.">
-    <meta property="og:title" content="Outbound Demand Testing for Africa | Test the Market Before You Commit Capital">
-    <meta property="og:description" content="Test real buyer demand with prospective customers in Africa. Validate commercial pipeline and buying interest before opening an office or hiring teams.">
+        content="{{ __('service_detail.outbound.meta_description') }}">
+    <meta property="og:title" content="{{ __('service_detail.outbound.og_title') }}">
+    <meta property="og:description" content="{{ __('service_detail.outbound.og_description') }}">
     <meta property="og:image" content="{{ asset('images/services/sd-outbound-hero.jpg') }}">
-    <link rel="canonical" href="{{ url('services/outbound-demand-testing') }}">
+    <link rel="canonical" href="{{ url('services/market-demand-testing') }}">
     {{-- services-new.css carries the shared footer3 + navbar styles used across the service pages --}}
     <link rel="stylesheet" href="{{ asset('css/services-new.css') }}?v={{ filemtime(public_path('css/services-new.css')) }}">
     <link rel="stylesheet" href="{{ asset('css/service-detail.css') }}?v={{ filemtime(public_path('css/service-detail.css')) }}">
@@ -19,14 +19,14 @@
       '@graph' => [
         [
           '@type' => 'Service',
-          'name' => 'Outbound Demand Testing for Africa',
-          'serviceType' => 'Outbound Sales & Commercial Demand Validation',
+          'name' => 'Market Demand Testing for Africa',
+          'serviceType' => 'Market Demand Testing & Commercial Demand Validation',
           'provider' => [
             '@type' => 'Organization',
             'name' => 'P23 Africa',
             'url' => 'https://p23africa.com'
           ],
-          'url' => url('services/outbound-demand-testing'),
+          'url' => url('services/market-demand-testing'),
           'description' => 'Test real buyer demand with prospective customers in Africa. Validate commercial pipeline and buying interest before opening an office or hiring teams.'
         ],
         [
@@ -47,8 +47,8 @@
             [
               '@type' => 'ListItem',
               'position' => 3,
-              'name' => 'Outbound Demand Testing',
-              'item' => url('services/outbound-demand-testing')
+              'name' => 'Market Demand Testing',
+              'item' => url('services/market-demand-testing')
             ]
           ]
         ]

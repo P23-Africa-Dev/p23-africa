@@ -10,7 +10,7 @@
     <meta property="og:title" content="{{ __('market.meta_title') }}">
     <meta property="og:description" content="{{ __('market.meta_description') }}">
     <meta property="og:image" content="{{ asset('images/market-entry/hero-office-woman.png') }}">
-    <link rel="canonical" href="{{ url('services/market-demand-testing') }}">
+    <link rel="canonical" href="{{ url('services/market-entry') }}">
     <link rel="stylesheet" href="{{ asset('css/market-entry-new.css') }}?v={{ filemtime(public_path('css/market-entry-new.css')) }}">
     <link rel="stylesheet" href="{{ asset('css/services-new.css') }}?v={{ filemtime(public_path('css/services-new.css')) }}">
 
@@ -27,7 +27,7 @@
             'name' => 'P23 Africa',
             'url' => 'https://p23africa.com'
           ],
-          'url' => url('services/market-demand-testing'),
+          'url' => url('services/market-entry'),
           'description' => __('market.meta_description'),
           'areaServed' => ['Nigeria', 'Ghana', 'Kenya', 'South Africa']
         ],
@@ -50,7 +50,7 @@
               '@type' => 'ListItem',
               'position' => 3,
               'name' => 'Market Entry & Expansion',
-              'item' => url('services/market-demand-testing')
+              'item' => url('services/market-entry')
             ]
           ]
         ]

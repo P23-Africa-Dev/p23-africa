@@ -42,7 +42,7 @@ return function (bool $localized): void {
         return view('services');
     })->name($name('services'));
 
-    Route::get('/market-entry', function () {
+    Route::get('/services/market-entry', function () {
         ClickTracker::track('Market_Entry_Page');
 
         return view('market-entry.index');
@@ -66,11 +66,11 @@ return function (bool $localized): void {
         return view('services.distributor-partner-development');
     })->name($name('services.distributor-partner'));
 
-    Route::get('/outbound-sales-demand-testing', function () {
+    Route::get('/services/market-demand-testing', function () {
         ClickTracker::track('Outbound_Sales_Page');
 
         return view('services.outbound-sales-demand-testing');
-    })->name($name('services.outbound-sales'));
+    })->name($name('services.market-demand-testing'));
 
     Route::get('/services/after-sales-support', function () {
         ClickTracker::track('After_Sales_Support_Page');
@@ -78,7 +78,15 @@ return function (bool $localized): void {
         return view('services.after-sales-support');
     })->name($name('services.after-sales-support'));
 
-    Route::get('/after-sales-support', fn () => redirect()->to(locale_route('services.after-sales-support')));
+    Route::get('/after-sales-support', fn () => redirect()->to(locale_route('services.after-sales-support'), 301));
+
+    Route::get('/services/commercial-sales-team', function () {
+        ClickTracker::track('Commercial_Sales_Team_Page');
+
+        return view('services.commercial-sales-team');
+    })->name($name('services.commercial-sales-team'));
+
+    Route::get('/commercial-sales-team', fn () => redirect()->to(locale_route('services.commercial-sales-team'), 301));
 
     Route::get('/african-expansion-for-manufacturers', function () {
         ClickTracker::track('African_Expansion_Landing_Page');
@@ -89,9 +97,17 @@ return function (bool $localized): void {
     Route::get('/african-expansion-for-manufacturers/guide', AfricanExpansionGuideController::class)
         ->name($name('lead-magnets.african-expansion.guide'));
 
-    Route::get('/services/market-entry', fn () => redirect()->to(locale_route('services.market-entry')));
-    Route::get('/services/market-entry/nigeria', fn () => redirect()->to(locale_route('services.market-entry.nigeria')));
-    Route::get('/services/market-entry/ghana', fn () => redirect()->to(locale_route('services.market-entry.ghana')));
+    Route::get('/market-entry', fn () => redirect()->to(locale_route('services.market-entry'), 301));
+    Route::get('/services/market-entry/nigeria', fn () => redirect()->to(locale_route('services.market-entry.nigeria'), 301));
+    Route::get('/services/market-entry/ghana', fn () => redirect()->to(locale_route('services.market-entry.ghana'), 301));
+    Route::get('/services/market-demand-testing/nigeria', fn () => redirect()->to(locale_route('services.market-entry.nigeria'), 301));
+    Route::get('/services/market-demand-testing/ghana', fn () => redirect()->to(locale_route('services.market-entry.ghana'), 301));
+
+    Route::get('/market-demand-testing', fn () => redirect()->to(locale_route('services.market-demand-testing'), 301));
+    Route::get('/services/outbound-demand-testing', fn () => redirect()->to(locale_route('services.market-demand-testing'), 301))->name($name('services.outbound-demand-testing'));
+    Route::get('/outbound-demand-testing', fn () => redirect()->to(locale_route('services.market-demand-testing'), 301));
+    Route::get('/outbound-sales-demand-testing', fn () => redirect()->to(locale_route('services.market-demand-testing'), 301))->name($name('services.outbound-sales'));
+    Route::get('/services/outbound-sales-demand-testing', fn () => redirect()->to(locale_route('services.market-demand-testing'), 301));
 
     Route::get('/sales', function () {
         ClickTracker::track('Sales_Page');

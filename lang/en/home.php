@@ -8,7 +8,7 @@ return [
     'results' => 'Commercial Results in Real Markets',
     'solutions' => 'Commercial Solutions for African Expansion',
     'verify' => 'Distributor Verification',
-    'outbound' => 'Outbound Demand Testing',
+    'outbound' => 'Market Demand Testing',
     'sales_ops' => 'Sales & Commercial Operations',
     'reach' => 'Global Reach.',
     'local' => 'Local Approach',

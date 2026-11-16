@@ -161,7 +161,7 @@
                             <p class="plan-card-desc">
                                 {{ __('services.entry_body') }}
                             </p>
-                            <a href="{{ route('services.market-demand-testing') }}" class="plan-explore-btn" aria-label="{{ __('services.explore_entry') }}">
+                            <a href="{{ locale_route('services.market-entry') }}" class="plan-explore-btn" aria-label="{{ __('services.explore_entry') }}">
                                 {{ __('services.explore') }} <span class="btn-arrow">→</span>
                             </a>
                         </div>
@@ -198,15 +198,26 @@
                     </div>
                 </div>
 
-                {{-- Column 3: Market Demand Testing (Full-Height Card) --}}
-                <div class="plan-col-tall">
+                {{-- Column 3: Commercial Sales Team (Top, 449px) & Market Demand Testing (Bottom, 332px) --}}
+                <div class="plan-col-stacked">
+                    {{-- Commercial Sales Team Card --}}
+                    <div class="plan-card plan-card-investment">
+                        <h3 class="plan-card-title">{{ __('services.commercial_sales') }}</h3>
+                        <p class="plan-card-desc">
+                            {{ __('services.commercial_sales_body') }}
+                        </p>
+                        <a href="{{ locale_route('services.commercial-sales-team') }}" class="plan-explore-btn" aria-label="{{ __('services.explore_commercial_sales') }}">
+                            {{ __('services.explore') }} <span class="btn-arrow">→</span>
+                        </a>
+                    </div>
+
                     {{-- Market Demand Testing Card --}}
                     <div class="plan-card plan-card-outbound">
                         <h3 class="plan-card-title">{{ __('services.outbound') }}</h3>
                         <p class="plan-card-desc">
                             {{ __('services.outbound_body') }}
                         </p>
-                        <a href="{{ route('services.outbound-demand-testing') }}" class="plan-explore-btn" aria-label="{{ __('services.explore_outbound') }}">
+                        <a href="{{ locale_route('services.market-demand-testing') }}" class="plan-explore-btn" aria-label="{{ __('services.explore_outbound') }}">
                             {{ __('services.explore') }} <span class="btn-arrow">→</span>
                         </a>
                     </div>

@@ -100,11 +100,11 @@ Route::get('/services', function () {
     return view('services');
 });
 
-// Market Demand Testing (formerly Market Entry & Expansion)
-Route::get('/services/market-demand-testing', function () {
+// Market Entry
+Route::get('/services/market-entry', function () {
     ClickTracker::track('Market_Entry_Page');
     return view('market-entry.index');
-})->name('services.market-demand-testing');
+})->name('services.market-entry');
 
 Route::get('/market-entry/nigeria', function () {
     ClickTracker::track('Market_Entry_Nigeria_Page');
@@ -122,17 +122,24 @@ Route::get('/distributor-partner-development', function () {
     return view('services.distributor-partner-development');
 })->name('services.distributor-partner');
 
-// Outbound Demand Testing
-Route::get('/services/outbound-demand-testing', function () {
+// Market Demand Testing (formerly Outbound Demand Testing)
+Route::get('/services/market-demand-testing', function () {
     ClickTracker::track('Outbound_Sales_Page');
     return view('services.outbound-sales-demand-testing');
-})->name('services.outbound-demand-testing');
+})->name('services.market-demand-testing');
 
 // After-Sales Support
 Route::get('/services/after-sales-support', function () {
     ClickTracker::track('After_Sales_Support_Page');
     return view('services.after-sales-support');
 })->name('services.after-sales-support');
+
+// Commercial Sales Team
+Route::get('/services/commercial-sales-team', function () {
+    ClickTracker::track('Commercial_Sales_Team_Page');
+    return view('services.commercial-sales-team');
+})->name('services.commercial-sales-team');
+Route::redirect('/commercial-sales-team', '/services/commercial-sales-team', 301);
 
 // African Expansion for Manufacturers Lead Magnet
 Route::get('/african-expansion-for-manufacturers', function () {
@@ -144,15 +151,17 @@ Route::get('/african-expansion-for-manufacturers/guide', AfricanExpansionGuideCo
     ->name('lead-magnets.african-expansion.guide');
 
 // Backward compatibility & SEO 301 Redirects
-Route::get('/market-demand-testing', fn() => redirect()->route('services.market-demand-testing', [], 301));
-Route::get('/market-entry', fn() => redirect()->route('services.market-demand-testing', [], 301))->name('services.market-entry');
-Route::get('/services/market-entry', fn() => redirect()->route('services.market-demand-testing', [], 301));
+Route::get('/market-entry', fn() => redirect()->route('services.market-entry', [], 301));
+Route::get('/services/market-entry/nigeria', fn() => redirect()->route('services.market-entry.nigeria', [], 301));
+Route::get('/services/market-entry/ghana', fn() => redirect()->route('services.market-entry.ghana', [], 301));
 Route::get('/services/market-demand-testing/nigeria', fn() => redirect()->route('services.market-entry.nigeria', [], 301));
 Route::get('/services/market-demand-testing/ghana', fn() => redirect()->route('services.market-entry.ghana', [], 301));
 
-Route::get('/outbound-demand-testing', fn() => redirect()->route('services.outbound-demand-testing', [], 301));
-Route::get('/outbound-sales-demand-testing', fn() => redirect()->route('services.outbound-demand-testing', [], 301))->name('services.outbound-sales');
-Route::get('/services/outbound-sales-demand-testing', fn() => redirect()->route('services.outbound-demand-testing', [], 301));
+Route::get('/market-demand-testing', fn() => redirect()->route('services.market-demand-testing', [], 301));
+Route::get('/services/outbound-demand-testing', fn() => redirect()->route('services.market-demand-testing', [], 301))->name('services.outbound-demand-testing');
+Route::get('/outbound-demand-testing', fn() => redirect()->route('services.market-demand-testing', [], 301));
+Route::get('/outbound-sales-demand-testing', fn() => redirect()->route('services.market-demand-testing', [], 301))->name('services.outbound-sales');
+Route::get('/services/outbound-sales-demand-testing', fn() => redirect()->route('services.market-demand-testing', [], 301));
 
 Route::get('/after-sales-support', fn() => redirect()->route('services.after-sales-support', [], 301));
 

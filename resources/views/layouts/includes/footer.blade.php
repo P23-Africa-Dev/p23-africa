@@ -27,10 +27,12 @@
 
                     <div class="col-md-2 footer-links strategy">
                         <p>What We Do</p>
-                        <a href="{{ route('services.market-demand-testing') }}">Market Demand Testing</a>
-                        <a href="{{ route('services.outbound-demand-testing') }}">Outbound Demand Testing</a>
-                        <a href="{{ route('services.distributor-partner') }}">Distributor Verification</a>
-                        <a href="{{ url('services') }}">Commercial Services</a>
+                        <a href="{{ locale_route('services.market-entry') }}">Market Entry</a>
+                        <a href="{{ locale_route('services.market-demand-testing') }}">Market Demand Testing</a>
+                        <a href="{{ locale_route('services.distributor-partner') }}">Distributor Verification</a>
+                        <a href="{{ locale_route('services.commercial-sales-team') }}">Commercial Sales Team</a>
+                        <a href="{{ locale_route('services.after-sales-support') }}">After-Sales Support</a>
+                        <a href="{{ locale_route('services') }}">Commercial Services</a>
                     </div>
 
                     <div class="col-md-2 footer-links first-icon">

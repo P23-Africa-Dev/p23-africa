@@ -53,11 +53,12 @@
                         </svg>
                     </a>
                     <div class="p23-nav-dropdown-menu" role="menu">
-                        <a href="{{ route('services.market-demand-testing') }}" class="p23-nav-dropdown-item" role="menuitem" itemprop="url"><span itemprop="name">Market Demand Testing</span></a>
-                        <a href="{{ route('services.outbound-demand-testing') }}" class="p23-nav-dropdown-item" role="menuitem" itemprop="url"><span itemprop="name">Outbound Demand Testing</span></a>
-                        <a href="{{ route('services.distributor-partner') }}" class="p23-nav-dropdown-item" role="menuitem" itemprop="url"><span itemprop="name">Distributor Verification</span></a>
+                        <a href="{{ locale_route('services.market-entry') }}" class="p23-nav-dropdown-item" role="menuitem" itemprop="url"><span itemprop="name">Market Entry</span></a>
+                        <a href="{{ locale_route('services.market-demand-testing') }}" class="p23-nav-dropdown-item" role="menuitem" itemprop="url"><span itemprop="name">Market Demand Testing</span></a>
+                        <a href="{{ locale_route('services.distributor-partner') }}" class="p23-nav-dropdown-item" role="menuitem" itemprop="url"><span itemprop="name">Distributor Verification</span></a>
+                        <a href="{{ locale_route('services.commercial-sales-team') }}" class="p23-nav-dropdown-item" role="menuitem" itemprop="url"><span itemprop="name">Commercial Sales Team</span></a>
                         <a href="{{ locale_route('services.after-sales-support') }}" class="p23-nav-dropdown-item" role="menuitem" itemprop="url"><span itemprop="name">After-Sales Support</span></a>
-                        <a href="{{ url('services') }}" class="p23-nav-dropdown-item" role="menuitem">Overview of Services</a>
+                        <a href="{{ locale_route('services') }}" class="p23-nav-dropdown-item" role="menuitem">Overview of Services</a>
                     </div>
                 </div>
                 <a href="{{ route('event') }}" class="p23-nav-link {{ $active === 'events' ? 'active' : '' }}" itemprop="url"><span itemprop="name">Events</span></a>

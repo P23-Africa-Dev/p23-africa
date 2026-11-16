@@ -49,14 +49,14 @@
             'itemListElement' => [
               [
                 '@type' => 'Service',
-                'name' => 'Market Demand Testing',
-                'url' => route('services.market-demand-testing'),
+                'name' => 'Market Entry',
+                'url' => route('services.market-entry'),
                 'description' => 'Evaluate real market demand and commercial opportunity across African markets before committing capital.'
               ],
               [
                 '@type' => 'Service',
-                'name' => 'Outbound Demand Testing',
-                'url' => route('services.outbound-demand-testing'),
+                'name' => 'Market Demand Testing',
+                'url' => route('services.market-demand-testing'),
                 'description' => 'Test real buyer interest with prospective customers in Africa. Validate commercial pipeline before expanding.'
               ]
             ]
@@ -66,16 +66,16 @@
           '@type' => 'SiteNavigationElement',
           '@id' => 'https://p23africa.com/#navigation',
           'name' => [
+            'Market Entry',
             'Market Demand Testing',
-            'Outbound Demand Testing',
             'Services',
             'About Us',
             'Resource Hub',
             'Contact Us'
           ],
           'url' => [
+            route('services.market-entry'),
             route('services.market-demand-testing'),
-            route('services.outbound-demand-testing'),
             url('services'),
             url('about'),
             route('resource-hub'),
@@ -2614,14 +2614,14 @@
             <div class="custom-underline"></div>
 
             <div class="row g-4 capabilities-grid">
-                <!-- 1. Market Demand Testing -->
+                <!-- 1. Market Entry -->
                 <div class="col-lg-4 col-md-6">
                     <div class="capability-card featured-card">
                         <div>
                             <div class="capability-icon">
                                 <i class="bi bi-compass"></i>
                             </div>
-                            <h3 class="capability-title">Market Demand Testing</h3>
+                            <h3 class="capability-title">Market Entry</h3>
                             <p class="capability-desc">Evaluate real market demand and practical routes to market across Nigeria, Ghana, Kenya, and South Africa. Test viability before committing capital or opening local offices.</p>
                             <div class="capability-tags">
                                 <span class="tag-item">Market entry strategy</span>
@@ -2633,13 +2633,13 @@
                                 <span class="tag-item">Commercial viability</span>
                             </div>
                         </div>
-                        <a href="{{ route('services.market-demand-testing') }}" class="capability-link">
-                            Explore market demand testing <i class="bi bi-arrow-right"></i>
+                        <a href="{{ locale_route('services.market-entry') }}" class="capability-link">
+                            Explore market entry <i class="bi bi-arrow-right"></i>
                         </a>
                     </div>
                 </div>
 
-                <!-- 2. Outbound Demand Testing -->
+                <!-- 2. Market Demand Testing -->
                 <div class="col-lg-4 col-md-6">
                     <div class="capability-card">
                         <div>
@@ -2658,8 +2658,8 @@
                                 <span class="tag-item">{{ __('home.tag_reporting') }}</span>
                             </div>
                         </div>
-                        <a href="{{ route('services.outbound-demand-testing') }}" class="capability-link">
-                            Explore outbound demand testing <i class="bi bi-arrow-right"></i>
+                        <a href="{{ locale_route('services.market-demand-testing') }}" class="capability-link">
+                            Explore market demand testing <i class="bi bi-arrow-right"></i>
                         </a>
                     </div>
                 </div>

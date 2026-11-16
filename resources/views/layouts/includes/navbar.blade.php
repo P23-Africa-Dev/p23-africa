@@ -32,46 +32,21 @@
                                 </div>
                             </div> --}}
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ locale_route('services') }}">{{ __('nav.services') }}</a>
-
-
-                            {{-- <div class="dropdown-menu dropdown-mega">
-                                <div class="container py-4" style="width: 70%;">
-                                    <div class="row">
-                                        <div class="col-md-3  line">
-                                            <a href="{{ url('services') }}#strategy" class="d-block mb-3"><b>Business
-                                                    Strategy</b></a>
-                                            <p>Insights on how we bring about growth in Africa</p>
-                                        </div>
-                                        <div class="col-md-3 line">
-                                            <a href="{{ url('market-entry') }}" class="d-block mb-3"><b>Market
-                                                    Entry</b></a>
-                                            <p>Wanna know how we have become great</p>
-                                        </div>
-                                        <div class="col-md-3 line">
-                                            <a href="{{ url('services') }}#research" class="d-block mb-3"><b>Business
-                                                    Research</b></a>
-                                            <p>Wanna know how we have become great</p>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <a href="{{ url('services') }}#sales" class="d-block mb-3"><b>Sales</b></a>
-                                            <p>Wanna know how we have become great</p>
-                                        </div>
-
-                                        <div class="col-md-3 mt-4 line">
-                                            <a href="{{ url('services') }}#marketing"
-                                                class="d-block mb-3"><b>Marketing</b></a>
-                                            <p>Wanna know how we have become great</p>
-                                        </div>
-                                        <div class="col-md-3 mt-4">
-                                            <a href="{{ url('services') }}#audit" class="d-block mb-3"><b>Business
-                                                    Audit</b></a>
-                                            <p>Wanna know how we have become great</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
+                        <li class="nav-item p23-nav-dropdown">
+                            <a class="nav-link p23-nav-dropdown-trigger" href="{{ locale_route('services') }}">
+                                <span>{{ __('nav.services') }}</span>
+                                <svg class="p23-nav-dropdown-icon" viewBox="0 0 10 6" fill="currentColor" aria-hidden="true">
+                                    <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                                </svg>
+                            </a>
+                            <div class="p23-nav-dropdown-menu" role="menu">
+                                <a href="{{ locale_route('services.market-entry') }}" class="p23-nav-dropdown-item" role="menuitem" itemprop="url"><span itemprop="name">Market Entry</span></a>
+                                <a href="{{ locale_route('services.market-demand-testing') }}" class="p23-nav-dropdown-item" role="menuitem" itemprop="url"><span itemprop="name">Market Demand Testing</span></a>
+                                <a href="{{ locale_route('services.distributor-partner') }}" class="p23-nav-dropdown-item" role="menuitem" itemprop="url"><span itemprop="name">Distributor Verification</span></a>
+                                <a href="{{ locale_route('services.commercial-sales-team') }}" class="p23-nav-dropdown-item" role="menuitem" itemprop="url"><span itemprop="name">Commercial Sales Team</span></a>
+                                <a href="{{ locale_route('services.after-sales-support') }}" class="p23-nav-dropdown-item" role="menuitem" itemprop="url"><span itemprop="name">After-Sales Support</span></a>
+                                <a href="{{ locale_route('services') }}" class="p23-nav-dropdown-item" role="menuitem">Overview of Services</a>
+                            </div>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ locale_route('event') }}">{{ __('nav.events') }}</a>

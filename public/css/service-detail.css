@@ -2047,3 +2047,516 @@ body.p23-black-navbar-page.sd-body .footer3 {
         grid-column: auto;
     }
 }
+
+/* ==========================================================================
+   COMMERCIAL SALES TEAM PAGE (.sd-page--commercial-sales)
+   ========================================================================== */
+.sd-cst-kicker {
+    display: inline-block;
+    font-family: var(--sd-sans);
+    font-weight: 700;
+    font-size: max(11px, calc(12 * var(--u)));
+    line-height: 1.2;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--sd-maroon);
+    margin-bottom: calc(10 * var(--u));
+}
+
+.sd-cst-kicker--sand {
+    color: #E3E1CF;
+}
+
+/* Hero floating badge */
+.sd-cst-hero-badge {
+    position: absolute;
+    left: calc(1080 * var(--u));
+    top: calc(395 * var(--u));
+    display: inline-flex;
+    align-items: center;
+    gap: calc(14 * var(--u));
+    padding: calc(14 * var(--u)) calc(22 * var(--u));
+    background: rgba(20, 30, 48, 0.94);
+    border: 1px solid rgba(227, 225, 207, 0.28);
+    border-radius: calc(12 * var(--u));
+    box-shadow: 0 18px 36px rgba(12, 24, 42, 0.32);
+    color: #FFFFFF;
+    z-index: 2;
+}
+
+.sd-cst-hero-badge__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #34D399;
+    box-shadow: 0 0 0 5px rgba(52, 211, 153, 0.2);
+    flex-shrink: 0;
+}
+
+.sd-cst-hero-badge__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.sd-cst-hero-badge__num {
+    font-family: var(--sd-serif);
+    font-style: italic;
+    font-weight: 700;
+    font-size: max(20px, calc(24 * var(--u)));
+    line-height: 1;
+    color: #E3E1CF;
+}
+
+.sd-cst-hero-badge__label {
+    font-family: var(--sd-sans);
+    font-weight: 600;
+    font-size: max(11px, calc(12 * var(--u)));
+    line-height: 1.25;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Section 2: Who this is for */
+.sd-cst-who {
+    padding-top: calc(74 * var(--u));
+}
+
+.sd-cst-who .sd-inner {
+    padding-left: calc(120 * var(--u));
+    padding-right: calc(106 * var(--u));
+}
+
+.sd-cst-who__shell {
+    background: var(--sd-cream);
+    border: 1px solid rgba(40, 55, 73, 0.08);
+    padding: calc(48 * var(--u)) calc(48 * var(--u)) calc(44 * var(--u));
+}
+
+.sd-cst-who__header {
+    display: grid;
+    grid-template-columns: calc(360 * var(--u)) minmax(0, 1fr);
+    gap: calc(40 * var(--u));
+    align-items: end;
+    padding-bottom: calc(34 * var(--u));
+    border-bottom: 1px solid rgba(40, 55, 73, 0.14);
+}
+
+.sd-cst-who__title {
+    font-family: var(--sd-serif);
+    font-weight: 700;
+    font-size: max(30px, calc(42 * var(--u)));
+    line-height: 1.08;
+    color: var(--sd-navy);
+}
+
+.sd-cst-who__intro {
+    font-size: max(15px, calc(17 * var(--u)));
+    line-height: 1.6;
+    color: var(--sd-ink);
+    font-weight: 500;
+}
+
+.sd-cst-who__cards {
+    margin-top: calc(32 * var(--u));
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: calc(20 * var(--u));
+}
+
+.sd-cst-who-card {
+    background: #FFFFFF;
+    border-top: 3px solid var(--sd-maroon);
+    padding: calc(28 * var(--u)) calc(26 * var(--u)) calc(30 * var(--u));
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: calc(18 * var(--u));
+    box-shadow: 0 10px 26px rgba(26, 40, 63, 0.06);
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.sd-cst-who-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 34px rgba(26, 40, 63, 0.12);
+}
+
+.sd-cst-who-card--navy {
+    background: #1A283F;
+    border-top-color: #E3E1CF;
+    color: #FFFFFF;
+}
+
+.sd-cst-who-card--sand {
+    background: #E3E1CF;
+    border-top-color: #283749;
+    color: #1A283F;
+}
+
+.sd-cst-who-card__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sd-cst-who-card__num {
+    font-family: var(--sd-serif);
+    font-style: italic;
+    font-weight: 700;
+    font-size: max(26px, calc(32 * var(--u)));
+    line-height: 1;
+    color: var(--sd-maroon);
+}
+
+.sd-cst-who-card--navy .sd-cst-who-card__num {
+    color: #E3E1CF;
+}
+
+.sd-cst-who-card--sand .sd-cst-who-card__num {
+    color: #283749;
+}
+
+.sd-cst-who-card__icon {
+    width: calc(38 * var(--u));
+    height: calc(38 * var(--u));
+    min-width: 34px;
+    min-height: 34px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(57, 9, 8, 0.08);
+    color: var(--sd-maroon);
+}
+
+.sd-cst-who-card--navy .sd-cst-who-card__icon {
+    background: rgba(255, 255, 255, 0.12);
+    color: #E3E1CF;
+}
+
+.sd-cst-who-card--sand .sd-cst-who-card__icon {
+    background: rgba(40, 55, 73, 0.12);
+    color: #283749;
+}
+
+.sd-cst-who-card__text {
+    font-size: max(14.5px, calc(16 * var(--u)));
+    line-height: 1.5;
+    font-weight: 600;
+    color: inherit;
+}
+
+/* Section 3: How it works (4-Step Bento Architecture) */
+.sd-cst-how .sd-inner {
+    padding-left: calc(120 * var(--u));
+    padding-right: calc(106 * var(--u));
+}
+
+.sd-cst-how__header {
+    margin-bottom: calc(28 * var(--u));
+}
+
+.sd-cst-how__title {
+    font-family: var(--sd-serif);
+    font-weight: 700;
+    font-size: max(30px, calc(42 * var(--u)));
+    line-height: 1.1;
+    color: var(--sd-navy);
+}
+
+.sd-cst-bento {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: calc(20 * var(--u));
+    align-items: stretch;
+}
+
+.sd-cst-card {
+    padding: calc(38 * var(--u)) calc(38 * var(--u)) calc(36 * var(--u));
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.sd-cst-card--step1 {
+    grid-column: span 7;
+}
+
+.sd-cst-card--step2 {
+    grid-column: span 5;
+}
+
+.sd-cst-card--step3 {
+    grid-column: span 6;
+    border: 1px solid rgba(40, 55, 73, 0.12);
+}
+
+.sd-cst-card--step4 {
+    grid-column: span 6;
+}
+
+.sd-cst-card__body {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: calc(22 * var(--u));
+}
+
+.sd-cst-card__body--between {
+    justify-content: space-between;
+}
+
+.sd-cst-card__heading {
+    max-width: calc(560 * var(--u));
+}
+
+.sd-cst-step1__intro {
+    max-width: calc(590 * var(--u));
+    font-size: max(14px, calc(15 * var(--u)));
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* 6 Demand Signals Grid inside Step 1 */
+.sd-cst-signals {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: calc(12 * var(--u));
+}
+
+.sd-cst-signal {
+    display: flex;
+    align-items: flex-start;
+    gap: calc(12 * var(--u));
+    padding: calc(14 * var(--u)) calc(16 * var(--u));
+    background: rgba(20, 30, 48, 0.55);
+    border: 1px solid rgba(227, 225, 207, 0.18);
+    font-size: max(13px, calc(14 * var(--u)));
+    line-height: 1.4;
+    color: #FFFFFF;
+}
+
+.sd-cst-signal__dot {
+    width: 8px;
+    height: 8px;
+    margin-top: 5px;
+    border-radius: 50%;
+    background: #E3E1CF;
+    flex-shrink: 0;
+}
+
+/* Step 2 text & flow chips */
+.sd-cst-step2__text {
+    font-size: max(14.5px, calc(16 * var(--u)));
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.sd-cst-flow-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: calc(10 * var(--u));
+    padding-top: calc(16 * var(--u));
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.sd-cst-flow-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: calc(7 * var(--u)) calc(14 * var(--u));
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(227, 225, 207, 0.26);
+    border-radius: 999px;
+    font-size: max(11px, calc(12 * var(--u)));
+    font-weight: 600;
+    color: #E3E1CF;
+}
+
+/* Step 3 & Step 4 Lists & Callout Footers */
+.sd-cst-card__lead-copy {
+    font-size: max(14px, calc(15 * var(--u)));
+    line-height: 1.55;
+    max-width: calc(520 * var(--u));
+}
+
+.sd-cst-list {
+    display: flex;
+    flex-direction: column;
+    gap: calc(10 * var(--u));
+    font-size: max(13.5px, calc(14.5 * var(--u)));
+    line-height: 1.45;
+}
+
+.sd-cst-callout {
+    padding: calc(16 * var(--u)) calc(20 * var(--u));
+    font-family: var(--sd-serif);
+    font-style: italic;
+    font-size: max(15px, calc(16.5 * var(--u)));
+    line-height: 1.45;
+}
+
+.sd-cst-callout--sand {
+    background: #E3E1CF;
+    border-left: 3px solid var(--sd-maroon);
+    color: #1A283F;
+}
+
+.sd-cst-callout--live {
+    display: flex;
+    align-items: center;
+    gap: calc(12 * var(--u));
+    background: rgba(88, 124, 144, 0.25);
+    border-left: 3px solid #E3E1CF;
+    color: #E3E1CF;
+}
+
+.sd-cst-live-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #34D399;
+    box-shadow: 0 0 0 4px rgba(52, 211, 153, 0.22);
+    flex-shrink: 0;
+}
+
+/* Section 4: You Own The Intelligence + 6-Month Programme + Result + CTA */
+.sd-cst-own__title {
+    text-transform: none;
+    font-family: var(--sd-serif);
+    font-weight: 700;
+    font-size: max(30px, calc(42 * var(--u)));
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+}
+
+.sd-cst-own__body {
+    margin-top: calc(16 * var(--u)) !important;
+    max-width: calc(880 * var(--u));
+    font-size: max(15px, calc(17 * var(--u)));
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.sd-cst-own__pills {
+    margin-top: calc(32 * var(--u));
+}
+
+.sd-cst-programme__card {
+    padding: calc(32 * var(--u)) calc(36 * var(--u)) calc(38 * var(--u));
+}
+
+.sd-cst-programme__checks {
+    margin-top: calc(28 * var(--u)) !important;
+    gap: calc(20 * var(--u));
+}
+
+.sd-cst-result-card,
+.sd-cst-cta-card {
+    padding: calc(30 * var(--u)) calc(34 * var(--u)) calc(34 * var(--u));
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sd-cst-result-card__body {
+    margin-top: calc(14 * var(--u)) !important;
+    font-size: max(15px, calc(16.5 * var(--u)));
+    line-height: 1.6;
+    color: #141E30;
+    font-weight: 500;
+}
+
+.sd-cst-cta-card__actions {
+    margin-top: calc(22 * var(--u));
+}
+
+.sd-cst-cta-card__btn {
+    margin-top: 0 !important;
+}
+
+@media (max-width: 1099.98px) {
+    .sd-cst-hero-badge {
+        left: auto;
+        right: 16px;
+        top: auto;
+        bottom: 16px;
+        padding: 12px 18px;
+        border-radius: 10px;
+    }
+
+    .sd-cst-who {
+        padding-top: 56px;
+    }
+
+    .sd-cst-who__shell {
+        padding: 36px 28px;
+    }
+
+    .sd-cst-who__header {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+        padding-bottom: 24px;
+    }
+
+    .sd-cst-who__cards {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    .sd-cst-bento {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    .sd-cst-card--step1,
+    .sd-cst-card--step2 {
+        grid-column: 1 / -1;
+    }
+
+    .sd-cst-card--step3,
+    .sd-cst-card--step4 {
+        grid-column: span 1;
+    }
+
+    .sd-cst-card {
+        padding: 32px 28px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .sd-cst-hero-badge {
+        position: relative;
+        left: auto;
+        right: auto;
+        top: auto;
+        bottom: auto;
+        margin-top: 14px;
+        width: 100%;
+    }
+
+    .sd-cst-who__shell {
+        padding: 28px 20px;
+    }
+
+    .sd-cst-who__cards,
+    .sd-cst-bento,
+    .sd-cst-signals {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .sd-cst-card--step1,
+    .sd-cst-card--step2,
+    .sd-cst-card--step3,
+    .sd-cst-card--step4 {
+        grid-column: auto;
+    }
+
+    .sd-cst-card {
+        padding: 28px 22px;
+    }
+}
+
