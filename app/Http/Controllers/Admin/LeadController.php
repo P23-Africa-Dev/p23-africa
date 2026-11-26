@@ -223,9 +223,16 @@ class LeadController extends Controller
 
         $exportOrganizations = collect();
         if ($canCrossOrgExport) {
-            $exportOrganizations = Organization::query()
-                ->orderBy('name')
-                ->get(['id', 'name']);
+            $exportOrganizations = collect([
+                (object) [
+                    'id' => 'legacy',
+                    'name' => 'P23 Africa (Legacy)',
+                ],
+            ])->concat(
+                Organization::query()
+                    ->orderBy('name')
+                    ->get(['id', 'name'])
+            );
         }
 
         return view('admin.crm.index', compact(
@@ -1238,28 +1245,41 @@ class LeadController extends Controller
         $user = auth()->user();
 
         $validated = $request->validate([
-            'organization_id' => 'nullable|integer|exists:organizations,id',
+            'organization_id' => [
+                'nullable',
+                function (string $attribute, mixed $value, \Closure $fail): void {
+                    if ($value === null || $value === '' || $value === 'legacy') {
+                        return;
+                    }
+
+                    if (!is_numeric($value) || !Organization::whereKey((int) $value)->exists()) {
+                        $fail('The selected organization is invalid.');
+                    }
+                },
+            ],
             'format' => ['nullable', Rule::in(['csv', 'migration_json'])],
         ]);
 
         $format = $validated['format'] ?? 'csv';
 
-        // Default to the caller's own organization context when no explicit target is provided.
-        $targetOrganizationId = array_key_exists('organization_id', $validated)
-            ? $validated['organization_id']
-            : $user?->organization_id;
-
         $isLegacyAdmin = $user
             && $user->hasRole('admin')
             && is_null($user->organization_id);
 
-        // Only legacy-admins can export across organizations.
-        if (!$isLegacyAdmin && (($user?->organization_id) !== $targetOrganizationId)) {
-            abort(403, 'You are not allowed to export leads for this organization.');
+        // Default to the caller's own organization context when no explicit target is provided.
+        // Sentinel "legacy" maps to the null-tenant (P23 Africa legacy) scope.
+        if (array_key_exists('organization_id', $validated)) {
+            $rawOrganizationId = $validated['organization_id'];
+            $targetOrganizationId = ($rawOrganizationId === null || $rawOrganizationId === '' || $rawOrganizationId === 'legacy')
+                ? null
+                : (int) $rawOrganizationId;
+        } else {
+            $targetOrganizationId = $user?->organization_id;
         }
 
-        if ($format === 'migration_json' && is_null($targetOrganizationId)) {
-            abort(422, 'Migration export requires a specific organization context.');
+        // Only legacy-admins can export across organizations (including the null/legacy tenant).
+        if (!$isLegacyAdmin && (($user?->organization_id) !== $targetOrganizationId)) {
+            abort(403, 'You are not allowed to export leads for this organization.');
         }
 
         $request->merge([

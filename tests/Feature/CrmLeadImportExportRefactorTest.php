@@ -789,25 +789,86 @@ class CrmLeadImportExportRefactorTest extends TestCase
         $this->assertSame('scoped@example.com', $payload['leads'][0]['lead']['email']);
     }
 
-    public function test_migration_export_requires_specific_organization_context(): void
+    public function test_legacy_admin_can_export_legacy_tenant_via_sentinel(): void
+    {
+        $tenantOrganization = $this->createOrganization('Tenant Export Org');
+        $tenantDrive = $this->createDrive($tenantOrganization, 'Tenant Pipeline');
+
+        $legacyAdmin = User::factory()->create(['organization_id' => null]);
+        $legacyAdmin->assignRole('admin');
+
+        Lead::create([
+            'organization_id' => null,
+            'drive_id' => null,
+            'first_name' => 'Legacy Lead',
+            'email' => 'legacy-export@example.com',
+            'status' => 'new',
+            'source' => 'website',
+            'priority' => 'high',
+        ]);
+
+        Lead::create([
+            'organization_id' => $tenantOrganization->id,
+            'drive_id' => $tenantDrive->id,
+            'first_name' => 'Tenant Lead',
+            'email' => 'tenant-export@example.com',
+            'status' => 'new',
+            'source' => 'website',
+            'priority' => 'high',
+        ]);
+
+        $this->actingAs($legacyAdmin);
+
+        $response = app(LeadController::class)->export(
+            Request::create('/admin/crm/export', 'GET', [
+                'organization_id' => 'legacy',
+                'format' => 'csv',
+            ]),
+            app(LeadExportService::class),
+        );
+
+        ob_start();
+        $response->sendContent();
+        $csv = ob_get_clean();
+
+        $this->assertStringContainsString('legacy-export@example.com', $csv);
+        $this->assertStringNotContainsString('tenant-export@example.com', $csv);
+    }
+
+    public function test_legacy_admin_can_export_legacy_migration_json(): void
     {
         $legacyAdmin = User::factory()->create(['organization_id' => null]);
         $legacyAdmin->assignRole('admin');
 
+        Lead::create([
+            'organization_id' => null,
+            'drive_id' => null,
+            'first_name' => 'Legacy Migration Lead',
+            'email' => 'legacy-migration@example.com',
+            'status' => 'new',
+            'source' => 'website',
+            'priority' => 'high',
+        ]);
+
         $this->actingAs($legacyAdmin);
 
-        try {
-            app(LeadController::class)->export(
-                Request::create('/admin/crm/export', 'GET', [
-                    'format' => 'migration_json',
-                ]),
-                app(LeadExportService::class),
-            );
+        $response = app(LeadController::class)->export(
+            Request::create('/admin/crm/export', 'GET', [
+                'organization_id' => 'legacy',
+                'format' => 'migration_json',
+            ]),
+            app(LeadExportService::class),
+        );
 
-            $this->fail('Expected a 422 exception when organization_id is omitted for migration export.');
-        } catch (HttpException $exception) {
-            $this->assertSame(422, $exception->getStatusCode());
-        }
+        ob_start();
+        $response->sendContent();
+        $json = ob_get_clean();
+        $payload = json_decode($json, true);
+
+        $this->assertSame('crm-leads-migration.v1', $payload['schema_version']);
+        $this->assertNull($payload['organization']['id'] ?? null);
+        $this->assertCount(1, $payload['leads']);
+        $this->assertSame('legacy-migration@example.com', $payload['leads'][0]['lead']['email']);
     }
 
     public function test_index_exposes_export_organizations_for_legacy_admin(): void
@@ -824,7 +885,11 @@ class CrmLeadImportExportRefactorTest extends TestCase
 
         $this->assertSame('admin.crm.index', $response->name());
         $this->assertTrue($response->getData()['canCrossOrgExport']);
-        $this->assertCount(2, $response->getData()['exportOrganizations']);
+
+        $exportOrganizations = $response->getData()['exportOrganizations'];
+        $this->assertCount(3, $exportOrganizations);
+        $this->assertSame('legacy', $exportOrganizations->first()->id);
+        $this->assertSame('P23 Africa (Legacy)', $exportOrganizations->first()->name);
     }
 
     public function test_index_hides_cross_org_export_options_for_non_legacy_admin(): void

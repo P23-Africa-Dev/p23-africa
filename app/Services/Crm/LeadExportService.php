@@ -55,10 +55,10 @@ class LeadExportService
     {
         $query = Lead::query()->with(['assignedUser', 'drive']);
 
-        if ($request->has('organization_id')) {
+        if ($request->exists('organization_id')) {
             $organizationId = $request->input('organization_id');
 
-            if ($organizationId === null || $organizationId === '') {
+            if ($organizationId === null || $organizationId === '' || $organizationId === 'legacy') {
                 $query->whereNull('organization_id');
             } else {
                 $query->where('organization_id', (int) $organizationId);
@@ -162,10 +162,13 @@ class LeadExportService
 
     public function streamMigrationJson(Request $request, ?User $user): StreamedResponse
     {
-        $targetOrganizationId = $request->input('organization_id');
+        $rawOrganizationId = $request->input('organization_id');
+        $targetOrganizationId = ($rawOrganizationId === null || $rawOrganizationId === '' || $rawOrganizationId === 'legacy')
+            ? null
+            : (int) $rawOrganizationId;
         $organization = is_null($targetOrganizationId)
             ? null
-            : Organization::query()->find((int) $targetOrganizationId);
+            : Organization::query()->find($targetOrganizationId);
 
         $statusCollection = LeadStatus::forOrganization($targetOrganizationId)
             ->orderBy('position')
